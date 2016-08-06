@@ -214,14 +214,14 @@
 			} else if(checkTrips($three, $two, $one)){
 				$reward->units = 9;
 				$reward->msg = 'Sick ass trips';
-				$reward->img = 'images/chat/trips/'.mt_rand(0,7).'.gif';
+				$reward->img = 'images/chat/trips/'.mt_rand(0,8).'.gif';
 			}
 		}
 		if ($two > -1 && $reward->units === 0){
 			if (checkDubs($two, $one)){
 				$reward->units = 3;
 				$reward->msg = 'Nice dubs';
-				$reward->img = 'images/chat/dubs/'.mt_rand(0,21).'.jpg';
+				$reward->img = 'images/chat/dubs/'.mt_rand(0,22).'.jpg';
 				if ($two === 7 && $one === 7){
 					$reward->img = 'images/chat/dubs/dub77.jpg';
 				}

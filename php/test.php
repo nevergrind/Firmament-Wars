@@ -1,40 +1,8 @@
 <?php
 	session_start();
-	var_dump($_SERVER);
+	
 	require('values.php');
 	require('connect1.php');
-	
-	
-	$_SESSION['capitalTiles'] = [];
-	$query = 'select startTile from fwPlayers where game=?';
-	$stmt = $link->prepare($query);
-	$stmt->bind_param('i', $_SESSION['gameId']);
-	$stmt->execute();
-	$stmt->bind_result($startTile);
-	while($stmt->fetch()){
-		array_push($_SESSION['capitalTiles'], $startTile);
-	}
-	
-	var_dump($_SESSION['capitalTiles']);
-	
-	echo "<br><br>";
-	// get game tiles
-	$query = "select defense from `fwTiles` where game=?";
-	$stmt = $link->prepare($query);
-	$stmt->bind_param('i', $_SESSION['gameId']);
-	$stmt->execute();
-	$stmt->bind_result($dDefense);
-	
-	$tiles = [];
-	$count = 0;
-	while($stmt->fetch()){
-		$x = new stdClass();
-		$x->defense = $dDefense;
-		$tiles[$count++] = $x;
-	}
-	var_dump($tiles);
-	
-	
 	
 	$gameDuration = microtime(true) - $_SESSION['gameDuration'];
 	echo 'gameDuration: ' . $gameDuration . '<br>';
