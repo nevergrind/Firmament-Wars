@@ -1,7 +1,7 @@
 <?php
 	require_once('connect1.php');
 	
-	$gameId = $_POST['gameId']*1;
+	$gameId = $_POST['gameId']*1; 
 	
 	$query = "select g.name, count(p.game) activePlayers, g.max max, g.map map 
 				from fwGames g 
