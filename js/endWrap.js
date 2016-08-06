@@ -1,0 +1,1 @@
+})($,Math,document,location);
