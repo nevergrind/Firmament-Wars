@@ -1,6 +1,6 @@
 // core.js
 $.ajaxSetup({
-    type: 'POST',
+	type: 'POST',
 	timeout: 4000
 });
 TweenMax.defaultEase = Quad.easeOut;
