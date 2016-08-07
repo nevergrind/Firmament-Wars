@@ -982,19 +982,6 @@ table {
 .margin-top{
 	margin-top: 12px;
 }
-/* helper classes */
-.no-padding{
-	padding: 0 !important;
-}
-.no-margin{
-	margin: 0 !important;
-}
-.pointer{
-	cursor: pointer;
-}
-.crosshair{
-	cursor: crosshair;
-}
 /* bootstrap overwrites */
 .fa{
 	cursor: default;
@@ -1074,6 +1061,19 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .text-crystal{
 	color: #8bf;
+}
+/* helper classes */
+.no-padding{
+	padding: 0 !important;
+}
+.no-margin{
+	margin: 0 !important;
+}
+.pointer{
+	cursor: pointer;
+}
+.crosshair{
+	cursor: crosshair;
 }
 @media all and (min-width: 1024px){
 	body { 
