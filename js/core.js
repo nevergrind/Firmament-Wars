@@ -293,6 +293,51 @@ var audio = {
 	},
 	move: function(){
 		audio.play('boots' + ~~(Math.random()*3));
+	},
+	cache: {},
+	load: {
+		title: function(){
+			console.warn("LOADING GAME AUDIO");
+			var x = [
+				'click', 
+				'beep'
+			];
+			for (var i=0, len=x.length; i<len; i++){
+				var z = x[i];
+				audio.cache[z] = new Audio("sound/" + z + ".mp3");
+			}
+			
+		},
+		game: function(){
+			console.warn("LOADING GAME AUDIO");
+			var x = [
+				'machine0',
+				'machine1',
+				'machine2',
+				'machine3',
+				'machine4',
+				'machine5',
+				'machine6',
+				'machine7',
+				'machine8',
+				'machine9',
+				'boots0',
+				'boots1',
+				'boots2',
+				'chat', 
+				'food', 
+				'culture',
+				'error',
+				'build',
+				'grenade5',
+				'missile7',
+				'bomb7'
+			];
+			for (var i=0, len=x.length; i<len; i++){
+				var z = x[i];
+				audio.cache[z] = new Audio("sound/" + z + ".mp3");
+			}
+		}
 	}
 }
 
@@ -321,115 +366,6 @@ function Msg(msg, d) {
 		delay: .1,
 		alpha: 1
 	}, .01);
-}
-
-function glow(e, color, amount) {
-    e.shadow = new C.Shadow(color, 5, 5, amount);
-    var bounds = e.getBounds();
-    e.setBounds(bounds.x, bounds.y, bounds.width, bounds.height);
-}
-
-function blurBmp(Slot, amount) {
-    if (isFirefox === true || isOpera === true || isChrome === true) {
-        if (amount === undefined) {
-            amount = 1;
-        }
-        var bb = bmp[Slot].getBounds();
-        var bbx = bb.x;
-        var bby = bb.y;
-        var bbWidth = bb.width;
-        var bbHeight = bb.height;
-        var blurFilter = new C.BlurFilter(amount, amount, 1);
-        bmp[Slot].filters = [blurFilter];
-        var bounds = blurFilter.getBounds();
-        bmp[Slot].cache((bbx + bounds.x), (bby + bounds.y), (bbWidth + bounds.width), (bbHeight + bounds.height));
-    }
-}
-
-function initBmpTint(Slot, mType, d) {
-    var i = "#0f0";
-    if (mType === "magic") {
-        i = "#f0f"
-    } else if (mType === "lightning") {
-        i = "#fff"
-    } else if (mType === "fire") {
-        i = "#f80"
-    } else if (mType === "cold") {
-        i = "#0ff"
-    }
-    bmpTint[Slot][mType].name = mob[Slot].image;
-    T.set(bmpTint[Slot][mType], {
-        easel: {
-            tint: i,
-            tintAmount: .5
-        }
-    });
-    tint(Slot, mType, d);
-}
-
-function tint(Slot, mType, d) {
-    if (mType === 'physical' || !mType) {
-        return;
-    }
-    if (isFirefox === true || isChrome === true || isOpera === true) {
-		if (bmpTint[Slot][mType].name !== mob[Slot].image) {
-			initBmpTint(Slot, mType, d)
-		} else {
-			tintTimer[Slot][mType].kill();
-			bmpTint[Slot][mType].alpha = 1;
-			tintTimer[Slot][mType] = T.delayedCall(d, function() {
-				bmpTint[Slot][mType].alpha = 0;
-			});
-		}
-    }
-}
-function cRem(target, e){
-	stage[target].removeChild(e);
-}
-function cacheAdd(s2, target, x, y, scaleX, scaleY, regCenter, first){
-	var e = new C.Bitmap(s2)
-	if(scaleX===undefined){ scaleX = 1; }
-	if(scaleY===undefined){ scaleY = 1; }
-	if(regCenter===true){
-		var halfW = e.image.width/2;
-		var halfH = e.image.height/2;
-		e.set({x:x+halfW, y:y+halfH, scaleX:scaleX, scaleY:scaleY, regX:halfW, regY:halfH});
-	}else{
-		e.set({x:x, y:y, scaleX:scaleX, scaleY:scaleY});
-	}
-	if(first===true){
-		stage[target].addChildAt(e, 0);
-	}else{
-		stage[target].addChild(e);
-	}
-	return e;
-}
-function img(img, w, h){
-    if(w===undefined){ w = 25; }
-    if(h===undefined){ h = 25; }
-    s1 = new C.Bitmap("/images1/"+img+".png");
-    s1.cache(0, 0, w, h);
-    return s1.cacheCanvas;
-}
-function can(img, target, x, y, w, h, regCenter, first){ 
-	var e = new C.Bitmap("/images1/"+img+".png");
-	var imgW = e.image.width;
-	var imgH = e.image.height;
-	var scaleX = w/imgW;
-	var scaleY = h/imgH;
-	if(regCenter===undefined){ 
-		e.setTransform(x, y, scaleX, scaleY, 0, 0, 0, 0, 0);
-	}else{
-		var halfW = imgW/2;
-		var halfH = imgH/2;
-		e.setTransform(x+halfW, y+halfH, scaleX, scaleY, 0, 0, 0, halfW, halfH);
-	}
-	if(!first){
-		stage[target].addChild(e);
-	}else{
-		stage[target].addChildAt(e, 0);
-	}
-	return e;
 }
 
 function playerLogout(){

@@ -1,4 +1,7 @@
 // game.js
+audio.play("ReturnOfTheFallen", 1);
+audio.load.title();
+
 function updateTileInfo(tileId){
 	function defMsg(){
 		var d = t.defense;
@@ -120,7 +123,7 @@ function showTarget(e, hover){
 			TweenMax.fromTo([DOM.targetLine, DOM.targetLineShadow], .2, {
 				strokeDashoffset: 0
 			}, {
-				strokeDashoffset: -24,
+				strokeDashoffset: -12,
 				repeat: -1,
 				ease: Linear.easeNone
 			});

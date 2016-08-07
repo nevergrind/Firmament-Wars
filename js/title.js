@@ -324,9 +324,6 @@ $("#buyFlag").on("click", function(){
 		g.unlock();
 	});
 });
-if (isChrome){
-	audio.play("ReturnOfTheFallen", 1);
-}
 
 $("#Msg").on("click", ".msg", function(){
 	var e = this;

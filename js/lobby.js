@@ -472,6 +472,7 @@ function startGame(d){
 	}
 }
 function lobbyCountdown(){
+	new Audio('sound/missile1.mp3');
 	var loadTime = Date.now() - g.startTime; 
 	if (loadTime < 1000){
 		joinStartedGame(); // page refresh
@@ -487,6 +488,7 @@ function lobbyCountdown(){
 				setTimeout(repeat, 1000, secondsToStart);
 			} else {
 				audio.play('missile1');
+				audio.load.game();
 			}
 			if (secondsToStart === 1){
 				TweenMax.to('#mainWrap', 2.5, {
