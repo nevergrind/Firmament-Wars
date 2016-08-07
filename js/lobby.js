@@ -130,7 +130,6 @@ function Nation(){
 function joinStartedGame(){
 	
 	g.lock(1);
-	console.info("Joining started game");
 	var e1 = document.getElementById("mainWrap");
 	if (e1 !== null){
 		TweenMax.to(e1, .5, {
@@ -200,7 +199,6 @@ function joinStartedGame(){
 		}
 		// init mapFlagWrap
 		var a = document.getElementsByClassName('unit');
-		var str = '';
 		for (var i=0, len=a.length; i<len; i++){
 			var t = game.tiles[i];
 			var x = a[i].getAttribute('x') - 24;
@@ -211,9 +209,17 @@ function joinStartedGame(){
 			} else if (t.flag){
 				flag = t.flag;
 			}
-			str += '<image id="flag' + i + '" class="mapFlag" xlink:href="images/flags/' + flag + '" x="' + x + '" y="' + y + '" width="24" height="24"/>';
+			var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+			svg.id = 'flag' + i;
+			svg.setAttributeNS(null, 'height', 24);
+			svg.setAttributeNS(null, 'width', 24);
+			svg.setAttributeNS(null,"x",x);
+			svg.setAttributeNS(null,"y",y);
+			svg.setAttributeNS(null,"class","mapFlag");
+			svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/flags/'+flag);
+			svg.setAttributeNS(null, 'height', 24);
+			document.getElementById('mapFlagWrap').appendChild(svg);
 		}
-		document.getElementById('mapFlagWrap').innerHTML = str;
 		
 		var str = '';
 		// init diplomacyPlayers
@@ -275,12 +281,14 @@ function joinStartedGame(){
 				triggerAction(this);
 			});
 		} else {
-			$(".land").on("mousedown", function(){
-				var box = this.getBBox();
-				var x = Math.round(box.x + (box.width/2));
-				var y = Math.round(box.y + (box.height/2));
-				console.info(this.id, x, y);
-				triggerAction(this);
+			$(".land").on("mousedown", function(e){
+				if (e.which === 1){
+					var box = this.getBBox();
+					var x = Math.round(box.x + (box.width/2));
+					var y = Math.round(box.y + (box.height/2));
+					console.info(this.id, x, y, e.which);
+					triggerAction(this);
+				}
 			});
 		}
 		$(".land").on("mouseenter", function(){
@@ -318,7 +326,7 @@ function joinStartedGame(){
 				try {
 					worldMap = Draggable.create("#worldWrap", {
 						bounds: "#gameWrap",
-						throwProps: true,
+						velocity: 'auto',
 						onRelease: function(){
 							(function go(c){
 								if (c < 30){
@@ -492,7 +500,6 @@ function lobbyCountdown(){
 			e.textContent = "Starting game in " + secondsToStart--;
 			if (secondsToStart >= 0){
 				audio.play('beep');
-				console.info(secondsToStart, "BEEP");
 				setTimeout(repeat, 1000, secondsToStart);
 			} else {
 				audio.play('missile1');

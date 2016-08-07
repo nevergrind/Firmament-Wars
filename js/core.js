@@ -168,9 +168,9 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
 	dom = {};
 // browser dependent
 if (isMSIE || isMSIE11){
-	$("head").append('<style> text { fill: #ffffff; stroke-width: 0; } </style>');
+	$("head").append('<style> text { fill: #ffffff; stroke-width: 0px; } </style>');
 } else if (isSafari){
-	$("head").append('<style> text { fill: #ffffff; stroke: #ffffff; stroke-width: 1.75px; } </style>');
+	$("head").append('<style> text { fill: #ffffff; stroke: #ffffff; stroke-width: 0px; } </style>');
 }
 if (isMobile){
 	$("head").append('<style> *{ box-shadow: none !important; } </style>');

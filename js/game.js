@@ -96,8 +96,8 @@ function showTarget(e, hover){
 		if (!hover){
 			my.tgt = tileId;
 		}
+		// animate targetLine
 		if (hover && tileId !== my.tgt){
-			// animate targetLine
 			var e = document.getElementById('unit' + tileId);
 			my.targetLine[4] = e.getAttribute('x')*1 - 10;
 			my.targetLine[5] = e.getAttribute('y')*1 - 10;
@@ -199,7 +199,10 @@ function getGameState(){
 							updateTargetStatus = true;
 						}
 						var newFlag = !game.player[d.player].flag ? 'blank.png' : game.player[d.player].flag;
-						document.getElementById('flag' + i).href.baseVal = "images/flags/" + newFlag;
+						var e5 = document.getElementById('flag' + i);
+						if (e5 !== null){
+							e5.href.baseVal = "images/flags/" + newFlag;
+						}
 						TweenMax.set(e1, {
 							fill: color[d.player]
 						});
@@ -376,14 +379,16 @@ function updateTileDefense(){
 	});
 }
 function triggerEndGame(msg){
-	$("*").off('click mousedown keydown keup, keypress')
+	$("*").off('click mousedown keydown keup keypress')
 	g.over = 1;
 	setTimeout(function(){
 		var e = document.getElementById('victoryScreen');
 		e.innerHTML = msg;
 		e.style.display = 'block';
-		$("#endWar").on('mousedown', function(){
-			location.reload();
+		$("#endWar").on('mousedown', function(e){
+			if (e.which === 1){
+				location.reload();
+			}
 		});
 	}, 2500);
 }

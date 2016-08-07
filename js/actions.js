@@ -19,6 +19,7 @@ var action = {
 	},
 	target: function(o){
 		my.targetData = o;
+		console.info(my.attackOn, my.tgt, game.tiles[my.tgt].player, my.player);
 		if (game.tiles[my.tgt].player !== my.player){
 			return;
 		}
@@ -434,53 +435,71 @@ function toggleChatMode(send){
 	}
 }
 
-$("#actions").on("mousedown", '#attack', function(){
-	var o = new Target({
-		skip: true
-	});
-	action.target(o);
-}).on('mousedown', '#deploy', function(){
-	action.deploy();
-}).on('mousedown', '#splitAttack', function(){
-	var o = new Target({
-		cost: 3,
-		splitAttack: true,
-		skip: true
-	});
-	action.target(o);
-}).on('mousedown', '#recruit', function(){
-	action.recruit();
-}).on('mousedown', '#upgradeTileDefense', function(){
-	action.upgradeTileDefense();
-}).on('mousedown', '#fireArtillery', function(){
-	var o = new Target({
-		cost: 60,
-		minimum: 0,
-		attackName: 'artillery',
-		hudMsg: 'Fire Artillery',
-		skip: true
-	});
-	action.target(o);
-}).on('mousedown', '#launchMissile', function(){
-	var o = new Target({
-		cost: 150,
-		minimum: 0,
-		attackName: 'missile',
-		hudMsg: 'Launch Missile',
-		skip: true
-	});
-	action.target(o);
-}).on('mousedown', '#launchNuke', function(){
-	var o = new Target({
-		cost: 600,
-		minimum: 0,
-		attackName: 'nuke',
-		hudMsg: 'Launch Nuclear Weapon',
-		skip: true
-	});
-	action.target(o);
-}).on('mousedown', '#gotoBuild, #gotoCommand', function(){
-	action.toggleMenu();
+$("#actions").on("mousedown", '#attack', function(e){
+	if (e.which === 1){
+		var o = new Target({
+			skip: true
+		});
+		action.target(o);
+	}
+}).on('mousedown', '#deploy', function(e){
+	if (e.which === 1){
+		action.deploy();
+	}
+}).on('mousedown', '#splitAttack', function(e){
+	if (e.which === 1){
+		var o = new Target({
+			cost: 3,
+			splitAttack: true,
+			skip: true
+		});
+		action.target(o);
+	}
+}).on('mousedown', '#recruit', function(e){
+	if (e.which === 1){
+		action.recruit();
+	}
+}).on('mousedown', '#upgradeTileDefense', function(e){
+	if (e.which === 1){
+		action.upgradeTileDefense();
+	}
+}).on('mousedown', '#fireArtillery', function(e){
+	if (e.which === 1){
+		var o = new Target({
+			cost: 60,
+			minimum: 0,
+			attackName: 'artillery',
+			hudMsg: 'Fire Artillery',
+			skip: true
+		});
+		action.target(o);
+	}
+}).on('mousedown', '#launchMissile', function(e){
+	if (e.which === 1){
+		var o = new Target({
+			cost: 150,
+			minimum: 0,
+			attackName: 'missile',
+			hudMsg: 'Launch Missile',
+			skip: true
+		});
+		action.target(o);
+	}
+}).on('mousedown', '#launchNuke', function(e){
+	if (e.which === 1){
+		var o = new Target({
+			cost: 600,
+			minimum: 0,
+			attackName: 'nuke',
+			hudMsg: 'Launch Nuclear Weapon',
+			skip: true
+		});
+		action.target(o);
+	}
+}).on('mousedown', '#gotoBuild, #gotoCommand', function(e){
+	if (e.which === 1){
+		action.toggleMenu();
+	}
 });
 
 $(document).on('keyup', function(e) {
@@ -524,6 +543,7 @@ $(document).on('keyup', function(e) {
 					if (x === 65){
 						// a
 						var o = new Target();
+						console.info(o);
 						action.target(o);
 					} else if (x === 83){
 						// s

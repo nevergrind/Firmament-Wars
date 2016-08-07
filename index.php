@@ -35,11 +35,8 @@
 
 <body id="body">
 	<div id="mainWrap" class="portal">
-	
-		<?php
-			$svg = file_get_contents("images/flat5.svg");
-			echo $svg;
-		?>
+		
+		<img id="worldTitle" src="images/flat4.jpg">
 	
 		<div id="titleMain" class="portal no-select">
 			<header class="shadow4">
@@ -236,7 +233,7 @@
 	</div>
 	
 	<div id="gameWrap">
-		<div id="wrap-ui" class="ui-window stagBlue">
+		<div id="wrap-ui" class="stagBlue">
 			<div id="diplomacy-ui" class="shadow4">
 			</div>
 			

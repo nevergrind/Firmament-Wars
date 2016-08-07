@@ -68,30 +68,32 @@ $("#create").on("click", function(){
 	$("#gameName").focus();
 });
 
-$("#menu").on("mousedown", "#createGame", function(){
-	var name = $("#gameName").val();
-	var players = $("#gamePlayers").val()*1;
-	if (name.length < 1 || name.length > 32){
-		Msg("Game name must be at least 4-32 characters.");
-	} else if (players < 2 || players > 8 || players % 1 !== 0){
-		Msg("Game must have 2-8 players.");
-	} else {
-		g.lock(1);
-		audio.play('click');
-		$.ajax({
-			url: 'php/createGame.php',
-			data: {
-				name: name,
-				players: players
-			}
-		}).done(function(data) {
-			console.info("Creating: ", data);
-			joinLobby(); // create
-		}).fail(function(e){
-			console.info(e.responseText);
-			Msg(e.statusText);
-			g.unlock(1);
-		});
+$("#menu").on("mousedown", "#createGame", function(e){
+	if (e.which === 1){
+		var name = $("#gameName").val();
+		var players = $("#gamePlayers").val()*1;
+		if (name.length < 1 || name.length > 32){
+			Msg("Game name must be at least 4-32 characters.");
+		} else if (players < 2 || players > 8 || players % 1 !== 0){
+			Msg("Game must have 2-8 players.");
+		} else {
+			g.lock(1);
+			audio.play('click');
+			$.ajax({
+				url: 'php/createGame.php',
+				data: {
+					name: name,
+					players: players
+				}
+			}).done(function(data) {
+				console.info("Creating: ", data);
+				joinLobby(); // create
+			}).fail(function(e){
+				console.info(e.responseText);
+				Msg(e.statusText);
+				g.unlock(1);
+			});
+		}
 	}
 });
 
@@ -270,23 +272,25 @@ $("#flagDropdown").on("change", function(e){
 });
 
 $("#submitNationName").on("mousedown", function(e){
-	var x = $("#updateNationName").val();
-	g.lock();
-	audio.play('click');
-	$.ajax({
-		url: 'php/updateNationName.php',
-		data: {
-			name: x
-		}
-	}).done(function(data) {
-		$("#nationName").text(data);
-		Msg("Your nation shall now be known as: " + data);
-		animateNationName();
-	}).fail(function(e){
-		Msg(e.statusText);
-	}).always(function(){
-		g.unlock();
-	});
+	if (e.which === 1){
+		var x = $("#updateNationName").val();
+		g.lock();
+		audio.play('click');
+		$.ajax({
+			url: 'php/updateNationName.php',
+			data: {
+				name: x
+			}
+		}).done(function(data) {
+			$("#nationName").text(data);
+			Msg("Your nation shall now be known as: " + data);
+			animateNationName();
+		}).fail(function(e){
+			Msg(e.statusText);
+		}).always(function(){
+			g.unlock();
+		});
+	}
 });
 
 
