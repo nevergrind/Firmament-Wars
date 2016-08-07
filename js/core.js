@@ -68,6 +68,7 @@ var my = {
 	targetLine: [0,0,0,0,0,0],
 	attackOn: false,
 	splitAttack: false,
+	targetData: {},
 	hud: function(msg, d){
 		timer.hud.kill();
 		DOM.hud.style.visibility = 'visible';

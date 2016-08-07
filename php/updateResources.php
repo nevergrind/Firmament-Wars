@@ -41,28 +41,22 @@
 		// milestones?
 		if ($x->food >= $_SESSION['foodMax']){
 			function getManpowerReward(){
-				$reward = 3 + $_SESSION['foodMilestone'];
+				$reward = 4 + ($_SESSION['foodMilestone'] * 2);
 				$foo = $_SESSION['foodMilestone'];
-				if ($foo > 1){
-					$reward++;
-				}
-				if ($foo > 5){
-					$reward+=2;
-				}
-				if ($foo > 9){
-					$reward+=4;
-				}
-				if ($foo > 14){
-					$reward+=6;
-				}
-				if ($foo > 20){
-					$reward+=8;
-				}
-				if ($foo > 27){
-					$reward+=12; 
-				}
 				if ($foo > 35){
-					$reward+=20; // max bonus 53 + 2 + 35
+					$reward+=44;
+				} else if ($foo > 27){
+					$reward+=32;
+				} else if ($foo > 20){
+					$reward+=22;
+				} else if ($foo > 14){
+					$reward+=14;
+				} else if ($foo > 9){
+					$reward+=8;
+				} else if ($foo > 5){
+					$reward+=4;
+				} else if ($foo > 2){
+					$reward+=2;
 				}
 				return $reward;
 			}

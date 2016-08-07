@@ -1,11 +1,24 @@
 // actions.js
+function Target(o){
+	if (o === undefined){
+		o = {};
+	}
+	this.cost = o.cost ? o.cost : 7;
+	this.minimum = o.minimum ? o.minimum : 2;
+	this.attackName = o.attackName ? o.attackName : 'attack';
+	this.splitAttack = o.splitAttack ? o.splitAttack : false;
+	this.hudMsg = o.hudMsg ? o.hudMsg : 'Select Target';
+	this.skip = o.skip ? o.skip : false;
+}
+
 var action = {
 	error: function(){
 		Msg("Not enough energy!", 1.5);
 		my.clearHud();
 		audio.play('error');
 	},
-	attack: function(skip){
+	target: function(o){
+		my.targetData = o;
 		if (game.tiles[my.tgt].player !== my.player){
 			return;
 		}
@@ -14,30 +27,32 @@ var action = {
 			my.clearHud();
 			return;
 		}
-		if (my.production < 7){
+		if (my.production < o.cost){
 			action.error();
 			return;
 		}
-		if (game.tiles[my.tgt].units < 2){
-			Msg("You need at least two armies to attack!", 1.5);
+		if (game.tiles[my.tgt].units < o.minimum){
+			Msg("You need at least " + o.minimum + " armies to attack!", 1.5);
 			my.clearHud();
 			return;
 		}
 		if (my.player === game.tiles[my.tgt].player){
 			my.attackOn = true;
-			my.splitAttack = false;
-			my.hud("Select Target");
+			my.attackName = o.attackName;
+			my.splitAttack = o.splitAttack;
+			my.hud(o.hudMsg);
+			// set cursor
 			$DOM.head.append('<style>.land{ cursor: crosshair; }</style>');
-			
+			// set target line
 			var e = document.getElementById('unit' + my.tgt);
 			my.targetLine[0] = e.getAttribute('x')*1;
 			my.targetLine[1] = e.getAttribute('y')*1;
-			if(!skip){
+			if(o.skip){
 				showTarget(my.lastTarget, true);
 			}
 		}
 	},
-	splitAttack: function(skip){
+	splitAttack: function(o){
 		if (game.tiles[my.tgt].player !== my.player){
 			return;
 		}
@@ -64,12 +79,12 @@ var action = {
 			var e = document.getElementById('unit' + my.tgt);
 			my.targetLine[0] = e.getAttribute('x')*1;
 			my.targetLine[1] = e.getAttribute('y')*1;
-			if(!skip){
+			if(o.skip){
 				showTarget(my.lastTarget, true);
 			}
 		}
 	},
-	attackTile: function(that){
+	attack: function(that){
 		var attacker = my.tgt;
 		var defender = that.id.slice(4)*1;
 		if (my.tgt === defender){
@@ -256,7 +271,22 @@ var action = {
 		});
 	},
 	fireArtillery: function(){
-		console.info('fire');
+		console.info('artillery');
+		return;
+		if (game.tiles[my.tgt].player !== my.player){
+			return;
+		}
+		if (my.attackOn){
+			my.attackOn = false;
+			my.clearHud();
+			return;
+		}
+		if (my.production < 60){
+			action.error();
+			return;
+		}
+		if (my.player === game.tiles[my.tgt].player){
+		}
 	},
 	launchMissile: function(){
 		console.info('missile');
@@ -265,7 +295,6 @@ var action = {
 		console.info('nuke');
 	},
 	toggleMenu: function(init){
-		console.info(g.actionMenu);
 		if (init || g.actionMenu === 'build'){
 			g.actionMenu = 'command';
 			DOM.tileCommand.style.display = 'block';
@@ -406,21 +435,50 @@ function toggleChatMode(send){
 }
 
 $("#actions").on("mousedown", '#attack', function(){
-	action.attack(true);
+	var o = new Target({
+		skip: true
+	});
+	action.target(o);
 }).on('mousedown', '#deploy', function(){
 	action.deploy();
 }).on('mousedown', '#splitAttack', function(){
-	action.splitAttack(true);
+	var o = new Target({
+		cost: 3,
+		splitAttack: true,
+		skip: true
+	});
+	action.target(o);
 }).on('mousedown', '#recruit', function(){
 	action.recruit();
 }).on('mousedown', '#upgradeTileDefense', function(){
 	action.upgradeTileDefense();
 }).on('mousedown', '#fireArtillery', function(){
-	action.fireArtillery();
+	var o = new Target({
+		cost: 60,
+		minimum: 0,
+		attackName: 'artillery',
+		hudMsg: 'Fire Artillery',
+		skip: true
+	});
+	action.target(o);
 }).on('mousedown', '#launchMissile', function(){
-	action.launchMissile();
+	var o = new Target({
+		cost: 150,
+		minimum: 0,
+		attackName: 'missile',
+		hudMsg: 'Launch Missile',
+		skip: true
+	});
+	action.target(o);
 }).on('mousedown', '#launchNuke', function(){
-	action.launchNuke();
+	var o = new Target({
+		cost: 600,
+		minimum: 0,
+		attackName: 'nuke',
+		hudMsg: 'Launch Nuclear Weapon',
+		skip: true
+	});
+	action.target(o);
 }).on('mousedown', '#gotoBuild, #gotoCommand', function(){
 	action.toggleMenu();
 });
@@ -465,10 +523,15 @@ $(document).on('keyup', function(e) {
 				if (g.actionMenu === 'command'){
 					if (x === 65){
 						// a
-						action.attack();
+						var o = new Target();
+						action.target(o);
 					} else if (x === 83){
 						// s
-						action.splitAttack();
+						var o = new Target({
+							cost: 3, 
+							splitAttack: true
+						});
+						action.target(o);
 					} else if (x === 68){
 						// d
 						action.deploy();
@@ -482,13 +545,31 @@ $(document).on('keyup', function(e) {
 						action.upgradeTileDefense();
 					} else if (x === 70){
 						// f
-						action.fireArtillery();
+						var o = new Target({
+							cost: 60,
+							minimum: 0,
+							attackName: 'artillery',
+							hudMsg: 'Fire Artillery'
+						});
+						action.target(o);
 					} else if (x === 67){
 						// c
-						action.launchMissile();
+						var o = new Target({
+							cost: 150,
+							minimum: 0,
+							attackName: 'missile',
+							hudMsg: 'Launch Missile'
+						});
+						action.target(o);
 					} else if (x === 78){
 						// n
-						action.launchNuke();
+						var o = new Target({
+							cost: 600,
+							minimum: 0,
+							attackName: 'nuke',
+							hudMsg: 'Launch Nuclear Weapon'
+						});
+						action.target(o);
 					}
 				}
 			}

@@ -253,14 +253,26 @@ function joinStartedGame(){
 				hide: 0
 			}
 		});
+		function triggerAction(that){
+			if (my.attackOn){
+				var o = my.targetData;
+				if (o.attackName === 'attack'){
+					action.attack(that);
+				} else if (o.attackName === 'artillery'){
+					action.fireArtillery(that);
+				} else if (o.attackName === 'missile'){
+					action.launchMissile(that);
+				} else if (o.attackName === 'nuke'){
+					action.launchNuke(that);
+				}
+			} else {
+				showTarget(that);
+			}
+		}
 		// SVG mouse events
 		if (isMSIE || isMSIE11){
 			$(".land").on("click", function(){
-				if (my.attackOn){
-					action.attackTile(this);
-				} else {
-					showTarget(this);
-				}
+				triggerAction(this);
 			});
 		} else {
 			$(".land").on("mousedown", function(){
@@ -268,11 +280,7 @@ function joinStartedGame(){
 				var x = Math.round(box.x + (box.width/2));
 				var y = Math.round(box.y + (box.height/2));
 				console.info(this.id, x, y);
-				if (my.attackOn){
-					action.attackTile(this);
-				} else {
-					showTarget(this);
-				}
+				triggerAction(this);
 			});
 		}
 		$(".land").on("mouseenter", function(){

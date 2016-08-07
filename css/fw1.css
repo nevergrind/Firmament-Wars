@@ -990,10 +990,10 @@ table {
 	margin: 0 !important;
 }
 .pointer{
-	cursor: pointer !important;
+	cursor: pointer;
 }
 .crosshair{
-	cursor: crosshair !important;
+	cursor: crosshair;
 }
 /* bootstrap overwrites */
 .fa{
