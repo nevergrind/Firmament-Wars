@@ -298,7 +298,6 @@ var audio = {
 	cache: {},
 	load: {
 		title: function(){
-			console.warn("LOADING GAME AUDIO");
 			var x = [
 				'click', 
 				'beep'
@@ -310,7 +309,6 @@ var audio = {
 			
 		},
 		game: function(){
-			console.warn("LOADING GAME AUDIO");
 			var x = [
 				'machine0',
 				'machine1',

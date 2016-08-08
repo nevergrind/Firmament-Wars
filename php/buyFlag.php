@@ -35,6 +35,7 @@
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('ss', $flag, $_SESSION['account']);
 			$stmt->execute();
+			$_SESSION['flag'] = $flag;
 		}
 	}
 	echo $crystals;

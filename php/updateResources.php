@@ -98,8 +98,9 @@
 				$msg .= $flag.$x->get . ': ' . $_SESSION['nation'] . ' receives <span class="chat-manpower">' . $manpowerBonus . '</span> armies!';
 			}
 			$x->foodMsg = $msg;
-			$stmt = $link->prepare('insert into fwchat (`message`, `gameId`, `event`) values (?, ?, "food");');
-			$stmt->bind_param('si', $msg, $_SESSION['gameId']);
+			$foodAccount = 'food|' . $_SESSION['account'];
+			$stmt = $link->prepare('insert into fwchat (`message`, `gameId`, `event`) values (?, ?, ?);');
+			$stmt->bind_param('sis', $msg, $_SESSION['gameId'], $foodAccount);
 			$stmt->execute();
 			
 			mysqli_query($link, 'delete from fwchat where timestamp < date_sub(now(), interval 20 second)');

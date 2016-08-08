@@ -4,11 +4,10 @@ function Target(o){
 		o = {};
 	}
 	this.cost = o.cost ? o.cost : 7;
-	this.minimum = o.minimum ? o.minimum : 2;
+	this.minimum = o.minimum !== undefined ? o.minimum : 2;
 	this.attackName = o.attackName ? o.attackName : 'attack';
 	this.splitAttack = o.splitAttack ? o.splitAttack : false;
 	this.hudMsg = o.hudMsg ? o.hudMsg : 'Select Target';
-	this.skip = o.skip ? o.skip : false;
 }
 
 var action = {
@@ -48,41 +47,7 @@ var action = {
 			var e = document.getElementById('unit' + my.tgt);
 			my.targetLine[0] = e.getAttribute('x')*1;
 			my.targetLine[1] = e.getAttribute('y')*1;
-			if(o.skip){
-				showTarget(my.lastTarget, true);
-			}
-		}
-	},
-	splitAttack: function(o){
-		if (game.tiles[my.tgt].player !== my.player){
-			return;
-		}
-		if (my.attackOn){
-			my.attackOn = false;
-			my.clearHud();
-			return;
-		}
-		if (my.production < 3){
-			action.error();
-			return;
-		}
-		if (game.tiles[my.tgt].units < 2){
-			Msg("You need at least two armies to split attack!", 1.5);
-			my.clearHud();
-			return;
-		}
-		if (my.player === game.tiles[my.tgt].player){
-			my.attackOn = true;
-			my.splitAttack = true;
-			my.hud("Select Target");
-			$DOM.head.append('<style>.land{ cursor: crosshair; }</style>');
-			
-			var e = document.getElementById('unit' + my.tgt);
-			my.targetLine[0] = e.getAttribute('x')*1;
-			my.targetLine[1] = e.getAttribute('y')*1;
-			if(o.skip){
-				showTarget(my.lastTarget, true);
-			}
+			showTarget(my.lastTarget, true);
 		}
 	},
 	attack: function(that){
@@ -112,6 +77,8 @@ var action = {
 			return;
 		}
 		g.lock(true);
+		showTarget(that);
+		my.clearHud();
 		// send attack to server
 		$.ajax({
 			url: 'php/attackTile.php',
@@ -129,7 +96,7 @@ var action = {
 				if (!game.tiles[defender].units){
 					audio.move();
 				} else {
-					animate.explosion(box);
+					animate.explosion(box, true);
 				}
 			} else {
 				audio.move();
@@ -146,12 +113,6 @@ var action = {
 		}).always(function(){
 			g.unlock();
 		});
-		// update mouse
-		showTarget(that);
-		// report attack message
-		
-		// report battle results
-		my.clearHud();
 	},
 	deploy: function(){
 		var t = game.tiles[my.tgt];
@@ -271,23 +232,52 @@ var action = {
 			audio.play('error');
 		});
 	},
-	fireArtillery: function(){
-		console.info('artillery');
-		return;
-		if (game.tiles[my.tgt].player !== my.player){
+	fireArtillery: function(that){
+		var attacker = my.tgt;
+		var defender = that.id.slice(4)*1;
+		if (my.tgt === defender){
 			return;
 		}
-		if (my.attackOn){
-			my.attackOn = false;
-			my.clearHud();
+		// can't attack friendly tile
+		if (game.tiles[defender].player === my.player){
 			return;
 		}
+		if (game.tiles[my.tgt].units === 0){
+			return;
+		}
+		my.attackOn = false;
 		if (my.production < 60){
 			action.error();
 			return;
 		}
-		if (my.player === game.tiles[my.tgt].player){
-		}
+		g.lock(true);
+		showTarget(that);
+		my.clearHud();
+		// send attack to server
+		$.ajax({
+			url: 'php/fireArtillery.php',
+			data: {
+				attacker: attacker,
+				defender: defender
+			}
+		}).done(function(data) {
+			console.info('fireArtillery', data);
+			// animate attack
+			var e1 = document.getElementById('land' + defender),
+				box = e1.getBBox();
+			animate.artillery(box, true);
+			if (data.production !== undefined){
+				setProduction(data);
+			}
+		}).fail(function(e){
+			console.info('error: ', e);
+			audio.play('error');
+			if (e.statusText){
+				Msg(e.statusText, 1.5);
+			}
+		}).always(function(){
+			g.unlock();
+		});
 	},
 	launchMissile: function(){
 		console.info('missile');
@@ -309,41 +299,30 @@ var action = {
 }
 
 var animate = {
-	explosion: function(box){
-		/*
-		if (box === undefined){
-			box = {
-				x: 1050,
-				y: 200,
-				width: 500,
-				height: 200
-			}
+	randomColor: function(){
+		var x = ~~(Math.random()*6),
+			c = '#ffffff';
+		if (x === 0){
+			c = '#ffffaa';
+		} else if (x === 1){
+			c = '#ffddaa';
+		} else if (x === 2){
+			c = '#ffeedd';
+		} else if (x === 3){
+			c = '#eeeecc';
+		} else if (x === 4){
+			c = '#ffbb77';
 		}
-		*/
-		function randomColor(){
-			var x = ~~(Math.random()*7),
-				c = '#ffffff';
-			if (x === 0){
-				c = '#ffffff';
-			} else if (x === 1){
-				c = '#ffff88';
-			} else if (x === 2){
-				c = '#ffff55';
-			} else if (x === 3){
-				c = '#ffaa55';
-			} else if (x === 4){
-				c = '#ffdddd';
-			} else if (x === 5){
-				c = '#dddd88';
-			} else {
-				c = '#cccccc';
-			}
-			return c;
-		}
+		return c;
+	},
+	explosion: function(box, playSound){
 		var sfx = ~~(Math.random()*9);
 		var delay = [.5, .5, .33, .33, .33, .33, .8, .33, .66, .4];
+		if (playSound){
+			audio.play('machine' + sfx);
+		}
 		
-		for (var i=0; i<30; i++){
+		for (var i=0; i<50; i++){
 			(function(Math){
 				var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
 				var x = box.x + (Math.random() * (box.width * .8)) + box.width * .1;
@@ -351,14 +330,55 @@ var animate = {
 				circ.setAttributeNS(null,"cx",x);
 				circ.setAttributeNS(null,"cy",y);
 				circ.setAttributeNS(null,"r",.01);
-				circ.setAttributeNS(null,"fill","none");
-				circ.setAttributeNS(null,"stroke",randomColor());
-				circ.setAttributeNS(null,"strokeWidth","0");
+				circ.setAttributeNS(null,"fill",'none');
+				circ.setAttributeNS(null,"stroke",animate.randomColor());
+				circ.setAttributeNS(null,"strokeWidth",'1');
+				DOM.world.appendChild(circ);
+				
+				TweenMax.to(circ, .075, {
+					delay: Math.random() * delay[sfx],
+					startAt:{
+						opacity: 1
+					},
+					strokeWidth: 5,
+					onComplete: function(){
+						TweenMax.to(this.target, .125, {
+							strokeWidth: 0,
+							attr: {
+								r: 7
+							},
+							onComplete: function(){
+								this.target.parentNode.removeChild(this.target);
+							}
+						});
+					}
+				});
+			})(Math);
+		}
+	},
+	upgrade: function(){
+		audio.play('build');
+	},
+	artillery: function(box, playSound){
+		if (playSound){
+			audio.play('grenade5');
+		}
+		for (var i=0; i<15; i++){
+			(function(Math){
+				var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
+				var x = box.x + (Math.random() * (box.width * .8)) + box.width * .1;
+				var y = box.y + (Math.random() * (box.height * .8)) + box.height * .1;
+				circ.setAttributeNS(null,"cx",x);
+				circ.setAttributeNS(null,"cy",y);
+				circ.setAttributeNS(null,"r",.01);
+				circ.setAttributeNS(null,"fill",'none');
+				circ.setAttributeNS(null,"stroke",animate.randomColor());
+				circ.setAttributeNS(null,"strokeWidth",'1');
 				DOM.world.appendChild(circ);
 				
 				if (Math.random() > .3){
 					TweenMax.to(circ, .1, {
-						delay: Math.random() * delay[sfx],
+						delay: Math.random() * .125,
 						startAt:{
 							opacity: 1
 						},
@@ -367,7 +387,7 @@ var animate = {
 							TweenMax.to(this.target, .25, {
 								strokeWidth: 0,
 								attr: {
-									r: 15
+									r: 21
 								},
 								onComplete: function(){
 									this.target.parentNode.removeChild(this.target);
@@ -379,13 +399,12 @@ var animate = {
 					TweenMax.to(circ, Math.random()*.2+.1, {
 						startAt: {
 							opacity: 1,
-							fill: randomColor(),
+							fill: animate.randomColor(),
 							strokeWidth:0,
 							attr: {
 								r: 8
 							}
 						},
-						delay: Math.random() * delay[sfx],
 						opacity: 0,
 						ease: Power1.easeIn,
 						onComplete: function(){
@@ -395,19 +414,17 @@ var animate = {
 				}
 			})(Math);
 		}
-		audio.play('machine' + sfx);
 	},
-	upgrade: function(){
-		audio.play('build');
+	missile: function(box, playSound){
+		if (playSound){
+			audio.play('missile7');
+		}
 	},
-	artillery: function(){
-		audio.play('grenade5');
-	},
-	missile: function(){
-		audio.play('missile7');
-	},
-	nuke: function(){
-		audio.play('bomb7');
+	nuke: function(box, playSound){
+		
+		if (playSound){
+			audio.play('bomb7');
+		}
 	}
 }
 // key bindings
@@ -437,9 +454,7 @@ function toggleChatMode(send){
 
 $("#actions").on("mousedown", '#attack', function(e){
 	if (e.which === 1){
-		var o = new Target({
-			skip: true
-		});
+		var o = new Target({});
 		action.target(o);
 	}
 }).on('mousedown', '#deploy', function(e){
@@ -450,8 +465,7 @@ $("#actions").on("mousedown", '#attack', function(e){
 	if (e.which === 1){
 		var o = new Target({
 			cost: 3,
-			splitAttack: true,
-			skip: true
+			splitAttack: true
 		});
 		action.target(o);
 	}
@@ -469,8 +483,7 @@ $("#actions").on("mousedown", '#attack', function(e){
 			cost: 60,
 			minimum: 0,
 			attackName: 'artillery',
-			hudMsg: 'Fire Artillery',
-			skip: true
+			hudMsg: 'Fire Artillery'
 		});
 		action.target(o);
 	}
@@ -480,8 +493,7 @@ $("#actions").on("mousedown", '#attack', function(e){
 			cost: 150,
 			minimum: 0,
 			attackName: 'missile',
-			hudMsg: 'Launch Missile',
-			skip: true
+			hudMsg: 'Launch Missile'
 		});
 		action.target(o);
 	}
@@ -491,8 +503,7 @@ $("#actions").on("mousedown", '#attack', function(e){
 			cost: 600,
 			minimum: 0,
 			attackName: 'nuke',
-			hudMsg: 'Launch Nuclear Weapon',
-			skip: true
+			hudMsg: 'Launch Nuclear Weapon'
 		});
 		action.target(o);
 	}

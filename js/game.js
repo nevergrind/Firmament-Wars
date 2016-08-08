@@ -157,11 +157,12 @@ function setActionButtons(t){
 function setTileUnits(i, unitColor){
 	var e = document.getElementById('unit' + i);
 	e.textContent = game.tiles[i].units === 0 ? "" : game.tiles[i].units;
-	TweenMax.fromTo(e, .5, {
-		transformOrigin: (game.tiles[i].units.length * 3) + ' 12',
-		scale: 2,
-		fill: unitColor
-	}, {
+	TweenMax.to(e, .5, {
+		startAt: {
+			transformOrigin: (game.tiles[i].units.length * 3) + ' 12',
+			scale: unitColor !== '#00ff00' ? 1 : 2,
+			fill: unitColor
+		},
 		scale: 1,
 		fill: "#ffffff"
 	});
@@ -210,7 +211,7 @@ function getGameState(){
 						if (d.player !== my.player && game.tiles[i].units){
 							var box = e1.getBBox();
 							if (d.units){
-								animate.explosion(box);
+								animate.explosion(box, false);
 							}
 						}
 					}
@@ -233,18 +234,29 @@ function getGameState(){
 				if (len > 0){
 					for (var i=0; i<len; i++){
 						var z = data.chat[i];
+						if (z.message){
+							chat(z.message);
+						}
 						if (!z.event){
-							chat(z.message);
+							// nothing
 						} else if (z.event === 'chatsfx'){
-							chat(z.message);
+							// chat events that get a sfx
 							audio.play('chat');
-						} else if (z.event === 'food'){
-							chat(z.message);
-							audio.play('food');
+						} else if (z.event.indexOf('food') === 0){
+							if (z.event.indexOf(my.account) > -1){
+								audio.play('food');
+							}
 						} else if (z.event === 'upgrade'){
 							// fetch updated tile defense data
-							chat(z.message);
 							updateTileDefense();
+						} else if (z.event.indexOf('artillery') === 0){
+							var a = z.event.split('|');
+							var tile = a[1];
+							console.info('artillery: ', z.event, tile);
+							var e2 = document.getElementById('land' + tile),
+								box = e2.getBBox();
+							animate.artillery(box, false);
+							
 						}
 					}
 				}

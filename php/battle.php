@@ -1,4 +1,5 @@
-<?php	
+<?php
+	require('isAdjacent.php');
 	function battle($x, $y, $defender){
 		$oBonus = $_SESSION['oBonus'] * 500;
 		$dBonus = $_SESSION['dBonus'] * 500;
@@ -41,11 +42,5 @@
 		}
 		
 		return array($x, $y);
-	}
-	function isAdjacent($x, $y){
-		if ($_SESSION['map'] == 'Earth Alpha'){
-			require('adjEarthAlpha.php');
-		}
-		return in_array($y, $adj[$x]);
 	}
 ?>

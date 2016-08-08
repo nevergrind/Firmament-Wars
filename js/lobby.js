@@ -144,6 +144,7 @@ function joinStartedGame(){
 		var focusTile = 0;
 		console.info('initGameState ', data);
 		my.player = data.player;
+		my.account = data.account;
 		TweenMax.set(DOM.targetLine, {
 			stroke: color[my.player]
 		});

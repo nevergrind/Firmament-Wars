@@ -7,10 +7,10 @@
 	$o->reward = 1;
 	
 	$attacker = new stdClass();
-	$attacker->tile = $_POST['attacker'];
+	$attacker->tile = $_POST['attacker']*1;
 	
 	$defender = new stdClass();
-	$defender->tile = $_POST['defender'];
+	$defender->tile = $_POST['defender']*1;
 	
 	$split = $_POST['split'] * 1;
 	
@@ -34,7 +34,7 @@
 		$stmt->bind_result($tile, $tileName, $nation, $flag, $units, $player, $account, $defense);
 		
 		while($stmt->fetch()){
-			if ($_POST['attacker'] == $tile){
+			if ($attacker->tile === $tile){
 				// use classes?
 				$attacker->tile = $tile;
 				$attacker->tileName = $tileName;
@@ -71,7 +71,7 @@
 		}
 		$originalDefendingUnits = $defender->units;
 		// add adjacent validation
-		if ($defender->account == $_SESSION['account']){
+		if ($defender->account === $_SESSION['account']){
 			// move to allied territory
 			if ($split === 0){
 				if ($defender->units + $attacker->units > 255){
