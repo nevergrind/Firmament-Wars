@@ -279,11 +279,103 @@ var action = {
 			g.unlock();
 		});
 	},
-	launchMissile: function(){
+	launchMissile: function(that){
 		console.info('missile');
+		
+		var attacker = my.tgt;
+		var defender = that.id.slice(4)*1;
+		if (my.tgt === defender){
+			return;
+		}
+		// can't attack friendly tile
+		if (game.tiles[defender].player === my.player){
+			return;
+		}
+		if (game.tiles[my.tgt].units === 0){
+			return;
+		}
+		my.attackOn = false;
+		if (my.production < 150){
+			action.error();
+			return;
+		}
+		g.lock(true);
+		showTarget(that);
+		my.clearHud();
+		// send attack to server
+		$.ajax({
+			url: 'php/launchMissile.php',
+			data: {
+				attacker: attacker,
+				defender: defender
+			}
+		}).done(function(data) {
+			console.info('launchMissile', data);
+			// animate attack
+			var e1 = document.getElementById('land' + defender),
+				box = e1.getBBox();
+			animate.missile(box, true);
+			if (data.production !== undefined){
+				setProduction(data);
+			}
+		}).fail(function(e){
+			console.info('error: ', e);
+			audio.play('error');
+			if (e.statusText){
+				Msg(e.statusText, 1.5);
+			}
+		}).always(function(){
+			g.unlock();
+		});
+		
 	},
-	launchNuke: function(){
-		console.info('nuke');
+	launchNuke: function(that){
+		var attacker = my.tgt;
+		var defender = that.id.slice(4)*1;
+		if (my.tgt === defender){
+			return;
+		}
+		// can't attack friendly tile
+		if (game.tiles[defender].player === my.player){
+			return;
+		}
+		if (game.tiles[my.tgt].units === 0){
+			return;
+		}
+		my.attackOn = false;
+		if (my.production < 600){
+			action.error();
+			return;
+		}
+		g.lock(true);
+		showTarget(that);
+		my.clearHud();
+		// send attack to server
+		$.ajax({
+			url: 'php/launchNuke.php',
+			data: {
+				attacker: attacker,
+				defender: defender
+			}
+		}).done(function(data) {
+			console.info('launchNuke', data);
+			// animate attack
+			var e1 = document.getElementById('land' + defender),
+				box = e1.getBBox();
+			animate.nuke(box, true);
+			if (data.production !== undefined){
+				setProduction(data);
+			}
+		}).fail(function(e){
+			console.info('error: ', e);
+			audio.play('error');
+			if (e.statusText){
+				Msg(e.statusText, 1.5);
+			}
+		}).always(function(){
+			g.unlock();
+		});
+		
 	},
 	toggleMenu: function(init){
 		if (init || g.actionMenu === 'build'){
@@ -421,6 +513,40 @@ var animate = {
 		if (playSound){
 			audio.play('missile7');
 		}
+		
+		(function(Math){
+			var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
+			var x = box.x + (Math.random() * (box.width * .8)) + box.width * .1;
+			var y = box.y + (Math.random() * (box.height * .8)) + box.height * .1;
+			circ.setAttributeNS(null,"cx",x);
+			circ.setAttributeNS(null,"cy",y);
+			circ.setAttributeNS(null,"r",3);
+			circ.setAttributeNS(null,"fill",animate.randomColor());
+			circ.setAttributeNS(null,"stroke",animate.randomColor());
+			circ.setAttributeNS(null,"strokeWidth",'1');
+			DOM.world.appendChild(circ);
+			
+			TweenMax.to(circ, .1, {
+				delay: Math.random() * .125,
+				startAt:{
+					opacity: 1
+				},
+				strokeWidth: 15,
+				onComplete: function(){
+					TweenMax.to(this.target, .25, {
+						strokeWidth: 0,
+						attr: {
+							r: 21
+						},
+						onComplete: function(){
+							this.target.parentNode.removeChild(this.target);
+						}
+					});
+				}
+			});
+		})(Math);
+		
+		
 	},
 	nuke: function(box, playSound){
 		

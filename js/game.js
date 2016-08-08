@@ -258,6 +258,15 @@ function getGameState(){
 									box = e2.getBBox();
 								animate.artillery(box, false);
 							}
+						} else if (z.event.indexOf('missile') === 0){
+							var a = z.event.split('|');
+							var tile = a[1];
+							var account = a[2];
+							if (my.account !== account){
+								var e2 = document.getElementById('land' + tile),
+									box = e2.getBBox();
+								animate.missile(box, false);
+							}
 						}
 					}
 				}

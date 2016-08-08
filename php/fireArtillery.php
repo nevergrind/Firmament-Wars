@@ -2,23 +2,6 @@
 	header('Content-Type: application/json');
 	require('connect1.php');
 	require('isAdjacent.php');
-	/*
-		if (my.tgt === defender){
-			return;
-		}
-		// can't attack friendly tile
-		if (game.tiles[defender].player === my.player){
-			return;
-		}
-		if (game.tiles[my.tgt].units === 0){
-			return;
-		}
-		my.attackOn = false;
-		if (my.production < 60){
-			action.error();
-			return;
-		}
-	*/
 	
 	$o = new stdClass();
 	$attacker = new stdClass();
@@ -76,10 +59,7 @@
 			// artillery attack
 			$newUnits = 2 + $_SESSION['oBonus'] + round($defender->units * .04);
 			$defender->units = $defender->units - $newUnits;
-			if (!$defender->flag){
-				$defender->units = 1;
-			}
-			if ($defender->units < 1){
+			if (!$defender->flag || $defender->units < 1){
 				$defender->units = 1;
 			}
 			// update defender
