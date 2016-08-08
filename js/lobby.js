@@ -90,6 +90,10 @@ function setResources(d){
 		if (my.oBonus !== d.oBonus){
 			DOM.oBonus.textContent = d.oBonus;
 			my.oBonus = d.oBonus;
+			$('#fireArtillery').tooltip('hide')
+			  .attr('data-original-title', 'Fire artillery at an adjacent enemy tile. Kills ' + (2 + my.oBonus) + ' + 4% of armies.')
+			  .tooltip('fixTitle')
+			  .tooltip('show');
 		}
 		if (my.dBonus !== d.dBonus){
 			DOM.dBonus.textContent = d.dBonus;

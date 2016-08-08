@@ -74,7 +74,8 @@
 			exit();
 		} else {
 			// artillery attack
-			$defender->units = $defender->units - ceil($defender->units * .05);
+			$newUnits = 2 + $_SESSION['oBonus'] + round($defender->units * .04);
+			$defender->units = $defender->units - $newUnits;
 			if (!$defender->flag){
 				$defender->units = 1;
 			}
@@ -91,7 +92,7 @@
 			$o->production = $_SESSION['production'];
 			// report to other players
 			$msg = '';
-			$data = 'artillery|' . $defender->tile;
+			$data = 'artillery|' . $defender->tile . '|' . $_SESSION['account'];
 			$stmt = $link->prepare('insert into fwchat (`message`, `gameId`, `event`) values (?, ?, ?);');
 			$stmt->bind_param('sis', $msg, $_SESSION['gameId'], $data);
 			$stmt->execute();

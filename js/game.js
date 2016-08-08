@@ -252,11 +252,12 @@ function getGameState(){
 						} else if (z.event.indexOf('artillery') === 0){
 							var a = z.event.split('|');
 							var tile = a[1];
-							console.info('artillery: ', z.event, tile);
-							var e2 = document.getElementById('land' + tile),
-								box = e2.getBBox();
-							animate.artillery(box, false);
-							
+							var account = a[2];
+							if (my.account !== account){
+								var e2 = document.getElementById('land' + tile),
+									box = e2.getBBox();
+								animate.artillery(box, false);
+							}
 						}
 					}
 				}
