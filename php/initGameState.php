@@ -58,6 +58,8 @@
 	$x->turnProduction = $_SESSION['turnProduction'];
 	$x->ajax = 'initGameState';
 	$x->account = $_SESSION['account'];
+	$x->oBonus = $_SESSION['oBonus'];
+	$x->dBonus = $_SESSION['dBonus'];
 	
 	$query = 'select sum(food), sum(culture) from `fwTiles` where account=? and game=?';
 	$stmt = $link->prepare($query);

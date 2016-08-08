@@ -329,6 +329,8 @@ var audio = {
 				'error',
 				'build',
 				'grenade5',
+				'grenade6',
+				'grenade8',
 				'missile7',
 				'bomb7'
 			];

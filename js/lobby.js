@@ -1,3 +1,6 @@
+function initOffensiveTooltips(){
+	$('#fireArtillery').attr('title', 'Fire artillery at an adjacent enemy tile. Kills ' + (2 + my.oBonus) + ' + 4% of armies.');
+}
 function initResources(d){
 	my.food = d.food;
 	my.production = d.production;
@@ -90,10 +93,7 @@ function setResources(d){
 		if (my.oBonus !== d.oBonus){
 			DOM.oBonus.textContent = d.oBonus;
 			my.oBonus = d.oBonus;
-			$('#fireArtillery').tooltip('hide')
-			  .attr('data-original-title', 'Fire artillery at an adjacent enemy tile. Kills ' + (2 + my.oBonus) + ' + 4% of armies.')
-			  .tooltip('fixTitle')
-			  .tooltip('show');
+			initOffensiveTooltips();
 		}
 		if (my.dBonus !== d.dBonus){
 			DOM.dBonus.textContent = d.dBonus;
@@ -149,6 +149,9 @@ function joinStartedGame(){
 		console.info('initGameState ', data);
 		my.player = data.player;
 		my.account = data.account;
+		my.oBonus = data.oBonus;
+		my.dBonus = data.dBonus;
+		initOffensiveTooltips();
 		TweenMax.set(DOM.targetLine, {
 			stroke: color[my.player]
 		});

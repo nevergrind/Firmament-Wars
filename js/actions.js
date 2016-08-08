@@ -361,7 +361,9 @@ var animate = {
 	},
 	artillery: function(box, playSound){
 		if (playSound){
-			audio.play('grenade5');
+			var a = [5, 6, 8];
+			var sfx = ~~(Math.random() * 3);
+			audio.play('grenade' + a[sfx]);
 		}
 		for (var i=0; i<15; i++){
 			(function(Math){
