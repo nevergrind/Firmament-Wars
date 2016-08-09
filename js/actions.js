@@ -133,7 +133,9 @@ var action = {
 			} else {
 				rem = my.manpower - deployedUnits;
 			}
-			game.tiles[my.tgt].units += deployedUnits;
+			console.log('deploy: ', t.units, deployedUnits);
+			game.tiles[my.tgt].units = t.units + deployedUnits;
+			console.info('deploy: ', game.tiles[my.tgt].units);
 			my.manpower = ~~rem;
 			// do it
 			DOM.manpower.textContent = my.manpower;
@@ -358,11 +360,23 @@ var action = {
 				defender: defender
 			}
 		}).done(function(data) {
+			setTimeout(function(){
+				$.ajax({
+					url: 'php/launchNukeHit.php',
+					data: {
+						defender: defender
+					}
+				}).done(function(data) {
+					console.info('launchNukeHit! ', data);
+					// animate attack
+					var e1 = document.getElementById('land' + defender),
+						box = e1.getBBox();
+				});
+			}, 8000);
+			setTimeout(function(){
+				animate.artillery(box, true);
+			}, 7000);
 			console.info('launchNuke', data);
-			// animate attack
-			var e1 = document.getElementById('land' + defender),
-				box = e1.getBBox();
-			animate.nuke(box, true);
 			if (data.production !== undefined){
 				setProduction(data);
 			}
@@ -437,7 +451,7 @@ var animate = {
 						TweenMax.to(this.target, .125, {
 							strokeWidth: 0,
 							attr: {
-								r: 7
+								r: 9
 							},
 							onComplete: function(){
 								this.target.parentNode.removeChild(this.target);
@@ -548,11 +562,15 @@ var animate = {
 		
 		
 	},
-	nuke: function(box, playSound){
+	nuke: function(box){
+		TweenMax.to('#test', 1, {
+			onComplete: function(){
+				updateTileDefense();
+				audio.play('bomb7');
+				animate.artillery(box, true);
+			}
+		});
 		
-		if (playSound){
-			audio.play('bomb7');
-		}
 	}
 }
 // key bindings

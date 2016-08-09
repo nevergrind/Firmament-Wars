@@ -219,6 +219,10 @@ a:hover{
 	color: #ffff00;
 	text-shadow: 2px 2px 0 #520;
 }
+.chat-alert{
+	color: #ff1a1a;
+	text-shadow: 2px 2px 0 #500;
+}
 .chat-food{
 	color: #8d0;
 	text-shadow: 2px 2px 0 #150;

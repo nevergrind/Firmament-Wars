@@ -9,7 +9,7 @@
 	$defender = new stdClass();
 	$defender->tile = $_POST['defender']*1;
 	
-	if ($_SESSION['production'] < 150){
+	if ($_SESSION['production'] < 600){
 		header('HTTP/1.1 500 Not enough energy!');
 		exit();
 	}
@@ -54,23 +54,11 @@
 		header('HTTP/1.1 500 You cannot fire artillery at allied territory!');
 		exit();
 	} else {
-		// artillery attack
-		$killedUnits = 5 + ($_SESSION['oBonus'] * 2) + round($defender->units * .15);
-		$defender->units = $defender->units - $killedUnits;
-		if (!$defender->flag || $defender->units < 1){
-			$defender->units = 1;
-		}
-		// update defender
-		$query = 'update fwTiles set units=? where tile=? and game=?';
-		$stmt = $link->prepare($query);
-		$stmt->bind_param('iii', $defender->units, $defender->tile, $_SESSION['gameId']);
-		$stmt->execute();
-		
-		$_SESSION['production'] -= 150;
+		$_SESSION['production'] -= 600;
 		$o->production = $_SESSION['production'];
 		// report to other players
-		$msg = '';
-		$data = 'missile|' . $defender->tile . '|' . $_SESSION['account'];
+		$msg = '<span class="chat-alert">Nuclear launch detected!</span>';
+		$data = 'nuke|' . $defender->tile . '|' . $_SESSION['account'];
 		$stmt = $link->prepare('insert into fwchat (`message`, `gameId`, `event`) values (?, ?, ?);');
 		$stmt->bind_param('sis', $msg, $_SESSION['gameId'], $data);
 		$stmt->execute();

@@ -267,6 +267,16 @@ function getGameState(){
 									box = e2.getBBox();
 								animate.missile(box, false);
 							}
+						} else if (z.event.indexOf('nuke') === 0){
+							console.warn("NUKE EVENT");
+							var a = z.event.split('|');
+							var tile = a[1];
+							var account = a[2];
+							var e2 = document.getElementById('land' + tile),
+								box = e2.getBBox();
+							setTimeout(function(){
+								animate.nuke(box, true);
+							}, 7000);
 						}
 					}
 				}
