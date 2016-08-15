@@ -269,14 +269,21 @@ function getGameState(){
 							}
 						} else if (z.event.indexOf('nuke') === 0){
 							console.warn("NUKE EVENT");
+							audio.play('warning');
 							var a = z.event.split('|');
 							var tile = a[1];
 							var account = a[2];
-							var e2 = document.getElementById('land' + tile),
-								box = e2.getBBox();
-							setTimeout(function(){
-								animate.nuke(box, true);
-							}, 7000);
+							if (my.account !== account){
+								var e2 = document.getElementById('land' + tile),
+									box = e2.getBBox();
+								setTimeout(function(){
+									// animate.nuke(box, true);
+								}, 7000);
+								setTimeout(function(){
+									animate.artillery(box, true);
+									// does nothing when finished
+								}, 8000);
+							}
 						}
 					}
 				}

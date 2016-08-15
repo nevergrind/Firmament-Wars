@@ -64,6 +64,7 @@
 	$_SESSION['productionReward'] = 0;
 	$_SESSION['gameStartTime'] = microtime(true);
 	$_SESSION['gameDuration'] = -1;
+	$_SESSION['nukesLaunched'] = 0;
 	
 	// init chat
 	$query = "select row from fwchat order by row desc limit 1";

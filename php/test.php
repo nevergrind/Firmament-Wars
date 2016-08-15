@@ -1,6 +1,5 @@
 <?php
 	session_start();
-	
 	require('values.php');
 	require('connect1.php');
 	

@@ -332,7 +332,8 @@ var audio = {
 				'grenade6',
 				'grenade8',
 				'missile7',
-				'bomb7'
+				'bomb7',
+				'warning'
 			];
 			for (var i=0, len=x.length; i<len; i++){
 				var z = x[i];

@@ -360,6 +360,8 @@ var action = {
 				defender: defender
 			}
 		}).done(function(data) {
+			var e1 = document.getElementById('land' + defender),
+				box = e1.getBBox();
 			setTimeout(function(){
 				$.ajax({
 					url: 'php/launchNukeHit.php',
@@ -367,14 +369,12 @@ var action = {
 						defender: defender
 					}
 				}).done(function(data) {
-					console.info('launchNukeHit! ', data);
-					// animate attack
-					var e1 = document.getElementById('land' + defender),
-						box = e1.getBBox();
+					animate.artillery(box, true);
+					// does nothing when finished
 				});
 			}, 8000);
 			setTimeout(function(){
-				animate.artillery(box, true);
+				// animate.nuke(box, true);
 			}, 7000);
 			console.info('launchNuke', data);
 			if (data.production !== undefined){
@@ -567,6 +567,7 @@ var animate = {
 			onComplete: function(){
 				updateTileDefense();
 				audio.play('bomb7');
+				// replace later with actual animation
 				animate.artillery(box, true);
 			}
 		});

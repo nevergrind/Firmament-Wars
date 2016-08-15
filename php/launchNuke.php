@@ -55,6 +55,7 @@
 		exit();
 	} else {
 		$_SESSION['production'] -= 600;
+		$_SESSION['nukesLaunched']++;
 		$o->production = $_SESSION['production'];
 		// report to other players
 		$msg = '<span class="chat-alert">Nuclear launch detected!</span>';
