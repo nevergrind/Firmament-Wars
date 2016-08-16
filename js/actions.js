@@ -369,12 +369,11 @@ var action = {
 						defender: defender
 					}
 				}).done(function(data) {
-					animate.artillery(box, true);
 					// does nothing when finished
 				});
 			}, 8000);
 			setTimeout(function(){
-				// animate.nuke(box, true);
+				animate.nuke(defender);
 			}, 7000);
 			console.info('launchNuke', data);
 			if (data.production !== undefined){
@@ -482,6 +481,7 @@ var animate = {
 				circ.setAttributeNS(null,"fill",'none');
 				circ.setAttributeNS(null,"stroke",animate.randomColor());
 				circ.setAttributeNS(null,"strokeWidth",'1');
+				circ.setAttributeNS(null,"class","no-point");
 				DOM.world.appendChild(circ);
 				
 				if (Math.random() > .3){
@@ -538,6 +538,7 @@ var animate = {
 			circ.setAttributeNS(null,"fill",animate.randomColor());
 			circ.setAttributeNS(null,"stroke",animate.randomColor());
 			circ.setAttributeNS(null,"strokeWidth",'1');
+			circ.setAttributeNS(null,"class","no-point");
 			DOM.world.appendChild(circ);
 			
 			TweenMax.to(circ, .1, {
@@ -562,16 +563,178 @@ var animate = {
 		
 		
 	},
-	nuke: function(box){
+	nuke: function(tile){
+		var e2 = document.getElementById('land' + tile),
+			box = e2.getBBox();
 		TweenMax.to('#test', 1, {
 			onComplete: function(){
 				updateTileDefense();
-				audio.play('bomb7');
-				// replace later with actual animation
-				animate.artillery(box, true);
+				audio.play('bomb9');
+				TweenMax.fromTo(DOM.screenFlash, 1.5, {
+					opacity: 1,
+					background: '#ffffff'
+				}, {
+					opacity: 0,
+					background: '#ff8800',
+					ease: Expo.easeOut
+				});
+				
+				animate.screenShake(32, 20, .016, true);
+				
+				var a = [];
+
+				for (var i=1; i<30; i++){
+					var x = box.x + box.width/2;
+					var y = box.y + box.height/2;
+					a[i] = document.createElementNS("http://www.w3.org/2000/svg","circle");
+					a[i].setAttributeNS(null,"cx",x);
+					a[i].setAttributeNS(null,"cy",y);
+					a[i].setAttributeNS(null,"class","no-point");
+					if (i === 1){
+						DOM.world.appendChild(a[i]);
+					} else {
+						DOM.world.insertBefore(a[i], a[i-1]);
+					}
+					if (i % 5 === 0){
+						  var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+						  svg.setAttributeNS(null, 'height', 256);
+						  svg.setAttributeNS(null, 'width', 256);
+						  svg.setAttributeNS(null,"x",x-128);
+						  svg.setAttributeNS(null,"y",y-128);
+						  svg.setAttributeNS(null,"class","no-point");
+						  svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/smoke.png');
+						  DOM.world.appendChild(svg);
+						  (function(svg){
+								TweenMax.to(svg, 8, {
+									startAt: {
+										transformOrigin: '50% 50%',
+										opacity: .5,
+										scale: 0
+									},
+									opacity: 0,
+									rotation: Math.random()*360-180,
+									scale: 2,
+									ease: Expo.easeOut,
+									onComplete: function(){
+										this.target.parentNode.removeChild(this.target);
+									}
+								});
+						  })(svg);
+					}
+					(function(i){
+						TweenMax.to(a[i], 1.5, {
+							startAt: {
+								opacity: 1,
+								strokeWidth: i/2,
+								fill: '#ffffff',
+								stroke: '#ffffff',
+								attr: {
+									r: i*1 + 20
+								}
+							},
+							attr: {
+							  r: i*2 + 20
+							},
+							fill: '#ffdd88',
+							fillOpacity: .5,
+							stroke: '#ff8800',
+							opacity: .125, 
+							strokeWidth: i,
+							onComplete: function(){
+								TweenMax.to(a[i], 8, {
+									transformOrigin: '50% 50%',
+									scale: 1.2,
+									fill: '#aaaaaa',
+									stroke: '#dddddd',
+									opacity: 0,
+									ease: Expo.easeOut,
+									onComplete: function(){
+										this.target.parentNode.removeChild(this.target);
+									}
+									
+								});
+							}
+						});
+					})(i);
+				}
 			}
 		});
 		
+	},
+	screenShake: function(count, d, interval, fade){
+		// number of shakes, distance of shaking, interval of shakes
+		var foo=0;
+		var M = Math;
+		(function doit(count,d,interval){
+			var d2 = d/2;
+			if (fade){
+				if (foo % 2 === 0){
+					d--;
+					if (d < 2){
+						d = 2;
+					}
+				}
+			}
+			if (isFirefox){
+				TweenMax.to(DOM.body, interval, {
+					x: ~~(M.random()*(d)-d2),
+					y: ~~(M.random()*(d)-d2),
+					onComplete:function(){
+						TweenMax.to(DOM.body, interval, {
+							x: ~~(M.random()*(d)-d2),
+							y: ~~(M.random()*(d)-d2),
+							onComplete:function(){
+								TweenMax.to(DOM.body, interval, {
+									x: ~~(M.random()*(d)-d2),
+									y: ~~(M.random()*(d)-d2),
+									onComplete:function(){
+										TweenMax.to(DOM.body, interval,{
+											x: 0,
+											y: 0,
+											onComplete: function(){
+												foo++;
+												if(foo < count){ 
+													doit(count,d,interval); 
+												}
+											}
+										});
+									}
+								});
+							}
+						});
+					}
+				});
+			} else {
+				TweenMax.to(DOM.body, interval, {
+					left: ~~(M.random()*(d)-d2),
+					top: ~~(M.random()*(d)-d2),
+					onComplete:function(){
+						TweenMax.to(DOM.body, interval, {
+							left: ~~(M.random()*(d)-d2),
+							top: ~~(M.random()*(d)-d2),
+							onComplete:function(){
+								TweenMax.to(DOM.body, interval, {
+									left: ~~(M.random()*(d)-d2),
+									top: ~~(M.random()*(d)-d2),
+									onComplete:function(){
+										TweenMax.to(DOM.body, interval,{
+											left: 0,
+											top: 0,
+											onComplete: function(){
+												foo++;
+												if(foo < count){ 
+													doit(count,d,interval); 
+												}
+											}
+										});
+									}
+								});
+							}
+						});
+					}
+				});
+			}
+		})(count,d,interval);
 	}
 }
 // key bindings

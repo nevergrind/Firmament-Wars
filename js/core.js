@@ -96,6 +96,7 @@ var timer = {
 }
 
 var DOM = {
+	body: document.getElementById('body'),
 	food: document.getElementById('food'),
 	production: document.getElementById('production'),
 	culture: document.getElementById('culture'),
@@ -129,7 +130,8 @@ var DOM = {
 	buildWord: document.getElementById('buildWord'),
 	buildCost: document.getElementById('buildCost'),
 	upgradeTileDefense: document.getElementById('upgradeTileDefense'),
-	upgradeTileComplete: document.getElementById('upgradeTileComplete')
+	upgradeTileComplete: document.getElementById('upgradeTileComplete'),
+	screenFlash: document.getElementById('screenFlash')
 }
 var $DOM = {
 	head: $("#head"),
@@ -332,7 +334,7 @@ var audio = {
 				'grenade6',
 				'grenade8',
 				'missile7',
-				'bomb7',
+				'bomb9',
 				'warning'
 			];
 			for (var i=0, len=x.length; i<len; i++){

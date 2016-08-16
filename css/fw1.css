@@ -259,6 +259,15 @@ a:hover{
 	background: rgba(0,0,0,.3);
 	border: 1px solid rgba(192,240,255,.2);
 }
+#screenFlash{
+	position: absolute;
+	background: '#ffffff';
+	width: 1024px;
+	height: 768px;
+	z-index: 4999;
+	opacity: 0;
+	pointer-events: none;
+}
 #wrap-ui{
 	position: absolute;
 	bottom: 0%;
@@ -976,6 +985,9 @@ table {
 	display: none;
 }
 /* helper classes */
+.no-point{
+	pointer-events: none;
+}
 .nowrap{
 	white-space: nowrap;
 	overflow: hidden;
@@ -1076,6 +1088,7 @@ input[type=number]::-webkit-outer-spin-button {
 .crosshair{
 	cursor: crosshair;
 }
+/* media queries */
 @media all and (min-width: 1024px){
 	body { 
 		font-size: 1.5em; 

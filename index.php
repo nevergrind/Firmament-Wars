@@ -472,6 +472,7 @@
 	<audio id="bgmusic" autoplay loop preload="auto"></audio>
 	
 	<div id="Msg" class="shadow4"></div>
+	<div id="screenFlash"></div>
 	<div id="overlay" class="portal"></div>
 </body>
 <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>

@@ -274,14 +274,10 @@ function getGameState(){
 							var tile = a[1];
 							var account = a[2];
 							if (my.account !== account){
-								var e2 = document.getElementById('land' + tile),
-									box = e2.getBBox();
 								setTimeout(function(){
-									// animate.nuke(box, true);
+									animate.nuke(tile);
 								}, 7000);
 								setTimeout(function(){
-									animate.artillery(box, true);
-									// does nothing when finished
 								}, 8000);
 							}
 						}

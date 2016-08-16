@@ -226,7 +226,6 @@ function joinStartedGame(){
 			svg.setAttributeNS(null,"y",y);
 			svg.setAttributeNS(null,"class","mapFlag");
 			svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/flags/'+flag);
-			svg.setAttributeNS(null, 'height', 24);
 			document.getElementById('mapFlagWrap').appendChild(svg);
 		}
 		
@@ -332,6 +331,20 @@ function joinStartedGame(){
 		(function repeat(){
 			// delayed to allow svg to load
 			if ($("#world").length > 0){
+				
+				//load map
+				
+				/*
+				  $.ajax({
+					type: 'GET',
+					url: 'images/world_simple3.svg'
+				  }).done(function(data){
+					console.info('test: ', data);
+				  }).fail(function(err){
+					console.warn('fail', err);
+					$("#worldWrap").html(err.responseText);
+				  });
+				*/
 				try {
 					worldMap = Draggable.create("#worldWrap", {
 						bounds: "#gameWrap",
@@ -497,7 +510,7 @@ function startGame(d){
 	}
 }
 function lobbyCountdown(){
-	new Audio('sound/missile1.mp3');
+	new Audio('sound/beepHi.mp3');
 	var loadTime = Date.now() - g.startTime; 
 	if (loadTime < 1000){
 		joinStartedGame(); // page refresh
@@ -511,7 +524,7 @@ function lobbyCountdown(){
 				audio.play('beep');
 				setTimeout(repeat, 1000, secondsToStart);
 			} else {
-				audio.play('missile1');
+				audio.play('beepHi');
 				audio.load.game();
 			}
 			if (secondsToStart === 1){
