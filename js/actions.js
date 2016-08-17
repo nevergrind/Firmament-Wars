@@ -91,12 +91,10 @@ var action = {
 			console.info('attackTile', data);
 			// animate attack
 			if (game.tiles[defender].player !== my.player){
-				var e1 = document.getElementById('land' + defender),
-					box = e1.getBBox();
 				if (!game.tiles[defender].units){
 					audio.move();
 				} else {
-					animate.explosion(box, true);
+					animate.explosion(defender, true);
 				}
 			} else {
 				audio.move();
@@ -264,10 +262,7 @@ var action = {
 			}
 		}).done(function(data) {
 			console.info('fireArtillery', data);
-			// animate attack
-			var e1 = document.getElementById('land' + defender),
-				box = e1.getBBox();
-			animate.artillery(box, true);
+			animate.artillery(defender, true);
 			if (data.production !== undefined){
 				setProduction(data);
 			}
@@ -420,7 +415,9 @@ var animate = {
 		}
 		return c;
 	},
-	explosion: function(box, playSound){
+	explosion: function(tile, playSound){
+		var e1 = document.getElementById('land' + tile),
+			box = e1.getBBox();
 		var sfx = ~~(Math.random()*9);
 		var delay = [.5, .5, .33, .33, .33, .33, .8, .33, .66, .4];
 		if (playSound){
@@ -464,7 +461,9 @@ var animate = {
 	upgrade: function(){
 		audio.play('build');
 	},
-	artillery: function(box, playSound){
+	artillery: function(tile, playSound){
+		var e1 = document.getElementById('land' + tile),
+			box = e1.getBBox();
 		if (playSound){
 			var a = [5, 6, 8];
 			var sfx = ~~(Math.random() * 3);
@@ -523,7 +522,7 @@ var animate = {
 			})(Math);
 		}
 	},
-	missile: function(box, playSound){
+	missile: function(tile, playSound){
 		if (playSound){
 			audio.play('missile7');
 		}
@@ -624,7 +623,7 @@ var animate = {
 					(function(i){
 						TweenMax.to(a[i], 1.5, {
 							startAt: {
-								opacity: 1,
+								opacity: .8,
 								strokeWidth: i/2,
 								fill: '#ffffff',
 								stroke: '#ffffff',
@@ -675,65 +674,34 @@ var animate = {
 					}
 				}
 			}
-			if (isFirefox){
-				TweenMax.to(DOM.body, interval, {
-					x: ~~(M.random()*(d)-d2),
-					y: ~~(M.random()*(d)-d2),
-					onComplete:function(){
-						TweenMax.to(DOM.body, interval, {
-							x: ~~(M.random()*(d)-d2),
-							y: ~~(M.random()*(d)-d2),
-							onComplete:function(){
-								TweenMax.to(DOM.body, interval, {
-									x: ~~(M.random()*(d)-d2),
-									y: ~~(M.random()*(d)-d2),
-									onComplete:function(){
-										TweenMax.to(DOM.body, interval,{
-											x: 0,
-											y: 0,
-											onComplete: function(){
-												foo++;
-												if(foo < count){ 
-													doit(count,d,interval); 
-												}
+			TweenMax.to(DOM.world, interval, {
+				x: ~~(M.random()*(d)-d2),
+				y: ~~(M.random()*(d)-d2),
+				onComplete:function(){
+					TweenMax.to(DOM.world, interval, {
+						x: ~~(M.random()*(d)-d2),
+						y: ~~(M.random()*(d)-d2),
+						onComplete:function(){
+							TweenMax.to(DOM.world, interval, {
+								x: ~~(M.random()*(d)-d2),
+								y: ~~(M.random()*(d)-d2),
+								onComplete:function(){
+									TweenMax.to(DOM.world, interval,{
+										x: 0,
+										y: 0,
+										onComplete: function(){
+											foo++;
+											if(foo < count){ 
+												doit(count,d,interval); 
 											}
-										});
-									}
-								});
-							}
-						});
-					}
-				});
-			} else {
-				TweenMax.to(DOM.body, interval, {
-					left: ~~(M.random()*(d)-d2),
-					top: ~~(M.random()*(d)-d2),
-					onComplete:function(){
-						TweenMax.to(DOM.body, interval, {
-							left: ~~(M.random()*(d)-d2),
-							top: ~~(M.random()*(d)-d2),
-							onComplete:function(){
-								TweenMax.to(DOM.body, interval, {
-									left: ~~(M.random()*(d)-d2),
-									top: ~~(M.random()*(d)-d2),
-									onComplete:function(){
-										TweenMax.to(DOM.body, interval,{
-											left: 0,
-											top: 0,
-											onComplete: function(){
-												foo++;
-												if(foo < count){ 
-													doit(count,d,interval); 
-												}
-											}
-										});
-									}
-								});
-							}
-						});
-					}
-				});
-			}
+										}
+									});
+								}
+							});
+						}
+					});
+				}
+			});
 		})(count,d,interval);
 	}
 }

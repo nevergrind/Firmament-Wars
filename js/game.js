@@ -209,9 +209,8 @@ function getGameState(){
 						});
 						// animate other players' attacks
 						if (d.player !== my.player && game.tiles[i].units){
-							var box = e1.getBBox();
 							if (d.units){
-								animate.explosion(box, false);
+								animate.explosion(i, false);
 							}
 						}
 					}
@@ -254,9 +253,7 @@ function getGameState(){
 							var tile = a[1];
 							var account = a[2];
 							if (my.account !== account){
-								var e2 = document.getElementById('land' + tile),
-									box = e2.getBBox();
-								animate.artillery(box, false);
+								animate.artillery(tile, false);
 							}
 						} else if (z.event.indexOf('missile') === 0){
 							var a = z.event.split('|');

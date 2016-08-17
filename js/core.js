@@ -96,7 +96,6 @@ var timer = {
 }
 
 var DOM = {
-	body: document.getElementById('body'),
 	food: document.getElementById('food'),
 	production: document.getElementById('production'),
 	culture: document.getElementById('culture'),
