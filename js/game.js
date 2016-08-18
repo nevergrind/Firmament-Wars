@@ -265,18 +265,42 @@ function getGameState(){
 								animate.missile(box, false);
 							}
 						} else if (z.event.indexOf('nuke') === 0){
-							console.warn("NUKE EVENT");
 							audio.play('warning');
 							var a = z.event.split('|');
 							var tile = a[1];
 							var account = a[2];
+							// red dot
+							var e3 = document.getElementById('unit' + tile),
+								box = e3.getBBox();
+							var dot = document.createElementNS("http://www.w3.org/2000/svg","ellipse");
+							var x = box.x;
+							var y = box.y;
+							dot.setAttributeNS(null,"cx",x+ (box.width/2) + (Math.random()*12-6));
+							dot.setAttributeNS(null,"cy",y+ (box.height/2) + (Math.random()*12-6));
+							dot.setAttributeNS(null,"rx",2);
+							dot.setAttributeNS(null,"ry",1);
+							dot.setAttributeNS(null,"fill",'red');
+							dot.setAttributeNS(null,"stroke",'none');
+							DOM.world.appendChild(dot);
+							// animate and remove
+							TweenMax.to(dot, .1, {
+								startAt: {
+									opacity: 1
+								},
+								fill: '#880000',
+								ease: SteppedEase.config(1),
+								repeat: -1,
+								yoyo: true
+							});
+							setTimeout(function(){
+								dot.parentNode.removeChild(dot);
+							}, 7000);
 							if (my.account !== account){
 								setTimeout(function(){
 									animate.nuke(tile);
 								}, 7000);
-								setTimeout(function(){
-								}, 8000);
 							}
+							
 						}
 					}
 				}

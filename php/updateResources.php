@@ -83,27 +83,30 @@
 			if ($_SESSION['manpower'] > 999){
 				$_SESSION['manpower'] = 999;
 			}
-			// write GET to chat
-			$flag = $_SESSION['flag'] === 'Default.jpg' ? 
-				'<img src="images/flags/Player'.$_SESSION['player'].'.jpg" class="player'.$_SESSION['player'].' p'.$_SESSION['player'].'b inlineFlag">' :
-				'<img src="images/flags/'.$_SESSION['flag'].'" class="player'.$_SESSION['player'].' p'.$_SESSION['player'].'b inlineFlag">';
+			
 			$msg = '';
-			if ($bonus->img){
-				$msg .= '<img src="'. $bonus->img .'" class="chat-img"><div class="chat-manpower">'. $bonus->msg .'!</div>';
-			}
 			if ($bonus->units){
-				$msg .= $flag.$x->get . ': ' . $_SESSION["nation"] . ' receives <span class="chat-manpower">' . $manpowerBonus . '+' . $bonus->units . 
-				'</span> armies!';
-			} else {
-				$msg .= $flag.$x->get . ': ' . $_SESSION['nation'] . ' receives <span class="chat-manpower">' . $manpowerBonus . '</span> armies!';
+				// write GET to chat
+				$flag = $_SESSION['flag'] === 'Default.jpg' ? 
+					'<img src="images/flags/Player'.$_SESSION['player'].'.jpg" class="player'.$_SESSION['player'].' p'.$_SESSION['player'].'b inlineFlag">' :
+					'<img src="images/flags/'.$_SESSION['flag'].'" class="player'.$_SESSION['player'].' p'.$_SESSION['player'].'b inlineFlag">';
+				if ($bonus->img){
+					$msg .= '<img src="'. $bonus->img .'" class="chat-img"><div class="chat-manpower">'. $bonus->msg .'!</div>';
+				}
+				if ($bonus->units){
+					$msg .= $flag.$x->get . ': ' . $_SESSION["nation"] . ' receives <span class="chat-manpower">' . $manpowerBonus . '+' . $bonus->units . 
+					'</span> armies!';
+				} else {
+					$msg .= $flag.$x->get . ': ' . $_SESSION['nation'] . ' receives <span class="chat-manpower">' . $manpowerBonus . '</span> armies!';
+				}
+				$foodAccount = 'food|' . $_SESSION['account'];
+				$stmt = $link->prepare('insert into fwchat (`message`, `gameId`, `event`) values (?, ?, ?);');
+				$stmt->bind_param('sis', $msg, $_SESSION['gameId'], $foodAccount);
+				$stmt->execute();
+			
+				mysqli_query($link, 'delete from fwchat where timestamp < date_sub(now(), interval 20 second)');
 			}
 			$x->foodMsg = $msg;
-			$foodAccount = 'food|' . $_SESSION['account'];
-			$stmt = $link->prepare('insert into fwchat (`message`, `gameId`, `event`) values (?, ?, ?);');
-			$stmt->bind_param('sis', $msg, $_SESSION['gameId'], $foodAccount);
-			$stmt->execute();
-			
-			mysqli_query($link, 'delete from fwchat where timestamp < date_sub(now(), interval 20 second)');
 		}
 		// culture milestone
 		if ($x->culture >= $_SESSION['cultureMax']){

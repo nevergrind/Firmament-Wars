@@ -255,7 +255,7 @@ var audio = {
 		return !!a.canPlayType ? true : false;
 	})(document.createElement('audio')),
 	play: function(foo, bg){
-		if (foo && audio.on) {
+		if (foo && audio.ext === 'mp3') {
 			if (bg){
 				DOM.bgmusic.src = "music/" + foo + "." + audio.ext;
 			} else {
@@ -269,17 +269,21 @@ var audio = {
 	ambientTrack: 0,
 	ambientTotalTracks: 8,
 	ambientInit: function(){
-		audio.pause();
-		audio.ambientTrack = ~~(Math.random() * audio.ambientTotalTracks);
-		audio.ambientPlay();
-	},
-	ambientPlay: function(){
-		audio.ambientTrack++;
-		var x = new Audio("music/ambient" + (audio.ambientTrack % audio.ambientTotalTracks) + "." + audio.ext);
-		x.onended = function(){
+		if (audio.ext === 'mp3'){
+			audio.pause();
+			audio.ambientTrack = ~~(Math.random() * audio.ambientTotalTracks);
 			audio.ambientPlay();
 		}
-		x.play();
+	},
+	ambientPlay: function(){
+		if (audio.ext === 'mp3'){
+			audio.ambientTrack++;
+			var x = new Audio("music/ambient" + (audio.ambientTrack % audio.ambientTotalTracks) + "." + audio.ext);
+			x.onended = function(){
+				audio.ambientPlay();
+			}
+			x.play();
+		}
 	},
 	fade: function(){
 		var x = {
@@ -299,46 +303,49 @@ var audio = {
 	cache: {},
 	load: {
 		title: function(){
-			var x = [
-				'click', 
-				'beep'
-			];
-			for (var i=0, len=x.length; i<len; i++){
-				var z = x[i];
-				audio.cache[z] = new Audio("sound/" + z + ".mp3");
+			if (audio.ext === 'mp3'){
+				var x = [
+					'click', 
+					'beep'
+				];
+				for (var i=0, len=x.length; i<len; i++){
+					var z = x[i];
+					audio.cache[z] = new Audio("sound/" + z + ".mp3");
+				}
 			}
-			
 		},
 		game: function(){
-			var x = [
-				'machine0',
-				'machine1',
-				'machine2',
-				'machine3',
-				'machine4',
-				'machine5',
-				'machine6',
-				'machine7',
-				'machine8',
-				'machine9',
-				'boots0',
-				'boots1',
-				'boots2',
-				'chat', 
-				'food', 
-				'culture',
-				'error',
-				'build',
-				'grenade5',
-				'grenade6',
-				'grenade8',
-				'missile7',
-				'bomb9',
-				'warning'
-			];
-			for (var i=0, len=x.length; i<len; i++){
-				var z = x[i];
-				audio.cache[z] = new Audio("sound/" + z + ".mp3");
+			if (audio.ext === 'mp3'){
+				var x = [
+					'machine0',
+					'machine1',
+					'machine2',
+					'machine3',
+					'machine4',
+					'machine5',
+					'machine6',
+					'machine7',
+					'machine8',
+					'machine9',
+					'boots0',
+					'boots1',
+					'boots2',
+					'chat', 
+					'food', 
+					'culture',
+					'error',
+					'build',
+					'grenade5',
+					'grenade6',
+					'grenade8',
+					'missile7',
+					'bomb9',
+					'warning'
+				];
+				for (var i=0, len=x.length; i<len; i++){
+					var z = x[i];
+					audio.cache[z] = new Audio("sound/" + z + ".mp3");
+				}
 			}
 		}
 	}
