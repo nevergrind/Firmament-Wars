@@ -148,6 +148,10 @@ function joinStartedGame(){
 		audio.ambientInit();
 		var focusTile = 0;
 		console.info('initGameState ', data);
+		if (location.hostname === 'localhost'){
+			audio.load.game();
+			video.load.game();
+		}
 		my.player = data.player;
 		my.account = data.account;
 		my.oBonus = data.oBonus;
@@ -526,6 +530,7 @@ function lobbyCountdown(){
 			} else {
 				audio.play('beepHi');
 				audio.load.game();
+				video.load.game();
 			}
 			if (secondsToStart === 1){
 				TweenMax.to('#mainWrap', 2.5, {

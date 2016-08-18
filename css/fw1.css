@@ -613,6 +613,9 @@ text{
 	stroke-linejoin: round;
 	paint-order: stroke;
 }
+#motionPath{
+	visibility: hidden;
+}
 #targetLine{
 	visibility: hidden;
 	stroke-width: 3;

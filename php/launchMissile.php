@@ -13,28 +13,20 @@
 		header('HTTP/1.1 500 Not enough energy!');
 		exit();
 	}
-	$query = 'select tile, tileName, nation, flag, units, player, account from fwTiles where (tile=? or tile=?) and game=? limit 2';
+	$query = 'select tile, units, account from fwTiles where (tile=? or tile=?) and game=? limit 2';
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('iii', $attacker->tile, $defender->tile, $_SESSION['gameId']);
 	$stmt->execute();
-	$stmt->bind_result($tile, $tileName, $nation, $flag, $units, $player, $account);
+	$stmt->bind_result($tile, $units, $account);
 	
 	while($stmt->fetch()){
 		if ($attacker->tile === $tile){
 			$attacker->tile = $tile;
-			$attacker->tileName = $tileName;
-			$attacker->nation = $nation;
-			$attacker->flag = $flag;
 			$attacker->units = $units;
-			$attacker->player = $player;
 			$attacker->account = $account;
 		} else {
 			$defender->tile = $tile;
-			$defender->tileName = $tileName;
-			$defender->nation = $nation;
-			$defender->flag = $flag;
 			$defender->units = $units;
-			$defender->player = $player;
 			$defender->account = $account;
 		}
 	}
@@ -43,8 +35,7 @@
 		exit();
 	}
 	
-	$originalDefendingUnits = $defender->units;
-	if ($originalDefendingUnits === 0){
+	if ($defender->units === 0){
 		// cannot use artillery on undiscovered territory
 		header('HTTP/1.1 500 There\'s nobody to shoot at!');
 		exit();
@@ -54,23 +45,12 @@
 		header('HTTP/1.1 500 You cannot fire artillery at allied territory!');
 		exit();
 	} else {
-		// artillery attack
-		$killedUnits = 5 + ($_SESSION['oBonus'] * 2) + round($defender->units * .15);
-		$defender->units = $defender->units - $killedUnits;
-		if (!$defender->flag || $defender->units < 1){
-			$defender->units = 1;
-		}
-		// update defender
-		$query = 'update fwTiles set units=? where tile=? and game=?';
-		$stmt = $link->prepare($query);
-		$stmt->bind_param('iii', $defender->units, $defender->tile, $_SESSION['gameId']);
-		$stmt->execute();
-		
+		$_SESSION['missilesLaunched']++;
 		$_SESSION['production'] -= 150;
 		$o->production = $_SESSION['production'];
-		// report to other players
+		// report & animate launch
 		$msg = '';
-		$data = 'missile|' . $defender->tile . '|' . $_SESSION['account'];
+		$data = 'missile|' . $attacker->tile . '|' . $defender->tile . '|' . $_SESSION['account'];
 		$stmt = $link->prepare('insert into fwchat (`message`, `gameId`, `event`) values (?, ?, ?);');
 		$stmt->bind_param('sis', $msg, $_SESSION['gameId'], $data);
 		$stmt->execute();

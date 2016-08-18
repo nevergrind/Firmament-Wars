@@ -14,7 +14,7 @@
 	}
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head id='head'>
 	<title>Firmament Wars | Grand Strategy Warfare</title>
 	<meta charset="utf-8">

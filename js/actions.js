@@ -45,8 +45,8 @@ var action = {
 			$DOM.head.append('<style>.land{ cursor: crosshair; }</style>');
 			// set target line
 			var e = document.getElementById('unit' + my.tgt);
-			my.targetLine[0] = e.getAttribute('x')*1;
-			my.targetLine[1] = e.getAttribute('y')*1;
+			my.targetLine[0] = e.getAttribute('x')*1 - 10;
+			my.targetLine[1] = e.getAttribute('y')*1 - 10;
 			showTarget(my.lastTarget, true);
 		}
 	},
@@ -309,12 +309,27 @@ var action = {
 		}).done(function(data) {
 			console.info('launchMissile', data);
 			// animate attack
-			var e1 = document.getElementById('land' + defender),
-				box = e1.getBBox();
-			animate.missile(box, true);
 			if (data.production !== undefined){
 				setProduction(data);
 			}
+			setTimeout(function(){
+				$.ajax({
+					url: 'php/launchMissileHit.php',
+					data: {
+						attacker: attacker,
+						defender: defender
+					}
+				}).done(function(data) {
+					console.info('Missile Hit!', data);
+				}).fail(function(e){
+					console.info('error: ', e);
+					if (e.statusText){
+						Msg(e.statusText, 1.5);
+					}
+				});
+			}, 2000);
+			
+			
 		}).fail(function(e){
 			console.info('error: ', e);
 			audio.play('error');
@@ -522,45 +537,139 @@ var animate = {
 			})(Math);
 		}
 	},
-	missile: function(tile, playSound){
+	missile: function(attacker, defender, playSound){
 		if (playSound){
 			audio.play('missile7');
 		}
+		var e2 = document.getElementById('unit' + attacker),
+			boxA = e2.getBBox(),
+			x1 = boxA.x + boxA.width/2,
+			y1 = boxA.y + boxA.height/2,
+			e3 = document.getElementById('unit' + defender),
+			boxB = e3.getBBox(),
+			x2 = boxB.x + boxB.width/2,
+			y2 = boxB.y + boxB.height/2;
+		// get missile line coordinates
+		my.motionPath[0] = e2.getAttribute('x')*1 - 10;
+		my.motionPath[1] = e2.getAttribute('y')*1 - 10;
+		my.motionPath[4] = e3.getAttribute('x')*1 - 10;
+		my.motionPath[5] = e3.getAttribute('y')*1 - 10;
+		my.motionPath[2] = (my.motionPath[0] + my.motionPath[4]) / 2;
+		my.motionPath[3] = ((my.motionPath[1] + my.motionPath[5]) / 2) - 50;
+		TweenMax.set(DOM.motionPath, {
+			attr: {
+				d: "M " + my.motionPath[0] +","+ my.motionPath[1] + 
+					" Q " + my.motionPath[2] +" "+ my.motionPath[3] + " " 
+					+ my.motionPath[4] +" "+ my.motionPath[5]
+			}
+		});
+		var path = MorphSVGPlugin.pathDataToBezier('#motionPath', {
+			align: 'relative'
+		});
+		// create missile 591 93
+		var mis = document.createElementNS("http://www.w3.org/2000/svg", "image");
+		mis.setAttributeNS(null,"width",30);
+		mis.setAttributeNS(null,"height",5);
+		mis.setAttributeNS(null,"x",x1);
+		mis.setAttributeNS(null,"y",y1);
+		mis.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", "images/missile.png");
+		mis.setAttributeNS(null,"class","no-point");
+		DOM.world.appendChild(mis);
 		
-		(function(Math){
-			var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
-			var x = box.x + (Math.random() * (box.width * .8)) + box.width * .1;
-			var y = box.y + (Math.random() * (box.height * .8)) + box.height * .1;
-			circ.setAttributeNS(null,"cx",x);
-			circ.setAttributeNS(null,"cy",y);
-			circ.setAttributeNS(null,"r",3);
-			circ.setAttributeNS(null,"fill",animate.randomColor());
-			circ.setAttributeNS(null,"stroke",animate.randomColor());
-			circ.setAttributeNS(null,"strokeWidth",'1');
-			circ.setAttributeNS(null,"class","no-point");
-			DOM.world.appendChild(circ);
-			
-			TweenMax.to(circ, .1, {
-				delay: Math.random() * .125,
-				startAt:{
-					opacity: 1
-				},
-				strokeWidth: 15,
-				onComplete: function(){
-					TweenMax.to(this.target, .25, {
-						strokeWidth: 0,
-						attr: {
-							r: 21
+		var count = 0;
+		TweenMax.to(mis, 1.5, {
+			startAt:{
+				opacity: 1,
+				xPercent: -50,
+				yPercent: -50
+			},
+			bezier: {
+				values: path,
+				type: 'cubic',
+				curviness: 1.5,
+				autoRotate: true
+			},
+			ease: Power2.easeIn,
+			onUpdate: function(){
+				count++;
+				if (count % 5 === 0){
+					var x = x1 + mis._gsTransform.x;
+					var y = y1 + mis._gsTransform.y;
+					var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+					svg.setAttributeNS(null, 'height', 40);
+					svg.setAttributeNS(null, 'width', 40);
+					svg.setAttributeNS(null,"x",x-20);
+					svg.setAttributeNS(null,"y",y-20);
+					svg.setAttributeNS(null,"class","no-point");
+					svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/smoke.png');
+					DOM.world.appendChild(svg);
+					TweenMax.to(svg, .5, {
+						startAt: {
+							transformOrigin: '50% 50%',
+							opacity: 0
 						},
+						opacity: 1,
+						scale: 1.5,
+						ease: Power3.easeOut,
 						onComplete: function(){
-							this.target.parentNode.removeChild(this.target);
+							TweenMax.to(this.target, .5, {
+								opacity: 0,
+								scale: 2,
+								ease: Linear.easeNone,
+								onComplete: function(){
+									this.target.parentNode.removeChild(this.target);
+								}
+							});
 						}
 					});
 				}
-			});
-		})(Math);
-		
-		
+			},
+			onComplete: function(){
+				this.target.parentNode.removeChild(this.target);
+				animate.missileExplosion(defender);
+			}
+		});
+	},
+	missileExplosion: function(tile){
+		var e1 = document.getElementById('unit' + tile),
+			box = e1.getBBox(),
+			a = [5, 6, 8],
+			sfx = ~~(Math.random() * 3);
+		audio.play('grenade' + a[sfx]);
+		for (var i=0; i<15; i++){
+			(function(Math){
+				var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
+				var x = box.x + Math.random() * 50 - 25;
+				var y = box.y + Math.random() * 50 - 25;
+				circ.setAttributeNS(null,"cx",x);
+				circ.setAttributeNS(null,"cy",y);
+				circ.setAttributeNS(null,"r",1);
+				circ.setAttributeNS(null,"fill",'none');
+				circ.setAttributeNS(null,"stroke",animate.randomColor());
+				circ.setAttributeNS(null,"strokeWidth",'1');
+				circ.setAttributeNS(null,"class","no-point");
+				DOM.world.appendChild(circ);
+				
+				TweenMax.to(circ, .1, {
+					delay: Math.random() * .25,
+					startAt:{
+						opacity: 1
+					},
+					strokeWidth: 25,
+					onComplete: function(){
+						TweenMax.to(this.target, .25, {
+							strokeWidth: 0,
+							attr: {
+								r: 35
+							},
+							onComplete: function(){
+								this.target.parentNode.removeChild(this.target);
+							}
+						});
+					}
+				});
+			})(Math);
+		}
 	},
 	nuke: function(tile){
 		var e2 = document.getElementById('unit' + tile),
@@ -592,9 +701,9 @@ var animate = {
 		});
 		// drop bomb svg
 		var bomb = document.createElementNS("http://www.w3.org/2000/svg","image");
-		bomb.setAttributeNS("http://www.w3.org/1999/xlink","href","images/nuke.svg");
-		bomb.setAttributeNS(null,"width",12);
-		bomb.setAttributeNS(null,"height",9);
+		bomb.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","images/nuke.png");
+		bomb.setAttributeNS(null,"width",16);
+		bomb.setAttributeNS(null,"height",12);
 		bomb.setAttributeNS(null,"x",x-6);
 		bomb.setAttributeNS(null,"y",y-768);
 		DOM.world.appendChild(bomb);
@@ -630,6 +739,7 @@ var animate = {
 					a[i] = document.createElementNS("http://www.w3.org/2000/svg","circle");
 					a[i].setAttributeNS(null,"cx",x);
 					a[i].setAttributeNS(null,"cy",y);
+					a[i].setAttributeNS(null,"r",.1);
 					a[i].setAttributeNS(null,"class","no-point");
 					if (i === 1){
 						DOM.world.appendChild(a[i]);

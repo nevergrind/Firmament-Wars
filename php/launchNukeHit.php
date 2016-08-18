@@ -8,6 +8,7 @@
 	$defender->tile = $_POST['defender']*1;
 	
 	if ($_SESSION['nukesLaunched'] > 0){
+		$_SESSION['nukesLaunched']--;
 		
 		$query = 'select tile, tileName, nation, flag, units, player, account from fwTiles where tile=? and game=?';
 		$stmt = $link->prepare($query);

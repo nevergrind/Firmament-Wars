@@ -107,7 +107,6 @@ function showTarget(e, hover){
 				visibility: 'visible',
 				attr: {
 					d: "M " + my.targetLine[0] +","+ my.targetLine[1] + " "
-							// " Q " + my.targetLine[2] +" "+ (my.targetLine[3] + 150) + " " 
 							+ my.targetLine[4] +","+ my.targetLine[5]
 				}
 			});
@@ -249,32 +248,29 @@ function getGameState(){
 							// fetch updated tile defense data
 							updateTileDefense();
 						} else if (z.event.indexOf('artillery') === 0){
-							var a = z.event.split('|');
-							var tile = a[1];
-							var account = a[2];
+							var a = z.event.split('|'),
+								tile = a[1],
+								account = a[2];
 							if (my.account !== account){
 								animate.artillery(tile, false);
 							}
 						} else if (z.event.indexOf('missile') === 0){
-							var a = z.event.split('|');
-							var tile = a[1];
-							var account = a[2];
-							if (my.account !== account){
-								var e2 = document.getElementById('land' + tile),
-									box = e2.getBBox();
-								animate.missile(box, false);
-							}
+							var a = z.event.split('|'),
+								attacker = a[1],
+								defender = a[2],
+								account = a[3];
+							animate.missile(attacker, defender, true);
 						} else if (z.event.indexOf('nuke') === 0){
 							audio.play('warning');
-							var a = z.event.split('|');
-							var tile = a[1];
-							var account = a[2];
-							// red dot
-							var e3 = document.getElementById('unit' + tile),
+							var a = z.event.split('|'),
+								tile = a[1],
+								account = a[2],
+								e3 = document.getElementById('unit' + tile),
 								box = e3.getBBox();
-							var dot = document.createElementNS("http://www.w3.org/2000/svg","ellipse");
-							var x = box.x;
-							var y = box.y;
+								dot = document.createElementNS("http://www.w3.org/2000/svg","ellipse"),
+								x = box.x,
+								y = box.y;
+							// red dot
 							dot.setAttributeNS(null,"cx",x+ (box.width/2) + (Math.random()*12-6));
 							dot.setAttributeNS(null,"cy",y+ (box.height/2) + (Math.random()*12-6));
 							dot.setAttributeNS(null,"rx",2);

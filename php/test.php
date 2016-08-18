@@ -3,6 +3,9 @@
 	require('values.php');
 	require('connect1.php');
 	
+	$_SESSION['production'] = 99999;
+	$_SESSION['missilesLaunched'] = 0;
+	
 	$gameDuration = microtime(true) - $_SESSION['gameDuration'];
 	echo 'gameDuration: ' . $gameDuration . '<br>';
 	$gameStartTime = 6 + ($_SESSION['resourceTick'] * 5);

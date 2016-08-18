@@ -66,6 +66,7 @@ var my = {
 	sumCulture: 0,
 	flag: "",
 	targetLine: [0,0,0,0,0,0],
+	motionPath: [0,0,0,0,0,0],
 	attackOn: false,
 	splitAttack: false,
 	targetData: {},
@@ -108,6 +109,7 @@ var DOM = {
 	sumCulture: document.getElementById("sumCulture"),
 	chatContent: document.getElementById("chat-content"),
 	chatInput: document.getElementById("chat-input"),
+	motionPath: document.getElementById('motionPath'),
 	targetLine: document.getElementById('targetLine'),
 	targetLineShadow: document.getElementById('targetLineShadow'),
 	targetCrosshair: document.getElementById('targetCrosshair'),
@@ -207,6 +209,15 @@ function resizeWindow() {
 	*/
 	if (isFirefox){
 		TweenMax.set("body", {
+			x: ~~(w/2 + ((window.innerWidth - w) / 2)),
+			y: ~~(h/2 + ((window.innerHeight - h) / 2)),
+			opacity: 1,
+			yPercent: -50,
+			xPercent: -50,
+			force3D: true
+		});
+		/*
+		TweenMax.set("body", {
 			left: '50%',
 			top: '50%',
 			marginLeft: ~~(-w / 2),
@@ -214,6 +225,7 @@ function resizeWindow() {
 			opacity: 1,
 			force3D: true
 		});
+		*/
 	} else {
 		TweenMax.set("body", {
 			x: ~~(w/2 + ((window.innerWidth - w) / 2)),
@@ -246,7 +258,23 @@ function chat(msg) {
 		}
 	}, 9000);
 }
-
+var video = {
+	cache: {},
+	load: {
+		game: function(){
+			var x = [
+				'missile.png', 
+				'nuke.png',
+				'smoke.png'
+			];
+			for (var i=0, len=x.length; i<len; i++){
+				var z = x[i];
+				video.cache[z] = new Image();
+				video.cache[z].src = "images/" + z;
+			}
+		}
+	}
+}
 var audio = {
 	ext: (function(a){
 		return !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, '')) ? 'mp3' : 'ogg'
