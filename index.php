@@ -281,7 +281,7 @@
 								<div id="recruit" class="actionButtons row" 
 									data-placement="left" 
 									data-toggle="tooltip" 
-									title="Recruit 3 armies">
+									title="">
 									<div class="col-xs-8"><span class='text-hotkey'>R</span>ecruit</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i>50
@@ -315,7 +315,7 @@
 								<div id="fireArtillery" class="actionButtons row" 
 									data-placement="left" 
 									data-toggle="tooltip" 
-									title="Fire artillery at an adjacent enemy tile. Kills 2 + 4% of armies.">
+									title="">
 									<div class="col-xs-8"><span class='text-hotkey'>F</span>ire Artillery</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i>60
@@ -325,7 +325,7 @@
 								<div id="launchMissile" class="actionButtons row" 
 									data-placement="left" 
 									data-toggle="tooltip" 
-									title="Launch a missile at any enemy territory. Kills 5 + 12-15% of armies.">
+									title="">
 									<div class="col-xs-8">Laun<span class='text-hotkey'>c</span>h Missile</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i>150
@@ -503,7 +503,8 @@
 				'lobby',
 				'map',
 				'game',
-				'actions'
+				'actions',
+				'animate'
 			];
 		}else{
 			var _scriptLoader = [

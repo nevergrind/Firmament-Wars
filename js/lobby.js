@@ -1,6 +1,7 @@
 function initOffensiveTooltips(){
 	$('#fireArtillery').attr('title', 'Fire artillery at an adjacent enemy tile. Kills ' + (2 + my.oBonus) + ' + 4% of armies.');
 	$('#launchMissile').attr('title', 'Launch a missile at any enemy territory. Kills ' + (5 + (my.oBonus * 2)) + ' + 15% of armies.');
+	$('#recruit').attr('title', 'Recruit ' + (3 + ~~(my.cultureBonus / 30)) + ' armies. Boosted by culture.');
 }
 function initResources(d){
 	my.food = d.food;
@@ -156,6 +157,7 @@ function joinStartedGame(){
 		my.account = data.account;
 		my.oBonus = data.oBonus;
 		my.dBonus = data.dBonus;
+		my.cultureBonus = data.cultureBonus;
 		initOffensiveTooltips();
 		TweenMax.set(DOM.targetLine, {
 			stroke: color[my.player]

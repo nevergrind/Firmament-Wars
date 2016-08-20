@@ -23,7 +23,7 @@
 	if ($_SESSION['player'] === $player &&
 		$units <= 254){
 		
-		$deployedUnits = 3;
+		$deployedUnits = 3 + floor($_SESSION['cultureBonus'] / 30);
 		$units += $deployedUnits;
 		if ($units > 255){
 			$units = 255;

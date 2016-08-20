@@ -162,9 +162,15 @@ function setTileUnits(i, unitColor){
 			scale: unitColor !== '#00ff00' ? 1 : 2,
 			fill: unitColor
 		},
-		scale: 1,
-		fill: "#ffffff"
+		scale: 1
 	});
+	if (unitColor === '#00ff00'){
+		TweenMax.to(e, .1, {
+			fill: "#ffffff",
+			ease: SteppedEase.config(1),
+			repeat: 3
+		});
+	}
 }
 
 function getGameState(){

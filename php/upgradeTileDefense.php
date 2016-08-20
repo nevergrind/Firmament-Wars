@@ -48,7 +48,12 @@
 	$stmt->bind_param('iii', $newDef, $target, $_SESSION['gameId']);
 	$stmt->execute();
 	
-	$msg = $_SESSION['nation'] . ' built a '. $built . ' in ' . $tileName . '.';
+	// update chat
+	$flag = $_SESSION['flag'] === 'Default.jpg' ? 
+		'<img src="images/flags/Player' . $_SESSION['player'] . '.jpg" class="player' . $_SESSION['player'] . ' p' . $_SESSION['player'] . 'b inlineFlag">' :
+		'<img src="images/flags/' . $_SESSION['flag'] . '" class="player' . $_SESSION['player'] . ' p' . $_SESSION['player'] . 'b inlineFlag">';
+	
+	$msg = $flag . ' ' . $_SESSION['nation'] . ' built a '. $built . ' in ' . $tileName . '.';
 	$stmt = $link->prepare('insert into fwchat (`message`, `gameId`, `event`) values (?, ?, "upgrade");');
 	$stmt->bind_param('si', $msg, $_SESSION['gameId']);
 	$stmt->execute();

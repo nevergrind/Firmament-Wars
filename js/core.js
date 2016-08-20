@@ -265,7 +265,10 @@ var video = {
 			var x = [
 				'missile.png', 
 				'nuke.png',
-				'smoke.png'
+				'smoke.png',
+				'blueSmoke.png',
+				'fireball.png',
+				'bulwark.png'
 			];
 			for (var i=0, len=x.length; i<len; i++){
 				var z = x[i];
