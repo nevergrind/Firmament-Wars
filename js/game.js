@@ -80,6 +80,10 @@ function updateTileInfo(tileId){
 		DOM.upgradeTileComplete.style.display = 'none';
 		DOM.buildWord.textContent = defWord[ind];
 		DOM.buildCost.textContent = defCost[ind];
+		if (ind === 2){
+			defWord[2] = 'Fortresse';
+		}
+		$('#upgradeTileDefense').attr('title', defWord[ind] + 's upgrade the structural defense of a territory.').tooltip('fixTitle');
 	}
 	
 	$('.fwTooltip').tooltip({
@@ -151,7 +155,7 @@ function showTarget(e, hover){
 function setActionButtons(t){
 	DOM.tileName.textContent = !t.flag ? '???' : t.name;
 	my.player === t.player ? DOM.tileActions.style.display = 'block' : DOM.tileActions.style.display = 'none';
-	action.toggleMenu(true);
+	action.setMenu();
 }
 function setTileUnits(i, unitColor){
 	var e = document.getElementById('unit' + i);
@@ -165,10 +169,12 @@ function setTileUnits(i, unitColor){
 		scale: 1
 	});
 	if (unitColor === '#00ff00'){
-		TweenMax.to(e, .1, {
-			fill: "#ffffff",
-			ease: SteppedEase.config(1),
-			repeat: 3
+		TweenMax.to(e, 1, {
+			fill: "#ffffff"
+		});
+	} else {
+		TweenMax.to(e, 1, {
+			fill: '#ffffff'
 		});
 	}
 }

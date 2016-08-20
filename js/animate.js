@@ -66,7 +66,8 @@ var animate = {
 		var x = box.x + box.width/2;
 		var y = box.y + box.height/2;
 		// smoke
-		for (var i=1; i<=10; i++){
+		var size = game.tiles[tile].defense;
+		for (var i=1; i<=(10 + (size*5)); i++){
 			var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
 			svg.setAttributeNS(null, 'height', 256);
 			svg.setAttributeNS(null, 'width', 256);

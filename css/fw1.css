@@ -442,10 +442,10 @@ a:hover{
 	margin-top: 1%;
 	font-size: .625em;
 }
-#tileBuild, #tileCommand{
+#menuSelect, #tileCommand, #tileResearch, #tileBuild{
 	width: 100%;
 }
-#tileBuild{
+#tileResearch, #tileBuild{
 	display: none;
 }
 #tileAction > tbody > tr > td{
@@ -508,6 +508,26 @@ table td, .table th, .table td {
 .actionButtons:active{
 	box-shadow:
 		0 5em 5em rgba(0,0,0,.3) inset;
+}
+.actionTabs{
+	background: rgba(23, 42, 84,1);
+	margin-bottom: .05em;
+	cursor: pointer;
+	border: 2px solid #000;
+	font-size: 1em;
+	line-height: 3em;
+	border-radius: 8px 8px 0 0;
+	box-shadow:
+		0 .1em .3em rgba(128, 192, 255, .5) inset,
+		0 -.1em .1em rgba(16, 92, 192, .7) inset,
+		0 3em rgba(0,0,0,.5) inset;
+}
+.activeTab{
+	background: rgba(4, 67, 136,1);
+	box-shadow:
+		0 .1em .3em rgba(128, 192, 255, .5) inset;
+}
+.activeTab:hover{
 }
 #players{
 	height: 30%;

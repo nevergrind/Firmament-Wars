@@ -241,10 +241,26 @@
 				<div class="row">
 					<div id="target" class="col-xs-4 text-center no-select">
 					</div>
+					
 					<div id="actions" class="col-xs-8 no-select">
 						<div id="tile-name" class="no-select text-center shadow4"></div>
 						
 						<div id="tileActions">
+							<div id="menuSelect" class="container shadow4">
+								<div class="row">
+									<div id="gotoCommand" class="actionTabs activeTab col-md-4 text-center" data-toggle="tooltip" title="Command your armies">
+										<span class='text-hotkey'>C</span>ommand
+									</div>
+								
+									<div id="gotoResearch" class="actionTabs col-md-4 text-center" data-toggle="tooltip" title="Unlock new technologies">
+										<span class='text-hotkey'>R</span>esearch
+									</div>
+								
+									<div id="gotoBuild" class="actionTabs col-md-4 text-center" data-toggle="tooltip" title="Build a structures and weapons">
+										<span class='text-hotkey'>B</span>uild
+									</div>
+								</div>
+							</div>
 						
 							<div id="tileCommand" class="container shadow4">
 							
@@ -282,15 +298,63 @@
 									data-placement="left" 
 									data-toggle="tooltip" 
 									title="">
-									<div class="col-xs-8"><span class='text-hotkey'>R</span>ecruit</div>
+									<div class="col-xs-8">R<span class='text-hotkey'>e</span>cruit</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i>50
 									</div>
 								</div>
+							</div>
+							
+							<div id="tileResearch" class="container shadow4">
 								
-								<div id="gotoBuild" class="actionButtons row" data-placement="left" data-toggle="tooltip" title="Build a structure/weapon">
-									<div class="col-xs-12 text-center">Build M<span class='text-hotkey'>e</span>nu</div>
+								<div id="researchEngineering" class="actionButtons row" 
+									data-placement="left" 
+									data-toggle="tooltip" 
+									title="Research engineering to learn how to build defensive structures.">
+									<div class="col-xs-8">
+										Engineering
+									</div>
+									<div class="col-xs-4 text-right">
+										<i class="fa fa-bolt production pointer actionBolt"></i><span id="buildCost">100</span>
+									</div>
 								</div>
+								
+								<div id="researchGunpowder" class="actionButtons row" 
+									data-placement="left" 
+									data-toggle="tooltip" 
+									title="Research gunpowder technology to attack safely from a distance.">
+									<div class="col-xs-8">
+										Gunpowder
+									</div>
+									<div class="col-xs-4 text-right">
+										<i class="fa fa-bolt production pointer actionBolt"></i><span id="buildCost">125</span>
+									</div>
+								</div>
+								
+								<div id="researchRocketry" class="actionButtons row" 
+									data-placement="left" 
+									data-toggle="tooltip" 
+									title="Research rocketry technology to launch missiles at any territory.">
+									<div class="col-xs-8">
+										Rocketry
+									</div>
+									<div class="col-xs-4 text-right">
+										<i class="fa fa-bolt production pointer actionBolt"></i><span id="buildCost">250</span>
+									</div>
+								</div>
+								
+								<div id="researchAtomicTheory" class="actionButtons row" 
+									data-placement="left" 
+									data-toggle="tooltip" 
+									title="Research atomic theory to launch nuclear weapons.">
+									<div class="col-xs-8">
+										Atomic Theory
+									</div>
+									<div class="col-xs-4 text-right">
+										<i class="fa fa-bolt production pointer actionBolt"></i><span id="buildCost">500</span>
+									</div>
+								</div>
+								
 							</div>
 							
 							<div id="tileBuild" class="container shadow4">
@@ -298,8 +362,10 @@
 								<div id="upgradeTileDefense" class="actionButtons row" 
 									data-placement="left" 
 									data-toggle="tooltip" 
-									title="Build a wall to fortify a territory">
-									<div class="col-xs-8"><span class='text-hotkey'>B</span>uild <span id="buildWord">Bunker</span></div>
+									title="Bunkers upgrade the structural defense of a territory">
+									<div class="col-xs-8">
+									B<span class='text-hotkey'>u</span>ild <span id="buildWord">Bunker</span>
+									</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i><span id="buildCost">80</span>
 									</div>
@@ -316,7 +382,9 @@
 									data-placement="left" 
 									data-toggle="tooltip" 
 									title="">
-									<div class="col-xs-8"><span class='text-hotkey'>F</span>ire Artillery</div>
+									<div class="col-xs-8">
+										Fire <span class='text-hotkey'>A</span>rtillery
+									</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i>60
 									</div>
@@ -326,7 +394,9 @@
 									data-placement="left" 
 									data-toggle="tooltip" 
 									title="">
-									<div class="col-xs-8">Laun<span class='text-hotkey'>c</span>h Missile</div>
+									<div class="col-xs-8">
+										Launch <span class='text-hotkey'>M</span>issile
+									</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i>150
 									</div>
@@ -340,10 +410,6 @@
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i>600
 									</div>
-								</div>
-								
-								<div id="gotoCommand" class="actionButtons row" data-placement="left" data-toggle="tooltip" title="Command your armies">
-									<div class="col-lg-12 text-center">Command M<span class='text-hotkey'>e</span>nu</div>
 								</div>
 							</div>
 						

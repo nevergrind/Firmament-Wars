@@ -400,16 +400,25 @@ var action = {
 		});
 		
 	},
-	toggleMenu: function(init){
-		if (init || g.actionMenu === 'build'){
+	setMenu: function(id){
+		if (id === undefined){
+			id = 'gotoCommand';
+		}
+		DOM.tileCommand.style.display = 'none';
+		DOM.tileResearch.style.display = 'none';
+		DOM.tileBuild.style.display = 'none';
+		$(".actionTabs").removeClass('activeTab');
+		if (id === 'gotoCommand'){
 			g.actionMenu = 'command';
 			DOM.tileCommand.style.display = 'block';
-			DOM.tileBuild.style.display = 'none';
-		} else {
+		} else if (id === 'gotoResearch'){
+			g.actionMenu = 'research';
+			DOM.tileResearch.style.display = 'block';
+		} else if (id === 'gotoBuild'){
 			g.actionMenu = 'build';
-			DOM.tileCommand.style.display = 'none';
 			DOM.tileBuild.style.display = 'block';
 		}
+		$("#" + id).addClass('activeTab');
 	}
 }
 
@@ -493,9 +502,9 @@ $("#actions").on("mousedown", '#attack', function(e){
 		});
 		action.target(o);
 	}
-}).on('mousedown', '#gotoBuild, #gotoCommand', function(e){
+}).on('mousedown', '.actionTabs', function(e){
 	if (e.which === 1){
-		action.toggleMenu();
+		action.setMenu(this.id);
 	}
 });
 
@@ -524,9 +533,15 @@ $(document).on('keyup', function(e) {
 			if (x === 13){
 				// enter
 				toggleChatMode();
-			} else if (x === 69){
-				// e
-				action.toggleMenu();
+			} else if (x === 67){
+				// c
+				action.setMenu('gotoCommand');
+			} else if (x === 82){
+				// r
+				action.setMenu('gotoResearch');
+			} else if (x === 66){
+				// c
+				action.setMenu('gotoBuild');
 			}  else if (x === 27){
 				// esc
 				my.attackOn = false;
@@ -552,15 +567,15 @@ $(document).on('keyup', function(e) {
 					} else if (x === 68){
 						// d
 						action.deploy();
-					} else if (x === 82){
-						// r
+					} else if (x === 69){
+						// e
 						action.recruit();
 					}
 				} else {
-					if (x === 66){
-						// b
+					if (x === 85){
+						// u
 						action.upgradeTileDefense();
-					} else if (x === 70){
+					} else if (x === 65){
 						// f
 						var o = new Target({
 							cost: 60,
@@ -569,7 +584,7 @@ $(document).on('keyup', function(e) {
 							hudMsg: 'Fire Artillery'
 						});
 						action.target(o);
-					} else if (x === 67){
+					} else if (x === 77){
 						// c
 						var o = new Target({
 							cost: 150,
