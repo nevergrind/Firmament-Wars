@@ -100,6 +100,7 @@ var DOM = {
 	food: document.getElementById('food'),
 	production: document.getElementById('production'),
 	culture: document.getElementById('culture'),
+	Msg: document.getElementById('Msg'),
 	hud: document.getElementById("hud"),
 	sumFood: document.getElementById("sumFood"),
 	foodMax: document.getElementById("foodMax"),
@@ -384,20 +385,24 @@ var audio = {
 }
 
 function Msg(msg, d) {
-    var e = document.createElement('div');
-	e.className = "msg";
-    e.innerHTML = msg;
-    document.getElementById("Msg").appendChild(e);
-	if (d === undefined){
+	DOM.Msg.innerHTML = msg;
+	if (!d || d < .5){
 		d = 5;
 	}
-    TweenMax.to(e, d, {
+    TweenMax.to(DOM.Msg, d, {
+		overwrite: 1,
+		startAt: {
+			opacity: 1
+		},
 		onComplete: function(){
-			this.target.parentNode.removeChild(e);
+			TweenMax.to(this.target, .5, {
+				opacity: 0
+			});
 		}
     });
+	// split text animation
 	var tl = new TimelineMax();
-	var split = new SplitText(e, {
+	var split = new SplitText(DOM.Msg, {
 		type: "words,chars"
 	});
 	var chars = split.chars;

@@ -323,7 +323,7 @@
 										<span class='text-hotkey'>E</span>ngineering
 									</div>
 									<div class="col-xs-4 text-right">
-										<i class="fa fa-bolt production pointer actionBolt"></i><span id="buildCost">100</span>
+										<i class="fa fa-bolt production pointer actionBolt"></i>100
 									</div>
 								</div>
 								
@@ -335,7 +335,7 @@
 										<span class='text-hotkey'>G</span>unpowder
 									</div>
 									<div class="col-xs-4 text-right">
-										<i class="fa fa-bolt production pointer actionBolt"></i><span id="buildCost">125</span>
+										<i class="fa fa-bolt production pointer actionBolt"></i>125
 									</div>
 								</div>
 								
@@ -347,7 +347,7 @@
 										<span class='text-hotkey'>R</span>ocketry
 									</div>
 									<div class="col-xs-4 text-right">
-										<i class="fa fa-bolt production pointer actionBolt"></i><span id="buildCost">250</span>
+										<i class="fa fa-bolt production pointer actionBolt"></i>250
 									</div>
 								</div>
 								
@@ -359,7 +359,7 @@
 										<span class='text-hotkey'>A</span>tomic Theory
 									</div>
 									<div class="col-xs-4 text-right">
-										<i class="fa fa-bolt production pointer actionBolt"></i><span id="buildCost">500</span>
+										<i class="fa fa-bolt production pointer actionBolt"></i>500
 									</div>
 								</div>
 								
