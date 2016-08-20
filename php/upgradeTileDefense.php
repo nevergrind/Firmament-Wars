@@ -54,8 +54,9 @@
 		'<img src="images/flags/' . $_SESSION['flag'] . '" class="player' . $_SESSION['player'] . ' p' . $_SESSION['player'] . 'b inlineFlag">';
 	
 	$msg = $flag . ' ' . $_SESSION['nation'] . ' built a '. $built . ' in ' . $tileName . '.';
-	$stmt = $link->prepare('insert into fwchat (`message`, `gameId`, `event`) values (?, ?, "upgrade");');
-	$stmt->bind_param('si', $msg, $_SESSION['gameId']);
+	$event = "upgrade|" . $target;
+	$stmt = $link->prepare('insert into fwchat (`message`, `gameId`, `event`) values (?, ?, ?);');
+	$stmt->bind_param('sis', $msg, $_SESSION['gameId'], $event);
 	$stmt->execute();
 	
 	echo json_encode($x);

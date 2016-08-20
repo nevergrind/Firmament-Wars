@@ -267,7 +267,7 @@ var video = {
 				'missile.png', 
 				'nuke.png',
 				'smoke.png',
-				'blueSmoke.png',
+				'goldSmoke.png',
 				'fireball.png',
 				'bulwark.png'
 			];

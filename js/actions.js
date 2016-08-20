@@ -211,7 +211,6 @@ var action = {
 			return;
 		}
 		
-		animate.upgrade(my.tgt);
 		
 		$.ajax({
 			url: 'php/upgradeTileDefense.php',
@@ -533,13 +532,13 @@ $(document).on('keyup', function(e) {
 			if (x === 13){
 				// enter
 				toggleChatMode();
-			} else if (x === 67){
+			} else if (x === 67 && g.actionMenu !== 'command'){
 				// c
 				action.setMenu('gotoCommand');
-			} else if (x === 82){
+			} else if (x === 82 && g.actionMenu !== 'research'){
 				// r
 				action.setMenu('gotoResearch');
-			} else if (x === 66){
+			} else if (x === 66 && g.actionMenu !== 'build'){
 				// c
 				action.setMenu('gotoBuild');
 			}  else if (x === 27){
@@ -571,9 +570,23 @@ $(document).on('keyup', function(e) {
 						// e
 						action.recruit();
 					}
+				} else if (g.actionMenu === 'research'){
+					if (x === 69){
+						// r
+						console.info('engineering');
+					} else if (x === 71){
+						// f
+						console.info('gunpowder');
+					} else if (x === 82){
+						// r
+						console.info('rocketry');
+					} else if (x === 65){
+						// a
+						console.info('atomic');
+					}
 				} else {
-					if (x === 85){
-						// u
+					if (x === 66){
+						// b
 						action.upgradeTileDefense();
 					} else if (x === 65){
 						// f

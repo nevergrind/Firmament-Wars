@@ -256,9 +256,12 @@ function getGameState(){
 							if (z.event.indexOf(my.account) > -1){
 								audio.play('food');
 							}
-						} else if (z.event === 'upgrade'){
+						} else if (z.event.indexOf('upgrade') === 0){
+							var a = z.event.split('|'),
+								tile = a[1];
 							// fetch updated tile defense data
 							updateTileDefense();
+							animate.upgrade(tile);
 						} else if (z.event.indexOf('artillery') === 0){
 							var a = z.event.split('|'),
 								tile = a[1],

@@ -268,7 +268,9 @@
 									data-placement="left" 
 									data-toggle="tooltip" 
 									title="Move/attack with all armies">
-									<div class="col-xs-8"><span class='text-hotkey'>A</span>ttack</div>
+									<div class="col-xs-8">
+										<span class='text-hotkey'>A</span>ttack
+									</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i>7
 									</div>
@@ -278,7 +280,9 @@
 									data-placement="left" 
 									data-toggle="tooltip" 
 									title="Move/attack with half of your armies">
-									<div class="col-xs-8"><span class='text-hotkey'>S</span>plit Attack</div>
+									<div class="col-xs-8">
+										<span class='text-hotkey'>S</span>plit Attack
+									</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i>3
 									</div>
@@ -288,7 +292,9 @@
 									data-placement="left" 
 									data-toggle="tooltip" 
 									title="Deploy up to 12 armies">
-									<div class="col-xs-8"><span class='text-hotkey'>D</span>eploy</div>
+									<div class="col-xs-8">
+										<span class='text-hotkey'>D</span>eploy
+									</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i>20
 									</div>
@@ -298,7 +304,9 @@
 									data-placement="left" 
 									data-toggle="tooltip" 
 									title="">
-									<div class="col-xs-8">R<span class='text-hotkey'>e</span>cruit</div>
+									<div class="col-xs-8">
+										R<span class='text-hotkey'>e</span>cruit
+									</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i>50
 									</div>
@@ -312,7 +320,7 @@
 									data-toggle="tooltip" 
 									title="Research engineering to learn how to build defensive structures.">
 									<div class="col-xs-8">
-										Engineering
+										<span class='text-hotkey'>E</span>ngineering
 									</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i><span id="buildCost">100</span>
@@ -324,7 +332,7 @@
 									data-toggle="tooltip" 
 									title="Research gunpowder technology to attack safely from a distance.">
 									<div class="col-xs-8">
-										Gunpowder
+										<span class='text-hotkey'>G</span>unpowder
 									</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i><span id="buildCost">125</span>
@@ -336,7 +344,7 @@
 									data-toggle="tooltip" 
 									title="Research rocketry technology to launch missiles at any territory.">
 									<div class="col-xs-8">
-										Rocketry
+										<span class='text-hotkey'>R</span>ocketry
 									</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i><span id="buildCost">250</span>
@@ -348,7 +356,7 @@
 									data-toggle="tooltip" 
 									title="Research atomic theory to launch nuclear weapons.">
 									<div class="col-xs-8">
-										Atomic Theory
+										<span class='text-hotkey'>A</span>tomic Theory
 									</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i><span id="buildCost">500</span>

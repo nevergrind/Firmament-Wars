@@ -61,20 +61,20 @@ var animate = {
 	},
 	upgrade: function(tile){
 		audio.play('build');
-		var e1 = document.getElementById('land' + tile),
+		var e1 = document.getElementById('unit' + tile),
 			box = e1.getBBox();
-		var x = box.x + box.width/2;
-		var y = box.y + box.height/2;
+		var x = box.x + box.width/2 - 10;
+		var y = box.y + box.height/2 + 10;
 		// smoke
 		var size = game.tiles[tile].defense;
-		for (var i=1; i<=(10 + (size*5)); i++){
+		for (var i=1; i<=(10 + (size*4)); i++){
 			var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
 			svg.setAttributeNS(null, 'height', 256);
 			svg.setAttributeNS(null, 'width', 256);
 			svg.setAttributeNS(null,"x",x);
 			svg.setAttributeNS(null,"y",y);
 			svg.setAttributeNS(null,"class","no-point");
-			svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/blueSmoke.png');
+			svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/goldSmoke.png');
 			DOM.world.appendChild(svg);
 			TweenMax.to(svg, .5, {
 				startAt: {
@@ -82,7 +82,7 @@ var animate = {
 					yPercent: -50,
 					transformOrigin: '50% 50%',
 					opacity: 1,
-					scale: .1
+					scale: 0
 				},
 				scale: i*.1,
 				opacity: 0,
