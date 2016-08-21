@@ -53,8 +53,10 @@
 				
 				echo 
 				'<div class="accountDetails text-primary">
-					' . $_SESSION['account'] . ' <i class="fa fa-diamond" title="Never Crystals"></i>
-					<span id="crystalCount" class="text-primary" title="Crystals Remaining">'.$crystals.'</span>&ensp;<a target="_blank" title="Manage Account" href="/account/?back=games/firmament-wars">Account</a>&ensp;
+					' . $_SESSION['account'] . 
+					' <i class="fa fa-diamond" title="Never Crystals"></i>
+					<span id="crystalCount" class="text-primary" title="Crystals Remaining">' .$crystals.'</span>&ensp;
+					<a target="_blank" title="Manage Account" href="/account">Account</a>&ensp;
 					<a target="_blank" title="Store" href="/store/">Store</a>&ensp;
 					
 				</div>
@@ -206,6 +208,13 @@
 					</div>
 				</div>
 			</div>
+			
+			<div id='soundWrap' class="shadow4">
+				<i id='musicToggle' class='fa fa-volume-up' 
+					data-toggle="tooltip" 
+					data-placement="right" 
+					title='Toggle music'></i>
+			</div>
 		</div>
 	
 		<div id="joinGameLobby" class="shadow4">
@@ -243,7 +252,6 @@
 					</div>
 					
 					<div id="actions" class="col-xs-8 no-select">
-						<div id="tile-name" class="no-select text-center shadow4"></div>
 						
 						<div id="tileActions">
 							<div id="menuSelect" class="container shadow4">

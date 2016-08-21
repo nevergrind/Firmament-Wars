@@ -14,7 +14,7 @@
 		$x->gameDone = 1;
 	}
 	// I am the only player that has tiles left
-		if ($_SESSION['resourceTick'] > 9){
+	if ($_SESSION['resourceTick'] > 9){
 		if (isset($_SESSION['gameId']) && $x->gameDone){
 			$x->win = 1;
 			$query = "insert into fwNations (`account`, `wins`, `games`) VALUES (?, 1, 1) on duplicate key update wins=wins+1, games=games+1";
@@ -32,8 +32,6 @@
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('s', $_SESSION['gameId']);
 			$stmt->execute();
-			
-			unset($_SESSION['gameId']);
 		}
 	} else {
 		// game wasn't long enough
@@ -49,6 +47,8 @@
 		$stmt->bind_param('s', $_SESSION['gameId']);
 		$stmt->execute();
 	}
+	
+	require('unsetSession.php');
 	
 	echo json_encode($x);
 ?>

@@ -1,6 +1,5 @@
 <?php
 	header('Content-Type: application/json');
-	session_start();
 	require('connect1.php');
 	
 	// get game tiles

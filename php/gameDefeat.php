@@ -15,13 +15,13 @@
 	}
 	// if I have no tiles remaining... I died
 	if (isset($_SESSION['gameId']) && $x->gameDone){
-			$x->lose = 1;
-			require('loseGame.php');
-		
-			$x->gameName = $_SESSION['gameName'];
-			$x->map = $_SESSION['map'];
-			$x->duration = $_SESSION['resourceTick']*5;
-			unset($_SESSION['gameId']);
+		$x->lose = 1;
+		require('loseGame.php');
+	
+		$x->gameName = $_SESSION['gameName'];
+		$x->map = $_SESSION['map'];
+		$x->duration = $_SESSION['resourceTick']*5;
+		require('unsetSession.php');
 	}
 	
 	echo json_encode($x);

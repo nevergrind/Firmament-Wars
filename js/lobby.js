@@ -302,13 +302,11 @@ function joinStartedGame(){
 			});
 		} else {
 			$(".land").on("mousedown", function(e){
-				if (e.which === 1){
-					var box = this.getBBox();
-					var x = Math.round(box.x + (box.width/2));
-					var y = Math.round(box.y + (box.height/2));
-					console.info(this.id, x, y, e.which);
-					triggerAction(this);
-				}
+				var box = this.getBBox();
+				var x = Math.round(box.x + (box.width/2));
+				var y = Math.round(box.y + (box.height/2));
+				console.info(this.id, x, y, e.which);
+				triggerAction(this);
 			});
 		}
 		$(".land").on("mouseenter", function(){

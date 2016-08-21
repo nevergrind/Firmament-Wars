@@ -69,31 +69,29 @@ $("#create").on("click", function(){
 });
 
 $("#menu").on("mousedown", "#createGame", function(e){
-	if (e.which === 1){
-		var name = $("#gameName").val();
-		var players = $("#gamePlayers").val()*1;
-		if (name.length < 1 || name.length > 32){
-			Msg("Game name must be at least 4-32 characters.");
-		} else if (players < 2 || players > 8 || players % 1 !== 0){
-			Msg("Game must have 2-8 players.");
-		} else {
-			g.lock(1);
-			audio.play('click');
-			$.ajax({
-				url: 'php/createGame.php',
-				data: {
-					name: name,
-					players: players
-				}
-			}).done(function(data) {
-				console.info("Creating: ", data);
-				joinLobby(); // create
-			}).fail(function(e){
-				console.info(e.responseText);
-				Msg(e.statusText);
-				g.unlock(1);
-			});
-		}
+	var name = $("#gameName").val();
+	var players = $("#gamePlayers").val()*1;
+	if (name.length < 1 || name.length > 32){
+		Msg("Game name must be at least 4-32 characters.");
+	} else if (players < 2 || players > 8 || players % 1 !== 0){
+		Msg("Game must have 2-8 players.");
+	} else {
+		g.lock(1);
+		audio.play('click');
+		$.ajax({
+			url: 'php/createGame.php',
+			data: {
+				name: name,
+				players: players
+			}
+		}).done(function(data) {
+			console.info("Creating: ", data);
+			joinLobby(); // create
+		}).fail(function(e){
+			console.info(e.responseText);
+			Msg(e.statusText);
+			g.unlock(1);
+		});
 	}
 });
 
@@ -113,88 +111,6 @@ function joinGame(){
 		g.unlock();
 	});
 }
-
-(function(){
-	// init 
-	var s = "<option value='Default' selected='selected'>Default</option>";
-	var flagData = {
-		Africa: {
-			group: "Africa",
-			name: ['Algeria', 'Botswana', 'Cameroon', 'Cape Verde', 'Ivory Coast', 'Egypt', 'Ghana', 'Kenya', 'Liberia', 'Morocco', 'Mozambique', 'Namibia', 'Nigeria', 'South Africa', 'Uganda']
-		},
-		Asia: {
-			group: "Asia",
-			name: ['Bangladesh', 'Cambodia', 'China', 'Hong Kong', 'India', 'Indonesia', 'Iran', 'Japan', 'Malaysia', 'Mongolia', 'Myanmar', 'Nepal', 'North Korea', 'Pakistan', 'Philippines', 'Singapore', 'South Korea', 'Sri Lanka', 'Suriname', 'Taiwan', 'Thailand', 'Vietnam']
-		},
-		Europe: {
-			group: "Europe",
-			name: ['Albania', 'Austria', 'Belgium', 'Bosnia and Herzegovina', 'Bulgaria', 'Croatia', 'Czech Republic', 'Denmark', 'England', 'Estonia', 'Finland', 'France', 'Germany', 'Greece', 'Hungary', 'Iceland', 'Ireland', 'Italy', 'Kosovo', 'Latvia', 'Lithuania', 'Macedonia', 'Montenegro', 'Netherlands', 'Norway', 'Poland', 'Portugal', 'Romania', 'Russia', 'Scotland', 'Serbia', 'Slovakia', 'Slovenia', 'Spain', 'Sweden', 'Switzerland', 'Ukraine', 'United Kingdom', 'United States']
-		},
-		Eurasia: {
-			group: "Eurasia",
-			name: ['Armenia', 'Azerbaijan', 'Georgia', 'Kazakhstan', 'Uzbekistan']
-		},
-		Historic: {
-			group: "Historic",
-			name: ['Confederate Flag', 'Flanders', 'Gadsden Flag', 'Isle of Man', 'Rising Sun Flag', 'NSDAP Flag', 'Shahanshahi', 'USSR', 'Welsh']
-		},
-		MiddleEast: {
-			group: "Middle East",
-			name: ['Israel', 'Jordan', 'Kurdistan', 'Lebanon', 'Palestine', 'Qatar', 'Saudi Arabia', 'Syria', 'Turkey']
-		},
-		NorthAmerica: {
-			group: "North America",
-			name: ['Bahamas', 'Barbados', 'Canada', 'Costa Rica', 'Cuba', 'Haiti', 'Honduras', 'Mexico', 'Saint Lucia', 'Trinidad and Tobago']
-		},
-		Oceania: {
-			group: "Oceania",
-			name: ['Australia', 'New Zealand']
-		},
-		Miscellaneous: {
-			group: "Miscellaneous",
-			name: ['Anarcho-Capitalist', 'European Union', 'High Energy', 'ISIS', 'Northwest Front', 'Pan-African Flag', 'Rainbow Flag', 'United Nations']
-		},
-		SouthAmerica: {
-			group: "South America",
-			name: ['Argentina', 'Bolivia', 'Brazil', 'Chile', 'Colombia', 'Ecuador', 'Paraguay', 'Peru', 'Uruguay', 'Venezuela']
-		},
-	}
-	for (x in flagData){
-		s += "<optgroup label='" + flagData[x].group + "'>";
-		flagData[x].name.forEach(function(e){
-			s += "<option value='" + e + "'>" + e + "</option>";
-		});
-		s += "</optgroup>";
-	}
-	document.getElementById("flagDropdown").innerHTML = s;
-	g.lock();
-	function showTitleScreen(){
-		document.getElementById("titleMain").style.visibility = "visible";
-		document.getElementById('mainWrap').style.display = "block";
-	}
-	if (location.host === 'localhost'){
-		$.ajax({
-			type: "GET",
-			url: 'php/rejoinGame.php' // check if already in a game
-		}).done(function(data) {
-			console.info('rejoin ', data);
-			if (data.gameId > 0){
-				console.info("Auto joined game:" + (data.gameId));
-				// join lobby in progress
-				joinLobby(0); // autojoin
-				initResources(data); // setResources(data);
-			} else {
-				showTitleScreen();
-			}
-		}).fail(function(e){
-			Msg("Failed to contact server.");
-		}).always(function(){
-			g.unlock();
-		});
-	} else {
-		showTitleScreen();
-	}
-})();
 
 // cached values on client to reduce DB load
 
@@ -272,25 +188,23 @@ $("#flagDropdown").on("change", function(e){
 });
 
 $("#submitNationName").on("mousedown", function(e){
-	if (e.which === 1){
-		var x = $("#updateNationName").val();
-		g.lock();
-		audio.play('click');
-		$.ajax({
-			url: 'php/updateNationName.php',
-			data: {
-				name: x
-			}
-		}).done(function(data) {
-			$("#nationName").text(data);
-			Msg("Your nation shall now be known as: " + data);
-			animateNationName();
-		}).fail(function(e){
-			Msg(e.statusText);
-		}).always(function(){
-			g.unlock();
-		});
-	}
+	var x = $("#updateNationName").val();
+	g.lock();
+	audio.play('click');
+	$.ajax({
+		url: 'php/updateNationName.php',
+		data: {
+			name: x
+		}
+	}).done(function(data) {
+		$("#nationName").text(data);
+		Msg("Your nation shall now be known as: " + data);
+		animateNationName();
+	}).fail(function(e){
+		Msg(e.statusText);
+	}).always(function(){
+		g.unlock();
+	});
 });
 
 

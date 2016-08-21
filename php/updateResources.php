@@ -70,13 +70,10 @@
 				$_SESSION['foodMax'] = 9999;
 			}
 			// GET?!
-			$query = "insert into fwGets (`account`, `flag`, `nation`) VALUES (?, ?, ?)";
-			$stmt = $link->prepare($query);
-			$stmt->bind_param('sss', $_SESSION['account'], $_SESSION['flag'], $_SESSION['nation']);
-			$stmt->execute();
+			$stmt = mysqli_query($link, "insert into fwGets (`row`) VALUES (null)");
 			// last insert id is GET value
 			
-			$x->get = $stmt->insert_id;
+			$x->get = mysqli_insert_id($link);
 			$bonus = getReward($x->get);
 			$x->getBonus = $bonus->units;
 			$_SESSION['manpower'] += $bonus->units;
@@ -105,6 +102,11 @@
 				$stmt->execute();
 			
 				mysqli_query($link, 'delete from fwchat where timestamp < date_sub(now(), interval 20 second)');
+				// write to GETS only
+				$query = "insert into fwGetsOnly (`get`, `getMessage`, `account`) VALUES (?, ?, ?)";
+				$stmt = $link->prepare($query);
+				$stmt->bind_param('iss', $x->get, $bonus->msg, $_SESSION['account']);
+				$stmt->execute();
 			}
 			$x->foodMsg = $msg;
 		}

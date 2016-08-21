@@ -1,7 +1,4 @@
 // game.js
-audio.play("ReturnOfTheFallen", 1);
-audio.load.title();
-
 function updateTileInfo(tileId){
 	function defMsg(){
 		var d = t.defense;
@@ -30,15 +27,15 @@ function updateTileInfo(tileId){
 	}
 	var t = game.tiles[tileId],
 		flag = "",
-		nation = "",
+		name = t.name,
 		account = "",
 		name = t.name;
 	if (t.player === 0){
 		flag = "Player0.jpg";
 		if (t.units > 0){
-			nation = "Barbarian Tribe";
+			name = "Barbarian Tribe";
 		} else {
-			nation = "";
+			name = "";
 			flag = "blank.png";
 			name = '???';
 		}
@@ -48,7 +45,7 @@ function updateTileInfo(tileId){
 		} else {
 			flag = t.flag;
 		}
-		nation = t.nation;
+		name = t.name;
 		account = t.account;
 	}
 	
@@ -61,13 +58,16 @@ function updateTileInfo(tileId){
 		</div>'+
 		'<img src="images/flags/' + flag + '" class="p' + t.player + 'b w100 block center">\
 		<div id="nation-ui" class="shadow4">';
+			if (t.player){
+				str += '<i class="fa fa-stop diplomacySquare player' +t.player+ '"></i>';
+			}
 			if (t.capital){
 				str += 
-				'<span id="tile-name" class="no-select text-center shadow4 fwTooltip" data-toggle="tooltip" title="Capital Palace<br> Boosts tile defense">\
+				'<span id="tileName" class="no-select text-center shadow4 fwTooltip" data-toggle="tooltip" title="Capital Palace<br> Boosts tile defense">\
 					<i class="fa fa-fort-awesome text-warning shadow4"></i>\
 				</span> ';
 			}
-			str += nation + '</div>';
+			str += name + '</div>';
 	DOM.target.innerHTML = str;
 	var defWord = ['Bunker', 'Wall', 'Fortress'],
 		defCost = [80, 225, 450],
@@ -90,7 +90,10 @@ function updateTileInfo(tileId){
 		html: true
 	});
 	// actions panel
-	setActionButtons(t);
+	my.player === t.player ? 
+		DOM.tileActions.style.display = 'block' : 
+		DOM.tileActions.style.display = 'none';
+	action.setMenu();
 }
 function showTarget(e, hover){
 	if (typeof e === 'object' && e.id !== undefined){
@@ -151,11 +154,6 @@ function showTarget(e, hover){
 	} else {
 		my.attackOn = false;
 	}
-}
-function setActionButtons(t){
-	DOM.tileName.textContent = !t.flag ? '???' : t.name;
-	my.player === t.player ? DOM.tileActions.style.display = 'block' : DOM.tileActions.style.display = 'none';
-	action.setMenu();
 }
 function setTileUnits(i, unitColor){
 	var e = document.getElementById('unit' + i);

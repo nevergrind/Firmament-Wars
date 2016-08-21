@@ -196,13 +196,14 @@ var animate = {
 			boxB = e3.getBBox(),
 			x2 = boxB.x + boxB.width/2,
 			y2 = boxB.y + boxB.height/2;
+		console.info(Math.abs(x1-x2));
 		// get missile line coordinates
 		my.motionPath[0] = e2.getAttribute('x')*1 - 10;
 		my.motionPath[1] = e2.getAttribute('y')*1 - 10;
 		my.motionPath[4] = e3.getAttribute('x')*1 - 10;
 		my.motionPath[5] = e3.getAttribute('y')*1 - 10;
 		my.motionPath[2] = (my.motionPath[0] + my.motionPath[4]) / 2;
-		my.motionPath[3] = ((my.motionPath[1] + my.motionPath[5]) / 2) - 50;
+		my.motionPath[3] = ((my.motionPath[1] + my.motionPath[5]) / 2) - (Math.abs(x1-x2)/3);
 		TweenMax.set(DOM.motionPath, {
 			attr: {
 				d: "M " + my.motionPath[0] +","+ my.motionPath[1] + 

@@ -26,9 +26,23 @@
 		} else if ($reward === 5){
 			require('connect1.php');
 			// flip enemy tile
-			$query = 'SELECT row, player, nation, tileName, units units FROM `fwtiles` where game=? and player!=? and flag!="" order by units desc limit 1';
+			$offset = mt_rand(0,2);
+			// if there are <= 3, it always takes the largest tile
+			// count enemy tiles first
+			$query = 'SELECT row FROM `fwtiles` where game=? and player!=? and flag!="" limit 3';
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('ii', $_SESSION['gameId'], $_SESSION['player']);
+			$stmt->execute();
+			$stmt->store_result();
+			$count = $stmt->num_rows;
+			if ($count < 3){
+				$offset = 1;
+			}
+			
+			// if there are more than 3 enemy tiles, it picks randomly from the first 3
+			$query = 'SELECT row, player, nation, tileName, units units FROM `fwtiles` where game=? and player!=? and flag!="" order by units desc limit 1 offset ?';
+			$stmt = $link->prepare($query);
+			$stmt->bind_param('iii', $_SESSION['gameId'], $_SESSION['player'], $offset);
 			$stmt->execute();
 			$stmt->bind_result($drow, $dplayer, $dnation, $dtileName, $dunits);
 			$x = new stdClass();

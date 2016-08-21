@@ -164,7 +164,7 @@
 		if ($six > -1 && $reward->units === 0){
 			if (checkHex($six, $five, $four, $three, $two, $one)){
 				$reward->units = 35;
-				$reward->msg = 'Savage hex';
+				$reward->msg = 'Wicked hex';
 				$reward->img = 'images/chat/hex/0.gif';
 			} else if (checkTripleDubs($six, $five, $four, $three, $two, $one)){
 				$reward->units = 16;
