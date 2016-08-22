@@ -38,23 +38,20 @@ var g = {
 	},
 	updateUserInfo: function(){
 		$.getJSON('https://geoip-db.com/json/geoip.php?jsonp=?') 
-			.done (function(location){
-				console.info(location);
-				location.latitude = location.latitude+'';
-				location.longitude = location.longitude+'';
-				g.config.location = location;
-				var x = g.config;
-				var foo = JSON.stringify(x);
-				localStorage.setItem('config', foo);
-				$.ajax({
-					url: 'php/updateUserInfo.php',
-					data: {
-						location: g.config.location
-					}
-				}).done(function(d){
-					console.info(d);
-				});
+		.done (function(location){
+			location.latitude += '';
+			location.longitude += '';
+			g.config.location = location;
+			var x = g.config;
+			var foo = JSON.stringify(x);
+			localStorage.setItem('config', foo);
+			$.ajax({
+				url: 'php/updateUserInfo.php',
+				data: {
+					location: g.config.location
+				}
 			});
+		});
 	},
 	checkPlayerData: function(){
 		var config = localStorage.getItem('config');
@@ -166,6 +163,7 @@ var game = {
 var my = {
 	player: 1,
 	tgt: 1,
+	capital: 0,
 	lastTarget: {},
 	units: 0,
 	food: 0,
@@ -190,6 +188,12 @@ var my = {
 	attackOn: false,
 	splitAttack: false,
 	targetData: {},
+	tech: {
+		engineering: 0,
+		gunpowder: 0,
+		rocketry: 0,
+		atomicTheory: 0
+	},
 	hud: function(msg, d){
 		timer.hud.kill();
 		DOM.hud.style.visibility = 'visible';
@@ -210,52 +214,142 @@ var my = {
 			strokeDashoffset: 0
 		});
 		$DOM.head.append('<style>.land{ cursor: pointer; }</style>');
+	},
+	nextTarget: function(backwards){
+		var count = 0,
+			len = game.tiles.length;
+		backwards ? my.tgt-- : my.tgt++;
+		if (my.tgt < 0){
+			my.tgt = len-1;
+		}
+		while (count < 255 && my.player !== game.tiles[my.tgt % len].player){
+			backwards ? my.tgt-- : my.tgt++;
+			if (my.tgt < 0){
+				my.tgt = len-1;
+			}
+			count++;
+		}
+		if (!backwards){
+			my.tgt = my.tgt % len;
+		} else {
+			my.tgt = Math.abs(my.tgt);
+		}
+		showTarget(document.getElementById('land' + my.tgt));
+		my.focusTile(my.tgt, .1);
+	},
+	focusTile: function(tile, d){
+		var e = document.getElementById("land" + tile),
+			box = e.getBBox();
+		if (d === undefined){
+			d = .5;
+		}
+		// init map position & check max/min values
+		var x = -box.x + 512;
+		if (x > 0){ 
+			x = 0;
+		}
+		var xMin = (g.mouse.mapSizeX - 1024) * -1;
+		if (x < xMin){ 
+			x = xMin;
+		}
+		
+		var y = -box.y + 384;
+		if (y > 0){ 
+			y = 0;
+		}
+		var yMin = (g.mouse.mapSizeY - 768) * -1;
+		if (y < yMin){ 
+			y = yMin;
+		}
+		TweenMax.to(DOM.worldWrap, d, {
+			force3D: false,
+			x: x * g.resizeX,
+			y: y * g.resizeY
+		});
+		showTarget(document.getElementById('land' + tile));
+		my.flashTile(tile);
+	},
+	flashTile: function(tile){
+		var e2 = document.getElementById('unit' + tile);
+		TweenMax.to(e2, .05, {
+			startAt: {
+				transformOrigin: '50% 50%',
+				fill: '#0ff'
+			},
+			fill: '#ffffff',
+			ease: SteppedEase.config(1),
+			repeat: 12,
+			yoyo: true
+		});
+		var e3 = document.getElementById('flag' + tile);
+		TweenMax.to(e3, 1, {
+			startAt: {
+				transformOrigin: '50% 50%',
+				scale: 2
+			},
+			ease: Power2.easeIn,
+			scale: 1
+		});
 	}
 }
 var timer = {
 	hud: g.TDC()
 }
 // DOM caching
-var DOM = {
-	food: document.getElementById('food'),
-	production: document.getElementById('production'),
-	culture: document.getElementById('culture'),
-	Msg: document.getElementById('Msg'),
-	hud: document.getElementById("hud"),
-	sumFood: document.getElementById("sumFood"),
-	foodMax: document.getElementById("foodMax"),
-	cultureMax: document.getElementById("cultureMax"),
-	manpower: document.getElementById("manpower"),
-	sumProduction: document.getElementById("sumProduction"),
-	sumCulture: document.getElementById("sumCulture"),
-	chatContent: document.getElementById("chat-content"),
-	chatInput: document.getElementById("chat-input"),
-	motionPath: document.getElementById('motionPath'),
-	targetLine: document.getElementById('targetLine'),
-	targetLineShadow: document.getElementById('targetLineShadow'),
-	targetCrosshair: document.getElementById('targetCrosshair'),
-	target: document.getElementById('target'),
-	actions: document.getElementById('actions'),
-	oBonus: document.getElementById('oBonus'),
-	dBonus: document.getElementById('dBonus'),
-	turnBonus: document.getElementById('turnBonus'),
-	foodBonus: document.getElementById('foodBonus'),
-	cultureBonus: document.getElementById('cultureBonus'),
-	foodBar: document.getElementById('foodBar'),
-	cultureBar: document.getElementById('cultureBar'),
-	world: document.getElementById('world'),
-	bgmusic: document.getElementById('bgmusic'),
-	tileName: document.getElementById('tileName'),
-	tileActions: document.getElementById('tileActions'),
-	tileCommand: document.getElementById('tileCommand'),
-	tileResearch: document.getElementById('tileResearch'),
-	tileBuild: document.getElementById('tileBuild'),
-	buildWord: document.getElementById('buildWord'),
-	buildCost: document.getElementById('buildCost'),
-	upgradeTileDefense: document.getElementById('upgradeTileDefense'),
-	upgradeTileComplete: document.getElementById('upgradeTileComplete'),
-	screenFlash: document.getElementById('screenFlash')
+var DOM;
+function initDom(){
+	var d = document;
+	DOM = {
+		food: d.getElementById('food'),
+		production: d.getElementById('production'),
+		culture: d.getElementById('culture'),
+		Msg: d.getElementById('Msg'),
+		hud: d.getElementById("hud"),
+		sumFood: d.getElementById("sumFood"),
+		foodMax: d.getElementById("foodMax"),
+		cultureMax: d.getElementById("cultureMax"),
+		manpower: d.getElementById("manpower"),
+		sumProduction: d.getElementById("sumProduction"),
+		sumCulture: d.getElementById("sumCulture"),
+		chatContent: d.getElementById("chat-content"),
+		chatInput: d.getElementById("chat-input"),
+		worldWrap: d.getElementById('worldWrap'),
+		motionPath: d.getElementById('motionPath'),
+		targetLine: d.getElementById('targetLine'),
+		targetLineShadow: d.getElementById('targetLineShadow'),
+		targetCrosshair: d.getElementById('targetCrosshair'),
+		target: d.getElementById('target'),
+		actions: d.getElementById('actions'),
+		oBonus: d.getElementById('oBonus'),
+		dBonus: d.getElementById('dBonus'),
+		turnBonus: d.getElementById('turnBonus'),
+		foodBonus: d.getElementById('foodBonus'),
+		cultureBonus: d.getElementById('cultureBonus'),
+		foodBar: d.getElementById('foodBar'),
+		cultureBar: d.getElementById('cultureBar'),
+		world: d.getElementById('world'),
+		bgmusic: d.getElementById('bgmusic'),
+		tileName: d.getElementById('tileName'),
+		tileActions: d.getElementById('tileActions'),
+		tileCommand: d.getElementById('tileCommand'),
+		tileResearch: d.getElementById('tileResearch'),
+		tileBuild: d.getElementById('tileBuild'),
+		buildWord: d.getElementById('buildWord'),
+		buildCost: d.getElementById('buildCost'),
+		upgradeTileDefense: d.getElementById('upgradeTileDefense'),
+		screenFlash: d.getElementById('screenFlash'),
+		fireArtillery: d.getElementById('fireArtillery'),
+		launchMissile: d.getElementById('launchMissile'),
+		launchNuke: d.getElementById('launchNuke'),
+		researchEngineering: d.getElementById('researchEngineering'),
+		researchGunpowder: d.getElementById('researchGunpowder'),
+		researchRocketry: d.getElementById('researchRocketry'),
+		researchAtomicTheory: d.getElementById('researchAtomicTheory'),
+		researchFutureTech: d.getElementById('researchFutureTech')
+	}
 }
+initDom();
+
 var $DOM = {
 	head: $("#head"),
 	chatInput: $("#chat-input")
@@ -499,7 +593,8 @@ var audio = {
 					'grenade8',
 					'missile7',
 					'bomb9',
-					'warning'
+					'warning',
+					'research'
 				];
 				for (var i=0, len=x.length; i<len; i++){
 					var z = x[i];

@@ -3,6 +3,11 @@
 	require('connect1.php');
 	
 	$_SESSION['production'] = 99999;
+	$_SESSION['tech'] = new stdClass();
+	$_SESSION['tech']->engineering = 0;
+	$_SESSION['tech']->gunpowder = 0;
+	$_SESSION['tech']->rocketry = 0;
+	$_SESSION['tech']->atomicTheory = 0;
 	$_SESSION['missilesLaunched'] = 0;
 	
 	$gameDuration = microtime(true) - $_SESSION['gameDuration'];

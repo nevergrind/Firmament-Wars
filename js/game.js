@@ -37,7 +37,7 @@ function updateTileInfo(tileId){
 		} else {
 			name = "";
 			flag = "blank.png";
-			name = '???';
+			name = '';
 		}
 	} else {
 		if (t.flag === "Default.jpg"){
@@ -74,10 +74,8 @@ function updateTileInfo(tileId){
 		ind = t.defense - (t.capital ? 1 : 0);
 	if (ind > 2){
 		DOM.upgradeTileDefense.style.display = 'none';
-		DOM.upgradeTileComplete.style.display = 'block';
 	} else {
 		DOM.upgradeTileDefense.style.display = 'block';
-		DOM.upgradeTileComplete.style.display = 'none';
 		DOM.buildWord.textContent = defWord[ind];
 		DOM.buildCost.textContent = defCost[ind];
 		if (ind === 2){
@@ -151,6 +149,7 @@ function showTarget(e, hover){
 		}
 		// tile data
 		updateTileInfo(tileId);
+		my.flashTile(tileId);
 	} else {
 		my.attackOn = false;
 	}
@@ -444,7 +443,7 @@ function updateTileDefense(){
 	});
 }
 function triggerEndGame(msg){
-	$("*").off('click mousedown keydown keup keypress')
+	$("*").off('click mousedown keydown keyup keypress')
 	g.over = 1;
 	setTimeout(function(){
 		var e = document.getElementById('victoryScreen');

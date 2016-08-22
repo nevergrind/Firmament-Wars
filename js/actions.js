@@ -413,9 +413,63 @@ var action = {
 		} else if (id === 'gotoResearch'){
 			g.actionMenu = 'research';
 			DOM.tileResearch.style.display = 'block';
+			if (!my.tech.engineering){
+				DOM.researchEngineering.style.display = 'block';
+			} else {
+				DOM.researchEngineering.style.display = 'none';
+			}
+			if (!my.tech.gunpowder){
+				DOM.researchGunpowder.style.display = 'block';
+			} else {
+				DOM.researchGunpowder.style.display = 'none';
+			}
+			if (!my.tech.rocketry){
+				DOM.researchRocketry.style.display = 'block';
+			} else {
+				DOM.researchRocketry.style.display = 'none';
+			}
+			if (!my.tech.atomicTheory){
+				DOM.researchAtomicTheory.style.display = 'block';
+			} else {
+				DOM.researchAtomicTheory.style.display = 'none';
+			}
+			// all techs must be finished
+			if (!my.tech.engineering || 
+				!my.tech.gunpowder || 
+				!my.tech.rocketry || 
+				!my.tech.atomicTheory){
+				DOM.researchFutureTech.style.display = 'none';
+			} else {
+				DOM.researchFutureTech.style.display = 'block';
+			}
 		} else if (id === 'gotoBuild'){
 			g.actionMenu = 'build';
 			DOM.tileBuild.style.display = 'block';
+			if (!game.tiles[my.tgt].defense){
+				DOM.upgradeTileDefense.style.display = 'block';
+			} else {
+				// wall or fortress
+				if (!my.tech.engineering){
+					DOM.upgradeTileDefense.style.display = 'none';
+				} else {
+					DOM.upgradeTileDefense.style.display = 'block';
+				}
+			}
+			if (!my.tech.gunpowder){
+				DOM.fireArtillery.style.display = 'none';
+			} else {
+				DOM.fireArtillery.style.display = 'block';
+			}
+			if (!my.tech.rocketry){
+				DOM.launchMissile.style.display = 'none';
+			} else {
+				DOM.launchMissile.style.display = 'block';
+			}
+			if (!my.tech.atomicTheory){
+				DOM.launchNuke.style.display = 'none';
+			} else {
+				DOM.launchNuke.style.display = 'block';
+			}
 		}
 		$("#" + id).addClass('activeTab');
 	}
@@ -471,6 +525,26 @@ $("#actions").on("mousedown", '#attack', function(e){
 	if (e.which === 1){
 		action.upgradeTileDefense();
 	}
+}).on('mousedown', '#researchGunpowder', function(e){
+	if (e.which === 1){
+		research.gunpowder();
+	}
+}).on('mousedown', '#researchEngineering', function(e){
+	if (e.which === 1){
+		research.engineering();
+	}
+}).on('mousedown', '#researchRocketry', function(e){
+	if (e.which === 1){
+		research.rocketry();
+	}
+}).on('mousedown', '#researchAtomicTheory', function(e){
+	if (e.which === 1){
+		research.atomicTheory();
+	}
+}).on('mousedown', '#researchFutureTech', function(e){
+	if (e.which === 1){
+		research.futureTech();
+	}
 }).on('mousedown', '#fireArtillery', function(e){
 	if (e.which === 1){
 		var o = new Target({
@@ -507,9 +581,88 @@ $("#actions").on("mousedown", '#attack', function(e){
 	}
 });
 
+var research = {
+	gunpowder: function(){
+		$.ajax({
+			type: 'GET',
+			url: 'php/researchGunpowder.php'
+		}).done(function(data) {
+			my.tech.gunpowder = 1;
+			research.report(data, "Gunpowder");
+		}).fail(function(data){
+			console.info('gunpowder: ', data);
+		});
+	},
+	engineering: function(){
+		$.ajax({
+			type: 'GET',
+			url: 'php/researchEngineering.php'
+		}).done(function(data) {
+			my.tech.engineering = 1;
+			research.report(data, "Engineering");
+		});
+	},
+	rocketry: function(){
+		$.ajax({
+			type: 'GET',
+			url: 'php/researchRocketry.php'
+		}).done(function(data) {
+			my.tech.rocketry = 1;
+			research.report(data, "Rocketry");
+		}).fail(function(data){
+			console.info('rocketry: ', data);
+		});
+	},
+	atomicTheory: function(){
+		$.ajax({
+			type: 'GET',
+			url: 'php/researchAtomicTheory.php'
+		}).done(function(data) {
+			my.tech.atomicTheory = 1;
+			research.report(data, "Atomic Theory");
+		}).fail(function(data){
+			console.info('atomic: ', data);
+		});
+	},
+	futureTech: function(){
+		$.ajax({
+			type: 'GET',
+			url: 'php/researchFutureTech.php'
+		}).done(function(data) {
+			research.report(data, "Future Tech");
+		}).fail(function(data){
+			console.info('future: ', data);
+		});
+	},
+	report: function(data, tech){
+		setProduction(data);
+		chat('You have finished researching ' + tech + '.');
+		if (data.cultureMsg){
+			chat(data.cultureMsg);
+		}
+		audio.play('research');
+		action.setMenu('gotoResearch');
+	}
+}
+
+$(document).on('keydown', function(e){
+	var x = e.keyCode;
+	//console.info(x);
+	if (x === 9){
+		// tab
+		if (g.view === 'game'){
+			if (!e.shiftKey){
+				my.nextTarget(false);
+			} else {
+				my.nextTarget(true);
+			}
+			e.preventDefault();
+		}
+	}
+});
 $(document).on('keyup', function(e) {
 	var x = e.keyCode;
-	console.info(x);
+	//console.info(x);
 	if (g.view === 'title'){
 		if (x === 13){
 			if (g.focusUpdateNationName){
@@ -573,16 +726,19 @@ $(document).on('keyup', function(e) {
 				} else if (g.actionMenu === 'research'){
 					if (x === 69){
 						// r
-						console.info('engineering');
+						research.engineering();
 					} else if (x === 71){
-						// f
-						console.info('gunpowder');
+						// g
+						research.gunpowder();
 					} else if (x === 82){
 						// r
-						console.info('rocketry');
+						research.rocketry();
 					} else if (x === 65){
 						// a
-						console.info('atomic');
+						research.atomicTheory();
+					} else if (x === 70){
+						// f
+						research.futureTech();
 					}
 				} else {
 					if (x === 66){

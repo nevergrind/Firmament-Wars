@@ -18,6 +18,12 @@
 	$capitalDefBonus = in_array($target, $_SESSION['capitalTiles']) ? 1 : 0;
 	$ind = $defense - $capitalDefBonus;
 	
+	if ($ind >= 1){
+		if (!$_SESSION['tech']->engineering){
+			header('HTTP/1.1 500 You must research this technology first!');
+			exit();
+		}
+	}
 	
 	$x = new stdClass();
 	$x->capital = $capitalDefBonus;

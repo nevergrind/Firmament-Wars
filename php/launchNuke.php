@@ -13,6 +13,10 @@
 		header('HTTP/1.1 500 Not enough energy!');
 		exit();
 	}
+	if (!$_SESSION['tech']->atomicTheory){
+		header('HTTP/1.1 500 You must research this technology first!');
+		exit();
+	}
 	$query = 'select tile, tileName, nation, flag, units, player, account from fwTiles where (tile=? or tile=?) and game=? limit 2';
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('iii', $attacker->tile, $defender->tile, $_SESSION['gameId']);

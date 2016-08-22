@@ -61,6 +61,9 @@
 	$x->oBonus = $_SESSION['oBonus'];
 	$x->dBonus = $_SESSION['dBonus'];
 	$x->cultureBonus = $_SESSION['cultureBonus'];
+	// tech
+	$x->tech = $_SESSION['tech'];
+	$x->capital = $_SESSION['capital'];
 	
 	$query = 'select sum(food), sum(culture) from `fwTiles` where account=? and game=?';
 	$stmt = $link->prepare($query);

@@ -196,7 +196,7 @@ var animate = {
 			boxB = e3.getBBox(),
 			x2 = boxB.x + boxB.width/2,
 			y2 = boxB.y + boxB.height/2;
-		console.info(Math.abs(x1-x2));
+			
 		// get missile line coordinates
 		my.motionPath[0] = e2.getAttribute('x')*1 - 10;
 		my.motionPath[1] = e2.getAttribute('y')*1 - 10;

@@ -36,7 +36,7 @@
 			$stmt->store_result();
 			$count = $stmt->num_rows;
 			if ($count < 3){
-				$offset = 1;
+				$offset = 0;
 			}
 			
 			// if there are more than 3 enemy tiles, it picks randomly from the first 3

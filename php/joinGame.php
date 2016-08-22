@@ -66,6 +66,11 @@
 	$_SESSION['gameDuration'] = -1;
 	$_SESSION['missilesLaunched'] = 0;
 	$_SESSION['nukesLaunched'] = 0;
+	$_SESSION['tech'] = new stdClass();
+	$_SESSION['tech']->engineering = 0;
+	$_SESSION['tech']->gunpowder = 0;
+	$_SESSION['tech']->rocketry = 0;
+	$_SESSION['tech']->atomicTheory = 0;
 	
 	// init chat
 	$query = "select row from fwchat order by row desc limit 1";

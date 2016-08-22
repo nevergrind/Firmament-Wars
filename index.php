@@ -264,7 +264,7 @@
 										<span class='text-hotkey'>R</span>esearch
 									</div>
 								
-									<div id="gotoBuild" class="actionTabs col-md-4 text-center" data-toggle="tooltip" title="Build a structures and weapons">
+									<div id="gotoBuild" class="actionTabs col-md-4 text-center" data-toggle="tooltip" title="Build structures and weapons">
 										<span class='text-hotkey'>B</span>uild
 									</div>
 								</div>
@@ -323,22 +323,10 @@
 							
 							<div id="tileResearch" class="container shadow4">
 								
-								<div id="researchEngineering" class="actionButtons row" 
-									data-placement="left" 
-									data-toggle="tooltip" 
-									title="Research engineering to learn how to build defensive structures.">
-									<div class="col-xs-8">
-										<span class='text-hotkey'>E</span>ngineering
-									</div>
-									<div class="col-xs-4 text-right">
-										<i class="fa fa-bolt production pointer actionBolt"></i>100
-									</div>
-								</div>
-								
 								<div id="researchGunpowder" class="actionButtons row" 
 									data-placement="left" 
 									data-toggle="tooltip" 
-									title="Research gunpowder technology to attack safely from a distance.">
+									title="Research gunpowder to unlock cannons.">
 									<div class="col-xs-8">
 										<span class='text-hotkey'>G</span>unpowder
 									</div>
@@ -347,10 +335,22 @@
 									</div>
 								</div>
 								
+								<div id="researchEngineering" class="actionButtons row" 
+									data-placement="left" 
+									data-toggle="tooltip" 
+									title="Research engineering to unlock walls and fortresses.">
+									<div class="col-xs-8">
+										<span class='text-hotkey'>E</span>ngineering
+									</div>
+									<div class="col-xs-4 text-right">
+										<i class="fa fa-bolt production pointer actionBolt"></i>150
+									</div>
+								</div>
+								
 								<div id="researchRocketry" class="actionButtons row" 
 									data-placement="left" 
 									data-toggle="tooltip" 
-									title="Research rocketry technology to launch missiles at any territory.">
+									title="Research rocketry to unlock missiles.">
 									<div class="col-xs-8">
 										<span class='text-hotkey'>R</span>ocketry
 									</div>
@@ -362,7 +362,7 @@
 								<div id="researchAtomicTheory" class="actionButtons row" 
 									data-placement="left" 
 									data-toggle="tooltip" 
-									title="Research atomic theory to launch nuclear weapons.">
+									title="Research atomic theory to unlock nuclear weapons.">
 									<div class="col-xs-8">
 										<span class='text-hotkey'>A</span>tomic Theory
 									</div>
@@ -371,28 +371,21 @@
 									</div>
 								</div>
 								
-							</div>
-							
-							<div id="tileBuild" class="container shadow4">
-							
-								<div id="upgradeTileDefense" class="actionButtons row" 
+								<div id="researchFutureTech" class="actionButtons row" 
 									data-placement="left" 
 									data-toggle="tooltip" 
-									title="Bunkers upgrade the structural defense of a territory">
+									title="Research future technology.">
 									<div class="col-xs-8">
-									B<span class='text-hotkey'>u</span>ild <span id="buildWord">Bunker</span>
+										<span class='text-hotkey'>F</span>uture Tech
 									</div>
 									<div class="col-xs-4 text-right">
-										<i class="fa fa-bolt production pointer actionBolt"></i><span id="buildCost">80</span>
+										<i class="fa fa-bolt production pointer actionBolt"></i>1250
 									</div>
 								</div>
 								
-								<div id="upgradeTileComplete" class="actionButtons row"
-									data-placement="left"
-									data-toggle="tooltip"
-									title="This tile has been fully upgraded">
-									<div class="col-lg-12 text-center">Fully Fortified</div>
-								</div>
+							</div>
+							
+							<div id="tileBuild" class="container shadow4">
 								
 								<div id="fireArtillery" class="actionButtons row" 
 									data-placement="left" 
@@ -403,6 +396,18 @@
 									</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i>60
+									</div>
+								</div>
+							
+								<div id="upgradeTileDefense" class="actionButtons row" 
+									data-placement="left" 
+									data-toggle="tooltip" 
+									title="Bunkers upgrade the structural defense of a territory">
+									<div class="col-xs-8">
+									<span class='text-hotkey'>B</span>uild <span id="buildWord">Bunker</span>
+									</div>
+									<div class="col-xs-4 text-right">
+										<i class="fa fa-bolt production pointer actionBolt"></i><span id="buildCost">80</span>
 									</div>
 								</div>
 								
@@ -430,7 +435,6 @@
 							</div>
 						
 						</div>
-				
 					</div>
 				</div>
 			</div>
@@ -541,8 +545,10 @@
 			
 		<div id="worldWrap">
 			<?php
+				/*
 				$svg = file_get_contents("images/world_simple3.svg");
 				echo $svg;
+				*/
 			?>
 		</div>
 		

@@ -923,11 +923,12 @@ table {
 	display: none;
 	text-align: center;
 }
+#researchFutureTech{
+	display: none;
+}
 .player0{
 	color: #002F73;
 	background: #002F73;
-}
-.p0b{
 }
 .player1{
 	color: #700000;
@@ -1035,9 +1036,6 @@ table {
 	margin: 1em 0 0;
 	font-variant: small-caps;
 	letter-spacing: .1em;
-}
-#upgradeTileComplete{
-	display: none;
 }
 /* helper classes */
 .no-point{

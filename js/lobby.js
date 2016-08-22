@@ -153,7 +153,6 @@ function joinStartedGame(){
 		url: "php/initGameState.php"
 	}).done(function(data){
 		audio.ambientInit();
-		var focusTile = 0;
 		console.info('initGameState ', data);
 		if (location.hostname === 'localhost'){
 			audio.load.game();
@@ -164,15 +163,8 @@ function joinStartedGame(){
 		my.oBonus = data.oBonus;
 		my.dBonus = data.dBonus;
 		my.cultureBonus = data.cultureBonus;
-		initOffensiveTooltips();
-		TweenMax.set(DOM.targetLine, {
-			stroke: color[my.player]
-		});
-		TweenMax.set(DOM.targetLine, {
-			stroke: "hsl(+=0%, +=80%, +=25%)"
-		});
-		
-		
+		my.tech = data.tech;
+		my.capital = data.capital;
 		my.flag = data.flag;
 		my.nation = data.nation;
 		my.foodMax = data.foodMax;
@@ -185,147 +177,6 @@ function joinStartedGame(){
 			// initialize diplomacy-ui
 			game.player[z] = new Nation();
 		}
-		// initialize client data
-		for (var i=0, len=data.tiles.length; i<len; i++){
-			var d = data.tiles[i];
-			game.tiles[i] = {
-				name: d.tileName,
-				account: d.account,
-				player: d.player,
-				nation: d.nation,
-				flag: d.flag,
-				capital: data.capitalTiles.indexOf(i) > -1 && d.flag ? true : false,
-				units: d.units,
-				food: d.food,
-				culture: d.culture,
-				defense: d.defense
-			}
-			if (d.nation){
-				if (!game.player[d.player].nation){
-					game.player[d.player].player = d.player;
-					game.player[d.player].nation = d.nation;
-					game.player[d.player].flag = d.flag;
-					game.player[d.player].account = d.account;
-				}
-			}
-			document.getElementById('unit' + i).textContent = d.units === 0 ? "" : d.units;
-			if (data.tiles[i].player){
-				TweenMax.set(document.getElementById('land' + i), {
-					fill: color[d.player]
-				});
-			}
-			if (my.player === d.player){
-				my.focusTile = i;
-			}
-		}
-		// init mapFlagWrap
-		var a = document.getElementsByClassName('unit');
-		for (var i=0, len=a.length; i<len; i++){
-			var t = game.tiles[i];
-			var x = a[i].getAttribute('x') - 24;
-			var y = a[i].getAttribute('y') - 24;
-			var flag = 'blank.png';
-			if (!t.flag && t.units){
-				flag = "Player0.jpg";
-			} else if (t.flag){
-				flag = t.flag;
-			}
-			var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-			svg.id = 'flag' + i;
-			svg.setAttributeNS(null, 'height', 24);
-			svg.setAttributeNS(null, 'width', 24);
-			svg.setAttributeNS(null,"x",x);
-			svg.setAttributeNS(null,"y",y);
-			svg.setAttributeNS(null,"class","mapFlag");
-			svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/flags/'+flag);
-			document.getElementById('mapFlagWrap').appendChild(svg);
-		}
-		
-		var str = '';
-		// init diplomacyPlayers
-		for (var i=0, len=game.player.length; i<len; i++){
-			var p = game.player[i];
-			if (p.flag){
-				// console.info(game.player[i]);
-				if (p.flag === 'Default.jpg'){
-					str += 
-					'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">';
-							if (my.player === p.player){
-								str += '<i id="surrender" class="fa fa-flag pointer" data-placement="right" data-toggle="tooltip" title="Surrender"></i>';
-							} else {
-								str += '<i class="fa fa-flag surrender"></i>';
-							}
-							str += '<i class="fa fa-stop diplomacySquare player' + p.player + ' data-toggle="tooltip" title="Player Color""></i>' +
-							'<img src="images/flags/Player' + p.player + '.jpg" class="player' + p.player + ' inlineFlag diploFlag" data-toggle="tooltip" title="'+ p.account + '"><span class="diploNames" data-toggle="tooltip" title="'+ p.nation + '">' + p.nation + '</span>';
-				} else {
-					str += 
-					'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">';
-							if (my.player === p.player){
-								str += '<i id="surrender" class="fa fa-flag pointer"  data-placement="right" data-toggle="tooltip" title="Surrender"></i>';
-							} else {
-								str += '<i class="fa fa-flag surrender"></i>';
-							}
-							str += '<i class="fa fa-stop diplomacySquare player' + p.player + '" data-toggle="tooltip" title="Player Color"></i>' +
-							'<img src="images/flags/' + p.flag + '" class="inlineFlag diploFlag" data-toggle="tooltip" title="'+ p.account + '"><span class="diploNames" data-toggle="tooltip" title="'+ p.nation + '">' + p.nation + '</span>';
-				}
-				str += '</div>';
-			}
-		}
-		
-		document.getElementById('diplomacy-ui').innerHTML = str;
-		$('[data-toggle="tooltip"]').tooltip({
-			delay: {
-				show: 0,
-				hide: 0
-			}
-		});
-		function triggerAction(that){
-			if (my.attackOn){
-				var o = my.targetData;
-				if (o.attackName === 'attack'){
-					action.attack(that);
-				} else if (o.attackName === 'artillery'){
-					action.fireArtillery(that);
-				} else if (o.attackName === 'missile'){
-					action.launchMissile(that);
-				} else if (o.attackName === 'nuke'){
-					action.launchNuke(that);
-				}
-			} else {
-				showTarget(that);
-			}
-		}
-		// SVG mouse events
-		if (isMSIE || isMSIE11){
-			$(".land").on("click", function(){
-				triggerAction(this);
-			});
-		} else {
-			$(".land").on("mousedown", function(e){
-				var box = this.getBBox();
-				var x = Math.round(box.x + (box.width/2));
-				var y = Math.round(box.y + (box.height/2));
-				console.info(this.id, x, y, e.which);
-				triggerAction(this);
-			});
-		}
-		$(".land").on("mouseenter", function(){
-			my.lastTarget = this;
-			if (my.attackOn){
-				showTarget(this, true);
-			}
-			TweenMax.set(this, {
-				fill: "hsl(+=0%, +=30%, +=15%)"
-			});
-		}).on("mouseleave", function(){
-			var land = this.id.slice(4)*1;
-			if (game.tiles.length > 0){
-				var player = game.tiles[land].player;
-				TweenMax.to(this, .25, {
-					fill: color[player]
-				});
-			}
-		});
 		
 		$("#mainWrap").remove();
 		g.unlock();
@@ -336,85 +187,199 @@ function joinStartedGame(){
 		}, {
 			autoAlpha: 1
 		});
-		getGameState();
 		
-		(function repeat(){
-			// delayed to allow svg to load
-			if ($("#world").length > 0){
-				
-				//load map
-				
-				/*
-				  $.ajax({
-					type: 'GET',
-					url: 'images/world_simple3.svg'
-				  }).done(function(data){
-					console.info('test: ', data);
-				  }).fail(function(err){
-					console.warn('fail', err);
-					$("#worldWrap").html(err.responseText);
-				  });
-				*/
-				try {
-					worldMap = Draggable.create("#worldWrap", {
-						bounds: "#gameWrap",
-						velocity: 'auto',
-						onRelease: function(){
-							(function go(c){
-								if (c < 30){
-										worldMap[0].applyBounds();
-									setTimeout(function(){
-										go(++c);
-									}, 50);
-								}
-							})(0);
-						},
-						onThrowComplete : function(){
-								worldMap[0].applyBounds();
-						}
-					});
-				} catch (err){
-					setTimeout(repeat, 100);
-				}
-			} else {
-				setTimeout(repeat, 100);
-			}
-		})();
-		// focus on player home
-		var e = document.getElementById("land" + my.focusTile);
-		var box = e.getBBox();
-		// init map position & check max/min values
-		var x = (-box.x + 512);
-		if (x > 0){ x = 0; }
-		var xMin = (g.mouse.mapSizeX - 1024) * -1;
-		if (x < xMin){ x = xMin; }
-		
-		var y = (-box.y + 384);
-		if (y > 0){ y = 0; }
-		var yMin = (g.mouse.mapSizeY - 768) * -1;
-		if (y < yMin){ y = yMin; } 
-		TweenMax.to('#worldWrap', .5, {
-			force3D: false,
-			x: x * g.resizeX,
-			y: y * g.resizeY
+		// load map
+		$.ajax({
+			type: 'GET',
+			url: 'images/world_simple3.svg'
+		}).done(function(data){
+			document.getElementById('worldWrap').innerHTML = data.responseText;
+			initMap();
+		}).fail(function(err){
+			//$("#worldWrap").html(err.responseText);
+			document.getElementById('worldWrap').innerHTML = err.responseText;
+			initMap();
 		});
-		initResources(data); // setResources(data);
-		$(e).trigger("mousedown");
-		if (!isMobile){
-			var e = document.getElementsByClassName('land');
-			TweenMax.fromTo(e, 2, {
-				fillOpacity: .01,
-				drawSVG: '0%'
-			}, {
-				drawSVG: '100%',
-				fillOpacity: 1,
-				ease: Linear.easeOut
-			});
-		}
-		if (location.host !== 'localhost'){
-			window.onbeforeunload = function(){
-				return "Are you sure you want leave the game?";
+		
+		function initMap(){
+			initDom();
+				
+			// initialize client data
+			for (var i=0, len=data.tiles.length; i<len; i++){
+				var d = data.tiles[i];
+				game.tiles[i] = {
+					name: d.tileName,
+					account: d.account,
+					player: d.player,
+					nation: d.nation,
+					flag: d.flag,
+					capital: data.capitalTiles.indexOf(i) > -1 && d.flag ? true : false,
+					units: d.units,
+					food: d.food,
+					culture: d.culture,
+					defense: d.defense
+				}
+				if (d.nation){
+					if (!game.player[d.player].nation){
+						game.player[d.player].player = d.player;
+						game.player[d.player].nation = d.nation;
+						game.player[d.player].flag = d.flag;
+						game.player[d.player].account = d.account;
+					}
+				}
+				document.getElementById('unit' + i).textContent = d.units === 0 ? "" : d.units;
+				if (data.tiles[i].player){
+					TweenMax.set(document.getElementById('land' + i), {
+						fill: color[d.player]
+					});
+				}
 			}
+			// init mapFlagWrap
+			var a = document.getElementsByClassName('unit');
+			for (var i=0, len=a.length; i<len; i++){
+				var t = game.tiles[i];
+				var x = a[i].getAttribute('x') - 24;
+				var y = a[i].getAttribute('y') - 24;
+				var flag = 'blank.png';
+				if (!t.flag && t.units){
+					flag = "Player0.jpg";
+				} else if (t.flag){
+					flag = t.flag;
+				}
+				var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+				svg.id = 'flag' + i;
+				svg.setAttributeNS(null, 'height', 24);
+				svg.setAttributeNS(null, 'width', 24);
+				svg.setAttributeNS(null,"x",x);
+				svg.setAttributeNS(null,"y",y);
+				svg.setAttributeNS(null,"class","mapFlag");
+				svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/flags/'+flag);
+				document.getElementById('mapFlagWrap').appendChild(svg);
+			}
+			var str = '';
+			// init diplomacyPlayers
+			for (var i=0, len=game.player.length; i<len; i++){
+				var p = game.player[i];
+				if (p.flag){
+					// console.info(game.player[i]);
+					if (p.flag === 'Default.jpg'){
+						str += 
+						'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">';
+								if (my.player === p.player){
+									str += '<i id="surrender" class="fa fa-flag pointer" data-placement="right" data-toggle="tooltip" title="Surrender"></i>';
+								} else {
+									str += '<i class="fa fa-flag surrender"></i>';
+								}
+								str += '<i class="fa fa-stop diplomacySquare player' + p.player + ' data-toggle="tooltip" title="Player Color""></i>' +
+								'<img src="images/flags/Player' + p.player + '.jpg" class="player' + p.player + ' inlineFlag diploFlag" data-toggle="tooltip" title="'+ p.account + '"><span class="diploNames" data-toggle="tooltip" title="'+ p.nation + '">' + p.nation + '</span>';
+					} else {
+						str += 
+						'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">';
+								if (my.player === p.player){
+									str += '<i id="surrender" class="fa fa-flag pointer"  data-placement="right" data-toggle="tooltip" title="Surrender"></i>';
+								} else {
+									str += '<i class="fa fa-flag surrender"></i>';
+								}
+								str += '<i class="fa fa-stop diplomacySquare player' + p.player + '" data-toggle="tooltip" title="Player Color"></i>' +
+								'<img src="images/flags/' + p.flag + '" class="inlineFlag diploFlag" data-toggle="tooltip" title="'+ p.account + '"><span class="diploNames" data-toggle="tooltip" title="'+ p.nation + '">' + p.nation + '</span>';
+					}
+					str += '</div>';
+				}
+			}
+			
+			document.getElementById('diplomacy-ui').innerHTML = str;
+			$('[data-toggle="tooltip"]').tooltip({
+				delay: {
+					show: 0,
+					hide: 0
+				}
+			});
+			initResources(data);
+			setTimeout(function(){
+				// init draggable map
+				worldMap = Draggable.create(DOM.worldWrap, {
+					type: 'x,y',
+					bounds: "#gameWrap"
+				});
+				
+				initOffensiveTooltips();
+				TweenMax.set(DOM.targetLine, {
+					stroke: color[my.player]
+				});
+				TweenMax.set(DOM.targetLine, {
+					stroke: "hsl(+=0%, +=80%, +=25%)"
+				});
+				
+				function triggerAction(that){
+					if (my.attackOn){
+						var o = my.targetData;
+						if (o.attackName === 'attack'){
+							action.attack(that);
+						} else if (o.attackName === 'artillery'){
+							action.fireArtillery(that);
+						} else if (o.attackName === 'missile'){
+							action.launchMissile(that);
+						} else if (o.attackName === 'nuke'){
+							action.launchNuke(that);
+						}
+					} else {
+						showTarget(that);
+					}
+				}
+				// map events
+				if (isMSIE || isMSIE11){
+					$(".land").on("click", function(){
+						triggerAction(this);
+					});
+				} else {
+					$(".land").on("mousedown", function(e){
+						var box = this.getBBox();
+						var x = Math.round(box.x + (box.width/2));
+						var y = Math.round(box.y + (box.height/2));
+						console.info(this.id, x, y, e.which);
+						triggerAction(this);
+					});
+				}
+				$(".land").on("mouseenter", function(){
+					my.lastTarget = this;
+					if (my.attackOn){
+						showTarget(this, true);
+					}
+					TweenMax.set(this, {
+						fill: "hsl(+=0%, +=30%, +=15%)"
+					});
+				}).on("mouseleave", function(){
+					var land = this.id.slice(4)*1;
+					if (game.tiles.length > 0){
+						var player = game.tiles[land].player;
+						TweenMax.to(this, .25, {
+							fill: color[player]
+						});
+					}
+				});
+				
+				// focus on player home
+				my.focusTile(my.capital);
+				// desktop only animation
+				if (!isMobile){
+					var e = document.getElementsByClassName('land');
+					TweenMax.fromTo(e, 2, {
+						fillOpacity: .01,
+						drawSVG: '0%'
+					}, {
+						drawSVG: '100%',
+						fillOpacity: 1,
+						ease: Linear.easeOut
+					});
+				}
+				// add warning for players
+				if (location.host !== 'localhost'){
+					window.onbeforeunload = function(){
+						return "Are you sure you want leave the game?";
+					}
+				}
+				getGameState();
+			}, 100);
 		}
 	}).fail(function(data){
 		serverError();
