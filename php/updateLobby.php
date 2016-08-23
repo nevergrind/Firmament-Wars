@@ -45,18 +45,20 @@
 		</div>';
 	}
 	// is my gameId started?
-	$query = 'SELECT row FROM `fwgames` where row=? and start > 0';
+	$query = 'SELECT count(row) rows FROM `fwgames` where row=? and start > 0';
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('i', $_SESSION['gameId']);
+	$stmt->bind_result($rows);
 	$stmt->execute();
-	$stmt->store_result();
-	$startedGame = $stmt->num_rows;
+	while($stmt->fetch()){
+		$count = $rows;
+	}
 	
 	$x->name = $_SESSION['gameName'];
 	$x->max = $_SESSION['max'];
 	$x->map = $_SESSION['map'];
 	$x->player = $_SESSION['player'];
-	$x->gameStarted = $startedGame;
+	$x->gameStarted = $count;
 	$x->totalPlayers = $totalPlayers;
 	$x->delay = microtime(true) - $start;
 	echo json_encode($x);

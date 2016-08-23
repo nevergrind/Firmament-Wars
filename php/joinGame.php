@@ -21,8 +21,7 @@
 		$map = $dmap;
 	}
 	
-	$count = $stmt->num_rows;
-	if (!$count){
+	if (!$stmt->num_rows){
 		header('HTTP/1.1 500 All players have left the game.');
 		exit;
 	}
@@ -117,25 +116,6 @@
 		exit;
 	}
 	
-	// get account flag
-	$_SESSION['nation'] = "";
-	$_SESSION['flag'] = "";
-
-	$query = "select nation, flag from fwNations where account=?";
-	$stmt = $link->prepare($query);
-	$stmt->bind_param('s', $_SESSION['account']);
-	$stmt->execute();
-	$stmt->store_result();
-	$stmt->bind_result($dNation, $dFlag);
-	$count = $stmt->num_rows;
-	if ($count < 1){
-		header('HTTP/1.1 500 Cannot access nation data.');
-		exit;
-	}
-	while($stmt->fetch()){
-		$_SESSION['nation'] = $dNation;
-		$_SESSION['flag'] = $dFlag;
-	}
 	require('pingLobby.php');
 	
 	require('updateLobby.php');

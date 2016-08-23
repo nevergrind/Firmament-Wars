@@ -13,8 +13,8 @@
 	if ($players < 2 || $players > 8 || $players % 1 != 0){
 		$players = 2;
 	}
-	
-	$query = "select count(p.game) players, g.name from fwGames g join fwPlayers p on g.row=p.game and g.name=? group by p.game having players > 0";
+	// does this game name exist?
+	$query = "select count(p.game) players from fwGames g join fwPlayers p on g.row=p.game and g.name=? group by p.game having players > 0";
 	
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('s', $name);
@@ -81,24 +81,5 @@
 		$_SESSION['chatId'] = $row;
 	}
 	
-	// get account flag
-	$nation = "";
-	$flag = "";
-
-	$query = "select nation, flag from fwNations where account=?";
-	$stmt = $link->prepare($query);
-	$stmt->bind_param('s', $_SESSION['account']);
-	$stmt->execute();
-	$stmt->store_result();
-	$stmt->bind_result($dNation, $dFlag);
-	$count = $stmt->num_rows;
-	if ($count < 1){
-		header('HTTP/1.1 500 Cannot access nation data.');
-		exit;
-	}
-	while($stmt->fetch()){
-		$_SESSION['nation'] = $dNation;
-		$_SESSION['flag'] = $dFlag;
-	}
 	require('updateLobby.php');
 ?>

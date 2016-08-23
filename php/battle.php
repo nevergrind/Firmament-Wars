@@ -3,11 +3,9 @@
 	function battle($x, $y, $defender){
 		$oBonus = $_SESSION['oBonus'] * 500;
 		$dBonus = $_SESSION['dBonus'] * 500;
-		// $oTileUpgrades = [0, 1600, 3200, 4800];
-		$dTileUpgrades = [0, 3000, 4500, 5500, 6200];
+		$dTileUpgrades = [0, 3000, 4500, 5400, 6200];
 		// structure upgrades + capital
 		$defVal = $dTileUpgrades[$defender->defense];
-		// Math.ceil(Math.random() * (6 + bonus)) + (Math.random() * 100 < oTile ? 3 : 0);
 		
 		while ($y > 0 && $x > 1){
 			$diceX = $x > 2 ? 3 : 2;

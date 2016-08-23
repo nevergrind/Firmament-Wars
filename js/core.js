@@ -73,7 +73,7 @@ g.init = (function(){
 	console.info("Initializing game...");
 	$('[title]').tooltip();
 	// build map drop-down 
-	var s = "<option value='Default' selected='selected'>Default</option>";
+	var s = "<li><a class='flagSelect' href='#'>Default</a></li>";
 	var flagData = {
 		Africa: {
 			group: "Africa",
@@ -117,11 +117,10 @@ g.init = (function(){
 		},
 	}
 	for (x in flagData){
-		s += "<optgroup label='" + flagData[x].group + "'>";
+		s += "<li class='dropdown-header'>" + flagData[x].group + "</li>";
 		flagData[x].name.forEach(function(e){
-			s += "<option value='" + e + "'>" + e + "</option>";
+			s += "<li><a class='flagSelect' href='#'>" + e + "</a></li>";
 		});
-		s += "</optgroup>";
 	}
 	document.getElementById("flagDropdown").innerHTML = s;
 	g.lock();
@@ -188,6 +187,8 @@ var my = {
 	attackOn: false,
 	splitAttack: false,
 	targetData: {},
+	selectedFlag: "Default",
+	selectedFlagFull: "Default.jpg",
 	tech: {
 		engineering: 0,
 		gunpowder: 0,
@@ -253,7 +254,7 @@ var my = {
 			x = xMin;
 		}
 		
-		var y = -box.y + 384;
+		var y = -box.y + 234; // 384 is dead center
 		if (y > 0){ 
 			y = 0;
 		}
@@ -282,13 +283,21 @@ var my = {
 			yoyo: true
 		});
 		var e3 = document.getElementById('flag' + tile);
+		var e4 = document.getElementById('land' + tile);
 		TweenMax.to(e3, 1, {
 			startAt: {
 				transformOrigin: '50% 50%',
-				scale: 2
+				scale: 1.75
 			},
-			ease: Power2.easeIn,
+			ease: Power3.easeIn,
 			scale: 1
+		});
+		TweenMax.to(e4, 1, {
+			fillOpacity: .8,
+			drawSVG: '0%'
+		}, {
+			drawSVG: '100%',
+			fillOpacity: 1
 		});
 	}
 }

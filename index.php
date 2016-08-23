@@ -58,7 +58,7 @@
 					<span id="crystalCount" class="text-primary" title="Crystals Remaining">' .$crystals.'</span>&ensp;
 					<a target="_blank" title="Manage Account" href="/account">Account</a>&ensp;
 					<a target="_blank" title="Store" href="/store/">Store</a>&ensp;
-					
+					<a id="logout" href="#">Logout</a>
 				</div>
 				<div class="pull-right text-primary">
 					<a target="_blank" href="//www.youtube.com/user/Maelfyn">
@@ -117,6 +117,9 @@
 								// show record
 								echo 'Record: ' .$wins. ' wins, '. $losses .' losses, '. $disconnects .' disconnects';
 							}
+							// init nation values
+							$_SESSION['nation'] = $nation;
+							$_SESSION['flag'] = $flag;
 						} else {
 							$query = "insert into fwNations (`account`, `nation`, `flag`) VALUES (?, '$nation', '$flag')";
 							$stmt = $link->prepare($query);
@@ -140,15 +143,6 @@
 				
 				<div class='row'>
 					<div id="menuContent" class="shadow4 col-lg-12"></div>
-				</div>
-				<hr class="fancyhr">
-				
-				<div class='row'>
-					<div id="menuFoot" class="text-center col-lg-12">
-						<button id="logout" type="button" class="btn btn-primary btn-xs shadow4">
-							Logout
-						</button>
-					</div>
 				</div>
 			</div>
 			
@@ -179,9 +173,15 @@
 						<div class='flagLabel'>
 							Select National Flag
 						</div>
-						<select id="flagDropdown" class="form-control">
-							<!-- flags -->
-						</select>
+						<div class="dropdown">
+							<button class="btn btn-primary dropdown-toggle shadow4" type="button" data-toggle="dropdown">
+								Update Flag
+								<span class="caret shadow4"></span>
+							</button>
+							<ul id="flagDropdown" class="dropdown-menu">
+								
+							</ul>
+						</div>
 						<div id="flagPurchased" class="flagPurchaseStatus">
 							<hr class="fancyhr">
 							<h4 class="text-center text-success shadow4">
@@ -548,7 +548,7 @@
 				/*
 				$svg = file_get_contents("images/world_simple3.svg");
 				echo $svg;
-				*/
+				*/	
 			?>
 		</div>
 		

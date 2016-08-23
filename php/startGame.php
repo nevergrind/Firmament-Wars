@@ -10,7 +10,6 @@ if ($_SESSION['player'] === 1){
 	$stmt->execute();
 	$stmt->store_result();
 	$stmt->bind_result($dPlayer, $dAccount, $dNation, $dFlag);
-	$count = $stmt->num_rows;
 	
 	$players = array();
 	while($stmt->fetch()){
@@ -22,7 +21,7 @@ if ($_SESSION['player'] === 1){
 		array_push($players, $x);
 	}
 	
-	if ($count < 2 || $count > 8){
+	if ($stmt->num_rows < 2 || $stmt->num_rows > 8){
 		header('HTTP/1.1 500 You failed to join the game.');
 		exit;
 	}

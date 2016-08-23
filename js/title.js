@@ -43,26 +43,39 @@ $("#refreshGames").on("click", function(){
 
 $("#create").on("click", function(){
 	var x = 
-	"<div id='createGameWrap'>\
-		<form class='form-horizontal'>\
-			<div class='form-group'>\
-				<label id='gameNameLabel' for='gameName' class='col-xs-3 control-label'>Game Name:</label>\
-				<div class='col-xs-9'>\
-					<input id='gameName' class='form-control' type='text' maxlength='32' autocomplete='off' size='20'>\
+	"<div id='createGameWrap' class='container'>\
+		<div class='row buffer'>\
+			<div class='col-xs-3 control-label createRow'>Game Name:</div>\
+			<div class='col-xs-9'>\
+				<input id='gameName' class='form-control' type='text' maxlength='32' autocomplete='off' size='20'>\
+			</div>\
+		</div>\
+		<div class='row buffer'>\
+			<div class='col-xs-9 control-label createRow'>Maximum Number of Players:</div>\
+			<div class='col-xs-3'>\
+				<input type='number' class='form-control' id='gamePlayers' value='8' min='2' max='8'>\
+			</div>\
+		</div>\
+		<div class='row buffer'>\
+			<div id='gameMap' class='col-xs-6 createRow'>Map:</div>\
+			<div class='col-xs-6'>\
+				<div class='dropdown pull-right'>\
+					<button class='btn btn-primary dropdown-toggle shadow4' type='button' data-toggle='dropdown'>\
+						Earth Alpha\
+						<span class='caret shadow4'></span>\
+					</button>\
+					<ul id='mapDropdown' class='dropdown-menu'>\
+						<li><a class='mapSelect' href='#'>Earth Alpha</a></li>\
+					</ul>\
 				</div>\
 			</div>\
-			<div class='form-group'>\
-				<label id='gamePlayersLabel' for='gamePlayers' class='col-xs-8 control-label'>Maximum Number of Players:</label>\
-				<div class='col-xs-4'>\
-					<input type='number' class='form-control' id='gamePlayers' value='8' min='2' max='8'>\
-				</div>\
+		</div>\
+		<hr class='fancyhr'>\
+		<div class='row'>\
+			<div class='col-xs-12 text-center'>\
+				<button id='createGame' type='button' class='btn btn-md btn-info btn-responsive shadow4'>Create Game Lobby</button>\
 			</div>\
-			<div class='form-group '>\
-				<div class='col-xs-12'>\
-					<button id='createGame' type='button' class='btn btn-md btn-info btn-responsive pull-right shadow4'>Create Game Lobby</button>\
-				</div>\
-			</div>\
-		</form>\
+		</div>\
 	</div>";
 	$("#menuContent").html(x);
 	$("#gameName").focus();
@@ -155,23 +168,25 @@ $("#toggleNation").on("click", function(){
 	animateNationName();
 });
 
-$("#flagDropdown").on("change", function(e){
+$("#flagDropdown").on('click', '.flagSelect', function(){
+	my.selectedFlag = $(this).text();
+	my.selectedFlagFull = my.selectedFlag === "Nepal" ? my.selectedFlag+".png" : my.selectedFlag+".jpg";
 	$(".flagPurchaseStatus").css("display", "none");
-	var z = $(this).val();
-	var x = z === "Nepal" ? "Nepal.png" : z + ".jpg";
-	$("#updateNationFlag").attr("src", "images/flags/" + x)
+	$("#updateNationFlag")
+		.attr("src", "images/flags/" + my.selectedFlagFull)
 		.css("display", "block");
+	console.info(my.selectedFlag, my.selectedFlagFull);
 	g.lock(1);
 	$.ajax({
 		url: 'php/updateFlag.php',
 		data: {
-			flag: x
+			flag: my.selectedFlagFull
 		}
 	}).done(function(data) {
 		$("#offerFlag").css("display", "none");
-		$("#nationFlag").attr("src", "images/flags/" + x);
+		$("#nationFlag").attr("src", "images/flags/" + my.selectedFlagFull);
 		$("#flagPurchased").css("display", "block");
-		Msg("Your nation's flag is now: " + z);
+		Msg("Your nation's flag is now: " + my.selectedFlag);
 	}).fail(function(e){
 		$("#flagPurchased").css("display", "none");
 		$("#offerFlag").css("display", "block");
@@ -221,20 +236,18 @@ $("#menuContent").on("blur", "#gameName", function(){
 });
 
 $("#buyFlag").on("click", function(){
-	var e = $("#flagDropdown").val();
-	var x = e === "Nepal" ? "Nepal.png" : e + ".jpg";
 	g.lock();
 	$.ajax({
 		url: 'php/buyFlag.php',
 		data: {
-			flag: x
+			flag: my.selectedFlagFull
 		}
 	}).done(function(data) {
 		$("#crystalCount").text(data);
 		$("#flagPurchased").css("display", "block");
 		$("#offerFlag").css("display", "none");
-		$("#nationFlag").attr("src", "images/flags/" + x);
-		Msg("Your nation's flag is now: " + e);
+		$("#nationFlag").attr("src", "images/flags/" + my.selectedFlagFull);
+		Msg("Your nation's flag is now: " + my.selectedFlag);
 	}).fail(function(e){
 		// not enough money
 		Msg(e.statusText);

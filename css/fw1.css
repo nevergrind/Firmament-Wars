@@ -665,6 +665,9 @@ text{
 	stroke-dasharray: 2,2;
 	pointer-events: none;
 }
+.mapSelect{
+	text-shadow: none;
+}
 .flagLabel{
 	margin-bottom: .25em;
 }
@@ -875,6 +878,27 @@ table {
 	width: 100%;
 }
 #flagDropdown{
+	background: #f2f2f2;
+	max-height: 400px;
+	overflow: auto;
+}
+.dropdown-menu>li>a{
+	color: #222;
+}
+.dropdown-menu>li>a:hover{
+	background: #135;
+	color: #fff;
+}
+.dropdown-header{
+	font-weight: bold;
+	font-size: 1.25em;
+	background: #357;
+	border-top: 1px solid #016;
+	border-bottom: 1px solid #016;
+	color: #fff;
+	letter-spacing: .125em;
+	font-family: Times New Roman, serif;
+	font-variant: small-caps;
 }
 #updateNationFlag{
 	display: none;
@@ -1079,9 +1103,15 @@ table {
 	color: #1a1a1a;
 }
 #createGameWrap{
-	margin: 1em;
+	width: 100%;
 }
-#gameNameLabel, #gamePlayersLabel{
+.buffer{
+	margin-top: .5em;
+}
+.buffer2{
+	margin-top: 1em;
+}
+.createRow{
 	font-weight: normal;
 	white-space: nowrap;
 	padding: .5em 0;

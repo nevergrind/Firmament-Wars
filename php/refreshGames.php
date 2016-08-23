@@ -29,9 +29,8 @@
 			}
 			$str .=
 			"<tr>
-				<td></td>
-				<td>
-					<button id='joinGame' type='button' class='btn btn-md btn-info btn-responsive shadow4 pull-right'>Join Game</button>
+				<td colspan='2' class='text-center'>
+					<button id='joinGame' type='button' class='btn btn-md btn-info btn-responsive shadow4'>Join Game</button>
 				</td>
 			</tr>";
 		} else {
