@@ -400,12 +400,12 @@ function initLobby(x){
 	var str = '<div id="lobbyWrap" class="container-fixed">';
 	for (var i=1; i<=8; i++){
 		str += 
-		'<div class="row lobbyRow">\
+		'<div id="lobbyRow' +i+ '" class="row lobbyRow">\
 			<div class="col-sm-2">\
 				<img id="lobbyFlag' +i+ '" class="w100 block center" src="images/flags/blank.png">\
 			</div>\
 			<div class="col-sm-6 lobbyDetails">\
-				<span id="lobbyAccount' +i+ '">account</span>\
+				<span id="lobbyAccount' +i+ '"></span>\
 			</div>\
 			<div class="col-sm-4">';
 			if (i === x.player){
@@ -485,26 +485,29 @@ function joinLobby(d){
 			}).done(function(x){
 				console.info(x.delay);
 				my.totalPlayers = x.totalPlayers;
-				for (var i=1; i<=8; i++){
-					if (x.playerData[i-1] !== undefined){
-						var data = x.playerData[i-1];
-						if (lobby.data[i].account !== data.account){
-							console.info('setting lobby data: ', data);
-							lobby.data[i] = data;
-							if (g.view === "lobby"){
+				if (g.view === "lobby"){
+					for (var i=1; i<=8; i++){
+						if (x.playerData[i-1] !== undefined){
+							var data = x.playerData[i-1];
+							if (lobby.data[i].account !== data.account){
+								console.info('setting lobby data: ', data);
+								lobby.data[i] = data;
+								document.getElementById("lobbyRow" + i).style.display = 'block';
 								document.getElementById("lobbyAccount" + i).innerHTML = data.account;
 								document.getElementById("lobbyFlag" + i).src = 'images/flags/' + data.flag;
 								document.getElementById("lobbyGovernment" + i).innerHTML = data.government;
-							}
-							// check if start button should light up
-							if (data.player === 1){
-								var e = document.getElementById("startGame");
-								if (x.totalPlayers === 1){
-									e.className = lobby.startClassOff;
-								} else {
-									e.className = lobby.startClassOn;
+								// check if start button should light up
+								if (data.player === 1){
+									var e = document.getElementById("startGame");
+									if (x.totalPlayers === 1){
+										e.className = lobby.startClassOff;
+									} else {
+										e.className = lobby.startClassOn;
+									}
 								}
 							}
+						} else {
+							document.getElementById("lobbyRow" + i).style.display = 'none';
 						}
 					}
 				}

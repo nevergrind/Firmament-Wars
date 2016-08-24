@@ -747,12 +747,12 @@ circle{
 	position: absolute;
 	top: 2%;
 	width: 55%;
-	height: 95%;
+	height: 57%;
 	left: 2%;
 }
 #lobbyGame{
 	position: absolute;
-	top: 10%;
+	top: 2%;
 	width: 35%;
 	left: 60%;
 	padding: 10px;
@@ -901,11 +901,10 @@ table {
 	padding: 0 1em;
 }
 .lobbyRow{
+	display: none;
 	height: 3em;
 	line-height: 3em;
 	margin-top: .5em;
-}
-.lobbyDetails{
 }
 .lobbyCaret{
 	position: absolute;
@@ -931,7 +930,7 @@ table {
 }
 #governmentDropdown{
 	text-shadow: none;
-	background: #013;
+	background: #00061a;
 	border: 2px groove #204d74;
 }
 #governmentDropdown>li>a{
