@@ -79,9 +79,24 @@ $("#worldWrap").on("mousemove", function(e){
 		setMousePosition(e.originalEvent.layerX, e.originalEvent.layerY);
 	} else {
 		setMousePosition(e.offsetX, e.offsetY);
-		// console.info(e.offsetX, e.offsetY);
 	}
 });
 $("#gameWrap").on('click', '#surrender', function(){
 	exitGame();
+});
+$("#menu").on('click', '.mapSelect', function(){
+	var x = $(this).text();
+	my.map = x;
+	console.info(x);
+	var key = my.map.replace(/ /g,'');
+	var mapData = {
+		EarthAlpha: {
+			tiles: 83,
+			description: 'Up to 8 players vie for domination in this sprawling map across six continents.'
+		}
+	};
+	document.getElementById('createGameMap').innerHTML = x;
+	document.getElementById('createGameTiles').innerHTML = mapData[key].tiles;
+	document.getElementById('createGameDescription').innerHTML = mapData[key].description;
+	
 });

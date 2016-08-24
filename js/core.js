@@ -137,8 +137,11 @@ g.init = (function(){
 			if (data.gameId > 0){
 				console.info("Auto joined game:" + (data.gameId));
 				// join lobby in progress
-				joinLobby(0); // autojoin
-				initResources(data); // setResources(data);
+				setTimeout(function(){
+					initLobby(data);
+					joinLobby(0); // autojoin
+					initResources(data); // setResources(data);
+				}, 111);
 			} else {
 				showTitleScreen();
 			}
@@ -161,6 +164,10 @@ var game = {
 // player data values
 var my = {
 	player: 1,
+	gameName: 'Earth Alpha',
+	max: 8,
+	map: '',
+	totalPlayers: 0,
 	tgt: 1,
 	capital: 0,
 	lastTarget: {},
@@ -718,7 +725,6 @@ function exitGame(bypass){
 		}).done(function(data) {
 			location.reload();
 		}).fail(function(e){
-			Msg(e.statusText);
 			g.unlock(1);
 		});
 	}

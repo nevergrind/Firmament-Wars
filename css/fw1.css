@@ -93,29 +93,29 @@ a:hover{
 	height: 1px; 
 	background-image: -webkit-linear-gradient(
 		left, 
-		rgba(16,64,176,.2), 
-		rgba(16,64,176,1), 
-		rgba(16,64,176,.2)
+		rgba(16,64,176,.4), 
+		rgba(32,128,232,1), 
+		rgba(16,64,176,.4)
 	); 
 	background-image: -moz-linear-gradient(
 		left, 
-		rgba(16,64,176,.2), 
-		rgba(16,64,176,1), 
-		rgba(16,64,176,.2)
+		rgba(16,64,176,.4), 
+		rgba(32,128,232,1), 
+		rgba(16,64,176,.4)
 	); 
 	background-image: -ms-linear-gradient(
 		left, 
-		rgba(16,64,176,.2), 
-		rgba(16,64,176,1), 
-		rgba(16,64,176,.2)
+		rgba(16,64,176,.4), 
+		rgba(32,128,232,1), 
+		rgba(16,64,176,.4)
 	); 
 	background-image: -o-linear-gradient(
 		left, 
-		rgba(16,64,176,.2), 
-		rgba(16,64,176,1), 
-		rgba(16,64,176,.2)
+		rgba(16,64,176,.4), 
+		rgba(32,128,232,1), 
+		rgba(16,64,176,.4)
 	); 
-	margin:8px 8px;
+	margin:8px 0;
 }
 .shadow1{
 	text-shadow:
@@ -731,9 +731,6 @@ circle{
 #refreshGames{
 	margin: 0;
 }
-#joinGame{
-	margin-top: 12px;
-}
 #titleMain{
 	visibility: hidden;
 }
@@ -779,21 +776,13 @@ circle{
 }
 #menuOnline{
 	color: #bef;
-	letter-spacing: .05em;
-}
-#soundWrap{
-	position: absolute;
-	bottom: 0;
-	left: .5%;
-	width: 15%;
-	height: 5%;
-	font-size: 2em;
-	color: #8bf;
 }
 #musicToggle{
 	cursor: pointer;
 }
-
+#musicToggle{
+	width: 1em;
+}
 #Msg{
 	opacity: 0;
 	position: absolute;
@@ -908,8 +897,45 @@ table {
 	word-break: break-word;
 	max-height: 160px;
 }
+#lobbyWrap{
+	padding: 0 1em;
+}
 .lobbyRow{
-	margin: 6px 0;
+	height: 3em;
+	line-height: 3em;
+	margin-top: .5em;
+}
+.lobbyDetails{
+}
+.lobbyCaret{
+	position: absolute;
+	top: .375em;
+	right: .5em;
+	font-size: 1.5em;
+}
+.lobbyGovernment{
+	position: relative;
+	text-align: left;
+	width: 100%;
+	height: 2.75em;
+	background: none;
+	color: #aef;
+}
+.lobbyGovernment:hover{
+	background: none;
+	color: #aef;
+}
+.lobbyGovernmentMine:hover{
+	background: rgba(32,112,192,.5);
+	color: #aef;
+}
+#governmentDropdown{
+	text-shadow: none;
+	background: #013;
+	border: 2px groove #204d74;
+}
+#governmentDropdown>li>a{
+	color: #aef;
 }
 .lobbyNationName{
 	word-break: break-word;
@@ -1080,6 +1106,9 @@ table {
 .text-right{
 	text-align: right;
 }
+.text-disabled{
+	color: #333;
+}
 .text-success{
 	color: #0d0;
 }
@@ -1102,19 +1131,25 @@ table {
 	text-shadow: none;
 	color: #1a1a1a;
 }
-#createGameWrap{
-	width: 100%;
-}
 .buffer{
 	margin-top: .5em;
 }
 .buffer2{
 	margin-top: 1em;
 }
-.createRow{
-	font-weight: normal;
-	white-space: nowrap;
-	padding: .5em 0;
+.buffer3{
+	margin-top: 2em;
+}
+#createGameMapWrap{
+}
+#mapDropdownWrap{
+	height: 1em;
+}
+label{
+	display: inline;
+}
+#createGameDescription{
+	line-height: 1em;
 }
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button {  

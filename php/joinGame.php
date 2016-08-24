@@ -1,8 +1,9 @@
 <?php
+	header('Content-Type: application/json');
 	require_once('connect1.php');
 	
 	$gameId = $_POST['gameId']*1; 
-	
+	// is it possible to join this game?
 	$query = "select g.name, count(p.game) activePlayers, g.max max, g.map map 
 				from fwGames g 
 				join fwplayers p 
@@ -70,6 +71,7 @@
 	$_SESSION['tech']->gunpowder = 0;
 	$_SESSION['tech']->rocketry = 0;
 	$_SESSION['tech']->atomicTheory = 0;
+	$_SESSION['government'] = 'Despotism';
 	
 	// init chat
 	$query = "select row from fwchat order by row desc limit 1";
@@ -118,5 +120,8 @@
 	
 	require('pingLobby.php');
 	
-	require('updateLobby.php');
+	require('initLobby.php');
+	
+	//require('updateLobby.php');
+	echo json_encode($x);
 ?>

@@ -1,8 +1,10 @@
 <?php
+	header('Content-Type: application/json');
 	// create a new lobby 
 	require_once('connect1.php');
 	$name = $_POST['name'];
 	$players = $_POST['players'];
+	$map = $_POST['map'];
 	
 	$len = strlen($name);
 	if ($len < 4 || $len > 32){
@@ -28,8 +30,11 @@
 		// check disconnected players when creating a game
 		require('checkDisconnectsByAccount.php'); 
 	}
-	// if maps are added, this will have to be POST'd
-	$map = "Earth Alpha";
+	// map data
+	$possibleMaps = ['Earth Alpha'];
+	if (!in_array($map, $possibleMaps)){
+		$map = 'Earth Alpha';
+	}
 	// create game
 	$query = "insert into fwGames (`name`, `max`, `map`) values (?, ?, ?)";
 	$stmt = $link->prepare($query);
@@ -72,6 +77,7 @@
 	$_SESSION['tech']->gunpowder = 0;
 	$_SESSION['tech']->rocketry = 0;
 	$_SESSION['tech']->atomicTheory = 0;
+	$_SESSION['government'] = 'Despotism';
 	// init chat
 	$query = "select row from fwchat order by row desc limit 1";
 	$stmt = $link->prepare($query);
@@ -81,5 +87,9 @@
 		$_SESSION['chatId'] = $row;
 	}
 	
-	require('updateLobby.php');
+	// require('updateLobby.php');
+	
+	require('initLobby.php');
+	
+	echo json_encode($x);
 ?>

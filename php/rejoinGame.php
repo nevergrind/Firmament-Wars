@@ -51,5 +51,7 @@
 			}
 		}
 	}
+	
+	require('initLobby.php');
 	echo json_encode($x);
 ?>

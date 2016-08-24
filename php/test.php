@@ -2,28 +2,7 @@
 	require('values.php');
 	require('connect1.php');
 	
-	$query = "select count(p.game) players, map from fwGames g join fwPlayers p on g.row=p.game and g.name=? group by p.game having players > 0";
-	$name ="Test";
-	$stmt = $link->prepare($query);
-	$stmt->bind_param('s', $name);
-	$stmt->execute();
-	// $stmt->store_result();
-	// $count = $stmt->num_rows;
-	// $arr = $stmt->fetch();
-	$stmt->bind_result($count);
-	while($stmt->fetch()){
-		$count = $players;
-	}
-	
-	$stmt->bind_result($players);
-	while($stmt->fetch()){
-		$count = $players;
-	};
-	var_dump($count);
 
-	//var_dump($arr);
-	exit();
-	
 	
 	$_SESSION['production'] = 99999;
 	$_SESSION['tech'] = new stdClass();

@@ -53,8 +53,11 @@
 				
 				echo 
 				'<div class="accountDetails text-primary">
-					' . $_SESSION['account'] . 
-					' <i class="fa fa-diamond" title="Never Crystals"></i>
+					<i id="musicToggle" class="fa fa-volume-up" 
+					data-toggle="tooltip" 
+					data-placement="right" 
+					title="Toggle music"></i>
+					<i class="fa fa-diamond" title="Never Crystals"></i>
 					<span id="crystalCount" class="text-primary" title="Crystals Remaining">' .$crystals.'</span>&ensp;
 					<a target="_blank" title="Manage Account" href="/account">Account</a>&ensp;
 					<a target="_blank" title="Store" href="/store/">Store</a>&ensp;
@@ -115,7 +118,7 @@
 								$losses = $losses;
 								$disconnects = $disconnects;
 								// show record
-								echo 'Record: ' .$wins. ' wins, '. $losses .' losses, '. $disconnects .' disconnects';
+								echo $_SESSION['account']. ': ' .$wins. ' wins, '. $losses .' losses, '. $disconnects .' disconnects';
 							}
 							// init nation values
 							$_SESSION['nation'] = $nation;
@@ -126,7 +129,7 @@
 							$stmt->bind_param('s', $_SESSION['account']);
 							$stmt->execute();
 							// show record; new nation
-							echo 'Record: 0 wins, 0 losses, 0 disconnects';
+							echo $_SESSION['account']. ': 0 wins, 0 losses, 0 disconnects';
 						}
 					?>
 					</div>
@@ -135,13 +138,11 @@
 				<div class="row">
 					<div id="menuHead" class="btn-group col-lg-12" role="group">
 						<button id="refreshGames" type="button" class="btn btn-primary btn-responsive btn-md shadow4 active">Refresh Games</button>
-						<button id="create" type="button" class="btn btn-primary btn-responsive btn-md shadow4">Create</button>
+						<button id="create" type="button" class="btn btn-primary btn-responsive btn-md shadow4">Create Game</button>
 						<button id="toggleNation" type="button" class="btn btn-primary btn-responsive btn-md shadow4">Configure Nation</button>
 					</div>
 				</div>
-				<hr class="fancyhr">
-				
-				<div class='row'>
+				<div class='row buffer2'>
 					<div id="menuContent" class="shadow4 col-lg-12"></div>
 				</div>
 			</div>
@@ -207,13 +208,6 @@
 						<img id="updateNationFlag" class="w100 block center" src="images/flags/<?php echo $flag; ?>">
 					</div>
 				</div>
-			</div>
-			
-			<div id='soundWrap' class="shadow4">
-				<i id='musicToggle' class='fa fa-volume-up' 
-					data-toggle="tooltip" 
-					data-placement="right" 
-					title='Toggle music'></i>
 			</div>
 		</div>
 	

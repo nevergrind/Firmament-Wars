@@ -30,6 +30,7 @@
 			$str .=
 			"<tr>
 				<td colspan='2' class='text-center'>
+					<hr class='fancyhr'>
 					<button id='joinGame' type='button' class='btn btn-md btn-info btn-responsive shadow4'>Join Game</button>
 				</td>
 			</tr>";

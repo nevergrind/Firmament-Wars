@@ -43,42 +43,58 @@ $("#refreshGames").on("click", function(){
 
 $("#create").on("click", function(){
 	var x = 
-	"<div id='createGameWrap' class='container'>\
-		<div class='row buffer'>\
-			<div class='col-xs-3 control-label createRow'>Game Name:</div>\
-			<div class='col-xs-9'>\
-				<input id='gameName' class='form-control' type='text' maxlength='32' autocomplete='off' size='20'>\
+	"<form class='form-horizontal'>\
+		<div class='form-group'>\
+			<label class='col-sm-4 control-label'>Game Name:</label>\
+			<div class='col-sm-8'>\
+				<input id='gameName' class='form-control' type='text' maxlength='32' autocomplete='off'>\
 			</div>\
 		</div>\
-		<div class='row buffer'>\
-			<div class='col-xs-9 control-label createRow'>Maximum Number of Players:</div>\
+		<div class='form-group'>\
+			<label class='col-xs-9 control-label'>Maximum Players:</label>\
 			<div class='col-xs-3'>\
-				<input type='number' class='form-control' id='gamePlayers' value='8' min='2' max='8'>\
+				<input id='gamePlayers' type='number' class='form-control' id='gamePlayers' value='8' min='2' max='8'>\
+			</div>\
+		</div>\
+	</form>\
+	<div class='container-fixed buffer2'>\
+		<div class='row'>\
+			<div class='col-xs-4'>\
+				<label>Map:</label>\
+			</div>\
+			<div class='col-xs-8'>\
+				<label>Description:</label>\
 			</div>\
 		</div>\
 		<div class='row buffer'>\
-			<div id='gameMap' class='col-xs-6 createRow'>Map:</div>\
-			<div class='col-xs-6'>\
-				<div class='dropdown pull-right'>\
+			<div class='col-xs-4'>\
+				<div class='dropdown'>\
 					<button class='btn btn-primary dropdown-toggle shadow4' type='button' data-toggle='dropdown'>\
-						Earth Alpha\
-						<span class='caret shadow4'></span>\
+						<span id='createGameMap'>Earth Alpha</span>\
+						<span class='caret'></span>\
 					</button>\
 					<ul id='mapDropdown' class='dropdown-menu'>\
 						<li><a class='mapSelect' href='#'>Earth Alpha</a></li>\
 					</ul>\
 				</div>\
 			</div>\
+			<div class='col-xs-8'>\
+				<span id='createGameDescription'>Up to 8 players vie for domination in this sprawling map across six continents.</span>\
+				<span id='createGameGlobe' data-toggle='tooltip' title='Number of territories for this map'><i class='fa fa-globe'></i> <span id='createGameTiles'>83</span></span>\
+			</div>\
 		</div>\
-		<hr class='fancyhr'>\
+		<div class='row'>\
+			<hr class='col-xs-12 fancyhr'>\
+		</div>\
 		<div class='row'>\
 			<div class='col-xs-12 text-center'>\
 				<button id='createGame' type='button' class='btn btn-md btn-info btn-responsive shadow4'>Create Game Lobby</button>\
 			</div>\
 		</div>\
-	</div>";
+	</label>";
 	$("#menuContent").html(x);
 	$("#gameName").focus();
+	$("#createGameGlobe").tooltip();
 });
 
 $("#menu").on("mousedown", "#createGame", function(e){
@@ -95,14 +111,15 @@ $("#menu").on("mousedown", "#createGame", function(e){
 			url: 'php/createGame.php',
 			data: {
 				name: name,
-				players: players
+				players: players,
+				map: my.map
 			}
 		}).done(function(data) {
 			console.info("Creating: ", data);
+			initLobby(data);
 			joinLobby(); // create
 		}).fail(function(e){
 			console.info(e.responseText);
-			Msg(e.statusText);
 			g.unlock(1);
 		});
 	}
@@ -117,9 +134,10 @@ function joinGame(){
 			gameId: gameId
 		}
 	}).done(function(data) {
+		initLobby(data);
 		joinLobby(); // normal join
 	}).fail(function(e){
-		Msg(e.statusText);
+		console.info(e.responseText);
 	}).always(function(){
 		g.unlock();
 	});
