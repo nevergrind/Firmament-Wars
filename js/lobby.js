@@ -1,3 +1,81 @@
+var lobby = {
+	data: [
+		{ account: '' }, 
+		{ account: '' }, 
+		{ account: '' }, 
+		{ account: '' }, 
+		{ account: '' }, 
+		{ account: '' }, 
+		{ account: '' }, 
+		{ account: '' },
+		{ account: '' }
+	],
+	startClassOn: "btn btn-info btn-md btn-block btn-responsive shadow4",
+	startClassOff: "btn btn-default btn-md btn-block btn-responsive shadow4",
+	updateGovernmentWindow: function(government){
+		var str = '';
+		if (government === "Despotism"){
+			str = '<div id="lobbyGovName" class="text-primary">Despotism</div>\
+				<div id="lobbyGovPerks">\
+					<div>3x starting energy</div>\
+					<div>+50% starting armies</div>\
+					<div>Start With a Bunker</div>\
+					<div>Free Split Attack</div>\
+				</div>';
+		} else if (government === "Monarchy"){
+			str = '<div id="lobbyGovName" class="text-primary">Monarchy</div>\
+				<div id="lobbyGovPerks">\
+					<div>2x starting culture</div>\
+					<div>+50% culture bonus</div>\
+					<div>Start with Great Tactician</div>\
+					<div>1/2 cost structures</div>\
+				</div>';
+		} else if (government === "Democracy"){
+			str = '<div id="lobbyGovName" class="text-primary">Democracy</div>\
+				<div id="lobbyGovPerks">\
+					<div>1/2 starting culture</div>\
+					<div>+50% energy bonus</div>\
+					<div>More great people</div>\
+					<div>Start with a wall</div>\
+				</div>';
+		} else if (government === "Fundamentalism"){
+			str = '<div id="lobbyGovName" class="text-primary">Fundamentalism</div>\
+				<div id="lobbyGovPerks">\
+					<div>Overrun ability</div>\
+					<div>Infiltration</div>\
+					<div>Faster growth</div>\
+					<div>1/2 cost Recruit</div>\
+				</div>';
+		} else if (government === "Fascism"){
+			str = '<div id="lobbyGovName" class="text-primary">Fascism</div>\
+				<div id="lobbyGovPerks">\
+					<div>Start with Gunpowder</div>\
+					<div>1/2 cost Attack</div>\
+					<div>Start with Great General</div>\
+					<div>Free Deploy cost</div>\
+				</div>';
+		} else if (government === "Republic"){
+			str = '<div id="lobbyGovName" class="text-primary">Republic</div>\
+				<div id="lobbyGovPerks">\
+					<div>+50% exploration bonus</div>\
+					<div>2x starting food</div>\
+					<div>+50% food bonus</div>\
+					<div>Victorious healing</div>\
+				</div>';
+		} else if (government === "Communism"){
+			str = '<div id="lobbyGovName" class="text-primary">Communism</div>\
+				<div id="lobbyGovPerks">\
+					<div>0 starting culture</div>\
+					<div>1/2 cost research</div>\
+					<div>1/2 cost weapons</div>\
+					<div>Start with a great person</div>\
+				</div>';
+		} 
+		document.getElementById('lobbyGovernment' + my.player).textContent = government;
+		document.getElementById('lobbyGovernmentDescription').innerHTML = str;
+	}
+};
+
 function initOffensiveTooltips(){
 	$('#fireArtillery')
 		.attr('title', 'Fire artillery at an adjacent enemy tile. Kills ' + (2 + my.oBonus) + ' + 4% of armies.')
@@ -397,17 +475,17 @@ function initLobby(x){
 	if (!x.gameStarted){
 		document.getElementById('mainWrap').style.display = "block";
 	}
-	var str = '<div id="lobbyWrap" class="container-fixed">';
+	var str = '<div id="lobbyWrap" class="container">';
 	for (var i=1; i<=8; i++){
 		str += 
 		'<div id="lobbyRow' +i+ '" class="row lobbyRow">\
-			<div class="col-sm-2">\
+			<div class="col-xs-2">\
 				<img id="lobbyFlag' +i+ '" class="w100 block center" src="images/flags/blank.png">\
 			</div>\
-			<div class="col-sm-6 lobbyDetails">\
+			<div class="col-xs-6 lobbyDetails">\
 				<span id="lobbyAccount' +i+ '"></span>\
 			</div>\
-			<div class="col-sm-4">';
+			<div class="col-xs-4">';
 			if (i === x.player){
 				// me
 				str += 
@@ -417,13 +495,13 @@ function initLobby(x){
 						<i class="fa fa-caret-down text-warning lobbyCaret"></i>\
 					</button>\
 					<ul id="governmentDropdown" class="dropdown-menu">\
-						<li><a href="#">Despotism</a></li>\
-						<li><a href="#">Monarchy</a></li>\
-						<li><a href="#">Democracy</a></li>\
-						<li><a href="#">Fundamentalism</a></li>\
-						<li><a href="#">Fascism</a></li>\
-						<li><a href="#">Republic</a></li>\
-						<li><a href="#">Communism</a></li>\
+						<li class="governmentChoice"><a href="#">Despotism</a></li>\
+						<li class="governmentChoice"><a href="#">Monarchy</a></li>\
+						<li class="governmentChoice"><a href="#">Democracy</a></li>\
+						<li class="governmentChoice"><a href="#">Fundamentalism</a></li>\
+						<li class="governmentChoice"><a href="#">Fascism</a></li>\
+						<li class="governmentChoice"><a href="#">Republic</a></li>\
+						<li class="governmentChoice"><a href="#">Communism</a></li>\
 					</ul>\
 				</div>';
 			} else {
@@ -462,22 +540,6 @@ function joinLobby(d){
 		}
 	});
 	
-	var lobby = {
-		data: [
-			{ account: '' }, 
-			{ account: '' }, 
-			{ account: '' }, 
-			{ account: '' }, 
-			{ account: '' }, 
-			{ account: '' }, 
-			{ account: '' }, 
-			{ account: '' },
-			{ account: '' }
-		],
-		startClassOn: "btn btn-info btn-md btn-block btn-responsive shadow4",
-		startClassOff: "btn btn-default btn-md btn-block btn-responsive shadow4"
-	};
-	
 	(function repeat(){
 		if (g.view === "lobby"){
 			$.ajax({
@@ -490,15 +552,22 @@ function joinLobby(d){
 					for (var i=1; i<=8; i++){
 						var data = x.playerData[i-1];
 						//console.info(i, lobby.data[i], data);
+						// player exists
 						if (data !== undefined){
-							// player joined
+							document.getElementById("lobbyRow" + i).style.display = 'block';
+							// different player account
 							if (lobby.data[i].account !== data.account){
-								lobby.data[i] = data;
-								document.getElementById("lobbyRow" + i).style.display = 'block';
 								document.getElementById("lobbyAccount" + i).innerHTML = data.account;
 								document.getElementById("lobbyFlag" + i).src = 'images/flags/' + data.flag;
-								document.getElementById("lobbyGovernment" + i).innerHTML = data.government;
 							}
+							if (lobby.data[i].government !== data.government){
+								// update button & window
+								document.getElementById("lobbyGovernment" + i).innerHTML = data.government;
+								if (data.player === my.player){
+									lobby.updateGovernmentWindow(data.government);
+								}
+							}
+							lobby.data[i] = data;
 						} else {
 							// player left
 							document.getElementById("lobbyRow" + i).style.display = 'none';
@@ -506,7 +575,7 @@ function joinLobby(d){
 						}
 					}
 					// check if start button should light up
-					console.info(x);
+					//console.info(x);
 					if (x.player === 1){
 						var e = document.getElementById("startGame");
 						if (x.totalPlayers === 1){
@@ -581,3 +650,13 @@ function lobbyCountdown(){
 		})(5);
 	}
 }
+$("#joinGameLobby").on('click', '.governmentChoice', function(e){
+	var government = $(this).text();
+	lobby.updateGovernmentWindow(government);
+	$.ajax({
+		url: "php/changeGovernment.php",
+		data: {
+			government: government
+		}
+	});
+});

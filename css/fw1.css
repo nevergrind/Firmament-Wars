@@ -755,6 +755,7 @@ circle{
 	top: 2%;
 	width: 35%;
 	left: 60%;
+	font-size: 1em;
 }
 #lobbyPlayers{
 	position: relative;
@@ -766,14 +767,18 @@ circle{
 	position: relative;
 	top: 0%;
 	padding: 1em;
-	font-size: 1.25em;
 }
+#lobbyGovernmentDescription{
+	padding: 1em;
+}
+
 .lobbyRelWrap{
 	position: relative;
 	top: 0%;
 	margin-top: 4%;
 }
 #lobbyChatLog{
+	height: 30%;
 	padding: 1em;
 }
 #lobbyChatWrap{
@@ -918,6 +923,7 @@ table {
 	max-height: 160px;
 }
 #lobbyWrap{
+	width: 100%;
 	padding: 0 1em;
 }
 .lobbyRow{
@@ -937,7 +943,7 @@ table {
 	text-align: left;
 	width: 100%;
 	height: 2.75em;
-	background: none;
+	background: rgba(0,0,0,.5);
 	color: #aef;
 }
 .lobbyGovernment:hover{
@@ -1101,7 +1107,6 @@ table {
 	display: none;
 }
 #countdown{
-	font-size: 1em;
 	display: none;
 	margin: 1em 0 0;
 	font-variant: small-caps;

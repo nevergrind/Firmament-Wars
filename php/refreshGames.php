@@ -1,7 +1,7 @@
 <?php
 	require('connect1.php');
 
-	$noGameFound = "<tr><td colspan='3' class='text-warning text-center col-md-12 warCells'>No active games found. Create a game to play!</td></tr>";
+	$noGameFound = "<tr><td colspan='3' class='text-warning text-center col-xs-12 warCells'>No active games found. Create a game to play!</td></tr>";
 	/* why is this here? lol
 	$query = 'select row from fwGames';
 	$result = $link->query($query);
@@ -10,8 +10,8 @@
 	$str = 
 	'<table id="refreshGames" class="table table-condensed table-borderless">
 		<tr>
-			<th class="col-md-9 warCells">Game</th>
-			<th class="col-md-3 warCells">Players/Max</th>
+			<th class="col-xs-9 warCells">Game</th>
+			<th class="col-xs-3 warCells">Players/Max</th>
 		</tr>';
 			
 	// game data

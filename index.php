@@ -82,7 +82,7 @@
 			
 			<div id="menu" class="fw-primary container">
 				<div id='menuOnline' class='shadow4 row'>
-					<div class='col-lg-12'>
+					<div class='col-xs-12'>
 					<?php
 						require('php/checkDisconnectsByAccount.php');
 					
@@ -93,7 +93,7 @@
 							($row["count"] == 1 ? 'is' : 'are')  .' currently '.$row["count"].' '.
 							($row["count"] == 1 ? 'player' : 'players') . ' playing Firmament Wars'
 						);
-						echo '</div><div class="col-lg-12">';
+						echo '</div><div class="col-xs-12">';
 						// check if nation exists; create if not
 						$query = 'select count(row) from fwNations where account=?';
 						$stmt = $link->prepare($query);
@@ -136,14 +136,14 @@
 				</div>
 				<hr class='fancyhr'>
 				<div class="row">
-					<div id="menuHead" class="btn-group col-lg-12" role="group">
+					<div id="menuHead" class="btn-group col-xs-12" role="group">
 						<button id="refreshGames" type="button" class="btn btn-primary btn-responsive btn-md shadow4 active">Refresh Games</button>
 						<button id="create" type="button" class="btn btn-primary btn-responsive btn-md shadow4">Create Game</button>
 						<button id="toggleNation" type="button" class="btn btn-primary btn-responsive btn-md shadow4">Configure Nation</button>
 					</div>
 				</div>
 				<div class='row buffer2'>
-					<div id="menuContent" class="shadow4 col-lg-12"></div>
+					<div id="menuContent" class="shadow4 col-xs-12"></div>
 				</div>
 			</div>
 			
@@ -215,19 +215,14 @@
 		
 			<div id="lobbyLeftCol">
 			
-				<div id="lobbyPlayers" class="fw-primary">
-					<div id='lobby'>
-						<div id='lobbyBody' class='clearfix'>
-						</div>
-					</div>
-				</div>
+				<div id="lobbyPlayers" class="fw-primary"></div>
 				
 				<div id="lobbyChatLog" class="fw-primary lobbyRelWrap">
-					Lorem Ipsum ;lkjasf l;askj f;lkasjd f;ksad f;lkas k lkj saldkfj ;sdlk jdas;l kj;fl kj ;lkja ;lkjasd ;lkjadsf ;lkasdj l;k jsd;lk fjads;lk fjasd;lk jads;lk f
+					Lorem ipsum dolor sit amet, mel amet magna accusam ne. Et mei purto dissentias. Usu id fuisset sententiae necessitatibus, quo paulo delicatissimi ut. Duis veritus dissentias cu vel, te nam facer dicunt recteque.
 				</div>
 				
 				<div id="lobbyChatWrap" class="fw-primary lobbyRelWrap">
-					Lorem Ipsum ;lkjasf l;askj f;lkasjd f;ksad f;lkas 
+					Lorem ipsum dolor sit amet, mel amet magna accusam ne. 
 				</div>
 				
 			</div>
@@ -243,7 +238,13 @@
 				</div>
 				
 				<div id="lobbyGovernmentDescription" class="fw-primary text-center lobbyRelWrap">
-					Lorem Ipsum ;lkjasf l;askj f;lkasjd f;ksad f;lkas k lkj saldkfj ;sdlk jdas;l kj;fl kj ;lkja ;lkjasd ;lkjadsf ;lkasdj l;k jsd;lk fjads;lk fjasd;lk jads;lk f
+					<div id="lobbyGovName" class='text-primary'>Despotism</div>
+					<div id="lobbyGovPerks">
+						<div>3x starting energy</div>
+						<div>+50% starting armies</div>
+						<div>Start With a Bunker</div>
+						<div>Free Split Attack</div>
+					</div>
 				</div>
 				
 				<div id="lobbyButtons" class="fw-primary text-center lobbyRelWrap">
@@ -272,15 +273,15 @@
 						<div id="tileActions">
 							<div id="menuSelect" class="container shadow4">
 								<div class="row">
-									<div id="gotoCommand" class="actionTabs activeTab col-md-4 text-center" data-toggle="tooltip" title="Command your armies">
+									<div id="gotoCommand" class="actionTabs activeTab col-xs-4 text-center" data-toggle="tooltip" title="Command your armies">
 										<span class='text-hotkey'>C</span>ommand
 									</div>
 								
-									<div id="gotoResearch" class="actionTabs col-md-4 text-center" data-toggle="tooltip" title="Unlock new technologies">
+									<div id="gotoResearch" class="actionTabs col-xs-4 text-center" data-toggle="tooltip" title="Unlock new technologies">
 										<span class='text-hotkey'>R</span>esearch
 									</div>
 								
-									<div id="gotoBuild" class="actionTabs col-md-4 text-center" data-toggle="tooltip" title="Build structures and weapons">
+									<div id="gotoBuild" class="actionTabs col-xs-4 text-center" data-toggle="tooltip" title="Build structures and weapons">
 										<span class='text-hotkey'>B</span>uild
 									</div>
 								</div>
@@ -457,7 +458,7 @@
 			
 			<div id="resources-ui" class="container no-select shadow4">
 				<div class="row">
-					<div id='manpowerWrap' class="col-sm-12 no-padding manpower">
+					<div id='manpowerWrap' class="col-xs-12 no-padding manpower">
 						<span data-toggle="tooltip" title="Great Generals boost army offense">
 							<i class="glyphicon glyphicon-star"></i>
 							<span id="oBonus">0</span> 
@@ -467,7 +468,7 @@
 							<span id="dBonus">0</span>
 						</span>
 					</div>
-					<div class="col-sm-12 no-padding">
+					<div class="col-xs-12 no-padding">
 						<span data-toggle="tooltip" title="Deploy armies to conquered territories">
 							<i class="fa fa-angle-double-up manpower"></i> Armies <span id="manpower">0</span>
 						</span>
@@ -475,7 +476,7 @@
 				</div>
 				
 				<div class="row">
-					<div class="col-sm-12 no-padding production">
+					<div class="col-xs-12 no-padding production">
 						<span data-toggle="tooltip" title="Energy is required to perform actions">
 							<i class="fa fa-bolt"></i> Energy 
 						</span>
@@ -485,7 +486,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-12 no-padding">
+					<div class="col-xs-12 no-padding">
 						<div class="resourceIndicator">
 							<span id="production">0</span> 
 							<span data-toggle="tooltip" title="Energy per turn">
@@ -496,7 +497,7 @@
 				</div>
 				
 				<div class="row">
-					<div class="col-sm-12 no-padding food">
+					<div class="col-xs-12 no-padding food">
 						<span data-toggle="tooltip" title="Food milestones produce armies">
 							<i class="glyphicon glyphicon-apple"></i> Food 
 						</span>
@@ -507,7 +508,7 @@
 				</div>
 				
 				<div class="row">
-					<div class="col-sm-12 no-padding">
+					<div class="col-xs-12 no-padding">
 						<div class="resourceIndicator">
 							<span id="food">0</span>/<span id="foodMax">25</span> 
 							<span data-toggle="tooltip" title="Food per turn">
@@ -524,7 +525,7 @@
 				</div>
 				
 				<div class="row">
-					<div class="col-sm-12 no-padding culture">
+					<div class="col-xs-12 no-padding culture">
 						<span data-toggle="tooltip" title="Culture milestones produce special rewards"><i class="fa fa-flag"></i> Culture</span>
 						<span data-toggle="tooltip" title="Culture Bonus">
 							+<span id="cultureBonus">0</span>%
@@ -533,7 +534,7 @@
 				</div>
 				
 				<div class="row">
-					<div class="col-sm-12 no-padding">
+					<div class="col-xs-12 no-padding">
 						<div class="resourceIndicator">
 							<span id="culture">0</span>/<span id="cultureMax">400</span> 
 							<span data-toggle="tooltip" title="Culture per turn">

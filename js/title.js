@@ -45,8 +45,8 @@ $("#create").on("click", function(){
 	var x = 
 	"<form class='form-horizontal'>\
 		<div class='form-group'>\
-			<label class='col-sm-4 control-label'>Game Name:</label>\
-			<div class='col-sm-8'>\
+			<label class='col-xs-4 control-label'>Game Name:</label>\
+			<div class='col-xs-8'>\
 				<input id='gameName' class='form-control' type='text' maxlength='32' autocomplete='off'>\
 			</div>\
 		</div>\
