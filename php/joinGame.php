@@ -1,6 +1,8 @@
 <?php
 	header('Content-Type: application/json');
 	require_once('connect1.php');
+	// remove players that left
+	mysqli_query($link, 'delete from fwplayers where timestamp < date_sub(now(), interval 20 second)');
 	
 	$gameId = $_POST['gameId']*1; 
 	// is it possible to join this game?

@@ -93,11 +93,12 @@ function updateTileInfo(tileId){
 		DOM.tileActions.style.display = 'none';
 	action.setMenu();
 }
-function showTarget(e, hover){
+function showTarget(e, hover, skipOldTgtUpdate){
 	if (typeof e === 'object' && e.id !== undefined){
 		var tileId = e.id.slice(4)*1;
 		// console.info('tileId: ', tileId);
 		var d = game.tiles[tileId];
+		var cacheOldTgt = my.tgt;
 		if (!hover){
 			my.tgt = tileId;
 		}
@@ -148,6 +149,9 @@ function showTarget(e, hover){
 			});
 		}
 		// tile data
+		if (!skipOldTgtUpdate){
+			my.lastTgt = cacheOldTgt;
+		}
 		updateTileInfo(tileId);
 		my.flashTile(tileId);
 	} else {
@@ -157,20 +161,23 @@ function showTarget(e, hover){
 function setTileUnits(i, unitColor){
 	var e = document.getElementById('unit' + i);
 	e.textContent = game.tiles[i].units === 0 ? "" : game.tiles[i].units;
-	TweenMax.to(e, .5, {
-		startAt: {
-			transformOrigin: (game.tiles[i].units.length * 3) + ' 12',
-			scale: unitColor !== '#00ff00' ? 1 : 2,
-			fill: unitColor
-		},
-		scale: 1
-	});
 	if (unitColor === '#00ff00'){
-		TweenMax.to(e, 1, {
-			fill: "#ffffff"
+		TweenMax.to(e, .05, {
+			startAt: {
+				// transformOrigin: (game.tiles[i].units.length * 3) + ' 12',
+				fill: unitColor
+			},
+			fill: '#ffffff',
+			ease: SteppedEase.config(1),
+			repeat: 12,
+			yoyo: true
 		});
 	} else {
 		TweenMax.to(e, 1, {
+			startAt: {
+				fill: '#ff0000'
+			},
+			ease: Power2.easeIn,
 			fill: '#ffffff'
 		});
 	}

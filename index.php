@@ -212,25 +212,47 @@
 		</div>
 	
 		<div id="joinGameLobby" class="shadow4">
-			<div id="lobbyPlayers" class="fw-primary">
-				<div id='lobby'>
-					<div id='lobbyBody' class='clearfix'>
+		
+			<div id="lobbyLeftCol">
+			
+				<div id="lobbyPlayers" class="fw-primary">
+					<div id='lobby'>
+						<div id='lobbyBody' class='clearfix'>
+						</div>
 					</div>
 				</div>
+				
+				<div id="lobbyChatLog" class="fw-primary lobbyRelWrap">
+					Lorem Ipsum ;lkjasf l;askj f;lkasjd f;ksad f;lkas k lkj saldkfj ;sdlk jdas;l kj;fl kj ;lkja ;lkjasd ;lkjadsf ;lkasdj l;k jsd;lk fjads;lk fjasd;lk jads;lk f
+				</div>
+				
+				<div id="lobbyChatWrap" class="fw-primary lobbyRelWrap">
+					Lorem Ipsum ;lkjasf l;askj f;lkasjd f;ksad f;lkas 
+				</div>
+				
 			</div>
-			<div id="lobbyGame" class="fw-primary">
-				<div class='text-primary text-center margin-top'>Game Name:</div> 
-				<div id='lobbyGameName' class='text-center'></div>
-				<div class='text-primary text-center margin-top'>Max Players:</div>
-				<div id='lobbyGameMax' class='text-center'></div>
-				<div class='text-primary text-center margin-top'>Map:</div>
-				<div id='lobbyGameMap' class='text-center'></div>
+			
+			<div id="lobbyRightCol">
+				<div id="lobbyGame" class="fw-primary">
+					<div class='text-primary text-center margin-top'>Game Name:</div> 
+					<div id='lobbyGameName' class='text-center'></div>
+					<div class='text-primary text-center margin-top'>Max Players:</div>
+					<div id='lobbyGameMax' class='text-center'></div>
+					<div class='text-primary text-center margin-top'>Map:</div>
+					<div id='lobbyGameMap' class='text-center'></div>
+				</div>
+				
+				<div id="lobbyGovernmentDescription" class="fw-primary text-center lobbyRelWrap">
+					Lorem Ipsum ;lkjasf l;askj f;lkasjd f;ksad f;lkas k lkj saldkfj ;sdlk jdas;l kj;fl kj ;lkja ;lkjasd ;lkjadsf ;lkasdj l;k jsd;lk fjads;lk fjasd;lk jads;lk f
+				</div>
+				
+				<div id="lobbyButtons" class="fw-primary text-center lobbyRelWrap">
+					<button id='startGame' type='button' class='btn btn-default btn-md btn-block btn-responsive shadow4'>Start Game</button>
+					<button id='cancelGame' type='button' class='btn btn-default btn-md btn-block btn-responsive shadow4'>Exit</button>
+					<div id='countdown' class='text-warning'></div>
+				</div>
 			</div>
-			<div id="lobbyButtons" class="fw-primary text-center">
-				<button id='startGame' type='button' class='btn btn-default btn-md btn-block btn-responsive shadow4'>Start Game</button>
-				<button id='cancelGame' type='button' class='btn btn-default btn-md btn-block btn-responsive shadow4'>Exit</button>
-				<div id='countdown' class='text-warning'></div>
-			</div>
+			
 		</div>
 		
 	</div>
@@ -537,14 +559,7 @@
 		</table>
 		<input id="chat-input" class="fw-text noselect nobg" type='text' maxlength="240" autocomplete="off"/>
 			
-		<div id="worldWrap">
-			<?php
-				/*
-				$svg = file_get_contents("images/world_simple3.svg");
-				echo $svg;
-				*/	
-			?>
-		</div>
+		<div id="worldWrap"></div>
 		
 		<div id="hud" class="shadow4">Select Target</div>
 		<div id="victoryScreen" class="fw-primary fw-text no-select"></div>

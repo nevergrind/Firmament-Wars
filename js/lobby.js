@@ -191,7 +191,7 @@ function joinStartedGame(){
 		// load map
 		$.ajax({
 			type: 'GET',
-			url: 'images/world_simple3.svg'
+			url: 'images/EarthAlpha.svg'
 		}).done(function(data){
 			document.getElementById('worldWrap').innerHTML = data.responseText;
 			initMap();
@@ -471,6 +471,7 @@ function joinLobby(d){
 			{ account: '' }, 
 			{ account: '' }, 
 			{ account: '' }, 
+			{ account: '' },
 			{ account: '' }
 		],
 		startClassOn: "btn btn-info btn-md btn-block btn-responsive shadow4",
@@ -483,31 +484,35 @@ function joinLobby(d){
 				type: "GET",
 				url: "php/updateLobby.php"
 			}).done(function(x){
-				console.info(x.delay);
+				//console.info(x.delay);
 				my.totalPlayers = x.totalPlayers;
 				if (g.view === "lobby"){
 					for (var i=1; i<=8; i++){
-						if (x.playerData[i-1] !== undefined){
-							var data = x.playerData[i-1];
+						var data = x.playerData[i-1];
+						//console.info(i, lobby.data[i], data);
+						if (data !== undefined){
+							// player joined
 							if (lobby.data[i].account !== data.account){
-								console.info('setting lobby data: ', data);
 								lobby.data[i] = data;
 								document.getElementById("lobbyRow" + i).style.display = 'block';
 								document.getElementById("lobbyAccount" + i).innerHTML = data.account;
 								document.getElementById("lobbyFlag" + i).src = 'images/flags/' + data.flag;
 								document.getElementById("lobbyGovernment" + i).innerHTML = data.government;
-								// check if start button should light up
-								if (data.player === 1){
-									var e = document.getElementById("startGame");
-									if (x.totalPlayers === 1){
-										e.className = lobby.startClassOff;
-									} else {
-										e.className = lobby.startClassOn;
-									}
-								}
 							}
 						} else {
+							// player left
 							document.getElementById("lobbyRow" + i).style.display = 'none';
+							lobby.data[i] = { account: '' };
+						}
+					}
+					// check if start button should light up
+					console.info(x);
+					if (x.player === 1){
+						var e = document.getElementById("startGame");
+						if (x.totalPlayers === 1){
+							e.className = lobby.startClassOff;
+						} else {
+							e.className = lobby.startClassOn;
 						}
 					}
 				}

@@ -169,6 +169,7 @@ var my = {
 	map: '',
 	totalPlayers: 0,
 	tgt: 1,
+	lastTgt: 1,
 	capital: 0,
 	lastTarget: {},
 	units: 0,
@@ -224,6 +225,7 @@ var my = {
 		$DOM.head.append('<style>.land{ cursor: pointer; }</style>');
 	},
 	nextTarget: function(backwards){
+		my.lastTgt = my.tgt;
 		var count = 0,
 			len = game.tiles.length;
 		backwards ? my.tgt-- : my.tgt++;
@@ -242,7 +244,6 @@ var my = {
 		} else {
 			my.tgt = Math.abs(my.tgt);
 		}
-		showTarget(document.getElementById('land' + my.tgt));
 		my.focusTile(my.tgt, .1);
 	},
 	focusTile: function(tile, d){
@@ -274,7 +275,7 @@ var my = {
 			x: x * g.resizeX,
 			y: y * g.resizeY
 		});
-		showTarget(document.getElementById('land' + tile));
+		showTarget(document.getElementById('land' + tile), false, 1);
 		my.flashTile(tile);
 	},
 	flashTile: function(tile){
@@ -286,25 +287,33 @@ var my = {
 			},
 			fill: '#ffffff',
 			ease: SteppedEase.config(1),
-			repeat: 12,
+			repeat: 8,
 			yoyo: true
 		});
-		var e3 = document.getElementById('flag' + tile);
-		var e4 = document.getElementById('land' + tile);
-		TweenMax.to(e3, 1, {
-			startAt: {
+		console.info(my.lastTgt, my.tgt);
+		// last tgt
+		if (my.lastTgt !== my.tgt){
+			var e4 = document.getElementById('flag' + my.lastTgt);
+			TweenMax.set(e4, {
 				transformOrigin: '50% 50%',
-				scale: 1.75
-			},
-			ease: Power3.easeIn,
-			scale: 1
+				scale: 1
+			});
+			var e6 = document.getElementById('unit' + my.lastTgt);
+			TweenMax.set(e6, {
+				scale: 1
+			});
+		}
+		// my tgt
+		var e3 = document.getElementById('flag' + tile);
+		TweenMax.to(e3, .5, {
+			transformOrigin: '50% 50%',
+			scale: 1.5,
+			ease: Power3.easeOut
 		});
-		TweenMax.to(e4, 1, {
-			fillOpacity: .8,
-			drawSVG: '0%'
-		}, {
-			drawSVG: '100%',
-			fillOpacity: 1
+		var e5 = document.getElementById('unit' + tile);
+		TweenMax.to(e5, .5, {
+			scale: 1.5,
+			ease: Power3.easeOut
 		});
 	}
 }
@@ -705,6 +714,7 @@ function refreshGames(){
 	}).done(function(data) {
 		$("#menuContent").html(data);
 		$(".wars").filter(":first").trigger("click");
+		console.info(data);
 	}).fail(function(e){
 		Msg("Server error.");
 	}).always(function(){

@@ -62,6 +62,7 @@
 		$count = $rows;
 	}
 	
+	$x->player = $_SESSION['player'];
 	$x->gameStarted = $count; // boolean to trigger game start
 	$x->totalPlayers = $totalPlayers;
 	$x->delay = microtime(true) - $start;
