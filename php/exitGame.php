@@ -28,7 +28,5 @@
 			$stmt->execute();
 		}
 		require('unsetSession.php');
-	} else {
-		header('HTTP/1.1 500 Game session data not found.');
 	}
 ?>

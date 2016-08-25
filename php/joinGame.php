@@ -124,6 +124,6 @@
 	
 	require('initLobby.php');
 	
-	//require('updateLobby.php');
+	$x->player = $_SESSION['player'];
 	echo json_encode($x);
 ?>

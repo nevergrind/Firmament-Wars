@@ -115,6 +115,7 @@ $("#menu").on("mousedown", "#createGame", function(e){
 				map: my.map
 			}
 		}).done(function(data) {
+			my.player = data.player;
 			console.info("Creating: ", data);
 			initLobby(data);
 			joinLobby(); // create
@@ -134,10 +135,13 @@ function joinGame(){
 			gameId: gameId
 		}
 	}).done(function(data) {
+		console.info(data);
+		my.player = data.player;
 		initLobby(data);
 		joinLobby(); // normal join
-	}).fail(function(e){
-		console.info(e.responseText);
+	}).fail(function(data){
+		console.info(data);
+		console.info(data.responseText);
 	}).always(function(){
 		g.unlock();
 	});

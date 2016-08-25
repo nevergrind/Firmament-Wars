@@ -735,7 +735,7 @@ function exitGame(bypass){
 		}).done(function(data) {
 			location.reload();
 		}).fail(function(e){
-			g.unlock(1);
+			location.reload();
 		});
 	}
 }
