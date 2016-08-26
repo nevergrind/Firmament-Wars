@@ -295,25 +295,48 @@ a:hover{
 	text-shadow: 2px 2px 0 #357;
 	border-radius: 0;
 }
-#titleChatSend{
+.fwBlue{
 	background: rgba(16,56,96,1);
-	color: #aef;
+	color: #aef !important;
 	cursor: pointer;
 	border: 1px solid #2e6da4;
-	border-radius: 0 4px 4px 0;
+	border-radius: 4px;
 	text-shadow:
 		1px 1px #000,
 		-1px 0 #000,
 		1px 0 #000,
 		-1px 1px #000,
 		1px -1px #000,
-		-1px -1px #000;
+		-1px -1px #000 !important;
 }
-#titleChatSend:hover{
-	background: rgba(32,112,192,1);
+.fwBlue:hover{
+	background: rgba(26,66,106,1);
 }
-#titleChatSend:active{
-	background: rgba(8,28,48,1);
+.fwBlue:active{
+	background: rgba(6,46,86,1);
+}
+.fwGreen{
+	background: rgba(11,76,11,1);
+	color: #afa !important;
+	cursor: pointer;
+	border: 1px solid #3a3;
+	border-radius: 4px;
+	text-shadow:
+		1px 1px #000,
+		-1px 0 #000,
+		1px 0 #000,
+		-1px 1px #000,
+		1px -1px #000,
+		-1px -1px #000 !important;
+}
+.fwGreen:hover{
+	background: rgba(26,86,26,1);
+}
+.fwGreen:active{
+	background: rgba(1,66,1,1);
+}
+#lobbyChatSend, #titleChatSend{
+	border-radius: 0 4px 4px 0;
 }
 
 /* lobby chat */
@@ -322,26 +345,6 @@ a:hover{
 	width: 100%;
 	border: 1px solid #2e6da4;
 	border-right: none;
-}
-#lobbyChatSend{
-	background: rgba(16,56,96,1);
-	color: #aef;
-	cursor: pointer;
-	border: 1px solid #2e6da4;
-	border-radius: 0 4px 4px 0;
-	text-shadow:
-		1px 1px #000,
-		-1px 0 #000,
-		1px 0 #000,
-		-1px 1px #000,
-		1px -1px #000,
-		-1px -1px #000;
-}
-#lobbyChatSend:hover{
-	background: rgba(32,112,192,1);
-}
-#lobbyChatSend:active{
-	background: rgba(8,28,48,1);
 }
 #chat-input{
 	position: absolute;
@@ -782,8 +785,8 @@ circle{
 	position: relative;
 	margin: 0 auto;
 }
-.w35{
-	width: 35%;
+.w33{
+	width: 33%;
 }
 .w66{
 	width: 66%;
@@ -1007,6 +1010,12 @@ circle{
 	pointer-events: none;
 	visibility: hidden;
 }
+#createGameFormWrap{
+	padding: 0 .5em;
+}
+#gamePlayers{
+	width: 33%;
+}
 #titleViewBackdrop{
 	position: absolute;
 	visibility: hidden;
@@ -1111,7 +1120,7 @@ table {
 	right: .5em;
 	font-size: 1.5em;
 }
-.lobbyGovernment{
+.fwDropdownButton{
 	position: relative;
 	text-align: left;
 	width: 100%;
@@ -1119,13 +1128,27 @@ table {
 	background: rgba(0,0,0,.5);
 	color: #aef;
 }
-.lobbyGovernment:hover{
-	background: none;
+.fwDropdownButton:hover{
+	border: 1px solid #2e6da4;
+	background: rgba(0,16,56,.5) !important;
+}
+.fwDropdownButton:active{
+	border: 1px solid #2e6da4;
+	background: rgba(0,6,36,.5) !important;
+}
+.btn-primary.active, .btn-primary:active, .open>.dropdown-toggle.btn-primary{
+	border: 1px solid #aef !important;
+	color: #aef !important;
+	background: rgba(0,16,56,.5) !important;
+}
+.fwDropdownButton:hover{
+	background: rgba(32,112,192,.5);
 	color: #aef;
 	border: 1px solid #aef;
 }
-.lobbyGovernmentMine:hover{
-	background: rgba(32,112,192,.5);
+.fwDropdownButtonEnemy:hover{
+	background: rgba(0,0,0,.5);
+	border: 1px solid #2e6da4;
 	color: #aef;
 }
 #governmentDropdown{
@@ -1136,6 +1159,25 @@ table {
 #governmentDropdown>li>a{
 	color: #aef;
 }
+#governmentDropdown>li>a:hover{
+	background: #135;
+}
+
+
+.fwDropdown{
+	text-shadow: none;
+	background: #00061a;
+	border: 2px groove #204d74;
+}
+.fwDropdown>li>a{
+	color: #aef;
+}
+.fwDropdown>li>a:hover{
+	background: #135;
+	color: #aef;
+}
+
+
 .lobbyNationName{
 	word-break: break-word;
 	font-family: Times New Roman, serif;

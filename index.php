@@ -134,9 +134,9 @@
 				</div>
 				<div>
 					<div id="menuHead">
-						<button id="refreshGames" type="button" class="titleButtons btn btn-primary btn-responsive  shadow4">Refresh Games</button>
-						<button id="create" type="button" class="titleButtons btn btn-primary btn-responsive shadow4">Create Game</button>
-						<button id="toggleNation" type="button" class="btn btn-primary btn-responsive  shadow4">Configure Nation</button>
+						<button id="refreshGames" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Refresh Games</button>
+						<button id="create" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Create Game</button>
+						<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>
 					</div>
 				</div>
 				<div id='refreshGameWrap'>
@@ -147,7 +147,7 @@
 							<div class="pull-left fw-text">
 								Game <input id="joinGameName" class='joinGameInputs' type='text' maxlength="240" autocomplete="off"/>
 								Password <input id="joinGamePassword" class='joinGameInputs' type='text' maxlength="240" autocomplete="off"/>
-								<button id="joinGame" type="button" class="btn btn-md btn-info btn-responsive shadow4">Join Game</button>
+								<button id="joinGame" type="button" class="btn btn-md fwGreen btn-responsive shadow4">Join Game</button>
 							</div>
 						</div>
 					</div>
@@ -176,7 +176,7 @@
 					<div>
 						<hr class="fancyhr">
 					</div>
-					<span id="titleChatSend" class="input-group-addon shadow4">Send</span>
+					<span id="titleChatSend" class="input-group-addon shadow4 fwBlue">Send</span>
 				</div>
 			</div>
 		</div>
@@ -192,7 +192,7 @@
 					
 					<div id="lobbyChatWrap" class="lobbyRelWrap input-group">
 						<input id="lobby-chat-input" class="fw-text noselect nobg form-control" type='text' maxlength="240" autocomplete="off"/>
-						<span id="lobbyChatSend" class="input-group-addon shadow4">Send</span>
+						<span id="lobbyChatSend" class="input-group-addon shadow4 fwBlue">Send</span>
 					</div>
 				</div>
 				
@@ -232,71 +232,55 @@
 		
 	<div id="titleViewBackdrop"></div>
 	
-	<div id='createGameWrap' class='fw-primary container titleModal'>
-		<div class="row text-center">
-			<div class='col-xs-12'>
-				<h2 class='header'>Create Game</h2>
-				<hr class="fancyhr">
+	<div id='createGameWrap' class='fw-primary titleModal'>
+		<h2 class='header text-center'>Create Game</h2>
+		<hr class="fancyhr">
+		<div id="createGameFormWrap">
+			<div class='buffer2'>
+				<label>Game Name</label>
 			</div>
-		</div>
-		<div class='row'>
-			<div class='col-xs-12'>Game Name</div>
-		</div>
-		<div class='row'>
-			<div class='col-xs-12'>
+			<div class='buffer'>
 				<input id='gameName' class='form-control' type='text' maxlength='32' autocomplete='off'>
 			</div>
-		</div>
-		<div class='row'>
-			<label class='col-xs-12'>Password (Optional)</label>
-		</div>
-		<div class='row'>
-			<div class='col-xs-12'>
+			<div class='buffer2'>
+				<label>Password (Optional)</label>
+			</div>
+			<div class='buffer'>
 				<input id='gamePassword' class='form-control' type='text' maxlength='32' autocomplete='off'>
 			</div>
-		</div>
-		<div class='row buffer2'>
-			<label class='col-xs-12 control-label'>Maximum Players</label>
-		</div>
-		<div class='row'>
-			<div class='col-xs-3'>
+			<div class='buffer2'>
+				<label class='control-label'>Maximum Number of Players</label>
+			</div>
+			<div class='buffer'>
 				<input id='gamePlayers' type='number' class='form-control' id='gamePlayers' value='8' min='2' max='8'>
 			</div>
-		</div>
-		<div class='row buffer2'>
-			<label class='col-xs-12 control-label'>Map</label>
-		</div>
-		<div class='row'>
-			<div class='col-xs-12'>
+			<div class='buffer2'>
+				<label class='control-label'>Map</label>
+			</div>
+			<div class='buffer w33'>
 				<div class='dropdown'>
-					<button class='btn btn-primary dropdown-toggle shadow4' type='button' data-toggle='dropdown'>
+					<button class='btn btn-primary dropdown-toggle shadow4 fwDropdownButton' type='button' data-toggle='dropdown'>
 						<span id='createGameMap'>Earth Alpha</span>
-						<span class='caret'></span>
+						<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 					</button>
-					<ul id='mapDropdown' class='dropdown-menu'>
+					<ul id='mapDropdown' class='dropdown-menu fwDropdown'>
 						<li><a class='mapSelect' href='#'>Earth Alpha</a></li>
 					</ul>
 				</div>
 			</div>
-		</div>
-		<div class='row buffer2'>
-			<div class='col-xs-12'>
+			<div class='buffer2'>
 				<label class='control-label'>Map Description</label>
-				<div>
-					<span id='createGameDescription'>Up to 8 players vie for domination in this sprawling map across six continents.</span>
-					<span id='createGameGlobe' data-toggle='tooltip' title='Number of territories for this map'><i class='fa fa-globe'></i> <span id='createGameTiles'>83</span></span>
-				</div>
+			</div>
+			<div class='buffer'>
+				<span id='createGameDescription'>Up to 8 players vie for domination in this sprawling map across six continents.</span>
+				<span id='createGameGlobe' data-toggle='tooltip' title='Number of territories for this map'><i class='fa fa-globe'></i> <span id='createGameTiles'>83</span></span>
 			</div>
 		</div>
-		<div class='row'>
-			<div class='col-xs-12'>
-				<hr class='fancyhr'>
-			</div>
+		<div>
+			<hr class='fancyhr'>
 		</div>
-		<div class='row'>
-			<div class='col-xs-12 text-center'>
-				<button id='createGame' type='button' class='btn btn-md btn-info btn-responsive shadow4'>Create Game Lobby</button>
-			</div>
+		<div class='text-center'>
+			<button id='createGame' type='button' class='btn btn-md fwGreen btn-responsive shadow4'>Create Game Lobby</button>
 		</div>
 	</div>
 	
@@ -318,7 +302,7 @@
 				<div class="input-group">
 					<input id="updateNationName" class="form-control" type="text" maxlength="32" autocomplete="off" size="24" aria-describedby="updateNationNameStatus" placeholder="Enter New Nation Name">
 					<span class="input-group-btn">
-						<button id="submitNationName" class="btn btn-primary shadow4" type="button">
+						<button id="submitNationName" class="btn fwBlue shadow4" type="button">
 							Update Nation Name
 						</button>
 					</span>
@@ -333,7 +317,7 @@
 					Select National Flag
 				</div>
 				<div class="dropdown">
-					<button class="btn btn-primary dropdown-toggle shadow4" type="button" data-toggle="dropdown">
+					<button class="btn fwBlue dropdown-toggle shadow4" type="button" data-toggle="dropdown">
 						Update Flag
 						<span class="caret shadow4"></span>
 					</button>
@@ -352,7 +336,7 @@
 					<hr class="fancyhr">
 					<h5 class="text-center">Buy flag for 100 Never Crystals?</h5>
 					<div class="center block">
-						<button id="buyFlag" type="button" class="btn btn-primary shadow4 text-primary" title="Purchase Flag">
+						<button id="buyFlag" type="button" class="btn fwBlue shadow4 text-primary">
 							<i class="fa fa-diamond"></i> 100
 						</button>
 					</div>
@@ -369,7 +353,7 @@
 		<div class='row buffer text-center'>
 			<div class='col-xs-12'>
 				<hr class="fancyhr">
-				<button id="configureNationDone" type="button" class="btn btn-md btn-info btn-responsive shadow4">Done</button>
+				<button id="configureNationDone" type="button" class="btn btn-md fwGreen btn-responsive shadow4">Done</button>
 			</div>
 		</div>
 	</div>

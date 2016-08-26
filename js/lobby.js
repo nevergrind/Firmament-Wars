@@ -142,7 +142,7 @@ var lobby = {
 					// me
 					str += 
 					'<div class="dropdown">\
-						<button class="btn btn-primary dropdown-toggle shadow4 lobbyGovernment lobbyGovernmentMine" type="button" data-toggle="dropdown">\
+						<button class="btn btn-primary dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">\
 							<span id="lobbyGovernment' +i+ '">Despotism</span>\
 							<i class="fa fa-caret-down text-warning lobbyCaret"></i>\
 						</button>\
@@ -160,7 +160,7 @@ var lobby = {
 					// not me
 					str += 
 					'<div class="dropdown">\
-						<button style="cursor: default" class="btn btn-primary dropdown-toggle shadow4 lobbyGovernment" type="button">\
+						<button style="cursor: default" class="btn btn-primary dropdown-toggle shadow4 fwDropdownButton fwDropdownButtonEnemy" type="button">\
 							<span id="lobbyGovernment' +i+ '" class="pull-left">Despotism</span>\
 							<i class="fa fa-caret-down text-disabled lobbyCaret"></i>\
 						</button>\

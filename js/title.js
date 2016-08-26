@@ -121,9 +121,7 @@ $("#refreshGames").on("click", function(){
 }).trigger("click");
 
 $("#create").on("click", function(){
-	var e = document.getElementById("createGameWrap"),
-		e2 = document.getElementById("titleViewBackdrop");
-	TweenMax.to(e, .5, {
+	TweenMax.to(document.getElementById("createGameWrap"), .5, {
 		startAt: {
 			visibility: 'visible',
 			scale: .8,
@@ -132,16 +130,17 @@ $("#create").on("click", function(){
 		scale: 1,
 		alpha: 1
 	});
-	TweenMax.to(e2, .5, {
+	TweenMax.to(document.getElementById("titleViewBackdrop"), .25, {
 		startAt: {
 			visibility: 'visible',
 			opacity: 0
 		},
-		opacity: 1
+		opacity: 1,
+		ease: Linear.easeNone,
+		onComplete: function(){
+			$("#gameName").focus();
+		}
 	});
-	//$("#createGameWrap").html(x);
-	$("#createGameGlobe").tooltip();
-	$("#gameName").focus();
 });
 
 $("#createGame").on("mousedown", function(e){
@@ -180,6 +179,7 @@ function joinGame(){
 	if (!g.id || typeof g.id !== 'number'){
 		return;
 	}
+	var name = $("#joinGameName").val();
 	var pw = $("#joinGamePassword").val();
 	g.lock();
 	audio.play('click');
@@ -187,6 +187,7 @@ function joinGame(){
 		url: 'php/joinGame.php',
 		data: {
 			gameId: g.id,
+			name: name,
 			pw: pw
 		}
 	}).done(function(data) {

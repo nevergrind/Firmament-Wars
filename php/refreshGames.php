@@ -16,30 +16,12 @@
 		</tr>';
 			
 	// game data
-	$query = 'select g.row row, min(p.player) host, g.name name, g.map map, count(p.game) players, g.max max from fwGames g join fwplayers p on g.row=p.game and p.timestamp > date_sub(now(), interval ' . $_SESSION["refreshGameLag"] . ' second) and p.startGame = 0 group by p.game having players > 0 and host=1 order by p.account';
+	$query = 'select g.row row, min(p.player) host, g.name name, g.map map, count(p.game) players, g.max max from fwGames g join fwplayers p on g.row=p.game and p.timestamp > date_sub(now(), interval ' . $_SESSION["refreshGameLag"] . ' second) and p.startGame = 0 and g.password="" group by p.game having players > 0 and host=1 order by p.account';
 	
 	$stmt = mysqli_query($link, $query);
 	$count = mysqli_num_rows($stmt);
 	if ($count > 0){
 		while($row = mysqli_fetch_assoc($stmt)){
-			$str .= 
-			'<tr class="wars" data-id=\'' . $row["row"] . '\'>
-				<td class="warCells">' . $row["name"] . '</td>
-				<td class="warCells">' . $row["map"] . '</td>
-				<td class="warCells">' . $row["players"] . '/' .$row["max"] . '</td>
-			</tr>';
-			$str .= 
-			'<tr class="wars" data-id=\'' . $row["row"] . '\'>
-				<td class="warCells">' . $row["name"] . '</td>
-				<td class="warCells">' . $row["map"] . '</td>
-				<td class="warCells">' . $row["players"] . '/' .$row["max"] . '</td>
-			</tr>';
-			$str .= 
-			'<tr class="wars" data-id=\'' . $row["row"] . '\'>
-				<td class="warCells">' . $row["name"] . '</td>
-				<td class="warCells">' . $row["map"] . '</td>
-				<td class="warCells">' . $row["players"] . '/' .$row["max"] . '</td>
-			</tr>';
 			$str .= 
 			'<tr class="wars" data-id=\'' . $row["row"] . '\'>
 				<td class="warCells">' . $row["name"] . '</td>

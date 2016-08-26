@@ -5,40 +5,49 @@
 	mysqli_query($link, 'delete from fwplayers where timestamp < date_sub(now(), interval 20 second)');
 	
 	$gameId = $_POST['gameId']*1; 
+	$name = $_POST['name'];
 	$pw = $_POST['pw'];
 	
-	$o = new stdClass();
-	$o->pw = '';
-	$stmt = $link->prepare('select password from fwgames where row=? limit 1');
-	$stmt->bind_param('i', $_SESSION['gameId']);
-	$stmt->execute();
-	$stmt->bind_result($password);
-	while($stmt->fetch()){
-		$o->pw = $password;
-	}
-	if (strlen($pw) > 0 || strlen($o->pw) > 0){
-		if ($pw != $o->pw){
-			header('HTTP/1.1 500 The password did not match.' . $pw . ' !== ' . $o->pw);
-			exit;
+	if (strlen($name) > 0){
+		// PRIVATE game
+		// check password
+		$o = new stdClass();
+		$o->pw = '';
+		$stmt = $link->prepare('select password from fwgames where row=? limit 1');
+		$stmt->bind_param('i', $_SESSION['gameId']);
+		$stmt->execute();
+		$stmt->bind_result($password);
+		while($stmt->fetch()){
+			$o->pw = $password;
 		}
-	}
-	// is it possible to join this game?
-	$query = "select g.name, count(p.game) activePlayers, g.max max, g.map map 
-				from fwGames g 
-				join fwplayers p 
-				on g.row=p.game and p.timestamp > date_sub(now(), interval {$_SESSION['lag']} second)
-				where g.row=? 
-				group by p.game";
-	$stmt = $link->prepare($query);
-	$stmt->bind_param('i', $gameId);
-	$stmt->execute();
-	$stmt->store_result();
-	$stmt->bind_result($dgameName, $dactivePlayers, $dmax, $dmap);
-	while($stmt->fetch()){
-		$gameName = $dgameName;
-		$activePlayers = $dactivePlayers;
-		$max = $dmax;
-		$map = $dmap;
+		if (strlen($pw) > 0 || strlen($o->pw) > 0){
+			if ($pw != $o->pw){
+				header('HTTP/1.1 500 The password did not match.' . $pw . ' !== ' . $o->pw);
+				exit;
+			}
+		}
+		// check if it's possible to join
+	} else {
+		// PUBLIC game
+		// no game name supplied
+		// is it possible to join this game?
+		$query = "select g.name, count(p.game) activePlayers, g.max max, g.map map 
+					from fwGames g 
+					join fwplayers p 
+					on g.row=p.game and p.timestamp > date_sub(now(), interval {$_SESSION['lag']} second)
+					where g.row=? 
+					group by p.game";
+		$stmt = $link->prepare($query);
+		$stmt->bind_param('i', $gameId);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($dgameName, $dactivePlayers, $dmax, $dmap);
+		while($stmt->fetch()){
+			$gameName = $dgameName;
+			$activePlayers = $dactivePlayers;
+			$max = $dmax;
+			$map = $dmap;
+		}
 	}
 	
 	if (!$stmt->num_rows){
