@@ -62,7 +62,7 @@
 		$_SESSION['nukesLaunched']++;
 		$o->production = $_SESSION['production'];
 		// report to other players
-		$msg = '<span class="chat-alert">Nuclear launch detected!</span>';
+		$msg = '<span class="chat-danger">Nuclear launch detected!</span>';
 		$data = 'nuke|' . $defender->tile . '|' . $_SESSION['account'];
 		$stmt = $link->prepare('insert into fwchat (`message`, `gameId`, `event`) values (?, ?, ?);');
 		$stmt->bind_param('sis', $msg, $_SESSION['gameId'], $data);

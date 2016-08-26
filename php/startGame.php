@@ -26,7 +26,7 @@ if ($_SESSION['player'] === 1){
 		exit;
 	}
 	// must timestamp start of game
-	$query = "update fwGames set start=now() where row=?";
+	$query = "update fwPlayers set startGame=1 where game=?";
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('i', $_SESSION['gameId']);
 	$stmt->execute();

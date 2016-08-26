@@ -13,16 +13,17 @@
 	$stmt->execute();
 	
 	// who is still in the lobby?
-	$query = 'select account, nation, flag, player, government from fwPlayers where game=? and timestamp > date_sub(now(), interval '.$_SESSION['lag'].' second) order by player';
+	$query = 'select account, nation, flag, player, government, startGame from fwPlayers where game=? and timestamp > date_sub(now(), interval '.$_SESSION['lag'].' second) order by player';
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('i', $_SESSION['gameId']);
 	$stmt->execute();
-	$stmt->bind_result($account, $nation, $flag, $player, $government);
+	$stmt->bind_result($account, $nation, $flag, $player, $government, $startGame);
 	
 	$x = new stdClass();
 	$x->hostFound = false;
 	$totalPlayers = 0;
 	$x->playerData = [];
+	$x->startGame = 0;
 	while($stmt->fetch()){
 		$x->playerData[$totalPlayers] = new stdClass();
 		$x->playerData[$totalPlayers]->account = $account;
@@ -33,37 +34,23 @@
 		$totalPlayers++;
 		if ($player === 1){
 			$x->hostFound = true;
+			$x->startGame = $startGame;
 		}
-		/*
-		$x->lobbyData .= 
-		'<div class="row lobbyRow">
-			<div class="col-xs-3">';
-		if ($flag != "Default.jpg"){
-			$x->lobbyData .= '<img src="images/flags/'.$flag.'" class="player'.$player.' p'.$player.'b w100 block center">';
-		} else {
-			$x->lobbyData .= '<img src="images/flags/Player'.$player.'.jpg" class="player'.$player.' p'.$player.'b w100 block center">';
-		}
-		$x->lobbyData .= 
-			'</div>
-			<div class="col-xs-9 text-center lobbyNationInfo">
-				<div class="text-warning">'.$account.'</div>
-				<div class="lobbyNationName">'.$nation.'</div>
-			</div>
-		</div>';
-		*/
 	}
-	// is my gameId started?
-	$query = 'SELECT count(row) rows FROM `fwgames` where row=? and start > 0';
-	$stmt = $link->prepare($query);
-	$stmt->bind_param('i', $_SESSION['gameId']);
-	$stmt->bind_result($rows);
+	// lobby chat messages
+	$x->chat = [];
+	$stmt = $link->prepare('select row, message from fwchat where row > ? and gameId=?');
+	$stmt->bind_param('ii', $_SESSION['chatId'], $_SESSION['gameId']);
 	$stmt->execute();
+	$stmt->bind_result($row, $message);
+	$i = 0;
 	while($stmt->fetch()){
-		$count = $rows;
+		$x->chat[$i++] = $message;
+		$_SESSION['chatId'] = $row;
 	}
-	
+	// some final values to send
 	$x->player = $_SESSION['player'];
-	$x->gameStarted = $count; // boolean to trigger game start
+	$x->gameStarted = $x->startGame; // boolean to trigger game start
 	$x->totalPlayers = $totalPlayers;
 	$x->delay = microtime(true) - $start;
 	echo json_encode($x);

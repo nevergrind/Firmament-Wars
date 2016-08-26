@@ -44,10 +44,19 @@ audio{
 	display: none;
 }
 h1,h2{
-	font-size: .875em;
+	font-size: 1.25em;
 	color:#fff;
 	margin:0;
 	padding:0;
+}
+.header{
+	font-family: Times New Roman, serif;
+	letter-spacing: .2em;
+	color: #aef;
+    background: -webkit-radial-gradient(center center, farthest-side, rgba(32,64,124,.5) 0%, rgba(0,0,0,.1) 100%);
+    background: -moz-radial-gradient(center center, farthest-side, rgba(32,64,124,.5) 0%, rgba(0,0,0,.1) 100%);
+    background: -ms-radial-gradient(center center, farthest-side, rgba(32,64,124,.5) 0%, rgba(0,0,0,.1) 100%);
+    background: -o-radial-gradient(center center, farthest-side, rgba(32,64,124,.5) 0%, rgba(0,0,0,.1) 100%);
 }
 a:hover{
 	color: #8bf;
@@ -222,7 +231,11 @@ a:hover{
 	color: #ffff00;
 	text-shadow: 2px 2px 0 #520;
 }
-.chat-alert{
+.chat-warning{
+	color: #ffff1a;
+	text-shadow: 2px 2px 0 #550;
+}
+.chat-danger{
 	color: #ff1a1a;
 	text-shadow: 2px 2px 0 #500;
 }
@@ -241,6 +254,93 @@ a:hover{
 .chat-arrow{
 	color: #1e1;
 	text-shadow: 2px 2px 0 #050;
+}
+/* title chat */
+#titleChat{
+	position: absolute;
+	padding: .5em;
+	top: 7%;
+	left: 56%;
+	width: 43%;
+	height: 91%;
+}
+#title-chat-input{
+	padding: 0 2%;
+	width: 100%;
+	border: 1px solid #2e6da4;
+	border-right: none;
+}
+.titleRelWrap{
+	position: relative;
+	top: 0%;
+	margin-top: 4%;
+}
+#titleChatLog{
+	overflow: auto;
+	text-align: left;
+	width: 100%;
+	top: .5%;
+	height: 87.5%;
+	font-family: Consolas, monospace;
+	color: #bef;
+	text-shadow: 2px 2px 0 #357;
+	padding: 0 .5em;
+	border-radius: 4px;
+}
+#titleChatWrap{
+	margin-top: .5em;
+	font-family: Consolas, monospace;
+	color: #bef;
+	text-shadow: 2px 2px 0 #357;
+	border-radius: 0;
+}
+#titleChatSend{
+	background: rgba(16,56,96,1);
+	color: #aef;
+	cursor: pointer;
+	border: 1px solid #2e6da4;
+	border-radius: 0 4px 4px 0;
+	text-shadow:
+		1px 1px #000,
+		-1px 0 #000,
+		1px 0 #000,
+		-1px 1px #000,
+		1px -1px #000,
+		-1px -1px #000;
+}
+#titleChatSend:hover{
+	background: rgba(32,112,192,1);
+}
+#titleChatSend:active{
+	background: rgba(8,28,48,1);
+}
+
+/* lobby chat */
+#lobby-chat-input{
+	padding: .5% 1%;
+	width: 100%;
+	border: 1px solid #2e6da4;
+	border-right: none;
+}
+#lobbyChatSend{
+	background: rgba(16,56,96,1);
+	color: #aef;
+	cursor: pointer;
+	border: 1px solid #2e6da4;
+	border-radius: 0 4px 4px 0;
+	text-shadow:
+		1px 1px #000,
+		-1px 0 #000,
+		1px 0 #000,
+		-1px 1px #000,
+		1px -1px #000,
+		-1px -1px #000;
+}
+#lobbyChatSend:hover{
+	background: rgba(32,112,192,1);
+}
+#lobbyChatSend:active{
+	background: rgba(8,28,48,1);
 }
 #chat-input{
 	position: absolute;
@@ -728,9 +828,6 @@ circle{
     background-color: #286090;
     border-color: #204d74;
 }
-#refreshGames{
-	margin: 0;
-}
 #titleMain{
 	visibility: hidden;
 }
@@ -768,6 +865,10 @@ circle{
 	top: 0%;
 	padding: 1em;
 }
+#lobbyGameName{
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 #lobbyGovernmentDescription{
 	padding: 1em;
 }
@@ -777,12 +878,27 @@ circle{
 	top: 0%;
 	margin-top: 4%;
 }
+#lobbyChatLogWrap{
+	height: 35%;
+	padding: .5em;
+	border-radius: 6px 6px 0 0;
+}
 #lobbyChatLog{
-	height: 30%;
-	padding: 1em;
+	overflow: auto;
+	width: 100%;
+	height: 83%;
+	font-family: Consolas, monospace;
+	color: #bef;
+	text-shadow: 2px 2px 0 #357;
+	padding: .5em;
+	border-radius: 4px;
 }
 #lobbyChatWrap{
-	padding: .5em 1em;
+	margin-top: .5em;
+	font-family: Consolas, monospace;
+	color: #bef;
+	text-shadow: 2px 2px 0 #357;
+	border-radius: 0;
 }
 #lobbyGovernmentDescription{
 	padding: 1em;
@@ -794,10 +910,49 @@ circle{
 	position: absolute;
 	top: 7%;
 	left: 1%;
-	width: 47%;
+	width: 54%;
 	overflow: hidden;
 	padding: .5em 1em;
-	max-height: 86%;
+	height: 91%;
+}
+#joinGamePasswordWrap{
+	margin-left: 8%;
+}
+#joinGamePassword{
+	color: #bef;
+	background: none;
+	border: 1px solid #2e6da4;
+	margin: 0 1em 0 .5em;
+	padding: .25em .5em;
+	border-radius: 4px;
+}
+#refreshGameWrap{
+	height: 78%;
+}
+#menuContent{
+	max-height: 91%;
+	margin: 0;
+	overflow-y: auto;
+	margin: 3% 0;
+}
+#createGameWrap{
+	display: none;
+	padding: 2em .5em .25em;
+}
+#gameTable{
+	table-layout: fixed;
+	width: 100%;
+	padding: 0 1%;
+	margin: 0;
+}
+.gameTableCol1{
+	width: 50%;
+}
+.gameTableCol2{
+	width: 35%;
+}
+.gameTableCol3{
+	width: 15%;
 }
 #menuOnline{
 	color: #bef;
@@ -854,13 +1009,30 @@ circle{
 	pointer-events: none;
 	visibility: hidden;
 }
+#configureNationBackdrop{
+	position: absolute;
+	visibility: hidden;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,.8);
+    background: -webkit-radial-gradient(center center, farthest-side, rgba(0,0,0,.2) 0%, rgba(0,0,0,.9) 100%);
+    background: -moz-radial-gradient(center center, farthest-side, rgba(0,0,0,.2) 0%, rgba(0,0,0,.9) 100%);
+    background: -ms-radial-gradient(center center, farthest-side, rgba(0,0,0,.2) 0%, rgba(0,0,0,.9) 100%);
+    background: -o-radial-gradient(center center, farthest-side, rgba(0,0,0,.2) 0%, rgba(0,0,0,.9) 100%);
+	z-index: 999999;
+}
 #configureNation{
 	visibility: hidden;
 	position: absolute;
 	padding: 8px;
 	top: 7%;
-	left: 51%;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
 	width: 47%;
+	z-index: 999999;
 }
 .wars{
 	white-space: nowrap;

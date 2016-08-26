@@ -38,7 +38,7 @@
 		
 		<img id="worldTitle" src="images/flat4.jpg">
 	
-		<div id="titleMain" class="portal no-select">
+		<div id="titleMain" class="portal">
 			<header class="shadow4">
 				<div id="headerWrap">
 			<?php
@@ -80,9 +80,15 @@
 				</div>
 			</header>
 			
-			<div id="menu" class="fw-primary container">
-				<div id='menuOnline' class='shadow4 row'>
-					<div class='col-xs-12'>
+			<div id="menu" class="fw-primary">
+				<div class="text-center">
+					<div>
+						<h2 class='header'>Firmament Wars</h2>
+						<hr class="fancyhr">
+					</div>
+				</div>
+				<div id='menuOnline'>
+					<div>
 					<?php
 						require('php/checkDisconnectsByAccount.php');
 					
@@ -93,7 +99,7 @@
 							($row["count"] == 1 ? 'is' : 'are')  .' currently '.$row["count"].' '.
 							($row["count"] == 1 ? 'player' : 'players') . ' playing Firmament Wars'
 						);
-						echo '</div><div class="col-xs-12">';
+						echo '</div><div>';
 						// check if nation exists; create if not
 						$query = 'select count(row) from fwNations where account=?';
 						$stmt = $link->prepare($query);
@@ -135,78 +141,40 @@
 					</div>
 				</div>
 				<hr class='fancyhr'>
-				<div class="row">
-					<div id="menuHead" class="btn-group col-xs-12" role="group">
-						<button id="refreshGames" type="button" class="btn btn-primary btn-responsive btn-md shadow4 active">Refresh Games</button>
-						<button id="create" type="button" class="btn btn-primary btn-responsive btn-md shadow4">Create Game</button>
-						<button id="toggleNation" type="button" class="btn btn-primary btn-responsive btn-md shadow4">Configure Nation</button>
+				<div>
+					<div id="menuHead" class="btn-group" role="group">
+						<button id="refreshGames" type="button" class="titleButtons btn btn-primary btn-responsive  shadow4 active">Refresh Games</button>
+						<button id="create" type="button" class="titleButtons btn btn-primary btn-responsive shadow4">Create Game</button>
+						<button id="toggleNation" type="button" class="btn btn-primary btn-responsive  shadow4">Configure Nation</button>
 					</div>
 				</div>
-				<div class='row buffer2'>
-					<div id="menuContent" class="shadow4 col-xs-12"></div>
+				<div id='refreshGameWrap'>
+					<div id="menuContent" class='buffer2 shadow4'></div>
+					<div id='joinGameWrap' class='buffer'>
+						<hr class="fancyhr">
+						<div id="joinGamePasswordWrap">
+							<div class="pull-left fw-text">
+								Game Password <input id="joinGamePassword" type='text' maxlength="240" autocomplete="off"/>
+							</div>
+							<button id="joinGame" type="button" class="pull-left btn btn-md btn-info btn-responsive shadow4">Join Game</button>
+						</div>
+					</div>
+				</div>
+				<div id='createGameWrap'>
 				</div>
 			</div>
 			
-			<div id="configureNation" class="fw-primary container">
-				<div class="row">
-					<div class="col-xs-6">
-						<img id="nationFlag" class="w100" src="images/flags/<?php echo $flag; ?>">
-					</div>
-					<div id="nationName" class="col-xs-6 shadow4 nation text-center"><?php echo $nation; ?></div>
-				</div>
+			<div id="titleChat" class="fw-primary text-center">
+				<h2 class='header'>Global Chat Lobby</h2>
 				<hr class="fancyhr">
-				<div class="row">
-					<div class="col-xs-12">
-						<div class="input-group">
-							<input id="updateNationName" class="form-control" type="text" maxlength="32" autocomplete="off" size="24" aria-describedby="updateNationNameStatus" placeholder="Enter New Nation Name">
-							<span class="input-group-btn">
-								<button id="submitNationName" class="btn btn-primary shadow4" type="button">
-									Update Nation Name
-								</button>
-							</span>
-						</div>
-					</div>
-				</div>
-				<hr class="fancyhr">
+				<div id="titleChatLog"></div>
 				
-				<div class="row">
-					<div class="col-xs-6">
-						<div class='flagLabel'>
-							Select National Flag
-						</div>
-						<div class="dropdown">
-							<button class="btn btn-primary dropdown-toggle shadow4" type="button" data-toggle="dropdown">
-								Update Flag
-								<span class="caret shadow4"></span>
-							</button>
-							<ul id="flagDropdown" class="dropdown-menu">
-								
-							</ul>
-						</div>
-						<div id="flagPurchased" class="flagPurchaseStatus">
-							<hr class="fancyhr">
-							<h4 class="text-center text-success shadow4">
-								<i class="fa fa-check"></i>
-								&ensp;Flag Purchased!
-							</h4>
-						</div>
-						<div id="offerFlag" class="flagPurchaseStatus shadow4">
-							<hr class="fancyhr">
-							<h5 class="text-center">Buy flag for 100 Never Crystals?</h5>
-							<div class="center block">
-								<button id="buyFlag" type="button" class="btn btn-primary shadow4 text-primary" title="Purchase Flag">
-									<i class="fa fa-diamond" title="Never Crystals"></i> 100
-								</button>
-							</div>
-							<h4 class="text-center">
-								<a target="_blank" href="/store/">Purchase Crystals</a>
-							</h4>
-						</div>
-						
+				<div id="titleChatWrap" class="titleRelWrap input-group">
+					<input id="title-chat-input" class="fw-text noselect nobg form-control" type='text' maxlength="240" autocomplete="off"/>
+					<div>
+						<hr class="fancyhr">
 					</div>
-					<div class="col-xs-6">
-						<img id="updateNationFlag" class="w100 block center" src="images/flags/<?php echo $flag; ?>">
-					</div>
+					<span id="titleChatSend" class="input-group-addon shadow4">Send</span>
 				</div>
 			</div>
 		</div>
@@ -217,12 +185,13 @@
 			
 				<div id="lobbyPlayers" class="fw-primary"></div>
 				
-				<div id="lobbyChatLog" class="fw-primary lobbyRelWrap">
-					Lorem ipsum dolor sit amet, mel amet magna accusam ne. Et mei purto dissentias. Usu id fuisset sententiae necessitatibus, quo paulo delicatissimi ut. Duis veritus dissentias cu vel, te nam facer dicunt recteque.
-				</div>
-				
-				<div id="lobbyChatWrap" class="fw-primary lobbyRelWrap">
-					Lorem ipsum dolor sit amet, mel amet magna accusam ne. 
+				<div id="lobbyChatLogWrap" class="fw-primary lobbyRelWrap">
+					<div id="lobbyChatLog"></div>
+					
+					<div id="lobbyChatWrap" class="lobbyRelWrap input-group">
+						<input id="lobby-chat-input" class="fw-text noselect nobg form-control" type='text' maxlength="240" autocomplete="off"/>
+						<span id="lobbyChatSend" class="input-group-addon shadow4">Send</span>
+					</div>
 				</div>
 				
 			</div>
@@ -256,6 +225,82 @@
 			
 		</div>
 		
+	</div>
+	
+		
+	<div id="configureNationBackdrop"></div>
+	<div id="configureNation" class="fw-primary container">
+		<div class="row text-center">
+			<div class='col-xs-12'>
+				<h2 class='header'>Configure Nation</h2>
+				<hr class="fancyhr">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6">
+				<img id="nationFlag" class="w100" src="images/flags/<?php echo $flag; ?>">
+			</div>
+			<div id="nationName" class="col-xs-6 shadow4 nation text-center"><?php echo $nation; ?></div>
+		</div>
+		<div class="row buffer2">
+			<div class="col-xs-12">
+				<div class="input-group">
+					<input id="updateNationName" class="form-control" type="text" maxlength="32" autocomplete="off" size="24" aria-describedby="updateNationNameStatus" placeholder="Enter New Nation Name">
+					<span class="input-group-btn">
+						<button id="submitNationName" class="btn btn-primary shadow4" type="button">
+							Update Nation Name
+						</button>
+					</span>
+				</div>
+			</div>
+		</div>
+		<hr class="fancyhr">
+		
+		<div class="row">
+			<div class="col-xs-6 text-center">
+				<div class='flagLabel'>
+					Select National Flag
+				</div>
+				<div class="dropdown">
+					<button class="btn btn-primary dropdown-toggle shadow4" type="button" data-toggle="dropdown">
+						Update Flag
+						<span class="caret shadow4"></span>
+					</button>
+					<ul id="flagDropdown" class="dropdown-menu">
+						
+					</ul>
+				</div>
+				<div id="flagPurchased" class="flagPurchaseStatus">
+					<hr class="fancyhr">
+					<h4 class="text-center text-success shadow4">
+						<i class="fa fa-check"></i>
+						&ensp;Flag Purchased!
+					</h4>
+				</div>
+				<div id="offerFlag" class="flagPurchaseStatus shadow4">
+					<hr class="fancyhr">
+					<h5 class="text-center">Buy flag for 100 Never Crystals?</h5>
+					<div class="center block">
+						<button id="buyFlag" type="button" class="btn btn-primary shadow4 text-primary" title="Purchase Flag">
+							<i class="fa fa-diamond"></i> 100
+						</button>
+					</div>
+					<h4 class="text-center">
+						<a target="_blank" href="/store/">Purchase Crystals</a>
+					</h4>
+				</div>
+				
+			</div>
+			<div class="col-xs-6">
+				<img id="updateNationFlag" class="w100 block center" src="images/flags/<?php echo $flag; ?>">
+			</div>
+		</div>
+		<div class='row buffer text-center'>
+			<div class='col-xs-12'>
+				<hr class="fancyhr">
+				<button id="configureNationDone" type="button" class="btn btn-md btn-info btn-responsive shadow4">Done</button>
+			</div>
+		</div>
 	</div>
 	
 	<div id="gameWrap">

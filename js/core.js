@@ -6,6 +6,7 @@ $.ajaxSetup({
 TweenMax.defaultEase = Quad.easeOut;
 
 var g = {
+	id: 0,
 	focusUpdateNationName: false,
 	focusGameName: false,
 	view: "title",
@@ -25,6 +26,21 @@ var g = {
 	unlock: function(clear){
 		g.overlay.style.display = "none";
 		clear ? g.overlay.style.opacity = 0 : g.overlay.style.opacity = 1;
+	},
+	unlockFade: function(d){
+		if (!d){
+			d = 1;
+		}
+		TweenMax.to(g.overlay, d, {
+			startAt: {
+				opacity: 1,
+			},
+			ease: Power3.easeIn,
+			opacity: 0,
+			onComplete: function(){
+				g.overlay.style.display = 'none';
+			}
+		});
 	},
 	TDC: function(){
 		return new TweenMax.delayedCall(0, '');
@@ -85,7 +101,7 @@ g.init = (function(){
 		},
 		Europe: {
 			group: "Europe",
-			name: ['Albania', 'Austria', 'Belgium', 'Bosnia and Herzegovina', 'Bulgaria', 'Croatia', 'Czech Republic', 'Denmark', 'England', 'Estonia', 'Finland', 'France', 'Germany', 'Greece', 'Hungary', 'Iceland', 'Ireland', 'Italy', 'Kosovo', 'Latvia', 'Lithuania', 'Macedonia', 'Montenegro', 'Netherlands', 'Norway', 'Poland', 'Portugal', 'Romania', 'Russia', 'Scotland', 'Serbia', 'Slovakia', 'Slovenia', 'Spain', 'Sweden', 'Switzerland', 'Ukraine', 'United Kingdom', 'United States']
+			name: ['Albania', 'Austria', 'Belgium', 'Bosnia and Herzegovina', 'Bulgaria', 'Croatia', 'Czech Republic', 'Denmark', 'England', 'Estonia', 'Finland', 'France', 'Germany', 'Greece', 'Hungary', 'Iceland', 'Ireland', 'Italy', 'Kosovo', 'Latvia', 'Lithuania', 'Macedonia', 'Montenegro', 'Netherlands', 'Norway', 'Poland', 'Portugal', 'Romania', 'Russia', 'Scotland', 'Serbia', 'Slovakia', 'Slovenia', 'Spain', 'Sweden', 'Switzerland', 'Ukraine', 'United Kingdom']
 		},
 		Eurasia: {
 			group: "Eurasia",
@@ -101,7 +117,7 @@ g.init = (function(){
 		},
 		NorthAmerica: {
 			group: "North America",
-			name: ['Bahamas', 'Barbados', 'Canada', 'Costa Rica', 'Cuba', 'Haiti', 'Honduras', 'Mexico', 'Saint Lucia', 'Trinidad and Tobago']
+			name: ['Bahamas', 'Barbados', 'Canada', 'Costa Rica', 'Cuba', 'Haiti', 'Honduras', 'Mexico', 'Saint Lucia', 'Trinidad and Tobago', 'United States']
 		},
 		Oceania: {
 			group: "Oceania",
@@ -138,8 +154,8 @@ g.init = (function(){
 				console.info("Auto joined game:" + (data.gameId));
 				// join lobby in progress
 				setTimeout(function(){
-					initLobby(data);
-					joinLobby(0); // autojoin
+					lobby.init(data);
+					lobby.join(0); // autojoin
 					initResources(data); // setResources(data);
 				}, 111);
 			} else {
@@ -338,6 +354,8 @@ function initDom(){
 		sumCulture: d.getElementById("sumCulture"),
 		chatContent: d.getElementById("chat-content"),
 		chatInput: d.getElementById("chat-input"),
+		lobbyChatInput: d.getElementById("lobby-chat-input"),
+		titleChatInput: d.getElementById("title-chat-input"),
 		worldWrap: d.getElementById('worldWrap'),
 		motionPath: d.getElementById('motionPath'),
 		targetLine: d.getElementById('targetLine'),
@@ -370,14 +388,18 @@ function initDom(){
 		researchGunpowder: d.getElementById('researchGunpowder'),
 		researchRocketry: d.getElementById('researchRocketry'),
 		researchAtomicTheory: d.getElementById('researchAtomicTheory'),
-		researchFutureTech: d.getElementById('researchFutureTech')
+		researchFutureTech: d.getElementById('researchFutureTech'),
+		lobbyChatLog: d.getElementById('lobbyChatLog'),
+		titleChatLog: d.getElementById('titleChatLog')
 	}
 }
 initDom();
 
 var $DOM = {
 	head: $("#head"),
-	chatInput: $("#chat-input")
+	chatInput: $("#chat-input"),
+	lobbyChatInput: $("#lobby-chat-input"),
+	titleChatInput: $("#title-chat-input")
 }
 // team colors
 var color = [
@@ -532,10 +554,15 @@ var audio = {
 			g.config.audio.musicOn = false;
 			audio.pause();
 			document.getElementById('musicToggle').className = 'fa fa-volume-off';
+			var foo = JSON.stringify(g.config);
+			localStorage.setItem('config', foo);
 		} else {
 			g.config.audio.musicOn = true;
 			audio.start();
 			document.getElementById('musicToggle').className = 'fa fa-volume-up';
+			var foo = JSON.stringify(g.config);
+			localStorage.setItem('config', foo);
+			audio.play("ReturnOfTheFallen", 1);
 		}
 	},
 	pause: function(){
@@ -631,8 +658,12 @@ var audio = {
 }
 audio.init = (function(){
 	console.info("Checking local data...");
+	$("#musicToggle").on('mousedown', function(){
+		audio.toggle();
+	});
 	var config = localStorage.getItem('config');
 	if (config === null){
+		// initialize
 		var x = g.config;
 		var foo = JSON.stringify(x);
 		localStorage.setItem('config', foo);
@@ -644,12 +675,13 @@ audio.init = (function(){
 	console.info("Initializing audio...");
 	audio.load.title();
 	audio.play("ReturnOfTheFallen", 1);
+	console.info(g.config.audio.musicOn);
+	if (!g.config.audio.musicOn){
+		audio.pause();
+		document.getElementById('musicToggle').className = 'fa fa-volume-off';
+	}
 	g.checkPlayerData();
 })();
-
-$("#musicToggle").on('mousedown', function(){
-	audio.toggle();
-});
 
 function Msg(msg, d) {
 	DOM.Msg.innerHTML = msg;
@@ -694,20 +726,10 @@ function playerLogout(){
     });
 }
 
-(function repeat(){
-	if (g.view === 'title'){
-		$.ajax({
-			type: "GET",
-			url: "php/keepAlive.php"
-		}).always(function(){
-			setTimeout(function(){
-				repeat();
-			}, 240000);
-		});
-	}
-})();
 function refreshGames(){
 	g.lock();
+	document.getElementById('refreshGameWrap').style.display = 'block';
+	document.getElementById('createGameWrap').style.display = 'none';
 	$.ajax({
 		type: 'GET',
 		url: 'php/refreshGames.php'
@@ -718,7 +740,7 @@ function refreshGames(){
 	}).fail(function(e){
 		Msg("Server error.");
 	}).always(function(){
-		g.unlock();
+		g.unlockFade(.5);
 	});
 }
 
@@ -730,11 +752,11 @@ function exitGame(bypass){
 	if (r || bypass || g.view !== 'game'){
 		g.lock(1);
 		$.ajax({
-			type: "GET",
-			url: 'php/exitGame.php'
-		}).done(function(data) {
-			location.reload();
-		}).fail(function(e){
+			url: 'php/exitGame.php',
+			data: {
+				view: g.view
+			}
+		}).always(function(){
 			location.reload();
 		});
 	}

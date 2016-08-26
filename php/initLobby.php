@@ -12,14 +12,13 @@
 	// localhost only
 	if($_SERVER["SERVER_NAME"] === "localhost"){
 		// is my gameId started?
-		$query = 'SELECT count(row) rows FROM `fwgames` where row=? and start > 0';
+		$query = 'SELECT startGame FROM `fwplayers` where game=? and account=?';
 		$stmt = $link->prepare($query);
-		$stmt->bind_param('i', $_SESSION['gameId']);
-		$stmt->bind_result($rows);
+		$stmt->bind_param('is', $_SESSION['gameId'], $_SESSION['account']);
+		$stmt->bind_result($startGame);
 		$stmt->execute();
 		while($stmt->fetch()){
-			$count = $rows;
+			$x->gameStarted = $startGame;
 		}
-		$x->gameStarted = $count; // boolean to trigger game start
 	}
 ?>

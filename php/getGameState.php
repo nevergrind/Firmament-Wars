@@ -20,18 +20,18 @@
 		$x->player[$player] = 1;
 	}
 	// get chat messages
-	$stmt = $link->prepare('select row, message, event from fwchat where row > ? and gameId=? order by row');
+	$stmt = $link->prepare('select row, message, event from fwchat where row > ? and gameId=?');
 	$stmt->bind_param('ii', $_SESSION['chatId'], $_SESSION['gameId']);
 	$stmt->execute();
 	$stmt->bind_result($row, $message, $event);
-	$x->chat = array();
+	$x->chat = [];
 	$i = 0;
 	while($stmt->fetch()){
 		$o = new stdClass();
-		$_SESSION['chatId'] = $row;
 		$o->message = $message;
 		$o->event = $event;
 		$x->chat[$i++] = $o;
+		$_SESSION['chatId'] = $row;
 	}
 	$x->chatId = $_SESSION['chatId'];
 	$x->timeout = 1000;

@@ -669,12 +669,24 @@ $(document).on('keyup', function(e) {
 				$("#submitNationName").trigger("mousedown");
 			} else if (g.focusGameName){
 				$("#createGame").trigger("mousedown");
+			} else if (title.chatOn){
+				if (x === 13){
+					// enter - sends chat
+					title.sendMsg();
+				}
+			}
+		}
+	} else if (g.view === 'lobby'){
+		if (lobby.chatOn){
+			if (x === 13){
+				// enter - sends chat
+				lobby.sendMsg();
 			}
 		}
 	} else if (g.view === 'game'){
 		if (g.chatOn){
-			if (x === 13){
-				// enter - sends chat
+			if (x === 13 || x === 27){
+				// enter/esc - sends chat
 				toggleChatMode(true);
 			} else if (x === 27){
 				// esc

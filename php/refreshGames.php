@@ -8,14 +8,15 @@
 	$count = $result->num_rows;
 	*/
 	$str = 
-	'<table id="refreshGames" class="table table-condensed table-borderless">
+	'<table id="gameTable" class="table table-condensed table-borderless">
 		<tr>
-			<th class="col-xs-9 warCells">Game</th>
-			<th class="col-xs-3 warCells">Players/Max</th>
+			<th class="gameTableCol1 warCells">Game</th>
+			<th class="gameTableCol2 warCells">Map</th>
+			<th class="gameTableCol3 warCells">Players</th>
 		</tr>';
 			
 	// game data
-	$query = 'select g.row row, min(p.player) host, g.name name, count(p.game) players, g.max max from fwGames g join fwplayers p on g.row=p.game and p.timestamp > date_sub(now(), interval ' . $_SESSION["refreshGameLag"] . ' second) and g.start = 0 group by p.game having players > 0 and host=1 order by p.account';
+	$query = 'select g.row row, min(p.player) host, g.name name, g.map map, count(p.game) players, g.max max from fwGames g join fwplayers p on g.row=p.game and p.timestamp > date_sub(now(), interval ' . $_SESSION["refreshGameLag"] . ' second) and p.startGame = 0 group by p.game having players > 0 and host=1 order by p.account';
 	
 	$stmt = mysqli_query($link, $query);
 	$count = mysqli_num_rows($stmt);
@@ -24,16 +25,22 @@
 			$str .= 
 			'<tr class="wars" data-id=\'' . $row["row"] . '\'>
 				<td class="warCells">' . $row["name"] . '</td>
+				<td class="warCells">' . $row["map"] . '</td>
+				<td class="warCells">' . $row["players"] . '/' .$row["max"] . '</td>
+			</tr>';
+			$str .= 
+			'<tr class="wars" data-id=\'' . $row["row"] . '\'>
+				<td class="warCells">' . $row["name"] . '</td>
+				<td class="warCells">' . $row["map"] . '</td>
+				<td class="warCells">' . $row["players"] . '/' .$row["max"] . '</td>
+			</tr>';
+			$str .= 
+			'<tr class="wars" data-id=\'' . $row["row"] . '\'>
+				<td class="warCells">' . $row["name"] . '</td>
+				<td class="warCells">' . $row["map"] . '</td>
 				<td class="warCells">' . $row["players"] . '/' .$row["max"] . '</td>
 			</tr>';
 		}
-		$str .=
-		'<tr>
-			<td colspan="2" class="text-center">
-				<hr class="fancyhr">
-				<button id="joinGame" type="button" class="btn btn-md btn-info btn-responsive shadow4">Join Game</button>
-			</td>
-		</tr>';
 	} else {
 		$str .= $noGameFound;
 	}

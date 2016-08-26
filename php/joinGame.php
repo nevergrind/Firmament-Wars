@@ -5,6 +5,21 @@
 	mysqli_query($link, 'delete from fwplayers where timestamp < date_sub(now(), interval 20 second)');
 	
 	$gameId = $_POST['gameId']*1; 
+	$pw = $_POST['pw'];
+	$stmt = $link->prepare('select password from fwgames where row=? limit 1');
+	$stmt->bind_param('i', $_SESSION['gameId']);
+	$stmt->execute();
+	$stmt->bind_result($password);
+	$pw2 = '';
+	while($stmt->fetch()){
+		$pw2 = $password;
+	}
+	if (strlen($pw) > 0 || strlen($pw2) > 0){
+		if ($pw != $pw2){
+			header('HTTP/1.1 500 The password did not match.' . $pw . ' !== ' . $pw2);
+			exit;
+		}
+	}
 	// is it possible to join this game?
 	$query = "select g.name, count(p.game) activePlayers, g.max max, g.map map 
 				from fwGames g 
@@ -125,5 +140,11 @@
 	require('initLobby.php');
 	
 	$x->player = $_SESSION['player'];
+	
+	// update chat
+	$msg = '<span class="chat-warning">'. $_SESSION['account'] . ' has joined the game.</span>';
+	$stmt = $link->prepare('insert into fwchat (`message`, `gameId`) values (?, ?);');
+	$stmt->bind_param('si', $msg, $_SESSION['gameId']);
+	$stmt->execute();
 	echo json_encode($x);
 ?>

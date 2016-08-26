@@ -2,6 +2,15 @@
 	require('values.php');
 	require('connect1.php');
 	
+	$stmt = $link->prepare('select password from fwgames where row=? limit 1');
+	$stmt->bind_param('i', $_SESSION['gameId']);
+	$stmt->execute();
+	$stmt->bind_result($gamePw);
+	while($stmt->fetch()){
+		$gamePw = $gamePw;
+	}
+	echo $gamePw;
+	exit();
 
 	
 	$_SESSION['production'] = 99999;

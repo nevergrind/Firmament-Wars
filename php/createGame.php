@@ -3,6 +3,7 @@
 	// create a new lobby 
 	require_once('connect1.php');
 	$name = $_POST['name'];
+	$pw = $_POST['pw'];
 	$players = $_POST['players'];
 	$map = $_POST['map'];
 	
@@ -36,9 +37,9 @@
 		$map = 'Earth Alpha';
 	}
 	// create game
-	$query = "insert into fwGames (`name`, `max`, `map`) values (?, ?, ?)";
+	$query = "insert into fwGames (`name`, `password`, `max`, `map`) values (?, ?, ?, ?)";
 	$stmt = $link->prepare($query);
-	$stmt->bind_param('sis', $name, $players, $map);
+	$stmt->bind_param('ssis', $name, $pw, $players, $map);
 	$stmt->execute();
 	
 	// set session values
@@ -86,8 +87,6 @@
 	while($stmt->fetch()){
 		$_SESSION['chatId'] = $row;
 	}
-	
-	// require('updateLobby.php');
 	
 	require('initLobby.php');
 	$x->player = $_SESSION['player'];

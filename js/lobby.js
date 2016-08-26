@@ -73,6 +73,198 @@ var lobby = {
 		} 
 		document.getElementById('lobbyGovernment' + my.player).textContent = government;
 		document.getElementById('lobbyGovernmentDescription').innerHTML = str;
+	},
+	chat: function (msg){
+		while (DOM.lobbyChatLog.childNodes.length > 200) {
+			DOM.lobbyChatLog.removeChild(DOM.lobbyChatLog.firstChild);
+		}
+		var z = document.createElement('div');
+		z.innerHTML = msg;
+		DOM.lobbyChatLog.appendChild(z);
+		if (!lobby.chatDrag){
+			DOM.lobbyChatLog.scrollTop = DOM.lobbyChatLog.scrollHeight;
+		}
+	},
+	chatDrag: false,
+	chatOn: false,
+	sendMsg: function(bypass){
+		var message = $DOM.lobbyChatInput.val();
+		if (bypass || lobby.chatOn){
+			// bypass via ENTER or chat has focus
+			if (message){
+				// send ajax chat msg
+				$.ajax({
+					url: 'php/insertLobbyChat.php',
+					data: {
+						message: message
+					}
+				});
+			}
+			$DOM.lobbyChatInput.val('');
+		}
+	},
+	init: function(x){
+		$("#lobby-chat-input").on('focus', function(){
+			lobby.chatOn = true;
+		}).on('blur', function(){
+			lobby.chatOn = false;
+		});
+		$("#lobbyChatSend").on('click', function(){
+			lobby.sendMsg(true);
+		});
+		// prevents auto scroll while scrolling
+		$("#lobbyChatLog").on('mousedown', function(){
+			lobby.chatDrag = true;
+		}).on('mouseup', function(){
+			lobby.chatDrag = false;
+		});
+		console.info("Initializing lobby...");
+		document.getElementById("lobbyGameName").innerHTML = x.name;
+		document.getElementById("lobbyGameMax").innerHTML = x.max;
+		document.getElementById("lobbyGameMap").innerHTML = x.map;
+		var z = x.player === 1 ? "block" : "none";
+		document.getElementById("startGame").style.display = z;
+		if (!x.startGame){
+			document.getElementById('mainWrap').style.display = "block";
+		}
+		var str = '<div id="lobbyWrap" class="container">';
+		for (var i=1; i<=8; i++){
+			str += 
+			'<div id="lobbyRow' +i+ '" class="row lobbyRow">\
+				<div class="col-xs-2">\
+					<img id="lobbyFlag' +i+ '" class="w100 block center" src="images/flags/blank.png">\
+				</div>\
+				<div class="col-xs-6 lobbyDetails">\
+					<span id="lobbyAccount' +i+ '"></span>\
+				</div>\
+				<div class="col-xs-4">';
+				if (i === x.player){
+					// me
+					str += 
+					'<div class="dropdown">\
+						<button class="btn btn-primary dropdown-toggle shadow4 lobbyGovernment lobbyGovernmentMine" type="button" data-toggle="dropdown">\
+							<span id="lobbyGovernment' +i+ '">Despotism</span>\
+							<i class="fa fa-caret-down text-warning lobbyCaret"></i>\
+						</button>\
+						<ul id="governmentDropdown" class="dropdown-menu">\
+							<li class="governmentChoice"><a href="#">Despotism</a></li>\
+							<li class="governmentChoice"><a href="#">Monarchy</a></li>\
+							<li class="governmentChoice"><a href="#">Democracy</a></li>\
+							<li class="governmentChoice"><a href="#">Fundamentalism</a></li>\
+							<li class="governmentChoice"><a href="#">Fascism</a></li>\
+							<li class="governmentChoice"><a href="#">Republic</a></li>\
+							<li class="governmentChoice"><a href="#">Communism</a></li>\
+						</ul>\
+					</div>';
+				} else {
+					// not me
+					str += 
+					'<div class="dropdown">\
+						<button style="cursor: default" class="btn btn-primary dropdown-toggle shadow4 lobbyGovernment" type="button">\
+							<span id="lobbyGovernment' +i+ '" class="pull-left">Despotism</span>\
+							<i class="fa fa-caret-down text-disabled lobbyCaret"></i>\
+						</button>\
+					</div>';
+				}
+				// <span class="caret text-danger lobbyCaret"></span>
+				str += 
+				'</div>\
+			</div>';
+		}
+		str += '</div>';
+		document.getElementById("lobbyPlayers").innerHTML = str;
+		delete lobby.init;
+	},
+	join: function(d){
+		console.info("Joining lobby...");
+		if (d === undefined){
+			d = .5;
+		}
+		g.view = "lobby";
+		TweenMax.to("#titleMain", d, {
+			autoAlpha: 0,
+			onComplete: function(){
+				g.unlock(1);
+				TweenMax.fromTo('#joinGameLobby', .5, {
+					autoAlpha: 0
+				}, {
+					autoAlpha: 1
+				});
+			}
+		});
+		
+		(function repeat(){
+			if (g.view === "lobby"){
+				$.ajax({
+					type: "GET",
+					url: "php/updateLobby.php"
+				}).done(function(x){
+					//console.info(x);
+					my.totalPlayers = x.totalPlayers;
+					if (g.view === "lobby"){
+						for (var i=1; i<=8; i++){
+							var data = x.playerData[i-1];
+							//console.info(i, lobby.data[i], data);
+							// player exists
+							if (data !== undefined){
+								document.getElementById("lobbyRow" + i).style.display = 'block';
+								// different player account
+								if (lobby.data[i].account !== data.account){
+									document.getElementById("lobbyAccount" + i).innerHTML = data.account;
+									document.getElementById("lobbyFlag" + i).src = 'images/flags/' + data.flag;
+								}
+								if (lobby.data[i].government !== data.government){
+									// update button & window
+									document.getElementById("lobbyGovernment" + i).innerHTML = data.government;
+									if (data.player === my.player){
+										lobby.updateGovernmentWindow(data.government);
+									}
+								}
+								lobby.data[i] = data;
+							} else {
+								// player left
+								document.getElementById("lobbyRow" + i).style.display = 'none';
+								lobby.data[i] = { account: '' };
+							}
+						}
+						// check if start button should light up
+						//console.info(x);
+						if (x.player === 1){
+							var e = document.getElementById("startGame");
+							if (x.totalPlayers === 1){
+								e.className = lobby.startClassOff;
+							} else {
+								e.className = lobby.startClassOn;
+							}
+						}
+						
+						// report chat messages
+						var len = x.chat.length;
+						if (len > 0){
+							for (var i=0; i<len; i++){
+								if (x.chat[i]){
+									lobby.chat(x.chat[i]);
+								}
+							}
+						}
+					}
+					// still in the lobby?
+					if (x.gameStarted){
+						lobbyCountdown();
+					} else if (!x.hostFound){
+						Msg("The host has left the lobby.");
+						setTimeout(function(){
+							exitGame(true);
+						}, 500);
+					} else {
+						setTimeout(repeat, 1000);
+					}
+				}).fail(function(data){
+					serverError();
+				});
+			}
+		})();
+		delete lobby.join;
 	}
 };
 
@@ -464,143 +656,6 @@ function joinStartedGame(){
 	}).always(function(){
 		g.unlock();
 	});
-}
-function initLobby(x){
-	console.info("Initializing lobby...");
-	document.getElementById("lobbyGameName").innerHTML = x.name;
-	document.getElementById("lobbyGameMax").innerHTML = x.max;
-	document.getElementById("lobbyGameMap").innerHTML = x.map;
-	var z = x.player === 1 ? "block" : "none";
-	document.getElementById("startGame").style.display = z;
-	if (!x.gameStarted){
-		document.getElementById('mainWrap').style.display = "block";
-	}
-	var str = '<div id="lobbyWrap" class="container">';
-	for (var i=1; i<=8; i++){
-		str += 
-		'<div id="lobbyRow' +i+ '" class="row lobbyRow">\
-			<div class="col-xs-2">\
-				<img id="lobbyFlag' +i+ '" class="w100 block center" src="images/flags/blank.png">\
-			</div>\
-			<div class="col-xs-6 lobbyDetails">\
-				<span id="lobbyAccount' +i+ '"></span>\
-			</div>\
-			<div class="col-xs-4">';
-			if (i === x.player){
-				// me
-				str += 
-				'<div class="dropdown">\
-					<button class="btn btn-primary dropdown-toggle shadow4 lobbyGovernment lobbyGovernmentMine" type="button" data-toggle="dropdown">\
-						<span id="lobbyGovernment' +i+ '">Despotism</span>\
-						<i class="fa fa-caret-down text-warning lobbyCaret"></i>\
-					</button>\
-					<ul id="governmentDropdown" class="dropdown-menu">\
-						<li class="governmentChoice"><a href="#">Despotism</a></li>\
-						<li class="governmentChoice"><a href="#">Monarchy</a></li>\
-						<li class="governmentChoice"><a href="#">Democracy</a></li>\
-						<li class="governmentChoice"><a href="#">Fundamentalism</a></li>\
-						<li class="governmentChoice"><a href="#">Fascism</a></li>\
-						<li class="governmentChoice"><a href="#">Republic</a></li>\
-						<li class="governmentChoice"><a href="#">Communism</a></li>\
-					</ul>\
-				</div>';
-			} else {
-				// not me
-				str += 
-				'<div class="dropdown">\
-					<button style="cursor: default" class="btn btn-primary dropdown-toggle shadow4 lobbyGovernment" type="button">\
-						<span id="lobbyGovernment' +i+ '" class="pull-left">Despotism</span>\
-						<i class="fa fa-caret-down text-disabled lobbyCaret"></i>\
-					</button>\
-				</div>';
-			}
-			// <span class="caret text-danger lobbyCaret"></span>
-			str += 
-			'</div>\
-		</div>';
-	}
-	str += '</div>';
-	document.getElementById("lobbyPlayers").innerHTML = str;
-}
-function joinLobby(d){
-	console.info("Joining lobby...");
-	if (d === undefined){
-		d = .5;
-	}
-	g.view = "lobby";
-	TweenMax.to("#titleMain", d, {
-		autoAlpha: 0,
-		onComplete: function(){
-			g.unlock(1);
-			TweenMax.fromTo('#joinGameLobby', .5, {
-				autoAlpha: 0
-			}, {
-				autoAlpha: 1
-			});
-		}
-	});
-	
-	(function repeat(){
-		if (g.view === "lobby"){
-			$.ajax({
-				type: "GET",
-				url: "php/updateLobby.php"
-			}).done(function(x){
-				//console.info(x.delay);
-				my.totalPlayers = x.totalPlayers;
-				if (g.view === "lobby"){
-					for (var i=1; i<=8; i++){
-						var data = x.playerData[i-1];
-						//console.info(i, lobby.data[i], data);
-						// player exists
-						if (data !== undefined){
-							document.getElementById("lobbyRow" + i).style.display = 'block';
-							// different player account
-							if (lobby.data[i].account !== data.account){
-								document.getElementById("lobbyAccount" + i).innerHTML = data.account;
-								document.getElementById("lobbyFlag" + i).src = 'images/flags/' + data.flag;
-							}
-							if (lobby.data[i].government !== data.government){
-								// update button & window
-								document.getElementById("lobbyGovernment" + i).innerHTML = data.government;
-								if (data.player === my.player){
-									lobby.updateGovernmentWindow(data.government);
-								}
-							}
-							lobby.data[i] = data;
-						} else {
-							// player left
-							document.getElementById("lobbyRow" + i).style.display = 'none';
-							lobby.data[i] = { account: '' };
-						}
-					}
-					// check if start button should light up
-					//console.info(x);
-					if (x.player === 1){
-						var e = document.getElementById("startGame");
-						if (x.totalPlayers === 1){
-							e.className = lobby.startClassOff;
-						} else {
-							e.className = lobby.startClassOn;
-						}
-					}
-				}
-				// still in the lobby?
-				if (x.gameStarted){
-					lobbyCountdown();
-				} else if (!x.hostFound){
-					Msg("The host has left the lobby.");
-					setTimeout(function(){
-						exitGame(true);
-					}, 500);
-				} else {
-					setTimeout(repeat, 1000);
-				}
-			}).fail(function(data){
-				serverError();
-			});
-		}
-	})();
 }
 function startGame(d){
 	document.getElementById("startGame").style.display = "none";
