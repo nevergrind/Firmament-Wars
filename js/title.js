@@ -39,7 +39,7 @@ var title = {
 			}
 		})();
 		setTimeout(function(){
-			title.chat("Welcome to the global chat lobby.", "chat-warning");
+			title.chat("You have joined the global chat lobby.", "chat-warning");
 		}, 100);
 	})(),
 	chatDrag: false,
@@ -74,6 +74,14 @@ var title = {
 			$DOM.titleChatInput.val('');
 		}
 	},
+	hideBackdrop: function(){
+		var e = document.getElementById("configureNation"),
+			e2 = document.getElementById("titleViewBackdrop"),
+			e3 = document.getElementById('createGameWrap');
+		e.style.visibility = "hidden";
+		e2.style.visibility = "hidden";
+		e3.style.visibility = 'hidden';
+	}
 }
 $("#bgmusic").on('ended', function() {
 	var x = document.getElementById('bgmusic');
@@ -100,10 +108,6 @@ $("img").on('dragstart', function(event) {
 $("#logout").on('click', function() {
 	playerLogout();
 });
-$(".titleButtons").on("click", function(){
-	$(".titleButtons").removeClass("active");
-	$(this).addClass("active");
-});
 
 $("#menu").on("click", ".wars", function(){
 	$(".wars").removeClass("selected");
@@ -117,74 +121,30 @@ $("#refreshGames").on("click", function(){
 }).trigger("click");
 
 $("#create").on("click", function(){
-	var x = 
-	"<div class='container w100'>\
-		<div class='row'>\
-			<label class='col-xs-12 control-label'>Game Name</label>\
-		</div>\
-		<div class='row'>\
-			<div class='col-xs-12'>\
-				<input id='gameName' class='form-control' type='text' maxlength='32' autocomplete='off'>\
-			</div>\
-		</div>\
-		<div class='row buffer2'>\
-			<label class='col-xs-12 control-label'>Password (Optional)</label>\
-		</div>\
-		<div class='row'>\
-			<div class='col-xs-12'>\
-				<input id='gamePassword' class='form-control' type='text' maxlength='32' autocomplete='off'>\
-			</div>\
-		</div>\
-		<div class='row buffer2'>\
-			<label class='col-xs-12 control-label'>Maximum Players</label>\
-		</div>\
-		<div class='row'>\
-			<div class='col-xs-3'>\
-				<input id='gamePlayers' type='number' class='form-control' id='gamePlayers' value='8' min='2' max='8'>\
-			</div>\
-		</div>\
-		<div class='row buffer2'>\
-			<label class='col-xs-12 control-label'>Map</label>\
-		</div>\
-		<div class='row'>\
-			<div class='col-xs-12'>\
-				<div class='dropdown'>\
-					<button class='btn btn-primary dropdown-toggle shadow4' type='button' data-toggle='dropdown'>\
-						<span id='createGameMap'>Earth Alpha</span>\
-						<span class='caret'></span>\
-					</button>\
-					<ul id='mapDropdown' class='dropdown-menu'>\
-						<li><a class='mapSelect' href='#'>Earth Alpha</a></li>\
-					</ul>\
-				</div>\
-			</div>\
-		</div>\
-		<div class='row buffer2'>\
-			<div class='col-xs-12'>\
-				<label class='control-label'>Map Description</label>\
-				<div>\
-					<span id='createGameDescription'>Up to 8 players vie for domination in this sprawling map across six continents.</span>\
-					<span id='createGameGlobe' data-toggle='tooltip' title='Number of territories for this map'><i class='fa fa-globe'></i> <span id='createGameTiles'>83</span></span>\
-				</div>\
-			</div>\
-		</div>\
-		<div class='row'>\
-			<hr class='fancyhr'>\
-		</div>\
-		<div class='row'>\
-			<div class='col-xs-12 text-center'>\
-				<button id='createGame' type='button' class='btn btn-md btn-info btn-responsive shadow4'>Create Game Lobby</button>\
-			</div>\
-		</div>\
-	</div>";
-	$("#createGameWrap").html(x);
+	var e = document.getElementById("createGameWrap"),
+		e2 = document.getElementById("titleViewBackdrop");
+	TweenMax.to(e, .5, {
+		startAt: {
+			visibility: 'visible',
+			scale: .8,
+			alpha: 0
+		},
+		scale: 1,
+		alpha: 1
+	});
+	TweenMax.to(e2, .5, {
+		startAt: {
+			visibility: 'visible',
+			opacity: 0
+		},
+		opacity: 1
+	});
+	//$("#createGameWrap").html(x);
 	$("#createGameGlobe").tooltip();
-	document.getElementById('refreshGameWrap').style.display = 'none';
-	document.getElementById('createGameWrap').style.display = 'block';
 	$("#gameName").focus();
 });
 
-$("#menu").on("mousedown", "#createGame", function(e){
+$("#createGame").on("mousedown", function(e){
 	var name = $("#gameName").val();
 	var pw = $("#gamePassword").val();
 	var players = $("#gamePlayers").val()*1;
@@ -193,6 +153,7 @@ $("#menu").on("mousedown", "#createGame", function(e){
 	} else if (players < 2 || players > 8 || players % 1 !== 0){
 		Msg("Game must have 2-8 players.");
 	} else {
+		title.hideBackdrop();
 		g.lock(1);
 		audio.play('click');
 		$.ajax({
@@ -270,7 +231,7 @@ function animateNationName(){
 }
 $("#toggleNation").on("click", function(){
 	var e = document.getElementById("configureNation"),
-		e2 = document.getElementById("configureNationBackdrop");
+		e2 = document.getElementById("titleViewBackdrop");
 	TweenMax.to(e, .5, {
 		startAt: {
 			visibility: 'visible',
@@ -377,10 +338,6 @@ $("#buyFlag").on("click", function(){
 		g.unlock();
 	});
 });
-$("#configureNationDone, #configureNationBackdrop").on('click', function(){
-	var e = document.getElementById("configureNation"),
-		e2 = document.getElementById("configureNationBackdrop");
-	e.style.visibility = "hidden";
-	e2.style.visibility = "hidden";
-	
+$("#configureNationDone, #titleViewBackdrop").on('click', function(){
+	title.hideBackdrop();
 });

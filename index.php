@@ -91,15 +91,7 @@
 					<div>
 					<?php
 						require('php/checkDisconnectsByAccount.php');
-					
-						$result = mysqli_query($link, 'select count(row) count from `fwplayers` where timestamp > date_sub(now(), interval 20 second)');
-						// Associative array
-						$row = mysqli_fetch_assoc($result);
-						printf ("%s", 'There '. 
-							($row["count"] == 1 ? 'is' : 'are')  .' currently '.$row["count"].' '.
-							($row["count"] == 1 ? 'player' : 'players') . ' playing Firmament Wars'
-						);
-						echo '</div><div>';
+						
 						// check if nation exists; create if not
 						$query = 'select count(row) from fwNations where account=?';
 						$stmt = $link->prepare($query);
@@ -123,8 +115,6 @@
 								$wins = $wins;
 								$losses = $losses;
 								$disconnects = $disconnects;
-								// show record
-								echo $_SESSION['account']. ': ' .$wins. ' wins, '. $losses .' losses, '. $disconnects .' disconnects';
 							}
 							// init nation values
 							$_SESSION['nation'] = $nation;
@@ -135,15 +125,16 @@
 							$stmt->bind_param('s', $_SESSION['account']);
 							$stmt->execute();
 							// show record; new nation
-							echo $_SESSION['account']. ': 0 wins, 0 losses, 0 disconnects';
+							$wins = 0;
+							$losses = 0;
+							$disconnects = 0;
 						}
 					?>
 					</div>
 				</div>
-				<hr class='fancyhr'>
 				<div>
-					<div id="menuHead" class="btn-group" role="group">
-						<button id="refreshGames" type="button" class="titleButtons btn btn-primary btn-responsive  shadow4 active">Refresh Games</button>
+					<div id="menuHead">
+						<button id="refreshGames" type="button" class="titleButtons btn btn-primary btn-responsive  shadow4">Refresh Games</button>
 						<button id="create" type="button" class="titleButtons btn btn-primary btn-responsive shadow4">Create Game</button>
 						<button id="toggleNation" type="button" class="btn btn-primary btn-responsive  shadow4">Configure Nation</button>
 					</div>
@@ -154,20 +145,31 @@
 						<hr class="fancyhr">
 						<div id="joinGamePasswordWrap">
 							<div class="pull-left fw-text">
-								Game Password <input id="joinGamePassword" type='text' maxlength="240" autocomplete="off"/>
+								Game <input id="joinGameName" class='joinGameInputs' type='text' maxlength="240" autocomplete="off"/>
+								Password <input id="joinGamePassword" class='joinGameInputs' type='text' maxlength="240" autocomplete="off"/>
+								<button id="joinGame" type="button" class="btn btn-md btn-info btn-responsive shadow4">Join Game</button>
 							</div>
-							<button id="joinGame" type="button" class="pull-left btn btn-md btn-info btn-responsive shadow4">Join Game</button>
 						</div>
 					</div>
-				</div>
-				<div id='createGameWrap'>
 				</div>
 			</div>
 			
 			<div id="titleChat" class="fw-primary text-center">
 				<h2 class='header'>Global Chat Lobby</h2>
 				<hr class="fancyhr">
-				<div id="titleChatLog"></div>
+				<div id="titleChatLog">
+				<?php
+					$result = mysqli_query($link, 'select count(row) count from `fwplayers` where timestamp > date_sub(now(), interval 20 second)');
+					// Associative array
+					while ($row = mysqli_fetch_assoc($result)){
+						echo '<div class="" >There '. 
+						($row["count"] == 1 ? 'is' : 'are')  .' currently ' . $row["count"] . ' ' .
+						($row["count"] == 1 ? 'player' : 'players') . ' playing Firmament Wars</div>';
+					}
+					// display record
+					echo '<div class="fw-chat">'. $_SESSION['account']. ': ' .$wins. ' wins, '. $losses .' losses, '. $disconnects .' disconnects</div>';
+				?>
+				</div>
 				
 				<div id="titleChatWrap" class="titleRelWrap input-group">
 					<input id="title-chat-input" class="fw-text noselect nobg form-control" type='text' maxlength="240" autocomplete="off"/>
@@ -228,8 +230,77 @@
 	</div>
 	
 		
-	<div id="configureNationBackdrop"></div>
-	<div id="configureNation" class="fw-primary container">
+	<div id="titleViewBackdrop"></div>
+	
+	<div id='createGameWrap' class='fw-primary container titleModal'>
+		<div class="row text-center">
+			<div class='col-xs-12'>
+				<h2 class='header'>Create Game</h2>
+				<hr class="fancyhr">
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-xs-12'>Game Name</div>
+		</div>
+		<div class='row'>
+			<div class='col-xs-12'>
+				<input id='gameName' class='form-control' type='text' maxlength='32' autocomplete='off'>
+			</div>
+		</div>
+		<div class='row'>
+			<label class='col-xs-12'>Password (Optional)</label>
+		</div>
+		<div class='row'>
+			<div class='col-xs-12'>
+				<input id='gamePassword' class='form-control' type='text' maxlength='32' autocomplete='off'>
+			</div>
+		</div>
+		<div class='row buffer2'>
+			<label class='col-xs-12 control-label'>Maximum Players</label>
+		</div>
+		<div class='row'>
+			<div class='col-xs-3'>
+				<input id='gamePlayers' type='number' class='form-control' id='gamePlayers' value='8' min='2' max='8'>
+			</div>
+		</div>
+		<div class='row buffer2'>
+			<label class='col-xs-12 control-label'>Map</label>
+		</div>
+		<div class='row'>
+			<div class='col-xs-12'>
+				<div class='dropdown'>
+					<button class='btn btn-primary dropdown-toggle shadow4' type='button' data-toggle='dropdown'>
+						<span id='createGameMap'>Earth Alpha</span>
+						<span class='caret'></span>
+					</button>
+					<ul id='mapDropdown' class='dropdown-menu'>
+						<li><a class='mapSelect' href='#'>Earth Alpha</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class='row buffer2'>
+			<div class='col-xs-12'>
+				<label class='control-label'>Map Description</label>
+				<div>
+					<span id='createGameDescription'>Up to 8 players vie for domination in this sprawling map across six continents.</span>
+					<span id='createGameGlobe' data-toggle='tooltip' title='Number of territories for this map'><i class='fa fa-globe'></i> <span id='createGameTiles'>83</span></span>
+				</div>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-xs-12'>
+				<hr class='fancyhr'>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-xs-12 text-center'>
+				<button id='createGame' type='button' class='btn btn-md btn-info btn-responsive shadow4'>Create Game Lobby</button>
+			</div>
+		</div>
+	</div>
+	
+	<div id="configureNation" class="fw-primary container titleModal">
 		<div class="row text-center">
 			<div class='col-xs-12'>
 				<h2 class='header'>Configure Nation</h2>

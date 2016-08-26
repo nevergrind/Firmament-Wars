@@ -728,8 +728,6 @@ function playerLogout(){
 
 function refreshGames(){
 	g.lock();
-	document.getElementById('refreshGameWrap').style.display = 'block';
-	document.getElementById('createGameWrap').style.display = 'none';
 	$.ajax({
 		type: 'GET',
 		url: 'php/refreshGames.php'

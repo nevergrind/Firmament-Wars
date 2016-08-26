@@ -6,17 +6,19 @@
 	
 	$gameId = $_POST['gameId']*1; 
 	$pw = $_POST['pw'];
+	
+	$o = new stdClass();
+	$o->pw = '';
 	$stmt = $link->prepare('select password from fwgames where row=? limit 1');
 	$stmt->bind_param('i', $_SESSION['gameId']);
 	$stmt->execute();
 	$stmt->bind_result($password);
-	$pw2 = '';
 	while($stmt->fetch()){
-		$pw2 = $password;
+		$o->pw = $password;
 	}
-	if (strlen($pw) > 0 || strlen($pw2) > 0){
-		if ($pw != $pw2){
-			header('HTTP/1.1 500 The password did not match.' . $pw . ' !== ' . $pw2);
+	if (strlen($pw) > 0 || strlen($o->pw) > 0){
+		if ($pw != $o->pw){
+			header('HTTP/1.1 500 The password did not match.' . $pw . ' !== ' . $o->pw);
 			exit;
 		}
 	}

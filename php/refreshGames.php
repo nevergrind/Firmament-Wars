@@ -40,6 +40,12 @@
 				<td class="warCells">' . $row["map"] . '</td>
 				<td class="warCells">' . $row["players"] . '/' .$row["max"] . '</td>
 			</tr>';
+			$str .= 
+			'<tr class="wars" data-id=\'' . $row["row"] . '\'>
+				<td class="warCells">' . $row["name"] . '</td>
+				<td class="warCells">' . $row["map"] . '</td>
+				<td class="warCells">' . $row["players"] . '/' .$row["max"] . '</td>
+			</tr>';
 		}
 	} else {
 		$str .= $noGameFound;
