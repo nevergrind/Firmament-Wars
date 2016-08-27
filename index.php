@@ -165,8 +165,6 @@
 						$total = $row['count']*1;
 						echo '<div class="" >There '. ($total === 1 ? 'is' : 'are') .' '. $row["count"] . ' '. ($total === 1 ? 'person' : 'people') .' playing Firmament Wars</div>';
 					}
-					// display record
-					echo '<div class="fw-chat">'. $_SESSION['account']. ': ' .$wins. ' wins, '. $losses .' losses, '. $disconnects .' disconnects</div>';
 				?>
 				</div>
 				
@@ -239,19 +237,19 @@
 				<label>Game Name</label>
 			</div>
 			<div class='buffer'>
-				<input id='gameName' class='form-control' type='text' maxlength='32' autocomplete='off'>
+				<input id='gameName' class='form-control createGameInput' type='text' maxlength='32' autocomplete='off'>
 			</div>
 			<div class='buffer2'>
 				<label>Password (Optional)</label>
 			</div>
 			<div class='buffer'>
-				<input id='gamePassword' class='form-control' type='text' maxlength='32' autocomplete='off'>
+				<input id='gamePassword' class='form-control createGameInput' type='text' maxlength='32' autocomplete='off'>
 			</div>
 			<div class='buffer2'>
 				<label class='control-label'>Maximum Number of Players</label>
 			</div>
 			<div class='buffer'>
-				<input id='gamePlayers' type='number' class='form-control' id='gamePlayers' value='8' min='2' max='8'>
+				<input id='gamePlayers' type='number' class='form-control createGameInput' id='gamePlayers' value='8' min='2' max='8'>
 			</div>
 			<div class='buffer2'>
 				<label class='control-label'>Map</label>
@@ -262,7 +260,7 @@
 						<span id='createGameMap'>Earth Alpha</span>
 						<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 					</button>
-					<ul id='mapDropdown' class='dropdown-menu fwDropdown'>
+					<ul id='mapDropdown' class='dropdown-menu fwDropdown createGameInput'>
 						<li><a class='mapSelect' href='#'>Earth Alpha</a></li>
 					</ul>
 				</div>
@@ -441,7 +439,8 @@
 										<span class='text-hotkey'>S</span>plit Attack
 									</div>
 									<div class="col-xs-4 text-right">
-										<i class="fa fa-bolt production pointer actionBolt"></i>3
+										<i class="fa fa-bolt production pointer actionBolt"></i>
+										<span id="splitAttackCost">3</span>
 									</div>
 								</div>
 								

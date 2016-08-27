@@ -1,6 +1,16 @@
 <?php
 	require('values.php');
 	require('connect1.php');
+$query = "select startGame from fwPlayers where game=? limit 1";
+$stmt = $link->prepare($query);
+$stmt->bind_param('i', $_SESSION['gameId']);
+$stmt->bind_result($dCount);
+$stmt->execute();
+	while($stmt->fetch()){
+		$gameStartStatus = $dCount;
+	}
+
+echo $gameStartStatus;
 	
 	$_SESSION['production'] = 99999;
 	$_SESSION['tech'] = new stdClass();
@@ -38,7 +48,7 @@
 		echo "<br>gameId: " . $_SESSION['gameId'];
 		echo "<br>max: " . $_SESSION['max'];
 		echo "<br>gameName: " . $_SESSION['gameName'];
-		echo "<br>gameStarted: " . $_SESSION['gameStarted'];
+		echo "<br>startGame: " . $_SESSION['startGame'];
 		echo "<br>gameType: " . $_SESSION['gameType'];
 		echo "<br>player: " . $_SESSION['player'];
 		echo "<br>map: " . $_SESSION['map'];

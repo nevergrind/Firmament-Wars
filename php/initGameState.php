@@ -2,14 +2,10 @@
 	header('Content-Type: application/json');
 	require('connect1.php');
 	
+	require('initializeGame.php');
+	
 	require('pingLobby.php');
-	$_SESSION['gameStarted'] = 1; // determines if exitGame is a loss or not
-	// set government bonuses
-	if ($_SESSION['government'] === 'Despotism'){
-		$_SESSION['production'] = 30;
-	} else {
-		$_SESSION['production'] = 10;
-	}
+	$_SESSION['startGame'] = 1; // determines if exitGame is a loss or not
 	
 	// get game tiles
 	$query = "select account, flag, nation, tile, tileName, player, units, food, culture, defense from `fwTiles` where game=?";

@@ -1224,70 +1224,63 @@ table {
 	background: #700000;
 }
 .p1b{
-	outline: 2px solid #700000;
+	outline: 1px solid #700000;
 }
 .player2{
 	color: #0000d0;
 	background: #0000d0;
 }
 .p2b{
-	outline: 2px solid #0000d0;
+	outline: 1px solid #0000d0;
 }
 .player3{
 	color: #b0b000;
 	background: #b0b000;
 }
 .p3b{
-	outline: 2px solid #b0b000;
+	outline: 1px solid #b0b000;
 }
 .player4{
 	color: #006000;
 	background: #006000;
 }
 .p4b{
-	outline: 2px solid #006000;
+	outline: 1px solid #006000;
 }
 .player5{
 	color: #b06000;
 	background: #b06000;
 }
 .p5b{
-	outline: 2px solid #b06000;
+	outline: 1px solid #b06000;
 }
 .player6{
 	color: #1177aa;
 	background: #1177aa;
 }
 .p6b{
-	outline: 2px solid #1177aa;
+	outline: 1px solid #1177aa;
 }
 .player7{
 	color: #b050b0;
 	background: #b050b0;
 }
 .p7b{
-	outline: 2px solid #b050b0;
+	outline: 1px solid #b050b0;
 }
 .player8{
 	color: #5500aa;
 	background: #5500aa;
 }
 .p8b{
-	outline: 2px solid #5500aa;
-}
-.player8{
-	color: #5500aa;
-	background: #5500aa;
-}
-.p8b{
-	outline: 2px solid #5500aa;
+	outline: 1px solid #5500aa;
 }
 .player9{
 	color: #002F73;
 	background: #002F73;
 }
 .p9b{
-	outline: 2px solid #002F73;
+	outline: 1px solid #002F73;
 }
 .mapFlag{
 	pointer-events: none;

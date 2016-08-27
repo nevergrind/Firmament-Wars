@@ -209,6 +209,7 @@ var my = {
 	motionPath: [0,0,0,0,0,0],
 	attackOn: false,
 	splitAttack: false,
+	splitAttackCost: 3,
 	targetData: {},
 	selectedFlag: "Default",
 	selectedFlagFull: "Default.jpg",

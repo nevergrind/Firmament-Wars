@@ -13,6 +13,11 @@ var title = {
 		}).on('blur', function(){
 			title.chatOn = false;
 		});
+		$(".createGameInput").on('focus', function(){
+			title.createGameFocus = true;
+		}).on('blur', function(){
+			title.createGameFocus = false;
+		});
 		$("#titleChatSend").on('click', function(){
 			title.sendMsg(true);
 		});
@@ -86,6 +91,39 @@ var title = {
 		e.style.visibility = "hidden";
 		e2.style.visibility = "hidden";
 		e3.style.visibility = 'hidden';
+	},
+	createGameFocus: false,
+	createGame: function(){
+		var name = $("#gameName").val(),
+			pw = $("#gamePassword").val(),
+			players = $("#gamePlayers").val()*1;
+		if (name.length < 1 || name.length > 32){
+			Msg("Game name must be at least 4-32 characters.");
+		} else if (players < 2 || players > 8 || players % 1 !== 0){
+			Msg("Game must have 2-8 players.");
+		} else {
+			title.hideBackdrop();
+			g.lock(1);
+			audio.play('click');
+			$.ajax({
+				url: 'php/createGame.php',
+				data: {
+					name: name,
+					pw: pw,
+					players: players,
+					map: my.map
+				}
+			}).done(function(data) {
+				my.player = data.player;
+				console.info("Creating: ", data);
+				lobby.init(data);
+				lobby.join(); // create
+			}).fail(function(e){
+				console.info(e.responseText);
+				Msg(e.statusText);
+				g.unlock(1);
+			});
+		}
 	}
 }
 $("#bgmusic").on('ended', function() {
@@ -149,36 +187,7 @@ $("#create").on("click", function(){
 });
 
 $("#createGame").on("mousedown", function(e){
-	var name = $("#gameName").val();
-	var pw = $("#gamePassword").val();
-	var players = $("#gamePlayers").val()*1;
-	if (name.length < 1 || name.length > 32){
-		Msg("Game name must be at least 4-32 characters.");
-	} else if (players < 2 || players > 8 || players % 1 !== 0){
-		Msg("Game must have 2-8 players.");
-	} else {
-		title.hideBackdrop();
-		g.lock(1);
-		audio.play('click');
-		$.ajax({
-			url: 'php/createGame.php',
-			data: {
-				name: name,
-				pw: pw,
-				players: players,
-				map: my.map
-			}
-		}).done(function(data) {
-			my.player = data.player;
-			console.info("Creating: ", data);
-			lobby.init(data);
-			lobby.join(); // create
-		}).fail(function(e){
-			console.info(e.responseText);
-			Msg(e.statusText);
-			g.unlock(1);
-		});
-	}
+	title.createGame();
 });
 
 function joinGame(){

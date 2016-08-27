@@ -7,7 +7,7 @@
 		$x->max = $_SESSION['max'];
 		$x->map = $_SESSION['map'];
 		$x->player = $_SESSION['player'];
-		$x->gameStarted = 0; // boolean to trigger game start
+		$x->startGame = 0; // boolean to trigger game start
 	}
 	// localhost only
 	if($_SERVER["SERVER_NAME"] === "localhost"){
@@ -18,7 +18,7 @@
 		$stmt->bind_result($startGame);
 		$stmt->execute();
 		while($stmt->fetch()){
-			$x->gameStarted = $startGame;
+			$x->startGame = $startGame;
 		}
 	}
 ?>

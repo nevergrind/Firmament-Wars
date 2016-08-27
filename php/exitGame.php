@@ -2,7 +2,7 @@
 	require_once('connect1.php');
 	
 	if (isset($_SESSION['gameId'])){
-		if ($_SESSION['gameStarted']){
+		if ($_SESSION['startGame']){
 			// surrender
 			$msg = $_SESSION['account'] . ' has surrendered.';
 			$stmt = $link->prepare('insert into fwchat (`message`, `gameId`, `event`) values (?, ?, "chatsfx");');

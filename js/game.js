@@ -173,7 +173,7 @@ function setTileUnits(i, unitColor){
 			yoyo: true
 		});
 	} else {
-		TweenMax.to(e, 1, {
+		TweenMax.to(e, .5, {
 			startAt: {
 				fill: '#ff0000'
 			},
@@ -204,6 +204,12 @@ function getGameState(){
 					// check player value
 					
 					if (d.player !== game.tiles[i].player){
+						// set text visible if uninhabited
+						if (!game.tiles[i].units){
+							TweenMax.set(document.getElementById('unit' + i), {
+								visibility: 'visible'
+							});
+						}
 						// only update client data if there's a difference
 						game.tiles[i].player = d.player;
 						game.tiles[i].account = game.player[d.player].account;

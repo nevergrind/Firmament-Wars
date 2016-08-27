@@ -50,7 +50,7 @@
 	}
 	// some final values to send
 	$x->player = $_SESSION['player'];
-	$x->gameStarted = $x->startGame; // boolean to trigger game start
+	$x->startGame = $x->startGame; // boolean to trigger game start
 	$x->totalPlayers = $totalPlayers;
 	$x->delay = microtime(true) - $start;
 	echo json_encode($x);

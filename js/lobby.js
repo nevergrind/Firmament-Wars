@@ -248,7 +248,7 @@ var lobby = {
 						}
 					}
 					// still in the lobby?
-					if (x.gameStarted){
+					if (x.startGame){
 						lobbyCountdown();
 					} else if (!x.hostFound){
 						Msg("The host has left the lobby.");
@@ -408,10 +408,10 @@ function Nation(){
 	return this;
 }
 
-function joinStartedGame(){
-	
+function initGameState(){
 	g.lock(1);
 	var e1 = document.getElementById("mainWrap");
+	console.info("initGameState.php start");
 	if (e1 !== null){
 		TweenMax.to(e1, .5, {
 			alpha: 0
@@ -441,6 +441,11 @@ function joinStartedGame(){
 		my.turnProduction = data.turnProduction;
 		my.cultureMax = data.cultureMax;
 		my.government = data.government;
+		// government perks
+		if (my.government === 'Despotism'){
+			document.getElementById('splitAttackCost').textContent = 0;
+			my.splitAttackCost = 0;
+		}
 		// initialize player data
 		game.initialized = true;
 		for (var z=0, len=game.player.length; z<len; z++){
@@ -662,7 +667,7 @@ function joinStartedGame(){
 		g.unlock();
 	});
 }
-function startGame(d){
+function startGame(){
 	document.getElementById("startGame").style.display = "none";
 	g.lock(1);
 	audio.play('click');
@@ -670,7 +675,7 @@ function startGame(d){
 		type: "GET",
 		url: "php/startGame.php"
 	}).done(function(data){
-		console.info(data);
+		console.info('startGame: ', data);
 		g.unlock();
 	}).fail(function(data){
 		serverError();
@@ -682,7 +687,7 @@ function lobbyCountdown(){
 	new Audio('sound/beepHi.mp3');
 	var loadTime = Date.now() - g.startTime; 
 	if (loadTime < 1000){
-		joinStartedGame(); // page refresh
+		initGameState(); // page refresh
 	} else {
 		// normal countdown
 		var e = document.getElementById('countdown');
@@ -702,7 +707,7 @@ function lobbyCountdown(){
 					alpha: 0,
 					ease: Power3.easeIn,
 					onComplete: function(){
-						joinStartedGame();
+						initGameState();
 					}
 				});
 				audio.fade();
@@ -712,7 +717,6 @@ function lobbyCountdown(){
 }
 $("#joinGameLobby").on('click', '.governmentChoice', function(e){
 	var government = $(this).text();
-	lobby.updateGovernmentWindow(government);
 	$.ajax({
 		url: "php/changeGovernment.php",
 		data: {

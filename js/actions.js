@@ -71,7 +71,7 @@ var action = {
 			return;
 		}
 		if ((my.production < 7 && !my.splitAttack) ||
-			(my.production < 3 && my.splitAttack)
+			(my.production < my.splitAttackCost && my.splitAttack)
 		){
 			action.error();
 			return;
@@ -674,6 +674,8 @@ $(document).on('keyup', function(e) {
 					// enter - sends chat
 					title.sendMsg();
 				}
+			} else if (title.createGameFocus){
+				title.createGame();
 			}
 		} else if (x === 27){
 			title.hideBackdrop();

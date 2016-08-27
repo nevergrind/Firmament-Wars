@@ -30,7 +30,7 @@
 			$_SESSION['foodReward'] += $amount;
 		} else if ($reward === 1){
 			// production
-			$amount = 30 + ($tier * 5);
+			$amount = 20 + ($tier * 5);
 			$msg = 'Plunder! We discovered <span class="chat-production">'. $amount .' energy</span> in ' . $defender->tileName. '!';
 			$_SESSION['productionReward'] += $amount;
 			

@@ -79,12 +79,13 @@
 	$_SESSION['gameId'] = $o->gameId;
 	$_SESSION['max'] = $max;
 	$_SESSION['gameName'] = $gameName;
-	$_SESSION['gameStarted'] = 0;
+	$_SESSION['startGame'] = 0;
 	$_SESSION['gameType'] = 'FFA';
 	$_SESSION['map'] = $map;
 	$_SESSION['food'] = 0;
 	$_SESSION['foodMax'] = 25;
 	$_SESSION['foodMilestone'] = 0;
+	$_SESSION['production'] = 10;
 	$_SESSION['turnProduction'] = 10;
 	$_SESSION['culture'] = 0;
 	$_SESSION['cultureMax'] = 400;

@@ -51,7 +51,7 @@
 	$_SESSION['gameId'] = $stmt->insert_id;
 	$_SESSION['max'] = $players;
 	$_SESSION['gameName'] = $name;
-	$_SESSION['gameStarted'] = 0;
+	$_SESSION['startGame'] = 0;
 	$_SESSION['gameType'] = 'FFA';
 	$_SESSION['player'] = 1;
 	$_SESSION['playerMod'] = $_SESSION['player'] % 4;

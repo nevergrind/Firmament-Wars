@@ -20,7 +20,11 @@
 			exit();
 		}
 	} else {
-		if ($_SESSION['production'] < 3){
+		$splitAttackCost = 3;
+		if ($_SESSION['government'] === 'Despotism'){
+			$splitAttackCost = 0;
+		}
+		if ($_SESSION['production'] < $splitAttackCost){
 			header('HTTP/1.1 500 Not enough energy!');
 			exit();
 		}
@@ -108,7 +112,7 @@
 			$stmt->bind_param('iii', $defender->units, $defender->tile, $_SESSION['gameId']);
 			$stmt->execute();
 			
-			$_SESSION['production'] -= $split === 0 ? 7 : 3;
+			$_SESSION['production'] -= $split === 0 ? 7 : $splitAttackCost;
 			$o->production = $_SESSION['production'];
 			
 			
@@ -175,7 +179,7 @@
 						}
 					}
 			
-					$_SESSION['production'] -= $split === 0 ? 7 : 3;
+					$_SESSION['production'] -= $split === 0 ? 7 : $splitAttackCost;
 					$o->production = $_SESSION['production'];
 				} else {
 					// defeat
@@ -208,13 +212,7 @@
 						'<img src="images/flags/Player'.$defender->player.'.jpg" class="player'.$defender->player.' p'.$defender->player.'b inlineFlag">' :
 						'<img src="images/flags/'.$defender->flag.'" class="player'.$defender->player.' p'.$defender->player.'b inlineFlag">';
 					}
-					/*
-					$msg = $atkFlag. $attacker->nation . ' fails to conquer ' . $defFlag . $defender->tileName. '.';
-					$stmt = $link->prepare('insert into fwchat (`message`, `gameId`) values (?, ?);');
-					$stmt->bind_param('si', $msg, $_SESSION['gameId']);
-					$stmt->execute();
-					*/
-					$_SESSION['production'] -= $split === 0 ? 7 : 3;
+					$_SESSION['production'] -= $split === 0 ? 7 : $splitAttackCost;
 					$o->production = $_SESSION['production'];
 				}
 			} else {
