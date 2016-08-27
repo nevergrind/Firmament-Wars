@@ -70,8 +70,8 @@ var lobby = {
 					<div>1/2 cost weapons</div>\
 					<div>Start with a great person</div>\
 				</div>';
-		} 
-		document.getElementById('lobbyGovernment' + my.player).textContent = government;
+		}
+		document.getElementById('lobbyGovernment' + my.player).innerHTML = government;
 		document.getElementById('lobbyGovernmentDescription').innerHTML = str;
 	},
 	chat: function (msg){
@@ -132,7 +132,7 @@ var lobby = {
 			str += 
 			'<div id="lobbyRow' +i+ '" class="row lobbyRow">\
 				<div class="col-xs-2">\
-					<img id="lobbyFlag' +i+ '" class="w100 block center" src="images/flags/blank.png">\
+					<img id="lobbyFlag' +i+ '" class="w100 block center p' + i + 'b player' +i+ '" src="images/flags/blank.png">\
 				</div>\
 				<div class="col-xs-6 lobbyDetails">\
 					<span id="lobbyAccount' +i+ '"></span>\
@@ -211,14 +211,13 @@ var lobby = {
 								// different player account
 								if (lobby.data[i].account !== data.account){
 									document.getElementById("lobbyAccount" + i).innerHTML = data.account;
-									document.getElementById("lobbyFlag" + i).src = 'images/flags/' + data.flag;
+									if (data.flag !== 'Default.jpg'){
+										document.getElementById("lobbyFlag" + i).src = 'images/flags/' + data.flag;
+									}
 								}
 								if (lobby.data[i].government !== data.government){
 									// update button & window
-									document.getElementById("lobbyGovernment" + i).innerHTML = data.government;
-									if (data.player === my.player){
-										lobby.updateGovernmentWindow(data.government);
-									}
+									document.getElementById('lobbyGovernment' + i).innerHTML = data.government;
 								}
 								lobby.data[i] = data;
 							} else {
@@ -441,6 +440,7 @@ function joinStartedGame(){
 		my.production = data.production;
 		my.turnProduction = data.turnProduction;
 		my.cultureMax = data.cultureMax;
+		my.government = data.government;
 		// initialize player data
 		game.initialized = true;
 		for (var z=0, len=game.player.length; z<len; z++){
@@ -466,7 +466,6 @@ function joinStartedGame(){
 			document.getElementById('worldWrap').innerHTML = data.responseText;
 			initMap();
 		}).fail(function(err){
-			//$("#worldWrap").html(err.responseText);
 			document.getElementById('worldWrap').innerHTML = err.responseText;
 			initMap();
 		});
@@ -497,7 +496,11 @@ function joinStartedGame(){
 						game.player[d.player].account = d.account;
 					}
 				}
-				document.getElementById('unit' + i).textContent = d.units === 0 ? "" : d.units;
+				// init flag unit values
+				document.getElementById('unit' + i).textContent = d.units === 0 ? 0 : d.units;
+				if (d.units){
+					document.getElementById('unit' + i).style.visibility = 'visible';
+				}
 				if (data.tiles[i].player){
 					TweenMax.set(document.getElementById('land' + i), {
 						fill: color[d.player]
@@ -507,6 +510,7 @@ function joinStartedGame(){
 			// init mapFlagWrap
 			var a = document.getElementsByClassName('unit');
 			for (var i=0, len=a.length; i<len; i++){
+				// set flag position and value
 				var t = game.tiles[i];
 				var x = a[i].getAttribute('x') - 24;
 				var y = a[i].getAttribute('y') - 24;
@@ -516,6 +520,7 @@ function joinStartedGame(){
 				} else if (t.flag){
 					flag = t.flag;
 				}
+				// dynamically add svg flag image to the map
 				var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
 				svg.id = 'flag' + i;
 				svg.setAttributeNS(null, 'height', 24);

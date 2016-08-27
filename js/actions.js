@@ -675,6 +675,8 @@ $(document).on('keyup', function(e) {
 					title.sendMsg();
 				}
 			}
+		} else if (x === 27){
+			title.hideBackdrop();
 		}
 	} else if (g.view === 'lobby'){
 		if (lobby.chatOn){

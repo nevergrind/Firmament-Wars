@@ -4,12 +4,12 @@ require_once('connect1.php');
 // must be host
 if ($_SESSION['player'] === 1){
 	// must have 2-8 players
-	$query = "select player, account, nation, flag from `fwplayers` where game=? and timestamp > date_sub(now(), interval {$_SESSION['lag']} second)";
+	$query = "select player, account, nation, flag, government from `fwplayers` where game=? and timestamp > date_sub(now(), interval {$_SESSION['lag']} second)";
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('i', $_SESSION['gameId']);
 	$stmt->execute();
 	$stmt->store_result();
-	$stmt->bind_result($dPlayer, $dAccount, $dNation, $dFlag);
+	$stmt->bind_result($dPlayer, $dAccount, $dNation, $dFlag, $dGovernment);
 	
 	$players = array();
 	while($stmt->fetch()){
@@ -18,6 +18,7 @@ if ($_SESSION['player'] === 1){
 		$x->account = $dAccount;
 		$x->nation = $dNation;
 		$x->flag = $dFlag;
+		$x->government = $dGovernment;
 		array_push($players, $x);
 	}
 	
@@ -102,9 +103,13 @@ if ($_SESSION['player'] === 1){
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('s', $players[$i]->account);
 			$stmt->execute();
-			
+			// set units
+			$units = 12;
+			if ($players[$i]->government === 'Despotism'){
+				$units = 18;
+			}
 			// set starting units
-			$query = "update fwTiles set account=?, player=?, nation=?, flag=?, units=12, food=5, culture=8, defense=1 where tile=$startTile and game=?";
+			$query = "update fwTiles set account=?, player=?, nation=?, flag=?, units=$units, food=5, culture=8, defense=1 where tile=$startTile and game=?";
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('sissi', $players[$i]->account, $players[$i]->player, $players[$i]->nation, $players[$i]->flag, $_SESSION['gameId']);
 			$stmt->execute();

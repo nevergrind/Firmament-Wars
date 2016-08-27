@@ -730,6 +730,7 @@ table td, .table th, .table td {
 	overflow: visible;
 }
 .unit{
+	visibility: hidden;
 	white-space: nowrap;
 	font-size: 22px;
 	font-family: Consolas, Monospace;
@@ -1274,12 +1275,26 @@ table {
 .p8b{
 	outline: 2px solid #5500aa;
 }
+.player8{
+	color: #5500aa;
+	background: #5500aa;
+}
+.p8b{
+	outline: 2px solid #5500aa;
+}
+.player9{
+	color: #002F73;
+	background: #002F73;
+}
+.p9b{
+	outline: 2px solid #002F73;
+}
 .mapFlag{
 	pointer-events: none;
 }
 .inlineFlag{
 	display: inline-block;
-	margin-right: .5em;
+	margin: 0 .5em .1em 0;
 	height: 1em;
 	outline-width: 2px;
 }

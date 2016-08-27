@@ -164,7 +164,7 @@ function setTileUnits(i, unitColor){
 	if (unitColor === '#00ff00'){
 		TweenMax.to(e, .05, {
 			startAt: {
-				// transformOrigin: (game.tiles[i].units.length * 3) + ' 12',
+				transformOrigin: (game.tiles[i].units.length * 3) + ' 12',
 				fill: unitColor
 			},
 			fill: '#ffffff',

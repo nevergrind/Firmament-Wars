@@ -152,6 +152,7 @@ g.init = (function(){
 			console.info('rejoin ', data);
 			if (data.gameId > 0){
 				console.info("Auto joined game:" + (data.gameId));
+				my.player = data.player;
 				// join lobby in progress
 				setTimeout(function(){
 					lobby.init(data);
@@ -161,8 +162,6 @@ g.init = (function(){
 			} else {
 				showTitleScreen();
 			}
-		}).fail(function(e){
-			Msg("Failed to contact server.");
 		}).always(function(){
 			g.unlock();
 		});
@@ -213,6 +212,7 @@ var my = {
 	targetData: {},
 	selectedFlag: "Default",
 	selectedFlagFull: "Default.jpg",
+	government: 'Despotism',
 	tech: {
 		engineering: 0,
 		gunpowder: 0,
@@ -295,42 +295,47 @@ var my = {
 		my.flashTile(tile);
 	},
 	flashTile: function(tile){
-		var e2 = document.getElementById('unit' + tile);
-		TweenMax.to(e2, .05, {
-			startAt: {
+		if (!my.attackOn){
+			console.info(my.lastTgt, my.tgt);
+			// last tgt
+			if (my.lastTgt !== my.tgt){
+				var e4 = document.getElementById('flag' + my.lastTgt);
+				TweenMax.to(e4, .2, {
+					transformOrigin: '50% 50%',
+					scale: 1
+				});
+				var e6 = document.getElementById('unit' + my.lastTgt);
+				TweenMax.to(e6, .2, {
+					scale: 1
+				});
+			}
+			// my tgt
+			var e3 = document.getElementById('flag' + tile);
+			TweenMax.to(e3, .5, {
 				transformOrigin: '50% 50%',
-				fill: '#0ff'
-			},
-			fill: '#ffffff',
-			ease: SteppedEase.config(1),
-			repeat: 8,
-			yoyo: true
-		});
-		console.info(my.lastTgt, my.tgt);
-		// last tgt
-		if (my.lastTgt !== my.tgt){
-			var e4 = document.getElementById('flag' + my.lastTgt);
-			TweenMax.set(e4, {
-				transformOrigin: '50% 50%',
-				scale: 1
+				scale: 1.5,
+				ease: Power3.easeOut
 			});
-			var e6 = document.getElementById('unit' + my.lastTgt);
-			TweenMax.set(e6, {
-				scale: 1
-			});
+			// flag unit text
+			if (game.tiles[tile].units){
+				var e2 = document.getElementById('unit' + tile);
+				TweenMax.to(e2, .05, {
+					startAt: {
+						transformOrigin: '50% 50%',
+						fill: '#0ff'
+					},
+					fill: '#ffffff',
+					ease: SteppedEase.config(1),
+					repeat: 6,
+					yoyo: true
+				});
+				TweenMax.to(e2, .5, {
+					visibility: 'visible',
+					scale: 1.5,
+					ease: Power3.easeOut
+				});
+			}
 		}
-		// my tgt
-		var e3 = document.getElementById('flag' + tile);
-		TweenMax.to(e3, .5, {
-			transformOrigin: '50% 50%',
-			scale: 1.5,
-			ease: Power3.easeOut
-		});
-		var e5 = document.getElementById('unit' + tile);
-		TweenMax.to(e5, .5, {
-			scale: 1.5,
-			ease: Power3.easeOut
-		});
 	}
 }
 var timer = {
@@ -670,12 +675,10 @@ audio.init = (function(){
 	} else {
 		var foo = JSON.parse(config);
 		g.config.audio = foo.audio;
-		console.info(foo);
 	}
 	console.info("Initializing audio...");
 	audio.load.title();
 	audio.play("ReturnOfTheFallen", 1);
-	console.info(g.config.audio.musicOn);
 	if (!g.config.audio.musicOn){
 		audio.pause();
 		document.getElementById('musicToggle').className = 'fa fa-volume-off';
@@ -686,7 +689,7 @@ audio.init = (function(){
 function Msg(msg, d) {
 	DOM.Msg.innerHTML = msg;
 	if (!d || d < .5){
-		d = 5;
+		d = 2;
 	}
     TweenMax.to(DOM.Msg, d, {
 		overwrite: 1,
@@ -732,9 +735,32 @@ function refreshGames(){
 		type: 'GET',
 		url: 'php/refreshGames.php'
 	}).done(function(data) {
-		$("#menuContent").html(data);
+		var e = document.getElementById('menuContent');
+		if (!data.length){
+			e.innerHTML = "<div class='text-center text-warning buffer2'>No active games found. Create a game to play!</div>";
+		} else {
+			// head
+			var str = 
+			'<table id="gameTable" class="table table-condensed table-borderless">\
+				<tr>\
+					<th class="gameTableCol1 warCells">Game</th>\
+					<th class="gameTableCol2 warCells">Map</th>\
+					<th class="gameTableCol3 warCells">Players</th>\
+				</tr>';
+			// body
+			for (var i=0, len=data.length; i<len; i++){
+				str += 
+				"<tr class='wars' data-id='" + data[i].row + "'>\
+					<td class='warCells'>"+ data[i].name + "</td>\
+					<td class='warCells'>" + data[i].map + "</td>\
+					<td class='warCells'>" + data[i].players + "/" + data[i].max + "</td>\
+				</tr>";
+			}
+			// foot
+			str += "</table>";
+			e.innerHTML = str;
+		}
 		$(".wars").filter(":first").trigger("click");
-		console.info(data);
 	}).fail(function(e){
 		Msg("Server error.");
 	}).always(function(){

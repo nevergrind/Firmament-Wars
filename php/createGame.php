@@ -59,7 +59,7 @@
 	$_SESSION['food'] = 0;
 	$_SESSION['foodMax'] = 25;
 	$_SESSION['foodMilestone'] = 0;
-	$_SESSION['production'] = 25;
+	$_SESSION['production'] = 10;
 	$_SESSION['turnProduction'] = 10;
 	$_SESSION['culture'] = 0;
 	$_SESSION['cultureMax'] = 400;

@@ -16,5 +16,6 @@ if (!in_array($_POST['government'], $governments)){
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('ss', $_POST['government'], $_SESSION['account']);
 	$stmt->execute();
+	$_SESSION['government'] = $_POST['government'];
 }
 ?>

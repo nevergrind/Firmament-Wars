@@ -4,6 +4,13 @@
 	
 	require('pingLobby.php');
 	$_SESSION['gameStarted'] = 1; // determines if exitGame is a loss or not
+	// set government bonuses
+	if ($_SESSION['government'] === 'Despotism'){
+		$_SESSION['production'] = 30;
+	} else {
+		$_SESSION['production'] = 10;
+	}
+	
 	// get game tiles
 	$query = "select account, flag, nation, tile, tileName, player, units, food, culture, defense from `fwTiles` where game=?";
 	$stmt = $link->prepare($query);
@@ -86,19 +93,8 @@
 	while($stmt->fetch()){
 		array_push($_SESSION['capitalTiles'], $startTile);
 	}
-		
-		
-		/*$_SESSION['capitalTiles'] = [
-			$x->tiles[79]->flag ? 79 : null, 
-			$x->tiles[24]->flag ? 24 : null, 
-			$x->tiles[29]->flag ? 29 : null, 
-			$x->tiles[47]->flag ? 47 : null, 
-			$x->tiles[69]->flag ? 69 : null, 
-			$x->tiles[52]->flag ? 52 : null, 
-			$x->tiles[9]->flag ? 9 : null, 
-			$x->tiles[46]->flag ? 46 : null
-		];*/
 	$x->capitalTiles = $_SESSION['capitalTiles'];
+	$x->government = $_SESSION['government'];
 	
 	$_SESSION['gameStartTime'] = microtime(true);
 	if ($_SESSION['gameDuration'] === -1){

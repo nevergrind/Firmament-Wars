@@ -55,9 +55,7 @@
 	$stmt->execute();
 	
 	// update chat
-	$flag = $_SESSION['flag'] === 'Default.jpg' ? 
-		'<img src="images/flags/Player' . $_SESSION['player'] . '.jpg" class="player' . $_SESSION['player'] . ' p' . $_SESSION['player'] . 'b inlineFlag">' :
-		'<img src="images/flags/' . $_SESSION['flag'] . '" class="player' . $_SESSION['player'] . ' p' . $_SESSION['player'] . 'b inlineFlag">';
+	require('chatFlag.php');
 	
 	$msg = $flag . ' ' . $_SESSION['nation'] . ' built a '. $built . ' in ' . $tileName . '.';
 	$event = "upgrade|" . $target;

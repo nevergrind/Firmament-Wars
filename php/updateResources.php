@@ -84,9 +84,7 @@
 			$msg = '';
 			if ($bonus->units){
 				// write GET to chat
-				$flag = $_SESSION['flag'] === 'Default.jpg' ? 
-					'<img src="images/flags/Player'.$_SESSION['player'].'.jpg" class="player'.$_SESSION['player'].' p'.$_SESSION['player'].'b inlineFlag">' :
-					'<img src="images/flags/'.$_SESSION['flag'].'" class="player'.$_SESSION['player'].' p'.$_SESSION['player'].'b inlineFlag">';
+				require('chatFlag.php');
 				if ($bonus->img){
 					$msg .= '<img src="'. $bonus->img .'" class="chat-img"><div class="chat-manpower">'. $bonus->msg .'!</div>';
 				}

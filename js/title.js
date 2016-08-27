@@ -266,7 +266,6 @@ $("#flagDropdown").on('click', '.flagSelect', function(){
 	$("#updateNationFlag")
 		.attr("src", "images/flags/" + my.selectedFlagFull)
 		.css("display", "block");
-	console.info(my.selectedFlag, my.selectedFlagFull);
 	g.lock(1);
 	$.ajax({
 		url: 'php/updateFlag.php',

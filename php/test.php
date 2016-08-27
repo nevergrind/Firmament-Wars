@@ -2,17 +2,6 @@
 	require('values.php');
 	require('connect1.php');
 	
-	$stmt = $link->prepare('select password from fwgames where row=? limit 1');
-	$stmt->bind_param('i', $_SESSION['gameId']);
-	$stmt->execute();
-	$stmt->bind_result($gamePw);
-	while($stmt->fetch()){
-		$gamePw = $gamePw;
-	}
-	echo $gamePw;
-	exit();
-
-	
 	$_SESSION['production'] = 99999;
 	$_SESSION['tech'] = new stdClass();
 	$_SESSION['tech']->engineering = 0;
@@ -72,6 +61,7 @@
 		echo "<br>cultureBonus: " . $_SESSION['cultureBonus'];
 		echo "<br>oBonus: " . $_SESSION['oBonus'];
 		echo "<br>dBonus: " . $_SESSION['dBonus'];
+		echo "<br>government: " . $_SESSION['government'];
 	} else {
 		echo '<br>Game values not detected in session.';
 	}
