@@ -555,7 +555,8 @@
 									<span class='text-hotkey'>B</span>uild <span id="buildWord">Bunker</span>
 									</div>
 									<div class="col-xs-4 text-right">
-										<i class="fa fa-bolt production pointer actionBolt"></i><span id="buildCost">80</span>
+										<i class="fa fa-bolt production pointer actionBolt"></i>
+										<span id="buildCost">80</span>
 									</div>
 								</div>
 								

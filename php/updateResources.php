@@ -111,7 +111,7 @@
 		// culture milestone
 		if ($x->culture >= $_SESSION['cultureMax']){
 			$x->culture -= $_SESSION['cultureMax'];
-			$_SESSION['cultureMax'] += 250;
+			$_SESSION['cultureMax'] += $_SESSION['cultureIncrement'];
 			if ($_SESSION['cultureMax'] > 9999){
 				$_SESSION['cultureMax'] = 9999;
 			}

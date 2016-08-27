@@ -158,6 +158,8 @@ g.init = (function(){
 					lobby.init(data);
 					lobby.join(0); // autojoin
 					initResources(data); // setResources(data);
+					my.government = data.government;
+					lobby.updateGovernmentWindow(my.government);
 				}, 111);
 			} else {
 				showTitleScreen();
@@ -210,6 +212,7 @@ var my = {
 	attackOn: false,
 	splitAttack: false,
 	splitAttackCost: 3,
+	buildCost: 1,
 	targetData: {},
 	selectedFlag: "Default",
 	selectedFlagFull: "Default.jpg",

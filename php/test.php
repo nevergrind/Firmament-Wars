@@ -1,24 +1,8 @@
 <?php
 	require('values.php');
 	require('connect1.php');
-$query = "select startGame from fwPlayers where game=? limit 1";
-$stmt = $link->prepare($query);
-$stmt->bind_param('i', $_SESSION['gameId']);
-$stmt->bind_result($dCount);
-$stmt->execute();
-	while($stmt->fetch()){
-		$gameStartStatus = $dCount;
-	}
-
-echo $gameStartStatus;
 	
-	$_SESSION['production'] = 99999;
-	$_SESSION['tech'] = new stdClass();
-	$_SESSION['tech']->engineering = 0;
-	$_SESSION['tech']->gunpowder = 0;
-	$_SESSION['tech']->rocketry = 0;
-	$_SESSION['tech']->atomicTheory = 0;
-	$_SESSION['missilesLaunched'] = 0;
+	$_SESSION['production'] = 1000;
 	
 	$gameDuration = microtime(true) - $_SESSION['gameDuration'];
 	echo 'gameDuration: ' . $gameDuration . '<br>';

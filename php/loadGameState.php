@@ -59,7 +59,6 @@
 	$x->dBonus = $_SESSION['dBonus'];
 	// turn
 	$x->turnProduction = $_SESSION['turnProduction'];
-	$x->ajax = 'initGameState';
 	$x->account = $_SESSION['account'];
 	$x->oBonus = $_SESSION['oBonus'];
 	$x->dBonus = $_SESSION['dBonus'];
@@ -91,6 +90,7 @@
 	}
 	$x->capitalTiles = $_SESSION['capitalTiles'];
 	$x->government = $_SESSION['government'];
+	$x->buildCost = $_SESSION['buildCost'];
 	
 	$_SESSION['gameStartTime'] = microtime(true);
 	if ($_SESSION['gameDuration'] === -1){

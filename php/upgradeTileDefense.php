@@ -14,7 +14,7 @@
 		$tileName = $dTileName;
 		$defense = $dDefense;
 	}
-	$cost = [80, 225, 450];
+	$cost = [80, 200, 450];
 	$capitalDefBonus = in_array($target, $_SESSION['capitalTiles']) ? 1 : 0;
 	$ind = $defense - $capitalDefBonus;
 	
@@ -37,14 +37,14 @@
 		header('HTTP/1.1 500 This tile is fully upgraded!');
 		exit();
 	}
-	if ($_SESSION['production'] < $cost[$ind]){
+	if ($_SESSION['production'] < ($cost[$ind] * $_SESSION['buildCost'])){
 		header('HTTP/1.1 500 Not enough energy!');
 		exit();
 	}
 	
 	$structures = ['bunker', 'wall', 'fortress'];
 	$built = $structures[$ind];
-	$_SESSION['production'] -= $cost[$ind];
+	$_SESSION['production'] -= ($cost[$ind] * $_SESSION['buildCost']);
 	$x->production = $_SESSION['production'];
 	$ind++;
 	$newDef = $ind + $capitalDefBonus;

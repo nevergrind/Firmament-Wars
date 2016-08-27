@@ -20,11 +20,7 @@
 			exit();
 		}
 	} else {
-		$splitAttackCost = 3;
-		if ($_SESSION['government'] === 'Despotism'){
-			$splitAttackCost = 0;
-		}
-		if ($_SESSION['production'] < $splitAttackCost){
+		if ($_SESSION['production'] < $_SESSION['splitAttackCost']){
 			header('HTTP/1.1 500 Not enough energy!');
 			exit();
 		}
@@ -112,7 +108,7 @@
 			$stmt->bind_param('iii', $defender->units, $defender->tile, $_SESSION['gameId']);
 			$stmt->execute();
 			
-			$_SESSION['production'] -= $split === 0 ? 7 : $splitAttackCost;
+			$_SESSION['production'] -= $split === 0 ? 7 : $_SESSION['splitAttackCost'];
 			$o->production = $_SESSION['production'];
 			
 			
@@ -179,7 +175,7 @@
 						}
 					}
 			
-					$_SESSION['production'] -= $split === 0 ? 7 : $splitAttackCost;
+					$_SESSION['production'] -= $split === 0 ? 7 : $_SESSION['splitAttackCost'];
 					$o->production = $_SESSION['production'];
 				} else {
 					// defeat
@@ -212,7 +208,7 @@
 						'<img src="images/flags/Player'.$defender->player.'.jpg" class="player'.$defender->player.' p'.$defender->player.'b inlineFlag">' :
 						'<img src="images/flags/'.$defender->flag.'" class="player'.$defender->player.' p'.$defender->player.'b inlineFlag">';
 					}
-					$_SESSION['production'] -= $split === 0 ? 7 : $splitAttackCost;
+					$_SESSION['production'] -= $split === 0 ? 7 : $_SESSION['splitAttackCost'];
 					$o->production = $_SESSION['production'];
 				}
 			} else {

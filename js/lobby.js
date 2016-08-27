@@ -408,10 +408,9 @@ function Nation(){
 	return this;
 }
 
-function initGameState(){
+function loadGameState(){
 	g.lock(1);
 	var e1 = document.getElementById("mainWrap");
-	console.info("initGameState.php start");
 	if (e1 !== null){
 		TweenMax.to(e1, .5, {
 			alpha: 0
@@ -419,10 +418,10 @@ function initGameState(){
 	}
 	$.ajax({
 		type: "GET",
-		url: "php/initGameState.php"
+		url: "php/loadGameState.php"
 	}).done(function(data){
 		audio.ambientInit();
-		console.info('initGameState ', data);
+		console.info('loadGameState ', data);
 		if (location.hostname === 'localhost'){
 			audio.load.game();
 			video.load.game();
@@ -441,10 +440,14 @@ function initGameState(){
 		my.turnProduction = data.turnProduction;
 		my.cultureMax = data.cultureMax;
 		my.government = data.government;
-		// government perks
+		my.buildCost = data.buildCost;
+		lobby.updateGovernmentWindow(my.government);
+		// global government bonuses
 		if (my.government === 'Despotism'){
 			document.getElementById('splitAttackCost').textContent = 0;
 			my.splitAttackCost = 0;
+		} else if (my.government === 'Monarchy'){
+			my.buildCost = .5;
 		}
 		// initialize player data
 		game.initialized = true;
@@ -520,6 +523,9 @@ function initGameState(){
 				var x = a[i].getAttribute('x') - 24;
 				var y = a[i].getAttribute('y') - 24;
 				var flag = 'blank.png';
+				if (t === undefined){
+					console.info("UNDEFINED TILE: ", i, t);
+				}
 				if (!t.flag && t.units){
 					flag = "Player0.jpg";
 				} else if (t.flag){
@@ -687,7 +693,7 @@ function lobbyCountdown(){
 	new Audio('sound/beepHi.mp3');
 	var loadTime = Date.now() - g.startTime; 
 	if (loadTime < 1000){
-		initGameState(); // page refresh
+		loadGameState(); // page refresh
 	} else {
 		// normal countdown
 		var e = document.getElementById('countdown');
@@ -707,7 +713,7 @@ function lobbyCountdown(){
 					alpha: 0,
 					ease: Power3.easeIn,
 					onComplete: function(){
-						initGameState();
+						loadGameState();
 					}
 				});
 				audio.fade();
@@ -722,5 +728,7 @@ $("#joinGameLobby").on('click', '.governmentChoice', function(e){
 		data: {
 			government: government
 		}
+	}).done(function(){
+		lobby.updateGovernmentWindow(government);
 	});
 });

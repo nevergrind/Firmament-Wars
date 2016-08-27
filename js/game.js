@@ -69,15 +69,16 @@ function updateTileInfo(tileId){
 			}
 			str += name + '</div>';
 	DOM.target.innerHTML = str;
+	
 	var defWord = ['Bunker', 'Wall', 'Fortress'],
-		defCost = [80, 225, 450],
+		defCost = [80, 200, 450],
 		ind = t.defense - (t.capital ? 1 : 0);
 	if (ind > 2){
 		DOM.upgradeTileDefense.style.display = 'none';
 	} else {
 		DOM.upgradeTileDefense.style.display = 'block';
 		DOM.buildWord.textContent = defWord[ind];
-		DOM.buildCost.textContent = defCost[ind];
+		DOM.buildCost.textContent = defCost[ind] * my.buildCost;
 		if (ind === 2){
 			defWord[2] = 'Fortresse';
 		}

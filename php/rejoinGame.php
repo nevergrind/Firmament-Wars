@@ -51,7 +51,7 @@
 			}
 		}
 	}
-	
+	$x->government = isset($_SESSION['government']) ? $_SESSION['government'] : 'Despotism';
 	require('initLobby.php');
 	echo json_encode($x);
 ?>

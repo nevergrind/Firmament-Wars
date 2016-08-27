@@ -59,10 +59,11 @@
 	$_SESSION['food'] = 0;
 	$_SESSION['foodMax'] = 25;
 	$_SESSION['foodMilestone'] = 0;
-	$_SESSION['production'] = 10;
+	$_SESSION['production'] = 30;
 	$_SESSION['turnProduction'] = 10;
 	$_SESSION['culture'] = 0;
 	$_SESSION['cultureMax'] = 400;
+	$_SESSION['cultureIncrement'] = 250;
 	$_SESSION['cultureMilestone'] = 0;
 	$_SESSION['manpower'] = 0;
 	$_SESSION['foodBonus'] = 0;
@@ -84,6 +85,10 @@
 	$_SESSION['tech']->rocketry = 0;
 	$_SESSION['tech']->atomicTheory = 0;
 	$_SESSION['government'] = 'Despotism';
+	// government perks
+	// global government bonuses
+	$_SESSION['splitAttackCost'] = 3;
+	$_SESSION['buildCost'] = 1;
 	
 	require('initChatId.php');
 	

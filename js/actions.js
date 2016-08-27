@@ -198,7 +198,7 @@ var action = {
 	upgradeTileDefense: function(){
 		var oldTgt = my.tgt;
 		var t = game.tiles[my.tgt],
-			cost = [80, 225, 450],
+			cost = [80, 200, 450],
 			ind = t.defense - t.capital ? 1 : 0;
 		if (t.player !== my.player){
 			return;
@@ -206,7 +206,7 @@ var action = {
 		if (ind > 2){
 			return;
 		}
-		if (my.production < cost[ind]){
+		if (my.production < (cost[ind] * my.buildCost)){
 			action.error();
 			return;
 		}
@@ -452,7 +452,9 @@ var action = {
 				if (!my.tech.engineering){
 					DOM.upgradeTileDefense.style.display = 'none';
 				} else {
-					DOM.upgradeTileDefense.style.display = 'block';
+					if (game.tiles[my.tgt].defense < 3){
+						DOM.upgradeTileDefense.style.display = 'block';
+					}
 				}
 			}
 			if (!my.tech.gunpowder){
