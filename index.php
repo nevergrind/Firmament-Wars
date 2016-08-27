@@ -162,9 +162,8 @@
 					$result = mysqli_query($link, 'select count(row) count from `fwplayers` where timestamp > date_sub(now(), interval 20 second)');
 					// Associative array
 					while ($row = mysqli_fetch_assoc($result)){
-						echo '<div class="" >There '. 
-						($row["count"] == 1 ? 'is' : 'are')  .' currently ' . $row["count"] . ' ' .
-						($row["count"] == 1 ? 'player' : 'players') . ' playing Firmament Wars</div>';
+						$total = $row['count']*1;
+						echo '<div class="" >There '. ($total === 1 ? 'is' : 'are') .' '. $row["count"] . ' '. ($total === 1 ? 'person' : 'people') .' playing Firmament Wars</div>';
 					}
 					// display record
 					echo '<div class="fw-chat">'. $_SESSION['account']. ': ' .$wins. ' wins, '. $losses .' losses, '. $disconnects .' disconnects</div>';
@@ -291,13 +290,47 @@
 				<hr class="fancyhr">
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-xs-6">
-				<img id="nationFlag" class="w100" src="images/flags/<?php echo $flag; ?>">
+		<img id="nationFlag" src="images/flags/<?php echo $flag; ?>">
+		<div class='row fw-text'>
+			<div class='col-xs-4 nationStats'>
+				Name:
 			</div>
-			<div id="nationName" class="col-xs-6 shadow4 nation text-center"><?php echo $nation; ?></div>
+			<div class='col-xs-4 nationStats' id="nationName">
+				<div><?php echo $nation; ?></div>
+			</div>
 		</div>
-		<div class="row buffer2">
+		<div class='row fw-text'>
+			<div class='col-xs-4 nationStats'>
+				Wins:
+			</div>
+			<div class='col-xs-4 nationStats'>
+				<?php echo $wins; ?>
+			</div>
+		</div>
+		<div class='row fw-text'>
+			<div class='col-xs-4 nationStats'>
+				Losses:
+			</div>
+			<div class='col-xs-4 nationStats'>
+				<?php echo $losses; ?>
+			</div>
+		</div>
+		<div class='row fw-text'>
+			<div class='col-xs-4 nationStats'>
+				Disconnects:
+			</div>
+			<div class='col-xs-4 nationStats'>
+				<?php echo $disconnects; ?>
+			</div>
+		</div>
+		<div class="row text-center buffer2">
+			<div class='col-xs-12'>
+				<hr class="fancyhr">
+				<h2 class='header'>Update Name</h2>
+				<hr class="fancyhr">
+			</div>
+		</div>
+		<div class="row">
 			<div class="col-xs-12">
 				<div class="input-group">
 					<input id="updateNationName" class="form-control" type="text" maxlength="32" autocomplete="off" size="24" aria-describedby="updateNationNameStatus" placeholder="Enter New Nation Name">
@@ -309,31 +342,30 @@
 				</div>
 			</div>
 		</div>
-		<hr class="fancyhr">
+		<div class="row text-center">
+			<div class='col-xs-12'>
+				<hr class="fancyhr">
+				<h2 class='header'>Update Flag</h2>
+				<hr class="fancyhr">
+			</div>
+		</div>
 		
 		<div class="row">
 			<div class="col-xs-6 text-center">
-				<div class='flagLabel'>
-					Select National Flag
-				</div>
 				<div class="dropdown">
-					<button class="btn fwBlue dropdown-toggle shadow4" type="button" data-toggle="dropdown">
+					<button class="btn dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">
 						Update Flag
-						<span class="caret shadow4"></span>
+						<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 					</button>
-					<ul id="flagDropdown" class="dropdown-menu">
-						
-					</ul>
+					<ul id="flagDropdown" class="dropdown-menu fwDropdown"></ul>
 				</div>
 				<div id="flagPurchased" class="flagPurchaseStatus">
-					<hr class="fancyhr">
 					<h4 class="text-center text-success shadow4">
 						<i class="fa fa-check"></i>
 						&ensp;Flag Purchased!
 					</h4>
 				</div>
 				<div id="offerFlag" class="flagPurchaseStatus shadow4">
-					<hr class="fancyhr">
 					<h5 class="text-center">Buy flag for 100 Never Crystals?</h5>
 					<div class="center block">
 						<button id="buyFlag" type="button" class="btn fwBlue shadow4 text-primary">
@@ -341,7 +373,7 @@
 						</button>
 					</div>
 					<h4 class="text-center">
-						<a target="_blank" href="/store/">Purchase Crystals</a>
+						<a id='purchaseCrystals' target="_blank" href="/store/">Purchase Crystals</a>
 					</h4>
 				</div>
 				

@@ -4,17 +4,31 @@
 	// remove players that left
 	mysqli_query($link, 'delete from fwplayers where timestamp < date_sub(now(), interval 20 second)');
 	
-	$gameId = $_POST['gameId']*1; 
+	$o = new stdClass();
+	$o->gameId = $_POST['gameId']*1; 
 	$name = $_POST['name'];
 	$pw = $_POST['pw'];
 	
 	if (strlen($name) > 0){
-		// PRIVATE game
+		// PRIVATE game, get row id via name
+		$stmt = $link->prepare('select row from fwgames where name=? limit 1');
+		$stmt->bind_param('s', $name);
+		$stmt->execute();
+		$stmt->bind_result($gameId);
+		$stmt->store_result();
+		// check if the game exists at all
+		if (!$stmt->num_rows){
+			header('HTTP/1.1 500 Game name does not exist.');
+			exit;
+		}
+		// get gameId
+		while($stmt->fetch()){
+			$o->gameId = $gameId;
+		}
 		// check password
-		$o = new stdClass();
 		$o->pw = '';
 		$stmt = $link->prepare('select password from fwgames where row=? limit 1');
-		$stmt->bind_param('i', $_SESSION['gameId']);
+		$stmt->bind_param('i', $o->gameId);
 		$stmt->execute();
 		$stmt->bind_result($password);
 		while($stmt->fetch()){
@@ -22,32 +36,28 @@
 		}
 		if (strlen($pw) > 0 || strlen($o->pw) > 0){
 			if ($pw != $o->pw){
-				header('HTTP/1.1 500 The password did not match.' . $pw . ' !== ' . $o->pw);
+				header('HTTP/1.1 500 The password did not match.');
 				exit;
 			}
 		}
-		// check if it's possible to join
-	} else {
-		// PUBLIC game
-		// no game name supplied
-		// is it possible to join this game?
-		$query = "select g.name, count(p.game) activePlayers, g.max max, g.map map 
-					from fwGames g 
-					join fwplayers p 
-					on g.row=p.game and p.timestamp > date_sub(now(), interval {$_SESSION['lag']} second)
-					where g.row=? 
-					group by p.game";
-		$stmt = $link->prepare($query);
-		$stmt->bind_param('i', $gameId);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($dgameName, $dactivePlayers, $dmax, $dmap);
-		while($stmt->fetch()){
-			$gameName = $dgameName;
-			$activePlayers = $dactivePlayers;
-			$max = $dmax;
-			$map = $dmap;
-		}
+	}
+	// is it possible to join this game?
+	$query = "select g.name, count(p.game) activePlayers, g.max max, g.map map 
+				from fwGames g 
+				join fwplayers p 
+				on g.row=p.game and p.timestamp > date_sub(now(), interval {$_SESSION['lag']} second)
+				where g.row=? and p.startGame=0
+				group by p.game";
+	$stmt = $link->prepare($query);
+	$stmt->bind_param('i', $o->gameId);
+	$stmt->execute();
+	$stmt->store_result();
+	$stmt->bind_result($dgameName, $dactivePlayers, $dmax, $dmap);
+	while($stmt->fetch()){
+		$gameName = $dgameName;
+		$activePlayers = $dactivePlayers;
+		$max = $dmax;
+		$map = $dmap;
 	}
 	
 	if (!$stmt->num_rows){
@@ -66,7 +76,7 @@
 	require('checkDisconnectsByAccount.php');
 	
 	// set session values
-	$_SESSION['gameId'] = $gameId;
+	$_SESSION['gameId'] = $o->gameId;
 	$_SESSION['max'] = $max;
 	$_SESSION['gameName'] = $gameName;
 	$_SESSION['gameStarted'] = 0;
@@ -101,19 +111,12 @@
 	$_SESSION['tech']->atomicTheory = 0;
 	$_SESSION['government'] = 'Despotism';
 	
-	// init chat
-	$query = "select row from fwchat order by row desc limit 1";
-	$stmt = $link->prepare($query);
-	$stmt->execute();
-	$stmt->bind_result($row);
-	while($stmt->fetch()){
-		$_SESSION['chatId'] = $row;
-	}
+	require('initChatId.php');
 	
 	// determine player number
 	$query = 'select player, startTile from fwPlayers where game=?';
 	$stmt = $link->prepare($query);
-	$stmt->bind_param('i', $gameId);
+	$stmt->bind_param('i', $o->gameId);
 	$stmt->execute();
 	$stmt->bind_result($player, $startTile);
 	$a = [];
@@ -134,7 +137,7 @@
 					values (?, ?, ?, ?, ?) 
 					on duplicate key update timestamp=now()';
 				$stmt = $link->prepare($query);
-				$stmt->bind_param('isssi', $_SESSION['gameId'], $_SESSION['account'], $_SESSION['nation'], $_SESSION['flag'], $_SESSION['player']);
+				$stmt->bind_param('isssi', $o->gameId, $_SESSION['account'], $_SESSION['nation'], $_SESSION['flag'], $_SESSION['player']);
 				$stmt->execute();
 			}
 		}
@@ -155,7 +158,7 @@
 	// update chat
 	$msg = '<span class="chat-warning">'. $_SESSION['account'] . ' has joined the game.</span>';
 	$stmt = $link->prepare('insert into fwchat (`message`, `gameId`) values (?, ?);');
-	$stmt->bind_param('si', $msg, $_SESSION['gameId']);
+	$stmt->bind_param('si', $msg, $o->gameId);
 	$stmt->execute();
 	echo json_encode($x);
 ?>

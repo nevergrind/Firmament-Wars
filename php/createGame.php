@@ -16,7 +16,7 @@
 	if ($players < 2 || $players > 8 || $players % 1 != 0){
 		$players = 2;
 	}
-	// does this game name exist?
+	// does this game name exist and is the game active?
 	$query = "select count(p.game) players from fwGames g join fwPlayers p on g.row=p.game and g.name=? group by p.game having players > 0";
 	
 	$stmt = $link->prepare($query);
@@ -29,7 +29,12 @@
 		exit;
 	} else {
 		// check disconnected players when creating a game
-		require('checkDisconnectsByAccount.php'); 
+		require('checkDisconnectsByAccount.php');
+		// delete games with the same name since we know they have 0 players
+		$query = 'delete from fwgames where name=?';
+		$stmt = $link->prepare($query);
+		$stmt->bind_param('s', $name);
+		$stmt->execute();
 	}
 	// map data
 	$possibleMaps = ['Earth Alpha'];
@@ -79,14 +84,8 @@
 	$_SESSION['tech']->rocketry = 0;
 	$_SESSION['tech']->atomicTheory = 0;
 	$_SESSION['government'] = 'Despotism';
-	// init chat
-	$query = "select row from fwchat order by row desc limit 1";
-	$stmt = $link->prepare($query);
-	$stmt->execute();
-	$stmt->bind_result($row);
-	while($stmt->fetch()){
-		$_SESSION['chatId'] = $row;
-	}
+	
+	require('initChatId.php');
 	
 	require('initLobby.php');
 	$x->player = $_SESSION['player'];

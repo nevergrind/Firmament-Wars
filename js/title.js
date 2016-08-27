@@ -16,28 +16,33 @@ var title = {
 		$("#titleChatSend").on('click', function(){
 			title.sendMsg(true);
 		});
-		(function repeat(){
-			if (g.view === 'title'){
-				$.ajax({
-					type: "GET",
-					url: "php/titleUpdate.php"
-				}).done(function(data){
-					// report chat messages
-					var len = data.chat.length;
-					if (len > 0){
-						for (var i=0; i<len; i++){
-							if (data.chat[i]){
-								title.chat(data.chat[i]);
+		$.ajax({
+			type: 'GET',
+			url: 'php/initChatId.php'
+		}).done(function(data){
+			(function repeat(){
+				if (g.view === 'title'){
+					$.ajax({
+						type: "GET",
+						url: "php/titleUpdate.php"
+					}).done(function(data){
+						// report chat messages
+						var len = data.chat.length;
+						if (len > 0){
+							for (var i=0; i<len; i++){
+								if (data.chat[i]){
+									title.chat(data.chat[i]);
+								}
 							}
 						}
-					}
-				}).always(function(){
-					setTimeout(function(){
-						repeat();
-					}, 1500);
-				});
-			}
-		})();
+					}).always(function(){
+						setTimeout(function(){
+							repeat();
+						}, 1000);
+					});
+				}
+			})();
+		});
 		setTimeout(function(){
 			title.chat("You have joined the global chat lobby.", "chat-warning");
 		}, 100);
@@ -170,16 +175,18 @@ $("#createGame").on("mousedown", function(e){
 			lobby.join(); // create
 		}).fail(function(e){
 			console.info(e.responseText);
+			Msg(e.statusText);
 			g.unlock(1);
 		});
 	}
 });
 
 function joinGame(){
-	if (!g.id || typeof g.id !== 'number'){
+	var name = $("#joinGameName").val();
+	if (!g.id && !name){
+		Msg("Invalid game data.", 1.5);
 		return;
 	}
-	var name = $("#joinGameName").val();
 	var pw = $("#joinGamePassword").val();
 	g.lock();
 	audio.play('click');
@@ -197,7 +204,7 @@ function joinGame(){
 		lobby.join(); // normal join
 	}).fail(function(data){
 		console.info(data);
-		Msg(data.statusText);
+		Msg(data.statusText, 1.5);
 	}).always(function(){
 		g.unlock();
 	});
@@ -218,7 +225,7 @@ $("#mainWrap").on("click", "#cancelGame", function(){
 
 function animateNationName(){
 	var tl = new TimelineMax();
-	var split = new SplitText("#nationName", {
+	var split = new SplitText(".nationStats", {
 		type: "words,chars"
 	});
 	var chars = split.chars;
@@ -228,7 +235,7 @@ function animateNationName(){
 	}, {
 		delay: .25,
 		alpha: 1
-	}, .025);
+	}, .016);
 }
 $("#toggleNation").on("click", function(){
 	var e = document.getElementById("configureNation"),
@@ -297,7 +304,7 @@ $("#submitNationName").on("mousedown", function(e){
 		}
 	}).done(function(data) {
 		$("#nationName").text(data);
-		Msg("Your nation shall now be known as: " + data);
+		Msg("Your nation shall be known as: " + data, 1.5);
 		animateNationName();
 	}).fail(function(e){
 		Msg(e.statusText);
