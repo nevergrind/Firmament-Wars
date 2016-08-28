@@ -60,7 +60,7 @@ function updateTileInfo(tileId){
 			if (t.capital){
 				str += 
 				'<span id="tileName" class="no-select text-center shadow4 fwTooltip" data-toggle="tooltip" title="Capital Palace<br> Boosts tile defense">\
-					<i class="fa fa-fort-awesome text-warning shadow4"></i>\
+					<i class="glyphicon glyphicon-star text-warning shadow4 capitalStar"></i>\
 				</span> ';
 			}
 			str += name + '</div>';

@@ -73,9 +73,9 @@ if ($gameStartStatus === 1){
 		$tileName = array('Chicago','Pakistan','Namibia','Congo','Greece','Oman','Punta Arenas','Buenos Aires','Turkey','Sydney','Perth','Gibson Desert','Queensland','Germany','Persia','Kenya','France','Italy','Mali','Sri Lanka','India','Ontario','Estonia','Panama','Bolivia','Brazil','Rio de Janeiro','Guyana','Kyrgyzstan','Zimbabwe','South Africa','Sudan','Quebec','Alberta','Nunavut','British Colombia','Shanghai','Tibet','Beijing','Colombia','Cuba','Poland','Ethiopia','Algeria','Peru','Egypt','Scandinavia','United Kingdom','Greenland','Yemen','Babylon','Iceland','Japan','Kazakhstan','Thailand','Libya','Morocco','Ukraine','Madagascar','Mexico','Mongolia','Nigeria','Svalbard','New Zealand','Philippines','Indonesia','Alaska','Papua New Guinea','Spain','Saudi Arabia','Norilsk','Tomsk','St. Petersburg','Moscow','Ural','Yakutsk','Kamchatka','Irkutsk','Syberia','California','New York','Florida','Texas');
 		// set barbarians
 		for ($i = 0; $i < $maxTiles; $i++){
+			// 30% chance for barbs - needs 25 barbs (3 per player)
 			$barbarianUnits = mt_rand(0, 9) > 6 ? 2 : 0;
 			$food = 2;
-			// $production = 2;
 			$culture = 0;
 			if ($barbarianUnits === 2){
 				$foo = mt_rand(0, 1);

@@ -30,17 +30,40 @@
 		$x->defense = $dDefense;
 		$tiles[$count++] = $x;
 	}
-	// set capital
-	$query = "select startTile from fwPlayers where game=? and account=?;";
+	$x = new stdClass();
+	$_SESSION['capitalTiles'] = [];
+	// map capital tiles give defense bonus
+	/*
+	$query = 'select startTile from fwPlayers where game=?';
 	$stmt = $link->prepare($query);
-	$stmt->bind_param('is', $_SESSION['gameId'], $_SESSION['account']);
+	$stmt->bind_param('i', $_SESSION['gameId']);
 	$stmt->execute();
 	$stmt->bind_result($startTile);
 	while($stmt->fetch()){
-		$_SESSION['capital'] = $startTile;
+		array_push($_SESSION['capitalTiles'], $startTile);
+	}*/
+	// set my capital, all capital tiles, and all players data IN PROGRESS
+	$query = "select player, nation, flag, account, startTile, government from fwPlayers where game=?;";
+	$stmt = $link->prepare($query);
+	$stmt->bind_param('i', $_SESSION['gameId']);
+	$stmt->execute();
+	$stmt->bind_result($player, $nation, $flag, $account, $startTile, $government);
+	$x->players = [];
+	$count = 0;
+	while($stmt->fetch()){
+		$x->players[$count] = new stdClass();
+		$x->players[$count]->player = $player;
+		$x->players[$count]->nation = $nation;
+		$x->players[$count]->flag = $flag;
+		$x->players[$count]->account = $account;
+		$x->players[$count]->government = $government;
+		if ($account === $_SESSION['account']){
+			$_SESSION['capital'] = $startTile;
+		}
+		array_push($_SESSION['capitalTiles'], $startTile);
+		$count++;
 	}
 	
-	$x = new stdClass();
 	$x->player = $_SESSION['player'];
 	$x->flag = $_SESSION['flag'];
 	$x->nation = $_SESSION['nation'];
@@ -78,16 +101,6 @@
 		$x->sumCulture = $culture + round($culture * ($_SESSION['cultureBonus'] / 100)) + $_SESSION['cultureReward'];
 	}
 	$x->tiles = $tiles;
-	// map capital tiles give defense bonus
-	$_SESSION['capitalTiles'] = [];
-	$query = 'select startTile from fwPlayers where game=?';
-	$stmt = $link->prepare($query);
-	$stmt->bind_param('i', $_SESSION['gameId']);
-	$stmt->execute();
-	$stmt->bind_result($startTile);
-	while($stmt->fetch()){
-		array_push($_SESSION['capitalTiles'], $startTile);
-	}
 	$x->capitalTiles = $_SESSION['capitalTiles'];
 	$x->government = $_SESSION['government'];
 	$x->buildCost = $_SESSION['buildCost'];

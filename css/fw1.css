@@ -482,9 +482,6 @@ a:hover{
 	opacity: 0;
 	pointer-events: none;
 }
-.diplomacySquare{
-	margin-right: .375em;
-}
 #target-ui{
 	position: absolute;
 	top: 0%;
@@ -1031,6 +1028,11 @@ circle{
     background: -o-radial-gradient(center center, farthest-corner, rgba(0,0,0,1) 0%, rgba(0,0,0,.7) 100%);
 	z-index: 999999;
 }
+.capitalStar{
+	box-shadow: 0 0 0 2px #ee7;
+	border-radius: 50%;
+	font-size: .7em;
+}
 .titleModal{
 	visibility: hidden;
 	position: absolute;
@@ -1226,6 +1228,11 @@ table {
 .p1b{
 	outline: 1px solid #700000;
 }
+.diplo2{
+	color: #0000d0;
+	background: #08f;
+	border: 2px ridge #0000d0;
+}
 .player2{
 	color: #0000d0;
 	background: #0000d0;
@@ -1281,6 +1288,10 @@ table {
 }
 .p9b{
 	outline: 1px solid #002F73;
+}
+.diploSquare{
+	color: #b5a170;
+	margin-right: .375em;
 }
 .mapFlag{
 	pointer-events: none;
@@ -1346,7 +1357,7 @@ table {
 /* bootstrap overwrites */
 .fa{
 	cursor: default;
-	background: none !important;
+	/* background: none !important; */
 }
 .text-right{
 	text-align: right;
