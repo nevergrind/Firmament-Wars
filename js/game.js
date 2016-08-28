@@ -26,12 +26,12 @@ function updateTileInfo(tileId){
 		}
 	}
 	var t = game.tiles[tileId],
-		flag = "",
+		flag = "Default.jpg",
 		name = t.name,
 		account = "",
 		name = t.name;
 	if (t.player === 0){
-		flag = "Default.jpg";
+		flag = "Player0.jpg";
 		if (t.units > 0){
 			name = "Barbarian Tribe";
 		} else {

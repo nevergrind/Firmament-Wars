@@ -252,8 +252,8 @@ var action = {
 			return;
 		}
 		g.lock(true);
-		showTarget(that);
 		my.clearHud();
+		showTarget(document.getElementById('land' + attacker));
 		// send attack to server
 		$.ajax({
 			url: 'php/fireArtillery.php',
@@ -278,8 +278,6 @@ var action = {
 		});
 	},
 	launchMissile: function(that){
-		console.info('missile');
-		
 		var attacker = my.tgt;
 		var defender = that.id.slice(4)*1;
 		if (my.tgt === defender){
@@ -298,8 +296,8 @@ var action = {
 			return;
 		}
 		g.lock(true);
-		showTarget(that);
 		my.clearHud();
+		showTarget(document.getElementById('land' + attacker));
 		// send attack to server
 		$.ajax({
 			url: 'php/launchMissile.php',
@@ -361,8 +359,8 @@ var action = {
 			return;
 		}
 		g.lock(true);
-		showTarget(that);
 		my.clearHud();
+		showTarget(document.getElementById('land' + attacker));
 		// send attack to server
 		$.ajax({
 			url: 'php/launchNuke.php',

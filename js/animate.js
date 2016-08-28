@@ -286,11 +286,11 @@ var animate = {
 			a = [5, 6, 8],
 			sfx = ~~(Math.random() * 3);
 		audio.play('grenade' + a[sfx]);
-		for (var i=0; i<15; i++){
+		for (var i=0; i<7; i++){
 			(function(Math){
 				var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
-				var x = box.x + Math.random() * 50 - 25;
-				var y = box.y + Math.random() * 50 - 25;
+				var x = box.x + Math.random() * 100 - 50;
+				var y = box.y + Math.random() * 100 - 50;
 				circ.setAttributeNS(null,"cx",x);
 				circ.setAttributeNS(null,"cy",y);
 				circ.setAttributeNS(null,"r",1);
