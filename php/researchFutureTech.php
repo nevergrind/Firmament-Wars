@@ -2,7 +2,8 @@
 	header('Content-Type: application/json');
 	require('connect1.php');
 	
-	if ($_SESSION['production'] < 1250){
+	$cost = 1250 * $_SESSION['researchCost'];
+	if ($_SESSION['production'] < $cost){
 		header('HTTP/1.1 500 Not enough energy!');
 		exit();
 	}
@@ -14,7 +15,7 @@
 		exit();
 	}
 	$x = new stdClass();
-	$_SESSION['production'] -= 1250;
+	$_SESSION['production'] -= $cost;
 	$x->production = $_SESSION['production'];
 	
 	require('rewardCulture.php');

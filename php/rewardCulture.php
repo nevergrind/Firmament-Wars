@@ -1,8 +1,8 @@
 <?php
 	function rewardCulture(){
 		$msg = '';
-		$reward = mt_rand(0,5);
-		
+		// don't allow revolutionaries to appear until 1st real milestone (communism)
+		$reward = $_SESSION['cultureMilestone'] > 1 ? mt_rand(0,5) : mt_rand(0,4);
 		if ($reward === 0){
 			// offensive bonus
 			$msg = 'A Great General appears!<br> All armies receive a <span class="chat-manpower">+1 offense</span> bonus!';

@@ -57,6 +57,7 @@
 	$_SESSION['playerMod'] = $_SESSION['player'] % 4;
 	$_SESSION['map'] = $map;
 	$_SESSION['food'] = 0;
+	$_SESSION['foodIncrement'] = 25;
 	$_SESSION['foodMax'] = 25;
 	$_SESSION['foodMilestone'] = 0;
 	$_SESSION['production'] = 30;
@@ -87,8 +88,14 @@
 	$_SESSION['government'] = 'Despotism';
 	// government perks
 	// global government bonuses
-	$_SESSION['splitAttackCost'] = 3;
+	$_SESSION['attackCost'] = 7;
+	$_SESSION['splitAttackCost'] = 0;
 	$_SESSION['buildCost'] = 1;
+	$_SESSION['RecruitCost'] = 50;
+	$_SESSION['maxDeployment'] = 12;
+	$_SESSION['deployCost'] = 20;
+	$_SESSION['researchCost'] = 1;
+	$_SESSION['weaponCost'] = 1;
 	
 	require('initChatId.php');
 	

@@ -1,7 +1,7 @@
 <?php
 	require('values.php');
 	require('connect1.php');
-	
+	$_SESSION['weaponCost'] = .5;
 	$_SESSION['production'] = 1000;
 	
 	$gameDuration = microtime(true) - $_SESSION['gameDuration'];

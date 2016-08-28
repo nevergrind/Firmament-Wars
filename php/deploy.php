@@ -7,11 +7,11 @@
 	if ($deployedUnits < 1){
 		$deployedUnits = 1;
 	}
-	if ($deployedUnits > 12){
-		$deployedUnits = 12;
+	if ($deployedUnits > $_SESSION['maxDeployment']){
+		$deployedUnits = $_SESSION['maxDeployment'];
 	}
 	
-	if ($_SESSION['production'] < 20){
+	if ($_SESSION['production'] < $_SESSION['deployCost']){
 		header('HTTP/1.1 500 Not enough energy!');
 		exit();
 	}
@@ -31,7 +31,9 @@
 		$units <= 254 &&
 		$_SESSION['manpower'] > 0){
 		
-		$deployedUnits = $_SESSION['manpower'] < 12 ? $_SESSION['manpower'] : 12;
+		$deployedUnits = $_SESSION['manpower'] < $_SESSION['maxDeployment'] ? 
+			$_SESSION['manpower'] : 
+			$_SESSION['maxDeployment'];
 		$rem = 0;
 		if ($units + $deployedUnits > 255){
 			$rem = ($units + $deployedUnits) - 255;
@@ -48,7 +50,7 @@
 		$stmt->bind_param('iii', $units, $target, $_SESSION['gameId']);
 		$stmt->execute();
 		
-		$_SESSION['production'] -= 20;
+		$_SESSION['production'] -= $_SESSION['deployCost'];
 		$x->production = $_SESSION['production'];
 	} else {
 		header('HTTP/1.1 500 You cannot deploy to enemy territory!');

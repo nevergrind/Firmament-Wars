@@ -4,7 +4,7 @@
 	
 	$target = $_POST['target']*1;
 	
-	if ($_SESSION['production'] < 50){
+	if ($_SESSION['production'] < $_SESSION['RecruitCost']){
 		header('HTTP/1.1 500 Not enough energy!');
 		exit();
 	}
@@ -35,7 +35,7 @@
 		$stmt->bind_param('iii', $units, $target, $_SESSION['gameId']);
 		$stmt->execute();
 		
-		$_SESSION['production'] -= 50;
+		$_SESSION['production'] -= $_SESSION['RecruitCost'];
 		$x->production = $_SESSION['production'];
 	} else {
 		header('HTTP/1.1 500 You cannot recruit here!');

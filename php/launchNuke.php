@@ -9,7 +9,8 @@
 	$defender = new stdClass();
 	$defender->tile = $_POST['defender']*1;
 	
-	if ($_SESSION['production'] < 600){
+	$cost = 600*$_SESSION['weaponCost'];
+	if ($_SESSION['production'] < $cost){
 		header('HTTP/1.1 500 Not enough energy!');
 		exit();
 	}
@@ -58,7 +59,7 @@
 		header('HTTP/1.1 500 You cannot fire artillery at allied territory!');
 		exit();
 	} else {
-		$_SESSION['production'] -= 600;
+		$_SESSION['production'] -= $cost;
 		$_SESSION['nukesLaunched']++;
 		$o->production = $_SESSION['production'];
 		// report to other players

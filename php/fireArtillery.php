@@ -10,7 +10,8 @@
 	$defender = new stdClass();
 	$defender->tile = $_POST['defender']*1;
 	
-	if ($_SESSION['production'] < 60){
+	$cost = 60*$_SESSION['weaponCost'];
+	if ($_SESSION['production'] < $cost){
 		header('HTTP/1.1 500 Not enough energy!');
 		exit();
 	}
@@ -72,7 +73,7 @@
 			$stmt->bind_param('iii', $defender->units, $defender->tile, $_SESSION['gameId']);
 			$stmt->execute();
 			
-			$_SESSION['production'] -= 60;
+			$_SESSION['production'] -= $cost;
 			$o->production = $_SESSION['production'];
 			// report to other players
 			$msg = '';

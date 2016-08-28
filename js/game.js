@@ -31,13 +31,12 @@ function updateTileInfo(tileId){
 		account = "",
 		name = t.name;
 	if (t.player === 0){
-		flag = "Player0.jpg";
+		flag = "Default.jpg";
 		if (t.units > 0){
 			name = "Barbarian Tribe";
 		} else {
-			name = "";
-			flag = "blank.png";
-			name = '';
+			name = "Uninhabited";
+			flag = "Default.jpg";
 		}
 	} else {
 		if (t.flag === "Default.jpg"){
@@ -58,9 +57,6 @@ function updateTileInfo(tileId){
 		</div>'+
 		'<img src="images/flags/' + flag + '" class="p' + t.player + 'b w100 block center">\
 		<div id="nation-ui" class="shadow4">';
-			if (t.player){
-				str += '<i class="fa fa-stop diplomacySquare player' +t.player+ '"></i>';
-			}
 			if (t.capital){
 				str += 
 				'<span id="tileName" class="no-select text-center shadow4 fwTooltip" data-toggle="tooltip" title="Capital Palace<br> Boosts tile defense">\
@@ -73,6 +69,7 @@ function updateTileInfo(tileId){
 	var defWord = ['Bunker', 'Wall', 'Fortress'],
 		defCost = [80, 200, 450],
 		ind = t.defense - (t.capital ? 1 : 0);
+
 	if (ind > 2){
 		DOM.upgradeTileDefense.style.display = 'none';
 	} else {

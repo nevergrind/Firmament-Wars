@@ -4,8 +4,22 @@
 		$oBonus = $_SESSION['oBonus'] * 500;
 		$dBonus = $_SESSION['dBonus'] * 500;
 		$dTileUpgrades = [0, 3000, 4500, 5400, 6200];
+		if ($_SESSION['government'] === 'Fundamentalism'){
+			if ($y > 0){
+				if ($x/$y >= 4){
+					// overrun
+					return array($x, 0);
+				}
+			}
+			// infiltration
+			if (--$defender->defense < 0){
+				$defender->defense = 0;
+			}
+		}
 		// structure upgrades + capital
 		$defVal = $dTileUpgrades[$defender->defense];
+		
+		$originalAttackingUnits = $x;
 		
 		while ($y > 0 && $x > 1){
 			$diceX = $x > 2 ? 3 : 2;
@@ -37,6 +51,14 @@
 			}
 			$x += $diceX;
 			$y += $diceY;
+		}
+		
+		if ($_SESSION['government'] === 'Republic'){
+			// victorious healing
+			if ($x > $y){
+				$diff = $originalAttackingUnits - $x;
+				$x += ceil($diff / 2);
+			}
 		}
 		
 		return array($x, $y);

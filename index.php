@@ -290,34 +290,34 @@
 		</div>
 		<img id="nationFlag" src="images/flags/<?php echo $flag; ?>">
 		<div class='row fw-text'>
-			<div class='col-xs-4 nationStats'>
+			<div class='col-xs-4'>
 				Name:
 			</div>
-			<div class='col-xs-4 nationStats' id="nationName">
+			<div class='col-xs-4' id="nationName">
 				<div><?php echo $nation; ?></div>
 			</div>
 		</div>
 		<div class='row fw-text'>
-			<div class='col-xs-4 nationStats'>
+			<div class='col-xs-4'>
 				Wins:
 			</div>
-			<div class='col-xs-4 nationStats'>
+			<div class='col-xs-4'>
 				<?php echo $wins; ?>
 			</div>
 		</div>
 		<div class='row fw-text'>
-			<div class='col-xs-4 nationStats'>
+			<div class='col-xs-4'>
 				Losses:
 			</div>
-			<div class='col-xs-4 nationStats'>
+			<div class='col-xs-4'>
 				<?php echo $losses; ?>
 			</div>
 		</div>
 		<div class='row fw-text'>
-			<div class='col-xs-4 nationStats'>
+			<div class='col-xs-4'>
 				Disconnects:
 			</div>
-			<div class='col-xs-4 nationStats'>
+			<div class='col-xs-4'>
 				<?php echo $disconnects; ?>
 			</div>
 		</div>
@@ -427,7 +427,8 @@
 										<span class='text-hotkey'>A</span>ttack
 									</div>
 									<div class="col-xs-4 text-right">
-										<i class="fa fa-bolt production pointer actionBolt"></i>7
+										<i class="fa fa-bolt production pointer actionBolt"></i>
+										<span id='attackCost'>7</span>
 									</div>
 								</div>
 								
@@ -452,7 +453,8 @@
 										<span class='text-hotkey'>D</span>eploy
 									</div>
 									<div class="col-xs-4 text-right">
-										<i class="fa fa-bolt production pointer actionBolt"></i>20
+										<i class="fa fa-bolt production pointer actionBolt"></i>
+										<span id='deployCost'>20</cost>
 									</div>
 								</div>
 								
@@ -464,7 +466,8 @@
 										R<span class='text-hotkey'>e</span>cruit
 									</div>
 									<div class="col-xs-4 text-right">
-										<i class="fa fa-bolt production pointer actionBolt"></i>50
+										<i class="fa fa-bolt production pointer actionBolt"></i>
+										<span id="recruitCost">50</span>
 									</div>
 								</div>
 							</div>
@@ -479,7 +482,8 @@
 										<span class='text-hotkey'>G</span>unpowder
 									</div>
 									<div class="col-xs-4 text-right">
-										<i class="fa fa-bolt production pointer actionBolt"></i>125
+										<i class="fa fa-bolt production pointer actionBolt"></i>
+										<span id='gunpowderCost'>120</span>
 									</div>
 								</div>
 								
@@ -491,7 +495,8 @@
 										<span class='text-hotkey'>E</span>ngineering
 									</div>
 									<div class="col-xs-4 text-right">
-										<i class="fa fa-bolt production pointer actionBolt"></i>150
+										<i class="fa fa-bolt production pointer actionBolt"></i>
+										<span id='engineeringCost'>150</span>
 									</div>
 								</div>
 								
@@ -503,7 +508,8 @@
 										<span class='text-hotkey'>R</span>ocketry
 									</div>
 									<div class="col-xs-4 text-right">
-										<i class="fa fa-bolt production pointer actionBolt"></i>250
+										<i class="fa fa-bolt production pointer actionBolt"></i>
+										<span id='rocketryCost'>250</span>
 									</div>
 								</div>
 								
@@ -515,7 +521,8 @@
 										<span class='text-hotkey'>A</span>tomic Theory
 									</div>
 									<div class="col-xs-4 text-right">
-										<i class="fa fa-bolt production pointer actionBolt"></i>500
+										<i class="fa fa-bolt production pointer actionBolt"></i>
+										<span id='atomicTheoryCost'>500</span>
 									</div>
 								</div>
 								
@@ -527,7 +534,8 @@
 										<span class='text-hotkey'>F</span>uture Tech
 									</div>
 									<div class="col-xs-4 text-right">
-										<i class="fa fa-bolt production pointer actionBolt"></i>1250
+										<i class="fa fa-bolt production pointer actionBolt"></i>
+										<span id='futureTechCost'>1250</span>
 									</div>
 								</div>
 								
@@ -543,7 +551,8 @@
 										Fire <span class='text-hotkey'>A</span>rtillery
 									</div>
 									<div class="col-xs-4 text-right">
-										<i class="fa fa-bolt production pointer actionBolt"></i>60
+										<i class="fa fa-bolt production pointer actionBolt"></i>
+										<span id='artilleryCost'>60</span>
 									</div>
 								</div>
 							
@@ -568,7 +577,8 @@
 										Launch <span class='text-hotkey'>M</span>issile
 									</div>
 									<div class="col-xs-4 text-right">
-										<i class="fa fa-bolt production pointer actionBolt"></i>150
+										<i class="fa fa-bolt production pointer actionBolt"></i>
+										<span id='missileCost'>150</span>
 									</div>
 								</div>
 								
@@ -578,7 +588,8 @@
 									title="Launch a nuclear weapon at any enemy territory. Kills 80-99% of armies and destroys all structures.">
 									<div class="col-xs-8">Launch <span class='text-hotkey'>N</span>uke</div>
 									<div class="col-xs-4 text-right">
-										<i class="fa fa-bolt production pointer actionBolt"></i>600
+										<i class="fa fa-bolt production pointer actionBolt"></i>
+										<span id='nukeCost'>600</span>
 									</div>
 								</div>
 							</div>

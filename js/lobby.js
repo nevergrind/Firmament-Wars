@@ -33,7 +33,7 @@ var lobby = {
 		} else if (government === "Democracy"){
 			str = '<div id="lobbyGovName" class="text-primary">Democracy</div>\
 				<div id="lobbyGovPerks">\
-					<div>1/2 starting culture</div>\
+					<div>Unlimited Army Deployment</div>\
 					<div>+50% energy bonus</div>\
 					<div>More great people</div>\
 					<div>Start with a wall</div>\
@@ -49,23 +49,23 @@ var lobby = {
 		} else if (government === "Fascism"){
 			str = '<div id="lobbyGovName" class="text-primary">Fascism</div>\
 				<div id="lobbyGovPerks">\
-					<div>Start with Gunpowder</div>\
-					<div>1/2 cost Attack</div>\
+					<div>Fervor doubles bonus troops</div>\
+					<div>5-cost Attack</div>\
 					<div>Start with Great General</div>\
 					<div>Free Deploy cost</div>\
 				</div>';
 		} else if (government === "Republic"){
 			str = '<div id="lobbyGovName" class="text-primary">Republic</div>\
 				<div id="lobbyGovPerks">\
-					<div>+50% exploration bonus</div>\
+					<div>+50% plunder bonus</div>\
 					<div>2x starting food</div>\
 					<div>+50% food bonus</div>\
-					<div>Victorious healing</div>\
+					<div>Combat medics</div>\
 				</div>';
 		} else if (government === "Communism"){
 			str = '<div id="lobbyGovName" class="text-primary">Communism</div>\
 				<div id="lobbyGovPerks">\
-					<div>0 starting culture</div>\
+					<div>2x discovery bonus</div>\
 					<div>1/2 cost research</div>\
 					<div>1/2 cost weapons</div>\
 					<div>Start with a great person</div>\
@@ -423,6 +423,7 @@ function loadGameState(){
 		audio.ambientInit();
 		console.info('loadGameState ', data);
 		if (location.hostname === 'localhost'){
+			// only when refreshing page while testing
 			audio.load.game();
 			video.load.game();
 		}
@@ -448,6 +449,27 @@ function loadGameState(){
 			my.splitAttackCost = 0;
 		} else if (my.government === 'Monarchy'){
 			my.buildCost = .5;
+		} else if (my.government === 'Democracy'){
+			my.maxDeployment = 254;
+		} else if (my.government === 'Fundamentalism'){
+			document.getElementById('recruitCost').textContent = 25;
+			my.recruitCost = 25;
+		} else if (my.government === 'Fascism'){
+			document.getElementById('attackCost').textContent = 5;
+			my.attackCost = 5;
+			document.getElementById('deployCost').textContent = 0;
+			my.deployCost = 0;
+		} else if (my.government === 'Communism'){
+			// research
+			DOM.gunpowderCost.textContent = 60;
+			DOM.engineeringCost.textContent = 75;
+			DOM.rocketryCost.textContent = 125;
+			DOM.atomicTheoryCost.textContent = 250;
+			DOM.futureTechCost.textContent = 625;
+			// weapons
+			DOM.artilleryCost.textContent = 30;
+			DOM.missileCost.textContent = 75;
+			DOM.nukeCost.textContent = 300;
 		}
 		// initialize player data
 		game.initialized = true;

@@ -70,7 +70,7 @@ var action = {
 			my.clearHud();
 			return;
 		}
-		if ((my.production < 7 && !my.splitAttack) ||
+		if ((my.production < my.attackCost && !my.splitAttack) ||
 			(my.production < my.splitAttackCost && my.splitAttack)
 		){
 			action.error();
@@ -87,7 +87,7 @@ var action = {
 				defender: defender,
 				split: my.splitAttack ? 1 : 0
 			}
-		}).done(function(data) {
+		}).done(function(data){
 			console.info('attackTile', data);
 			// animate attack
 			if (game.tiles[defender].player !== my.player){
@@ -117,13 +117,15 @@ var action = {
 		if (t.player !== my.player){
 			return;
 		}
-		if (my.production < 20){
+		if (my.production < my.deployCost){
 			action.error();
 			return;
 		}
 		if (my.manpower && t.units <= 254){
 			// determine number
-			var deployedUnits = my.manpower < 12 ? my.manpower : 12;
+			var deployedUnits = my.manpower < my.maxDeployment ? 
+				my.manpower : 
+				my.maxDeployment;
 			var rem = 0;
 			if (t.units + deployedUnits > 255){
 				rem = ~~((t.units + deployedUnits) - 255);
@@ -131,9 +133,9 @@ var action = {
 			} else {
 				rem = my.manpower - deployedUnits;
 			}
-			console.log('deploy: ', t.units, deployedUnits);
+			//console.log('deploy: ', t.units, deployedUnits);
 			game.tiles[my.tgt].units = t.units + deployedUnits;
-			console.info('deploy: ', game.tiles[my.tgt].units);
+			//console.info('deploy: ', game.tiles[my.tgt].units);
 			my.manpower = ~~rem;
 			// do it
 			DOM.manpower.textContent = my.manpower;
@@ -146,7 +148,7 @@ var action = {
 					target: my.tgt
 				}
 			}).done(function(data) {
-				console.info("deploy: ", data);
+				//console.info("deploy: ", data);
 				if (data.production !== undefined){
 					setProduction(data);
 				}
@@ -163,7 +165,7 @@ var action = {
 		if (t.player !== my.player){
 			return;
 		}
-		if (my.production < 50){
+		if (my.production < my.recruitCost){
 			action.error();
 			return;
 		}
@@ -413,65 +415,47 @@ var action = {
 		} else if (id === 'gotoResearch'){
 			g.actionMenu = 'research';
 			DOM.tileResearch.style.display = 'block';
-			if (!my.tech.engineering){
-				DOM.researchEngineering.style.display = 'block';
-			} else {
-				DOM.researchEngineering.style.display = 'none';
-			}
-			if (!my.tech.gunpowder){
-				DOM.researchGunpowder.style.display = 'block';
-			} else {
-				DOM.researchGunpowder.style.display = 'none';
-			}
-			if (!my.tech.rocketry){
-				DOM.researchRocketry.style.display = 'block';
-			} else {
-				DOM.researchRocketry.style.display = 'none';
-			}
-			if (!my.tech.atomicTheory){
-				DOM.researchAtomicTheory.style.display = 'block';
-			} else {
-				DOM.researchAtomicTheory.style.display = 'none';
-			}
+			// show/hide research
+			DOM.researchEngineering.style.display = my.tech.engineering ? 'none' : 'block';
+			DOM.researchGunpowder.style.display = my.tech.gunpowder ? 'none' : 'block';
+			DOM.researchRocketry.style.display = my.tech.rocketry ? 'none' : 'block';
+			DOM.researchAtomicTheory.style.display = my.tech.atomicTheory ? 'none' : 'block';
 			// all techs must be finished
+			var display = 'block';
 			if (!my.tech.engineering || 
 				!my.tech.gunpowder || 
 				!my.tech.rocketry || 
 				!my.tech.atomicTheory){
-				DOM.researchFutureTech.style.display = 'none';
-			} else {
-				DOM.researchFutureTech.style.display = 'block';
+				display = 'none';
 			}
+			DOM.researchFutureTech.style.display = display;
 		} else if (id === 'gotoBuild'){
 			g.actionMenu = 'build';
 			DOM.tileBuild.style.display = 'block';
 			if (!game.tiles[my.tgt].defense){
+				// zero defense
 				DOM.upgradeTileDefense.style.display = 'block';
 			} else {
 				// wall or fortress
+				var capValue = game.tiles[my.tgt].capital ? 1 : 0,
+					dMinusPalace = game.tiles[my.tgt].defense - capValue,
+					display = 'none';
 				if (!my.tech.engineering){
-					DOM.upgradeTileDefense.style.display = 'none';
+					// bunker max possible
+					if (!dMinusPalace){
+						display = 'block';
+					}
 				} else {
-					if (game.tiles[my.tgt].defense < 3){
-						DOM.upgradeTileDefense.style.display = 'block';
+					if (dMinusPalace < 3){
+						display = 'block';
 					}
 				}
+				DOM.upgradeTileDefense.style.display = display;
 			}
-			if (!my.tech.gunpowder){
-				DOM.fireArtillery.style.display = 'none';
-			} else {
-				DOM.fireArtillery.style.display = 'block';
-			}
-			if (!my.tech.rocketry){
-				DOM.launchMissile.style.display = 'none';
-			} else {
-				DOM.launchMissile.style.display = 'block';
-			}
-			if (!my.tech.atomicTheory){
-				DOM.launchNuke.style.display = 'none';
-			} else {
-				DOM.launchNuke.style.display = 'block';
-			}
+			
+			DOM.fireArtillery.style.display = my.tech.gunpowder ? 'block' : 'none';
+			DOM.launchMissile.style.display = my.tech.rocketry ? 'block' : 'none';
+			DOM.launchNuke.style.display = my.tech.atomicTheory ? 'block' : 'none';
 		}
 		$("#" + id).addClass('activeTab');
 	}
@@ -668,9 +652,9 @@ $(document).on('keyup', function(e) {
 	if (g.view === 'title'){
 		if (x === 13){
 			if (g.focusUpdateNationName){
-				$("#submitNationName").trigger("mousedown");
+				title.submitNationName();
 			} else if (g.focusGameName){
-				$("#createGame").trigger("mousedown");
+				title.createGame();
 			} else if (title.chatOn){
 				if (x === 13){
 					// enter - sends chat

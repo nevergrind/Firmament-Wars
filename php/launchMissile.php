@@ -9,7 +9,8 @@
 	$defender = new stdClass();
 	$defender->tile = $_POST['defender']*1;
 	
-	if ($_SESSION['production'] < 150){
+	$cost = 150*$_SESSION['weaponCost'];
+	if ($_SESSION['production'] < $cost){
 		header('HTTP/1.1 500 Not enough energy!');
 		exit();
 	}
@@ -50,7 +51,7 @@
 		exit();
 	} else {
 		$_SESSION['missilesLaunched']++;
-		$_SESSION['production'] -= 150;
+		$_SESSION['production'] -= $cost;
 		$o->production = $_SESSION['production'];
 		// report & animate launch
 		$msg = '';

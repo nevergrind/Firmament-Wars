@@ -227,6 +227,9 @@
 				}
 			}
 		}
+		if ($_SESSION['government'] === 'Fascism'){
+			$reward->units *= 2;
+		}
 		return $reward;
 	}
 ?>

@@ -88,9 +88,15 @@ var title = {
 		var e = document.getElementById("configureNation"),
 			e2 = document.getElementById("titleViewBackdrop"),
 			e3 = document.getElementById('createGameWrap');
-		e.style.visibility = "hidden";
-		e2.style.visibility = "hidden";
-		e3.style.visibility = 'hidden';
+		TweenMax.to([e,e2,e3], .2, {
+			alpha: 0,
+			ease: Linear.easeNone,
+			onComplete: function(){
+				e.style.visibility = "hidden";
+				e2.style.visibility = "hidden";
+				e3.style.visibility = 'hidden';
+			}
+		});
 	},
 	createGameFocus: false,
 	createGame: function(){
@@ -124,6 +130,24 @@ var title = {
 				g.unlock(1);
 			});
 		}
+	},
+	submitNationName: function(){
+		var x = $("#updateNationName").val();
+		g.lock();
+		audio.play('click');
+		$.ajax({
+			url: 'php/updateNationName.php',
+			data: {
+				name: x
+			}
+		}).done(function(data) {
+			$("#nationName").text(data);
+			animateNationName();
+		}).fail(function(e){
+			Msg(e.statusText);
+		}).always(function(){
+			g.unlock();
+		});
 	}
 }
 $("#bgmusic").on('ended', function() {
@@ -234,7 +258,7 @@ $("#mainWrap").on("click", "#cancelGame", function(){
 
 function animateNationName(){
 	var tl = new TimelineMax();
-	var split = new SplitText(".nationStats", {
+	var split = new SplitText("#nationName", {
 		type: "words,chars"
 	});
 	var chars = split.chars;
@@ -265,7 +289,6 @@ $("#toggleNation").on("click", function(){
 		},
 		opacity: 1
 	});
-	animateNationName();
 });
 
 $("#flagDropdown").on('click', '.flagSelect', function(){
@@ -301,24 +324,8 @@ $("#flagDropdown").on('click', '.flagSelect', function(){
 	});
 });
 
-$("#submitNationName").on("mousedown", function(e){
-	var x = $("#updateNationName").val();
-	g.lock();
-	audio.play('click');
-	$.ajax({
-		url: 'php/updateNationName.php',
-		data: {
-			name: x
-		}
-	}).done(function(data) {
-		$("#nationName").text(data);
-		Msg("Your nation shall be known as: " + data, 1.5);
-		animateNationName();
-	}).fail(function(e){
-		Msg(e.statusText);
-	}).always(function(){
-		g.unlock();
-	});
+$("#submitNationName").on("mousedown", function(){
+	title.submitNationName();
 });
 
 
@@ -354,6 +361,10 @@ $("#buyFlag").on("click", function(){
 		g.unlock();
 	});
 });
-$("#configureNationDone, #titleViewBackdrop").on('click', function(){
+$("#titleViewBackdrop").on('click', function(){
+	title.hideBackdrop();
+});
+$("#configureNationDone").on('click', function(){
+	audio.play('click');
 	title.hideBackdrop();
 });

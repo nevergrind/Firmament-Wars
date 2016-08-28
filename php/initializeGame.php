@@ -111,6 +111,7 @@ if ($gameStartStatus === 1){
 			$units = 12;
 			$defense = 1;
 			$culture = 8;
+			$food = 5;
 			if ($players[$i]->government === 'Despotism'){
 				$units = 18;
 				$defense = 2;
@@ -118,14 +119,14 @@ if ($gameStartStatus === 1){
 				$culture = 24;
 			} else if ($players[$i]->government === 'Democracy'){
 				$defense = 3;
-				$culture = 4;
 			} else if ($players[$i]->government === 'Fundamentalism'){
 			} else if ($players[$i]->government === 'Fascism'){
 			} else if ($players[$i]->government === 'Republic'){
+				$food = 10;
 			} else if ($players[$i]->government === 'Communism'){
 			}
 			// set starting units
-			$query = "update fwTiles set account=?, player=?, nation=?, flag=?, units=$units, food=5, culture=$culture, defense=$defense where tile=$startTile and game=?";
+			$query = "update fwTiles set account=?, player=?, nation=?, flag=?, units=$units, food=$food, culture=$culture, defense=$defense where tile=$startTile and game=?";
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('sissi', $players[$i]->account, $players[$i]->player, $players[$i]->nation, $players[$i]->flag, $_SESSION['gameId']);
 			$stmt->execute();
