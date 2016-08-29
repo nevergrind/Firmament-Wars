@@ -590,8 +590,8 @@ function loadGameState(){
 							} else {
 								str += '<i class="fa fa-flag surrender"></i>';
 							}
-							str += '<i class="' + lobby.governmentIcon(p.government)+ ' player'+ p.player + ' diploSquare" data-toggle="tooltip" title="' + p.government + '"></i>' +
-							'<img src="images/flags/Player' + p.player + '.jpg" class="player' + p.player + ' inlineFlag diploFlag p' + p.player + 'b" data-toggle="tooltip" title="'+ p.account + '"><span class="diploNames" data-toggle="tooltip" title="'+ p.nation + '">' + p.nation + '</span>';
+							str += '<i class="' + lobby.governmentIcon(p.government)+ ' player'+ p.player + ' diploSquare" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>' +
+							'<img src="images/flags/Player' + p.player + '.jpg" class="player' + p.player + ' inlineFlag diploFlag p' + p.player + 'b" data-toggle="tooltip" title="'+ p.account + '"><span class="diploNames">' + p.nation + '</span>';
 				} else {
 					str += 
 					'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">';
@@ -600,8 +600,8 @@ function loadGameState(){
 							} else {
 								str += '<i class="fa fa-flag surrender"></i>';
 							}
-							str += '<i class="' + lobby.governmentIcon(p.government)+ ' player'+ p.player + ' diploSquare" data-toggle="tooltip" title="' + p.government + '"></i>' +
-							'<img src="images/flags/' + p.flag + '" class="inlineFlag diploFlag p' + p.player + 'b" data-toggle="tooltip" title="'+ p.account + '"><span class="diploNames" data-toggle="tooltip" title="'+ p.nation + '">' + p.nation + '</span>';
+							str += '<i class="' + lobby.governmentIcon(p.government)+ ' player'+ p.player + ' diploSquare" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>' +
+							'<img src="images/flags/' + p.flag + '" class="inlineFlag diploFlag p' + p.player + 'b" data-toggle="tooltip" title="'+ p.account + '"><span class="diploNames">' + p.nation + '</span>';
 				}
 				str += '</div>';
 			}

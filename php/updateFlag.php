@@ -2,7 +2,7 @@
 	require_once('connect1.php');
 	$flag = $_POST['flag'];
 	
-	$query = "select count(row) rows from fwFlags where flag=? and account=?";
+	$query = "select count(row) rows from fwFlags where flag=? and account=? limit 1";
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('ss', $flag, $_SESSION['account']);
 	$stmt->bind_result($rows);
