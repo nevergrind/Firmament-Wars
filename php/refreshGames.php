@@ -7,7 +7,7 @@
 	
 			
 	// game data
-	$query = 'select g.row row, min(p.player) host, g.name name, g.map map, count(p.game) players, g.max max from fwGames g join fwplayers p on g.row=p.game and p.timestamp > date_sub(now(), interval ' . $_SESSION["refreshGameLag"] . ' second) and p.startGame = 0 and g.password="" group by p.game having players > 0 and host=1 order by p.row desc';
+	$query = 'select g.row row, min(p.player) host, g.name name, g.map map, count(p.game) players, g.max max from fwgames g join fwplayers p on g.row=p.game and p.timestamp > date_sub(now(), interval ' . $_SESSION["refreshGameLag"] . ' second) and p.startGame = 0 and g.password="" group by p.game having players > 0 and host=1 order by p.row desc';
 	
 	$stmt = mysqli_query($link, $query);
 	$i = 0;

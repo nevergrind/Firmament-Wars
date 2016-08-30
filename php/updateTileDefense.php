@@ -3,7 +3,7 @@
 	require('connect1.php');
 	
 	// get game tiles
-	$query = "select defense from `fwTiles` where game=?";
+	$query = "select defense from `fwtiles` where game=?";
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('i', $_SESSION['gameId']);
 	$stmt->execute();

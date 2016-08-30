@@ -1,6 +1,6 @@
 <?php
-require_once('connect1.php');
-$query = "select startGame from fwPlayers where game=? limit 1";
+require('connect1.php');
+$query = "select startGame from fwplayers where game=? limit 1";
 $stmt = $link->prepare($query);
 $stmt->bind_param('i', $_SESSION['gameId']);
 $stmt->bind_result($dCount);
@@ -27,8 +27,8 @@ if ($gameStartStatus < 2){
 		$stmt->execute();
 		$_SESSION['government'] = $_POST['government'];
 		// default values
-		$_SESSION['production'] = 10;
-		$_SESSION['turnProduction'] = 10;
+		$_SESSION['production'] = 30;
+		$_SESSION['turnProduction'] = 30;
 		$_SESSION['attackCost'] = 7;
 		$_SESSION['splitAttackCost'] = 3;
 		$_SESSION['cultureBonus'] = 0;
@@ -48,14 +48,14 @@ if ($gameStartStatus < 2){
 		$_SESSION['weaponCost'] = 1;
 		// global government bonuses
 		if ($_SESSION['government'] === 'Despotism'){
-			$_SESSION['production'] = 30;
+			$_SESSION['production'] = 90;
 			$_SESSION['splitAttackCost'] = 0;
 		} else if ($_SESSION['government'] === 'Monarchy'){
 			$_SESSION['cultureBonus'] = 50;
 			$_SESSION['dBonus'] = 1;
 			$_SESSION['buildCost'] = .5;
 		} else if ($_SESSION['government'] === 'Democracy'){
-			$_SESSION['turnProduction'] = 15;
+			$_SESSION['turnProduction'] = 45;
 			$_SESSION['cultureMax'] = 200;
 			$_SESSION['cultureIncrement'] = 150;
 			$_SESSION['maxDeployment'] = 254;

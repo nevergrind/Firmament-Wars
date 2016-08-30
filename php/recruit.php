@@ -10,7 +10,7 @@
 	}
 	$x = new stdClass();
 	
-	$query = "select player, units from fwTiles where tile=? and game=?";
+	$query = "select player, units from fwtiles where tile=? and game=?";
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('ii', $target, $_SESSION['gameId']);
 	$stmt->execute();
@@ -30,7 +30,7 @@
 		}
 		
 		// update attacker
-		$query = 'update fwTiles set units=? where tile=? and game=?';
+		$query = 'update fwtiles set units=? where tile=? and game=?';
 		$stmt = $link->prepare($query);
 		$stmt->bind_param('iii', $units, $target, $_SESSION['gameId']);
 		$stmt->execute();

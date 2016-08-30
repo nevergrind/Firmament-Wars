@@ -1,8 +1,8 @@
 <?php
-	require_once('connect1.php');
+	require('connect1.php');
 	$flag = $_POST['flag'];
 	
-	$query = "select row from fwFlags where flag=? and account=?";
+	$query = "select row from fwflags where flag=? and account=?";
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('ss', $flag, $_SESSION['account']);
 	$stmt->execute();
@@ -21,7 +21,7 @@
 		} else {
 			$crystals = $crystals - 100;
 			// give flag
-			$query = "insert into fwFlags (`account`, `flag`) VALUES (?, ?)";
+			$query = "insert into fwflags (`account`, `flag`) VALUES (?, ?)";
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('ss', $_SESSION['account'], $flag);
 			$stmt->execute();
@@ -31,7 +31,7 @@
 			$stmt->bind_param('s', $_SESSION['email']);
 			$stmt->execute();
 			// set flag
-			$query = "update fwNations set flag=? where account=?";
+			$query = "update fwnations set flag=? where account=?";
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('ss', $flag, $_SESSION['account']);
 			$stmt->execute();

@@ -1,5 +1,5 @@
 <?php
-	require_once('connect1.php');
+	require('connect1.php');
 	
 	if (isset($_SESSION['gameId'])){
 		if ($_SESSION['startGame']){
@@ -9,7 +9,7 @@
 			$stmt->bind_param('si', $msg, $_SESSION['gameId']);
 			$stmt->execute();
 			// set all tiles and player to 0
-			$query = 'update fwTiles set account="", player=0, nation="", flag="", units=0 where game=? and account=?';
+			$query = 'update fwtiles set account="", player=0, nation="", flag="", units=0 where game=? and account=?';
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('is', $_SESSION['gameId'], $_SESSION['account']);
 			$stmt->execute();
@@ -18,12 +18,12 @@
 		} else {
 			// left lobby
 			// set all tiles and player to 0
-			$query = 'update fwTiles set account="", player=0, nation="", flag="", units=0 where game=? and account=?';
+			$query = 'update fwtiles set account="", player=0, nation="", flag="", units=0 where game=? and account=?';
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('is', $_SESSION['gameId'], $_SESSION['account']);
 			$stmt->execute();
 			// exit lobby
-			$query = 'delete from fwPlayers where account=?';
+			$query = 'delete from fwplayers where account=?';
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('s', $_SESSION['account']);
 			$stmt->execute();

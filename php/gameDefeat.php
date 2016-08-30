@@ -1,6 +1,6 @@
 <?php
 	header('Content-Type: application/json');
-	require_once('connect1.php');
+	require('connect1.php');
 	$x = new stdClass();
 	$x->gameDone = 0;
 	

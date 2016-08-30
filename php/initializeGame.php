@@ -1,6 +1,6 @@
 <?php
 // the first player to load the game
-$query = "select startGame from fwPlayers where game=? limit 1";
+$query = "select startGame from fwplayers where game=? limit 1";
 $stmt = $link->prepare($query);
 $stmt->bind_param('i', $_SESSION['gameId']);
 $stmt->bind_result($dCount);
@@ -11,7 +11,7 @@ while($stmt->fetch()){
 // must be host
 if ($gameStartStatus === 1){
 	// update startGame to 2 - only one player should init the game: whichever countdown loads first
-	$query = "update fwPlayers set startGame=2 where game=?";
+	$query = "update fwplayers set startGame=2 where game=?";
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('i', $_SESSION['gameId']);
 	$stmt->execute();
@@ -85,7 +85,7 @@ if ($gameStartStatus === 1){
 					$culture = getCulture();
 				}
 			}
-			$query = "insert into fwTiles (`game`, `tile`, `tileName`, `units`, `food`, `culture`) 
+			$query = "insert into fwtiles (`game`, `tile`, `tileName`, `units`, `food`, `culture`) 
 				VALUES (?, $i, ?, $barbarianUnits, $food, $culture)";
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('is', $_SESSION['gameId'], $tileName[$i]);
@@ -126,7 +126,7 @@ if ($gameStartStatus === 1){
 			} else if ($players[$i]->government === 'Communism'){
 			}
 			// set starting units
-			$query = "update fwTiles set account=?, player=?, nation=?, flag=?, units=$units, food=$food, culture=$culture, defense=$defense where tile=$startTile and game=?";
+			$query = "update fwtiles set account=?, player=?, nation=?, flag=?, units=$units, food=$food, culture=$culture, defense=$defense where tile=$startTile and game=?";
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('sissi', $players[$i]->account, $players[$i]->player, $players[$i]->nation, $players[$i]->flag, $_SESSION['gameId']);
 			$stmt->execute();

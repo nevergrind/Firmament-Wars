@@ -4,7 +4,7 @@
 	
 	$target = $_POST['target']*1;
 	
-	$query = "select player, tileName, defense from fwTiles where tile=? and game=?";
+	$query = "select player, tileName, defense from fwtiles where tile=? and game=?";
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('ii', $target, $_SESSION['gameId']);
 	$stmt->execute();
@@ -49,7 +49,7 @@
 	$ind++;
 	$newDef = $ind + $capitalDefBonus;
 	// update attacker
-	$query = 'update fwTiles set defense=? where tile=? and game=?';
+	$query = 'update fwtiles set defense=? where tile=? and game=?';
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('iii', $newDef, $target, $_SESSION['gameId']);
 	$stmt->execute();

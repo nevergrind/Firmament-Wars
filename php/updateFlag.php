@@ -1,8 +1,8 @@
 <?php
-	require_once('connect1.php');
+	require('connect1.php');
 	$flag = $_POST['flag'];
 	
-	$query = "select count(row) rows from fwFlags where flag=? and account=? limit 1";
+	$query = "select count(row) rows from fwflags where flag=? and account=? limit 1";
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('ss', $flag, $_SESSION['account']);
 	$stmt->bind_result($rows);
@@ -12,7 +12,7 @@
 	}
 	
 	function updateFlag($link, $flag){
-		$query = "update fwNations set flag=? where account=?";
+		$query = "update fwnations set flag=? where account=?";
 		$stmt = $link->prepare($query);
 		$stmt->bind_param('ss', $flag, $_SESSION['account']);
 		$stmt->execute();

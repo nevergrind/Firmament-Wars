@@ -3,6 +3,7 @@
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('si', $_SESSION['account'], $_SESSION['gameId']);
 	$stmt->execute();
+	$stmt->store_result();
 	$stmt->bind_result($dGame, $dAccount);
 	while($stmt->fetch()){
 		$game = $dGame;
@@ -16,19 +17,19 @@
 		$stmt->bind_param('si', $msg, $game);
 		$stmt->execute();
 		// set all tiles and player to 0
-		$query = 'update fwTiles set account="", player=0, nation="", flag="", units=0 where game=? and account=?';
+		$query = 'update fwtiles set account="", player=0, nation="", flag="", units=0 where game=? and account=?';
 		$stmt = $link->prepare($query);
 		$stmt->bind_param('is', $game, $account);
 		$stmt->execute();
 		
 		// delete from players
-		$query = 'delete from fwPlayers where account=? and game=?';
+		$query = 'delete from fwplayers where account=? and game=?';
 		$stmt = $link->prepare($query);
 		$stmt->bind_param('si', $account, $game);
 		$stmt->execute();
 		// add disconnect
 		if ($_SESSION['resourceTick'] > 9){
-			$query = "insert into fwNations (`account`, `disconnects`, `games`) VALUES (?, 1, 1) on duplicate key update disconnects=disconnects+1, games=games+1";
+			$query = "insert into fwnations (`account`, `disconnects`, `games`) VALUES (?, 1, 1) on duplicate key update disconnects=disconnects+1, games=games+1";
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('s', $account);
 			$stmt->execute();

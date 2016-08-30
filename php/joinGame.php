@@ -1,6 +1,6 @@
 <?php
 	header('Content-Type: application/json');
-	require_once('connect1.php');
+	require('connect1.php');
 	// remove players that left
 	mysqli_query($link, 'delete from fwplayers where timestamp < date_sub(now(), interval 20 second)');
 	
@@ -43,7 +43,7 @@
 	}
 	// is it possible to join this game?
 	$query = "select g.name, count(p.game) activePlayers, g.max max, g.map map 
-				from fwGames g 
+				from fwgames g 
 				join fwplayers p 
 				on g.row=p.game and p.timestamp > date_sub(now(), interval {$_SESSION['lag']} second)
 				where g.row=? and p.startGame=0
@@ -87,7 +87,7 @@
 	$_SESSION['foodMax'] = 25;
 	$_SESSION['foodMilestone'] = 0;
 	$_SESSION['production'] = 30;
-	$_SESSION['turnProduction'] = 10;
+	$_SESSION['turnProduction'] = 30;
 	$_SESSION['culture'] = 0;
 	$_SESSION['cultureMax'] = 400;
 	$_SESSION['cultureIncrement'] = 250;
@@ -125,7 +125,7 @@
 	require('initChatId.php');
 	
 	// determine player number
-	$query = 'select player, startTile from fwPlayers where game=?';
+	$query = 'select player, startTile from fwplayers where game=?';
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('i', $o->gameId);
 	$stmt->execute();
@@ -144,7 +144,7 @@
 				$_SESSION['player'] = $i;
 				$_SESSION['playerMod'] = $_SESSION['player'] % 4;
 				// claim player slot
-				$query = 'insert into fwPlayers (`game`, `account`, `nation`, `flag`, `player`) 
+				$query = 'insert into fwplayers (`game`, `account`, `nation`, `flag`, `player`) 
 					values (?, ?, ?, ?, ?) 
 					on duplicate key update timestamp=now()';
 				$stmt = $link->prepare($query);

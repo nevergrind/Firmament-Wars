@@ -3,7 +3,7 @@
 	require('connect1.php');
 	
 	// get game tiles
-	$stmt = $link->prepare('select player, units from `fwTiles` where game=? order by tile');
+	$stmt = $link->prepare('select player, units from `fwtiles` where game=? order by tile');
 	$stmt->bind_param('i', $_SESSION['gameId']);
 	$stmt->execute();
 	$stmt->bind_result($player, $units);

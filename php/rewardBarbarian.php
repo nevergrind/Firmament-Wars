@@ -14,7 +14,7 @@
 		
 		if ($reward === 3){
 			// do I even own my capital?
-			$query = 'select account from fwTiles where tile=? and game=?';
+			$query = 'select account from fwtiles where tile=? and game=?';
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('ii', $_SESSION['capital'], $_SESSION['gameId']);
 			$stmt->execute();
@@ -54,7 +54,7 @@
 			}
 			$msg = 'Nationalist fervor yields <span class="chat-manpower">' . $amount . ' armies</span> in our capital!';
 			// get capital unit value
-			$query = 'select units from fwTiles where tile=? and game=?';
+			$query = 'select units from fwtiles where tile=? and game=?';
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('ii', $_SESSION['capital'], $_SESSION['gameId']);
 			$stmt->execute();
@@ -64,7 +64,7 @@
 			}
 			// update capital value
 			$newTotal = $capitalUnits + $amount;
-			$stmt = $link->prepare('update fwTiles set units=? where tile=? and game=?');
+			$stmt = $link->prepare('update fwtiles set units=? where tile=? and game=?');
 			$stmt->bind_param('iii', $newTotal, $_SESSION['capital'], $_SESSION['gameId']);
 			$stmt->execute();
 		} else if ($reward === 4){
@@ -76,7 +76,7 @@
 			$msg = 'Nationalist fervor yields <span class="chat-manpower">' . $amount . ' armies!</span> in ' . $defender->tileName . '.';
 			
 			$newTotal = $defender->units + $amount;
-			$stmt = $link->prepare('update fwTiles set units=? where tile=? and game=?');
+			$stmt = $link->prepare('update fwtiles set units=? where tile=? and game=?');
 			$stmt->bind_param('iii', $newTotal, $defender->tile, $_SESSION['gameId']);
 			$stmt->execute();
 			

@@ -19,7 +19,7 @@
 			require('checkDisconnectsByGame.php');
 		}
 		// get game tiles
-		$query = 'select sum(food), sum(culture) from `fwTiles` where account=? and game=?';
+		$query = 'select sum(food), sum(culture) from `fwtiles` where account=? and game=?';
 		$stmt = $link->prepare($query);
 		$stmt->bind_param('si', $_SESSION['account'], $_SESSION['gameId']);
 		$stmt->execute();
@@ -70,7 +70,7 @@
 				$_SESSION['foodMax'] = 9999;
 			}
 			// GET?!
-			$stmt = mysqli_query($link, "insert into fwGets (`row`) VALUES (null)");
+			$stmt = mysqli_query($link, "insert into fwgets (`row`) VALUES (null)");
 			// last insert id is GET value
 			
 			$x->get = mysqli_insert_id($link);
@@ -101,7 +101,7 @@
 			
 				mysqli_query($link, 'delete from fwchat where timestamp < date_sub(now(), interval 20 second)');
 				// write to GETS only
-				$query = "insert into fwGetsOnly (`get`, `getMessage`, `account`) VALUES (?, ?, ?)";
+				$query = "insert into fwgetsonly (`get`, `getMessage`, `account`) VALUES (?, ?, ?)";
 				$stmt = $link->prepare($query);
 				$stmt->bind_param('iss', $x->get, $bonus->msg, $_SESSION['account']);
 				$stmt->execute();

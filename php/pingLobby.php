@@ -1,7 +1,7 @@
 <?php
 
 	// insert / replace into fwplayers
-	$query = "insert into fwPlayers (`game`, `account`, `nation`, `flag`, `player`) 
+	$query = "insert into fwplayers (`game`, `account`, `nation`, `flag`, `player`) 
 		values (?, ?, ?, ?, ?) 
 		on duplicate key update timestamp=now()";
 	$stmt = $link->prepare($query);

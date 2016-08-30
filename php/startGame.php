@@ -1,5 +1,5 @@
 <?php
-require_once('connect1.php');
+require('connect1.php');
 
 // must be host
 if ($_SESSION['player'] === 1){
@@ -16,7 +16,7 @@ if ($_SESSION['player'] === 1){
 		exit;
 	}
 	// must timestamp start of game
-	$query = "update fwPlayers set startGame=1 where game=?";
+	$query = "update fwplayers set startGame=1 where game=?";
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('i', $_SESSION['gameId']);
 	$stmt->execute();

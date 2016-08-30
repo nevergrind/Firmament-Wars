@@ -1,5 +1,5 @@
 <?php
-	require_once('connect1.php');
+	require('connect1.php');
 	
 	function validateName($x){
 		// min/max length

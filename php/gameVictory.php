@@ -1,6 +1,6 @@
 <?php
 	header('Content-Type: application/json');
-	require_once('connect1.php');
+	require('connect1.php');
 	$x = new stdClass();
 	$x->gameDone = 0;
 	$x->gameAbandoned = 0;
@@ -17,12 +17,12 @@
 	if ($_SESSION['resourceTick'] > 9){
 		if (isset($_SESSION['gameId']) && $x->gameDone){
 			$x->win = 1;
-			$query = "insert into fwNations (`account`, `wins`, `games`) VALUES (?, 1, 1) on duplicate key update wins=wins+1, games=games+1";
+			$query = "insert into fwnations (`account`, `wins`, `games`) VALUES (?, 1, 1) on duplicate key update wins=wins+1, games=games+1";
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('s', $_SESSION['account']);
 			$stmt->execute();
 			
-			$query = 'delete from fwPlayers where account=?';
+			$query = 'delete from fwplayers where account=?';
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('s', $_SESSION['account']);
 			$stmt->execute();
@@ -37,7 +37,7 @@
 		// game wasn't long enough
 		$x->gameAbandoned = 1;
 			
-		$query = 'delete from fwPlayers where account=?';
+		$query = 'delete from fwplayers where account=?';
 		$stmt = $link->prepare($query);
 		$stmt->bind_param('s', $_SESSION['account']);
 		$stmt->execute();

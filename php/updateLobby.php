@@ -1,11 +1,10 @@
 <?php
 	header('Content-Type: application/json');
-	$start = microtime(true);
 	// connect1.php
 	require('connect1.php');
 	
 	// ping lobby
-	$query = 'insert into fwPlayers (`game`, `account`, `nation`, `flag`, `player`) 
+	$query = 'insert into fwplayers (`game`, `account`, `nation`, `flag`, `player`) 
 		values (?, ?, ?, ?, ?) 
 		on duplicate key update timestamp=now()';
 	$stmt = $link->prepare($query);
@@ -13,7 +12,7 @@
 	$stmt->execute();
 	
 	// who is still in the lobby?
-	$query = 'select account, nation, flag, player, government, startGame from fwPlayers where game=? and timestamp > date_sub(now(), interval '.$_SESSION['lag'].' second) order by player';
+	$query = 'select account, nation, flag, player, government, startGame from fwplayers where game=? and timestamp > date_sub(now(), interval '.$_SESSION['lag'].' second) order by player';
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('i', $_SESSION['gameId']);
 	$stmt->execute();
@@ -21,17 +20,17 @@
 	
 	$x = new stdClass();
 	$x->hostFound = false;
-	$totalPlayers = 0;
+	$x->totalPlayers = 0;
 	$x->playerData = [];
 	$x->startGame = 0;
 	while($stmt->fetch()){
-		$x->playerData[$totalPlayers] = new stdClass();
-		$x->playerData[$totalPlayers]->account = $account;
-		$x->playerData[$totalPlayers]->nation = $nation;
-		$x->playerData[$totalPlayers]->flag = $flag;
-		$x->playerData[$totalPlayers]->player = $player;
-		$x->playerData[$totalPlayers]->government = $government;
-		$totalPlayers++;
+		$x->playerData[$x->totalPlayers] = new stdClass();
+		$x->playerData[$x->totalPlayers]->account = $account;
+		$x->playerData[$x->totalPlayers]->nation = $nation;
+		$x->playerData[$x->totalPlayers]->flag = $flag;
+		$x->playerData[$x->totalPlayers]->player = $player;
+		$x->playerData[$x->totalPlayers]->government = $government;
+		$x->totalPlayers++;
 		if ($player === 1){
 			$x->hostFound = true;
 			$x->startGame = $startGame;
@@ -50,8 +49,5 @@
 	}
 	// some final values to send
 	$x->player = $_SESSION['player'];
-	$x->startGame = $x->startGame; // boolean to trigger game start
-	$x->totalPlayers = $totalPlayers;
-	$x->delay = microtime(true) - $start;
 	echo json_encode($x);
 ?>

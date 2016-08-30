@@ -6,7 +6,7 @@
 	$defender = new stdClass();
 	$defender->tile = $_POST['defender']*1;
 	
-	$query = 'select tile, flag, units from fwTiles where tile=? and game=?';
+	$query = 'select tile, flag, units from fwtiles where tile=? and game=?';
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('ii', $defender->tile, $_SESSION['gameId']);
 	$stmt->execute();
@@ -25,7 +25,7 @@
 		$defender->units = 1;
 	}
 	// update defender
-	$query = 'update fwTiles set units=? where tile=? and game=?';
+	$query = 'update fwtiles set units=? where tile=? and game=?';
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('iii', $defender->units, $defender->tile, $_SESSION['gameId']);
 	$stmt->execute();

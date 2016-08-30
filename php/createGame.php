@@ -1,7 +1,7 @@
 <?php
 	header('Content-Type: application/json');
 	// create a new lobby 
-	require_once('connect1.php');
+	require('connect1.php');
 	$name = $_POST['name'];
 	$pw = $_POST['pw'];
 	$players = $_POST['players'];
@@ -17,7 +17,7 @@
 		$players = 2;
 	}
 	// does this game name exist and is the game active?
-	$query = "select count(p.game) players from fwGames g join fwPlayers p on g.row=p.game and g.name=? group by p.game having players > 0";
+	$query = "select count(p.game) players from fwgames g join fwplayers p on g.row=p.game and g.name=? group by p.game having players > 0";
 	
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('s', $name);
@@ -42,8 +42,9 @@
 		$map = 'Earth Alpha';
 	}
 	// create game
-	$query = "insert into fwGames (`name`, `password`, `max`, `map`) values (?, ?, ?, ?)";
+	$query = "insert into fwgames (`name`, `password`, `max`, `map`) values (?, ?, ?, ?)";
 	$stmt = $link->prepare($query);
+	$stmt->store_result();
 	$stmt->bind_param('ssis', $name, $pw, $players, $map);
 	$stmt->execute();
 	
@@ -61,7 +62,7 @@
 	$_SESSION['foodMax'] = 25;
 	$_SESSION['foodMilestone'] = 0;
 	$_SESSION['production'] = 30;
-	$_SESSION['turnProduction'] = 10;
+	$_SESSION['turnProduction'] = 30;
 	$_SESSION['culture'] = 0;
 	$_SESSION['cultureMax'] = 400;
 	$_SESSION['cultureIncrement'] = 250;

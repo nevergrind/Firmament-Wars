@@ -20,7 +20,7 @@
 		exit();
 	}
 	if (isAdjacent($attacker->tile, $defender->tile)){
-		$query = 'select tile, tileName, nation, flag, units, player, account from fwTiles where (tile=? or tile=?) and game=? limit 2';
+		$query = 'select tile, tileName, nation, flag, units, player, account from fwtiles where (tile=? or tile=?) and game=? limit 2';
 		$stmt = $link->prepare($query);
 		$stmt->bind_param('iii', $attacker->tile, $defender->tile, $_SESSION['gameId']);
 		$stmt->execute();
@@ -68,7 +68,7 @@
 				$defender->units = 1;
 			}
 			// update defender
-			$query = 'update fwTiles set units=? where tile=? and game=?';
+			$query = 'update fwtiles set units=? where tile=? and game=?';
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('iii', $defender->units, $defender->tile, $_SESSION['gameId']);
 			$stmt->execute();

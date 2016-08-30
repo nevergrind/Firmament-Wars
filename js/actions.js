@@ -125,7 +125,8 @@ var action = {
 			// determine number
 			var deployedUnits = my.manpower < my.maxDeployment ? 
 				my.manpower : 
-				my.maxDeployment;
+				my.maxDeployment,
+				tgt = my.tgt;
 			var rem = 0;
 			if (t.units + deployedUnits > 255){
 				rem = ~~((t.units + deployedUnits) - 255);
@@ -133,24 +134,26 @@ var action = {
 			} else {
 				rem = my.manpower - deployedUnits;
 			}
-			//console.log('deploy: ', t.units, deployedUnits);
-			game.tiles[my.tgt].units = t.units + deployedUnits;
-			//console.info('deploy: ', game.tiles[my.tgt].units);
-			my.manpower = ~~rem;
+			console.log('deploy: ', tgt, t.units, deployedUnits);
+			game.tiles[tgt].units = t.units + deployedUnits;
+			//
 			// do it
-			DOM.manpower.textContent = my.manpower;
-			setTileUnits(my.tgt, '#00ff00');
+			//
+			//
 			audio.move();
 			$.ajax({
 				url: 'php/deploy.php',
 				data: {
 					deployedUnits: deployedUnits,
-					target: my.tgt
+					target: tgt
 				}
 			}).done(function(data) {
-				//console.info("deploy: ", data);
+				console.info("deploy: ", data);
 				if (data.production !== undefined){
+					my.manpower = data.manpower;
+					DOM.manpower.textContent = my.manpower;
 					setProduction(data);
+					setTileUnits(tgt, '#00ff00');
 				}
 			}).fail(function(e){
 				audio.play('error');
@@ -247,7 +250,7 @@ var action = {
 			return;
 		}
 		my.attackOn = false;
-		if (my.production < 60){
+		if (my.production < 60 * my.weaponCost){
 			action.error();
 			return;
 		}
@@ -291,7 +294,7 @@ var action = {
 			return;
 		}
 		my.attackOn = false;
-		if (my.production < 150){
+		if (my.production < 150 * my.weaponCost){
 			action.error();
 			return;
 		}
@@ -354,7 +357,7 @@ var action = {
 			return;
 		}
 		my.attackOn = false;
-		if (my.production < 600){
+		if (my.production < 600 * my.weaponCost){
 			action.error();
 			return;
 		}
@@ -707,7 +710,6 @@ $(document).on('keyup', function(e) {
 					if (x === 65){
 						// a
 						var o = new Target();
-						console.info(o);
 						action.target(o);
 					} else if (x === 83){
 						// s
@@ -718,10 +720,14 @@ $(document).on('keyup', function(e) {
 						action.target(o);
 					} else if (x === 68){
 						// d
-						action.deploy();
+						if (!g.keyLock){
+							action.deploy();
+						}
 					} else if (x === 69){
 						// e
-						action.recruit();
+						if (!g.keyLock){
+							action.recruit();
+						}
 					}
 				} else if (g.actionMenu === 'research'){
 					if (x === 69){

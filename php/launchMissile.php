@@ -18,7 +18,7 @@
 		header('HTTP/1.1 500 You must research this technology first!');
 		exit();
 	}
-	$query = 'select tile, units, account from fwTiles where (tile=? or tile=?) and game=? limit 2';
+	$query = 'select tile, units, account from fwtiles where (tile=? or tile=?) and game=? limit 2';
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('iii', $attacker->tile, $defender->tile, $_SESSION['gameId']);
 	$stmt->execute();

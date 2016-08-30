@@ -4,13 +4,28 @@
 		error_reporting(E_ALL);
 		ini_set('display_errors', true);
 	} else {
-		error_reporting(0);
+		// error_reporting(0);
 	}
 	require('php/values.php');
 	
 	if(!isset($_SESSION['email']) || !strlen($_SESSION['email'])){
 		header("Location: /login.php?back=/games/firmament-wars");
 		exit();
+	} else {
+		if($_SERVER["SERVER_NAME"] !== "localhost"){
+			$a = [
+				'joemattleonard@gmail.com',
+				'paintballguy@gmail.com',
+				'fedor@battleofdurak.com',
+				'fdsdfg@gmail.com',
+				'jenlaurafinch@gmail.com',
+				'jdmarshmallow@gmail.com'
+			];
+			if (!in_array($_SESSION['email'], $a)){
+				echo "<center style='margin-top: 200px'>You do not have access to Firmament Wars.</center>";
+				exit();
+			}
+		}
 	}
 ?>
 <!DOCTYPE html>
@@ -42,9 +57,9 @@
 			<header class="shadow4">
 				<div id="headerWrap">
 			<?php
-				require_once('php/connect1.php');
+				require('php/connect1.php');
 				// crystals
-				$query = "select crystals from accounts where email='".$_SESSION['email']."' limit 1";
+				$query = "select crystals from accounts where email='". $_SESSION['email'] ."' limit 1";
 				$result = $link->query($query);
 				$crystals = '';
 				while($row = $result->fetch_assoc()){
@@ -93,7 +108,7 @@
 						require('php/checkDisconnectsByAccount.php');
 						
 						// check if nation exists; create if not
-						$query = 'select count(row) from fwNations where account=?';
+						$query = 'select count(row) from fwnations where account=?';
 						$stmt = $link->prepare($query);
 						$stmt->bind_param('s', $_SESSION['account']);
 						$stmt->execute();
@@ -104,7 +119,7 @@
 						$nation = 'Kingdom of '.ucfirst($_SESSION['account']);
 						$flag = 'Default.jpg';
 						if($count > 0){
-							$query = "select nation, flag, wins, losses, disconnects from fwNations where account=?";
+							$query = "select nation, flag, wins, losses, disconnects from fwnations where account=?";
 							$stmt = $link->prepare($query);
 							$stmt->bind_param('s', $_SESSION['account']);
 							$stmt->execute();
@@ -120,7 +135,7 @@
 							$_SESSION['nation'] = $nation;
 							$_SESSION['flag'] = $flag;
 						} else {
-							$query = "insert into fwNations (`account`, `nation`, `flag`) VALUES (?, '$nation', '$flag')";
+							$query = "insert into fwnations (`account`, `nation`, `flag`) VALUES (?, '$nation', '$flag')";
 							$stmt = $link->prepare($query);
 							$stmt->bind_param('s', $_SESSION['account']);
 							$stmt->execute();
@@ -736,7 +751,7 @@
 	}
 	patchVersion="0-0-1";
 	(function(d){
-		if(location.host==='localhost'){
+		if(location.host==='localhost' || 1){
 			var _scriptLoader = [
 				'core',
 				'title',

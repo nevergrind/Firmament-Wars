@@ -8,7 +8,7 @@
 	$_SESSION['startGame'] = 1; // determines if exitGame is a loss or not
 	
 	// get game tiles
-	$query = "select account, flag, nation, tile, tileName, player, units, food, culture, defense from `fwTiles` where game=?";
+	$query = "select account, flag, nation, tile, tileName, player, units, food, culture, defense from `fwtiles` where game=?";
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('i', $_SESSION['gameId']);
 	$stmt->execute();
@@ -34,7 +34,7 @@
 	$_SESSION['capitalTiles'] = [];
 	// map capital tiles give defense bonus
 	/*
-	$query = 'select startTile from fwPlayers where game=?';
+	$query = 'select startTile from fwplayers where game=?';
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('i', $_SESSION['gameId']);
 	$stmt->execute();
@@ -43,7 +43,7 @@
 		array_push($_SESSION['capitalTiles'], $startTile);
 	}*/
 	// set my capital, all capital tiles, and all players data IN PROGRESS
-	$query = "select player, nation, flag, account, startTile, government from fwPlayers where game=?;";
+	$query = "select player, nation, flag, account, startTile, government from fwplayers where game=?;";
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('i', $_SESSION['gameId']);
 	$stmt->execute();
@@ -90,7 +90,7 @@
 	$x->tech = $_SESSION['tech'];
 	$x->capital = $_SESSION['capital'];
 	
-	$query = 'select sum(food), sum(culture) from `fwTiles` where account=? and game=?';
+	$query = 'select sum(food), sum(culture) from `fwtiles` where account=? and game=?';
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('si', $_SESSION['account'], $_SESSION['gameId']);
 	$stmt->execute();

@@ -10,7 +10,7 @@
 	if ($_SESSION['nukesLaunched'] > 0){
 		$_SESSION['nukesLaunched']--;
 		
-		$query = 'select tile, tileName, nation, flag, units, player, account from fwTiles where tile=? and game=?';
+		$query = 'select tile, tileName, nation, flag, units, player, account from fwtiles where tile=? and game=?';
 		$stmt = $link->prepare($query);
 		$stmt->bind_param('ii', $defender->tile, $_SESSION['gameId']);
 		$stmt->execute();
@@ -33,7 +33,7 @@
 			$defender->units = 1;
 		}
 		// update defender
-		$query = 'update fwTiles set units=?, defense=0 where tile=? and game=?';
+		$query = 'update fwtiles set units=?, defense=0 where tile=? and game=?';
 		$stmt = $link->prepare($query);
 		$stmt->bind_param('iii', $defender->units, $defender->tile, $_SESSION['gameId']);
 		$stmt->execute();

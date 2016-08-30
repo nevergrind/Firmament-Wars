@@ -7,11 +7,11 @@
 ::-moz-focus-inner{border:0;}
 :focus{outline:none;}
 html{
-	font-family:Arial,sans-serif;
+	font-family: Arial, sans-serif;
 	-ms-touch-action: manipulation;
 	touch-action: manipulation;
 	background: #000;
-	overflow:hidden;
+	overflow: hidden;
 }
 input{
 	cursor: text;
@@ -389,7 +389,7 @@ a:hover{
 	border-top: 2px ridge rgba(176,240,255,1);
 }
 #diplomacy-ui{
-	font-family: "Times New Roman", serif;
+	font-family: Times New Roman, serif;
 	font-size: 1.125em;
 	position: absolute;
 	top: 0%;
@@ -994,7 +994,7 @@ circle{
 	pointer-events: none;
 }
 #hud{
-	font-family: "Times New Roman", serif;
+	font-family: Times New Roman, serif;
 	font-variant: small-caps;
 	letter-spacing: .1em;
 	position: absolute;
@@ -1032,6 +1032,7 @@ circle{
 	box-shadow: 0 0 0 2px #ee7;
 	border-radius: 50%;
 	font-size: .7em;
+	margin-right: .125em;
 }
 .titleModal{
 	visibility: hidden;
@@ -1074,6 +1075,7 @@ table {
 	width: 100%;
 }
 #flagDropdown{
+	width: 100%;
 	max-height: 300px;
 	overflow: auto;
 }
@@ -1094,6 +1096,7 @@ table {
 	letter-spacing: .125em;
 	font-family: Times New Roman, serif;
 	font-variant: small-caps;
+	padding-left: 1em;
 }
 #updateNationFlag{
 	display: none;
@@ -1162,8 +1165,6 @@ table {
 #governmentDropdown>li>a:hover{
 	background: #135;
 }
-
-
 .fwDropdown{
 	text-shadow: none;
 	background: #00061a;
@@ -1171,13 +1172,12 @@ table {
 }
 .fwDropdown>li>a{
 	color: #aef;
+	padding-left: 1em;
 }
 .fwDropdown>li>a:hover{
 	background: #135;
 	color: #aef;
 }
-
-
 .lobbyNationName{
 	word-break: break-word;
 	font-family: Times New Roman, serif;
@@ -1417,6 +1417,9 @@ input[type=number]::-webkit-outer-spin-button {
 .text-overflow{
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+.btn{
+	font-family: Consolas, monospace;
 }
 .btn:active,
 .btn:focus{

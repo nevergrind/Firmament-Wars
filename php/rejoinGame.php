@@ -1,8 +1,8 @@
 <?php
 	header('Content-Type: application/json');
-	require_once('connect1.php');
+	require('connect1.php');
 	
-	$query = 'select sum(food), sum(culture) from `fwTiles` where account=? and game=? limit 1';
+	$query = 'select sum(food), sum(culture) from `fwtiles` where account=? and game=? limit 1';
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('si', $_SESSION['account'], $_SESSION['gameId']);
 	$stmt->execute();
@@ -35,7 +35,7 @@
 	
 	$x->gameId = 0;
 	
-	$query = "select game from fwPlayers where account=? and timestamp > date_sub(now(), interval {$_SESSION['lag']} second)";
+	$query = "select game from fwplayers where account=? and timestamp > date_sub(now(), interval {$_SESSION['lag']} second)";
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('s', $_SESSION['account']);
 	$stmt->execute();

@@ -19,13 +19,16 @@ var g = {
 	over: 0,
 	actionMenu: 'command',
 	startTime: Date.now(),
+	keyLock: false,
 	lock: function(clear){
 		g.overlay.style.display = "block";
 		clear ? g.overlay.style.opacity = 0 : g.overlay.style.opacity = 1;
+		g.keyLock = true;
 	},
 	unlock: function(clear){
 		g.overlay.style.display = "none";
 		clear ? g.overlay.style.opacity = 0 : g.overlay.style.opacity = 1;
+		g.keyLock = false;
 	},
 	unlockFade: function(d){
 		if (!d){
@@ -215,6 +218,7 @@ var my = {
 	attackCost: 7,
 	deployCost: 20,
 	recruitCost: 50,
+	weaponCost: 1,
 	maxDeployment: 12,
 	buildCost: 1,
 	targetData: {},

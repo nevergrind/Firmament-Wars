@@ -27,11 +27,13 @@ var title = {
 		}).done(function(data){
 			(function repeat(){
 				if (g.view === 'title'){
+					var start = Date.now();
 					$.ajax({
 						type: "GET",
 						url: "php/titleUpdate.php"
 					}).done(function(data){
 						// report chat messages
+						console.log("Ping: ", Date.now() - start);
 						var len = data.chat.length;
 						if (len > 0){
 							for (var i=0; i<len; i++){

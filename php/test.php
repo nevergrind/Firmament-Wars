@@ -1,9 +1,8 @@
 <?php
 	require('values.php');
 	require('connect1.php');
-	$_SESSION['weaponCost'] = .5;
 	$_SESSION['production'] = 10000;
-	
+	$_SESSION['manpower'] = 999;
 	$gameDuration = microtime(true) - $_SESSION['gameDuration'];
 	echo 'gameDuration: ' . $gameDuration . '<br>';
 	$gameStartTime = 6 + ($_SESSION['resourceTick'] * 5);

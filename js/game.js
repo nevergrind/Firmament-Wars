@@ -369,7 +369,7 @@ function getGameState(){
 	})();
 	
 	(function(){
-		setInterval(function(){
+		setInterval(function(){ // setInterval preferred with websockets
 			if (!g.over){
 				$.ajax({
 					type: "GET",
@@ -454,7 +454,8 @@ function updateTileDefense(){
 	});
 }
 function triggerEndGame(msg){
-	$("*").off('click mousedown keydown keyup keypress')
+	$("*").off('click mousedown keydown keyup keypress');
+	window.onbeforeunload = null;
 	g.over = 1;
 	setTimeout(function(){
 		var e = document.getElementById('victoryScreen');
