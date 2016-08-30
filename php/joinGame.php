@@ -165,6 +165,7 @@
 	require('initLobby.php');
 	
 	$x->player = $_SESSION['player'];
+	$x->account = $_SESSION['account'];
 	
 	// update chat
 	$msg = '<span class="chat-warning">'. $_SESSION['account'] . ' has joined the game.</span>';

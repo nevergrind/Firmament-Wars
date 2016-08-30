@@ -147,7 +147,7 @@ g.init = (function(){
 		document.getElementById("titleMain").style.visibility = "visible";
 		document.getElementById('mainWrap').style.display = "block";
 	}
-	if (location.host === 'localhost'){
+	//if (location.host === 'localhost'){
 		$.ajax({
 			type: "GET",
 			url: 'php/rejoinGame.php' // check if already in a game
@@ -170,9 +170,11 @@ g.init = (function(){
 		}).always(function(){
 			g.unlock();
 		});
+	/*
 	} else {
 		showTitleScreen();
 	}
+	*/
 })();
 // game data values
 var game = {

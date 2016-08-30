@@ -104,6 +104,7 @@ var lobby = {
 		}
 	},
 	init: function(x){
+		// build the lobby DOM
 		$("#lobby-chat-input").on('focus', function(){
 			lobby.chatOn = true;
 		}).on('blur', function(){
@@ -166,10 +167,7 @@ var lobby = {
 						</button>\
 					</div>';
 				}
-				// <span class="caret text-danger lobbyCaret"></span>
-				str += 
-				'</div>\
-			</div>';
+				str += '</div></div>';
 		}
 		str += '</div>';
 		document.getElementById("lobbyPlayers").innerHTML = str;
@@ -697,7 +695,7 @@ function loadGameState(){
 				// add warning for players
 				if (location.host !== 'localhost'){
 					window.onbeforeunload = function(){
-						return "Are you sure you want leave the game?";
+						return "To leave the game use the surrender flag instead!";
 					}
 				}
 				getGameState();

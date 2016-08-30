@@ -102,5 +102,6 @@
 	
 	require('initLobby.php');
 	$x->player = $_SESSION['player'];
+	$x->account = $_SESSION['account'];
 	echo json_encode($x);
 ?>
