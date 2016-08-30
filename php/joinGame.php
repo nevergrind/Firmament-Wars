@@ -144,12 +144,7 @@
 				$_SESSION['player'] = $i;
 				$_SESSION['playerMod'] = $_SESSION['player'] % 4;
 				// claim player slot
-				$query = 'insert into fwplayers (`game`, `account`, `nation`, `flag`, `player`) 
-					values (?, ?, ?, ?, ?) 
-					on duplicate key update timestamp=now()';
-				$stmt = $link->prepare($query);
-				$stmt->bind_param('isssi', $o->gameId, $_SESSION['account'], $_SESSION['nation'], $_SESSION['flag'], $_SESSION['player']);
-				$stmt->execute();
+				require('pingLobby.php');
 			}
 		}
 	}
@@ -165,7 +160,6 @@
 	require('initLobby.php');
 	
 	$x->player = $_SESSION['player'];
-	$x->account = $_SESSION['account'];
 	
 	// update chat
 	$msg = '<span class="chat-warning">'. $_SESSION['account'] . ' has joined the game.</span>';

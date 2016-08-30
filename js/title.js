@@ -123,7 +123,6 @@ var title = {
 				}
 			}).done(function(data) {
 				my.player = data.player;
-				my.account = data.account;
 				console.info("Creating: ", data);
 				lobby.init(data);
 				lobby.join(); // create
@@ -236,7 +235,6 @@ function joinGame(){
 	}).done(function(data) {
 		console.info(data);
 		my.player = data.player;
-		my.account = data.account;
 		lobby.init(data);
 		lobby.join(); // normal join
 	}).fail(function(data){

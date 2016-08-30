@@ -808,12 +808,15 @@ function exitGame(bypass){
 	}
 }
 
-function serverError(){
+function serverError(data){
 	Msg('The server reported an error.');
+	console.info(data);
+	/*
 	setTimeout(function(){
 		window.onbeforeunload = null;
 		location.reload();
 	}, 5000);
+	*/
 }
 
 $(window).on('resize orientationchange', function() {

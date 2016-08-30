@@ -197,9 +197,9 @@ var lobby = {
 					type: "GET",
 					url: "php/updateLobby.php"
 				}).done(function(x){
-					//console.info(x);
-					my.totalPlayers = x.totalPlayers;
 					if (g.view === "lobby"){
+						my.totalPlayers = x.totalPlayers;
+						console.info(x);
 						for (var i=1; i<=8; i++){
 							var data = x.playerData[i-1];
 							//console.info(i, lobby.data[i], data);
@@ -257,7 +257,7 @@ var lobby = {
 						setTimeout(repeat, 1000);
 					}
 				}).fail(function(data){
-					serverError();
+					serverError(data);
 				});
 			}
 		})();
@@ -701,7 +701,7 @@ function loadGameState(){
 				getGameState();
 			}, 100);
 		}).fail(function(data){
-			serverError();
+			serverError(data);
 		}).always(function(){
 			g.unlock();
 		});
@@ -710,20 +710,22 @@ function loadGameState(){
 	});
 }
 function startGame(){
-	document.getElementById("startGame").style.display = "none";
-	g.lock(1);
-	audio.play('click');
-	$.ajax({
-		type: "GET",
-		url: "php/startGame.php"
-	}).done(function(data){
-		console.info('startGame: ', data);
-		g.unlock();
-	}).fail(function(data){
-		serverError();
-	}).always(function(){
-		g.unlock();
-	});
+	if (my.totalPlayers >= 2){
+		document.getElementById("startGame").style.display = "none";
+		g.lock(1);
+		audio.play('click');
+		$.ajax({
+			type: "GET",
+			url: "php/startGame.php"
+		}).done(function(data){
+			console.info('startGame: ', data);
+			g.unlock();
+		}).fail(function(data){
+			serverError(data);
+		}).always(function(){
+			g.unlock();
+		});
+	}
 }
 function lobbyCountdown(){
 	new Audio('sound/beepHi.mp3');
@@ -734,11 +736,12 @@ function lobbyCountdown(){
 		// normal countdown
 		var e = document.getElementById('countdown');
 		e.style.display = 'block';
-		(function repeat(secondsToStart){
+		(function repeating(secondsToStart){
 			e.textContent = "Starting game in " + secondsToStart--;
+			console.info(secondsToStart);
 			if (secondsToStart >= 0){
 				audio.play('beep');
-				setTimeout(repeat, 1000, secondsToStart);
+				setTimeout(repeating, 1000, secondsToStart);
 			} else {
 				audio.play('beepHi');
 				audio.load.game();
@@ -747,7 +750,7 @@ function lobbyCountdown(){
 			if (secondsToStart === 1){
 				TweenMax.to('#mainWrap', 2.5, {
 					alpha: 0,
-					ease: Power3.easeIn,
+					ease: Linear.easeNone,
 					onComplete: function(){
 						loadGameState();
 					}

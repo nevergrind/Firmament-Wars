@@ -361,34 +361,32 @@ function getGameState(){
 				// console.info('client lag: ', Date.now() - start);
 			}).fail(function(data){
 				console.info(data.responseText);
-				serverError();
 			}).always(function(data){
 				setTimeout(repeat, repeatDelay);
 			});
 		}
 	})();
 	
-	(function(){
-		setInterval(function(){ // setInterval preferred with websockets
-			if (!g.over){
-				$.ajax({
-					type: "GET",
-					url: "php/updateResources.php"
-				}).done(function(data){
-					console.info('resource: ', data);
-					setResources(data);
-					if (data.cultureMsg !== undefined){
-						if (data.cultureMsg){
-							chat(data.cultureMsg);
-							audio.play('culture');
-						}
+	(function repeat(){ 
+		if (!g.over){
+			$.ajax({
+				type: "GET",
+				url: "php/updateResources.php"
+			}).done(function(data){
+				console.info('resource: ', data);
+				setResources(data);
+				if (data.cultureMsg !== undefined){
+					if (data.cultureMsg){
+						chat(data.cultureMsg);
+						audio.play('culture');
 					}
-				}).fail(function(data){
-					console.info(data.responseText);
-					serverError();
-				});
-			}
-		}, 5000);
+				}
+			}).fail(function(data){
+				console.info(data.responseText);
+				serverError(data);
+			});
+			setTimeout(repeat, 5000); // setInterval preferred with websockets
+		}
 	})();
 }
 function gameDefeat(){
@@ -408,7 +406,7 @@ function gameDefeat(){
 			audio.play('shotgun2');
 		}
 	}).fail(function(data){
-		serverError();
+		serverError(data);
 	});
 }
 
@@ -439,7 +437,7 @@ function gameVictory(){
 			audio.play('mine4');
 		}
 	}).fail(function(data){
-		serverError();
+		serverError(data);
 	});
 }
 function updateTileDefense(){

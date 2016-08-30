@@ -1,18 +1,12 @@
 <?php
 	header('Content-Type: application/json');
-	// connect1.php
 	require('connect1.php');
 	
 	// ping lobby
-	$query = 'insert into fwplayers (`game`, `account`, `nation`, `flag`, `player`) 
-		values (?, ?, ?, ?, ?) 
-		on duplicate key update timestamp=now()';
-	$stmt = $link->prepare($query);
-	$stmt->bind_param('isssi', $_SESSION['gameId'], $_SESSION['account'], $_SESSION['nation'], $_SESSION['flag'], $_SESSION['player']);
-	$stmt->execute();
+	require('pingLobby.php');
 	
 	// who is still in the lobby?
-	$query = 'select account, nation, flag, player, government, startGame from fwplayers where game=? and timestamp > date_sub(now(), interval '.$_SESSION['lag'].' second) order by player';
+	$query = 'select account, nation, flag, player, government, startGame from fwplayers where game=? and timestamp > date_sub(now(), interval '. $_SESSION['lag'] .' second) order by player';
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('i', $_SESSION['gameId']);
 	$stmt->execute();

@@ -5,6 +5,8 @@
 		ini_set('display_errors', true);
 	} else {
 		// error_reporting(0);
+		error_reporting(E_ALL);
+		ini_set('display_errors', true);
 	}
 	require('php/values.php');
 	

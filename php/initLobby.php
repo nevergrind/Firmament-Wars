@@ -9,16 +9,14 @@
 		$x->player = $_SESSION['player'];
 		$x->startGame = 0; // boolean to trigger game start
 	}
-	// localhost only
-	if($_SERVER["SERVER_NAME"] === "localhost"){
-		// is my gameId started?
-		$query = 'SELECT startGame FROM `fwplayers` where game=? and account=?';
-		$stmt = $link->prepare($query);
-		$stmt->bind_param('is', $_SESSION['gameId'], $_SESSION['account']);
-		$stmt->bind_result($startGame);
-		$stmt->execute();
-		while($stmt->fetch()){
-			$x->startGame = $startGame;
-		}
+	// rejoin game logic
+	// is my gameId started?
+	$query = 'SELECT startGame FROM `fwplayers` where game=? and account=?';
+	$stmt = $link->prepare($query);
+	$stmt->bind_param('is', $_SESSION['gameId'], $_SESSION['account']);
+	$stmt->bind_result($startGame);
+	$stmt->execute();
+	while($stmt->fetch()){
+		$x->startGame = $startGame;
 	}
 ?>
