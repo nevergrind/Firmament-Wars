@@ -2,6 +2,9 @@
 	header('Content-Type: application/json');
 	// create a new lobby 
 	require('connect1.php');
+	
+	require('checkAlreadyPlaying.php');
+	
 	$name = $_POST['name'];
 	$pw = $_POST['pw'];
 	$players = $_POST['players'];
@@ -92,7 +95,7 @@
 	$_SESSION['attackCost'] = 7;
 	$_SESSION['splitAttackCost'] = 0;
 	$_SESSION['buildCost'] = 1;
-	$_SESSION['RecruitCost'] = 50;
+	$_SESSION['RecruitCost'] = 40;
 	$_SESSION['maxDeployment'] = 12;
 	$_SESSION['deployCost'] = 20;
 	$_SESSION['researchCost'] = 1;

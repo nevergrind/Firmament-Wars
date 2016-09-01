@@ -37,7 +37,7 @@ if ($gameStartStatus < 2){
 		$_SESSION['cultureMax'] = 400;
 		$_SESSION['cultureIncrement'] = 250;
 		$_SESSION['foodIncrement'] = 25;
-		$_SESSION['RecruitCost'] = 50;
+		$_SESSION['RecruitCost'] = 40;
 		$_SESSION['foodMax'] = 25;
 		$_SESSION['maxDeployment'] = 12;
 		$_SESSION['oBonus'] = 0;
@@ -61,7 +61,7 @@ if ($gameStartStatus < 2){
 			$_SESSION['maxDeployment'] = 254;
 		} else if ($_SESSION['government'] === 'Fundamentalism'){
 			$_SESSION['foodIncrement'] = 20;
-			$_SESSION['RecruitCost'] = 25;
+			$_SESSION['RecruitCost'] = 20;
 			$_SESSION['foodMax'] = 20;
 		} else if ($_SESSION['government'] === 'Fascism'){
 			$_SESSION['attackCost'] = 5;

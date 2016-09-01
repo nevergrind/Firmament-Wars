@@ -311,15 +311,18 @@ function getGameState(){
 								repeat: -1,
 								yoyo: true
 							});
-							setTimeout(function(){
-								dot.parentNode.removeChild(dot);
-							}, 7000);
-							if (my.account !== account){
+							(function(dot){
 								setTimeout(function(){
-									animate.nuke(tile);
+									dot.parentNode.removeChild(dot);
 								}, 7000);
+							})(dot);
+							if (my.account !== account){
+								(function(tile){
+									setTimeout(function(){
+										animate.nuke(tile);
+									}, 7000);
+								})(tile);
 							}
-							
 						}
 					}
 				}

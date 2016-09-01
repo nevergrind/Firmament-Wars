@@ -1,7 +1,22 @@
 <?php
 	require('values.php');
 	require('connect1.php');
-	$_SESSION['production'] = 10000;
+	
+	$query = 'select count(row) from fwplayers where account=?';
+	$stmt = $link->prepare($query);
+	$stmt->bind_param('s', $_SESSION['account']);
+	$stmt->execute();
+	$stmt->bind_result($account);
+	while ($stmt->fetch()){
+		echo $account;
+	}
+	echo $account;
+	if ($account){
+		echo "Error";
+	}
+	exit();
+	$_SESSION['production'] = 20;
+	$_SESSION['turnBonus'] = 0;
 	$_SESSION['manpower'] = 999;
 	$gameDuration = microtime(true) - $_SESSION['gameDuration'];
 	echo 'gameDuration: ' . $gameDuration . '<br>';

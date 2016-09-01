@@ -65,6 +65,7 @@
 			$manpowerBonus = getManpowerReward();
 			$_SESSION['manpower'] += $manpowerBonus;
 			$_SESSION['foodMilestone']++;
+			$_SESSION['turnProduction']++;
 			$_SESSION['foodMax'] = $_SESSION['foodMax'] + $_SESSION['foodIncrement'];
 			if ($_SESSION['foodMax'] > 9999){
 				$_SESSION['foodMax'] = 9999;

@@ -219,7 +219,7 @@ var my = {
 	splitAttackCost: 3,
 	attackCost: 7,
 	deployCost: 20,
-	recruitCost: 50,
+	recruitCost: 40,
 	weaponCost: 1,
 	maxDeployment: 12,
 	buildCost: 1,

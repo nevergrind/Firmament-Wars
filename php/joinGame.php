@@ -4,7 +4,10 @@
 	// remove players that left
 	mysqli_query($link, 'delete from fwplayers where timestamp < date_sub(now(), interval 20 second)');
 	
+	require('checkAlreadyPlaying.php');
+	
 	$o = new stdClass();
+	
 	$o->gameId = $_POST['gameId']*1; 
 	$name = $_POST['name'];
 	$pw = $_POST['pw'];
@@ -117,6 +120,7 @@
 	$_SESSION['attackCost'] = 7;
 	$_SESSION['splitAttackCost'] = 0;
 	$_SESSION['buildCost'] = 1;
+	$_SESSION['RecruitCost'] = 40;
 	$_SESSION['maxDeployment'] = 12;
 	$_SESSION['deployCost'] = 20;
 	$_SESSION['researchCost'] = 1;

@@ -478,8 +478,8 @@ function loadGameState(){
 			} else if (my.government === 'Democracy'){
 				my.maxDeployment = 254;
 			} else if (my.government === 'Fundamentalism'){
-				document.getElementById('recruitCost').textContent = 25;
-				my.recruitCost = 25;
+				document.getElementById('recruitCost').textContent = 20;
+				my.recruitCost = 20;
 			} else if (my.government === 'Fascism'){
 				document.getElementById('attackCost').textContent = 5;
 				my.attackCost = 5;
@@ -738,7 +738,6 @@ function lobbyCountdown(){
 		e.style.display = 'block';
 		(function repeating(secondsToStart){
 			e.textContent = "Starting game in " + secondsToStart--;
-			console.info(secondsToStart);
 			if (secondsToStart >= 0){
 				audio.play('beep');
 				setTimeout(repeating, 1000, secondsToStart);

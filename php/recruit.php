@@ -5,7 +5,7 @@
 	$target = $_POST['target']*1;
 	
 	if ($_SESSION['production'] < $_SESSION['RecruitCost']){
-		header('HTTP/1.1 500 Not enough energy!');
+		header('HTTP/1.1 500 Not enough energy!' . $_SESSION['production'] . ' v ' . $_SESSION['RecruitCost']);
 		exit();
 	}
 	$x = new stdClass();

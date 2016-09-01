@@ -174,27 +174,27 @@ var action = {
 		}
 		if (t.units <= 254){
 			
-			var deployedUnits = 3 + ~~(my.cultureBonus / 30);
-			
-			if (t.units + deployedUnits > 255){
-				game.tiles[my.tgt].units = 255;
-			} else {
-				game.tiles[my.tgt].units += deployedUnits;
-			}
-			// do it
-			setTileUnits(my.tgt, '#00ff00');
-			audio.move();
-			
 			$.ajax({
 				url: 'php/recruit.php',
 				data: {
 					target: my.tgt
 				}
 			}).done(function(data) {
-				console.info("recruit: ", data);
-				if (data.production){
+				console.info("recruit: ", data.production, data);
+				if (data.production !== undefined){
 					setProduction(data);
 				}
+			
+				var deployedUnits = 3 + ~~(my.cultureBonus / 30);
+				
+				if (t.units + deployedUnits > 255){
+					game.tiles[my.tgt].units = 255;
+				} else {
+					game.tiles[my.tgt].units += deployedUnits;
+				}
+				// do it
+				setTileUnits(my.tgt, '#00ff00');
+				audio.move();
 			}).fail(function(e){
 				audio.play('error');
 			});
@@ -224,7 +224,7 @@ var action = {
 			}
 		}).done(function(data) {
 			console.info("upgradeTileDefense: ", data);
-			if (data.production){
+			if (data.production !== undefined){
 				setProduction(data);
 			}
 			if (oldTgt === my.tgt){
@@ -250,6 +250,7 @@ var action = {
 			return;
 		}
 		my.attackOn = false;
+		console.info('cost: ', 60 * my.weaponCost);
 		if (my.production < 60 * my.weaponCost){
 			action.error();
 			return;
@@ -753,7 +754,7 @@ $(document).on('keyup', function(e) {
 					} else if (x === 65){
 						// f
 						var o = new Target({
-							cost: 60,
+							cost: 60 * my.weaponCost,
 							minimum: 0,
 							attackName: 'artillery',
 							hudMsg: 'Fire Artillery'
@@ -762,7 +763,7 @@ $(document).on('keyup', function(e) {
 					} else if (x === 77){
 						// c
 						var o = new Target({
-							cost: 150,
+							cost: 150 * my.weaponCost,
 							minimum: 0,
 							attackName: 'missile',
 							hudMsg: 'Launch Missile'
@@ -771,7 +772,7 @@ $(document).on('keyup', function(e) {
 					} else if (x === 78){
 						// n
 						var o = new Target({
-							cost: 600,
+							cost: 600 * my.weaponCost,
 							minimum: 0,
 							attackName: 'nuke',
 							hudMsg: 'Launch Nuclear Weapon'

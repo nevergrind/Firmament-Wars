@@ -4,26 +4,26 @@
 		error_reporting(E_ALL);
 		ini_set('display_errors', true);
 	} else {
-		// error_reporting(0);
-		error_reporting(E_ALL);
-		ini_set('display_errors', true);
+		error_reporting(0);
 	}
 	require('php/values.php');
 	
-	if(!isset($_SESSION['email']) || !strlen($_SESSION['email'])){
+	if(!strlen($_SESSION['email']) || 
+		!strlen($_SESSION['account'])){
 		header("Location: /login.php?back=/games/firmament-wars");
 		exit();
 	} else {
 		if($_SERVER["SERVER_NAME"] !== "localhost"){
-			$a = [
-				'joemattleonard@gmail.com',
-				'paintballguy@gmail.com',
-				'fedor@battleofdurak.com',
-				'fdsdfg@gmail.com',
-				'jenlaurafinch@gmail.com',
-				'jdmarshmallow@gmail.com'
-			];
-			if (!in_array($_SESSION['email'], $a)){
+			$query = 'select count(row) from fwwhitelist where account=?';
+			$stmt = $link->prepare($query);
+			$stmt->bind_param('s', $_SESSION['email']);
+			$stmt->execute();
+			$stmt->bind_result($account);
+			$count = 0;
+			while ($stmt->fetch()){
+				$count = $email;
+			}
+			if (!$count){
 				echo "<center style='margin-top: 200px'>You do not have access to Firmament Wars.</center>";
 				exit();
 			}
@@ -483,7 +483,7 @@
 									</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i>
-										<span id="recruitCost">50</span>
+										<span id="recruitCost">40</span>
 									</div>
 								</div>
 							</div>

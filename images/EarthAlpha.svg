@@ -488,6 +488,9 @@
     <path
        d="m 210,180 q -230 -150 -490 0"
        class='paths'></path>
+    <path
+       d="m 658,900 q 600 125 930 -100"
+       class='paths'></path>
 	</g>
 	
 	<!-- targeting -->
