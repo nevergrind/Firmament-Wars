@@ -14,11 +14,12 @@
 		exit();
 	} else {
 		if($_SERVER["SERVER_NAME"] !== "localhost"){
-			$query = 'select count(row) from fwwhitelist where account=?';
+			require('php/connect1.php');
+			$query = 'select count(email) from fwwhitelist where email=?';
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('s', $_SESSION['email']);
 			$stmt->execute();
-			$stmt->bind_result($account);
+			$stmt->bind_result($email);
 			$count = 0;
 			while ($stmt->fetch()){
 				$count = $email;
