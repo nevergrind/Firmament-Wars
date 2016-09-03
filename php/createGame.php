@@ -6,7 +6,7 @@
 	}
 	header('Content-Type: application/json');
 	
-	//require('checkAlreadyPlaying.php');
+	require('checkAlreadyPlaying.php');
 	
 	$name = $_POST['name'];
 	$pw = $_POST['pw'];

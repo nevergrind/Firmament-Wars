@@ -940,9 +940,10 @@ circle{
 }
 #musicToggle{
 	cursor: pointer;
+	width: 1em;
+	margin-right: .25em;
 }
 #musicToggle{
-	width: 1em;
 }
 #Msg{
 	opacity: 0;

@@ -56,6 +56,11 @@
 				<?php
 				
 				require('php/connect1.php');
+				echo '<div class="accountDetails text-primary">
+						<i id="musicToggle" class="fa fa-volume-up" 
+						data-toggle="tooltip" 
+						data-placement="right" 
+						title="Toggle music"></i>';
 				if (isset($_SESSION['email'])){
 					// crystals
 					$query = "select crystals from accounts where email='". $_SESSION['email'] ."' limit 1";
@@ -66,25 +71,18 @@
 					}
 					
 					echo 
-					'<div class="accountDetails text-primary">
-						<i id="musicToggle" class="fa fa-volume-up" 
-						data-toggle="tooltip" 
-						data-placement="right" 
-						title="Toggle music"></i>
-						<i class="fa fa-diamond" title="Never Crystals"></i>
-						<span id="crystalCount" class="text-primary" title="Crystals Remaining">' .$crystals.'</span>&ensp;
-						<a target="_blank" title="Manage Account" href="/account">Account</a>&ensp;
-						<a target="_blank" title="Store" href="/store/">Store</a>&ensp;
-						<a id="logout" href="#">Logout</a>
-					</div>';
+					'<i class="fa fa-diamond" title="Never Crystals"></i>
+					<span id="crystalCount" class="text-primary" title="Crystals Remaining">' .$crystals.'</span>&ensp;
+					<a target="_blank" title="Manage Account" href="/account">Account</a>&ensp;
+					<a target="_blank" title="Store" href="/store/">Store</a>&ensp;
+					<a id="logout" href="#">Logout</a>';
 				} else {
 					echo 
-					'<div class="accountDetails text-primary">
-						<a id="login" title="Login" href="/login.php?back=/games/firmament-wars">Login</a>
-					</div>';
+					'<a id="login" title="Login" href="/login.php?back=/games/firmament-wars">Login</a>';
 					
 				}
 				echo '
+				</div>
 				<div class="pull-right text-primary">
 					<a target="_blank" href="//www.youtube.com/user/Maelfyn">
 						<i class="fa fa-youtube-square text-primary pointer" title="YouTube"></i>

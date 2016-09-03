@@ -7,7 +7,7 @@
 	// remove players that left
 	mysqli_query($link, 'delete from fwplayers where timestamp < date_sub(now(), interval 20 second)');
 	
-	//require('checkAlreadyPlaying.php');
+	require('checkAlreadyPlaying.php');
 	
 	$o = new stdClass();
 	
