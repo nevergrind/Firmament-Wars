@@ -1,7 +1,18 @@
 <?php
 	require('values.php');
 	require('connect1.php');
+	$email = "chrome@test.com";
+	$query = "select account from accounts where email=?";
+	$stmt = $link->prepare($query);
+	$stmt->bind_param('s', $email);
+	$stmt->execute();
+	$stmt->bind_result($data);
+	while($stmt->fetch()){
+		$account = $data;
+	}
+	echo $account;
 	
+	exit;
 	$query = 'select count(row) from fwplayers where account=?';
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('s', $_SESSION['account']);

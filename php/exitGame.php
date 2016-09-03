@@ -34,6 +34,6 @@
 				$stmt->execute();
 			}
 		}
-		require('unsetSession.php');
+		require('resetGame.php');
 	}
 ?>

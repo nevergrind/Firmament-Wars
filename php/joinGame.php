@@ -1,10 +1,13 @@
 <?php
 	header('Content-Type: application/json');
 	require('connect1.php');
+	if (!isset($_SESSION['email'])){
+		exit;
+	}
 	// remove players that left
 	mysqli_query($link, 'delete from fwplayers where timestamp < date_sub(now(), interval 20 second)');
 	
-	require('checkAlreadyPlaying.php');
+	//require('checkAlreadyPlaying.php');
 	
 	$o = new stdClass();
 	

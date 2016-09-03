@@ -1,9 +1,12 @@
 <?php
-	header('Content-Type: application/json');
-	// create a new lobby 
 	require('connect1.php');
+	// create a new lobby 
+	if (!isset($_SESSION['email'])){
+		exit;
+	}
+	header('Content-Type: application/json');
 	
-	require('checkAlreadyPlaying.php');
+	//require('checkAlreadyPlaying.php');
 	
 	$name = $_POST['name'];
 	$pw = $_POST['pw'];

@@ -1,14 +1,15 @@
 <?php
-	$query = "SELECT account FROM fwplayers where timestamp < date_sub(now(), interval {$_SESSION['lag']} second) and game=?";
+	$query = "SELECT account, startGame FROM fwplayers where timestamp < date_sub(now(), interval {$_SESSION['lag']} second) and game=?";
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('i', $_SESSION['gameId']);
 	$stmt->execute();
-	$stmt->bind_result($account);
+	$stmt->bind_result($account, $startGameDb);
 	
 	$arr = array();
 	$count = 0;
 	while($stmt->fetch()){
 		$arr[$count++] = $account;
+		$startGame = $startGameDb;
 	}
 	foreach($arr as $a){
 		// notify game player has disconnected
@@ -27,8 +28,7 @@
 		$stmt->bind_param('s', $a);
 		$stmt->execute();
 		// add disconnect
-		
-		if ($_SESSION['resourceTick'] > 9){
+		if ($startGame >= 2){
 			$query = "insert into fwnations (`account`, `disconnects`, `games`) VALUES (?, 1, 1) on duplicate key update disconnects=disconnects+1, games=games+1";
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('s', $a);

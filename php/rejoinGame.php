@@ -44,7 +44,7 @@
 	
 	if ($stmt->num_rows > 0){
 		if (!isset($_SESSION['gameName'])){
-			require('unsetSession.php');
+			require('resetGame.php');
 		} else {
 			while($stmt->fetch()){
 				$x->gameId = $gameId;

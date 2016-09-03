@@ -143,10 +143,6 @@ g.init = (function(){
 	}
 	document.getElementById("flagDropdown").innerHTML = s;
 	g.lock();
-	function showTitleScreen(){
-		document.getElementById("titleMain").style.visibility = "visible";
-		document.getElementById('mainWrap').style.display = "block";
-	}
 	//if (location.host === 'localhost'){
 		$.ajax({
 			type: "GET",
@@ -164,15 +160,14 @@ g.init = (function(){
 					my.government = data.government;
 					lobby.updateGovernmentWindow(my.government);
 				}, 111);
-			} else {
-				showTitleScreen();
+				$("#titleMain").remove();
 			}
 		}).always(function(){
 			g.unlock();
 		});
 	/*
 	} else {
-		showTitleScreen();
+		// stuff
 	}
 	*/
 })();

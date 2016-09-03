@@ -1,13 +1,14 @@
 <?php
-	$query = "SELECT game, account FROM fwplayers where account=? and game!=? limit 1";
+	$query = "SELECT game, account, startGame FROM fwplayers where account=? limit 1";
 	$stmt = $link->prepare($query);
-	$stmt->bind_param('si', $_SESSION['account'], $_SESSION['gameId']);
+	$stmt->bind_param('s', $_SESSION['account']);
 	$stmt->execute();
 	$stmt->store_result();
-	$stmt->bind_result($dGame, $dAccount);
+	$stmt->bind_result($dGame, $dAccount, $startGameDb);
 	while($stmt->fetch()){
 		$game = $dGame;
 		$account = $dAccount;
+		$startGame = $startGameDb;
 	}
 	
 	if ($stmt->num_rows > 0){
@@ -28,7 +29,7 @@
 		$stmt->bind_param('si', $account, $game);
 		$stmt->execute();
 		// add disconnect
-		if ($_SESSION['resourceTick'] > 9){
+		if ($startGame >=2){
 			$query = "insert into fwnations (`account`, `disconnects`, `games`) VALUES (?, 1, 1) on duplicate key update disconnects=disconnects+1, games=games+1";
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('s', $account);

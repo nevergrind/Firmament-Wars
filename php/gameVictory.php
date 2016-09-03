@@ -21,34 +21,24 @@
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('s', $_SESSION['account']);
 			$stmt->execute();
-			
-			$query = 'delete from fwplayers where account=?';
-			$stmt = $link->prepare($query);
-			$stmt->bind_param('s', $_SESSION['account']);
-			$stmt->execute();
-			
-			// delete game
-			$query = 'delete from fwgames where row=?';
-			$stmt = $link->prepare($query);
-			$stmt->bind_param('s', $_SESSION['gameId']);
-			$stmt->execute();
 		}
 	} else {
 		// game wasn't long enough
 		$x->gameAbandoned = 1;
-			
-		$query = 'delete from fwplayers where account=?';
-		$stmt = $link->prepare($query);
-		$stmt->bind_param('s', $_SESSION['account']);
-		$stmt->execute();
-		// delete game
-		$query = 'delete from fwgames where row=?';
-		$stmt = $link->prepare($query);
-		$stmt->bind_param('s', $_SESSION['gameId']);
-		$stmt->execute();
 	}
 	
-	require('unsetSession.php');
+	$query = 'delete from fwplayers where account=?';
+	$stmt = $link->prepare($query);
+	$stmt->bind_param('s', $_SESSION['account']);
+	$stmt->execute();
+	
+	// delete game
+	$query = 'delete from fwgames where row=?';
+	$stmt = $link->prepare($query);
+	$stmt->bind_param('s', $_SESSION['gameId']);
+	$stmt->execute();
+	
+	require('resetGame.php');
 	
 	echo json_encode($x);
 ?>

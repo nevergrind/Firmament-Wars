@@ -8,33 +8,27 @@
 	}
 	require('php/values.php');
 	
-	if(!strlen($_SESSION['email']) || 
-		!strlen($_SESSION['account'])){
-		header("Location: /login.php?back=/games/firmament-wars");
-		exit();
-	} else {
-		if($_SERVER["SERVER_NAME"] !== "localhost"){
-			require('php/connect1.php');
-			$query = 'select count(email) from fwwhitelist where email=?';
-			$stmt = $link->prepare($query);
-			$stmt->bind_param('s', $_SESSION['email']);
-			$stmt->execute();
-			$stmt->bind_result($email);
-			$count = 0;
-			while ($stmt->fetch()){
-				$count = $email;
-			}
-			if (!$count){
-				echo "<center style='margin-top: 200px'>You do not have access to Firmament Wars.</center>";
-				exit();
-			}
+	if($_SERVER["SERVER_NAME"] !== "localhost"){
+		require('php/connect1.php');
+		$query = 'select count(email) from fwwhitelist where email=?';
+		$stmt = $link->prepare($query);
+		$stmt->bind_param('s', $_SESSION['email']);
+		$stmt->execute();
+		$stmt->bind_result($email);
+		$count = 0;
+		while ($stmt->fetch()){
+			$count = $email;
+		}
+		if (!$count){
+			echo "<center style='margin-top: 200px'>You do not have access to Firmament Wars. Firmament Wars is currently in its invite-only beta phase.</center>";
+			exit();
 		}
 	}
 ?>
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head id='head'>
-	<title>Firmament Wars | Grand Strategy Warfare</title>
+	<title>Firmament Wars | Real-Time Grand Strategy Warfare</title>
 	<meta charset="utf-8">
 	<meta name="keywords" content="political, online, multiplayer, free, game, strategy">
 	<meta name="description" content="Firmament Wars is a turn-based warfare strategy game created by Neverworks Games. Establish your nation, choose your flag, and select your dictator and vie for global domination.">
@@ -59,28 +53,38 @@
 		<div id="titleMain" class="portal">
 			<header class="shadow4">
 				<div id="headerWrap">
-			<?php
-				require('php/connect1.php');
-				// crystals
-				$query = "select crystals from accounts where email='". $_SESSION['email'] ."' limit 1";
-				$result = $link->query($query);
-				$crystals = '';
-				while($row = $result->fetch_assoc()){
-					$crystals .= $row['crystals'];
-				}
+				<?php
 				
-				echo 
-				'<div class="accountDetails text-primary">
-					<i id="musicToggle" class="fa fa-volume-up" 
-					data-toggle="tooltip" 
-					data-placement="right" 
-					title="Toggle music"></i>
-					<i class="fa fa-diamond" title="Never Crystals"></i>
-					<span id="crystalCount" class="text-primary" title="Crystals Remaining">' .$crystals.'</span>&ensp;
-					<a target="_blank" title="Manage Account" href="/account">Account</a>&ensp;
-					<a target="_blank" title="Store" href="/store/">Store</a>&ensp;
-					<a id="logout" href="#">Logout</a>
-				</div>
+				require('php/connect1.php');
+				if (isset($_SESSION['email'])){
+					// crystals
+					$query = "select crystals from accounts where email='". $_SESSION['email'] ."' limit 1";
+					$result = $link->query($query);
+					$crystals = '';
+					while($row = $result->fetch_assoc()){
+						$crystals .= $row['crystals'];
+					}
+					
+					echo 
+					'<div class="accountDetails text-primary">
+						<i id="musicToggle" class="fa fa-volume-up" 
+						data-toggle="tooltip" 
+						data-placement="right" 
+						title="Toggle music"></i>
+						<i class="fa fa-diamond" title="Never Crystals"></i>
+						<span id="crystalCount" class="text-primary" title="Crystals Remaining">' .$crystals.'</span>&ensp;
+						<a target="_blank" title="Manage Account" href="/account">Account</a>&ensp;
+						<a target="_blank" title="Store" href="/store/">Store</a>&ensp;
+						<a id="logout" href="#">Logout</a>
+					</div>';
+				} else {
+					echo 
+					'<div class="accountDetails text-primary">
+						<a id="login" title="Login" href="/login.php?back=/games/firmament-wars">Login</a>
+					</div>';
+					
+				}
+				echo '
 				<div class="pull-right text-primary">
 					<a target="_blank" href="//www.youtube.com/user/Maelfyn">
 						<i class="fa fa-youtube-square text-primary pointer" title="YouTube"></i>
@@ -108,6 +112,7 @@
 				<div id='menuOnline'>
 					<div>
 					<?php
+					if (isset($_SESSION['email'])){
 						require('php/checkDisconnectsByAccount.php');
 						
 						// check if nation exists; create if not
@@ -147,26 +152,38 @@
 							$losses = 0;
 							$disconnects = 0;
 						}
+					}
 					?>
 					</div>
 				</div>
 				<div>
 					<div id="menuHead">
 						<button id="refreshGames" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Refresh Games</button>
-						<button id="create" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Create Game</button>
-						<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>
+						<?php
+						if (isset($_SESSION['email'])){
+							echo
+							'<button id="create" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Create Game</button>
+							<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>';
+						}
+						?>
 					</div>
 				</div>
 				<div id='refreshGameWrap'>
 					<div id="menuContent" class='buffer2 shadow4'></div>
 					<div id='joinGameWrap' class='buffer'>
-						<hr class="fancyhr">
-						<div id="joinGamePasswordWrap">
 							<div class="pull-left fw-text">
-								Game <input id="joinGameName" class='joinGameInputs' type='text' maxlength="240" autocomplete="off"/>
-								Password <input id="joinGamePassword" class='joinGameInputs' type='text' maxlength="240" autocomplete="off"/>
-								<button id="joinGame" type="button" class="btn btn-md fwGreen btn-responsive shadow4">Join Game</button>
-							</div>
+								<?php
+								if (isset($_SESSION['email'])){
+									echo
+									'
+									<hr class="fancyhr">
+									<div id="joinGamePasswordWrap">
+										Game <input id="joinGameName" class="joinGameInputs" type="text" maxlength="240" autocomplete="off"/>
+										Password <input id="joinGamePassword" class="joinGameInputs" type="text" maxlength="240" autocomplete="off"/>
+										<button id="joinGame" type="button" class="btn btn-md fwGreen btn-responsive shadow4">Join Game</button>
+									</div>';
+								}
+								?>
 						</div>
 					</div>
 				</div>
@@ -187,11 +204,17 @@
 				</div>
 				
 				<div id="titleChatWrap" class="titleRelWrap input-group">
-					<input id="title-chat-input" class="fw-text noselect nobg form-control" type='text' maxlength="240" autocomplete="off"/>
-					<div>
-						<hr class="fancyhr">
-					</div>
-					<span id="titleChatSend" class="input-group-addon shadow4 fwBlue">Send</span>
+					
+					<?php
+					if (isset($_SESSION['email'])){
+						echo '
+						<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" autocomplete="off"/>
+						<div>
+							<hr class="fancyhr">
+						</div>
+						<span id="titleChatSend" class="input-group-addon shadow4 fwBlue">Send</span>';
+					}
+					?>
 				</div>
 			</div>
 		</div>
@@ -747,6 +770,9 @@
 <script src="js/libs/bootstrap.min.js"></script>
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/findShapeIndex.js"></script>
 
+<?php
+	require($_SERVER['DOCUMENT_ROOT'] . "/includes/ga.php");
+?>
 <script>
 	if (location.host === 'nevergrind.com'){
 		if (location.hash !== "#beta"){
@@ -783,5 +809,4 @@
 		}
 	})(document);
 </script>
-<?php require($_SERVER['DOCUMENT_ROOT'] . "/includes/ga.php"); ?>
 </html>
