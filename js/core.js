@@ -128,7 +128,7 @@ g.init = (function(){
 		},
 		Miscellaneous: {
 			group: "Miscellaneous",
-			name: ['Anarcho-Capitalist', 'European Union', 'High Energy', 'ISIS', 'Northwest Front', 'Pan-African Flag', 'Rainbow Flag', 'United Nations']
+			name: ['Anarcho-Capitalist', 'Christian', 'European Union', 'High Energy', 'ISIS', 'Northwest Front', 'Pan-African Flag', 'Rainbow Flag', 'United Nations']
 		},
 		SouthAmerica: {
 			group: "South America",
@@ -756,6 +756,7 @@ function refreshGames(){
 		if (!data.length){
 			e.innerHTML = "<div class='text-center text-warning buffer2'>No active games found. Create a game to play!</div>";
 		} else {
+			console.info(data);
 			// head
 			var str = 
 			'<table id="gameTable" class="table table-condensed table-borderless">\
@@ -779,6 +780,7 @@ function refreshGames(){
 		}
 		$(".wars").filter(":first").trigger("click");
 	}).fail(function(e){
+			console.info(e.responseText);
 		Msg("Server error.");
 	}).always(function(){
 		g.unlockFade(.5);

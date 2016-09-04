@@ -190,6 +190,24 @@
 			<div id="titleChat" class="fw-primary text-center">
 				<h2 class='header'>Global Chat Lobby</h2>
 				<hr class="fancyhr">
+				<div id='chatAd'>
+					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- xy responsive -->
+					<?php
+					if ($_SERVER['SERVER_NAME'] !== 'localhost'){
+					echo '<ins class="adsbygoogle"
+						 style="display:block"
+						 data-ad-client="ca-pub-8697751823759563"
+						 data-ad-slot="1466592983"
+						 data-ad-format="auto"></ins>';
+					}
+					?>
+					<script>
+					if (location.hostname !== 'localhost'){
+						(adsbygoogle = window.adsbygoogle || []).push({});
+					}
+					</script>
+				</div>
 				<div id="titleChatLog">
 				<?php
 					$result = mysqli_query($link, 'select count(row) count from `fwplayers` where timestamp > date_sub(now(), interval 20 second)');
