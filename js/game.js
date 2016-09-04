@@ -59,8 +59,9 @@ function updateTileInfo(tileId){
 		<div id="nation-ui" class="shadow4">';
 			if (t.capital){
 				str += 
-				'<span id="tileName" class="no-select text-center shadow4 fwTooltip" data-toggle="tooltip" title="Capital Palace<br> Boosts tile defense">\
-					<i class="glyphicon glyphicon-star text-warning shadow4 capitalStar"></i>\
+				'<span id="tileName" class="no-select fwTooltip fa-stack" data-toggle="tooltip" title="Capital Palace<br> Boosts tile defense">\
+					<i class="fa fa-circle-thin fa-stack-1x text-warning"></i>\
+					<i class="fa fa-star fa-stack-1x text-warning capitalStar"></i>\
 				</span> ';
 			}
 			str += name + '</div>';
@@ -186,191 +187,191 @@ function getGameState(){
 	(function repeat(){
 		var lag = Date.now();
 		var repeatDelay = 2500;
-		if (!g.over){
-			$.ajax({
-				type: "GET",
-				url: "php/getGameState.php"
-			}).done(function(data){
-				// console.info('server lag: ' + (Date.now() - lag), data.delay, data);
-				var start = Date.now();
-				repeatDelay = data.timeout;
-				var tiles = data.tiles;
-				// get tile data
-				for (var i=0, len=tiles.length; i<len; i++){
-					var d = data.tiles[i],
-						updateTargetStatus = false;
-					// check player value
-					
-					if (d.player !== game.tiles[i].player){
-						// set text visible if uninhabited
-						if (!game.tiles[i].units){
-							TweenMax.set(document.getElementById('unit' + i), {
-								visibility: 'visible'
-							});
-						}
-						// only update client data if there's a difference
-						game.tiles[i].player = d.player;
-						game.tiles[i].account = game.player[d.player].account;
-						game.tiles[i].nation = game.player[d.player].nation;
-						game.tiles[i].flag = game.player[d.player].flag;
-						var e1 = document.getElementById('land' + i);
-						if (my.tgt === i){
-							// attacker won 
-							updateTargetStatus = true;
-						}
-						var newFlag = !game.player[d.player].flag ? 'blank.png' : game.player[d.player].flag;
-						var e5 = document.getElementById('flag' + i);
-						if (e5 !== null){
-							e5.href.baseVal = "images/flags/" + newFlag;
-						}
-						TweenMax.set(e1, {
-							fill: color[d.player]
+		$.ajax({
+			type: "GET",
+			url: "php/getGameState.php"
+		}).done(function(data){
+			// console.info('server lag: ' + (Date.now() - lag), data.delay, data);
+			var start = Date.now();
+			repeatDelay = data.timeout;
+			var tiles = data.tiles;
+			// get tile data
+			for (var i=0, len=tiles.length; i<len; i++){
+				var d = data.tiles[i],
+					updateTargetStatus = false;
+				// check player value
+				
+				if (d.player !== game.tiles[i].player){
+					// set text visible if uninhabited
+					if (!game.tiles[i].units){
+						TweenMax.set(document.getElementById('unit' + i), {
+							visibility: 'visible'
 						});
-						// animate other players' attacks
-						if (d.player !== my.player && game.tiles[i].units){
-							if (d.units){
-								animate.explosion(i, false);
-							}
-						}
 					}
-					// check unit value
-					if (d.units !== game.tiles[i].units){
-						var unitColor = d.units > game.tiles[i].units ? '#00ff00' : '#ff0000';
-						game.tiles[i].units = d.units;
-						if (my.tgt === i){
-							// defender won
-							updateTargetStatus = true;
-						}
-						setTileUnits(i, unitColor);
+					// only update client data if there's a difference
+					game.tiles[i].player = d.player;
+					game.tiles[i].account = game.player[d.player].account;
+					game.tiles[i].nation = game.player[d.player].nation;
+					game.tiles[i].flag = game.player[d.player].flag;
+					var e1 = document.getElementById('land' + i);
+					if (my.tgt === i){
+						// attacker won 
+						updateTargetStatus = true;
 					}
-					if (updateTargetStatus){
-						showTarget(document.getElementById('land' + i));
+					var newFlag = !game.player[d.player].flag ? 'blank.png' : game.player[d.player].flag;
+					var e5 = document.getElementById('flag' + i);
+					if (e5 !== null){
+						e5.href.baseVal = "images/flags/" + newFlag;
+					}
+					TweenMax.set(e1, {
+						fill: color[d.player]
+					});
+					// animate other players' attacks
+					if (d.player !== my.player && game.tiles[i].units){
+						if (d.units){
+							animate.explosion(i, false);
+						}
 					}
 				}
-				// report chat messages
-				var len = data.chat.length;
-				if (len > 0){
-					for (var i=0; i<len; i++){
-						var z = data.chat[i];
-						if (z.message){
-							chat(z.message);
+				// check unit value
+				if (d.units !== game.tiles[i].units){
+					var unitColor = d.units > game.tiles[i].units ? '#00ff00' : '#ff0000';
+					game.tiles[i].units = d.units;
+					if (my.tgt === i){
+						// defender won
+						updateTargetStatus = true;
+					}
+					setTileUnits(i, unitColor);
+				}
+				if (updateTargetStatus){
+					showTarget(document.getElementById('land' + i));
+				}
+			}
+			// report chat messages
+			var len = data.chat.length;
+			if (len > 0){
+				for (var i=0; i<len; i++){
+					var z = data.chat[i];
+					if (z.message){
+						chat(z.message);
+					}
+					if (!z.event){
+						// nothing
+					} else if (z.event === 'chatsfx'){
+						// chat events that get a sfx
+						audio.play('chat');
+					} else if (z.event.indexOf('food') === 0){
+						if (z.event.indexOf(my.account) > -1){
+							audio.play('food');
 						}
-						if (!z.event){
-							// nothing
-						} else if (z.event === 'chatsfx'){
-							// chat events that get a sfx
-							audio.play('chat');
-						} else if (z.event.indexOf('food') === 0){
-							if (z.event.indexOf(my.account) > -1){
-								audio.play('food');
-							}
-						} else if (z.event.indexOf('upgrade') === 0){
-							var a = z.event.split('|'),
-								tile = a[1];
-							// fetch updated tile defense data
-							updateTileDefense();
-							animate.upgrade(tile);
-						} else if (z.event.indexOf('artillery') === 0){
-							var a = z.event.split('|'),
-								tile = a[1],
-								account = a[2];
-							if (my.account !== account){
-								animate.artillery(tile, false);
-							}
-						} else if (z.event.indexOf('missile') === 0){
-							var a = z.event.split('|'),
-								attacker = a[1],
-								defender = a[2],
-								account = a[3];
-							animate.missile(attacker, defender, true);
-						} else if (z.event.indexOf('nuke') === 0){
-							audio.play('warning');
-							var a = z.event.split('|'),
-								tile = a[1],
-								account = a[2],
-								e3 = document.getElementById('unit' + tile),
-								box = e3.getBBox();
-								dot = document.createElementNS("http://www.w3.org/2000/svg","ellipse"),
-								x = box.x,
-								y = box.y;
-							// red dot
-							dot.setAttributeNS(null,"cx",x+ (box.width/2) + (Math.random()*12-6));
-							dot.setAttributeNS(null,"cy",y+ (box.height/2) + (Math.random()*12-6));
-							dot.setAttributeNS(null,"rx",2);
-							dot.setAttributeNS(null,"ry",1);
-							dot.setAttributeNS(null,"fill",'red');
-							dot.setAttributeNS(null,"stroke",'none');
-							DOM.world.appendChild(dot);
-							// animate and remove
-							TweenMax.to(dot, .1, {
-								startAt: {
-									opacity: 1
-								},
-								fill: '#880000',
-								ease: SteppedEase.config(1),
-								repeat: -1,
-								yoyo: true
-							});
-							(function(dot){
+					} else if (z.event.indexOf('upgrade') === 0){
+						var a = z.event.split('|'),
+							tile = a[1];
+						// fetch updated tile defense data
+						updateTileDefense();
+						animate.upgrade(tile);
+					} else if (z.event.indexOf('artillery') === 0){
+						var a = z.event.split('|'),
+							tile = a[1],
+							account = a[2];
+						if (my.account !== account){
+							animate.artillery(tile, false);
+						}
+					} else if (z.event.indexOf('missile') === 0){
+						var a = z.event.split('|'),
+							attacker = a[1],
+							defender = a[2],
+							account = a[3];
+						animate.missile(attacker, defender, true);
+					} else if (z.event.indexOf('nuke') === 0){
+						audio.play('warning');
+						var a = z.event.split('|'),
+							tile = a[1],
+							account = a[2],
+							e3 = document.getElementById('unit' + tile),
+							box = e3.getBBox();
+							dot = document.createElementNS("http://www.w3.org/2000/svg","ellipse"),
+							x = box.x,
+							y = box.y;
+						// red dot
+						dot.setAttributeNS(null,"cx",x+ (box.width/2) + (Math.random()*12-6));
+						dot.setAttributeNS(null,"cy",y+ (box.height/2) + (Math.random()*12-6));
+						dot.setAttributeNS(null,"rx",2);
+						dot.setAttributeNS(null,"ry",1);
+						dot.setAttributeNS(null,"fill",'red');
+						dot.setAttributeNS(null,"stroke",'none');
+						DOM.world.appendChild(dot);
+						// animate and remove
+						TweenMax.to(dot, .1, {
+							startAt: {
+								opacity: 1
+							},
+							fill: '#880000',
+							ease: SteppedEase.config(1),
+							repeat: -1,
+							yoyo: true
+						});
+						(function(dot){
+							setTimeout(function(){
+								dot.parentNode.removeChild(dot);
+							}, 7000);
+						})(dot);
+						if (my.account !== account){
+							(function(tile){
 								setTimeout(function(){
-									dot.parentNode.removeChild(dot);
+									animate.nuke(tile);
+									updateTileDefense();
 								}, 7000);
-							})(dot);
-							if (my.account !== account){
-								(function(tile){
-									setTimeout(function(){
-										animate.nuke(tile);
-									}, 7000);
-								})(tile);
-							}
+							})(tile);
 						}
 					}
 				}
-				// check eliminated players; remove from panel
-				(function(p, len){
-					for (var i=0; i<len; i++){
-						if (p[i].account){
-							if (!data.player[i]){
-								game.player[i].account = '';
-								console.info('players: ', $(".diplomacyPlayers").length);
-								if ($(".alive").length > 1){
-									$("#diplomacyPlayer" + i).removeClass('alive');
+			}
+			// check eliminated players; remove from panel
+			(function(p, len){
+				for (var i=0; i<len; i++){
+					if (p[i].account){
+						if (!data.player[i]){
+							game.player[i].account = '';
+							if ($(".alive").length > 1){
+								$("#diplomacyPlayer" + i).removeClass('alive');
+								(function(i){
 									TweenMax.to('#diplomacyPlayer' + i, 1, {
 										autoAlpha: 0,
 										onComplete: function(){
-											$("#diplomacyPlayer" + i).remove();
+											$("#diplomacyPlayer" + i).css('display', 'none');
 										}
 									});
-								}
+								})(i);
 							}
 						}
 					}
-				})(game.player, game.player.length);
-				// remove dead players
-				(function(count){
-					// game over?
-					for (var i=0, len=data.player.length; i<len; i++){
-						if (i){
-							if (data.player[i]){
-								count++;
-							}
+				}
+			})(game.player, game.player.length);
+			// remove dead players
+			(function(count){
+				// game over?
+				for (var i=0, len=data.player.length; i<len; i++){
+					if (i){
+						if (data.player[i]){
+							count++;
 						}
 					}
-					if (!g.over){
-						if (!data.player[my.player]){
-							gameDefeat();
-						} else if (count === 1){
-							gameVictory();
-						}
+				}
+				if (!g.over){
+					if (!data.player[my.player]){
+						gameDefeat();
+					} else if (count === 1){
+						gameVictory();
 					}
-				})(0);
-				// console.info('client lag: ', Date.now() - start);
-			}).fail(function(data){
-				console.info(data.responseText);
-			}).always(function(data){
-				setTimeout(repeat, repeatDelay);
-			});
-		}
+				}
+			})(0);
+			// console.info('client lag: ', Date.now() - start);
+		}).fail(function(data){
+			console.info(data.responseText);
+		}).always(function(data){
+			setTimeout(repeat, repeatDelay);
+		});
 	})();
 	
 	(function repeat(){ 
@@ -405,8 +406,11 @@ function gameDefeat(){
 			var msg = 
 			'<p>Defeat!</p>'+
 			'<div>Your campaign for world domination has failed!</div>'+
-			'<div id="endWar">'+
+			'<div id="endWar" class="endBtn">'+
 				'<div class="modalBtnChild">Concede Defeat</div>'+
+			'</div>'+
+			'<div id="spectate" class="endBtn">'+
+				'<div class="modalBtnChild">Spectate</div>'+
 			'</div>';
 			triggerEndGame(msg);
 			audio.play('shotgun2');
@@ -415,6 +419,7 @@ function gameDefeat(){
 		serverError(data);
 	});
 }
+
 
 function gameVictory(){
 	new Audio('sound/shotgun2.mp3');
@@ -427,7 +432,7 @@ function gameVictory(){
 			var msg = 
 			'<p>Armistice!</p>'+
 			'<div>The campaign has been suspended!</div>'+
-			'<div id="endWar">'+
+			'<div id="endWar" class="endBtn">'+
 				'<div class="modalBtnChild">Cease Fire</div>'+
 			'</div>';
 			triggerEndGame(msg);
@@ -436,7 +441,7 @@ function gameVictory(){
 			var msg = 
 			'<p>Congratulations!</p>'+
 			'<div>Your campaign for global domination has succeeded!</div>'+
-			'<div id="endWar">'+
+			'<div id="endWar" class="endBtn">'+
 				'<div class="modalBtnChild">Victory</div>'+
 			'</div>';
 			triggerEndGame(msg);
@@ -454,6 +459,7 @@ function updateTileDefense(){
 		for (var i=0, len=data.length; i<len; i++){
 			var d = data[i];
 			game.tiles[i].defense = d.defense;
+			showTarget(document.getElementById('land' + my.tgt));
 		}
 	});
 }
@@ -468,6 +474,11 @@ function triggerEndGame(msg){
 		$("#endWar").on('mousedown', function(e){
 			if (e.which === 1){
 				location.reload();
+			}
+		});
+		$("#spectate").on('mousedown', function(e){
+			if (e.which === 1){
+				$("#victoryScreen").remove();
 			}
 		});
 	}, 2500);

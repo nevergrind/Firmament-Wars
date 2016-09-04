@@ -21,7 +21,7 @@
 		$x->gameName = $_SESSION['gameName'];
 		$x->map = $_SESSION['map'];
 		$x->duration = $_SESSION['resourceTick']*5;
-		require('resetGame.php');
+		// require('resetGame.php');
 	}
 	
 	echo json_encode($x);

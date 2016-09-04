@@ -29,10 +29,14 @@ header{
 	top: 0%;
 	left: 0%;
 	width: 100%;
-	font-size: 1.25em; 
-	letter-spacing: 1px;
-	overflow:hidden;
-	color: #fff;
+	font-size: 1.25em;
+}
+#mainWrap{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 }
 a{
 	color: #8bf;
@@ -302,6 +306,12 @@ a:hover{
 	line-height: 1.6em;
 }
 #titleChatWrap{
+	position: absolute;
+	padding: .5em;
+	bottom: 0em;
+	top: auto;
+	left: 0;
+	right: 0;
 	margin-top: .5em;
 	font-family: Consolas, monospace;
 	color: #bef;
@@ -681,16 +691,16 @@ table td, .table th, .table td {
 	text-align: center;
 	z-index: 9999;
 }
-#endWar{
-	margin-top: 4%;
+.endBtn{
 	border: 1px solid #3377dd;
 	box-shadow: 0 0 20px rgba(0,40,148,1) inset;
 	border-radius: 5%;
 	color: #ff0;
 	cursor: pointer;
 	padding: 1%;
+	margin-top: 4%;
 }
-#endWar:hover{
+.endBtn:hover{
 	background: rgba(0, 48, 112, .5);
 }
 .modalBtnChild{
@@ -1051,10 +1061,13 @@ circle{
 	z-index: 999999;
 }
 .capitalStar{
-	box-shadow: 0 0 0 2px #ee7;
-	border-radius: 50%;
-	font-size: .7em;
 	margin-right: .125em;
+	font-size: .675em;
+}
+.fa-stack{
+	width: 1em;
+	height: 1em;
+	line-height: 1em;
 }
 .titleModal{
 	visibility: hidden;

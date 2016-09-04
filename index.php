@@ -10,6 +10,7 @@
 	
 	if($_SERVER["SERVER_NAME"] !== "localhost"){
 		require('php/connect1.php');
+		require('resetGame.php');
 		$query = 'select count(email) from fwwhitelist where email=?';
 		$stmt = $link->prepare($query);
 		$stmt->bind_param('s', $_SESSION['email']);
@@ -20,7 +21,11 @@
 			$count = $email;
 		}
 		if (!$count){
-			echo "<center style='margin-top: 200px'>You do not have access to Firmament Wars. Firmament Wars is currently in its invite-only beta phase.</center>";
+			echo "
+				<h1>Firmament Wars</h1>
+				<p>You do not have access to Firmament Wars. Firmament Wars is currently in its invite-only beta phase.</p>
+				<a href='/login.php?back=/games/firmament-wars'>Try logging in with a whitelisted account</a>
+			";
 			exit();
 		}
 	}
@@ -143,6 +148,9 @@
 							$wins = 0;
 							$losses = 0;
 							$disconnects = 0;
+							// init nation values
+							$_SESSION['nation'] = $nation;
+							$_SESSION['flag'] = $flag;
 						}
 					}
 					?>
@@ -339,6 +347,14 @@
 				</div>
 			</div>
 			<img id="nationFlag" src="images/flags/<?php echo $flag; ?>">
+			<div class='row fw-text'>
+				<div class='col-xs-4'>
+					Account:
+				</div>
+				<div class='col-xs-4'>
+					<div><?php echo $_SESSION['account']; ?></div>
+				</div>
+			</div>
 			<div class='row fw-text'>
 				<div class='col-xs-4'>
 					Name:

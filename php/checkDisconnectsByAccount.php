@@ -12,6 +12,12 @@
 	}
 	
 	if ($stmt->num_rows > 0){
+		// delete from players
+		$query = 'delete from fwplayers where account=? and game=?';
+		$stmt = $link->prepare($query);
+		$stmt->bind_param('si', $account, $game);
+		$stmt->execute();
+		
 		if ($startGame >=2){
 			// notify game player has disconnected
 			$msg = $account . ' has disconnected from the game.';
@@ -22,12 +28,6 @@
 			$query = 'update fwtiles set account="", player=0, nation="", flag="", units=0 where game=? and account=?';
 			$stmt = $link->prepare($query);
 			$stmt->bind_param('is', $game, $account);
-			$stmt->execute();
-			
-			// delete from players
-			$query = 'delete from fwplayers where account=? and game=?';
-			$stmt = $link->prepare($query);
-			$stmt->bind_param('si', $account, $game);
 			$stmt->execute();
 			// add disconnect
 			$query = "insert into fwnations (`account`, `disconnects`, `games`) VALUES (?, 1, 1) on duplicate key update disconnects=disconnects+1, games=games+1";

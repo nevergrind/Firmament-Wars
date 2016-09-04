@@ -86,6 +86,7 @@ var lobby = {
 		}
 	},
 	chatDrag: false,
+	gameStarted: false,
 	chatOn: false,
 	sendMsg: function(bypass){
 		var message = $DOM.lobbyChatInput.val();
@@ -251,15 +252,18 @@ var lobby = {
 					}
 					// still in the lobby?
 					if (x.startGame){
-						lobbyCountdown();
-					} else if (!x.hostFound){
+						if (!lobby.gameStarted){
+							lobby.gameStarted = true;
+							lobbyCountdown();
+						}
+					}
+					if (!x.hostFound){
 						Msg("The host has left the lobby.");
 						setTimeout(function(){
 							exitGame(true);
 						}, 500);
-					} else {
-						setTimeout(repeat, 1000);
 					}
+					setTimeout(repeat, 1000);
 				}).fail(function(data){
 					serverError(data);
 				});
@@ -430,12 +434,10 @@ function loadGameState(){
 			alpha: 0
 		});
 	}
-	// give game time to be created in database
-		
 	// load map
 	$.ajax({
 		type: 'GET',
-		url: 'images/EarthAlpha.svg'
+		url: 'images/' + g.map.name + '.svg'
 	}).done(function(data){
 		document.getElementById('worldWrap').innerHTML = data.responseText;
 	}).fail(function(err){
@@ -443,20 +445,27 @@ function loadGameState(){
 	}).always(function(){
 		initDom();
 		
-		var loadGameDelay = location.host === 'localhost' ? 1500 : 3000;
+		var loadGameDelay = location.host === 'localhost' ? 0 : 1000;
 		setTimeout(function(){
 			
 		$.ajax({
 			type: "GET",
 			url: "php/loadGameState.php"
 		}).done(function(data){
+			console.warn(data.tiles.length, g.map.tiles);
+			if (data.tiles.length < g.map.tiles){
+				setTimeout(function(){
+					loadGameState();
+				}, 1000);
+				return;
+			}
+			
 			audio.ambientInit();
 			console.info('loadGameState ', data);
-			if (location.hostname === 'localhost'){
-				// only when refreshing page while testing
-				audio.load.game();
-				video.load.game();
-			}
+			// only when refreshing page while testing
+			audio.load.game();
+			video.load.game();
+			// done
 			my.player = data.player;
 			my.account = data.account;
 			my.oBonus = data.oBonus;
@@ -518,7 +527,7 @@ function loadGameState(){
 			}, {
 				autoAlpha: 1
 			});
-					
+			
 			// initialize client data
 			for (var i=0, len=data.tiles.length; i<len; i++){
 				var d = data.tiles[i];

@@ -367,7 +367,7 @@ var animate = {
 			}
 		});
 		// start bomb explosion sequence
-		TweenMax.to('#test', 1, {
+		TweenMax.to(g, 1, {
 			onComplete: function(){
 				updateTileDefense();
 				audio.play('bomb9');

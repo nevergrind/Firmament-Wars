@@ -650,7 +650,7 @@ $(document).on('keydown', function(e){
 });
 $(document).on('keyup', function(e) {
 	var x = e.keyCode;
-	//console.info(x);
+	console.info(g.view);
 	if (g.view === 'title'){
 		if (x === 13){
 			if (g.focusUpdateNationName){

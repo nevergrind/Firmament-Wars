@@ -55,6 +55,12 @@ var g = {
 		mapSizeX: 2000,
 		mapSizeY: 1200
 	},
+	map: {
+		sizeX: 2000,
+		sizeY: 1200,
+		name: 'EarthAlpha',
+		tiles: 83
+	},
 	updateUserInfo: function(){
 		$.getJSON('https://geoip-db.com/json/geoip.php?jsonp=?') 
 		.done (function(location){
@@ -143,27 +149,29 @@ g.init = (function(){
 	}
 	document.getElementById("flagDropdown").innerHTML = s;
 	g.lock();
-	$.ajax({
-		type: "GET",
-		url: 'php/rejoinGame.php' // check if already in a game
-	}).done(function(data) {
-		console.info('rejoin ', data);
-		if (data.gameId > 0){
-			console.info("Auto joined game:" + (data.gameId));
-			my.player = data.player;
-			// join lobby in progress
-			setTimeout(function(){
-				lobby.init(data);
-				lobby.join(0); // autojoin
-				initResources(data); // setResources(data);
-				my.government = data.government;
-				lobby.updateGovernmentWindow(my.government);
-			}, 111);
-			$("#titleMain").remove();
-		}
-	}).always(function(){
-		g.unlock();
-	});
+	if (location.hostname === 'localhost'){
+		$.ajax({
+			type: "GET",
+			url: 'php/rejoinGame.php' // check if already in a game
+		}).done(function(data) {
+			console.info('rejoin ', data);
+			if (data.gameId > 0){
+				console.info("Auto joined game:" + (data.gameId));
+				my.player = data.player;
+				// join lobby in progress
+				setTimeout(function(){
+					lobby.init(data);
+					lobby.join(0); // autojoin
+					initResources(data); // setResources(data);
+					my.government = data.government;
+					lobby.updateGovernmentWindow(my.government);
+				}, 111);
+				$("#titleMain").remove();
+			}
+		}).always(function(){
+			g.unlock();
+		});
+	}
 	$("#prevUnit").on('mousedown', function(){
 		my.nextTarget(true);
 	});
@@ -282,7 +290,7 @@ var my = {
 		if (x > 0){ 
 			x = 0;
 		}
-		var xMin = (g.mouse.mapSizeX - 1024) * -1;
+		var xMin = (g.map.sizeX - 1024) * -1;
 		if (x < xMin){ 
 			x = xMin;
 		}
@@ -291,7 +299,7 @@ var my = {
 		if (y > 0){ 
 			y = 0;
 		}
-		var yMin = (g.mouse.mapSizeY - 690) * -1;
+		var yMin = (g.map.sizeY - 690) * -1;
 		if (y < yMin){ 
 			y = yMin;
 		}
@@ -313,10 +321,13 @@ var my = {
 					transformOrigin: '50% 50%',
 					scale: 1
 				});
+				/*
 				var e6 = document.getElementById('unit' + my.lastTgt);
 				TweenMax.to(e6, .2, {
+					transformOrigin: '50% 50%',
 					scale: 1
 				});
+				*/
 			}
 			// my tgt
 			var e3 = document.getElementById('flag' + tile);
@@ -338,10 +349,8 @@ var my = {
 					repeat: 6,
 					yoyo: true
 				});
-				TweenMax.to(e2, .5, {
-					visibility: 'visible',
-					scale: 1.5,
-					ease: Power3.easeOut
+				TweenMax.set(e2, {
+					visibility: 'visible'
 				});
 			}
 		}
@@ -462,6 +471,7 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
 	}
 	if (isMobile){
 		$("head").append('<style> *{ box-shadow: none !important; } </style>');
+		//$("html").html("Firmament Wars is currently not available on mobile devices. Sorry about that! It runs like trash on mobile, so I'm probably doing you a favor.");
 	} else {
 		$("#gameTopLeft").remove();
 	}

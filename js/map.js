@@ -53,8 +53,8 @@ if (!isFirefox){
 	});
 }
 function setMousePosition(X, Y){
-	var x = ~~((X / g.mouse.mapSizeX) * 100);
-	var y = ~~((Y / g.mouse.mapSizeY) * 100);
+	var x = ~~((X / g.map.sizeX) * 100);
+	var y = ~~((Y / g.map.sizeY) * 100);
 	g.mouse.mouseTransX = x;
 	g.mouse.mouseTransY = y;
 }

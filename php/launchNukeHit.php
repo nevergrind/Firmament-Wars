@@ -32,10 +32,11 @@
 		if (!$defender->flag || $defender->units < 1){
 			$defender->units = 1;
 		}
+		$newDef = in_array($defender->tile, $_SESSION['capitalTiles']) ? 1 : 0;
 		// update defender
-		$query = 'update fwtiles set units=?, defense=0 where tile=? and game=?';
+		$query = 'update fwtiles set units=?, defense=? where tile=? and game=?';
 		$stmt = $link->prepare($query);
-		$stmt->bind_param('iii', $defender->units, $defender->tile, $_SESSION['gameId']);
+		$stmt->bind_param('iiii', $defender->units, $newDef, $defender->tile, $_SESSION['gameId']);
 		$stmt->execute();
 		
 		echo json_encode($o);

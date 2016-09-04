@@ -2,45 +2,11 @@
 	require('values.php');
 	require('connect1.php');
 	
-	
-	$query = "select game from fwplayers where account=? and timestamp > date_sub(now(), interval {$_SESSION['lag']} second)";
-	$stmt = $link->prepare($query);
-	$stmt->bind_param('s', $_SESSION['account']);
-	$stmt->execute();
-	$stmt->store_result();
-	$stmt->bind_result($gameId);
-	
-	echo $stmt->num_rows;
-	while ($stmt->fetch()){
-		echo $gameId;
-	}
-	
-	exit;
-	$query = 'select count(row) from fwplayers where account=?';
-	$stmt = $link->prepare($query);
-	$stmt->bind_param('s', $_SESSION['account']);
-	$stmt->execute();
-	$stmt->bind_result($account);
-	while ($stmt->fetch()){
-		echo $account;
-	}
-	echo $account;
-	if ($account){
-		echo "Error";
-	}
-	exit();
 	$_SESSION['production'] = 20;
 	$_SESSION['turnBonus'] = 0;
 	$_SESSION['manpower'] = 999;
 	$gameDuration = microtime(true) - $_SESSION['gameDuration'];
-	echo 'gameDuration: ' . $gameDuration . '<br>';
-	$gameStartTime = 6 + ($_SESSION['resourceTick'] * 5);
-	echo 'gameStartTime: ' . $gameStartTime . '<br>';
-	
-	$gameNow = (6 + $_SESSION['resourceTick'] * 5);
-	echo 'gameNow: ' . $gameNow . '<br>';
-	$gameStartTime = microtime(true) - $_SESSION['gameStartTime'];
-	echo 'gameStartTime: ' . $gameStartTime . '<br>';
+	echo 'gameId: ' . $_SESSION['gameId'] . '<br>';
 	
 	if (isset($_SESSION['resourceTick'])){
 		echo 'Resource Tick: ' . $_SESSION['resourceTick'] . '<br>';
