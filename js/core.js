@@ -172,12 +172,14 @@ g.init = (function(){
 			g.unlock();
 		});
 	}
+	/*
 	$("#prevUnit").on('mousedown', function(){
 		my.nextTarget(true);
 	});
 	$("#nextUnit").on('mousedown', function(){
 		my.nextTarget(false);
 	});
+	*/
 })();
 // game data values
 var game = {

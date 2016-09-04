@@ -388,6 +388,7 @@ var animate = {
 				fireball.setAttributeNS(null,"height",256);
 				fireball.setAttributeNS(null,"x",x);
 				fireball.setAttributeNS(null,"y",y);
+				fireball.setAttributeNS(null,"class","no-point");
 				DOM.world.appendChild(fireball);
 				TweenMax.to(fireball, 3, {
 					startAt: {

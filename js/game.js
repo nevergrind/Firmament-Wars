@@ -465,6 +465,7 @@ function updateTileDefense(){
 }
 function triggerEndGame(msg){
 	$("*").off('click mousedown keydown keyup keypress');
+	$("#chat-input").remove();
 	window.onbeforeunload = null;
 	g.over = 1;
 	setTimeout(function(){

@@ -691,6 +691,14 @@ table td, .table th, .table td {
 	text-align: center;
 	z-index: 9999;
 }
+#joinGameWrap{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	top: auto;
+	padding: .5em;
+}
 .endBtn{
 	border: 1px solid #3377dd;
 	box-shadow: 0 0 20px rgba(0,40,148,1) inset;

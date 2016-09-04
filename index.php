@@ -171,7 +171,7 @@
 				<hr class="fancyhr">
 				<div id='refreshGameWrap'>
 					<div id="menuContent" class='buffer2 shadow4'></div>
-					<div id='joinGameWrap' class='buffer'>
+					<div id='joinGameWrap'>
 							<div class="pull-left fw-text">
 								<?php
 								if (isset($_SESSION['email'])){
@@ -457,6 +457,7 @@
 	</div>
 	
 	<div id="gameWrap">
+		<!--
 		<div id="gameTopLeft">
 			<div class="btn-group" role="group">
 				<button id="prevUnit" class="btn btn-default targeting">
@@ -466,8 +467,8 @@
 					<i class='fa fa-chevron-right'></i>
 				</button>
 			</div>
-			
 		</div>
+		-->
 		<div id="wrap-ui" class="stagBlue">
 			<div id="diplomacy-ui" class="shadow4">
 			</div>
