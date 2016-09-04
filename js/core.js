@@ -142,30 +142,34 @@ g.init = (function(){
 		});
 	}
 	document.getElementById("flagDropdown").innerHTML = s;
-	if (location.hostname === 'localhost'){
-		g.lock();
-		$.ajax({
-			type: "GET",
-			url: 'php/rejoinGame.php' // check if already in a game
-		}).done(function(data) {
-			console.info('rejoin ', data);
-			if (data.gameId > 0){
-				console.info("Auto joined game:" + (data.gameId));
-				my.player = data.player;
-				// join lobby in progress
-				setTimeout(function(){
-					lobby.init(data);
-					lobby.join(0); // autojoin
-					initResources(data); // setResources(data);
-					my.government = data.government;
-					lobby.updateGovernmentWindow(my.government);
-				}, 111);
-				$("#titleMain").remove();
-			}
-		}).always(function(){
-			g.unlock();
-		});
-	}
+	g.lock();
+	$.ajax({
+		type: "GET",
+		url: 'php/rejoinGame.php' // check if already in a game
+	}).done(function(data) {
+		console.info('rejoin ', data);
+		if (data.gameId > 0){
+			console.info("Auto joined game:" + (data.gameId));
+			my.player = data.player;
+			// join lobby in progress
+			setTimeout(function(){
+				lobby.init(data);
+				lobby.join(0); // autojoin
+				initResources(data); // setResources(data);
+				my.government = data.government;
+				lobby.updateGovernmentWindow(my.government);
+			}, 111);
+			$("#titleMain").remove();
+		}
+	}).always(function(){
+		g.unlock();
+	});
+	$("#prevUnit").on('mousedown', function(){
+		my.nextTarget(true);
+	});
+	$("#nextUnit").on('mousedown', function(){
+		my.nextTarget(false);
+	});
 })();
 // game data values
 var game = {
@@ -458,6 +462,8 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
 	}
 	if (isMobile){
 		$("head").append('<style> *{ box-shadow: none !important; } </style>');
+	} else {
+		$("#gameTopLeft").remove();
 	}
 })($);
 

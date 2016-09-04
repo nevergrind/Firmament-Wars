@@ -336,7 +336,10 @@ function getGameState(){
 								if ($(".alive").length > 1){
 									$("#diplomacyPlayer" + i).removeClass('alive');
 									TweenMax.to('#diplomacyPlayer' + i, 1, {
-										autoAlpha: 0
+										autoAlpha: 0,
+										onComplete: function(){
+											$("#diplomacyPlayer" + i).remove();
+										}
 									});
 								}
 							}

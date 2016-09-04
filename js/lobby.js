@@ -175,6 +175,10 @@ var lobby = {
 	},
 	join: function(d){
 		console.info("Joining lobby...");
+		var loadTime = Date.now() - g.startTime; 
+		if (loadTime < 1000){
+			d = 0;
+		}
 		if (d === undefined){
 			d = .5;
 		}
@@ -183,7 +187,7 @@ var lobby = {
 			autoAlpha: 0,
 			onComplete: function(){
 				g.unlock(1);
-				TweenMax.fromTo('#joinGameLobby', .5, {
+				TweenMax.fromTo('#joinGameLobby', d, {
 					autoAlpha: 0
 				}, {
 					autoAlpha: 1
@@ -729,8 +733,9 @@ function startGame(){
 }
 function lobbyCountdown(){
 	new Audio('sound/beepHi.mp3');
-	var loadTime = Date.now() - g.startTime; 
+	var loadTime = Date.now() - g.startTime;
 	if (loadTime < 1000){
+		$("#titleMain").remove();
 		loadGameState(); // page refresh
 	} else {
 		// normal countdown

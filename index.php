@@ -213,16 +213,18 @@
 				?>
 				</div>
 				
-				<div id="titleChatWrap" class="titleRelWrap input-group">
+				<div id="titleChatWrap" class="titleRelWrap">
 					
 					<?php
 					if (isset($_SESSION['email'])){
 						echo '
-						<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" autocomplete="off"/>
-						<div>
-							<hr class="fancyhr">
-						</div>
-						<span id="titleChatSend" class="input-group-addon shadow4 fwBlue">Send</span>';
+						<hr class="fancyhr">
+						<div class="input-group">
+							<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" autocomplete="off"/>
+							<span id="titleChatSend" class="input-group-btn">
+								<button class="btn shadow4 fwBlue">Send</button>
+							</span>
+						</div>';
 					}
 					?>
 				</div>
@@ -439,6 +441,17 @@
 	</div>
 	
 	<div id="gameWrap">
+		<div id="gameTopLeft">
+			<div class="btn-group" role="group">
+				<button id="prevUnit" class="btn btn-default targeting">
+					<i class='fa fa-chevron-left'></i>
+				</button>
+				<button id="nextUnit" class="btn btn-default targeting">
+					<i class='fa fa-chevron-right'></i>
+				</button>
+			</div>
+			
+		</div>
 		<div id="wrap-ui" class="stagBlue">
 			<div id="diplomacy-ui" class="shadow4">
 			</div>

@@ -220,6 +220,21 @@ a:hover{
 	color: #ffff00;
 	text-shadow: .5px .5px #520, 1px 1px #520, 1.5px 1.5px #520, 2px 2px #520;
 }
+.chat-hidden{
+	color: #000000;
+	background: #000000;
+	text-shadow: none;
+	pointer-events: auto;
+}
+.chat-hidden:hover{
+	color: #fff;
+	pointer-events: auto;
+}
+.chat-alert{
+	color: #ff0000;
+	text-shadow: .5px .5px #500, 1px 1px #500, 1.5px 1.5px #500, 2px 2px #500;
+	text-transform: uppercase;
+}
 .chat-warning{
 	color: #ffff1a;
 	text-shadow: .5px .5px #550, 1px 1px #550, 1.5px 1.5px #550, 2px 2px #550;
@@ -277,7 +292,7 @@ a:hover{
 	overflow: auto;
 	text-align: left;
 	width: 100%;
-	height: 80%;
+	height: 78.5%;
 	font-family: Consolas, monospace;
 	color: #bef;
 	text-shadow: .5px .5px #357, 1px 1px #357, 1.5px 1.5px #357, 2px 2px #357;
@@ -372,6 +387,17 @@ a:hover{
 	z-index: 4999;
 	opacity: 0;
 	pointer-events: none;
+}
+#gameTopLeft{
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	margin: .5em;
+	z-index: 9999;
+	text-align: center;
+}
+#prevUnit:active, #nextUnit:active{
+	background: #333;
 }
 #wrap-ui{
 	position: absolute;
@@ -825,6 +851,9 @@ circle{
     background-color: #286090;
     border-color: #204d74;
 }
+#joinGame{
+	float: right;
+}
 #joinGameLobby{
 	visibility: hidden;
 	position: absolute;
@@ -919,7 +948,7 @@ circle{
 	margin: 0 .5em;
 	padding: .25em .5em;
 	border-radius: 4px;
-	width: 25%;
+	width: 22%;
 }
 #refreshGameWrap{
 	height: 82%;
@@ -1132,7 +1161,7 @@ table {
 	border: 1px solid #2e6da4;
 	background: rgba(0,6,36,.5) !important;
 }
-.btn.active, .btn:active, .open>.dropdown-toggle.btn{
+.open>.dropdown-toggle.btn{
 	border: 1px solid #aef !important;
 	color: #aef !important;
 	background: rgba(0,16,56,.5) !important;

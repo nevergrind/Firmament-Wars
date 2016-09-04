@@ -1,5 +1,5 @@
 <?php
-	$query = "SELECT game, account, startGame FROM fwplayers where account=? limit 1";
+	$query = "SELECT game, account, startGame FROM fwplayers where timestamp < date_sub(now(), interval {$_SESSION['lag']} second) and account=? limit 1";
 	$stmt = $link->prepare($query);
 	$stmt->bind_param('s', $_SESSION['account']);
 	$stmt->execute();
