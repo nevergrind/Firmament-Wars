@@ -1,16 +1,19 @@
 <?php
 	require('values.php');
 	require('connect1.php');
-	$email = "chrome@test.com";
-	$query = "select account from accounts where email=?";
+	
+	
+	$query = "select game from fwplayers where account=? and timestamp > date_sub(now(), interval {$_SESSION['lag']} second)";
 	$stmt = $link->prepare($query);
-	$stmt->bind_param('s', $email);
+	$stmt->bind_param('s', $_SESSION['account']);
 	$stmt->execute();
-	$stmt->bind_result($data);
-	while($stmt->fetch()){
-		$account = $data;
+	$stmt->store_result();
+	$stmt->bind_result($gameId);
+	
+	echo $stmt->num_rows;
+	while ($stmt->fetch()){
+		echo $gameId;
 	}
-	echo $account;
 	
 	exit;
 	$query = 'select count(row) from fwplayers where account=?';

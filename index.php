@@ -101,12 +101,6 @@
 			</header>
 			
 			<div id="menu" class="fw-primary">
-				<div class="text-center">
-					<div>
-						<h2 class='header'>Firmament Wars</h2>
-						<hr class="fancyhr">
-					</div>
-				</div>
 				<div id='menuOnline'>
 					<div>
 					<?php
@@ -166,6 +160,7 @@
 						?>
 					</div>
 				</div>
+				<hr class="fancyhr">
 				<div id='refreshGameWrap'>
 					<div id="menuContent" class='buffer2 shadow4'></div>
 					<div id='joinGameWrap' class='buffer'>
@@ -188,8 +183,6 @@
 			</div>
 			
 			<div id="titleChat" class="fw-primary text-center">
-				<h2 class='header'>Global Chat Lobby</h2>
-				<hr class="fancyhr">
 				<div id='chatAd'>
 					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 					<!-- xy responsive -->
@@ -208,6 +201,7 @@
 					}
 					</script>
 				</div>
+				<hr class="fancyhr">
 				<div id="titleChatLog">
 				<?php
 					$result = mysqli_query($link, 'select count(row) count from `fwplayers` where timestamp > date_sub(now(), interval 20 second)');

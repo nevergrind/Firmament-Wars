@@ -439,7 +439,7 @@ function loadGameState(){
 	}).always(function(){
 		initDom();
 		
-		var loadGameDelay = location.host === 'localhost' ? 500 : 2000;
+		var loadGameDelay = location.host === 'localhost' ? 1500 : 3000;
 		setTimeout(function(){
 			
 		$.ajax({
@@ -558,7 +558,7 @@ function loadGameState(){
 				var x = a[i].getAttribute('x') - 24;
 				var y = a[i].getAttribute('y') - 24;
 				var flag = 'blank.png';
-				if (!t.flag && t.units){
+				if (!t.flag && t.units){ // FIX TODO
 					flag = "Player0.jpg";
 				} else if (t.flag){
 					flag = t.flag;

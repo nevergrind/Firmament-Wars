@@ -33,7 +33,7 @@
 	$x->foodReward = isset($_SESSION['foodReward']) ? $_SESSION['foodReward'] : 0;
 	$x->cultureReward = isset($_SESSION['cultureReward']) ? $_SESSION['cultureReward'] : 0;
 	
-	$x->gameId = 0;
+	$x->gameId = -1;
 	
 	$query = "select game from fwplayers where account=? and timestamp > date_sub(now(), interval {$_SESSION['lag']} second)";
 	$stmt = $link->prepare($query);
@@ -44,8 +44,10 @@
 	
 	if ($stmt->num_rows > 0){
 		if (!isset($_SESSION['gameName'])){
+			$x->gameId = 0;
 			require('resetGame.php');
 		} else {
+			$x->gameId = -2;
 			while($stmt->fetch()){
 				$x->gameId = $gameId;
 			}

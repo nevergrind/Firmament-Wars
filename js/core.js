@@ -53,7 +53,7 @@ var g = {
 		mouseTransX: 50,
 		mouseTransY: 50,
 		mapSizeX: 2000,
-		mapSizeY: 1150
+		mapSizeY: 1200
 	},
 	updateUserInfo: function(){
 		$.getJSON('https://geoip-db.com/json/geoip.php?jsonp=?') 
@@ -142,8 +142,8 @@ g.init = (function(){
 		});
 	}
 	document.getElementById("flagDropdown").innerHTML = s;
-	g.lock();
-	//if (location.host === 'localhost'){
+	if (location.hostname === 'localhost'){
+		g.lock();
 		$.ajax({
 			type: "GET",
 			url: 'php/rejoinGame.php' // check if already in a game
@@ -165,11 +165,7 @@ g.init = (function(){
 		}).always(function(){
 			g.unlock();
 		});
-	/*
-	} else {
-		// stuff
 	}
-	*/
 })();
 // game data values
 var game = {
@@ -291,7 +287,7 @@ var my = {
 		if (y > 0){ 
 			y = 0;
 		}
-		var yMin = (g.mouse.mapSizeY - 768) * -1;
+		var yMin = (g.mouse.mapSizeY - 690) * -1;
 		if (y < yMin){ 
 			y = yMin;
 		}
@@ -468,10 +464,10 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
 function resizeWindow() {
     var e = document.getElementById('body');
     // game ratio
-    var widthToHeight = 1024/768;
+    var widthToHeight = 1024/690;
     // current window size
     var w = window.innerWidth > 1024 ? 1024 : window.innerWidth;
-    var h = window.innerHeight > 768 ? 768 : window.innerHeight;
+    var h = window.innerHeight > 690 ? 690 : window.innerHeight;
     if(w / h > widthToHeight){
     	// too tall
     	w = h * widthToHeight;
@@ -516,7 +512,7 @@ function resizeWindow() {
 		worldMap[0].applyBounds();
 	}
 	g.resizeX = w / 1024;
-	g.resizeY = h / 768;
+	g.resizeY = h / 690;
 }
 
 
@@ -753,6 +749,9 @@ function refreshGames(){
 		url: 'php/refreshGames.php'
 	}).done(function(data) {
 		var e = document.getElementById('menuContent');
+		if (e === null){
+			return;
+		}
 		if (!data.length){
 			e.innerHTML = "<div class='text-center text-warning buffer2'>No active games found. Create a game to play!</div>";
 		} else {
