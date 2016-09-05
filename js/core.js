@@ -17,6 +17,7 @@ var g = {
 	chatOn: false,
 	overlay: document.getElementById("overlay"),
 	over: 0,
+	done: 0,
 	actionMenu: 'command',
 	startTime: Date.now(),
 	keyLock: false,

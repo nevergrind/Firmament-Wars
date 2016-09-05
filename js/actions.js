@@ -382,7 +382,7 @@ var action = {
 						defender: defender
 					}
 				}).done(function(data) {
-					// does nothing when finished
+					updateTileDefense();
 				});
 			}, 8000);
 			setTimeout(function(){

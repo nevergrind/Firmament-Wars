@@ -6,6 +6,8 @@
 	$_SESSION['turnBonus'] = 0;
 	$_SESSION['manpower'] = 999;
 	$gameDuration = microtime(true) - $_SESSION['gameDuration'];
+	
+	
 	echo 'gameId: ' . $_SESSION['gameId'] . '<br>';
 	
 	if (isset($_SESSION['resourceTick'])){
