@@ -1,0 +1,2 @@
+[29-Aug-2016 16:17:13 America/Denver] PHP Parse error:  syntax error, unexpected 'en' (T_STRING), expecting ',' or ';' in /home/nevergrind2/public_html/games/firmament-wars/index.php on line 22
+[30-Aug-2016 00:30:53 UTC] PHP Fatal error:  Call to a member function bind_param() on a non-object in /home/nevergrind2/public_html/games/firmament-wars/index.php on line 108

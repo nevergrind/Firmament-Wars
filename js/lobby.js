@@ -437,12 +437,9 @@ function loadGameState(){
 	// load map
 	$.ajax({
 		type: 'GET',
-		url: 'images/' + g.map.name + '.svg'
+		url: 'maps/' + g.map.name + '.php'
 	}).done(function(data){
-		document.getElementById('worldWrap').innerHTML = data.responseText;
-	}).fail(function(err){
-		document.getElementById('worldWrap').innerHTML = err.responseText;
-	}).always(function(){
+		document.getElementById('worldWrap').innerHTML = data;
 		initDom();
 		
 		var loadGameDelay = location.host === 'localhost' ? 0 : 1000;
@@ -691,20 +688,6 @@ function loadGameState(){
 				
 				// focus on player home
 				my.focusTile(my.capital);
-				// desktop only animation
-				if (!isMobile){
-					/* too demanding
-					var e = document.getElementsByClassName('land');
-					TweenMax.fromTo(e, 2, {
-						fillOpacity: .01,
-						drawSVG: '0%'
-					}, {
-						drawSVG: '100%',
-						fillOpacity: 1,
-						ease: Linear.easeOut
-					});
-					*/
-				}
 				// add warning for players
 				if (location.host !== 'localhost'){
 					window.onbeforeunload = function(){

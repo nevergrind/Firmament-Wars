@@ -52,8 +52,26 @@ var title = {
 		});
 		setTimeout(function(){
 			title.chat("You have joined the global chat lobby.", "chat-warning");
+			var str = '';
+			for (var key in title.mapData){
+				console.info(key);
+				str += "<li><a class='mapSelect' href='#'>" + title.mapData[key].name + "</a></li>";
+			}
+			document.getElementById('mapDropdown').innerHTML = str;
 		}, 100);
 	})(),
+	mapData: {
+		EarthAlpha: {
+			name: 'Earth Alpha',
+			tiles: 83,
+			players: 8
+		},
+		FlatEarth: {
+			name: 'Flat Earth',
+			tiles: 60,
+			players: 6
+		}
+	},
 	chatDrag: false,
 	chatOn: false,
 	chat: function (msg, type){

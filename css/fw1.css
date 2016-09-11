@@ -757,6 +757,12 @@ table td, .table th, .table td {
 	z-index:9999;
 	pointer-events: none;
 }
+.hole{
+	fill: none;
+	stroke: #66ccff;
+	stroke-opacity: 1;
+	stroke-width: 1;
+}
 .land{
 	fill: #002F73;
 	fill-opacity: 1;
@@ -764,6 +770,7 @@ table td, .table th, .table td {
 	stroke-opacity: 1;
 	stroke-width: 1;
 	overflow: visible;
+	cursor: pointer;
 }
 .unit{
 	visibility: hidden;

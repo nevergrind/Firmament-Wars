@@ -142,9 +142,9 @@ g.init = (function(){
 			name: ['Argentina', 'Bolivia', 'Brazil', 'Chile', 'Colombia', 'Ecuador', 'Paraguay', 'Peru', 'Uruguay', 'Venezuela']
 		},
 	}
-	for (x in flagData){
-		s += "<li class='dropdown-header'>" + flagData[x].group + "</li>";
-		flagData[x].name.forEach(function(e){
+	for (var key in flagData){
+		s += "<li class='dropdown-header'>" + flagData[key].group + "</li>";
+		flagData[key].name.forEach(function(e){
 			s += "<li><a class='flagSelect' href='#'>" + e + "</a></li>";
 		});
 	}

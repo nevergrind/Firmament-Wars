@@ -6,37 +6,31 @@
 	} else {
 		error_reporting(0);
 	}
+	require('php/connect1.php');
 	require('php/values.php');
+	$whitelisted = 0;
 	
 	if($_SERVER["SERVER_NAME"] !== "localhost"){
-		require('php/connect1.php');
-		require('resetGame.php');
+		require('php/resetGame.php');
 		$query = 'select count(email) from fwwhitelist where email=?';
 		$stmt = $link->prepare($query);
 		$stmt->bind_param('s', $_SESSION['email']);
 		$stmt->execute();
 		$stmt->bind_result($email);
-		$count = 0;
 		while ($stmt->fetch()){
-			$count = $email;
+			$whitelisted = $email;
 		}
-		if (!$count){
-			echo "
-				<h1>Firmament Wars</h1>
-				<p>You do not have access to Firmament Wars. Firmament Wars is currently in its invite-only beta phase.</p>
-				<a href='/login.php?back=/games/firmament-wars'>Try logging in with a whitelisted account</a>
-			";
-			exit();
-		}
+	} else {
+		$whitelisted = 1;
 	}
 ?>
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head id='head'>
-	<title>Firmament Wars | Real-Time Grand Strategy Warfare</title>
+	<title>Firmament Wars | Political Strategy Game | Free Online Multiplayer</title>
 	<meta charset="utf-8">
-	<meta name="keywords" content="political, online, multiplayer, free, game, strategy">
-	<meta name="description" content="Firmament Wars is a turn-based warfare strategy game created by Neverworks Games. Establish your nation, choose your flag, and select your dictator and vie for global domination.">
+	<meta name="keywords" content="risk, civilization, online, multiplayer, free, game, political, strategy">
+	<meta name="description" content="Firmament Wars is a political grand strategy warfare game with free online multiplayer. Compete in real time with up to eight players for global domination!">
 	<meta name="author" content="Joe Leonard">
 	<meta name="referrer" content="always">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -84,19 +78,27 @@
 				} else {
 					echo 
 					'<a id="login" title="Login" href="/login.php?back=/games/firmament-wars">Login</a>';
-					
 				}
 				echo '
 				</div>
 				<div class="pull-right text-primary">
-					<a target="_blank" href="//www.youtube.com/user/Maelfyn">
-						<i class="fa fa-youtube-square text-primary pointer" title="YouTube"></i>
+					<a target="_blank" href="//www.youtube.com/user/Maelfyn" title="YouTube">
+						<i class="fa fa-youtube-square text-primary pointer"></i>
 					</a>
-					<a target="_blank" href="//twitter.com/neverworksgames">
-						<i class="fa fa-twitter-square text-primary pointer" title="Twitter"></i>
+					<a target="_blank" href="//www.facebook.com/neverworksgames" title="Facebook">
+						<i class="fa fa-facebook-square text-primary pointer"></i>
 					</a>
-					<a target="_blank" href="//www.facebook.com/neverworksgames">
-						<i class="fa fa-facebook-square text-primary pointer" title="Facebook"></i>
+					<a target="_blank" href="//twitter.com/neverworksgames" title="Twitter">
+						<i class="fa fa-twitter-square text-primary pointer"></i>
+					</a>
+					<a target="_blank" href="//plus.google.com/118162473590412052664" title="Google Plus">
+						<i class="fa fa-google-plus-square text-primary pointer"></i>
+					</a>
+					<a target="_blank" href="//reddit.com/r/nevergrind" title="Reddit">
+						<i class="fa fa-reddit-square text-primary pointer"></i>
+					</a>
+					<a target="_blank" href="//goo.gl/BFsmf2" title="LinkedIn">
+						<i class="fa fa-linkedin-square text-primary pointer"></i>
 					</a>
 					Firmament Wars
 				</div>';
@@ -109,7 +111,7 @@
 				<div id='menuOnline'>
 					<div>
 					<?php
-					if (isset($_SESSION['email'])){
+					if (isset($_SESSION['email']) && $whitelisted){
 						require('php/checkDisconnectsByAccount.php');
 						
 						// check if nation exists; create if not
@@ -159,8 +161,9 @@
 				<div>
 					<div id="menuHead">
 						<button id="refreshGames" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Refresh Games</button>
+						
 						<?php
-						if (isset($_SESSION['email'])){
+						if (isset($_SESSION['email']) && $whitelisted){
 							echo
 							'<button id="create" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Create Game</button>
 							<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>';
@@ -174,7 +177,7 @@
 					<div id='joinGameWrap'>
 							<div class="pull-left fw-text">
 								<?php
-								if (isset($_SESSION['email'])){
+								if (isset($_SESSION['email']) && $whitelisted){
 									echo
 									'
 									<hr class="fancyhr">
@@ -212,6 +215,9 @@
 				<hr class="fancyhr">
 				<div id="titleChatLog">
 				<?php
+					if (!$whitelisted){
+						echo '<div class="chat-alert">You currently do not have access to play Firmament Wars. You must get beta access from the administrator.</div>';
+					}
 					$result = mysqli_query($link, 'select count(row) count from `fwplayers` where timestamp > date_sub(now(), interval 20 second)');
 					// Associative array
 					while ($row = mysqli_fetch_assoc($result)){
@@ -224,7 +230,7 @@
 				<div id="titleChatWrap" class="titleRelWrap">
 					
 					<?php
-					if (isset($_SESSION['email'])){
+					if (isset($_SESSION['email']) && $whitelisted){
 						echo '
 						<hr class="fancyhr">
 						<div class="input-group">
@@ -319,16 +325,21 @@
 							<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 						</button>
 						<ul id='mapDropdown' class='dropdown-menu fwDropdown createGameInput'>
-							<li><a class='mapSelect' href='#'>Earth Alpha</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class='buffer2'>
-					<label class='control-label'>Map Description</label>
+					<label class='control-label'>Map Details</label>
 				</div>
 				<div class='buffer'>
-					<span id='createGameDescription'>Up to 8 players vie for domination in this sprawling map across six continents.</span>
-					<span id='createGameGlobe' data-toggle='tooltip' title='Number of territories for this map'><i class='fa fa-globe'></i> <span id='createGameTiles'>83</span></span>
+					<span data-toggle='tooltip' title='Max players on this map'>
+						<i class='fa fa-users'></i>
+						<span id='createGamePlayers'>8</span>
+					</span>&ensp;
+					<span data-toggle='tooltip' title='Number of territories on this map'>
+						<i class='fa fa-globe'></i> 
+						<span id='createGameTiles'>83</span>
+					</span>
 				</div>
 			</div>
 			<div>
@@ -798,8 +809,6 @@
 </body>
 <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/EaselJS/0.7.1/easeljs.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.15.0/plugins/EaselPlugin.min.js"></script>
 <script src="js/libs/DrawSVGPlugin.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/utils/Draggable.min.js"></script>
 <script src="js/libs/ScrambleTextPlugin.min.js"></script>
