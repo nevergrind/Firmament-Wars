@@ -195,6 +195,7 @@ var my = {
 	gameName: 'Earth Alpha',
 	max: 8,
 	map: '',
+	mapKey: 'EarthAlpha',
 	totalPlayers: 0,
 	tgt: 1,
 	lastTgt: 1,

@@ -86,9 +86,8 @@ $("#gameWrap").on('click', '#surrender', function(){
 });
 $("#createGameWrap").on('click', '.mapSelect', function(){
 	var x = $(this).text();
-	my.map = x;
-	console.info(x);
-	var key = my.map.replace(/ /g,'');
+	var key = x.replace(/ /g,'');
+	my.mapKey = key;
 	document.getElementById('createGameMap').innerHTML = x;
 	document.getElementById('createGameTiles').innerHTML = title.mapData[key].tiles;
 	document.getElementById('createGamePlayers').innerHTML = title.mapData[key].players;

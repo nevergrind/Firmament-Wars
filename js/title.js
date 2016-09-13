@@ -54,7 +54,6 @@ var title = {
 			title.chat("You have joined the global chat lobby.", "chat-warning");
 			var str = '';
 			for (var key in title.mapData){
-				console.info(key);
 				str += "<li><a class='mapSelect' href='#'>" + title.mapData[key].name + "</a></li>";
 			}
 			document.getElementById('mapDropdown').innerHTML = str;
@@ -137,7 +136,7 @@ var title = {
 					name: name,
 					pw: pw,
 					players: players,
-					map: my.map
+					map: title.mapData[my.mapKey].name
 				}
 			}).done(function(data) {
 				my.player = data.player;

@@ -1,10 +1,10 @@
 <?php
+	header('Content-Type: application/json');
 	require('connect1.php');
 	// create a new lobby 
 	if (!isset($_SESSION['email'])){
 		exit;
 	}
-	header('Content-Type: application/json');
 	
 	require('checkAlreadyPlaying.php');
 	
@@ -12,15 +12,22 @@
 	$pw = $_POST['pw'];
 	$players = $_POST['players'];
 	$map = $_POST['map'];
+	// determine map data
+	$_SESSION['mapIndex'] = 0;
 	
+	require('mapData.php');
+	// find map data - default to Earth Alpha if not found
+	$count = count($mapData);
+	for ($i = 0; $i < $count; $i++){
+		if ($map === $mapData[$i]->name){
+			$_SESSION['mapIndex'] = $i;
+		}
+	}
+	// check game name
 	$len = strlen($name);
 	if ($len < 4 || $len > 32){
 		header('HTTP/1.1 500 Game name invalid');
 		exit;
-	}
-	
-	if ($players < 2 || $players > 8 || $players % 1 != 0){
-		$players = 2;
 	}
 	// does this game name exist and is the game active?
 	$query = "select count(p.game) players from fwgames g join fwplayers p on g.row=p.game and g.name=? group by p.game having players > 0";
@@ -42,27 +49,22 @@
 		$stmt->bind_param('s', $name);
 		$stmt->execute();
 	}
-	// map data
-	$possibleMaps = ['Earth Alpha'];
-	if (!in_array($map, $possibleMaps)){
-		$map = 'Earth Alpha';
-	}
 	// create game
 	$query = "insert into fwgames (`name`, `password`, `max`, `map`) values (?, ?, ?, ?)";
 	$stmt = $link->prepare($query);
 	$stmt->store_result();
-	$stmt->bind_param('ssis', $name, $pw, $players, $map);
+	$stmt->bind_param('ssis', $name, $pw, $mapData[$_SESSION['mapIndex']]->maxPlayers, $mapData[$_SESSION['mapIndex']]->name);
 	$stmt->execute();
 	
 	// set session values
 	$_SESSION['gameId'] = $stmt->insert_id;
-	$_SESSION['max'] = $players;
+	$_SESSION['max'] = $mapData[$_SESSION['mapIndex']]->maxPlayers;
 	$_SESSION['gameName'] = $name;
 	$_SESSION['startGame'] = 0;
 	$_SESSION['gameType'] = 'FFA';
 	$_SESSION['player'] = 1;
 	$_SESSION['playerMod'] = $_SESSION['player'] % 4;
-	$_SESSION['map'] = $map;
+	$_SESSION['map'] = $mapData[$_SESSION['mapIndex']]->name;
 	$_SESSION['food'] = 0;
 	$_SESSION['foodIncrement'] = 25;
 	$_SESSION['foodMax'] = 25;
