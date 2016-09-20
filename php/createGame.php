@@ -13,16 +13,7 @@
 	$players = $_POST['players'];
 	$map = $_POST['map'];
 	// determine map data
-	$_SESSION['mapIndex'] = 0;
-	
-	require('mapData.php');
-	// find map data - default to Earth Alpha if not found
-	$count = count($mapData);
-	for ($i = 0; $i < $count; $i++){
-		if ($map === $mapData[$i]->name){
-			$_SESSION['mapIndex'] = $i;
-		}
-	}
+	require('setMapIndex.php');
 	// check game name
 	$len = strlen($name);
 	if ($len < 4 || $len > 32){

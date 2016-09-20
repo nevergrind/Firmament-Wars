@@ -32,16 +32,7 @@
 	}
 	$x = new stdClass();
 	$_SESSION['capitalTiles'] = [];
-	// map capital tiles give defense bonus
-	/*
-	$query = 'select startTile from fwplayers where game=?';
-	$stmt = $link->prepare($query);
-	$stmt->bind_param('i', $_SESSION['gameId']);
-	$stmt->execute();
-	$stmt->bind_result($startTile);
-	while($stmt->fetch()){
-		array_push($_SESSION['capitalTiles'], $startTile);
-	}*/
+	
 	// set my capital, all capital tiles, and all players data IN PROGRESS
 	$query = "select player, nation, flag, account, startTile, government from fwplayers where game=?;";
 	$stmt = $link->prepare($query);
@@ -83,9 +74,6 @@
 	// turn
 	$x->turnProduction = $_SESSION['turnProduction'];
 	$x->account = $_SESSION['account'];
-	$x->oBonus = $_SESSION['oBonus'];
-	$x->dBonus = $_SESSION['dBonus'];
-	$x->cultureBonus = $_SESSION['cultureBonus'];
 	// tech
 	$x->tech = $_SESSION['tech'];
 	$x->capital = $_SESSION['capital'];
@@ -110,5 +98,9 @@
 		// actual game start time
 		$_SESSION['gameDuration'] = microtime(true);
 	}
+	// set map data
+	require('mapData.php');
+	$x->mapData = $mapData[$_SESSION['mapIndex']];
+	
 	echo json_encode($x);
 ?>

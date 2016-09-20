@@ -21,6 +21,7 @@ var g = {
 	actionMenu: 'command',
 	startTime: Date.now(),
 	keyLock: false,
+	loadAttempts: 0,
 	lock: function(clear){
 		g.overlay.style.display = "block";
 		clear ? g.overlay.style.opacity = 0 : g.overlay.style.opacity = 1;
@@ -49,17 +50,20 @@ var g = {
 	TDC: function(){
 		return new TweenMax.delayedCall(0, '');
 	},
+	screen: {
+		width: 1024,
+		height: 690
+	},
 	mouse: {
-		mouseZoom: 100,
+		zoom: 100,
 		mouseTransX: 50,
-		mouseTransY: 50,
-		mapSizeX: 2000,
-		mapSizeY: 1200
+		mouseTransY: 50
 	},
 	map: {
 		sizeX: 2000,
 		sizeY: 1200,
-		name: 'EarthAlpha',
+		name: 'Earth Alpha',
+		key: 'EarthAlpha',
 		tiles: 83
 	},
 	updateUserInfo: function(){
@@ -93,6 +97,14 @@ var g = {
 		audio: {
 			musicOn: true
 		}
+	},
+	keepAlive: function repeat(){
+		$.ajax({
+			type: 'GET',
+			url: "php/keepAlive.php"
+		}).always(function() {
+			setTimeout(repeat, 300000);
+		});
 	}
 }
 g.init = (function(){
@@ -194,8 +206,6 @@ var my = {
 	player: 1,
 	gameName: 'Earth Alpha',
 	max: 8,
-	map: '',
-	mapKey: 'EarthAlpha',
 	totalPlayers: 0,
 	tgt: 1,
 	lastTgt: 1,
@@ -294,7 +304,7 @@ var my = {
 		if (x > 0){ 
 			x = 0;
 		}
-		var xMin = (g.map.sizeX - 1024) * -1;
+		var xMin = (g.map.sizeX - g.screen.width) * -1;
 		if (x < xMin){ 
 			x = xMin;
 		}
@@ -303,7 +313,7 @@ var my = {
 		if (y > 0){ 
 			y = 0;
 		}
-		var yMin = (g.map.sizeY - 690) * -1;
+		var yMin = (g.map.sizeY - g.screen.height) * -1;
 		if (y < yMin){ 
 			y = yMin;
 		}
@@ -484,10 +494,10 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
 function resizeWindow() {
     var e = document.getElementById('body');
     // game ratio
-    var widthToHeight = 1024/690;
+    var widthToHeight = g.screen.width / g.screen.height;
     // current window size
-    var w = window.innerWidth > 1024 ? 1024 : window.innerWidth;
-    var h = window.innerHeight > 690 ? 690 : window.innerHeight;
+    var w = window.innerWidth > g.screen.width ? g.screen.width : window.innerWidth;
+    var h = window.innerHeight > g.screen.height ? g.screen.height : window.innerHeight;
     if(w / h > widthToHeight){
     	// too tall
     	w = h * widthToHeight;
@@ -531,8 +541,8 @@ function resizeWindow() {
 	if (typeof worldMap[0] !== 'undefined'){
 		worldMap[0].applyBounds();
 	}
-	g.resizeX = w / 1024;
-	g.resizeY = h / 690;
+	g.resizeX = w / g.screen.width;
+	g.resizeY = h / g.screen.height;
 }
 
 

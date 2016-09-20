@@ -43,7 +43,7 @@
 	$stmt->bind_result($gameId);
 	
 	if ($stmt->num_rows > 0){
-		if (!isset($_SESSION['gameName'])){
+		if ($_SESSION['startGame'] !== 1 || !isset($_SESSION['gameName'])){
 			$x->gameId = 0;
 			require('resetGame.php');
 		} else {

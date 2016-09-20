@@ -43,5 +43,6 @@
 	}
 	// some final values to send
 	$x->player = $_SESSION['player'];
+	$x->map = $_SESSION['map'];
 	echo json_encode($x);
 ?>

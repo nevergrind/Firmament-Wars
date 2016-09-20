@@ -67,8 +67,8 @@ var title = {
 		},
 		FlatEarth: {
 			name: 'Flat Earth',
-			tiles: 60,
-			players: 6
+			tiles: 79,
+			players: 8
 		}
 	},
 	chatDrag: false,
@@ -136,7 +136,7 @@ var title = {
 					name: name,
 					pw: pw,
 					players: players,
-					map: title.mapData[my.mapKey].name
+					map: title.mapData[g.map.key].name
 				}
 			}).done(function(data) {
 				my.player = data.player;
@@ -252,6 +252,7 @@ function joinGame(){
 	}).done(function(data) {
 		console.info(data);
 		my.player = data.player;
+		g.map = data.mapData;
 		lobby.init(data);
 		lobby.join(); // normal join
 	}).fail(function(data){

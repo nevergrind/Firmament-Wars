@@ -394,6 +394,12 @@ function getGameState(){
 						audio.play('culture');
 					}
 				}
+				if (data.get !== undefined){
+					if (!data.getBonus){
+						// no bonus troops; only broadcast to self
+						chat(data.get + ': ' + my.nation + ' receives <span class="chat-manpower">' + data.manpowerBonus + '</span> armies!');
+					}
+				}
 			}).fail(function(data){
 				console.info(data.responseText);
 				serverError(data);
@@ -426,6 +432,7 @@ function gameDefeat(){
 	}).fail(function(data){
 		serverError(data);
 	});
+	g.keepAlive();
 }
 
 
@@ -458,6 +465,7 @@ function gameVictory(){
 	}).fail(function(data){
 		serverError(data);
 	});
+	g.keepAlive();
 }
 function updateTileDefense(){
 	$.ajax({

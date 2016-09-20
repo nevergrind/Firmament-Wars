@@ -1,15 +1,15 @@
 // map.js
 // map zooming and scrolling
 function mouseZoomIn(e){
-	if (g.mouse.mouseZoom >= 200){
-		g.mouse.mouseZoom = 200;
+	if (g.mouse.zoom >= 200){
+		g.mouse.zoom = 200;
 	} else {
-		g.mouse.mouseZoom += 5;
+		g.mouse.zoom += 5;
 		TweenMax.to("#worldWrap", .5, {
-			transformOrigin: g.mouse.mouseTransX + "% " + g.mouse.mouseTransY + "%",
+			transformOrigin: g.mouse.transX + "% " + g.mouse.transY + "%",
 			force3D: false,
 			smoothOrigin: true,
-			scale: g.mouse.mouseZoom / 100,
+			scale: g.mouse.zoom / 100,
 			onUpdate: function(){
 				worldMap[0].applyBounds();
 			}, 
@@ -21,15 +21,15 @@ function mouseZoomIn(e){
 }
 
 function mouseZoomOut(e){
-	if (g.mouse.mouseZoom <= 100){
-		g.mouse.mouseZoom = 100;
+	if (g.mouse.zoom <= 100){
+		g.mouse.zoom = 100;
 	} else {
-		g.mouse.mouseZoom -= 5;
+		g.mouse.zoom -= 5;
 		TweenMax.to("#worldWrap", .5, {
 			force3D: false,
 			smoothOrigin: true,
-			transformOrigin: g.mouse.mouseTransX + "% " + g.mouse.mouseTransY + "%",
-			scale: g.mouse.mouseZoom / 100,
+			transformOrigin: g.mouse.transX + "% " + g.mouse.transY + "%",
+			scale: g.mouse.zoom / 100,
 			onUpdate: function(){
 				worldMap[0].applyBounds();
 			}, 
@@ -55,8 +55,8 @@ if (!isFirefox){
 function setMousePosition(X, Y){
 	var x = ~~((X / g.map.sizeX) * 100);
 	var y = ~~((Y / g.map.sizeY) * 100);
-	g.mouse.mouseTransX = x;
-	g.mouse.mouseTransY = y;
+	g.mouse.transX = x;
+	g.mouse.transY = y;
 }
 if (!isFirefox){
 	$("body").on("mousewheel", function(e){
@@ -87,7 +87,8 @@ $("#gameWrap").on('click', '#surrender', function(){
 $("#createGameWrap").on('click', '.mapSelect', function(){
 	var x = $(this).text();
 	var key = x.replace(/ /g,'');
-	my.mapKey = key;
+	g.map.name = x;
+	g.map.key = key;
 	document.getElementById('createGameMap').innerHTML = x;
 	document.getElementById('createGameTiles').innerHTML = title.mapData[key].tiles;
 	document.getElementById('createGamePlayers').innerHTML = title.mapData[key].players;

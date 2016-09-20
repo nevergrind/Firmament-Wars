@@ -254,7 +254,7 @@ var lobby = {
 					if (x.startGame){
 						if (!lobby.gameStarted){
 							lobby.gameStarted = true;
-							lobbyCountdown();
+							lobbyCountdown(x);
 						}
 					}
 					if (!x.hostFound){
@@ -426,7 +426,7 @@ function Nation(){
 	return this;
 }
 
-function loadGameState(){
+function loadGameState(x){
 	g.lock(1);
 	var e1 = document.getElementById("mainWrap");
 	if (e1 !== null){
@@ -434,10 +434,15 @@ function loadGameState(){
 			alpha: 0
 		});
 	}
+	console.info(x);
+	if (x !== undefined){
+		g.map.key = x.map.replace(/ /g, '');
+	}
 	// load map
+	console.warn("Loading: " + g.map.key + ".php");
 	$.ajax({
 		type: 'GET',
-		url: 'maps/' + g.map.name + '.php'
+		url: 'maps/' + g.map.key + '.php'
 	}).done(function(data){
 		document.getElementById('worldWrap').innerHTML = data;
 		initDom();
@@ -449,12 +454,44 @@ function loadGameState(){
 			type: "GET",
 			url: "php/loadGameState.php"
 		}).done(function(data){
+			// set map data
+			g.map.sizeX = data.mapData.sizeX;
+			g.map.sizeY = data.mapData.sizeY;
+			g.map.name = data.mapData.name;
+			g.map.tiles = data.mapData.tiles;
+			// set worldWrap CSS
+			var css = '';
+			if (g.map.name === "Flat Earth"){
+				css = 
+				'<style>#worldWrap{ '+
+					'position: absolute; '+
+					'top: 0%; '+
+					'left: 0%; '+
+					'width: ' + ((g.map.sizeX / g.screen.width) * 100) + '%; '+
+					'height: ' + ((g.map.sizeY / g.screen.height) * 100) + '%; '+
+				'}</style>';
+			}
+			if (css){
+				$DOM.head.append(css);
+			}
+			
 			console.warn(data.tiles.length, g.map.tiles);
 			if (data.tiles.length < g.map.tiles){
-				setTimeout(function(){
-					loadGameState();
-				}, 1000);
+				/*
+				if (g.loadAttempts < 10){
+					setTimeout(function(){
+						g.loadAttempts++;
+						loadGameState();
+					}, 1000);
+				} else {
+					Msg("Failed to load game data");
+					setTimeout(function(){
+						window.onbeforeunload = null;
+						location.reload();
+					}, 3000);
+				}
 				return;
+				*/
 			}
 			
 			audio.ambientInit();
@@ -541,9 +578,12 @@ function loadGameState(){
 					defense: d.defense
 				}
 				// init flag unit values
-				document.getElementById('unit' + i).textContent = d.units === 0 ? 0 : d.units;
-				if (d.units){
-					document.getElementById('unit' + i).style.visibility = 'visible';
+				var zig = document.getElementById('unit' + i);
+				if (zig !== null){
+					zig.textContent = d.units === 0 ? 0 : d.units;
+					if (d.units){
+						zig.style.visibility = 'visible';
+					}
 				}
 				if (data.tiles[i].player){
 					TweenMax.set(document.getElementById('land' + i), {
@@ -568,10 +608,12 @@ function loadGameState(){
 				var x = a[i].getAttribute('x') - 24;
 				var y = a[i].getAttribute('y') - 24;
 				var flag = 'blank.png';
-				if (!t.flag && t.units){ // FIX TODO
-					flag = "Player0.jpg";
-				} else if (t.flag){
-					flag = t.flag;
+				if (t !== undefined){
+					if (!t.flag && t.units){ // FIX TODO
+						flag = "Player0.jpg";
+					} else if (t.flag){
+						flag = t.flag;
+					}
 				}
 				// dynamically add svg flag image to the map
 				var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
@@ -678,8 +720,9 @@ function loadGameState(){
 					});
 				}).on("mouseleave", function(){
 					var land = this.id.slice(4)*1;
+					console.info('land: ', land);
 					if (game.tiles.length > 0){
-						var player = game.tiles[land].player;
+						var player = game.tiles[land] !== undefined ? game.tiles[land].player : 0;
 						TweenMax.to(this, .25, {
 							fill: color[player]
 						});
@@ -723,12 +766,12 @@ function startGame(){
 		});
 	}
 }
-function lobbyCountdown(){
+function lobbyCountdown(x){
 	new Audio('sound/beepHi.mp3');
 	var loadTime = Date.now() - g.startTime;
 	if (loadTime < 1000){
 		$("#titleMain").remove();
-		loadGameState(); // page refresh
+		loadGameState(x); // page refresh
 	} else {
 		// normal countdown
 		var e = document.getElementById('countdown');

@@ -75,6 +75,7 @@
 			// last insert id is GET value
 			
 			$x->get = mysqli_insert_id($link);
+			$x->manpowerBonus = $manpowerBonus;
 			$bonus = getReward($x->get);
 			$x->getBonus = $bonus->units;
 			$_SESSION['manpower'] += $bonus->units;

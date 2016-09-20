@@ -2,41 +2,13 @@
 	require('values.php');
 	require('connect1.php');
 	
-	$map = 'Flat Earth';
-	$mapIndex = 0;
+	require('mapData.php');
+	$map = $mapData[$_SESSION['mapIndex']]->name;
+	$maxTiles = $mapData[$_SESSION['mapIndex']]->tiles;
+	$tileName = $mapData[$_SESSION['mapIndex']]->tileNames;
+	$start = $mapData[$_SESSION['mapIndex']]->startTiles;
 	
-	$mapData = array(
-		(object) array(
-			'name' => 'Earth Alpha',
-			'tiles' => 83,
-			'maxPlayers' => 8
-		),
-		(object) array(
-			'name' => 'Flat Earth',
-			'tiles' => 60,
-			'maxPlayers' => 6
-		)
-	);
-	// find map data
-	$count = count($mapData);
-	for ($i = 0; $i < $count; $i++){
-		if ($map === $mapData[$i]->name){
-			$mapIndex = $i;
-		}
-	}
-	echo '<br>'. $mapData[$mapIndex]->name;
-	/*
-		EarthAlpha: {
-			name: 'Earth Alpha',
-			tiles: 83,
-			players: 8
-		},
-		FlatEarth: {
-			name: 'Flat Earth',
-			tiles: 60,
-			players: 6
-		}
-	*/
+	var_dump($mapData);
 	exit;
 	$_SESSION['production'] = 20;
 	$_SESSION['turnBonus'] = 0;

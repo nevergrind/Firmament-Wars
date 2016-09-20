@@ -119,7 +119,6 @@
 	$_SESSION['tech']->atomicTheory = 0;
 	$_SESSION['government'] = 'Despotism';
 	// government perks
-	// global government bonuses
 	$_SESSION['attackCost'] = 7;
 	$_SESSION['splitAttackCost'] = 0;
 	$_SESSION['buildCost'] = 1;
@@ -130,6 +129,8 @@
 	$_SESSION['weaponCost'] = 1;
 	
 	require('initChatId.php');
+	// determine map data
+	require('setMapIndex.php');
 	
 	// determine player number
 	$query = 'select player, startTile from fwplayers where game=?';
@@ -167,6 +168,7 @@
 	require('initLobby.php');
 	
 	$x->player = $_SESSION['player'];
+	$x->mapData = $mapData[$_SESSION['mapIndex']];
 	
 	// update chat
 	$msg = '<span class="chat-warning">'. $_SESSION['account'] . ' has joined the game.</span>';

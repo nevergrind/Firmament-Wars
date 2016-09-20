@@ -355,7 +355,7 @@ var animate = {
 		bomb.setAttributeNS(null,"width",16);
 		bomb.setAttributeNS(null,"height",12);
 		bomb.setAttributeNS(null,"x",x-6);
-		bomb.setAttributeNS(null,"y",y-690);
+		bomb.setAttributeNS(null,"y",y - g.screen.height);
 		DOM.world.appendChild(bomb);
 		TweenMax.to(bomb, 1, {
 			attr: {
