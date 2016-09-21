@@ -67,7 +67,7 @@ var title = {
 		},
 		FlatEarth: {
 			name: 'Flat Earth',
-			tiles: 79,
+			tiles: 78,
 			players: 8
 		}
 	},

@@ -758,13 +758,7 @@ table td, .table th, .table td {
 	pointer-events: none;
 }
 .hole{
-	fill: none;
-	stroke: #66ccff;
-	stroke-opacity: 1;
-	stroke-width: 1;
-	fill-rule:evenodd;
-	stroke-linejoin:round;
-	stroke-miterlimit:4;
+	fill-rule: evenodd;
 }
 .land{
 	fill: #002F73;
