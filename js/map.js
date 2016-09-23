@@ -79,6 +79,7 @@ $("#worldWrap").on("mousemove", function(e){
 		setMousePosition(e.originalEvent.layerX, e.originalEvent.layerY);
 	} else {
 		setMousePosition(e.offsetX, e.offsetY);
+		//console.info(e.offsetX, e.offsetY);
 	}
 });
 $("#gameWrap").on('click', '#surrender', function(){

@@ -393,7 +393,7 @@ a:hover{
 	position: absolute;
 	background: '#ffffff';
 	width: 1024px;
-	height: 690px;
+	height: 768px;
 	z-index: 4999;
 	opacity: 0;
 	pointer-events: none;
@@ -812,6 +812,7 @@ text{
 	stroke-miterlimit: 4;
 	stroke-dasharray: 2,2;
 	pointer-events: none;
+	fill: none;
 }
 .mapSelect{
 	text-shadow: none;

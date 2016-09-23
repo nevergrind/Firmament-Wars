@@ -52,7 +52,7 @@ var g = {
 	},
 	screen: {
 		width: 1024,
-		height: 690
+		height: 768
 	},
 	mouse: {
 		zoom: 100,
@@ -327,7 +327,6 @@ var my = {
 	},
 	flashTile: function(tile){
 		if (!my.attackOn){
-			console.info(my.lastTgt, my.tgt);
 			// last tgt
 			if (my.lastTgt !== my.tgt){
 				var e4 = document.getElementById('flag' + my.lastTgt);
@@ -347,7 +346,7 @@ var my = {
 			var e3 = document.getElementById('flag' + tile);
 			TweenMax.to(e3, .5, {
 				transformOrigin: '50% 50%',
-				scale: 1.5,
+				scale: 2,
 				ease: Power3.easeOut
 			});
 			// flag unit text

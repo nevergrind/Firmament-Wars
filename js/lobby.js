@@ -706,7 +706,8 @@ function loadGameState(x){
 						var box = this.getBBox();
 						var x = Math.round(box.x + (box.width/2));
 						var y = Math.round(box.y + (box.height/2));
-						console.info(this.id, x, y, e.which);
+						console.clear();
+						console.warn(this.id, x, y, e.which);
 						triggerAction(this);
 					});
 				}

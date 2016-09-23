@@ -411,88 +411,106 @@ echo '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 	</g>
 	
 	<g>
-		<text x="491" y="298" class="unit" id="unit0">0</text>
-		<text x="1349" y="380" class="unit" id="unit1">0</text>
-		<text x="1081" y="688" class="unit" id="unit2">0</text>
-		<text x="1099" y="590" class="unit" id="unit3">0</text>
-		<text x="1094" y="298" class="unit" id="unit4">0</text>
-		<text x="1301" y="441" class="unit" id="unit5">0</text>
-		<text x="632" y="864" class="unit" id="unit6">0</text>
-		<text x="641" y="768" class="unit" id="unit7">0</text>
-		<text x="1167" y="330" class="unit" id="unit8">0</text>
-		<text x="1745" y="776" class="unit" id="unit9">0</text>
-		<text x="1647" y="759" class="unit" id="unit10">0</text>
-		<text x="1692" y="713" class="unit" id="unit11">0</text>
-		<text x="1766" y="720" class="unit" id="unit12">0</text>
-		<text x="1034" y="256" class="unit" id="unit13">0</text>
-		<text x="1276" y="373" class="unit" id="unit14">0</text>
-		<text x="1185" y="606" class="unit" id="unit15">0</text>
-		<text x="999" y="284" class="unit" id="unit16">0</text>
-		<text x="1044" y="301" class="unit" id="unit17">0</text>
-		<text x="954" y="511" class="unit" id="unit18">0</text>
-		<text x="1415" y="475" class="unit" id="unit19">0</text>
-		<text x="1435" y="420" class="unit" id="unit20">0</text>
-		<text x="551" y="240" class="unit" id="unit21">0</text>
-		<text x="1111" y="237" class="unit" id="unit22">0</text>
-		<text x="481" y="474" class="unit" id="unit23">0</text>
-		<text x="635" y="690" class="unit" id="unit24">0</text>
-		<text x="730" y="649" class="unit" id="unit25">0</text>
-		<text x="707" y="716" class="unit" id="unit26">0</text>
-		<text x="665" y="602" class="unit" id="unit27">0</text>
-		<text x="1421" y="325" class="unit" id="unit28">0</text>
-		<text x="1154" y="691" class="unit" id="unit29">0</text>
-		<text x="1125" y="766" class="unit" id="unit30">0</text>
-		<text x="1129" y="500" class="unit" id="unit31">0</text>
-		<text x="658" y="232" class="unit" id="unit32">0</text>
-		<text x="439" y="234" class="unit" id="unit33">0</text>
-		<text x="561" y="170" class="unit" id="unit34">0</text>
-		<text x="426" y="175" class="unit" id="unit35">0</text>
-		<text x="1589" y="397" class="unit" id="unit36">0</text>
-		<text x="1492" y="354" class="unit" id="unit37">0</text>
-		<text x="1609" y="305" class="unit" id="unit38">0</text>
-		<text x="594" y="541" class="unit" id="unit39">0</text>
-		<text x="593" y="460" class="unit" id="unit40">0</text>
-		<text x="1077" y="255" class="unit" id="unit41">0</text>
-		<text x="1220" y="532" class="unit" id="unit42">0</text>
-		<text x="1006" y="392" class="unit" id="unit43">0</text>
-		<text x="569" y="629" class="unit" id="unit44">0</text>
-		<text x="1149" y="408" class="unit" id="unit45">0</text>
-		<text x="1048" y="193" class="unit" id="unit46">0</text>
-		<text x="978" y="243" class="unit" id="unit47">0</text>
-		<text x="824" y="129" class="unit" id="unit48">0</text>
-		<text x="1252" y="480" class="unit" id="unit49">0</text>
-		<text x="1206" y="363" class="unit" id="unit50">0</text>
-		<text x="904" y="174" class="unit" id="unit51">0</text>
-		<text x="1718" y="347" class="unit" id="unit52">0</text>
-		<text x="1317" y="291" class="unit" id="unit53">0</text>
-		<text x="1547" y="470" class="unit" id="unit54">0</text>
-		<text x="1082" y="409" class="unit" id="unit55">0</text>
-		<text x="927" y="441" class="unit" id="unit56">0</text>
-		<text x="1141" y="270" class="unit" id="unit57">0</text>
-		<text x="1241" y="713" class="unit" id="unit58">0</text>
-		<text x="417" y="411" class="unit" id="unit59">0</text>
-		<text x="1206" y="363" class="unit" id="unit60">0</text>
-		<text x="904" y="174" class="unit" id="unit61">0</text>
-		<text x="1718" y="347" class="unit" id="unit62">0</text>
-		<text x="1317" y="291" class="unit" id="unit63">0</text>
-		<text x="1547" y="470" class="unit" id="unit64">0</text>
-		<text x="1082" y="409" class="unit" id="unit65">0</text>
-		<text x="927" y="441" class="unit" id="unit66">0</text>
-		<text x="1141" y="270" class="unit" id="unit67">0</text>
-		<text x="1241" y="713" class="unit" id="unit68">0</text>
-		<text x="1141" y="270" class="unit" id="unit69">0</text>
-		<text x="1241" y="713" class="unit" id="unit70">0</text>
-		<text x="417" y="411" class="unit" id="unit71">0</text>
-		<text x="1206" y="363" class="unit" id="unit72">0</text>
-		<text x="904" y="174" class="unit" id="unit73">0</text>
-		<text x="1718" y="347" class="unit" id="unit74">0</text>
-		<text x="1317" y="291" class="unit" id="unit75">0</text>
-		<text x="1547" y="470" class="unit" id="unit76">0</text>
-		<text x="1082" y="409" class="unit" id="unit77">0</text>
-		<text x="927" y="441" class="unit" id="unit78">0</text>
+		<text x="340" y="952" class="unit" id="unit0">0</text>
+		<text x="344" y="1028" class="unit" id="unit1">0</text>
+		<text x="541" y="1076" class="unit" id="unit2">0</text>
+		<text x="438" y="1074" class="unit" id="unit3">0</text>
+		<text x="441" y="947" class="unit" id="unit4">0</text>
+		<text x="500" y="983" class="unit" id="unit5">0</text>
+		<text x="667" y="658" class="unit" id="unit6">0</text>
+		<text x="572" y="680" class="unit" id="unit7">0</text>
+		<text x="420" y="874" class="unit" id="unit8">0</text>
+		<text x="230" y="970" class="unit" id="unit9">0</text>
+		<text x="560" y="825" class="unit" id="unit10">0</text>
+		<text x="812" y="646" class="unit" id="unit11">0</text>
+		<text x="735" y="705" class="unit" id="unit12">0</text>
+		<text x="845" y="858" class="unit" id="unit13">0</text>
+		<text x="824" y="785" class="unit" id="unit14">0</text>
+		<text x="713" y="796" class="unit" id="unit15">0</text>
+		<text x="956" y="720" class="unit" id="unit16">0</text>
+		<text x="987" y="768" class="unit" id="unit17">0</text>
+		<text x="978" y="818" class="unit" id="unit18">0</text>
+		<text x="906" y="858" class="unit" id="unit19">0</text>
+		<text x="954" y="859" class="unit" id="unit20">0</text>
+		<text x="944" y="898" class="unit" id="unit21">0</text>
+		<text x="847" y="965" class="unit" id="unit22">0</text>
+		<text x="803" y="1044" class="unit" id="unit23">0</text>
+		<text x="831" y="1108" class="unit" id="unit24">0</text>
+		<text x="912" y="1104" class="unit" id="unit25">0</text>
+		<text x="983" y="1148" class="unit" id="unit26">0</text>
+		<text x="1019" y="1235" class="unit" id="unit27">0</text>
+		<text x="1120" y="1265" class="unit" id="unit28">0</text>
+		<text x="1144" y="1010" class="unit" id="unit29">0</text>
+		<text x="1077" y="1040" class="unit" id="unit30">0</text>
+		<text x="1021" y="1002" class="unit" id="unit31">0</text>
+		<text x="1118" y="949" class="unit" id="unit32">0</text>
+		<text x="1064" y="952" class="unit" id="unit33">0</text>
+		<text x="1070" y="899" class="unit" id="unit34">0</text>
+		<text x="1093" y="857" class="unit" id="unit35">0</text>
+		<text x="1281" y="653" class="unit" id="unit36">0</text>
+		<text x="1171" y="699" class="unit" id="unit37">0</text>
+		<text x="889" y="632" class="unit" id="unit38">0</text>
+		<text x="757" y="657" class="unit" id="unit39">0</text>
+		<text x="943" y="651" class="unit" id="unit40">0</text>
+		<text x="1245" y="1104" class="unit" id="unit41">0</text>
+		<text x="1026" y="940" class="unit" id="unit42">0</text>
+		<text x="946" y="932" class="unit" id="unit43">0</text>
+		<text x="905" y="917" class="unit" id="unit44">0</text>
+		<text x="877" y="940" class="unit" id="unit45">0</text>
+		<text x="856" y="911" class="unit" id="unit46">0</text>
+		<text x="1020" y="626" class="unit" id="unit47">0</text>
+		<text x="1029" y="560" class="unit" id="unit48">0</text>
+		<text x="1123" y="639" class="unit" id="unit49">0</text>
+		<text x="1171" y="551" class="unit" id="unit50">0</text>
+		<text x="1251" y="569" class="unit" id="unit51">0</text>
+		<text x="1150" y="388" class="unit" id="unit52">0</text>
+		<text x="948" y="91" class="unit" id="unit53">0</text>
+		<text x="1375" y="468" class="unit" id="unit54">0</text>
+		<text x="1194" y="242" class="unit" id="unit55">0</text>
+		<text x="1248" y="331" class="unit" id="unit56">0</text>
+		<text x="1311" y="407" class="unit" id="unit57">0</text>
+		<text x="1171" y="807" class="unit" id="unit58">0</text>
+		<text x="1038" y="823" class="unit" id="unit59">0</text>
+		<text x="1089" y="801" class="unit" id="unit60">0</text>
+		<text x="1107" y="749" class="unit" id="unit61">0</text>
+		<text x="1077" y="688" class="unit" id="unit62">0</text>
+		<text x="1012" y="689" class="unit" id="unit63">0</text>
+		<text x="1030" y="723" class="unit" id="unit64">0</text>
+		<text x="1051" y="760" class="unit" id="unit65">0</text>
+		<text x="965" y="1027" class="unit" id="unit66">0</text>
+		<text x="882" y="1032" class="unit" id="unit67">0</text>
+		<text x="1018" y="1088" class="unit" id="unit68">0</text>
+		<text x="1093" y="1203" class="unit" id="unit69">0</text>
+		<text x="1082" y="1146" class="unit" id="unit70">0</text>
+		<text x="999" y="881" class="unit" id="unit71">0</text>
+		<text x="1164" y="1157" class="unit" id="unit72">0</text>
+		<text x="1119" y="1072" class="unit" id="unit73">0</text>
+		<text x="994" y="936" class="unit" id="unit74">0</text>
+		<text x="494" y="874" class="unit" id="unit75">0</text>
+		<text x="636" y="777" class="unit" id="unit76">0</text>
+		<text x="652" y="732" class="unit" id="unit77">0</text>
 	</g>
 	<g>
 		<!-- adjPaths -->
+    <path d="M 1164,370 1191,345" class="paths"/>
+    <path d="M 1217,532 1176,531" class="paths"/>
+    <path d="M 1149,563 1138,597" class="paths"/>
+    <path d="M 1017,555 1024,587" class="paths"/>
+	
+    <path d="M 976,61 Q 1040 50 1132 213" class="paths"/>
+    <path d="M 1140,414 Q 1050 460 1150 519" class="paths"/>
+    <path d="M 1357,511 Q 1370 560 1296 571" class="paths"/>
+    <path d="M 1303,586 Q 1350 640 1286 655" class="paths"/>
+    <path d="M 1222,493 Q 1230 450 1183 432" class="paths"/>
+    <path d="M 812,597 Q 850 555 896 597" class="paths"/>
+    <path d="M 557,841 Q 600 860 610 790" class="paths"/>
+    <path d="M 557,1118 Q 690 1200 801 1127" class="paths"/>
+    <path d="M 1178,1135 Q 1200 1170 1236 1132" class="paths"/>
+    <path d="M 772,1021 Q 780 950 819 962" class="paths"/>
+    <path d="M 852,929 Q 790 910 828 894" class="paths"/>
+    <path d="M 828,890 Q 800 865 815 840" class="paths"/>
+    <path d="M 812,835 Q 750 850 779 806" class="paths"/>
+	
 	</g>';
 	
 	require ('mapTargeting.php');
