@@ -3,7 +3,7 @@ function Target(o){
 	if (o === undefined){
 		o = {};
 	}
-	this.cost = o.cost ? o.cost : 7;
+	this.cost = o.cost ? o.cost : 10;
 	this.minimum = o.minimum !== undefined ? o.minimum : 2;
 	this.attackName = o.attackName ? o.attackName : 'attack';
 	this.splitAttack = o.splitAttack ? o.splitAttack : false;

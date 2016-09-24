@@ -56,10 +56,10 @@
 				
 				require('php/connect1.php');
 				echo '<div class="accountDetails text-primary">
-						<i id="musicToggle" class="fa fa-volume-up" 
+						<i id="musicToggle" class="fa fa-volume-off" 
 						data-toggle="tooltip" 
 						data-placement="right" 
-						title="Toggle music"></i>';
+						title="Toggle sound"></i>';
 				if (isset($_SESSION['email'])){
 					// crystals
 					$query = "select crystals from accounts where email='". $_SESSION['email'] ."' limit 1";
@@ -519,7 +519,7 @@
 									</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i>
-										<span id='attackCost'>7</span>
+										<span id='attackCost'>10</span>
 									</div>
 								</div>
 								
@@ -532,7 +532,7 @@
 									</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i>
-										<span id="splitAttackCost">3</span>
+										<span id="splitAttackCost">5</span>
 									</div>
 								</div>
 								

@@ -67,11 +67,15 @@ var g = {
 		tiles: 83
 	},
 	updateUserInfo: function(){
-		$.getJSON('https://geoip-db.com/json/geoip.php?jsonp=?') 
-		.done (function(location){
-			location.latitude += '';
-			location.longitude += '';
-			g.config.location = location;
+		$.ajax({
+			async: true,
+			type: 'GET',
+			dataType: 'jsonp',
+			url: 'https://geoip-db.com/json/geoip.php?jsonp=?'
+		}).done(function(data){
+			data.latitude += '';
+			data.longitude += '';
+			g.config.location = data;
 			var x = g.config;
 			var foo = JSON.stringify(x);
 			localStorage.setItem('config', foo);
@@ -95,15 +99,15 @@ var g = {
 	},
 	config: {
 		audio: {
-			musicOn: true
+			musicOn: false
 		}
 	},
-	keepAlive: function repeat(){
+	keepAlive: function(){
 		$.ajax({
 			type: 'GET',
 			url: "php/keepAlive.php"
 		}).always(function() {
-			setTimeout(repeat, 300000);
+			setTimeout(g.keepAlive, 300000);
 		});
 	}
 }
@@ -213,7 +217,7 @@ var my = {
 	lastTarget: {},
 	units: 0,
 	food: 0,
-	production: 10,
+	production: 25,
 	culture: 0,
 	oBonus: -1,
 	dBonus: -1,
@@ -233,8 +237,8 @@ var my = {
 	motionPath: [0,0,0,0,0,0],
 	attackOn: false,
 	splitAttack: false,
-	splitAttackCost: 3,
-	attackCost: 7,
+	splitAttackCost: 5,
+	attackCost: 10,
 	deployCost: 20,
 	recruitCost: 40,
 	weaponCost: 1,
@@ -721,7 +725,9 @@ audio.init = (function(){
 	console.info("Initializing audio...");
 	audio.load.title();
 	audio.play("ReturnOfTheFallen", 1);
-	if (!g.config.audio.musicOn){
+	if (g.config.audio.musicOn){
+		document.getElementById('musicToggle').className = 'fa fa-volume-up';
+	} else {
 		audio.pause();
 		document.getElementById('musicToggle').className = 'fa fa-volume-off';
 	}

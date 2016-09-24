@@ -379,34 +379,35 @@ function getGameState(){
 			});
 		}
 	})();
-	
-	(function repeat(){ 
-		if (!g.over){
-			$.ajax({
-				type: "GET",
-				url: "php/updateResources.php"
-			}).done(function(data){
-				console.info('resource: ', data);
-				setResources(data);
-				if (data.cultureMsg !== undefined){
-					if (data.cultureMsg){
-						chat(data.cultureMsg);
-						audio.play('culture');
+	setTimeout(function(){
+		(function repeat(){
+			if (!g.over){
+				$.ajax({
+					type: "GET",
+					url: "php/updateResources.php"
+				}).done(function(data){
+					console.info('resource: ', data);
+					setResources(data);
+					if (data.cultureMsg !== undefined){
+						if (data.cultureMsg){
+							chat(data.cultureMsg);
+							audio.play('culture');
+						}
 					}
-				}
-				if (data.get !== undefined){
-					if (!data.getBonus){
-						// no bonus troops; only broadcast to self
-						chat(data.get + ': ' + my.nation + ' receives <span class="chat-manpower">' + data.manpowerBonus + '</span> armies!');
+					if (data.get !== undefined){
+						if (!data.getBonus){
+							// no bonus troops; only broadcast to self
+							chat(data.get + ': ' + my.nation + ' receives <span class="chat-manpower">' + data.manpowerBonus + '</span> armies!');
+						}
 					}
-				}
-			}).fail(function(data){
-				console.info(data.responseText);
-				serverError(data);
-			});
-			setTimeout(repeat, 5000); // setInterval preferred with websockets
-		}
-	})();
+				}).fail(function(data){
+					console.info(data.responseText);
+					serverError(data);
+				});
+				setTimeout(repeat, 5000); // setInterval preferred with websockets
+			}
+		})();
+	}, 5000);
 }
 function gameDefeat(){
 	new Audio('sound/shotgun2.mp3');

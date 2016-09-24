@@ -33,7 +33,7 @@ var title = {
 						url: "php/titleUpdate.php"
 					}).done(function(data){
 						// report chat messages
-						console.log("Ping: ", Date.now() - start);
+						console.log("Ping: ", Date.now() - start, data);
 						var len = data.chat.length;
 						if (len > 0){
 							for (var i=0; i<len; i++){

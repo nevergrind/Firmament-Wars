@@ -50,7 +50,7 @@ var lobby = {
 			str = '<div id="lobbyGovName" class="text-primary">Fascism</div>\
 				<div id="lobbyGovPerks">\
 					<div>Fervor doubles bonus troops</div>\
-					<div>5-cost Attack</div>\
+					<div>1/2 cost Attack</div>\
 					<div>Start with Great General</div>\
 					<div>Free Deploy cost</div>\
 				</div>';
