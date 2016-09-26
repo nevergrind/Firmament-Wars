@@ -27,7 +27,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head id='head'>
-	<title>Firmament Wars | Political Strategy Game | Free Online Multiplayer</title>
+	<title>Firmament Wars | Political Grand Strategy Game | Free Online Multiplayer</title>
 	<meta charset="utf-8">
 	<meta name="keywords" content="risk, civilization, online, multiplayer, free, game, political, strategy">
 	<meta name="description" content="Firmament Wars is a political grand strategy warfare game with free online multiplayer. Compete in real time with up to eight players for global domination!">
@@ -50,7 +50,7 @@
 		<img id="worldTitle" src="images/flat4.jpg">
 	
 		<div id="titleMain" class="portal">
-			<header>
+			<header class="shadow4">
 				<div id="headerWrap">
 				<?php
 				
@@ -545,7 +545,7 @@
 									</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i>
-										<span id='deployCost'>20</cost>
+										<span id='deployCost'>10</cost>
 									</div>
 								</div>
 								
@@ -558,7 +558,7 @@
 									</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i>
-										<span id="recruitCost">40</span>
+										<span id="recruitCost">30</span>
 									</div>
 								</div>
 							</div>

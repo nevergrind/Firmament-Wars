@@ -243,6 +243,10 @@ function getGameState(){
 							updateTargetStatus = true;
 						}
 						setTileUnits(i, unitColor);
+						TweenMax.to(".mapBars" + i, 1.25, {
+							opacity: 1,
+							ease: Linear.easeNone
+						});
 					}
 					if (updateTargetStatus){
 						showTarget(document.getElementById('land' + i));
@@ -297,7 +301,7 @@ function getGameState(){
 							// red dot
 							dot.setAttributeNS(null,"cx",x+ (box.width/2) + (Math.random()*12-6));
 							dot.setAttributeNS(null,"cy",y+ (box.height/2) + (Math.random()*12-6));
-							dot.setAttributeNS(null,"rx",2);
+							dot.setAttributeNS(null,"rx",1);
 							dot.setAttributeNS(null,"ry",1);
 							dot.setAttributeNS(null,"fill",'red');
 							dot.setAttributeNS(null,"stroke",'none');
@@ -307,7 +311,7 @@ function getGameState(){
 								startAt: {
 									opacity: 1
 								},
-								fill: '#880000',
+								fill: '#00ff00',
 								ease: SteppedEase.config(1),
 								repeat: -1,
 								yoyo: true
@@ -315,13 +319,13 @@ function getGameState(){
 							(function(dot){
 								setTimeout(function(){
 									dot.parentNode.removeChild(dot);
-								}, 7000);
+								}, 4500);
 							})(dot);
 							if (my.account !== account){
 								(function(tile){
 									setTimeout(function(){
 										animate.nuke(tile);
-									}, 7000);
+									}, 4500);
 								})(tile);
 							}
 						}

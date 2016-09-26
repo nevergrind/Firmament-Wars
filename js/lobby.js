@@ -459,6 +459,23 @@ function loadGameState(x){
 			g.map.sizeY = data.mapData.sizeY;
 			g.map.name = data.mapData.name;
 			g.map.tiles = data.mapData.tiles;
+			
+			console.warn(data.tiles.length, g.map.tiles);
+			if (data.tiles.length < g.map.tiles){
+				if (g.loadAttempts < 10){
+					setTimeout(function(){
+						g.loadAttempts++;
+						loadGameState();
+					}, 1000);
+				} else {
+					Msg("Failed to load game data");
+					setTimeout(function(){
+						window.onbeforeunload = null;
+						location.reload();
+					}, 3000);
+				}
+				return;
+			}
 			// set worldWrap CSS
 			var css = '';
 			if (g.map.name === "Flat Earth"){
@@ -473,25 +490,6 @@ function loadGameState(x){
 			}
 			if (css){
 				$DOM.head.append(css);
-			}
-			
-			console.warn(data.tiles.length, g.map.tiles);
-			if (data.tiles.length < g.map.tiles){
-				/*
-				if (g.loadAttempts < 10){
-					setTimeout(function(){
-						g.loadAttempts++;
-						loadGameState();
-					}, 1000);
-				} else {
-					Msg("Failed to load game data");
-					setTimeout(function(){
-						window.onbeforeunload = null;
-						location.reload();
-					}, 3000);
-				}
-				return;
-				*/
 			}
 			
 			audio.ambientInit();
@@ -525,8 +523,8 @@ function loadGameState(x){
 			} else if (my.government === 'Democracy'){
 				my.maxDeployment = 254;
 			} else if (my.government === 'Fundamentalism'){
-				document.getElementById('recruitCost').textContent = 20;
-				my.recruitCost = 20;
+				document.getElementById('recruitCost').textContent = 15;
+				my.recruitCost = 15;
 			} else if (my.government === 'Fascism'){
 				document.getElementById('attackCost').textContent = 5;
 				my.attackCost = 5;
@@ -564,7 +562,8 @@ function loadGameState(x){
 			
 			// initialize client tile data
 			var mapCapitals = document.getElementById('mapCapitals'),
-				mapUpgrades = document.getElementById('mapUpgrades');
+				mapUpgrades = document.getElementById('mapUpgrades'),
+				mapBars = document.getElementById('mapBars');
 			for (var i=0, len=data.tiles.length; i<len; i++){
 				var d = data.tiles[i];
 				game.tiles[i] = {
@@ -612,7 +611,7 @@ function loadGameState(x){
 				var y = a[i].getAttribute('y') - 24;
 				var flag = 'blank.png';
 				if (t !== undefined){
-					if (!t.flag && t.units){ // FIX TODO
+					if (!t.flag && t.units){ // FIX TODO??
 						flag = "Player0.jpg";
 					} else if (t.flag){
 						flag = t.flag;
@@ -624,9 +623,9 @@ function loadGameState(x){
 				svg.setAttributeNS(null, 'height', 24);
 				svg.setAttributeNS(null, 'width', 24);
 				svg.setAttributeNS(null,"x",x);
-				svg.setAttributeNS(null,"y",y);
+				svg.setAttributeNS(null,"y",y + 5);
 				svg.setAttributeNS(null,"class","mapFlag");
-				svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/flags/'+flag);
+				svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/flags/' + flag);
 				mapFlagWrap.appendChild(svg);
 				// add star for capital to map
 				if (game.tiles[i].capital){
@@ -645,12 +644,54 @@ function loadGameState(x){
 						ease: Linear.easeNone
 					});
 				}
+				// map upgrade icons
 				if (game.tiles[i].defense - game.tiles[i].capital ? 1 : 0){
 					var e1 = document.getElementById('unit' + i),
 						box = e1.getBBox();
 					var x = box.x + box.width/2 - 10;
 					var y = box.y + box.height/2 + 10;
 					animate.upgradeIcon(i, x, y);
+				}
+				// food & culture bars
+				var boxHeight = game.tiles[i].culture ? 10 : 6,
+					boxOpacity = game.tiles[i].player ? 1 : 0,
+					foodWidth = game.tiles[i].food * 3;
+				var svg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+				svg.setAttributeNS(null, 'width', 26);
+				svg.setAttributeNS(null, 'height', boxHeight);
+				svg.setAttributeNS(null,"x",x + 2);
+				svg.setAttributeNS(null,"y",y + 26);
+				svg.setAttributeNS(null,"fill","#888888");
+				svg.setAttributeNS(null,"stroke","#000000");
+				svg.setAttributeNS(null,"opacity",boxOpacity);
+				svg.setAttributeNS(null,"class","mapBars" + i);
+				mapBars.appendChild(svg);
+				// food
+				var svg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+				svg.setAttributeNS(null, 'width', foodWidth);
+				svg.setAttributeNS(null, 'height', 4);
+				svg.setAttributeNS(null,"x",x + 3);
+				svg.setAttributeNS(null,"y",y + 27);
+				svg.setAttributeNS(null,"fill","#88dd00");
+				svg.setAttributeNS(null,"stroke","#000000");
+				svg.setAttributeNS(null,"opacity",boxOpacity);
+				svg.setAttributeNS(null,"class","mapBars" + i);
+				mapBars.appendChild(svg);
+				
+				// culture
+				if (game.tiles[i].culture){
+					var cultureWidth = game.tiles[i].culture * 3;
+					var svg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+					svg.setAttributeNS(null, 'width', cultureWidth);
+					svg.setAttributeNS(null, 'height', 4);
+					svg.setAttributeNS(null,"x",x + 3);
+					svg.setAttributeNS(null,"y",y + 31);
+					svg.setAttributeNS(null,"fill","#dd22dd");
+					svg.setAttributeNS(null,"stroke","#000000");
+					svg.setAttributeNS(null,"opacity",boxOpacity);
+					svg.setAttributeNS(null,"class","mapBars" + i);
+					mapBars.appendChild(svg);
+					
 				}
 			}
 			var str = '';
@@ -795,12 +836,12 @@ function startGame(){
 	}
 }
 function lobbyCountdown(x){
-	new Audio('sound/beepHi.mp3');
 	var loadTime = Date.now() - g.startTime;
 	if (loadTime < 1000){
 		$("#titleMain").remove();
 		loadGameState(x); // page refresh
 	} else {
+		new Audio('sound/beepHi.mp3');
 		// normal countdown
 		var e = document.getElementById('countdown');
 		e.style.display = 'block';

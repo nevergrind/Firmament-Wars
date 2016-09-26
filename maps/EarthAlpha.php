@@ -354,9 +354,70 @@ echo '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
        d="M 415.79861,321.20399 415.47309,349.5243 396.1,370.2 l 9.3,0 1.3,2.2 2.1,2 2.4,2.8 0.8,3.3 0.4,3.5 2.2,1.9 4,1.9 4.8,-5 4.4,-0.1 3.1,2.5 1.6,4.4 1,3.7 2.4,3.6 0.2,4.5 0.8,3 3.9,2 3.6,1.4 2.1,-0.2 -0.6,-2.2 0.4,-3.1 1,-4.4 1.9,-2.8 3.7,-3.1 6,-2.7 6.1,-4.7 4.9,-1.5 3.5,-0.4 3.5,1.4 4.9,-0.8 3.3,3.4 3.8,0.2 2.4,-1.2 1.7,0.9 1.3,-0.8 -0.9,-1.3 0.7,-2.5 -0.5,-1.7 2.4,-1 -5.72088,-3.46342 -2.45523,-8.13295 15.959,-10.58819 9.97438,-16.26591 12.88997,-10.74164 -12.88997,-3.71491 -16.54219,0 -19.36558,-5.18899 z"></path>
 	</g>
 	
+	<g>
+    <path
+       d="m 779,600 q 30 -60 120 -70"
+       class="paths"></path>
+    <path
+       d="m 704,138 52,-17"
+       class="paths"></path>
+    <path
+       d="m 895,125 q 35 10 15 30"
+       class="paths"></path>
+    <path
+       d="M 912,173 949,204"
+       class="paths"></path>
+    <path
+       d="m 968,285 q -40 -10 -15 -45"
+       class="paths"></path>
+    <path
+       d="m 1040,106 14,31"
+       class="paths"></path>
+    <path
+       d="m 581,442 q 40 -40 -25 -77"
+       class="paths"></path>
+    <path
+       d="m 1187,685 30,9"
+       class="paths"></path>
+    <path
+       d="M 905,395 q -50 -40 20 -65"
+       class="paths"></path>
+    <path
+       d="m 1574,513 37,32"
+       class="paths"></path>
+    <path
+       d="m 1777,803 71,34"
+       class="paths"></path>
+    <path
+       d="m 1807,641 q 20 30 -18 51"
+       class="paths"></path>
+    <path
+       d="m 1674,660 -40,-61"
+       class="paths"></path>
+    <path
+       d="m 1640,531 18,-23"
+       class="paths"></path>
+    <path
+       d="m 1697,319 -50,0"
+       class="paths"></path>
+    <path
+       d="m 1621,429 23,23"
+       class="paths"></path>
+    <path
+       d="m 1769,180 q 230 -150 460 0"
+       class="paths"></path>
+    <path
+       d="m 210,180 q -230 -150 -490 0"
+       class="paths"></path>
+    <path
+       d="m 658,900 q 600 125 930 -100"
+       class="paths"></path>
+	</g>
+	
 	<g id="mapCapitals"></g>
 	<g id="mapFlagWrap"></g>
 	<g id="mapUpgrades"></g>
+	<g id="mapBars" class="no-point"></g>
 	<g id="mapAnimations"></g>
 	
 	
@@ -444,65 +505,6 @@ echo '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<text x="588" y="319" class="unit" id="unit80">0</text>
 		<text x="552" y="359" class="unit" id="unit81">0</text>
 		<text x="469" y="361" class="unit" id="unit82">0</text>
-	</g>
-	<g>
-    <path
-       d="m 779,600 q 30 -60 120 -70"
-       class="paths"></path>
-    <path
-       d="m 704,138 52,-17"
-       class="paths"></path>
-    <path
-       d="m 895,125 q 35 10 15 30"
-       class="paths"></path>
-    <path
-       d="M 912,173 949,204"
-       class="paths"></path>
-    <path
-       d="m 968,285 q -40 -10 -15 -45"
-       class="paths"></path>
-    <path
-       d="m 1040,106 14,31"
-       class="paths"></path>
-    <path
-       d="m 581,442 q 40 -40 -25 -77"
-       class="paths"></path>
-    <path
-       d="m 1187,685 30,9"
-       class="paths"></path>
-    <path
-       d="M 905,395 q -50 -40 20 -65"
-       class="paths"></path>
-    <path
-       d="m 1574,513 37,32"
-       class="paths"></path>
-    <path
-       d="m 1777,803 71,34"
-       class="paths"></path>
-    <path
-       d="m 1807,641 q 20 30 -18 51"
-       class="paths"></path>
-    <path
-       d="m 1674,660 -40,-61"
-       class="paths"></path>
-    <path
-       d="m 1640,531 18,-23"
-       class="paths"></path>
-    <path
-       d="m 1697,319 -50,0"
-       class="paths"></path>
-    <path
-       d="m 1621,429 23,23"
-       class="paths"></path>
-    <path
-       d="m 1769,180 q 230 -150 460 0"
-       class="paths"></path>
-    <path
-       d="m 210,180 q -230 -150 -490 0"
-       class="paths"></path>
-    <path
-       d="m 658,900 q 600 125 930 -100"
-       class="paths"></path>
 	</g>';
 	   
 	require ('mapTargeting.php');

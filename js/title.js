@@ -199,7 +199,9 @@ $("#menu").on("click", ".wars", function(){
 	$(".wars").removeClass("selected");
 	$(this).addClass("selected");
 	g.id = $(this).data("id");
-	
+}).on("dblclick", ".wars", function(){
+	g.id = $(this).data("id");
+	joinGame();
 });
 // initializes refresh games
 $("#refreshGames").on("click", function(){

@@ -239,8 +239,8 @@ var my = {
 	splitAttack: false,
 	splitAttackCost: 5,
 	attackCost: 10,
-	deployCost: 20,
-	recruitCost: 40,
+	deployCost: 10,
+	recruitCost: 30,
 	weaponCost: 1,
 	maxDeployment: 12,
 	buildCost: 1,
@@ -332,18 +332,19 @@ var my = {
 	flashTile: function(tile){
 		if (!my.attackOn){
 			// last tgt
+			var flagOrigin = '100% 100%';
 			if (my.lastTgt !== my.tgt){
 				var e4 = document.getElementById('flag' + my.lastTgt);
 				TweenMax.to(e4, .2, {
-					transformOrigin: '50% 50%',
+					transformOrigin: flagOrigin,
 					scale: 1
 				});
 			}
 			// my tgt
 			var e3 = document.getElementById('flag' + tile);
 			TweenMax.to(e3, .5, {
-				transformOrigin: '50% 50%',
-				scale: 1.8,
+				transformOrigin: flagOrigin,
+				scale: 1.4,
 				ease: Power3.easeOut
 			});
 			// flag unit text
@@ -544,7 +545,7 @@ function resizeWindow() {
 
 
 function chat(msg) {
-    while (DOM.chatContent.childNodes.length > 10) {
+    while (DOM.chatContent.childNodes.length > 6) {
         DOM.chatContent.removeChild(DOM.chatContent.firstChild);
     }
     var z = document.createElement('div');

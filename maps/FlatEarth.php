@@ -326,9 +326,33 @@ echo '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
        class="land" />
   </g>
 	
+	<g>
+		<!-- adjPaths -->
+    <path d="M 1164,370 1191,345" class="paths"/>
+    <path d="M 1217,532 1176,531" class="paths"/>
+    <path d="M 1149,563 1138,597" class="paths"/>
+    <path d="M 1017,555 1024,587" class="paths"/>
+	
+    <path d="M 976,61 Q 1040 50 1132 213" class="paths"/>
+    <path d="M 1140,414 Q 1050 460 1150 519" class="paths"/>
+    <path d="M 1357,511 Q 1370 560 1296 571" class="paths"/>
+    <path d="M 1303,586 Q 1350 640 1286 655" class="paths"/>
+    <path d="M 1222,493 Q 1230 450 1183 432" class="paths"/>
+    <path d="M 812,597 Q 850 555 896 597" class="paths"/>
+    <path d="M 557,841 Q 600 860 610 790" class="paths"/>
+    <path d="M 557,1118 Q 690 1200 801 1127" class="paths"/>
+    <path d="M 1178,1135 Q 1200 1170 1236 1132" class="paths"/>
+    <path d="M 772,1021 Q 780 950 819 962" class="paths"/>
+    <path d="M 852,929 Q 790 910 828 894" class="paths"/>
+    <path d="M 828,890 Q 800 865 815 840" class="paths"/>
+    <path d="M 812,835 Q 750 850 779 806" class="paths"/>
+	
+	</g>
+	
 	<g id="mapCapitals"></g>
 	<g id="mapFlagWrap"></g>
 	<g id="mapUpgrades"></g>
+	<g id="mapBars" class="no-point"></g>
 	<g id="mapAnimations"></g>
 	
 	<g>
@@ -410,29 +434,6 @@ echo '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<text x="494" y="874" class="unit" id="unit75">0</text>
 		<text x="636" y="777" class="unit" id="unit76">0</text>
 		<text x="652" y="732" class="unit" id="unit77">0</text>
-	</g>
-	
-	<g>
-		<!-- adjPaths -->
-    <path d="M 1164,370 1191,345" class="paths"/>
-    <path d="M 1217,532 1176,531" class="paths"/>
-    <path d="M 1149,563 1138,597" class="paths"/>
-    <path d="M 1017,555 1024,587" class="paths"/>
-	
-    <path d="M 976,61 Q 1040 50 1132 213" class="paths"/>
-    <path d="M 1140,414 Q 1050 460 1150 519" class="paths"/>
-    <path d="M 1357,511 Q 1370 560 1296 571" class="paths"/>
-    <path d="M 1303,586 Q 1350 640 1286 655" class="paths"/>
-    <path d="M 1222,493 Q 1230 450 1183 432" class="paths"/>
-    <path d="M 812,597 Q 850 555 896 597" class="paths"/>
-    <path d="M 557,841 Q 600 860 610 790" class="paths"/>
-    <path d="M 557,1118 Q 690 1200 801 1127" class="paths"/>
-    <path d="M 1178,1135 Q 1200 1170 1236 1132" class="paths"/>
-    <path d="M 772,1021 Q 780 950 819 962" class="paths"/>
-    <path d="M 852,929 Q 790 910 828 894" class="paths"/>
-    <path d="M 828,890 Q 800 865 815 840" class="paths"/>
-    <path d="M 812,835 Q 750 850 779 806" class="paths"/>
-	
 	</g>';
 	
 	require ('mapTargeting.php');

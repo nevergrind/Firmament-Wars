@@ -252,7 +252,6 @@ var action = {
 			return;
 		}
 		my.attackOn = false;
-		console.info('cost: ', 60 * my.weaponCost);
 		if (my.production < 60 * my.weaponCost){
 			action.error();
 			return;
@@ -386,10 +385,10 @@ var action = {
 				}).done(function(data) {
 					updateTileDefense();
 				});
-			}, 8000);
+			}, 6000);
 			setTimeout(function(){
 				animate.nuke(defender);
-			}, 7000);
+			}, 5000);
 			console.info('launchNuke', data);
 			if (data.production !== undefined){
 				setProduction(data);

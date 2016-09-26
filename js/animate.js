@@ -367,7 +367,7 @@ var animate = {
 				rx: 10,
 				ry: 5
 			},
-			ease: Power2.easeIn,
+			ease: Power1.easeIn,
 			onComplete: function(){
 				this.target.parentNode.removeChild(this.target);
 			}
@@ -384,7 +384,7 @@ var animate = {
 			attr: {
 				y: y
 			},
-			ease: Power2.easeIn,
+			ease: Power1.easeIn,
 			onComplete: function(){
 				this.target.parentNode.removeChild(this.target);
 			}
@@ -397,6 +397,7 @@ var animate = {
 				audio.play('bomb9');
 				TweenMax.to(DOM.screenFlash, 1.5, {
 					startAt: {
+						transformOrigin: '50% 50%',
 						opacity: 1,
 						background: '#ffffff'
 					},

@@ -217,7 +217,7 @@ a:hover{
 	pointer-events: none;
 }
 .chat-img{
-	max-width: 50%;
+	max-width: 40%;
 	display: block;
 }
 .chat-manpower{
