@@ -338,19 +338,12 @@ var my = {
 					transformOrigin: '50% 50%',
 					scale: 1
 				});
-				/*
-				var e6 = document.getElementById('unit' + my.lastTgt);
-				TweenMax.to(e6, .2, {
-					transformOrigin: '50% 50%',
-					scale: 1
-				});
-				*/
 			}
 			// my tgt
 			var e3 = document.getElementById('flag' + tile);
 			TweenMax.to(e3, .5, {
 				transformOrigin: '50% 50%',
-				scale: 2,
+				scale: 1.8,
 				ease: Power3.easeOut
 			});
 			// flag unit text
@@ -438,7 +431,8 @@ function initDom(){
 		researchAtomicTheory: d.getElementById('researchAtomicTheory'),
 		researchFutureTech: d.getElementById('researchFutureTech'),
 		lobbyChatLog: d.getElementById('lobbyChatLog'),
-		titleChatLog: d.getElementById('titleChatLog')
+		titleChatLog: d.getElementById('titleChatLog'),
+		mapAnimations: d.getElementById('mapAnimations')
 	}
 }
 initDom();

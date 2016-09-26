@@ -12,6 +12,14 @@ echo '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
    style="stroke-linejoin: round; stroke:#000; fill: none;"
    version="1.1"
    viewBox="0 0 2000 1200">
+   <defs>
+		<filter id="glow" x="-10%" y="-10%" height="120%" width="120%">
+			<feOffset result="offOut" in="SourceGraphic" dx="0" dy="0" />
+			<feGaussianBlur result="blurOut" in="offOut" stdDeviation="3" />
+			<feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+		</filter>
+	</defs>
+	<g>
     <path 
        class="land" 
        id="land0"
@@ -345,9 +353,12 @@ echo '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
        id="land82"
        d="M 415.79861,321.20399 415.47309,349.5243 396.1,370.2 l 9.3,0 1.3,2.2 2.1,2 2.4,2.8 0.8,3.3 0.4,3.5 2.2,1.9 4,1.9 4.8,-5 4.4,-0.1 3.1,2.5 1.6,4.4 1,3.7 2.4,3.6 0.2,4.5 0.8,3 3.9,2 3.6,1.4 2.1,-0.2 -0.6,-2.2 0.4,-3.1 1,-4.4 1.9,-2.8 3.7,-3.1 6,-2.7 6.1,-4.7 4.9,-1.5 3.5,-0.4 3.5,1.4 4.9,-0.8 3.3,3.4 3.8,0.2 2.4,-1.2 1.7,0.9 1.3,-0.8 -0.9,-1.3 0.7,-2.5 -0.5,-1.7 2.4,-1 -5.72088,-3.46342 -2.45523,-8.13295 15.959,-10.58819 9.97438,-16.26591 12.88997,-10.74164 -12.88997,-3.71491 -16.54219,0 -19.36558,-5.18899 z"></path>
 	</g>
-  
-	<g id="mapFlagWrap">
-	</g>
+	
+	<g id="mapCapitals"></g>
+	<g id="mapFlagWrap"></g>
+	<g id="mapUpgrades"></g>
+	<g id="mapAnimations"></g>
+	
 	
 	<g>
 		<text x="491" y="298" class="unit" id="unit0">0</text>

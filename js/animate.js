@@ -66,8 +66,8 @@ var animate = {
 		var x = box.x + box.width/2 - 10;
 		var y = box.y + box.height/2 + 10;
 		// smoke
-		var size = game.tiles[tile].defense;
-		for (var i=1; i<=(10 + (size*4)); i++){
+		var size = game.tiles[tile].defense - game.tiles[tile].capital ? 1 : 0;
+		for (var i=1; i<=(6 + (size*3)); i++){
 			var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
 			svg.setAttributeNS(null, 'height', 256);
 			svg.setAttributeNS(null, 'width', 256);
@@ -111,16 +111,39 @@ var animate = {
 			scale: 1,
 			ease: Back.easeOut.config(3)
 		});
-		TweenMax.to(shield, 3, {
+		TweenMax.to(shield, 1.5, {
 			y: '-=20',
 			ease: Linear.easeNone
 		});
 		TweenMax.to(shield, .5, {
-			delay: 3,
+			delay: 1.5,
 			opacity: 0,
 			onComplete: function(){
 				this.target.parentNode.removeChild(this.target);
 			}
+		});
+		// add icon to map
+		animate.upgradeIcon(tile, x, y);
+	},
+	upgradeIcon: function(tile, x, y){
+		var icon = document.getElementById('mapUpgrade' + tile);
+		if (icon !== null){
+			icon.parentNode.removeChild(icon);
+		}
+		var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+		svg.id = 'mapUpgrade' + tile;
+		var cap = game.tiles[tile].capital ? 1 : 0;
+		var scale = .2 + (game.tiles[tile].defense - cap)/10;
+		svg.setAttributeNS(null, 'width', 57);
+		svg.setAttributeNS(null, 'height', 64);
+		svg.setAttributeNS(null,"x",x - 12);
+		svg.setAttributeNS(null,"y",y - 50);
+		svg.setAttributeNS(null,"class","no-point");
+		svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/bulwark.png');
+		document.getElementById('mapUpgrades').appendChild(svg);
+		TweenMax.set(svg, {
+			transformOrigin: '50% 50%',
+			scale: scale
 		});
 	},
 	artillery: function(tile, playSound){
@@ -205,9 +228,9 @@ var animate = {
 		my.motionPath[2] = (my.motionPath[0] + my.motionPath[4]) / 2;
 		my.motionPath[3] = ((my.motionPath[1] + my.motionPath[5]) / 2) - (Math.abs(x1-x2)/3);
 		TweenMax.set(DOM.motionPath, {
+			ease: Circ.easeIn,
 			attr: {
-				d: "M " + my.motionPath[0] +","+ my.motionPath[1] + 
-					" Q " + my.motionPath[2] +" "+ my.motionPath[3] + " " 
+				d: "M " + my.motionPath[0] +","+ my.motionPath[1] + ' ' +
 					+ my.motionPath[4] +" "+ my.motionPath[5]
 			}
 		});
@@ -289,8 +312,8 @@ var animate = {
 		for (var i=0; i<7; i++){
 			(function(Math){
 				var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
-				var x = box.x + Math.random() * 100 - 50;
-				var y = box.y + Math.random() * 100 - 50;
+				var x = box.x + Math.random() * 60 - 30;
+				var y = box.y + Math.random() * 60 - 30;
 				circ.setAttributeNS(null,"cx",x);
 				circ.setAttributeNS(null,"cy",y);
 				circ.setAttributeNS(null,"r",1);
@@ -335,7 +358,7 @@ var animate = {
 		shadow.setAttributeNS(null,"fill",'#000000');
 		shadow.setAttributeNS(null,"stroke",'none');
 		shadow.setAttributeNS(null,"class","no-point");
-		DOM.world.appendChild(shadow);
+		DOM.mapAnimations.appendChild(shadow);
 		TweenMax.to(shadow, 1, {
 			startAt: {
 				opacity: .5
@@ -356,7 +379,7 @@ var animate = {
 		bomb.setAttributeNS(null,"height",12);
 		bomb.setAttributeNS(null,"x",x-6);
 		bomb.setAttributeNS(null,"y",y - g.screen.height);
-		DOM.world.appendChild(bomb);
+		DOM.mapAnimations.appendChild(bomb);
 		TweenMax.to(bomb, 1, {
 			attr: {
 				y: y
@@ -366,134 +389,62 @@ var animate = {
 				this.target.parentNode.removeChild(this.target);
 			}
 		});
+		 new Image('images/fireball.png');
 		// start bomb explosion sequence
 		TweenMax.to(g, 1, {
 			onComplete: function(){
 				updateTileDefense();
 				audio.play('bomb9');
-				TweenMax.fromTo(DOM.screenFlash, 1.5, {
-					opacity: 1,
-					background: '#ffffff'
-				}, {
+				TweenMax.to(DOM.screenFlash, 1.5, {
+					startAt: {
+						opacity: 1,
+						background: '#ffffff'
+					},
 					opacity: 0,
 					background: '#ff8800',
 					ease: Expo.easeOut
 				});
-				
-				animate.screenShake(32, 20, .016, true);
+				// remove upgrade icon
+				var icon = document.getElementById('mapUpgrade' + tile);
+				if (icon !== null){
+					icon.parentNode.removeChild(icon);
+				}
+				// shake
+				animate.screenShake(16, 10, .016, true);
 				// fireball
 				var fireball = document.createElementNS("http://www.w3.org/2000/svg","image");
-				fireball.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","images/fireball.png");
 				fireball.setAttributeNS(null,"width",256);
 				fireball.setAttributeNS(null,"height",256);
 				fireball.setAttributeNS(null,"x",x);
 				fireball.setAttributeNS(null,"y",y);
+				fireball.setAttributeNS(null,"opacity",0);
 				fireball.setAttributeNS(null,"class","no-point");
-				DOM.world.appendChild(fireball);
+				fireball.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","images/fireball.png");
+				DOM.mapAnimations.appendChild(fireball);
 				TweenMax.to(fireball, 3, {
 					startAt: {
 						xPercent: -50,
 						yPercent: -50,
 						transformOrigin: '50% 50%',
-						opacity: 1,
 						scale: .1
 					},
-					rotation: 1080,
-					ease: Linear.easeNone,
+					rotation: 2160,
+					ease: Linear.easeNone
+				});
+				TweenMax.to(fireball, .75, {
+					scale: 1,
+					opacity: 1
+				});
+				TweenMax.to(fireball, 1, {
+					delay: 2,
+					scale: .25,
+					opacity: 0,
 					onComplete: function(){
-						this.target.parentNode.removeChild(this.target);
+						if (fireball !== null){
+							fireball.parentNode.removeChild(fireball);
+						}
 					}
 				});
-				TweenMax.to(fireball, .5, {
-					scale: 1.25,
-					onComplete: function(){
-						TweenMax.to(this.target, 1, {
-							delay: 2,
-							opacity: 0
-						});
-					}
-				});
-
-				// animate flame explosion
-				var a = [];
-				for (var i=1; i<30; i++){
-					a[i] = document.createElementNS("http://www.w3.org/2000/svg","circle");
-					a[i].setAttributeNS(null,"cx",x);
-					a[i].setAttributeNS(null,"cy",y);
-					a[i].setAttributeNS(null,"r",1);
-					a[i].setAttributeNS(null,"class","no-point");
-					if (i === 1){
-						DOM.world.appendChild(a[i]);
-					} else {
-						DOM.world.insertBefore(a[i], a[i-1]);
-					}
-					// animate smoke
-					if (i % 4 === 0){
-						  var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-						  svg.setAttributeNS(null, 'height', 256);
-						  svg.setAttributeNS(null, 'width', 256);
-						  svg.setAttributeNS(null,"x",x);
-						  svg.setAttributeNS(null,"y",y);
-						  svg.setAttributeNS(null,"class","no-point");
-						  svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/smoke.png');
-						  DOM.world.appendChild(svg);
-						  (function(svg){
-								TweenMax.to(svg, 8, {
-									startAt: {
-										xPercent: -50,
-										yPercent: -50,
-										transformOrigin: '50% 50%',
-										opacity: .5,
-										scale: 0
-									},
-									opacity: 0,
-									rotation: Math.random()*360-180,
-									scale: 2,
-									ease: Expo.easeOut,
-									onComplete: function(){
-										this.target.parentNode.removeChild(this.target);
-									}
-								});
-						  })(svg);
-					}
-					// fade flame to white smoke
-					(function(i){
-						TweenMax.to(a[i], 1.5, {
-							startAt: {
-								opacity: .7,
-								strokeWidth: i/2,
-								fill: '#ffff11',
-								stroke: '#ff6600',
-								scale: 0,
-								attr: {
-									r: i*1 + 20
-								}
-							},
-							attr: {
-							  r: i*2 + 20
-							},
-							fillOpacity: .5,
-							opacity: .125, 
-							strokeWidth: i,
-							scale: 1,
-							ease: Power4.easeOut,
-							onComplete: function(){
-								TweenMax.to(a[i], 8, {
-									transformOrigin: '50% 50%',
-									scale: 1.1,
-									fill: '#444444',
-									stroke: '#777777',
-									opacity: 0,
-									ease: Expo.easeOut,
-									onComplete: function(){
-										this.target.parentNode.removeChild(this.target);
-									}
-									
-								});
-							}
-						});
-					})(i);
-				}
 			}
 		});
 	},

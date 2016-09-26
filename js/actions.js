@@ -108,6 +108,8 @@ var action = {
 		}).fail(function(e){
 			audio.play('error');
 			Msg('You can only attack adjacent territories.', 1.5);
+			// set target attacker
+			showTarget(document.getElementById('land' + attacker));
 		}).always(function(){
 			g.unlock();
 		});

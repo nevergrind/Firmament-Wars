@@ -325,11 +325,11 @@ echo '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
        id="land77"
        class="land" />
   </g>
-
-  
-  
-	<g id="mapFlagWrap">
-	</g>
+	
+	<g id="mapCapitals"></g>
+	<g id="mapFlagWrap"></g>
+	<g id="mapUpgrades"></g>
+	<g id="mapAnimations"></g>
 	
 	<g>
 		<text x="340" y="952" class="unit" id="unit0">0</text>
@@ -411,6 +411,7 @@ echo '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<text x="636" y="777" class="unit" id="unit76">0</text>
 		<text x="652" y="732" class="unit" id="unit77">0</text>
 	</g>
+	
 	<g>
 		<!-- adjPaths -->
     <path d="M 1164,370 1191,345" class="paths"/>

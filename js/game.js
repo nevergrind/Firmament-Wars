@@ -321,7 +321,6 @@ function getGameState(){
 								(function(tile){
 									setTimeout(function(){
 										animate.nuke(tile);
-										updateTileDefense();
 									}, 7000);
 								})(tile);
 							}

@@ -769,6 +769,9 @@ table td, .table th, .table td {
 	overflow: visible;
 	cursor: pointer;
 }
+.landOutline{
+	stroke: #66ccff;
+}
 .unit{
 	visibility: hidden;
 	white-space: nowrap;

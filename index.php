@@ -50,7 +50,7 @@
 		<img id="worldTitle" src="images/flat4.jpg">
 	
 		<div id="titleMain" class="portal">
-			<header class="shadow4">
+			<header>
 				<div id="headerWrap">
 				<?php
 				

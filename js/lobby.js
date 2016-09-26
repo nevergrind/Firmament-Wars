@@ -562,7 +562,9 @@ function loadGameState(x){
 				autoAlpha: 1
 			});
 			
-			// initialize client data
+			// initialize client tile data
+			var mapCapitals = document.getElementById('mapCapitals'),
+				mapUpgrades = document.getElementById('mapUpgrades');
 			for (var i=0, len=data.tiles.length; i<len; i++){
 				var d = data.tiles[i];
 				game.tiles[i] = {
@@ -585,7 +587,7 @@ function loadGameState(x){
 						zig.style.visibility = 'visible';
 					}
 				}
-				if (data.tiles[i].player){
+				if (d.player){
 					TweenMax.set(document.getElementById('land' + i), {
 						fill: color[d.player]
 					});
@@ -601,7 +603,8 @@ function loadGameState(x){
 				game.player[d.player].government = d.government;
 			}
 			// init mapFlagWrap
-			var a = document.getElementsByClassName('unit');
+			var a = document.getElementsByClassName('unit'),
+				mapFlagWrap = document.getElementById('mapFlagWrap');
 			for (var i=0, len=a.length; i<len; i++){
 				// set flag position and value
 				var t = game.tiles[i];
@@ -624,7 +627,31 @@ function loadGameState(x){
 				svg.setAttributeNS(null,"y",y);
 				svg.setAttributeNS(null,"class","mapFlag");
 				svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/flags/'+flag);
-				document.getElementById('mapFlagWrap').appendChild(svg);
+				mapFlagWrap.appendChild(svg);
+				// add star for capital to map
+				if (game.tiles[i].capital){
+					var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+					svg.setAttributeNS(null, 'height', 50);
+					svg.setAttributeNS(null, 'width', 50);
+					svg.setAttributeNS(null,"x",x - 2);
+					svg.setAttributeNS(null,"y",y - 10);
+					svg.setAttributeNS(null,"class","no-point");
+					svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/capital.png');
+					mapCapitals.appendChild(svg);
+					TweenMax.to(svg, 40, {
+						transformOrigin: '50% 50%',
+						rotation: 360,
+						repeat: -1,
+						ease: Linear.easeNone
+					});
+				}
+				if (game.tiles[i].defense - game.tiles[i].capital ? 1 : 0){
+					var e1 = document.getElementById('unit' + i),
+						box = e1.getBBox();
+					var x = box.x + box.width/2 - 10;
+					var y = box.y + box.height/2 + 10;
+					animate.upgradeIcon(i, x, y);
+				}
 			}
 			var str = '';
 			// init diplomacyPlayers
@@ -721,7 +748,7 @@ function loadGameState(x){
 					});
 				}).on("mouseleave", function(){
 					var land = this.id.slice(4)*1;
-					console.info('land: ', land);
+					// console.info('land: ', land);
 					if (game.tiles.length > 0){
 						var player = game.tiles[land] !== undefined ? game.tiles[land].player : 0;
 						TweenMax.to(this, .25, {
