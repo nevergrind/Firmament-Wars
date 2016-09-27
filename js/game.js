@@ -273,7 +273,7 @@ function getGameState(){
 							var a = z.event.split('|'),
 								tile = a[1];
 							// fetch updated tile defense data
-							updateTileDefense();
+							updateTileDefense(tile);
 							animate.upgrade(tile);
 						} else if (z.event.indexOf('artillery') === 0){
 							var a = z.event.split('|'),
@@ -471,7 +471,7 @@ function gameVictory(){
 	});
 	g.keepAlive();
 }
-function updateTileDefense(){
+function updateTileDefense(tile){
 	$.ajax({
 		type: "GET",
 		url: "php/updateTileDefense.php"
@@ -480,6 +480,9 @@ function updateTileDefense(){
 			var d = data[i];
 			game.tiles[i].defense = d.defense;
 			showTarget(document.getElementById('land' + my.tgt));
+		}
+		if (tile !== undefined){
+			animate.updateMapBars(tile);
 		}
 	});
 }

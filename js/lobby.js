@@ -25,7 +25,7 @@ var lobby = {
 		} else if (government === "Monarchy"){
 			str = '<div id="lobbyGovName" class="text-primary">Monarchy</div>\
 				<div id="lobbyGovPerks">\
-					<div>2x starting culture</div>\
+					<div>3x starting culture</div>\
 					<div>+50% culture bonus</div>\
 					<div>Start with Great Tactician</div>\
 					<div>1/2 cost structures</div>\
@@ -445,7 +445,6 @@ function loadGameState(x){
 		url: 'maps/' + g.map.key + '.php'
 	}).done(function(data){
 		document.getElementById('worldWrap').innerHTML = data;
-		initDom();
 		
 		var loadGameDelay = location.host === 'localhost' ? 0 : 1000;
 		setTimeout(function(){
@@ -476,6 +475,7 @@ function loadGameState(x){
 				}
 				return;
 			}
+			initDom();
 			// set worldWrap CSS
 			var css = '';
 			if (g.map.name === "Flat Earth"){
@@ -603,6 +603,7 @@ function loadGameState(x){
 			}
 			// init mapFlagWrap
 			var a = document.getElementsByClassName('unit'),
+				mapBars = document.getElementById('mapBars'),
 				mapFlagWrap = document.getElementById('mapFlagWrap');
 			for (var i=0, len=a.length; i<len; i++){
 				// set flag position and value
@@ -634,7 +635,6 @@ function loadGameState(x){
 					svg.setAttributeNS(null, 'width', 50);
 					svg.setAttributeNS(null,"x",x - 2);
 					svg.setAttributeNS(null,"y",y - 10);
-					svg.setAttributeNS(null,"class","no-point");
 					svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/capital.png');
 					mapCapitals.appendChild(svg);
 					TweenMax.to(svg, 40, {
@@ -644,55 +644,8 @@ function loadGameState(x){
 						ease: Linear.easeNone
 					});
 				}
-				// map upgrade icons
-				if (game.tiles[i].defense - game.tiles[i].capital ? 1 : 0){
-					var e1 = document.getElementById('unit' + i),
-						box = e1.getBBox();
-					var x = box.x + box.width/2 - 10;
-					var y = box.y + box.height/2 + 10;
-					animate.upgradeIcon(i, x, y);
-				}
-				// food & culture bars
-				var boxHeight = game.tiles[i].culture ? 10 : 6,
-					boxOpacity = game.tiles[i].player ? 1 : 0,
-					foodWidth = game.tiles[i].food * 3;
-				var svg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-				svg.setAttributeNS(null, 'width', 26);
-				svg.setAttributeNS(null, 'height', boxHeight);
-				svg.setAttributeNS(null,"x",x + 2);
-				svg.setAttributeNS(null,"y",y + 26);
-				svg.setAttributeNS(null,"fill","#888888");
-				svg.setAttributeNS(null,"stroke","#000000");
-				svg.setAttributeNS(null,"opacity",boxOpacity);
-				svg.setAttributeNS(null,"class","mapBars" + i);
-				mapBars.appendChild(svg);
-				// food
-				var svg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-				svg.setAttributeNS(null, 'width', foodWidth);
-				svg.setAttributeNS(null, 'height', 4);
-				svg.setAttributeNS(null,"x",x + 3);
-				svg.setAttributeNS(null,"y",y + 27);
-				svg.setAttributeNS(null,"fill","#88dd00");
-				svg.setAttributeNS(null,"stroke","#000000");
-				svg.setAttributeNS(null,"opacity",boxOpacity);
-				svg.setAttributeNS(null,"class","mapBars" + i);
-				mapBars.appendChild(svg);
-				
-				// culture
-				if (game.tiles[i].culture){
-					var cultureWidth = game.tiles[i].culture * 3;
-					var svg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-					svg.setAttributeNS(null, 'width', cultureWidth);
-					svg.setAttributeNS(null, 'height', 4);
-					svg.setAttributeNS(null,"x",x + 3);
-					svg.setAttributeNS(null,"y",y + 31);
-					svg.setAttributeNS(null,"fill","#dd22dd");
-					svg.setAttributeNS(null,"stroke","#000000");
-					svg.setAttributeNS(null,"opacity",boxOpacity);
-					svg.setAttributeNS(null,"class","mapBars" + i);
-					mapBars.appendChild(svg);
-					
-				}
+				// food, culture, def bars
+				animate.initMapBars(i);
 			}
 			var str = '';
 			// init diplomacyPlayers

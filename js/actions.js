@@ -235,6 +235,7 @@ var action = {
 			}
 		}).fail(function(e){
 			console.info(e.responseText);
+			Msg(e.statusText);
 			audio.play('error');
 		});
 	},

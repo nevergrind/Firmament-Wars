@@ -67,15 +67,14 @@ var animate = {
 		var y = box.y + box.height/2 + 10;
 		// smoke
 		var size = game.tiles[tile].defense - game.tiles[tile].capital ? 1 : 0;
-		for (var i=1; i<=(6 + (size*3)); i++){
+		for (var i=1; i<=(3 + (size*3)); i++){
 			var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
 			svg.setAttributeNS(null, 'height', 256);
 			svg.setAttributeNS(null, 'width', 256);
 			svg.setAttributeNS(null,"x",x);
 			svg.setAttributeNS(null,"y",y);
-			svg.setAttributeNS(null,"class","no-point");
 			svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/goldSmoke.png');
-			DOM.world.appendChild(svg);
+			DOM.mapAnimations.appendChild(svg);
 			TweenMax.to(svg, .5, {
 				startAt: {
 					xPercent: -50,
@@ -98,8 +97,7 @@ var animate = {
 		shield.setAttributeNS(null,"height",32);
 		shield.setAttributeNS(null,"x",x);
 		shield.setAttributeNS(null,"y",y);
-		shield.setAttributeNS(null,"class","no-point");
-		DOM.world.appendChild(shield);
+		DOM.mapAnimations.appendChild(shield);
 		TweenMax.to(shield, .5, {
 			startAt: {
 				xPercent: -50,
@@ -122,29 +120,90 @@ var animate = {
 				this.target.parentNode.removeChild(this.target);
 			}
 		});
-		// add icon to map
-		animate.upgradeIcon(tile, x, y);
+		// update bars
+		this.updateMapBars(tile);
 	},
-	upgradeIcon: function(tile, x, y){
-		var icon = document.getElementById('mapUpgrade' + tile);
-		if (icon !== null){
-			icon.parentNode.removeChild(icon);
+	updateMapBars: function(tile){
+		var e1 = document.getElementById('unit' + tile),
+			box = e1.getBBox(),
+			x = box.x + box.width/2 - 10,
+			y = box.y + box.height/2 + 10;
+		$(".mapBars" + tile).remove();
+		this.initMapBars(tile, x, y);
+	},
+	initMapBars: function(i, x, y){
+		var e = document.getElementById('unit' + i);
+		var x = e.getAttribute('x') - 24;
+		var y = e.getAttribute('y') - 24;
+		
+		var boxHeight = 6;
+		if (game.tiles[i].culture){
+			boxHeight += 4;
 		}
-		var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-		svg.id = 'mapUpgrade' + tile;
-		var cap = game.tiles[tile].capital ? 1 : 0;
-		var scale = .2 + (game.tiles[tile].defense - cap)/10;
-		svg.setAttributeNS(null, 'width', 57);
-		svg.setAttributeNS(null, 'height', 64);
-		svg.setAttributeNS(null,"x",x - 12);
-		svg.setAttributeNS(null,"y",y - 50);
-		svg.setAttributeNS(null,"class","no-point");
-		svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/bulwark.png');
-		document.getElementById('mapUpgrades').appendChild(svg);
-		TweenMax.set(svg, {
-			transformOrigin: '50% 50%',
-			scale: scale
-		});
+		if (game.tiles[i].defense){
+			boxHeight += 4;
+		}
+		var boxOpacity = game.tiles[i].player ? 1 : 0;
+		var foodWidth = game.tiles[i].food * 3;
+		if (foodWidth > 24){
+			foodWidth = 24;
+		}
+		// wrapper
+		var svg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+		svg.setAttributeNS(null, 'width', 26);
+		svg.setAttributeNS(null, 'height', boxHeight);
+		svg.setAttributeNS(null,"x",x + 2);
+		svg.setAttributeNS(null,"y",y + 26);
+		svg.setAttributeNS(null,"fill","#888888");
+		svg.setAttributeNS(null,"stroke","#000000");
+		svg.setAttributeNS(null,"opacity",boxOpacity);
+		svg.setAttributeNS(null,"class","mapBars" + i);
+		DOM.mapBars.appendChild(svg);
+		// food
+		var yBar = 27;
+		var svg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+		svg.setAttributeNS(null, 'width', foodWidth);
+		svg.setAttributeNS(null, 'height', 4);
+		svg.setAttributeNS(null,"x",x + 3);
+		svg.setAttributeNS(null,"y",y + yBar);
+		svg.setAttributeNS(null,"fill","#88dd00");
+		svg.setAttributeNS(null,"stroke","#000000");
+		svg.setAttributeNS(null,"opacity",boxOpacity);
+		svg.setAttributeNS(null,"class","mapBars" + i);
+		DOM.mapBars.appendChild(svg);
+		// culture
+		if (game.tiles[i].culture){
+			yBar += 4;
+			var cultureWidth = game.tiles[i].culture * 3;
+			if (cultureWidth > 24){
+				cultureWidth = 24;
+			}
+			var svg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+			svg.setAttributeNS(null, 'width', cultureWidth);
+			svg.setAttributeNS(null, 'height', 4);
+			svg.setAttributeNS(null,"x",x + 3);
+			svg.setAttributeNS(null,"y",y + yBar);
+			svg.setAttributeNS(null,"fill","#dd22dd");
+			svg.setAttributeNS(null,"stroke","#000000");
+			svg.setAttributeNS(null,"opacity",boxOpacity);
+			svg.setAttributeNS(null,"class","mapBars" + i);
+			DOM.mapBars.appendChild(svg);
+		}
+		// defense
+		if (game.tiles[i].defense){
+			yBar += 4;
+			var defWidth = game.tiles[i].defense * 6;
+			var svg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+			svg.setAttributeNS(null, 'width', defWidth);
+			svg.setAttributeNS(null, 'height', 4);
+			svg.setAttributeNS(null,"x",x + 3);
+			svg.setAttributeNS(null,"y",y + yBar);
+			svg.setAttributeNS(null,"fill","#ffff00");
+			svg.setAttributeNS(null,"stroke","#000000");
+			svg.setAttributeNS(null,"opacity",boxOpacity);
+			svg.setAttributeNS(null,"class","mapBars" + i);
+			DOM.mapBars.appendChild(svg);
+		}
 	},
 	artillery: function(tile, playSound){
 		var e1 = document.getElementById('land' + tile),
@@ -165,8 +224,7 @@ var animate = {
 				circ.setAttributeNS(null,"fill",'none');
 				circ.setAttributeNS(null,"stroke",animate.randomColor());
 				circ.setAttributeNS(null,"strokeWidth",'1');
-				circ.setAttributeNS(null,"class","no-point");
-				DOM.world.appendChild(circ);
+				DOM.mapAnimations.appendChild(circ);
 				
 				if (Math.random() > .3){
 					TweenMax.to(circ, .1, {
@@ -244,8 +302,7 @@ var animate = {
 		mis.setAttributeNS(null,"x",x1);
 		mis.setAttributeNS(null,"y",y1);
 		mis.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", "images/missile.png");
-		mis.setAttributeNS(null,"class","no-point");
-		DOM.world.appendChild(mis);
+		DOM.mapAnimations.appendChild(mis);
 		
 		var count = 0;
 		TweenMax.to(mis, 1.5, {
@@ -271,9 +328,8 @@ var animate = {
 					svg.setAttributeNS(null, 'width', 40);
 					svg.setAttributeNS(null,"x",x);
 					svg.setAttributeNS(null,"y",y);
-					svg.setAttributeNS(null,"class","no-point");
 					svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/smoke.png');
-					DOM.world.appendChild(svg);
+					DOM.mapAnimations.appendChild(svg);
 					TweenMax.to(svg, .5, {
 						startAt: {
 							xPercent: -50,
@@ -320,8 +376,7 @@ var animate = {
 				circ.setAttributeNS(null,"fill",'none');
 				circ.setAttributeNS(null,"stroke",animate.randomColor());
 				circ.setAttributeNS(null,"strokeWidth",'1');
-				circ.setAttributeNS(null,"class","no-point");
-				DOM.world.appendChild(circ);
+				DOM.mapAnimations.appendChild(circ);
 				
 				TweenMax.to(circ, .1, {
 					delay: Math.random() * .25,
@@ -357,7 +412,6 @@ var animate = {
 		shadow.setAttributeNS(null,"ry",1);
 		shadow.setAttributeNS(null,"fill",'#000000');
 		shadow.setAttributeNS(null,"stroke",'none');
-		shadow.setAttributeNS(null,"class","no-point");
 		DOM.mapAnimations.appendChild(shadow);
 		TweenMax.to(shadow, 1, {
 			startAt: {
@@ -389,11 +443,11 @@ var animate = {
 				this.target.parentNode.removeChild(this.target);
 			}
 		});
-		 new Image('images/fireball.png');
+		new Image('images/fireball.png');
 		// start bomb explosion sequence
 		TweenMax.to(g, 1, {
 			onComplete: function(){
-				updateTileDefense();
+				updateTileDefense(tile);
 				audio.play('bomb9');
 				TweenMax.to(DOM.screenFlash, 1.5, {
 					startAt: {
@@ -405,11 +459,6 @@ var animate = {
 					background: '#ff8800',
 					ease: Expo.easeOut
 				});
-				// remove upgrade icon
-				var icon = document.getElementById('mapUpgrade' + tile);
-				if (icon !== null){
-					icon.parentNode.removeChild(icon);
-				}
 				// shake
 				animate.screenShake(16, 10, .016, true);
 				// fireball
@@ -419,7 +468,6 @@ var animate = {
 				fireball.setAttributeNS(null,"x",x);
 				fireball.setAttributeNS(null,"y",y);
 				fireball.setAttributeNS(null,"opacity",0);
-				fireball.setAttributeNS(null,"class","no-point");
 				fireball.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","images/fireball.png");
 				DOM.mapAnimations.appendChild(fireball);
 				TweenMax.to(fireball, 3, {

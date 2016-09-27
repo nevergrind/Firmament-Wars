@@ -433,7 +433,10 @@ function initDom(){
 		researchFutureTech: d.getElementById('researchFutureTech'),
 		lobbyChatLog: d.getElementById('lobbyChatLog'),
 		titleChatLog: d.getElementById('titleChatLog'),
-		mapAnimations: d.getElementById('mapAnimations')
+		mapAnimations: d.getElementById('mapAnimations'),
+		mapCapitals: d.getElementById('mapCapitals'),
+		mapUpgrades: d.getElementById('mapUpgrades'),
+		mapBars: d.getElementById('mapBars')
 	}
 }
 initDom();
