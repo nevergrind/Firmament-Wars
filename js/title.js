@@ -57,8 +57,8 @@ var title = {
 				str += "<li><a class='mapSelect' href='#'>" + title.mapData[key].name + "</a></li>";
 			}
 			document.getElementById('mapDropdown').innerHTML = str;
+			$('[title]').tooltip();
 		}, 100);
-		$('[title]').tooltip();
 	})(),
 	mapData: {
 		EarthAlpha: {
@@ -332,6 +332,7 @@ $("#flagDropdown").on('click', '.flagSelect', function(){
 		$("#nationFlag").attr("src", "images/flags/" + my.selectedFlagFull);
 		$("#flagPurchased").css("display", "block");
 		Msg("Your nation's flag is now: " + my.selectedFlag);
+		document.getElementById('selectedFlag').textContent = my.selectedFlag;
 	}).fail(function(e){
 		$("#flagPurchased").css("display", "none");
 		$("#offerFlag").css("display", "block");

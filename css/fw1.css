@@ -41,7 +41,7 @@ header{
 a{
 	color: #8bf;
 }
-#purchaseCrystals{
+.fwFont{
 	color: #aef;
 }
 #headerWrap{
@@ -1269,6 +1269,10 @@ table {
 }
 #flagPurchased{
 	display: none;
+}
+#offerMap{
+	display: none;
+	margin-right: 4em;
 }
 #offerFlag{
 	display: none;

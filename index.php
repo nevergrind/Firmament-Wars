@@ -185,11 +185,11 @@
 									echo
 									'
 									<hr class="fancyhr">
-									<div id="joinGamePasswordWrap">
+									<form id="joinGamePasswordWrap">
 										Game <input id="joinGameName" class="joinGameInputs" type="text" maxlength="240" autocomplete="off"/>
-										Password <input id="joinGamePassword" class="joinGameInputs" type="password" maxlength="240" autocomplete="off"/>
+										Password <input id="joinGamePassword" class="joinGameInputs" type="text" maxlength="240"/>
 										<button id="joinGame" type="button" class="btn btn-md fwGreen btn-responsive shadow4">Join Game</button>
-									</div>';
+									</form>';
 								}
 								?>
 						</div>
@@ -313,15 +313,31 @@
 				<div class='buffer'>
 					<input id='gamePassword' class='form-control createGameInput' type='text' maxlength='32' autocomplete='off'>
 				</div>
+				
 				<div class='buffer2'>
 					<label class='control-label'>Maximum Number of Players</label>
 				</div>
+				
 				<div class='buffer'>
 					<input id='gamePlayers' type='number' class='form-control createGameInput' id='gamePlayers' value='8' min='2' max='8'>
 				</div>
+				
 				<div class='buffer2'>
 					<label class='control-label'>Map</label>
 				</div>
+				
+				<div id="offerMap" class="pull-right text-center">
+					<h5>Buy map?</h5>
+					<div class="center block">
+						<button id="buyMap" type="button" class="btn fwBlue shadow4 text-primary">
+							<i class="fa fa-diamond"></i> 150
+						</button>
+					</div>
+					<h4>
+						<a class="fwFont" target="_blank" href="/store">Buy Crystals</a>
+					</h4>
+				</div>
+				
 				<div class='buffer w33'>
 					<div class='dropdown'>
 						<button class='btn btn-primary dropdown-toggle shadow4 fwDropdownButton' type='button' data-toggle='dropdown'>
@@ -332,6 +348,7 @@
 						</ul>
 					</div>
 				</div>
+				
 				<div class='buffer2'>
 					<label class='control-label'>Map Details</label>
 				</div>
@@ -343,6 +360,9 @@
 					<span data-toggle='tooltip' title='Number of territories on this map'>
 						<i class='fa fa-globe'></i> 
 						<span id='createGameTiles'>83</span>
+					</span>
+					<span id="mapStatus" class="text-success">
+						<i class="fa fa-check"></i> Free Map
 					</span>
 				</div>
 			</div>
@@ -433,26 +453,29 @@
 				<div class="col-xs-6 text-center">
 					<div class="dropdown">
 						<button class="btn dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">
-							Update Flag
+							<span id="selectedFlag"><?php 
+								$flagShort = explode(".", $_SESSION['flag']);
+								echo $flagShort[0];
+								?></span>
 							<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 						</button>
 						<ul id="flagDropdown" class="dropdown-menu fwDropdown"></ul>
 					</div>
-					<div id="flagPurchased" class="flagPurchaseStatus">
+					<div id="flagPurchased" class="flagPurchasedStatus">
 						<h4 class="text-center text-success shadow4">
 							<i class="fa fa-check"></i>
-							&ensp;Flag Purchased!
+							&ensp;Flag Unlocked!
 						</h4>
 					</div>
-					<div id="offerFlag" class="flagPurchaseStatus shadow4">
-						<h5 class="text-center">Buy flag for 100 Never Crystals?</h5>
+					<div id="offerFlag" class="flagPurchasedStatus shadow4">
+						<h5 class="text-center">Buy flag?</h5>
 						<div class="center block">
 							<button id="buyFlag" type="button" class="btn fwBlue shadow4 text-primary">
 								<i class="fa fa-diamond"></i> 100
 							</button>
 						</div>
 						<h4 class="text-center">
-							<a id='purchaseCrystals' target="_blank" href="/store">Purchase Crystals</a>
+							<a class='fwFont' target="_blank" href="/store">Buy Crystals</a>
 						</h4>
 					</div>
 					
