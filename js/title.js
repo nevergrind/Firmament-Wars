@@ -58,6 +58,7 @@ var title = {
 			}
 			document.getElementById('mapDropdown').innerHTML = str;
 		}, 100);
+		$('[title]').tooltip();
 	})(),
 	mapData: {
 		EarthAlpha: {

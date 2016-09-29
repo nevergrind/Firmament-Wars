@@ -90,7 +90,7 @@ function updateTileInfo(tileId){
 	my.player === t.player ? 
 		DOM.tileActions.style.display = 'block' : 
 		DOM.tileActions.style.display = 'none';
-	action.setMenu();
+	action.setMenu(my.activeTab);
 }
 function showTarget(e, hover, skipOldTgtUpdate){
 	if (typeof e === 'object' && e.id !== undefined){
@@ -395,6 +395,8 @@ function getGameState(){
 						if (data.cultureMsg){
 							chat(data.cultureMsg);
 							audio.play('culture');
+							// recruit bonus changes
+							initOffensiveTooltips();
 						}
 					}
 					if (data.get !== undefined){
@@ -454,7 +456,6 @@ function gameVictory(){
 			'<div id="endWar" class="endBtn">'+
 				'<div class="modalBtnChild">Cease Fire</div>'+
 			'</div>';
-			triggerEndGame(msg);
 			audio.play('shotgun2');
 		} else if (data.gameDone){
 			var msg = 
@@ -463,9 +464,9 @@ function gameVictory(){
 			'<div id="endWar" class="endBtn">'+
 				'<div class="modalBtnChild">Victory</div>'+
 			'</div>';
-			triggerEndGame(msg);
 			audio.play('mine4');
 		}
+		triggerEndGame(msg);
 	}).fail(function(data){
 		serverError(data);
 	});

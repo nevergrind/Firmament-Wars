@@ -67,34 +67,35 @@ var g = {
 		tiles: 83
 	},
 	updateUserInfo: function(){
-		$.ajax({
-			async: true,
-			type: 'GET',
-			dataType: 'jsonp',
-			url: 'https://geoip-db.com/json/geoip.php?jsonp=?'
-		}).done(function(data){
-			data.latitude += '';
-			data.longitude += '';
-			g.config.location = data;
-			var x = g.config;
-			var foo = JSON.stringify(x);
-			localStorage.setItem('config', foo);
+		if (location.host !== 'localhost'){
 			$.ajax({
-				url: 'php/updateUserInfo.php',
-				data: {
-					location: g.config.location
-				}
+				async: true,
+				type: 'GET',
+				dataType: 'jsonp',
+				url: 'https://geoip-db.com/json/geoip.php?jsonp=?'
+			}).done(function(data){
+				data.latitude += '';
+				data.longitude += '';
+				g.geo = data;
+				localStorage.setItem('geo', JSON.stringify(g.geo));
+				$.ajax({
+					url: 'php/updateUserInfo.php',
+					data: {
+						location: g.geo
+					}
+				});
+				
+				
+			var foo = JSON.parse(geo);
+			g.config.location = foo.location;
+			console.info('loc: ', g.config.location);
 			});
-		});
+		}
 	},
 	checkPlayerData: function(){
-		var config = localStorage.getItem('config');
-		if (config !== null){
-			var foo = JSON.parse(config);
-			g.config.location = foo.location;
-			if (g.config.location === undefined){
-				g.updateUserInfo();
-			}
+		var geo = localStorage.getItem('geo');
+		if (geo === null){
+			g.updateUserInfo();
 		}
 	},
 	config: {
@@ -102,6 +103,7 @@ var g = {
 			musicOn: false
 		}
 	},
+	geo: {},
 	keepAlive: function(){
 		$.ajax({
 			type: 'GET',
@@ -135,7 +137,7 @@ g.init = (function(){
 		},
 		Historic: {
 			group: "Historic",
-			name: ['Confederate Flag', 'Flanders', 'Gadsden Flag', 'Isle of Man', 'Rising Sun Flag', 'NSDAP Flag', 'Shahanshahi', 'USSR', 'Welsh']
+			name: ['Confederate Flag', 'Flanders', 'Gadsden Flag', 'Isle of Man', 'Rising Sun Flag', 'NSDAP Flag', 'NSDAP War Ensign', 'Shahanshahi', 'USSR', 'Welsh']
 		},
 		MiddleEast: {
 			group: "Middle East",
@@ -151,7 +153,7 @@ g.init = (function(){
 		},
 		Miscellaneous: {
 			group: "Miscellaneous",
-			name: ['Anarcho-Capitalist', 'Christian', 'European Union', 'High Energy', 'ISIS', 'Northwest Front', 'Pan-African Flag', 'Rainbow Flag', 'United Nations']
+			name: ['Anarcho-Capitalist', 'Christian', 'Edgemaster', 'European Union', 'High Energy', 'ISIS', 'Northwest Front', 'Pan-African Flag', 'Rainbow Flag', 'United Nations']
 		},
 		SouthAmerica: {
 			group: "South America",
@@ -248,6 +250,7 @@ var my = {
 	selectedFlag: "Default",
 	selectedFlagFull: "Default.jpg",
 	government: 'Despotism',
+	activeTab: 'gotoCommand',
 	tech: {
 		engineering: 0,
 		gunpowder: 0,

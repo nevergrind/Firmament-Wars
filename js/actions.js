@@ -14,7 +14,6 @@ var action = {
 	error: function(){
 		Msg("Not enough energy!", 1.5);
 		my.clearHud();
-		audio.play('error');
 	},
 	target: function(o){
 		my.targetData = o;
@@ -297,7 +296,7 @@ var action = {
 			return;
 		}
 		my.attackOn = false;
-		if (my.production < 150 * my.weaponCost){
+		if (my.production < 120 * my.weaponCost){
 			action.error();
 			return;
 		}
@@ -409,6 +408,7 @@ var action = {
 		if (id === undefined){
 			id = 'gotoCommand';
 		}
+		my.activeTab = id;
 		DOM.tileCommand.style.display = 'none';
 		DOM.tileResearch.style.display = 'none';
 		DOM.tileBuild.style.display = 'none';
@@ -422,8 +422,8 @@ var action = {
 			// show/hide research
 			DOM.researchEngineering.style.display = my.tech.engineering ? 'none' : 'block';
 			DOM.researchGunpowder.style.display = my.tech.gunpowder ? 'none' : 'block';
-			DOM.researchRocketry.style.display = my.tech.rocketry ? 'none' : 'block';
-			DOM.researchAtomicTheory.style.display = my.tech.atomicTheory ? 'none' : 'block';
+			DOM.researchRocketry.style.display = my.tech.rocketry || !my.tech.gunpowder ? 'none' : 'block';
+			DOM.researchAtomicTheory.style.display = my.tech.atomicTheory || !my.tech.gunpowder || !my.tech.rocketry || !my.tech.engineering ? 'none' : 'block';
 			// all techs must be finished
 			var display = 'block';
 			if (!my.tech.engineering || 
@@ -548,7 +548,7 @@ $("#actions").on("mousedown", '#attack', function(e){
 }).on('mousedown', '#launchMissile', function(e){
 	if (e.which === 1){
 		var o = new Target({
-			cost: 150,
+			cost: 120,
 			minimum: 0,
 			attackName: 'missile',
 			hudMsg: 'Launch Missile'
@@ -765,7 +765,7 @@ $(document).on('keyup', function(e) {
 					} else if (x === 77){
 						// c
 						var o = new Target({
-							cost: 150 * my.weaponCost,
+							cost: 120 * my.weaponCost,
 							minimum: 0,
 							attackName: 'missile',
 							hudMsg: 'Launch Missile'

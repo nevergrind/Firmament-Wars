@@ -405,6 +405,8 @@ function setResources(d){
 		if (my.cultureBonus !== d.cultureBonus){
 			DOM.cultureBonus.textContent = d.cultureBonus;
 			my.cultureBonus = d.cultureBonus;
+			// recruit bonus changes
+			initOffensiveTooltips();
 		}
 	}
 	setBars(d);

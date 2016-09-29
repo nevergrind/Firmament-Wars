@@ -27,10 +27,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head id='head'>
-	<title>Firmament Wars | Political Grand Strategy Game | Free Online Multiplayer</title>
+	<title>Firmament Wars | Grand Strategy Warfare | Free Multiplayer Game</title>
 	<meta charset="utf-8">
-	<meta name="keywords" content="risk, civilization, online, multiplayer, free, game, political, strategy">
-	<meta name="description" content="Firmament Wars is a political grand strategy warfare game with free online multiplayer. Compete in real time with up to eight players for global domination!">
+	<meta name="keywords" content="risk, civilization, online, multiplayer, free, strategy">
+	<meta name="description" content="Firmament Wars is a grand strategy game with free online multiplayer. Select a map and compete in real-time with up to eight players for global domination!">
 	<meta name="author" content="Joe Leonard">
 	<meta name="referrer" content="always">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -59,7 +59,7 @@
 						<i id="musicToggle" class="fa fa-volume-off" 
 						data-toggle="tooltip" 
 						data-placement="right" 
-						title="Toggle sound"></i>';
+						title="Toggle music"></i>';
 				if (isset($_SESSION['email'])){
 					// crystals
 					$query = "select crystals from accounts where email='". $_SESSION['email'] ."' limit 1";
@@ -70,37 +70,41 @@
 					}
 					
 					echo 
-					'<i class="fa fa-diamond" title="Never Crystals"></i>
-					<span id="crystalCount" class="text-primary" title="Crystals Remaining">' .$crystals.'</span>&ensp;
-					<a target="_blank" title="Manage Account" href="/account">Account</a>&ensp;
-					<a target="_blank" title="Store" href="/store/">Store</a>&ensp;
-					<a id="logout" href="#">Logout</a>';
+					'<span data-toggle="tooltip" data-placement="bottom" title="Crystals Remaining">
+						<i class="fa fa-diamond" title="Never Crystals"></i>
+						<span id="crystalCount" class="text-primary" >' .$crystals.'</span>
+					</span>&ensp;
+					<a target="_blank" href="/account">Account</a>&ensp;
+					<a target="_blank" href="/store">Store</a>&ensp;
+					<span id="logout" class="pointer">Logout</span>';
 				} else {
 					echo 
-					'<a id="login" title="Login" href="/login.php?back=/games/firmament-wars">Login</a>';
+					'<a id="login" href="/login.php?back=/games/firmament-wars">Login</a>';
 				}
 				echo '
 				</div>
 				<div class="pull-right text-primary">
-					<a target="_blank" href="//www.youtube.com/user/Maelfyn" title="YouTube">
+					<a target="_blank" href="//www.youtube.com/user/Maelfyn">
 						<i class="fa fa-youtube-square text-primary pointer"></i>
 					</a>
-					<a target="_blank" href="//www.facebook.com/neverworksgames" title="Facebook">
+					<a target="_blank" href="//www.facebook.com/neverworksgames">
 						<i class="fa fa-facebook-square text-primary pointer"></i>
 					</a>
-					<a target="_blank" href="//twitter.com/neverworksgames" title="Twitter">
+					<a target="_blank" href="//twitter.com/neverworksgames">
 						<i class="fa fa-twitter-square text-primary pointer"></i>
 					</a>
-					<a target="_blank" href="//plus.google.com/118162473590412052664" title="Google Plus">
+					<a target="_blank" href="//plus.google.com/118162473590412052664">
 						<i class="fa fa-google-plus-square text-primary pointer"></i>
 					</a>
-					<a target="_blank" href="//reddit.com/r/nevergrind" title="Reddit">
+					<a href="//github.com/Maelfyn/Nevergrind">
+						<i class="fa fa-github-square text-primary pointer"></i>
+					</a>
+					<a target="_blank" href="//reddit.com/r/nevergrind">
 						<i class="fa fa-reddit-square text-primary pointer"></i>
 					</a>
-					<a target="_blank" href="//goo.gl/BFsmf2" title="LinkedIn">
+					<a target="_blank" href="//goo.gl/BFsmf2">
 						<i class="fa fa-linkedin-square text-primary pointer"></i>
 					</a>
-					Firmament Wars
 				</div>';
 				
 				?>
@@ -183,7 +187,7 @@
 									<hr class="fancyhr">
 									<div id="joinGamePasswordWrap">
 										Game <input id="joinGameName" class="joinGameInputs" type="text" maxlength="240" autocomplete="off"/>
-										Password <input id="joinGamePassword" class="joinGameInputs" type="text" maxlength="240" autocomplete="off"/>
+										Password <input id="joinGamePassword" class="joinGameInputs" type="password" maxlength="240" autocomplete="off"/>
 										<button id="joinGame" type="button" class="btn btn-md fwGreen btn-responsive shadow4">Join Game</button>
 									</div>';
 								}
@@ -448,7 +452,7 @@
 							</button>
 						</div>
 						<h4 class="text-center">
-							<a id='purchaseCrystals' target="_blank" href="/store/">Purchase Crystals</a>
+							<a id='purchaseCrystals' target="_blank" href="/store">Purchase Crystals</a>
 						</h4>
 					</div>
 					
@@ -669,7 +673,7 @@
 									</div>
 									<div class="col-xs-4 text-right">
 										<i class="fa fa-bolt production pointer actionBolt"></i>
-										<span id='missileCost'>150</span>
+										<span id='missileCost'>120</span>
 									</div>
 								</div>
 								
