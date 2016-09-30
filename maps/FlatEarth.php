@@ -9,8 +9,11 @@ echo '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
    xmlns="http://www.w3.org/2000/svg"
    version="1.1"
    id="world"
-   viewBox="0 0 1600 1600">
-  <g>
+   viewBox="0 0 1600 1600">';
+   
+   require('filters.php');
+   
+  echo '<g id="landWrap">
     <path
        class="land" 
        id="land0"

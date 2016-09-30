@@ -185,7 +185,7 @@ g.init = (function(){
 					my.government = data.government;
 					lobby.updateGovernmentWindow(my.government);
 				}, 111);
-				$("#titleMain").remove();
+				$("#titleMain, #firmamentWarsLogo").remove();
 			}
 		}).always(function(){
 			g.unlock();
@@ -334,22 +334,6 @@ var my = {
 	},
 	flashTile: function(tile){
 		if (!my.attackOn){
-			// last tgt
-			var flagOrigin = '100% 100%';
-			if (my.lastTgt !== my.tgt){
-				var e4 = document.getElementById('flag' + my.lastTgt);
-				TweenMax.to(e4, .2, {
-					transformOrigin: flagOrigin,
-					scale: 1
-				});
-			}
-			// my tgt
-			var e3 = document.getElementById('flag' + tile);
-			TweenMax.to(e3, .5, {
-				transformOrigin: flagOrigin,
-				scale: 1.4,
-				ease: Power3.easeOut
-			});
 			// flag unit text
 			if (game.tiles[tile].units){
 				var e2 = document.getElementById('unit' + tile);

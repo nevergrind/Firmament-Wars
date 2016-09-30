@@ -99,9 +99,23 @@ function showTarget(e, hover, skipOldTgtUpdate){
 		var d = game.tiles[tileId];
 		var cacheOldTgt = my.tgt;
 		if (!hover){
+			var e1 = document.getElementById('land' + cacheOldTgt),
+				e2 = document.getElementById('land' + tileId);
+			TweenMax.set(e1, {
+				stroke: '#66ccff',
+				strokeWidth: 1
+			});
+			e1.setAttribute('filter', '');
 			my.tgt = tileId;
+			TweenMax.set(e2, {
+				stroke: '#aaeeff',
+				strokeWidth: 2
+			});
+			e2.setAttribute('filter', 'url(#glow)');
+			document.getElementById('topTile')
+				.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#land' + my.tgt);
 		}
-		// animate targetLine
+		// animate targetLine on hover
 		if (hover && tileId !== my.tgt){
 			var e = document.getElementById('unit' + tileId);
 			my.targetLine[4] = e.getAttribute('x')*1 - 10;
@@ -243,10 +257,12 @@ function getGameState(){
 							updateTargetStatus = true;
 						}
 						setTileUnits(i, unitColor);
-						TweenMax.to(".mapBars" + i, 1.25, {
-							opacity: 1,
-							ease: Linear.easeNone
-						});
+						if (d.player){
+							TweenMax.to(".mapBars" + i, 1, {
+								opacity: 1,
+								ease: Linear.easeNone
+							});
+						}
 					}
 					if (updateTargetStatus){
 						showTarget(document.getElementById('land' + i));

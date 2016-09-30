@@ -11,15 +11,11 @@ echo '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
    pretty_print="False"
    style="stroke-linejoin: round; stroke:#000; fill: none;"
    version="1.1"
-   viewBox="0 0 2000 1200">
-   <defs>
-		<filter id="glow" x="-10%" y="-10%" height="120%" width="120%">
-			<feOffset result="offOut" in="SourceGraphic" dx="0" dy="0" />
-			<feGaussianBlur result="blurOut" in="offOut" stdDeviation="3" />
-			<feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
-		</filter>
-	</defs>
-	<g>
+   viewBox="0 0 2000 1200">';
+   
+   require('filters.php');
+   
+	echo '<g id="landWrap">
     <path 
        class="land" 
        id="land0"

@@ -633,8 +633,8 @@ function loadGameState(x){
 				// add star for capital to map
 				if (game.tiles[i].capital){
 					var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-					svg.setAttributeNS(null, 'height', 50);
-					svg.setAttributeNS(null, 'width', 50);
+					svg.setAttributeNS(null, 'height', 40);
+					svg.setAttributeNS(null, 'width', 40);
 					svg.setAttributeNS(null,"x",x - 2);
 					svg.setAttributeNS(null,"y",y - 10);
 					svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/capital.png');
@@ -719,13 +719,14 @@ function loadGameState(x){
 						showTarget(that);
 					}
 				}
+				var zug = $('.land');
 				// map events
 				if (isMSIE || isMSIE11){
-					$(".land").on("click", function(){
+					zug.on("click", function(){
 						triggerAction(this);
 					});
 				} else {
-					$(".land").on("mousedown", function(e){
+					zug.on("mousedown", function(e){
 						var box = this.getBBox();
 						var x = Math.round(box.x + (box.width/2));
 						var y = Math.round(box.y + (box.height/2));
@@ -734,7 +735,7 @@ function loadGameState(x){
 						triggerAction(this);
 					});
 				}
-				$(".land").on("mouseenter", function(){
+				zug.on("mouseenter", function(){
 					my.lastTarget = this;
 					if (my.attackOn){
 						showTarget(this, true);
@@ -793,7 +794,7 @@ function startGame(){
 function lobbyCountdown(x){
 	var loadTime = Date.now() - g.startTime;
 	if (loadTime < 1000){
-		$("#titleMain").remove();
+		$("#titleMain, #firmamentWarsLogo").remove();
 		loadGameState(x); // page refresh
 	} else {
 		new Audio('sound/beepHi.mp3');

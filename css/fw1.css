@@ -291,6 +291,14 @@ a:hover{
 	width: 320px;
 	height: 50px;
 }
+#titlePlayerCountWrap{
+	float: right;
+	color: #aef;
+	font-family: Consolas, monospace;
+	padding: .25em .5em;
+	border-radius: 4px;
+	background: rgba(255,255,255,.1);
+}
 #titleChatLog{
 	position: relative;
 	overflow: auto;
@@ -750,7 +758,7 @@ table td, .table th, .table td {
 	position: absolute;
 	top: 0%; 
 	left: 0%;
-	background: #00062a url('../images/fw_grid.png');
+	background: #00062a url('../images/water2.jpg');
 }
 #mapUnits{
 	text-shadow: 1px 1px #000;
@@ -1263,7 +1271,7 @@ table {
 }
 .crystal{
 	float: left;
-	background:url('/images1/currency.png') 100% 0 / 200% 100%;
+	background: url('/images1/currency.png') 100% 0 / 200% 100%;
 	width:32px;
 	height:32px;
 }

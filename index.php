@@ -45,11 +45,12 @@
 </head>
 
 <body id="body">
-	<div id="mainWrap" class="portal">
 		
-		<img id="worldTitle" src="images/flat4.jpg">
+	<img id="firmamentWarsLogo" src="images/firmamentWarsTitle90.jpg">
+	<div id="mainWrap" class="portal">
 	
 		<div id="titleMain" class="portal">
+			
 			<header class="shadow4">
 				<div id="headerWrap">
 				<?php
@@ -239,9 +240,9 @@
 						<hr class="fancyhr">
 						<div class="input-group">
 							<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" autocomplete="off"/>
-							<span id="titleChatSend" class="input-group-btn">
+							<div id="titleChatSend" class="input-group-btn">
 								<button class="btn shadow4 fwBlue">Send</button>
-							</span>
+							</div>
 						</div>';
 					}
 					?>
@@ -250,6 +251,8 @@
 		</div>
 	
 		<div id="joinGameLobby" class="shadow4">
+		
+			<img id="worldTitle" src="images/flat4.jpg">
 		
 			<div id="lobbyLeftCol">
 			
