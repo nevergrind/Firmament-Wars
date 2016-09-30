@@ -879,7 +879,7 @@ circle{
 }
 .fw-primary{
 	border: 1px solid #01a;
-	background: rgba(0,0,0,.8);
+	background: rgba(0,0,0,.7);
 	border-radius: 6px;
 	color: #fff;
 	box-shadow: 0 0 5px #3377dd, 0 0 5px #3377dd inset;

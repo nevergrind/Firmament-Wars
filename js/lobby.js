@@ -633,13 +633,13 @@ function loadGameState(x){
 				// add star for capital to map
 				if (game.tiles[i].capital){
 					var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-					svg.setAttributeNS(null, 'height', 40);
-					svg.setAttributeNS(null, 'width', 40);
-					svg.setAttributeNS(null,"x",x - 2);
-					svg.setAttributeNS(null,"y",y - 10);
-					svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/capital.png');
+					svg.setAttributeNS(null, 'height', 30);
+					svg.setAttributeNS(null, 'width', 30);
+					svg.setAttributeNS(null,"x",x - 15);
+					svg.setAttributeNS(null,"y",y + 17);
+					svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/capital3.png');
 					mapCapitals.appendChild(svg);
-					TweenMax.to(svg, 40, {
+					TweenMax.to(svg, 60, {
 						transformOrigin: '50% 50%',
 						rotation: 360,
 						repeat: -1,

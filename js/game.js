@@ -99,21 +99,23 @@ function showTarget(e, hover, skipOldTgtUpdate){
 		var d = game.tiles[tileId];
 		var cacheOldTgt = my.tgt;
 		if (!hover){
-			var e1 = document.getElementById('land' + cacheOldTgt),
-				e2 = document.getElementById('land' + tileId);
-			TweenMax.set(e1, {
-				stroke: '#66ccff',
-				filter: '',
-				strokeWidth: 1
-			});
-			my.tgt = tileId;
-			TweenMax.set(e2, {
-				stroke: '#aaeeff',
-				filter: 'url(#glow)',
-				strokeWidth: 2
-			});
-			document.getElementById('topTile')
-				.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#land' + my.tgt);
+			if (cacheOldTgt !== tileId){
+				var e1 = document.getElementById('land' + cacheOldTgt),
+					e2 = document.getElementById('land' + tileId);
+				TweenMax.set(e1, {
+					stroke: '#66ccff',
+					filter: '',
+					strokeWidth: 1
+				});
+				my.tgt = tileId;
+				TweenMax.set(e2, {
+					stroke: '#aaeeff',
+					filter: 'url(#glow)',
+					strokeWidth: 2
+				});
+				document.getElementById('topTile')
+					.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#land' + my.tgt);
+			}
 		}
 		// animate targetLine on hover
 		if (hover && tileId !== my.tgt){
