@@ -103,15 +103,15 @@ function showTarget(e, hover, skipOldTgtUpdate){
 				e2 = document.getElementById('land' + tileId);
 			TweenMax.set(e1, {
 				stroke: '#66ccff',
+				filter: '',
 				strokeWidth: 1
 			});
-			e1.setAttribute('filter', '');
 			my.tgt = tileId;
 			TweenMax.set(e2, {
 				stroke: '#aaeeff',
+				filter: 'url(#glow)',
 				strokeWidth: 2
 			});
-			e2.setAttribute('filter', 'url(#glow)');
 			document.getElementById('topTile')
 				.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#land' + my.tgt);
 		}
