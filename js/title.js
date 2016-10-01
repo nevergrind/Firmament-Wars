@@ -81,13 +81,15 @@ var title = {
 			ease: Linear.easeNone
 		});
 		// logo
-		TweenMax.to('#firmamentWarsLogo, #firmamentWarsBlur', 1, {
+		TweenMax.to('#firmamentWarsLogo, #firmamentWarsBlur', globeDelay, {
 			startAt: {
 				visibility: 'visible',
 				opacity: 0
 			},
-			rotationX: 0,
 			opacity: 1,
+			ease: Quad.easeIn
+		});
+		TweenMax.to('#firmamentWarsLogo, #firmamentWarsBlur', globeDelay, {
 			top: 0,
 			onComplete: function(){
 				TweenMax.to('#firmamentWarsBlur', 4, {

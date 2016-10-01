@@ -40,17 +40,18 @@
 	<meta name="mobile-web-app-capable" content="yes">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-	<link rel='stylesheet' type='text/css' href="css/fw1.css">
+	<link rel='stylesheet' type='text/css' href="css/fw1.css?v1">
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
 
 <body id="body">
 
 	<div id="firmamentWarsLogoWrap" class="titleBG">
+		<img src="images/firmamentWarsTitle90.png" title="Firmament Wars Official Logo" class="titleBG">
 		<img src="images/firmamentWarsTitle_logoBG.png" id="firmamentWarsGlow" class="titleBG">
 		<div id="firmamentWarsStars" class="titleBG"></div>
 		
-		<img src="images/FirmamentWarsTitle_globe2.png" id="titleGlobe" class="titleBG">
+		<img src="images/FirmamentWarsTitle_globe3.png" id="titleGlobe" class="titleBG">
 		<!--
 		<img src="images/FirmamentWarsTitle_lights.png" id="firmamentWarsLights" class="titleBG titleGlobe fwHidden">
 		<img src="images/firmamentWarsTitle_lightsExplosions.png" id="firmamentWarsExplosions" class="titleBG titleGlobe fwHidden">
@@ -515,18 +516,6 @@
 	</div>
 	
 	<div id="gameWrap">
-		<!--
-		<div id="gameTopLeft">
-			<div class="btn-group" role="group">
-				<button id="prevUnit" class="btn btn-default targeting">
-					<i class='fa fa-chevron-left'></i>
-				</button>
-				<button id="nextUnit" class="btn btn-default targeting">
-					<i class='fa fa-chevron-right'></i>
-				</button>
-			</div>
-		</div>
-		-->
 		<div id="wrap-ui" class="stagBlue">
 			<div id="diplomacy-ui" class="shadow4">
 			</div>
@@ -899,7 +888,7 @@
 		var target = d.getElementsByTagName('script')[0];
 		for(var i=0, len=_scriptLoader.length; i<len; i++){
 			var x=d.createElement('script');
-			x.src = 'js/'+_scriptLoader[i]+'.js';
+			x.src = 'js/'+_scriptLoader[i]+'.js?v1';
 			x.async=false;
 			target.parentNode.appendChild(x);
 		}
