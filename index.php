@@ -50,7 +50,7 @@
 		<img src="images/firmamentWarsTitle_logoBG.png" id="firmamentWarsGlow" class="titleBG">
 		<div id="firmamentWarsStars" class="titleBG"></div>
 		
-		<img src="images/FirmamentWarsTitle_globe2.png" class="titleBG titleGlobe">
+		<img src="images/FirmamentWarsTitle_globe2.png" id="titleGlobe" class="titleBG">
 		<!--
 		<img src="images/FirmamentWarsTitle_lights.png" id="firmamentWarsLights" class="titleBG titleGlobe fwHidden">
 		<img src="images/firmamentWarsTitle_lightsExplosions.png" id="firmamentWarsExplosions" class="titleBG titleGlobe fwHidden">

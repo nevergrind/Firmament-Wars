@@ -182,7 +182,7 @@ a:hover{
 #firmamentWarsStars{
 	background: url('../images/firmamentWarsTitle_stars.png');
 }
-.fwHidden{
+.fwHidden, #titleMain{
 	visibility: hidden;
 	opacity: 0;
 }
@@ -193,11 +193,11 @@ a:hover{
 	width: 100%;
 	height: 100%;
 }
-.titleGlobe{
+#titleGlobe{
 	top: 100px;
 }
 #firmamentWarsLogo, #firmamentWarsBlur{
-	top: -100px;
+	top: -200px;
 }
 /* Firmament Wars */
 #gameWrap{

@@ -794,7 +794,7 @@ function startGame(){
 function lobbyCountdown(x){
 	var loadTime = Date.now() - g.startTime;
 	if (loadTime < 1000){
-		$("#titleMain, #firmamentWarsLogo").remove();
+		$("#firmamentWarsLogoWrap").remove();
 		loadGameState(x); // page refresh
 	} else {
 		new Audio('sound/beepHi.mp3');

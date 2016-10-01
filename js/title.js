@@ -62,8 +62,11 @@ var title = {
 		}, 100);
 	})(),
 	animateLogo: function(){
+		var globeDelay = 1,
+			globeYoyo = 6;
 		// blur
-		TweenMax.to('#firmamentWarsGlow', 6, {
+		TweenMax.to('#firmamentWarsGlow', globeYoyo, {
+			delay: globeDelay,
 			transformOrigin: '0% 100%',
 			transformPerspective: 100,
 			scale: 1.25,
@@ -71,18 +74,13 @@ var title = {
 			yoyo: true,
 			ease: Power1.easeInOut
 		});
-		// animate logo
+		// animate stars
 		TweenMax.to('#firmamentWarsStars', 60, {
 			backgroundPosition: '-1024px 0px', 
 			repeat: -1,
 			ease: Linear.easeNone
 		});
-		// globe
-		TweenMax.to('#firmamentWarsStars', 60, {
-			backgroundPosition: '-1024px 0px', 
-			repeat: -1,
-			ease: Linear.easeNone
-		});
+		// logo
 		TweenMax.to('#firmamentWarsLogo, #firmamentWarsBlur', 1, {
 			startAt: {
 				visibility: 'visible',
@@ -114,44 +112,27 @@ var title = {
 					repeat: -1,
 					yoyo: true
 				});
+				TweenMax.to('#titleMain', .5, {
+					startAt: {
+						visibility: 'visible'
+					},
+					opacity: 1
+				});
 			}
 		});
-		TweenMax.to('.titleGlobe', 1, {
+		// globe
+		TweenMax.to('#titleGlobe', globeDelay, {
 			top: 0,
 			onComplete: function(){
-				/*
-				TweenMax.to('#firmamentWarsCities', 3, {
+				TweenMax.to('#titleGlobe', globeYoyo, {
 					startAt: {
-						visibility: 'visible',
-						opacity: 0
+						scale: 1
 					},
-					opacity: 1,
-					repeat: -1,
-					yoyo: true
-				});
-				TweenMax.to('#firmamentWarsExplosions', 2.2, {
-					delay: 1,
-					startAt: {
-						visibility: 'visible',
-						opacity: 0
-					},
-					opacity: 1,
+					scale: 1.03,
 					repeat: -1,
 					yoyo: true,
-					repeatDelay: 2.77,
-					ease: SteppedEase.config(5)
+					ease: Power1.easeInOut
 				});
-				TweenMax.to('#firmamentWarsTargets', 1.5, {
-					startAt: {
-						visibility: 'visible',
-						opacity: 1
-					},
-					ease: Power3.easeIn,
-					opacity: .35,
-					repeat: -1,
-					repeatDelay: 2.33
-				});
-				*/
 			}
 		});
 	},

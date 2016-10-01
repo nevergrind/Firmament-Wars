@@ -185,7 +185,7 @@ g.init = (function(){
 					my.government = data.government;
 					lobby.updateGovernmentWindow(my.government);
 				}, 111);
-				$("#titleMain, #firmamentWarsLogo").remove();
+				$("#firmamentWarsLogoWrap").remove();
 			}
 		}).always(function(){
 			g.unlock();
