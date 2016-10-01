@@ -113,8 +113,7 @@ function showTarget(e, hover, skipOldTgtUpdate){
 					filter: 'url(#glow)',
 					strokeWidth: 2
 				});
-				document.getElementById('topTile')
-					.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#land' + my.tgt);
+				game.updateTopTile(my.tgt);
 			}
 		}
 		// animate targetLine on hover
@@ -217,7 +216,6 @@ function getGameState(){
 					var d = data.tiles[i],
 						updateTargetStatus = false;
 					// check player value
-					
 					if (d.player !== game.tiles[i].player){
 						// set text visible if uninhabited
 						if (!game.tiles[i].units){
@@ -268,6 +266,7 @@ function getGameState(){
 					}
 					if (updateTargetStatus){
 						showTarget(document.getElementById('land' + i));
+						game.updateTopTile(i);
 					}
 				}
 				// report chat messages

@@ -85,26 +85,29 @@
 				echo '
 				</div>
 				<div class="pull-right text-primary">
-					<a target="_blank" href="//www.youtube.com/user/Maelfyn">
-						<i class="fa fa-youtube-square text-primary pointer"></i>
+					<a href="//www.youtube.com/user/Maelfyn">
+						<i class="fa fa-youtube text-primary pointer"></i>
 					</a>
-					<a target="_blank" href="//www.facebook.com/neverworksgames">
-						<i class="fa fa-facebook-square text-primary pointer"></i>
+					<a href="//www.facebook.com/neverworksgames">
+						<i class="fa fa-facebook text-primary pointer"></i>
 					</a>
-					<a target="_blank" href="//twitter.com/neverworksgames">
-						<i class="fa fa-twitter-square text-primary pointer"></i>
+					<a href="//twitter.com/neverworksgames">
+						<i class="fa fa-twitter text-primary pointer"></i>
 					</a>
-					<a target="_blank" href="//plus.google.com/118162473590412052664">
-						<i class="fa fa-google-plus-square text-primary pointer"></i>
+					<a href="//plus.google.com/118162473590412052664">
+						<i class="fa fa-google-plus text-primary pointer"></i>
 					</a>
 					<a href="//github.com/Maelfyn/Nevergrind">
-						<i class="fa fa-github-square text-primary pointer"></i>
+						<i class="fa fa-github text-primary pointer"></i>
 					</a>
-					<a target="_blank" href="//reddit.com/r/nevergrind">
-						<i class="fa fa-reddit-square text-primary pointer"></i>
+					<a href="//reddit.com/r/nevergrind">
+						<i class="fa fa-reddit text-primary pointer"></i>
 					</a>
-					<a target="_blank" href="//goo.gl/BFsmf2">
-						<i class="fa fa-linkedin-square text-primary pointer"></i>
+					<a href="//goo.gl/BFsmf2">
+						<i class="fa fa-linkedin text-primary pointer"></i>
+					</a>
+					<a href="http://www.indiedb.com/games/firmament-wars">
+						<i class="fa fa-gamepad text-primary pointer"></i>
 					</a>
 				</div>';
 				

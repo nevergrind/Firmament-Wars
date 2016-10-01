@@ -205,7 +205,10 @@ var game = {
 	tiles: [],
 	initialized: false,
 	player: [0,0,0,0,0,0,0,0,0], // cached values on client to reduce DB load
-	
+	updateTopTile: function(i){
+		document.getElementById('topTile')
+			.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#land' + i);
+	}
 }
 // player data values
 var my = {
