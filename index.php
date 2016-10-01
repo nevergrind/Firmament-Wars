@@ -45,8 +45,22 @@
 </head>
 
 <body id="body">
+
+	<div id="firmamentWarsLogoWrap" class="titleBG">
+		<img src="images/firmamentWarsTitle_logoBG.png" id="firmamentWarsGlow" class="titleBG">
+		<div id="firmamentWarsStars" class="titleBG"></div>
 		
-	<img id="firmamentWarsLogo" src="images/firmamentWarsTitle90.jpg">
+		<img src="images/FirmamentWarsTitle_globe2.png" class="titleBG titleGlobe">
+		<!--
+		<img src="images/FirmamentWarsTitle_lights.png" id="firmamentWarsLights" class="titleBG titleGlobe fwHidden">
+		<img src="images/firmamentWarsTitle_lightsExplosions.png" id="firmamentWarsExplosions" class="titleBG titleGlobe fwHidden">
+		<img src="images/firmamentWarsTitle_lightsTargets.png" id="firmamentWarsTargets" class="titleBG titleGlobe fwHidden">
+		<img src="images/firmamentWarsTitle_lights2.png" id="firmamentWarsLights2" class="titleBG titleGlobe fwHidden">
+		-->
+		<img src="images/firmamentWarsTitle_logoBlur.png" id="firmamentWarsBlur" class="titleBG fwHidden">
+		<img src="images/firmamentWarsTitle_logo.png" id="firmamentWarsLogo" class="titleBG fwHidden">
+	</div>
+	
 	<div id="mainWrap" class="portal">
 	
 		<div id="titleMain" class="portal">

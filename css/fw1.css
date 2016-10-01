@@ -178,6 +178,27 @@ a:hover{
 		1px -1px #000,
 		-1px -1px #000;
 }
+/* logo */
+#firmamentWarsStars{
+	background: url('../images/firmamentWarsTitle_stars.png');
+}
+.fwHidden{
+	visibility: hidden;
+	opacity: 0;
+}
+.titleBG{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+.titleGlobe{
+	top: 100px;
+}
+#firmamentWarsLogo, #firmamentWarsBlur{
+	top: -100px;
+}
 /* Firmament Wars */
 #gameWrap{
 	visibility: hidden;
@@ -743,9 +764,6 @@ table td, .table th, .table td {
 	top: 0%;
 	left: 0%;
 	width: 197.461%;
-}
-#titleMain{
-	background: url('../images/firmamentWarsTitle90.jpg');
 }
 #worldWrap{
 	position: absolute;

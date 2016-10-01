@@ -58,8 +58,103 @@ var title = {
 			}
 			document.getElementById('mapDropdown').innerHTML = str;
 			$('[title]').tooltip();
+			title.animateLogo();
 		}, 100);
 	})(),
+	animateLogo: function(){
+		// blur
+		TweenMax.to('#firmamentWarsGlow', 6, {
+			transformOrigin: '0% 100%',
+			transformPerspective: 100,
+			scale: 1.25,
+			repeat: -1,
+			yoyo: true,
+			ease: Power1.easeInOut
+		});
+		// animate logo
+		TweenMax.to('#firmamentWarsStars', 60, {
+			backgroundPosition: '-1024px 0px', 
+			repeat: -1,
+			ease: Linear.easeNone
+		});
+		// globe
+		TweenMax.to('#firmamentWarsStars', 60, {
+			backgroundPosition: '-1024px 0px', 
+			repeat: -1,
+			ease: Linear.easeNone
+		});
+		TweenMax.to('#firmamentWarsLogo, #firmamentWarsBlur', 1, {
+			startAt: {
+				visibility: 'visible',
+				opacity: 0
+			},
+			rotationX: 0,
+			opacity: 1,
+			top: 0,
+			onComplete: function(){
+				TweenMax.to('#firmamentWarsBlur', 4, {
+					startAt: {
+						transformOrigin: '50% 50%',
+						scaleX: 1,
+						scaleY: 1
+					},
+					ease: Linear.easeNone,
+					scaleX: 1.2,
+					scaleY: 1.1,
+					repeat: -1,
+					yoyo: true
+				});
+				TweenMax.to('#firmamentWarsBlur', 1.666, {
+					startAt: {
+						transformOrigin: '50% 50%',
+						skewX: 0,
+					},
+					ease: Linear.easeNone,
+					skewX: 5,
+					repeat: -1,
+					yoyo: true
+				});
+			}
+		});
+		TweenMax.to('.titleGlobe', 1, {
+			top: 0,
+			onComplete: function(){
+				/*
+				TweenMax.to('#firmamentWarsCities', 3, {
+					startAt: {
+						visibility: 'visible',
+						opacity: 0
+					},
+					opacity: 1,
+					repeat: -1,
+					yoyo: true
+				});
+				TweenMax.to('#firmamentWarsExplosions', 2.2, {
+					delay: 1,
+					startAt: {
+						visibility: 'visible',
+						opacity: 0
+					},
+					opacity: 1,
+					repeat: -1,
+					yoyo: true,
+					repeatDelay: 2.77,
+					ease: SteppedEase.config(5)
+				});
+				TweenMax.to('#firmamentWarsTargets', 1.5, {
+					startAt: {
+						visibility: 'visible',
+						opacity: 1
+					},
+					ease: Power3.easeIn,
+					opacity: .35,
+					repeat: -1,
+					repeatDelay: 2.33
+				});
+				*/
+			}
+		});
+	},
 	mapData: {
 		EarthAlpha: {
 			name: 'Earth Alpha',
