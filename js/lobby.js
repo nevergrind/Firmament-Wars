@@ -50,9 +50,9 @@ var lobby = {
 			str = '<div id="lobbyGovName" class="text-primary">Fascism</div>\
 				<div id="lobbyGovPerks">\
 					<div>Fervor doubles bonus troops</div>\
-					<div>1/2 cost Attack</div>\
+					<div>Attack cost reduced 20%</div>\
 					<div>Start with Great General</div>\
-					<div>Free Deploy cost</div>\
+					<div>1/2 cost Deploy</div>\
 				</div>';
 		} else if (government === "Republic"){
 			str = '<div id="lobbyGovName" class="text-primary">Republic</div>\
@@ -528,10 +528,10 @@ function loadGameState(x){
 				document.getElementById('recruitCost').textContent = 15;
 				my.recruitCost = 15;
 			} else if (my.government === 'Fascism'){
-				document.getElementById('attackCost').textContent = 5;
-				my.attackCost = 5;
-				document.getElementById('deployCost').textContent = 0;
-				my.deployCost = 0;
+				document.getElementById('attackCost').textContent = 8;
+				my.attackCost = 8;
+				document.getElementById('deployCost').textContent = 5;
+				my.deployCost = 5;
 			} else if (my.government === 'Communism'){
 				// research
 				DOM.gunpowderCost.textContent = 60;
@@ -812,7 +812,8 @@ function lobbyCountdown(x){
 				video.load.game();
 			}
 			if (secondsToStart === 1){
-				TweenMax.to('#mainWrap', 2.5, {
+				TweenMax.to('#mainWrap', 1.5, {
+					delay: 1,
 					alpha: 0,
 					ease: Linear.easeNone,
 					onComplete: function(){
