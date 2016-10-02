@@ -456,6 +456,7 @@ $("#buyFlag").on("click", function(){
 		$("#offerFlag").css("display", "none");
 		$("#nationFlag").attr("src", "images/flags/" + my.selectedFlagFull);
 		Msg("Your nation's flag is now: " + my.selectedFlag);
+		document.getElementById('selectedFlag').textContent = my.selectedFlag;
 	}).fail(function(e){
 		// not enough money
 		Msg(e.statusText);
