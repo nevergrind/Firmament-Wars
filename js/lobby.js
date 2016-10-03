@@ -286,8 +286,8 @@ var lobby = {
 };
 
 function initOffensiveTooltips(){
-	$('#fireArtillery')
-		.attr('title', 'Fire artillery at an adjacent enemy tile. Kills ' + (2 + my.oBonus) + ' + 4% of armies.')
+	$('#fireCannons')
+		.attr('title', 'Fire cannons at an adjacent enemy tile. Kills ' + (2 + my.oBonus) + ' + 4% of armies.')
 		.tooltip('fixTitle');
 	$('#launchMissile')
 		.attr('title', 'Launch a missile at any enemy territory. Kills ' + (5 + (my.oBonus * 2)) + ' + 15% of armies.')
@@ -540,7 +540,7 @@ function loadGameState(x){
 				DOM.atomicTheoryCost.textContent = 250;
 				DOM.futureTechCost.textContent = 625;
 				// weapons
-				DOM.artilleryCost.textContent = 30;
+				DOM.cannonsCost.textContent = 30;
 				DOM.missileCost.textContent = 75;
 				DOM.nukeCost.textContent = 300;
 				my.weaponCost = .5;
@@ -637,7 +637,7 @@ function loadGameState(x){
 					svg.setAttributeNS(null, 'width', 30);
 					svg.setAttributeNS(null,"x",x - 15);
 					svg.setAttributeNS(null,"y",y + 17);
-					svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/capital3.png');
+					svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/capital.png');
 					mapCapitals.appendChild(svg);
 					TweenMax.to(svg, 60, {
 						transformOrigin: '50% 50%',
@@ -708,8 +708,8 @@ function loadGameState(x){
 						var o = my.targetData;
 						if (o.attackName === 'attack'){
 							action.attack(that);
-						} else if (o.attackName === 'artillery'){
-							action.fireArtillery(that);
+						} else if (o.attackName === 'cannons'){
+							action.fireCannons(that);
 						} else if (o.attackName === 'missile'){
 							action.launchMissile(that);
 						} else if (o.attackName === 'nuke'){

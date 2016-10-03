@@ -1,30 +1,5 @@
 // game.js
 function updateTileInfo(tileId){
-	function defMsg(){
-		var d = t.defense;
-		if (!d){
-			return 'Build structures to boost tile defense';
-		} else {
-			var x = '+' + d + ' tile defense:<br>';
-			if (t.capital){
-				x += 'Palace<br>';
-				if (t.defense >= 2){
-					x += 'Bunker<br>';
-				}
-				if (t.defense >= 3){
-					x += 'Wall';
-				}
-			} else {
-				if (t.defense >= 1){
-					x += 'Bunker<br>';
-				}
-				if (t.defense >= 2){
-					x += 'Wall';
-				}
-			}
-			return x;
-		}
-	}
 	var t = game.tiles[tileId],
 		flag = "Default.jpg",
 		name = t.name,
@@ -48,29 +23,29 @@ function updateTileInfo(tileId){
 		account = t.account;
 	}
 	
-	var str = 
-		'<div id="tileInfo" class="shadow4">';
+	var str = ''
+	DOM.targetFlag.innerHTML = 
+		'<img src="images/flags/' + flag + '" class="p' + t.player + 'b w100 block center">';
+	
+	var str = '';
+	if (t.capital){
 		str += 
-			'<span class="fwTooltip" data-toggle="tooltip" title="' + t.food + ' food in ' + name + '"> <i class="food glyphicon glyphicon-apple" ></i> ' + t.food + '</span> \
-			<span class="fwTooltip" data-toggle="tooltip" title="' + t.culture + ' culture in ' + name + '"><i class="culture fa fa-flag" data-toggle="tooltip"></i> ' + t.culture + '</span>\
-			<span class="fwTooltip" data-toggle="tooltip" title="' + defMsg() + '"><i class="glyphicon glyphicon-tower manpower" data-toggle="tooltip"></i> ' + t.defense + '</span>\
-		</div>'+
-		'<img src="images/flags/' + flag + '" class="p' + t.player + 'b w100 block center">\
-		<div id="nation-ui" class="shadow4">';
-			if (t.capital){
-				str += 
-				'<span id="tileName" class="no-select fwTooltip fa-stack" data-toggle="tooltip" title="Capital Palace<br> Boosts tile defense">\
-					<i class="fa fa-circle-thin fa-stack-1x text-warning"></i>\
-					<i class="fa fa-star fa-stack-1x text-warning capitalStar"></i>\
-				</span> ';
-			}
-			str += name + '</div>';
-	DOM.target.innerHTML = str;
+		'<span id="tileName" class="no-select fa-stack" data-toggle="tooltip" title="Capital Palace<br> Boosts tile defense">\
+			<i class="fa fa-circle-thin fa-stack-1x capitalColor"></i>\
+			<i class="fa fa-star fa-stack-1x capitalStar"></i>\
+		</span> ';
+	}
+	str += name + '</div>';
+	DOM.targetName.innerHTML = str;
 	
 	var defWord = ['Bunker', 'Wall', 'Fortress'],
 		defCost = [80, 200, 450],
 		ind = t.defense - (t.capital ? 1 : 0);
-
+		var defTooltip = [
+			'',
+			' Walls reduce cannon damage by 50% and cannot be flipped by Revolutionaries.',
+			' Fortresses reduce cannon damage by 75%, missile damage by 50%, and cannot be flipped by Revolutionaries.'
+		];
 	if (ind > 2){
 		DOM.upgradeTileDefense.style.display = 'none';
 	} else {
@@ -80,20 +55,23 @@ function updateTileInfo(tileId){
 		if (ind === 2){
 			defWord[2] = 'Fortresse';
 		}
-		$('#upgradeTileDefense').attr('title', defWord[ind] + 's upgrade the structural defense of a territory.').tooltip('fixTitle');
+		var tooltip = defWord[ind] + 's upgrade the defense of a territory.' + defTooltip[ind];
+		$('#upgradeTileDefense')
+			.attr('title', tooltip)
+			.tooltip('fixTitle')
+			.tooltip('hide');
 	}
-	
-	$('.fwTooltip').tooltip({
-		html: true
-	});
 	// actions panel
 	my.player === t.player ? 
 		DOM.tileActions.style.display = 'block' : 
 		DOM.tileActions.style.display = 'none';
-	action.setMenu(my.activeTab);
+	action.setMenu();
 }
 function showTarget(e, hover, skipOldTgtUpdate){
-	if (typeof e === 'object' && e.id !== undefined){
+	if (e.id === undefined){
+		e.id = 'land0';
+	}
+	if (typeof e === 'object'){
 		var tileId = e.id.slice(4)*1;
 		// console.info('tileId: ', tileId);
 		var d = game.tiles[tileId];
@@ -170,6 +148,7 @@ function showTarget(e, hover, skipOldTgtUpdate){
 		my.flashTile(tileId);
 	} else {
 		my.attackOn = false;
+		my.attackName = '';
 	}
 }
 function setTileUnits(i, unitColor){
@@ -292,12 +271,12 @@ function getGameState(){
 							// fetch updated tile defense data
 							updateTileDefense(tile);
 							animate.upgrade(tile);
-						} else if (z.event.indexOf('artillery') === 0){
+						} else if (z.event.indexOf('cannons') === 0){
 							var a = z.event.split('|'),
 								tile = a[1],
 								account = a[2];
 							if (my.account !== account){
-								animate.artillery(tile, false);
+								animate.cannons(tile, false);
 							}
 						} else if (z.event.indexOf('missile') === 0){
 							var a = z.event.split('|'),
@@ -336,15 +315,13 @@ function getGameState(){
 							(function(dot){
 								setTimeout(function(){
 									dot.parentNode.removeChild(dot);
-								}, 4500);
+								}, 5000);
 							})(dot);
-							if (my.account !== account){
-								(function(tile){
-									setTimeout(function(){
-										animate.nuke(tile);
-									}, 4500);
-								})(tile);
-							}
+							(function(tile){
+								setTimeout(function(){
+									animate.nuke(tile);
+								}, 5000);
+							})(tile);
 						}
 					}
 				}

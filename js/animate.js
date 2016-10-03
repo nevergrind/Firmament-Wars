@@ -207,7 +207,7 @@ var animate = {
 			DOM.mapBars.appendChild(svg);
 		}
 	},
-	artillery: function(tile, playSound){
+	cannons: function(tile, playSound){
 		var e1 = document.getElementById('land' + tile),
 			box = e1.getBBox();
 		if (playSound){
@@ -446,12 +446,20 @@ var animate = {
 			}
 		});
 		new Image('images/fireball.png');
+		var fireball = document.createElementNS("http://www.w3.org/2000/svg","image");
+		fireball.setAttributeNS(null,"width",128);
+		fireball.setAttributeNS(null,"height",128);
+		fireball.setAttributeNS(null,"x",x);
+		fireball.setAttributeNS(null,"y",y);
+		fireball.setAttributeNS(null,"opacity",0);
+		fireball.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","images/fireball2.png");
+		DOM.mapAnimations.appendChild(fireball);
 		// start bomb explosion sequence
 		TweenMax.to(g, 1, {
 			onComplete: function(){
 				updateTileDefense(tile);
 				audio.play('bomb9');
-				TweenMax.to(DOM.screenFlash, 1.5, {
+				TweenMax.to(DOM.screenFlash, .5, {
 					startAt: {
 						transformOrigin: '50% 50%',
 						opacity: 1,
@@ -464,14 +472,6 @@ var animate = {
 				// shake
 				animate.screenShake(16, 10, .016, true);
 				// fireball
-				var fireball = document.createElementNS("http://www.w3.org/2000/svg","image");
-				fireball.setAttributeNS(null,"width",256);
-				fireball.setAttributeNS(null,"height",256);
-				fireball.setAttributeNS(null,"x",x);
-				fireball.setAttributeNS(null,"y",y);
-				fireball.setAttributeNS(null,"opacity",0);
-				fireball.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","images/fireball.png");
-				DOM.mapAnimations.appendChild(fireball);
 				TweenMax.to(fireball, 3, {
 					startAt: {
 						xPercent: -50,

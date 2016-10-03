@@ -21,8 +21,9 @@ var action = {
 		if (game.tiles[my.tgt].player !== my.player){
 			return;
 		}
-		if (my.attackOn){
+		if (my.attackOn && o.attackName === my.attackName){
 			my.attackOn = false;
+			my.attackName = '';
 			my.clearHud();
 			return;
 		}
@@ -64,6 +65,7 @@ var action = {
 			}
 		}
 		my.attackOn = false;
+		my.attackName = '';
 		if (game.tiles[my.tgt].units === 1){
 			Msg("You need at least 2 armies to move/attack!", 1.5);
 			my.clearHud();
@@ -238,7 +240,7 @@ var action = {
 			audio.play('error');
 		});
 	},
-	fireArtillery: function(that){
+	fireCannons: function(that){
 		var attacker = my.tgt;
 		var defender = that.id.slice(4)*1;
 		if (my.tgt === defender){
@@ -252,6 +254,7 @@ var action = {
 			return;
 		}
 		my.attackOn = false;
+		my.attackName = '';
 		if (my.production < 60 * my.weaponCost){
 			action.error();
 			return;
@@ -261,14 +264,14 @@ var action = {
 		showTarget(document.getElementById('land' + attacker));
 		// send attack to server
 		$.ajax({
-			url: 'php/fireArtillery.php',
+			url: 'php/fireCannons.php',
 			data: {
 				attacker: attacker,
 				defender: defender
 			}
 		}).done(function(data) {
-			console.info('fireArtillery', data);
-			animate.artillery(defender, true);
+			console.info('fireCannons', data);
+			animate.cannons(defender, true);
 			if (data.production !== undefined){
 				setProduction(data);
 			}
@@ -296,6 +299,7 @@ var action = {
 			return;
 		}
 		my.attackOn = false;
+		my.attackName = '';
 		if (my.production < 120 * my.weaponCost){
 			action.error();
 			return;
@@ -359,6 +363,7 @@ var action = {
 			return;
 		}
 		my.attackOn = false;
+		my.attackName = '';
 		if (my.production < 600 * my.weaponCost){
 			action.error();
 			return;
@@ -383,12 +388,8 @@ var action = {
 						defender: defender
 					}
 				}).done(function(data) {
-					updateTileDefense();
 				});
 			}, 6000);
-			setTimeout(function(){
-				animate.nuke(defender);
-			}, 5000);
 			console.info('launchNuke', data);
 			if (data.production !== undefined){
 				setProduction(data);
@@ -404,64 +405,45 @@ var action = {
 		});
 		
 	},
-	setMenu: function(id){
-		if (id === undefined){
-			id = 'gotoCommand';
+	// updates currently visible buttons after research/targeting
+	setMenu: function(){
+		// show/hide research
+		DOM.researchEngineering.style.display = my.tech.engineering ? 'none' : 'block';
+		DOM.researchGunpowder.style.display = my.tech.gunpowder ? 'none' : 'block';
+		DOM.researchRocketry.style.display = my.tech.rocketry || !my.tech.gunpowder ? 'none' : 'block';
+		DOM.researchAtomicTheory.style.display = my.tech.atomicTheory || !my.tech.gunpowder || !my.tech.rocketry || !my.tech.engineering ? 'none' : 'block';
+		// all techs must be finished for future tech
+		var display = 'block';
+		if (!my.tech.engineering || 
+			!my.tech.gunpowder || 
+			!my.tech.rocketry || 
+			!my.tech.atomicTheory){
+			display = 'none';
 		}
-		my.activeTab = id;
-		DOM.tileCommand.style.display = 'none';
-		DOM.tileResearch.style.display = 'none';
-		DOM.tileBuild.style.display = 'none';
-		$(".actionTabs").removeClass('activeTab');
-		if (id === 'gotoCommand'){
-			g.actionMenu = 'command';
-			DOM.tileCommand.style.display = 'block';
-		} else if (id === 'gotoResearch'){
-			g.actionMenu = 'research';
-			DOM.tileResearch.style.display = 'block';
-			// show/hide research
-			DOM.researchEngineering.style.display = my.tech.engineering ? 'none' : 'block';
-			DOM.researchGunpowder.style.display = my.tech.gunpowder ? 'none' : 'block';
-			DOM.researchRocketry.style.display = my.tech.rocketry || !my.tech.gunpowder ? 'none' : 'block';
-			DOM.researchAtomicTheory.style.display = my.tech.atomicTheory || !my.tech.gunpowder || !my.tech.rocketry || !my.tech.engineering ? 'none' : 'block';
-			// all techs must be finished
-			var display = 'block';
-			if (!my.tech.engineering || 
-				!my.tech.gunpowder || 
-				!my.tech.rocketry || 
-				!my.tech.atomicTheory){
+		DOM.researchFutureTech.style.display = display;
+		if (!game.tiles[my.tgt].defense){
+			// zero defense
+			DOM.upgradeTileDefense.style.display = 'block';
+		} else {
+			// wall or fortress
+			var capValue = game.tiles[my.tgt].capital ? 1 : 0,
+				dMinusPalace = game.tiles[my.tgt].defense - capValue,
 				display = 'none';
-			}
-			DOM.researchFutureTech.style.display = display;
-		} else if (id === 'gotoBuild'){
-			g.actionMenu = 'build';
-			DOM.tileBuild.style.display = 'block';
-			if (!game.tiles[my.tgt].defense){
-				// zero defense
-				DOM.upgradeTileDefense.style.display = 'block';
-			} else {
-				// wall or fortress
-				var capValue = game.tiles[my.tgt].capital ? 1 : 0,
-					dMinusPalace = game.tiles[my.tgt].defense - capValue,
-					display = 'none';
-				if (!my.tech.engineering){
-					// bunker max possible
-					if (!dMinusPalace){
-						display = 'block';
-					}
-				} else {
-					if (dMinusPalace < 3){
-						display = 'block';
-					}
+			if (!my.tech.engineering){
+				// bunker max possible
+				if (!dMinusPalace){
+					display = 'block';
 				}
-				DOM.upgradeTileDefense.style.display = display;
+			} else {
+				if (dMinusPalace < 3){
+					display = 'block';
+				}
 			}
-			
-			DOM.fireArtillery.style.display = my.tech.gunpowder ? 'block' : 'none';
-			DOM.launchMissile.style.display = my.tech.rocketry ? 'block' : 'none';
-			DOM.launchNuke.style.display = my.tech.atomicTheory ? 'block' : 'none';
+			DOM.upgradeTileDefense.style.display = display;
 		}
-		$("#" + id).addClass('activeTab');
+		DOM.fireCannons.style.display = my.tech.gunpowder ? 'block' : 'none';
+		DOM.launchMissile.style.display = my.tech.rocketry ? 'block' : 'none';
+		DOM.launchNuke.style.display = my.tech.atomicTheory ? 'block' : 'none';
 	}
 }
 
@@ -490,7 +472,7 @@ function toggleChatMode(send){
 	}
 }
 
-$("#actions").on("mousedown", '#attack', function(e){
+$("#tileActions").on("mousedown", '#attack', function(e){
 	if (e.which === 1){
 		var o = new Target({});
 		action.target(o);
@@ -535,13 +517,13 @@ $("#actions").on("mousedown", '#attack', function(e){
 	if (e.which === 1){
 		research.futureTech();
 	}
-}).on('mousedown', '#fireArtillery', function(e){
+}).on('mousedown', '#fireCannons', function(e){
 	if (e.which === 1){
 		var o = new Target({
 			cost: 60,
 			minimum: 0,
-			attackName: 'artillery',
-			hudMsg: 'Fire Artillery'
+			attackName: 'cannons',
+			hudMsg: 'Fire Cannons'
 		});
 		action.target(o);
 	}
@@ -564,10 +546,6 @@ $("#actions").on("mousedown", '#attack', function(e){
 			hudMsg: 'Launch Nuclear Weapon'
 		});
 		action.target(o);
-	}
-}).on('mousedown', '.actionTabs', function(e){
-	if (e.which === 1){
-		action.setMenu(this.id);
 	}
 });
 
@@ -631,7 +609,7 @@ var research = {
 			chat(data.cultureMsg);
 		}
 		audio.play('research');
-		action.setMenu('gotoResearch');
+		action.setMenu();
 	}
 }
 
@@ -652,7 +630,7 @@ $(document).on('keydown', function(e){
 });
 $(document).on('keyup', function(e) {
 	var x = e.keyCode;
-	console.info(g.view);
+	console.info(g.view, x);
 	if (g.view === 'title'){
 		if (x === 13){
 			if (g.focusUpdateNationName){
@@ -687,101 +665,84 @@ $(document).on('keyup', function(e) {
 				toggleChatMode(true);
 			}
 		} else {
-			// any actionMenu mode
+			// game hotkeys
 			if (x === 13){
 				// enter
 				toggleChatMode();
-			} else if (x === 67 && g.actionMenu !== 'command'){
-				// c
-				action.setMenu('gotoCommand');
-			} else if (x === 82 && g.actionMenu !== 'research'){
-				// r
-				action.setMenu('gotoResearch');
-			} else if (x === 66 && g.actionMenu !== 'build'){
-				// c
-				action.setMenu('gotoBuild');
 			}  else if (x === 27){
 				// esc
 				my.attackOn = false;
+				my.attackName = '';
 				my.clearHud();
 				if (g.chatOn){
 					toggleChatMode();
 				}
-			} else {
-				// actionMenu
-				if (g.actionMenu === 'command'){
-					if (x === 65){
-						// a
-						var o = new Target();
-						action.target(o);
-					} else if (x === 83){
-						// s
-						var o = new Target({
-							cost: 3, 
-							splitAttack: true
-						});
-						action.target(o);
-					} else if (x === 68){
-						// d
-						if (!g.keyLock){
-							action.deploy();
-						}
-					} else if (x === 69){
-						// e
-						if (!g.keyLock){
-							action.recruit();
-						}
-					}
-				} else if (g.actionMenu === 'research'){
-					if (x === 69){
-						// r
-						research.engineering();
-					} else if (x === 71){
-						// g
-						research.gunpowder();
-					} else if (x === 82){
-						// r
-						research.rocketry();
-					} else if (x === 65){
-						// a
-						research.atomicTheory();
-					} else if (x === 70){
-						// f
-						research.futureTech();
-					}
-				} else {
-					if (x === 66){
-						// b
-						action.upgradeTileDefense();
-					} else if (x === 65){
-						// f
-						var o = new Target({
-							cost: 60 * my.weaponCost,
-							minimum: 0,
-							attackName: 'artillery',
-							hudMsg: 'Fire Artillery'
-						});
-						action.target(o);
-					} else if (x === 77){
-						// c
-						var o = new Target({
-							cost: 120 * my.weaponCost,
-							minimum: 0,
-							attackName: 'missile',
-							hudMsg: 'Launch Missile'
-						});
-						action.target(o);
-					} else if (x === 78){
-						// n
-						var o = new Target({
-							cost: 600 * my.weaponCost,
-							minimum: 0,
-							attackName: 'nuke',
-							hudMsg: 'Launch Nuclear Weapon'
-						});
-						action.target(o);
-					}
+			} else if (x === 65){
+				// a
+				var o = new Target();
+				action.target(o);
+			} else if (x === 83){
+				// s
+				var o = new Target({
+					cost: 3, 
+					splitAttack: true
+				});
+				action.target(o);
+			} else if (x === 68){
+				// d
+				if (!g.keyLock){
+					action.deploy();
 				}
+			} else if (x === 82){
+				// r
+				if (!g.keyLock){
+					action.recruit();
+				}
+			} else if (x === 69){
+				// e
+				research.engineering();
+			} else if (x === 71){
+				// g
+				research.gunpowder();
+			} else if (x === 82){
+				// k
+				research.rocketry();
+			} else if (x === 84){
+				// t
+				research.atomicTheory();
+			} else if (x === 70){
+				// f
+				research.futureTech();
+			} else if (x === 66){
+				// b
+				action.upgradeTileDefense();
+			} else if (x === 67){
+				// c
+				var o = new Target({
+					cost: 60 * my.weaponCost,
+					minimum: 0,
+					attackName: 'cannons',
+					hudMsg: 'Fire Cannons'
+				});
+				action.target(o);
+			} else if (x === 77){
+				// m
+				var o = new Target({
+					cost: 120 * my.weaponCost,
+					minimum: 0,
+					attackName: 'missile',
+					hudMsg: 'Launch Missile'
+				});
+				action.target(o);
+			} else if (x === 78){
+				// n
+				var o = new Target({
+					cost: 600 * my.weaponCost,
+					minimum: 0,
+					attackName: 'nuke',
+					hudMsg: 'Launch Nuclear Weapon'
+				});
+				action.target(o);
 			}
 		}
 	}

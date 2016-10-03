@@ -437,6 +437,25 @@ a:hover{
 #prevUnit:active, #nextUnit:active{
 	background: #333;
 }
+#ui2{
+	position: absolute;
+	color: #fff;
+	top: 0;
+	right: 0;
+	padding: .25em;
+	width: 20%;
+	z-index: 9999;
+}
+.tight{
+	margin: 0 !important;
+	padding: 0 !important;
+}
+#target-ui{
+	padding: 0;
+	margin: 0;
+	color: #fff;
+	font-size: .875em;
+}
 #wrap-ui{
 	position: absolute;
 	bottom: 0%;
@@ -542,18 +561,6 @@ a:hover{
 	opacity: 0;
 	pointer-events: none;
 }
-#target-ui{
-	position: absolute;
-	top: 0%;
-	right: 15%;
-	width: 50%;
-	height: 100%;
-	padding: .5% 1%;
-	color: #fff;
-	font-size: 1.25em;
-	border-left: 1px solid rgba(176,240,255,.1);
-	border-right: 1px solid rgba(176,240,255,.1);
-}
 #resources-ui{
 	font-size: 1em;
 	position: absolute;
@@ -593,11 +600,6 @@ a:hover{
 	padding: 3% 0;
 	
 }
-#actions{
-	position: relative;
-	left: 3%;
-	letter-spacing: .05em;
-}
 #actionTable  tr{
     border-spacing: 1em;
     border-collapse: separate;
@@ -606,15 +608,15 @@ a:hover{
 	font-size: .875em;
 	margin: 2% 0;
 }
-#tileActions{
+#researchHead{
+	font-size: 1.25em;
+}
+#tileActions, #tileResearch{
 	margin-top: 4%;
 	font-size: .625em;
 }
-#menuSelect, #tileCommand, #tileResearch, #tileBuild{
+#menuSelect{
 	width: 100%;
-}
-#tileResearch, #tileBuild{
-	display: none;
 }
 #tileAction > tbody > tr > td{
 	color: #f00;
@@ -676,27 +678,6 @@ table td, .table th, .table td {
 .actionButtons:active{
 	box-shadow:
 		0 5em 5em rgba(0,0,0,.3) inset;
-}
-.actionTabs{
-	background: rgba(23, 42, 84,1);
-	margin: 0;
-	padding: 0;
-	cursor: pointer;
-	border: 2px solid #000;
-	font-size: 1.25em;
-	line-height: 3em;
-	border-radius: 8px 8px 0 0;
-	box-shadow:
-		0 .1em .3em rgba(128, 192, 255, .5) inset,
-		0 -.1em .1em rgba(16, 92, 192, .7) inset,
-		0 3em rgba(0,0,0,.5) inset;
-}
-.activeTab{
-	background: rgba(4, 67, 136,1);
-	box-shadow:
-		0 .1em .3em rgba(128, 192, 255, .5) inset;
-}
-.activeTab:hover{
 }
 #players{
 	height: 30%;
@@ -1110,7 +1091,11 @@ circle{
     background: -o-radial-gradient(center center, farthest-corner, rgba(0,0,0,1) 0%, rgba(0,0,0,.7) 100%);
 	z-index: 999999;
 }
+.capitalColor{
+	color: #ffc500;
+}
 .capitalStar{
+	color: #ffc500;
 	margin-right: .125em;
 	font-size: .675em;
 }

@@ -124,18 +124,7 @@ var title = {
 		});
 		// globe
 		TweenMax.to('#titleGlobe', globeDelay, {
-			top: 0,
-			onComplete: function(){
-				TweenMax.to('#titleGlobe', globeYoyo, {
-					startAt: {
-						scale: 1
-					},
-					scale: 1.03,
-					repeat: -1,
-					yoyo: true,
-					ease: Power1.easeInOut
-				});
-			}
+			top: 0
 		});
 	},
 	mapData: {
