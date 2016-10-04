@@ -748,9 +748,8 @@ table td, .table th, .table td {
 }
 #worldTitle{
 	position: absolute;
-	top: 0%;
-	left: 0%;
-	width: 197.461%;
+	top: -59%;
+	left: -22%;
 }
 #worldWrap{
 	position: absolute;

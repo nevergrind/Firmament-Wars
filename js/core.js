@@ -841,13 +841,10 @@ $(window).on('resize orientationchange', function() {
 }).on('load', function(){
 	resizeWindow();
 	// background map
-	TweenMax.set("#worldTitle", {
-		x: -200,
-		y: -800
-	});
-	TweenMax.fromTo("#worldTitle", 316, {
-		rotation: -360
-	}, {
+	TweenMax.to("#worldTitle", 240, {
+		startAt: {
+			rotation: -360
+		},
 		rotation: 0,
 		repeat: -1,
 		ease: Linear.easeNone
