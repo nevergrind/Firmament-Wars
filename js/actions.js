@@ -472,7 +472,7 @@ function toggleChatMode(send){
 	}
 }
 
-$("#tileActions").on("mousedown", '#attack', function(e){
+$("#gameWrap").on("mousedown", '#attack', function(e){
 	if (e.which === 1){
 		var o = new Target({});
 		action.target(o);

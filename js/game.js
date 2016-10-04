@@ -31,11 +31,33 @@ function updateTileInfo(tileId){
 	if (t.capital){
 		str += 
 		'<span id="tileName" class="no-select fa-stack" data-toggle="tooltip" title="Capital Palace<br> Boosts tile defense">\
-			<i class="fa fa-circle-thin fa-stack-1x capitalColor"></i>\
-			<i class="fa fa-star fa-stack-1x capitalStar"></i>\
+			<i class="glyphicon glyphicon-star capitalStar"></i>\
 		</span> ';
 	}
-	str += name + '</div>';
+	if (!t.player){
+		var foodWidth = 0;
+		var cultureWidth = 0;
+		var defWidth = 0;
+	} else {
+		var foodWidth = ((t.food > 8 ? 8 : t.food) / 8) * 100;
+		var cultureWidth = ((t.culture > 8 ? 8 : t.culture) / 8) * 100;
+		var defWidth = (t.defense / 4) * 100;
+	}
+	console.info(foodWidth, cultureWidth);
+	str += name + '</div>\
+		<div class="targetBarsWrap">\
+			<hr class="targetBarsFood" style="width: ' + foodWidth + '%"/>\
+			<hr class="targetBarsFood" style="width: ' + foodWidth + '%"/>\
+		</div>\
+		<div class="targetBarsWrap"">\
+			<hr class="targetBarsCulture" style="width: ' + cultureWidth + '%"/>\
+			<hr class="targetBarsCulture" style="width: ' + cultureWidth + '%"/>\
+		</div>\
+		<div class="targetBarsWrap"">\
+			<hr class="targetBarsDefense" style="width: ' + defWidth + '%"/>\
+			<hr class="targetBarsDefense" style="width: ' + defWidth + '%"/>\
+		</div>';
+		
 	DOM.targetName.innerHTML = str;
 	
 	var defWord = ['Bunker', 'Wall', 'Fortress'],

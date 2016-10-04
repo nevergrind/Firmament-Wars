@@ -56,7 +56,10 @@ var title = {
 			for (var key in title.mapData){
 				str += "<li><a class='mapSelect' href='#'>" + title.mapData[key].name + "</a></li>";
 			}
-			document.getElementById('mapDropdown').innerHTML = str;
+			var e1 = document.getElementById('mapDropdown');
+			if (e1 !== null){
+				e1.innerHTML = str;
+			}
 			$('[title]').tooltip();
 			title.animateLogo();
 		}, 100);

@@ -7,11 +7,11 @@ echo '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    id="world" 
-   enable_background="new 0 0 2000 1200"
+   enable_background="new 0 0 2000 1100"
    pretty_print="False"
    style="stroke-linejoin: round; stroke:#000; fill: none;"
    version="1.1"
-   viewBox="0 0 2000 1200">';
+   viewBox="0 0 2000 1100">';
    
    require('filters.php');
    

@@ -121,57 +121,60 @@ var lobby = {
 			lobby.chatDrag = false;
 		});
 		console.info("Initializing lobby...");
-		document.getElementById("lobbyGameName").innerHTML = x.name;
-		document.getElementById("lobbyGameMax").innerHTML = x.max;
-		document.getElementById("lobbyGameMap").innerHTML = x.map;
-		var z = x.player === 1 ? "block" : "none";
-		document.getElementById("startGame").style.display = z;
-		if (!x.startGame){
-			document.getElementById('mainWrap').style.display = "block";
+		var e1 = document.getElementById("lobbyGameName");
+		if (e1 !== null){
+			e1.innerHTML = x.name;
+			document.getElementById("lobbyGameMax").innerHTML = x.max;
+			document.getElementById("lobbyGameMap").innerHTML = x.map;
+			var z = x.player === 1 ? "block" : "none";
+			document.getElementById("startGame").style.display = z;
+			if (!x.startGame){
+				document.getElementById('mainWrap').style.display = "block";
+			}
+			var str = '<div id="lobbyWrap" class="container">';
+			for (var i=1; i<=8; i++){
+				str += 
+				'<div id="lobbyRow' +i+ '" class="row lobbyRow">\
+					<div class="col-xs-2">\
+						<img id="lobbyFlag' +i+ '" class="w100 block center p' + i + 'b player' +i+ '" src="images/flags/blank.png">\
+					</div>\
+					<div class="col-xs-6 lobbyDetails">\
+						<span id="lobbyAccount' +i+ '"></span>\
+					</div>\
+					<div class="col-xs-4">';
+					if (i === x.player){
+						// me
+						str += 
+						'<div class="dropdown">\
+							<button class="btn btn-primary dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">\
+								<span id="lobbyGovernment' +i+ '">Despotism</span>\
+								<i class="fa fa-caret-down text-warning lobbyCaret"></i>\
+							</button>\
+							<ul id="governmentDropdown" class="dropdown-menu">\
+								<li class="governmentChoice"><a href="#">Despotism</a></li>\
+								<li class="governmentChoice"><a href="#">Monarchy</a></li>\
+								<li class="governmentChoice"><a href="#">Democracy</a></li>\
+								<li class="governmentChoice"><a href="#">Fundamentalism</a></li>\
+								<li class="governmentChoice"><a href="#">Fascism</a></li>\
+								<li class="governmentChoice"><a href="#">Republic</a></li>\
+								<li class="governmentChoice"><a href="#">Communism</a></li>\
+							</ul>\
+						</div>';
+					} else {
+						// not me
+						str += 
+						'<div class="dropdown">\
+							<button style="cursor: default" class="btn btn-primary dropdown-toggle shadow4 fwDropdownButton fwDropdownButtonEnemy" type="button">\
+								<span id="lobbyGovernment' +i+ '" class="pull-left">Despotism</span>\
+								<i class="fa fa-caret-down text-disabled lobbyCaret"></i>\
+							</button>\
+						</div>';
+					}
+					str += '</div></div>';
+			}
+			str += '</div>';
+			document.getElementById("lobbyPlayers").innerHTML = str;
 		}
-		var str = '<div id="lobbyWrap" class="container">';
-		for (var i=1; i<=8; i++){
-			str += 
-			'<div id="lobbyRow' +i+ '" class="row lobbyRow">\
-				<div class="col-xs-2">\
-					<img id="lobbyFlag' +i+ '" class="w100 block center p' + i + 'b player' +i+ '" src="images/flags/blank.png">\
-				</div>\
-				<div class="col-xs-6 lobbyDetails">\
-					<span id="lobbyAccount' +i+ '"></span>\
-				</div>\
-				<div class="col-xs-4">';
-				if (i === x.player){
-					// me
-					str += 
-					'<div class="dropdown">\
-						<button class="btn btn-primary dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">\
-							<span id="lobbyGovernment' +i+ '">Despotism</span>\
-							<i class="fa fa-caret-down text-warning lobbyCaret"></i>\
-						</button>\
-						<ul id="governmentDropdown" class="dropdown-menu">\
-							<li class="governmentChoice"><a href="#">Despotism</a></li>\
-							<li class="governmentChoice"><a href="#">Monarchy</a></li>\
-							<li class="governmentChoice"><a href="#">Democracy</a></li>\
-							<li class="governmentChoice"><a href="#">Fundamentalism</a></li>\
-							<li class="governmentChoice"><a href="#">Fascism</a></li>\
-							<li class="governmentChoice"><a href="#">Republic</a></li>\
-							<li class="governmentChoice"><a href="#">Communism</a></li>\
-						</ul>\
-					</div>';
-				} else {
-					// not me
-					str += 
-					'<div class="dropdown">\
-						<button style="cursor: default" class="btn btn-primary dropdown-toggle shadow4 fwDropdownButton fwDropdownButtonEnemy" type="button">\
-							<span id="lobbyGovernment' +i+ '" class="pull-left">Despotism</span>\
-							<i class="fa fa-caret-down text-disabled lobbyCaret"></i>\
-						</button>\
-					</div>';
-				}
-				str += '</div></div>';
-		}
-		str += '</div>';
-		document.getElementById("lobbyPlayers").innerHTML = str;
 		delete lobby.init;
 	},
 	join: function(d){
@@ -552,7 +555,7 @@ function loadGameState(x){
 				game.player[z] = new Nation();
 			}
 			
-			$("#mainWrap").remove();
+			g.removeContainers();
 			g.unlock();
 			g.view = "game";
 			var e = document.getElementById("gameWrap");
@@ -794,7 +797,6 @@ function startGame(){
 function lobbyCountdown(x){
 	var loadTime = Date.now() - g.startTime;
 	if (loadTime < 1000){
-		$("#firmamentWarsLogoWrap").remove();
 		loadGameState(x); // page refresh
 	} else {
 		new Audio('sound/beepHi.mp3');

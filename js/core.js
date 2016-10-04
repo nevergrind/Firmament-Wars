@@ -60,7 +60,7 @@ var g = {
 	},
 	map: {
 		sizeX: 2000,
-		sizeY: 1200,
+		sizeY: 1000,
 		name: 'Earth Alpha',
 		key: 'EarthAlpha',
 		tiles: 83
@@ -110,6 +110,9 @@ var g = {
 		}).always(function() {
 			setTimeout(g.keepAlive, 300000);
 		});
+	},
+	removeContainers: function(){
+		$("#firmamentWarsLogoWrap, #mainWrap").remove();
 	}
 }
 g.init = (function(){
@@ -184,7 +187,6 @@ g.init = (function(){
 					my.government = data.government;
 					lobby.updateGovernmentWindow(my.government);
 				}, 111);
-				$("#firmamentWarsLogoWrap").remove();
 			}
 		}).always(function(){
 			g.unlock();
@@ -534,7 +536,7 @@ function resizeWindow() {
 
 
 function chat(msg) {
-    while (DOM.chatContent.childNodes.length > 6) {
+    while (DOM.chatContent.childNodes.length > 10) {
         DOM.chatContent.removeChild(DOM.chatContent.firstChild);
     }
     var z = document.createElement('div');
@@ -786,7 +788,7 @@ function refreshGames(){
 			// body
 			for (var i=0, len=data.length; i<len; i++){
 				str += 
-				"<tr class='wars' data-id='" + data[i].row + "'>\
+				"<tr class='wars no-select' data-id='" + data[i].row + "'>\
 					<td class='warCells'>"+ data[i].name + "</td>\
 					<td class='warCells'>" + data[i].map + "</td>\
 					<td class='warCells'>" + data[i].players + "/" + data[i].max + "</td>\

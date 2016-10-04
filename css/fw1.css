@@ -228,7 +228,7 @@ a:hover{
 	display: table;
 	table-layout:fixed;
 	position: absolute;
-	bottom: 35%;
+	bottom: 5%;
 	left: .5%;
 	width: 50%;
 	padding: 1%;
@@ -399,8 +399,8 @@ a:hover{
 }
 #chat-input{
 	position: absolute;
-	bottom: 31%;
-	left: .5%;
+	bottom: .5em;
+	left: .5em;
 	width: 40%;
 	padding: .5% 1%;
 	z-index: 9999;
@@ -437,50 +437,72 @@ a:hover{
 #prevUnit:active, #nextUnit:active{
 	background: #333;
 }
+.marginLeft{
+	margin-left: .5em;
+}
+#ui2-head{
+	position: relative;
+	color: #fff;
+	font-size: 1em;
+	z-index: 9999;
+	padding: .25em .5em;
+	text-align: right;
+	border-radius: 4px;
+	margin-bottom: .5em;
+}
 #ui2{
 	position: absolute;
 	color: #fff;
-	top: 0;
-	right: 0;
-	padding: .25em;
-	width: 20%;
+	top: .25em;
+	right: .25em;
+	padding: .5em;
+	width: 24%;
 	z-index: 9999;
+	border-radius: 4px;
+}
+#resources-ui{
+	position: absolute;
+	bottom: .25em;
+	right: .25em;
+	width: 16%;
+	padding: .5em 0;
+	text-overflow: ellipsis;
+	color: #fff;
+	text-align: right;
+	z-index: 9999;
+}
+#resources-ui > .row, #target-ui > .row{
+	margin: 0;
+	padding: 0 .5em;
+}
+#diplomacy-ui{
+	font-size: 1.125em;
+	position: absolute;
+	left: .25em;
+	top: .25em;
+	padding: .5em;
+	color: #fff;
+	text-align: left;
+	z-index: 9999;
+}
+#targetName{
+	white-space: nowrap;
 }
 .tight{
 	margin: 0 !important;
 	padding: 0 !important;
 }
+.energyCost{
+	padding-left: 5px;
+}
 #target-ui{
 	padding: 0;
 	margin: 0;
 	color: #fff;
-	font-size: .875em;
-}
-#wrap-ui{
-	position: absolute;
-	bottom: 0%;
-	left: 0%;
-	width: 100%;
-	height: 28%;
-	z-index: 9999;
-	border-radius: 5% 5% 0 0;
-	border-top: 2px ridge rgba(176,240,255,1);
-	font-family: Times New Roman, serif;
-}
-#diplomacy-ui{
-	font-family: Times New Roman, serif;
-	font-size: 1.125em;
-	position: absolute;
-	top: 0%;
-	left: 0%;
-	width: 35%;
-	height: 100%;
-	padding: .5em .5em .5em 1%;
-	z-index: 9999;
-	color: #fff;
-	text-align: left;
 }
 .stagBlue{
+	border: 1px solid rgba(176,240,255,1);
+	border-radius: 4px;
 	background: rgba(0, 16, 60, .8);
 	background: linear-gradient(top, 
 		rgba(0, 24, 100, .82) 0%, rgba(0, 24, 100, .84) 10%, 
@@ -561,23 +583,6 @@ a:hover{
 	opacity: 0;
 	pointer-events: none;
 }
-#resources-ui{
-	font-size: 1em;
-	position: absolute;
-	top: 0%;
-	right: 0%;
-	width: 15%;
-	height: 100%;
-	padding: 1% 1% 0 0;
-	text-overflow: ellipsis;
-	z-index: 9999;
-	color: #fff;
-	text-align: right;
-}
-#resources-ui > .row, #target-ui > .row{
-	margin: 0;
-	padding: 0 .5em;
-}
 .resourceIndicator{
 	white-space: nowrap;
 	overflow: hidden;
@@ -609,7 +614,9 @@ a:hover{
 	margin: 2% 0;
 }
 #researchHead{
-	font-size: 1.25em;
+	font-size: 1.5em;
+	font-variant: small-caps;
+	letter-spacing: .25em;
 }
 #tileActions, #tileResearch{
 	margin-top: 4%;
@@ -749,8 +756,8 @@ table td, .table th, .table td {
 	position: absolute;
 	top: 0%;
 	left: 0%;
-	width: 195.3125%;
-	height: 173.9134%;
+	width: 195.31%;
+	height: 143.22%;
 }
 #world{
 	position: absolute;
@@ -795,6 +802,36 @@ table td, .table th, .table td {
 }
 .mapBars{
 	stroke-dasharray:2,1;
+}
+.targetBarsWrap{
+	margin: .1em 1em;
+	padding: 1px;
+	background: #2a2a2a;
+	height: 8px;
+	border: 1px solid #000;
+	overflow: hidden;
+}
+.targetBarsFood{
+	margin: 0;
+	color: none;
+	border-top: 2px dotted #8d0;
+	background-color: none;
+	height: 0;
+}
+.targetBarsCulture{
+	margin: 0;
+	color: none;
+	border-top: 2px dotted #d2d;
+	background-color: none;
+	height: 0;
+	
+}
+.targetBarsDefense{
+	margin: 0;
+	color: none;
+	border-top: 2px dotted #ff0;
+	background-color: none;
+	height: 0;
 }
 text{
 	fill: rgba(255,255,255,1);
@@ -1095,9 +1132,11 @@ circle{
 	color: #ffc500;
 }
 .capitalStar{
+	position: relative;
+	top: -1px;
 	color: #ffc500;
 	margin-right: .125em;
-	font-size: .675em;
+	font-size: .875em;
 }
 .fa-stack{
 	width: 1em;
@@ -1385,28 +1424,31 @@ table {
 	margin: .25em;
 }
 .resourceBar{
-	height: .25em;
+	height: .5em;
 	background: #777;
+	border-radius: 6px;
 }
 #foodBar{
 	margin: 0;
 	background: #8d0;
 	border: none;
 	width: 0;
+	border-radius: 0;
 	box-shadow: 
-		-1px 0 #040 inset,
-		0 -1px #480 inset,
-		0 1px #480 inset;
+		-2px 0 2px #040 inset,
+		0 -2px 2px #480 inset,
+		0 2px 2px #480 inset;
 }
 #cultureBar{
 	margin: 0;
 	background: #d2d;
 	border: none;
 	width: 0;
+	border-radius: 0;
 	box-shadow: 
-		-1px 0 #505 inset,
-		0 1px #f4f inset,
-		0 -1px #f4f inset;
+		-2px 0 2px #505 inset,
+		0 2px 2px #a4a inset,
+		0 -2px 2px #a1a inset;
 }
 #startGame{
 	display: none;
