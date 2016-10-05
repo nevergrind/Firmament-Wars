@@ -16,7 +16,16 @@ var animate = {
 		}
 		return c;
 	},
-	explosion: function(tile, playSound){
+	getXY: function(tile){
+		var e2 = document.getElementById('unit' + tile),
+			box = e2.getBBox(),
+			o = {
+				x: box.x,
+				y: box.y
+			}
+		return o;
+	},
+	gunfire: function(tile, playSound){
 		var e1 = document.getElementById('land' + tile),
 			box = e1.getBBox();
 		var sfx = ~~(Math.random()*9);
@@ -24,40 +33,35 @@ var animate = {
 		if (playSound){
 			audio.play('machine' + sfx);
 		}
-		
+		var x = 0,
+			y = 0;
 		for (var i=0; i<50; i++){
 			(function(Math){
 				var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
-				var x = box.x + (Math.random() * (box.width * .8)) + box.width * .1;
-				var y = box.y + (Math.random() * (box.height * .8)) + box.height * .1;
+				x = box.x + (Math.random() * (box.width * .8)) + box.width * .1;
+				y = box.y + (Math.random() * (box.height * .8)) + box.height * .1;
 				circ.setAttributeNS(null,"cx",x);
 				circ.setAttributeNS(null,"cy",y);
-				circ.setAttributeNS(null,"r",1);
-				circ.setAttributeNS(null,"fill",'none');
-				circ.setAttributeNS(null,"stroke",animate.randomColor());
-				circ.setAttributeNS(null,"strokeWidth",'1');
+				circ.setAttributeNS(null,"r",6);
+				circ.setAttributeNS(null,"fill",animate.randomColor());
+				circ.setAttributeNS(null,"stroke",'#000');
 				DOM.world.appendChild(circ);
 				
-				TweenMax.to(circ, .075, {
+				TweenMax.to(circ, .125, {
 					delay: Math.random() * delay[sfx],
 					startAt:{
 						opacity: 1
 					},
-					strokeWidth: 5,
+					attr: {
+						r: 0,
+					},
 					onComplete: function(){
-						TweenMax.to(this.target, .125, {
-							strokeWidth: 0,
-							attr: {
-								r: 9
-							},
-							onComplete: function(){
-								this.target.parentNode.removeChild(this.target);
-							}
-						});
+						this.target.parentNode.removeChild(this.target);
 					}
 				});
 			})(Math);
 		}
+		animate.smoke(tile, x, y, .5);
 	},
 	upgrade: function(tile){
 		audio.play('build');
@@ -110,8 +114,7 @@ var animate = {
 			ease: Back.easeOut.config(3)
 		});
 		TweenMax.to(shield, 1.5, {
-			y: '-=20',
-			ease: Linear.easeNone
+			y: '-=30'
 		});
 		TweenMax.to(shield, .5, {
 			delay: 1.5,
@@ -215,56 +218,46 @@ var animate = {
 			var sfx = ~~(Math.random() * 3);
 			audio.play('grenade' + a[sfx]);
 		}
-		for (var i=0; i<15; i++){
+		var x = 0,
+			y = 0;
+		for (var i=0; i<9; i++){
 			(function(Math){
 				var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
-				var x = box.x + (Math.random() * (box.width * .8)) + box.width * .1;
-				var y = box.y + (Math.random() * (box.height * .8)) + box.height * .1;
+				x = box.x + (Math.random() * (box.width * .8)) + box.width * .1;
+				y = box.y + (Math.random() * (box.height * .8)) + box.height * .1;
 				circ.setAttributeNS(null,"cx",x);
 				circ.setAttributeNS(null,"cy",y);
-				circ.setAttributeNS(null,"r",1);
-				circ.setAttributeNS(null,"fill",'none');
-				circ.setAttributeNS(null,"stroke",animate.randomColor());
-				circ.setAttributeNS(null,"strokeWidth",'1');
+				circ.setAttributeNS(null,"r",0);
+				circ.setAttributeNS(null,"fill",animate.randomColor());
+				circ.setAttributeNS(null,"stroke","#ffff55");
 				DOM.mapAnimations.appendChild(circ);
 				
-				if (Math.random() > .3){
-					TweenMax.to(circ, .1, {
-						delay: Math.random() * .125,
-						startAt:{
-							opacity: 1
-						},
-						strokeWidth: 15,
-						onComplete: function(){
-							TweenMax.to(this.target, .25, {
-								strokeWidth: 0,
-								attr: {
-									r: 21
-								},
-								onComplete: function(){
-									this.target.parentNode.removeChild(this.target);
-								}
-							});
-						}
-					});
-				} else {
-					TweenMax.to(circ, Math.random()*.2+.1, {
-						startAt: {
-							opacity: 1,
-							fill: animate.randomColor(),
-							strokeWidth:0,
-							attr: {
-								r: 8
-							}
-						},
-						opacity: 0,
-						ease: Power1.easeIn,
-						onComplete: function(){
-							this.target.parentNode.removeChild(this.target);
-						}
-					});
-				}
+				TweenMax.to(circ, 1, {
+					delay: Math.random()*.3,
+					attr: {
+						r: 16
+					},
+					onComplete: function(){
+						this.target.parentNode.removeChild(this.target);
+					},
+					ease: Power4.easeOut
+				});
+				TweenMax.to(circ, 1, {
+					startAt:{
+						opacity: 1
+					},
+					opacity: 0,
+					onUpdate: function(){
+						TweenMax.set(circ, {
+							fill: animate.randomColor()
+						});
+					},
+					ease: Power4.easeIn
+				});
 			})(Math);
+		}
+		for (var i=0; i<2; i++){
+			animate.smoke(tile, x, y, .7);
 		}
 	},
 	missile: function(attacker, defender, playSound){
@@ -367,38 +360,54 @@ var animate = {
 			a = [5, 6, 8],
 			sfx = ~~(Math.random() * 3);
 		audio.play('grenade' + a[sfx]);
-		for (var i=0; i<7; i++){
+		var x = 0,
+			y = 0;
+		for (var i=0; i<5; i++){
 			(function(Math){
 				var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
-				var x = box.x + Math.random() * 60 - 30;
-				var y = box.y + Math.random() * 60 - 30;
+				x = box.x + Math.random() * 60 - 30;
+				y = box.y + Math.random() * 60 - 30;
 				circ.setAttributeNS(null,"cx",x);
 				circ.setAttributeNS(null,"cy",y);
-				circ.setAttributeNS(null,"r",1);
-				circ.setAttributeNS(null,"fill",'none');
-				circ.setAttributeNS(null,"stroke",animate.randomColor());
-				circ.setAttributeNS(null,"strokeWidth",'1');
+				circ.setAttributeNS(null,"r",0);
+				circ.setAttributeNS(null,"fill",animate.randomColor());
+				circ.setAttributeNS(null,"stroke",'#ffffaa');
 				DOM.mapAnimations.appendChild(circ);
 				
-				TweenMax.to(circ, .1, {
+				TweenMax.to(circ, .75, {
 					delay: Math.random() * .25,
+					attr: {
+						r: 32
+					},
+					onComplete: function(){
+						TweenMax.to(circ, .5, {
+							attr: {
+								r: 16
+							},
+							ease: Power1.easeIn,
+							onComplete: function(){
+								this.target.parentNode.removeChild(this.target);
+							},
+						});
+					},
+					ease: Power4.easeOut
+				});
+				TweenMax.to(circ, 1.25, {
 					startAt:{
 						opacity: 1
 					},
-					strokeWidth: 25,
-					onComplete: function(){
-						TweenMax.to(this.target, .25, {
-							strokeWidth: 0,
-							attr: {
-								r: 35
-							},
-							onComplete: function(){
-								this.target.parentNode.removeChild(this.target);
-							}
+					opacity: 0,
+					onUpdate: function(){
+						TweenMax.set(circ, {
+							fill: animate.randomColor()
 						});
-					}
+					},
+					ease: Power2.easeIn
 				});
 			})(Math);
+		}
+		for (var i=0; i<3; i++){
+			animate.smoke(tile, x, y, 1);
 		}
 	},
 	nuke: function(tile){
@@ -445,23 +454,14 @@ var animate = {
 				this.target.parentNode.removeChild(this.target);
 			}
 		});
-		new Image('images/fireball.png');
-		var fireball = document.createElementNS("http://www.w3.org/2000/svg","image");
-		fireball.setAttributeNS(null,"width",128);
-		fireball.setAttributeNS(null,"height",128);
-		fireball.setAttributeNS(null,"x",x);
-		fireball.setAttributeNS(null,"y",y);
-		fireball.setAttributeNS(null,"opacity",0);
-		fireball.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","images/fireball2.png");
-		DOM.mapAnimations.appendChild(fireball);
+		new Image('images/smoke.png');
 		// start bomb explosion sequence
 		TweenMax.to(g, 1, {
 			onComplete: function(){
 				updateTileDefense(tile);
 				audio.play('bomb9');
-				TweenMax.to(DOM.screenFlash, .5, {
+				TweenMax.to(DOM.screenFlash, .1, {
 					startAt: {
-						transformOrigin: '50% 50%',
 						opacity: 1,
 						background: '#ffffff'
 					},
@@ -471,33 +471,89 @@ var animate = {
 				});
 				// shake
 				animate.screenShake(16, 10, .016, true);
-				// fireball
-				TweenMax.to(fireball, 3, {
+				var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
+				circ.setAttributeNS(null,"cx",x);
+				circ.setAttributeNS(null,"cy",y);
+				circ.setAttributeNS(null,"r",1);
+				circ.setAttributeNS(null,"fill",'#ffaa00');
+				circ.setAttributeNS(null,"stroke",'#ffffaa');
+				DOM.mapAnimations.appendChild(circ);
+				TweenMax.to(circ, 1.5, {
 					startAt: {
-						xPercent: -50,
-						yPercent: -50,
-						transformOrigin: '50% 50%',
-						scale: .1
+						opacity: 1
 					},
-					rotation: 2160,
-					ease: Linear.easeNone
-				});
-				TweenMax.to(fireball, .75, {
-					scale: 1,
-					opacity: 1
-				});
-				TweenMax.to(fireball, 1, {
-					delay: 2,
-					scale: .25,
-					opacity: 0,
+					attr: {
+						r: 80
+					},
 					onComplete: function(){
-						if (fireball !== null){
-							fireball.parentNode.removeChild(fireball);
-						}
+						TweenMax.to(circ, 1, {
+							attr: {
+								r: 50
+							},
+							ease: Power1.easeIn
+						});
+					},
+					ease: Power3.easeOut
+				});
+				TweenMax.to(circ, 2.5, {
+					onUpdate: function(){
+						TweenMax.set(circ, {
+							fill: animate.randomColor()
+						});
 					}
 				});
+				TweenMax.to(circ, 2.5, {
+					opacity: 0,
+					ease: Power4.easeIn,
+					onComplete: function(){
+						this.target.parentNode.removeChild(this.target);
+					}
+				});
+				for (var i=0; i<3; i++){
+					(function(i){
+						setTimeout(function(){
+							animate.smoke(tile, x, y);
+						}, i * 100);
+					})(i);
+				}
 			}
 		});
+	},
+	smoke: function(tile, x, y, scale){
+		if (x === undefined){
+			var o = animate.getXY(tile);
+			x = o.x;
+			y = o.y;
+		}
+		if (scale === undefined){
+			scale = 1.25;
+		}
+		var smoke = document.createElementNS("http://www.w3.org/2000/svg","image");
+		smoke.setAttributeNS(null,"width",256);
+		smoke.setAttributeNS(null,"height",256);
+		smoke.setAttributeNS(null,"x",x);
+		smoke.setAttributeNS(null,"y",y);
+		smoke.setAttributeNS(null,"opacity",0);
+		smoke.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","images/smoke.png");
+		DOM.mapUpgrades.appendChild(smoke);
+		TweenMax.to(smoke, 3, {
+			startAt: {
+				opacity: 1,
+				transformOrigin: '50% 50%',
+				xPercent: -50,
+				yPercent: -50,
+				scale: 0
+			}, 
+			ease: Power4.easeOut,
+			scale: scale
+		});
+		TweenMax.to(smoke, 3, {
+			opacity: 0,
+			onComplete: function(){
+				this.target.parentNode.removeChild(this.target);
+			}
+		});
+		
 	},
 	screenShake: function(count, d, interval, fade){
 		// number of shakes, distance of shaking, interval of shakes

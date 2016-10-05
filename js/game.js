@@ -245,7 +245,7 @@ function getGameState(){
 						// animate other players' attacks
 						if (d.player !== my.player && game.tiles[i].units){
 							if (d.units){
-								animate.explosion(i, false);
+								animate.gunfire(i, false);
 							}
 						}
 					}

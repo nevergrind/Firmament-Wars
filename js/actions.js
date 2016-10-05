@@ -14,6 +14,7 @@ var action = {
 	error: function(){
 		Msg("Not enough energy!", 1.5);
 		my.clearHud();
+		showTarget(document.getElementById('land' + my.tgt));
 	},
 	target: function(o){
 		my.targetData = o;
@@ -95,7 +96,7 @@ var action = {
 				if (!game.tiles[defender].units){
 					audio.move();
 				} else {
-					animate.explosion(defender, true);
+					animate.gunfire(defender, true);
 				}
 			} else {
 				audio.move();
@@ -105,6 +106,11 @@ var action = {
 			}
 			if (data.production !== undefined){
 				setProduction(data);
+			}
+			// reset target if lost
+			console.warn(data.victory, attacker, my.tgt);
+			if (!data.victory){
+				showTarget(document.getElementById('land' + attacker));
 			}
 		}).fail(function(e){
 			audio.play('error');
@@ -704,7 +710,7 @@ $(document).on('keyup', function(e) {
 			} else if (x === 71){
 				// g
 				research.gunpowder();
-			} else if (x === 82){
+			} else if (x === 75){
 				// k
 				research.rocketry();
 			} else if (x === 84){
