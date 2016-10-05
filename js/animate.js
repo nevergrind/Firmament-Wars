@@ -25,44 +25,6 @@ var animate = {
 			}
 		return o;
 	},
-	gunfire: function(tile, playSound){
-		var e1 = document.getElementById('land' + tile),
-			box = e1.getBBox();
-		var sfx = ~~(Math.random()*9);
-		var delay = [.5, .5, .33, .33, .33, .33, .8, .33, .66, .4];
-		if (playSound){
-			audio.play('machine' + sfx);
-		}
-		var x = 0,
-			y = 0;
-		for (var i=0; i<50; i++){
-			(function(Math){
-				var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
-				x = box.x + (Math.random() * (box.width * .8)) + box.width * .1;
-				y = box.y + (Math.random() * (box.height * .8)) + box.height * .1;
-				circ.setAttributeNS(null,"cx",x);
-				circ.setAttributeNS(null,"cy",y);
-				circ.setAttributeNS(null,"r",6);
-				circ.setAttributeNS(null,"fill",animate.randomColor());
-				circ.setAttributeNS(null,"stroke",'#000');
-				DOM.world.appendChild(circ);
-				
-				TweenMax.to(circ, .125, {
-					delay: Math.random() * delay[sfx],
-					startAt:{
-						opacity: 1
-					},
-					attr: {
-						r: 0,
-					},
-					onComplete: function(){
-						this.target.parentNode.removeChild(this.target);
-					}
-				});
-			})(Math);
-		}
-		animate.smoke(tile, x, y, .5);
-	},
 	upgrade: function(tile){
 		audio.play('build');
 		var e1 = document.getElementById('unit' + tile),
@@ -210,6 +172,44 @@ var animate = {
 			DOM.mapBars.appendChild(svg);
 		}
 	},
+	gunfire: function(tile, playSound){
+		var e1 = document.getElementById('land' + tile),
+			box = e1.getBBox();
+		var sfx = ~~(Math.random()*9);
+		var delay = [.5, .5, .33, .33, .33, .33, .8, .33, .66, .4];
+		if (playSound){
+			audio.play('machine' + sfx);
+		}
+		var x = 0,
+			y = 0;
+		for (var i=0; i<50; i++){
+			(function(Math){
+				var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
+				x = box.x + (Math.random() * (box.width * .8)) + box.width * .1;
+				y = box.y + (Math.random() * (box.height * .8)) + box.height * .1;
+				circ.setAttributeNS(null,"cx",x);
+				circ.setAttributeNS(null,"cy",y);
+				circ.setAttributeNS(null,"r",6);
+				circ.setAttributeNS(null,"fill",animate.randomColor());
+				circ.setAttributeNS(null,"stroke",'#000');
+				DOM.world.appendChild(circ);
+				
+				TweenMax.to(circ, .125, {
+					delay: Math.random() * delay[sfx],
+					startAt:{
+						opacity: 1
+					},
+					attr: {
+						r: 0,
+					},
+					onComplete: function(){
+						this.target.parentNode.removeChild(this.target);
+					}
+				});
+			})(Math);
+		}
+		animate.smoke(tile, x, y, .5);
+	},
 	cannons: function(tile, playSound){
 		var e1 = document.getElementById('land' + tile),
 			box = e1.getBBox();
@@ -227,32 +227,33 @@ var animate = {
 				y = box.y + (Math.random() * (box.height * .8)) + box.height * .1;
 				circ.setAttributeNS(null,"cx",x);
 				circ.setAttributeNS(null,"cy",y);
-				circ.setAttributeNS(null,"r",0);
-				circ.setAttributeNS(null,"fill",animate.randomColor());
+				circ.setAttributeNS(null,"r",16);
+				circ.setAttributeNS(null,"fill",'#ffff55');
 				circ.setAttributeNS(null,"stroke","#ffff55");
 				DOM.mapAnimations.appendChild(circ);
 				
-				TweenMax.to(circ, 1, {
-					delay: Math.random()*.3,
+				var delay = Math.random()*.2;
+				TweenMax.to(circ, .5, {
+					delay: delay,
 					attr: {
-						r: 16
+						r: 0
 					},
-					onComplete: function(){
-						this.target.parentNode.removeChild(this.target);
-					},
-					ease: Power4.easeOut
-				});
-				TweenMax.to(circ, 1, {
-					startAt:{
-						opacity: 1
-					},
-					opacity: 0,
 					onUpdate: function(){
 						TweenMax.set(circ, {
 							fill: animate.randomColor()
 						});
 					},
-					ease: Power4.easeIn
+					onComplete: function(){
+						this.target.parentNode.removeChild(this.target);
+					}
+				});
+				TweenMax.to(circ, .5, {
+					delay: delay,
+					startAt:{
+						opacity: 1
+					},
+					opacity: 0,
+					ease: Power4.easeOut
 				});
 			})(Math);
 		}
