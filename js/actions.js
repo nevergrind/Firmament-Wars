@@ -267,7 +267,7 @@ var action = {
 		}
 		my.attackOn = false;
 		my.attackName = '';
-		if (my.production < 60 * my.weaponCost){
+		if (my.production < 40 * my.weaponCost){
 			action.error();
 			return;
 		}
@@ -312,7 +312,7 @@ var action = {
 		}
 		my.attackOn = false;
 		my.attackName = '';
-		if (my.production < 120 * my.weaponCost){
+		if (my.production < 60 * my.weaponCost){
 			action.error();
 			return;
 		}
@@ -376,7 +376,7 @@ var action = {
 		}
 		my.attackOn = false;
 		my.attackName = '';
-		if (my.production < 600 * my.weaponCost){
+		if (my.production < 400 * my.weaponCost){
 			action.error();
 			return;
 		}
@@ -731,7 +731,7 @@ $(document).on('keyup', function(e) {
 			} else if (x === 67){
 				// c
 				var o = new Target({
-					cost: 60 * my.weaponCost,
+					cost: 40 * my.weaponCost,
 					minimum: 0,
 					attackName: 'cannons',
 					hudMsg: 'Fire Cannons'
@@ -740,7 +740,7 @@ $(document).on('keyup', function(e) {
 			} else if (x === 77){
 				// m
 				var o = new Target({
-					cost: 120 * my.weaponCost,
+					cost: 60 * my.weaponCost,
 					minimum: 0,
 					attackName: 'missile',
 					hudMsg: 'Launch Missile'
@@ -749,7 +749,7 @@ $(document).on('keyup', function(e) {
 			} else if (x === 78){
 				// n
 				var o = new Target({
-					cost: 600 * my.weaponCost,
+					cost: 400 * my.weaponCost,
 					minimum: 0,
 					attackName: 'nuke',
 					hudMsg: 'Launch Nuclear Weapon'

@@ -543,10 +543,10 @@ function loadGameState(x){
 				my.deployCost = 5;
 			} else if (my.government === 'Communism'){
 				// research
-				DOM.gunpowderCost.textContent = 60;
-				DOM.engineeringCost.textContent = 75;
-				DOM.rocketryCost.textContent = 125;
-				DOM.atomicTheoryCost.textContent = 250;
+				DOM.gunpowderCost.textContent = 40;
+				DOM.engineeringCost.textContent = 60;
+				DOM.rocketryCost.textContent = 100;
+				DOM.atomicTheoryCost.textContent = 125;
 				DOM.futureTechCost.textContent = 500;
 				// weapons
 				DOM.cannonsCost.textContent = 20;

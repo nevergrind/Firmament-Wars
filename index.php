@@ -673,7 +673,7 @@
 					</div>
 					<div class="col-xs-4 text-right energyCost">
 						<i class="fa fa-bolt production pointer actionBolt"></i>
-						<span id='gunpowderCost'>120</span>
+						<span id='gunpowderCost'>80</span>
 					</div>
 				</div>
 				
@@ -686,7 +686,7 @@
 					</div>
 					<div class="col-xs-4 text-right energyCost">
 						<i class="fa fa-bolt production pointer actionBolt"></i>
-						<span id='engineeringCost'>150</span>
+						<span id='engineeringCost'>120</span>
 					</div>
 				</div>
 				
@@ -699,7 +699,7 @@
 					</div>
 					<div class="col-xs-4 text-right energyCost">
 						<i class="fa fa-bolt production pointer actionBolt"></i>
-						<span id='rocketryCost'>250</span>
+						<span id='rocketryCost'>200</span>
 					</div>
 				</div>
 				
@@ -712,7 +712,7 @@
 					</div>
 					<div class="col-xs-4 text-right energyCost">
 						<i class="fa fa-bolt production pointer actionBolt"></i>
-						<span id='atomicTheoryCost'>500</span>
+						<span id='atomicTheoryCost'>250</span>
 					</div>
 				</div>
 				
