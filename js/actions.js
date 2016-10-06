@@ -11,8 +11,11 @@ function Target(o){
 }
 
 var action = {
-	error: function(){
-		Msg("Not enough energy!", 1.5);
+	error: function(msg){
+		if (msg === undefined){
+			msg = "Not enough energy!";
+		}
+		Msg(msg, 1.5);
 		my.clearHud();
 		showTarget(document.getElementById('land' + my.tgt));
 	},
@@ -130,7 +133,11 @@ var action = {
 			action.error();
 			return;
 		}
-		if (my.manpower && t.units <= 254){
+		if (!my.manpower){
+			action.error("No armies available for deployment!");
+			return;
+		}
+		if (t.units <= 254){
 			// determine number
 			var deployedUnits = my.manpower < my.maxDeployment ? 
 				my.manpower : 
@@ -212,7 +219,6 @@ var action = {
 	upgradeTileDefense: function(){
 		var oldTgt = my.tgt;
 		var t = game.tiles[my.tgt],
-			cost = [80, 200, 450],
 			ind = t.defense - t.capital ? 1 : 0;
 		if (t.player !== my.player){
 			return;
@@ -220,7 +226,7 @@ var action = {
 		if (ind > 2){
 			return;
 		}
-		if (my.production < (cost[ind] * my.buildCost)){
+		if (my.production < (g.upgradeCost[ind] * my.buildCost)){
 			action.error();
 			return;
 		}

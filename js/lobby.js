@@ -136,7 +136,7 @@ var lobby = {
 				str += 
 				'<div id="lobbyRow' +i+ '" class="row lobbyRow">\
 					<div class="col-xs-2">\
-						<img id="lobbyFlag' +i+ '" class="w100 block center p' + i + 'b player' +i+ '" src="images/flags/blank.png">\
+						<img id="lobbyFlag' +i+ '" data-placement="right" class="lobbyFlags w100 block center p' + i + 'b player' +i+ '" src="images/flags/blank.png">\
 					</div>\
 					<div class="col-xs-6 lobbyDetails">\
 						<span id="lobbyAccount' +i+ '"></span>\
@@ -219,6 +219,12 @@ var lobby = {
 									document.getElementById("lobbyAccount" + i).innerHTML = data.account;
 									if (data.flag !== 'Default.jpg'){
 										document.getElementById("lobbyFlag" + i).src = 'images/flags/' + data.flag;
+										var flagName = data.flag.split(".");
+										$('#lobbyFlag' + i)
+											.attr('title', flagName[0])
+											.tooltip({
+												container: 'body'
+											});
 									}
 								}
 								if (lobby.data[i].government !== data.government){
@@ -541,11 +547,11 @@ function loadGameState(x){
 				DOM.engineeringCost.textContent = 75;
 				DOM.rocketryCost.textContent = 125;
 				DOM.atomicTheoryCost.textContent = 250;
-				DOM.futureTechCost.textContent = 625;
+				DOM.futureTechCost.textContent = 500;
 				// weapons
-				DOM.cannonsCost.textContent = 30;
-				DOM.missileCost.textContent = 75;
-				DOM.nukeCost.textContent = 300;
+				DOM.cannonsCost.textContent = 20;
+				DOM.missileCost.textContent = 30;
+				DOM.nukeCost.textContent = 200;
 				my.weaponCost = .5;
 			}
 			// initialize player data

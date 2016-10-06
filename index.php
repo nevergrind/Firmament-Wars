@@ -80,7 +80,7 @@
 					}
 					
 					echo 
-					'<span data-toggle="tooltip" data-placement="bottom" title="Crystals Remaining">
+					'<span data-toggle="tooltip" data-placement="right" title="Crystals Remaining">
 						<i class="fa fa-diamond" title="Never Crystals"></i>
 						<span id="crystalCount" class="text-primary" >' .$crystals.'</span>
 					</span>&ensp;
@@ -232,6 +232,15 @@
 				<hr class="fancyhr">
 				<div id="titleChatLog">
 				<?php
+					/*
+					echo '
+						<div class="chat-warning">MESSAGE OF THE DAY: </div>
+						<div class="chat-warning">Closed beta event on 10/5 @ 8 p.m. EST</div>
+						<div>A teamspeak server is available for voice chat!</div>
+						<div>Download TeamSpeak at <a target="_blank" href="https://www.teamspeak.com/downloads">https://www.teamspeak.com/downloads</a></div>
+						<div>Connect to GhostGaming.gavs.us and join the Firmament Wars channel</div>
+					';
+					*/
 					if (!$whitelisted){
 						echo '<div class="chat-alert">You currently do not have access to play Firmament Wars. You must get beta access from the administrator.</div>';
 					}
@@ -239,7 +248,7 @@
 					// Associative array
 					while ($row = mysqli_fetch_assoc($result)){
 						$total = $row['count']*1;
-						echo '<div class="" >There '. ($total === 1 ? 'is' : 'are') .' '. $row["count"] . ' '. ($total === 1 ? 'person' : 'people') .' playing Firmament Wars</div>';
+						echo '<div>There '. ($total === 1 ? 'is' : 'are') .' '. $row["count"] . ' '. ($total === 1 ? 'person' : 'people') .' playing Firmament Wars</div>';
 					}
 				?>
 				</div>
@@ -609,7 +618,7 @@
 					</div>
 					<div class="col-xs-4 text-right energyCost">
 						<i class="fa fa-bolt production pointer actionBolt"></i>
-						<span id='cannonsCost'>60</span>
+						<span id='cannonsCost'>40</span>
 					</div>
 				</div>
 			
@@ -635,7 +644,7 @@
 					</div>
 					<div class="col-xs-4 text-right energyCost">
 						<i class="fa fa-bolt production pointer actionBolt"></i>
-						<span id='missileCost'>120</span>
+						<span id='missileCost'>60</span>
 					</div>
 				</div>
 				
@@ -646,7 +655,7 @@
 					<div class="col-xs-8">Launch <span class='text-hotkey'>N</span>uke</div>
 					<div class="col-xs-4 text-right energyCost">
 						<i class="fa fa-bolt production pointer actionBolt"></i>
-						<span id='nukeCost'>600</span>
+						<span id='nukeCost'>400</span>
 					</div>
 				</div>
 			
@@ -716,7 +725,7 @@
 					</div>
 					<div class="col-xs-4 text-right energyCost">
 						<i class="fa fa-bolt production pointer actionBolt"></i>
-						<span id='futureTechCost'>1250</span>
+						<span id='futureTechCost'>1000</span>
 					</div>
 				</div>
 			</div>

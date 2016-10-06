@@ -63,6 +63,14 @@ var title = {
 			$('[title]').tooltip();
 			title.animateLogo();
 		}, 100);
+		(function repeat(){
+			if (g.view === 'title'){
+				setTimeout(function(){
+					refreshGames(true);
+					repeat();
+				}, 12000);
+			}
+		})();
 	})(),
 	animateLogo: function(){
 		var globeDelay = 1,
@@ -90,6 +98,14 @@ var title = {
 				opacity: 0
 			},
 			opacity: 1,
+			ease: Quad.easeIn
+		});
+		TweenMax.to('#firmamentWarsBlur', globeDelay, {
+			startAt: {
+				visibility: 'visible',
+				scaleX: 0
+			},
+			scaleX: 1,
 			ease: Quad.easeIn
 		});
 		TweenMax.to('#firmamentWarsLogo, #firmamentWarsBlur', globeDelay, {

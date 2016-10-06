@@ -61,7 +61,6 @@ function updateTileInfo(tileId){
 	DOM.targetName.innerHTML = str;
 	
 	var defWord = ['Bunker', 'Wall', 'Fortress'],
-		defCost = [80, 200, 450],
 		ind = t.defense - (t.capital ? 1 : 0);
 		var defTooltip = [
 			'',
@@ -73,7 +72,7 @@ function updateTileInfo(tileId){
 	} else {
 		DOM.upgradeTileDefense.style.display = 'block';
 		DOM.buildWord.textContent = defWord[ind];
-		DOM.buildCost.textContent = defCost[ind] * my.buildCost;
+		DOM.buildCost.textContent = g.upgradeCost[ind] * my.buildCost;
 		if (ind === 2){
 			defWord[2] = 'Fortresse';
 		}
@@ -519,7 +518,7 @@ function triggerEndGame(msg){
 		});
 		$("#spectate").on('mousedown', function(e){
 			if (e.which === 1){
-				$("#victoryScreen").remove();
+				$("#victoryScreen, #ui2, #resources-ui").remove();
 			}
 		});
 	}, 2500);

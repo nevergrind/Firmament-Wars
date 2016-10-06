@@ -21,6 +21,7 @@ var g = {
 	startTime: Date.now(),
 	keyLock: false,
 	loadAttempts: 0,
+	upgradeCost: [80, 140, 200],
 	lock: function(clear){
 		g.overlay.style.display = "block";
 		clear ? g.overlay.style.opacity = 0 : g.overlay.style.opacity = 1;
@@ -248,7 +249,7 @@ var my = {
 	deployCost: 10,
 	recruitCost: 30,
 	weaponCost: 1,
-	maxDeployment: 12,
+	maxDeployment: 24,
 	buildCost: 1,
 	targetData: {},
 	selectedFlag: "Default",
@@ -763,8 +764,10 @@ function playerLogout(){
     });
 }
 
-function refreshGames(){
-	g.lock();
+function refreshGames(bypass){
+	if (!bypass){
+		g.lock();
+	}
 	$.ajax({
 		type: 'GET',
 		url: 'php/refreshGames.php'
@@ -803,7 +806,9 @@ function refreshGames(){
 			console.info(e.responseText);
 		Msg("Server error.");
 	}).always(function(){
-		g.unlockFade(.5);
+		if (!bypass){
+			g.unlockFade(.5);
+		}
 	});
 }
 
