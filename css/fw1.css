@@ -761,11 +761,36 @@ table td, .table th, .table td {
 	width: 195.31%;
 	height: 143.22%;
 }
+#worldWater1{
+	position: absolute;
+	top: -50%;
+	left: -50%;
+	width: 200%;
+	height: 200%;
+	background: url('../images/water2.jpg');
+}
+#worldWater2{
+	position: absolute;
+	top: -50%;
+	left: -50%;
+	width: 200%;
+	height: 200%;
+	background: url('../images/water2.jpg');
+	opacity: .4;
+}
+#worldWater3{
+	position: absolute;
+	top: -50%;
+	left: -50%;
+	width: 200%;
+	height: 200%;
+	background: url('../images/water2.jpg');
+	opacity: .3;
+}
 #world{
 	position: absolute;
 	top: 0%; 
 	left: 0%;
-	background: #00062a url('../images/water2.jpg');
 }
 #mapUnits{
 	text-shadow: 1px 1px #000;

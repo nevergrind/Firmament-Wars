@@ -1,4 +1,5 @@
 <?php
+require('waters.php');
 echo '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
    xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
