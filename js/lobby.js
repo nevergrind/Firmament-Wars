@@ -773,31 +773,34 @@ function loadGameState(x){
 				}
 				getGameState();
 			}, 100);
+			var delay = 140;
 			// animate water
-			TweenMax.to('#worldWater1', 90, {
-				startAt: {
-					skewY: 30
-				},
+			TweenMax.to('#worldWater1', delay, {
 				backgroundPosition: '-800px 0px',
-				skewY: 0,
 				repeat: -1,
 				ease: Linear.easeNone
 			});
-			TweenMax.to('#worldWater2', 90, {
+			TweenMax.to('#worldWater2', delay, {
 				startAt: {
-					backgroundPosition: '400px 300px', 
-					skewX: 30
+					backgroundPosition: '400px 300px'
 				},
 				backgroundPosition: '1200px 300px', 
-				skewX: 0,
 				repeat: -1,
 				ease: Linear.easeNone
 			});
-			TweenMax.to('#worldWater3', 75, {
+			TweenMax.to('#worldWater3', delay, {
 				startAt: {
 					backgroundPosition: '200px 150px', 
 				},
-				backgroundPosition: '200px -450px', 
+				backgroundPosition: '200px -650px', 
+				repeat: -1,
+				ease: Linear.easeNone
+			});
+			TweenMax.to('#worldWater4', delay, {
+				startAt: {
+					backgroundPosition: '100px 400px', 
+				},
+				backgroundPosition: '100px 1200px', 
 				repeat: -1,
 				ease: Linear.easeNone
 			});

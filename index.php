@@ -38,8 +38,8 @@
 	<meta name="twitter:widgets:csp" content="on">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel='stylesheet' type='text/css' href="css/fw1.css?v1">
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -183,7 +183,8 @@
 						if (isset($_SESSION['email']) && $whitelisted){
 							echo
 							'<button id="create" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Create Game</button>
-							<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>';
+							<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>
+							<img id="titleFlag" src="images/flags/' . $_SESSION['flag'] . '" class="inlineFlag">';
 						}
 						?>
 					</div>
@@ -491,6 +492,9 @@
 							&ensp;Flag Unlocked!
 						</h4>
 					</div>
+				</div>
+				<div class="col-xs-6">
+					<img id="updateNationFlag" class="w100 block center" src="images/flags/<?php echo $flag; ?>">
 					<div id="offerFlag" class="flagPurchasedStatus shadow4">
 						<h5 class="text-center">Buy flag?</h5>
 						<div class="center block">
@@ -502,10 +506,6 @@
 							<a class='fwFont' target="_blank" href="/store">Buy Crystals</a>
 						</h4>
 					</div>
-					
-				</div>
-				<div class="col-xs-6">
-					<img id="updateNationFlag" class="w100 block center" src="images/flags/<?php echo $flag; ?>">
 				</div>
 			</div>
 			<div class='row buffer text-center'>
@@ -825,7 +825,11 @@
 		</table>
 		<input id="chat-input" class="fw-text noselect nobg" type='text' maxlength="240" autocomplete="off"/>
 			
-		<div id="worldWrap"></div>
+		<div id="worldWrap">
+			<div id="worldWater1"></div>
+			<div id="worldWater2"></div>
+			<div id="worldWater3"></div>
+		</div>
 		
 		<div id="hud" class="shadow4">Select Target</div>
 		<div id="victoryScreen" class="fw-primary fw-text no-select"></div>

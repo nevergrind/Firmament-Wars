@@ -761,31 +761,22 @@ table td, .table th, .table td {
 	width: 195.31%;
 	height: 143.22%;
 }
-#worldWater1{
+.worldWater{
 	position: absolute;
 	top: -50%;
 	left: -50%;
 	width: 200%;
 	height: 200%;
-	background: url('../images/water2.jpg');
+	background: url('../images/water9.jpg');
 }
 #worldWater2{
-	position: absolute;
-	top: -50%;
-	left: -50%;
-	width: 200%;
-	height: 200%;
-	background: url('../images/water2.jpg');
 	opacity: .4;
 }
 #worldWater3{
-	position: absolute;
-	top: -50%;
-	left: -50%;
-	width: 200%;
-	height: 200%;
-	background: url('../images/water2.jpg');
-	opacity: .3;
+	opacity: .4;
+}
+#worldWater4{
+	opacity: .2;
 }
 #world{
 	position: absolute;
@@ -1333,6 +1324,7 @@ table {
 }
 #buyFlag{
 	font-size: 1.625em;
+	background: rgba(16,56,96,.7);
 }
 #buyFlag:hover{
 	color: #00bb00;
@@ -1351,8 +1343,18 @@ table {
 	margin-right: 4em;
 }
 #offerFlag{
+	position: absolute;
+	top: 5%;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
 	display: none;
 	text-align: center;
+	width: 55%;
+	background: rgba(0,0,0,.4);
+	border-radius: 6px;
+	border: 1px solid #3377dd;
+	
 }
 #researchFutureTech{
 	display: none;
@@ -1435,6 +1437,11 @@ table {
 }
 .mapFlag{
 	pointer-events: none;
+}
+#titleFlag{
+	float: right;
+	width: 10%;
+	height: auto;
 }
 .inlineFlag{
 	display: inline-block;

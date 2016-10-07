@@ -779,7 +779,6 @@ function refreshGames(bypass){
 		if (!data.length){
 			e.innerHTML = "<div class='text-center text-warning buffer2'>No active games found. Create a game to play!</div>";
 		} else {
-			console.info(data);
 			// head
 			var str = 
 			'<table id="gameTable" class="table table-condensed table-borderless">\
@@ -801,9 +800,11 @@ function refreshGames(bypass){
 			str += "</table>";
 			e.innerHTML = str;
 		}
-		$(".wars").filter(":first").trigger("click");
+		if (!bypass){
+			$(".wars").filter(":first").trigger("click");
+		}
 	}).fail(function(e){
-			console.info(e.responseText);
+		console.info(e.responseText);
 		Msg("Server error.");
 	}).always(function(){
 		if (!bypass){

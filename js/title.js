@@ -419,6 +419,7 @@ $("#flagDropdown").on('click', '.flagSelect', function(){
 		$("#flagPurchased").css("display", "block");
 		Msg("Your nation's flag is now: " + my.selectedFlag);
 		document.getElementById('selectedFlag').textContent = my.selectedFlag;
+		document.getElementById('titleFlag').src = "images/flags/" + my.selectedFlagFull;
 	}).fail(function(e){
 		$("#flagPurchased").css("display", "none");
 		$("#offerFlag").css("display", "block");
@@ -465,6 +466,7 @@ $("#buyFlag").on("click", function(){
 		$("#nationFlag").attr("src", "images/flags/" + my.selectedFlagFull);
 		Msg("Your nation's flag is now: " + my.selectedFlag);
 		document.getElementById('selectedFlag').textContent = my.selectedFlag;
+		document.getElementById('titleFlag').src = "images/flags/" + my.selectedFlagFull;
 	}).fail(function(e){
 		// not enough money
 		Msg(e.statusText);
