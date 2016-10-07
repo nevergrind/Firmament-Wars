@@ -22,6 +22,7 @@ var g = {
 	keyLock: false,
 	loadAttempts: 0,
 	upgradeCost: [80, 140, 200],
+	isModalOpen: false,
 	lock: function(clear){
 		g.overlay.style.display = "block";
 		clear ? g.overlay.style.opacity = 0 : g.overlay.style.opacity = 1;
@@ -800,8 +801,16 @@ function refreshGames(bypass){
 			str += "</table>";
 			e.innerHTML = str;
 		}
-		if (!bypass){
-			$(".wars").filter(":first").trigger("click");
+		console.clear();
+		console.info("MODAL: ", g.isModalOpen);
+		var e = $(".wars").filter(":first");
+		if (!g.isModalOpen){
+			// modal not open
+			e.trigger("click");
+		} else {
+			// modal open - do this to avoid messing with dropdowns
+			e.addClass('selected');
+			g.id = e.data('id');
 		}
 	}).fail(function(e){
 		console.info(e.responseText);

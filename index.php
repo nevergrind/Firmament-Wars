@@ -274,7 +274,7 @@
 	
 		<div id="joinGameLobby" class="shadow4">
 		
-			<img id="worldTitle" src="images/firmamentWarsNight.jpg">
+			<img id="worldTitle" src="images/firmamentWarsNight2.jpg">
 		
 			<div id="lobbyLeftCol">
 			

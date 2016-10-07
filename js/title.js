@@ -203,6 +203,7 @@ var title = {
 				e3.style.visibility = 'hidden';
 			}
 		});
+		g.isModalOpen = false;
 	},
 	createGameFocus: false,
 	createGame: function(){
@@ -316,6 +317,7 @@ $("#create").on("click", function(){
 			$("#gameName").focus();
 		}
 	});
+	g.isModalOpen = true;
 });
 
 $("#createGame").on("mousedown", function(e){
@@ -398,6 +400,7 @@ $("#toggleNation").on("click", function(){
 		},
 		opacity: 1
 	});
+	g.isModalOpen = true;
 });
 
 $("#flagDropdown").on('click', '.flagSelect', function(){
