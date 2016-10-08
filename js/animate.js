@@ -624,5 +624,20 @@ var animate = {
 			repeat: -1,
 			ease: Linear.easeNone
 		});
+	},
+	glowTile: function(oldTgt, newTgt){
+		var e1 = document.getElementById('land' + oldTgt),
+			e2 = document.getElementById('land' + newTgt);
+		TweenMax.set(e1, {
+			stroke: '#66ccff',
+			filter: '',
+			strokeWidth: 1
+		});
+		TweenMax.set(e2, {
+			stroke: '#aaeeff',
+			filter: 'url(#glow)',
+			strokeWidth: 2
+		});
+		game.updateTopTile(newTgt);
 	}
 }

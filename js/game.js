@@ -99,20 +99,8 @@ function showTarget(e, hover, skipOldTgtUpdate){
 		var cacheOldTgt = my.tgt;
 		if (!hover){
 			if (cacheOldTgt !== tileId){
-				var e1 = document.getElementById('land' + cacheOldTgt),
-					e2 = document.getElementById('land' + tileId);
-				TweenMax.set(e1, {
-					stroke: '#66ccff',
-					filter: '',
-					strokeWidth: 1
-				});
 				my.tgt = tileId;
-				TweenMax.set(e2, {
-					stroke: '#aaeeff',
-					filter: 'url(#glow)',
-					strokeWidth: 2
-				});
-				game.updateTopTile(my.tgt);
+				animate.glowTile(cacheOldTgt, tileId);
 			}
 		}
 		// animate targetLine on hover

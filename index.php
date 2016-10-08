@@ -27,9 +27,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head id='head'>
-	<title>Firmament Wars | Grand Strategy Warfare | Free Multiplayer Game</title>
+	<title>Firmament Wars | Multiplayer Grand Strategy Warfare</title>
 	<meta charset="utf-8">
-	<meta name="keywords" content="risk, civilization, online, multiplayer, free, strategy">
+	<meta name="keywords" content="risk, civilization, real-time, multiplayer, free, strategy">
 	<meta name="description" content="Firmament Wars is a grand strategy game with free online multiplayer. Select a map and compete in real-time with up to eight players for global domination!">
 	<meta name="author" content="Joe Leonard">
 	<meta name="referrer" content="always">

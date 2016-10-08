@@ -84,7 +84,7 @@ $("#worldWrap").on("mousemove", function(e){
 $("#gameWrap").on('click', '#surrender', function(e){
 	exitGame();
 });
-$("#createGameWrap").on('click', '.mapSelect', function(){
+$("#createGameWrap").on('click', '.mapSelect', function(e){
 	var x = $(this).text();
 	var key = x.replace(/ /g,'');
 	g.map.name = x;

@@ -320,7 +320,9 @@ var my = {
 			my.tgt = Math.abs(my.tgt);
 		}
 		my.focusTile(my.tgt, .1);
+		animate.glowTile(my.lastTgt, my.tgt);
 	},
+	// shift camera to tile
 	focusTile: function(tile, d){
 		var e = document.getElementById("land" + tile),
 			box = e.getBBox();
@@ -353,6 +355,7 @@ var my = {
 		showTarget(document.getElementById('land' + tile), false, 1);
 		my.flashTile(tile);
 	},
+	// flash text in land
 	flashTile: function(tile){
 		if (!my.attackOn){
 			// flag unit text

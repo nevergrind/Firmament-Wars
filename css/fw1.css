@@ -29,7 +29,8 @@ header{
 	top: 0%;
 	left: 0%;
 	width: 100%;
-	font-size: 1.25em;
+	font-size: 1.375em;
+	padding: .25em;
 }
 #mainWrap{
 	position: absolute;
@@ -217,9 +218,6 @@ a:hover{
 #titleGlobe{
 	top: auto;
 	bottom: -20%;
-	width: 80%;
-}
-#firmamentWarsBlur{
 	width: 80%;
 }
 #firmamentWarsLogo, #firmamentWarsBlur{
@@ -800,12 +798,12 @@ table td, .table th, .table td {
 	background: url('../images/water14.jpg');
 }
 #worldWater2{
-	opacity: .4;
+	opacity: .3;
 	background: url('../images/water13.jpg');
 }
 #worldWater3{
-	opacity: .4;
-	background: url('../images/water12.jpg');
+	opacity: .1;
+	background: url('../images/water8.jpg');
 }
 #world{
 	position: absolute;
