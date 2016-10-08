@@ -40,7 +40,7 @@
 	<meta name="mobile-web-app-capable" content="yes">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-	<link rel='stylesheet' type='text/css' href="css/fw1.css?v=1">
+	<link rel='stylesheet' type='text/css' href="css/fw1.css?v=2">
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
 
@@ -886,7 +886,7 @@
 		var target = d.getElementsByTagName('script')[0];
 		for(var i=0, len=_scriptLoader.length; i<len; i++){
 			var x=d.createElement('script');
-			x.src = 'js/'+_scriptLoader[i]+'.js?v=1';
+			x.src = 'js/'+_scriptLoader[i]+'.js?v=2';
 			x.async=false;
 			target.parentNode.appendChild(x);
 		}

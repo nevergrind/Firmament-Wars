@@ -487,18 +487,7 @@ function loadGameState(x){
 				return;
 			}
 			initDom();
-			// set worldWrap CSS
-			var css = 
-				'<style>#worldWrap{ '+
-					'position: absolute; '+
-					'top: 0%; '+
-					'left: 0%; '+
-					'width: ' + ((g.map.sizeX / g.screen.width) * 100) + '%; '+
-					'height: ' + ((g.map.sizeY / g.screen.height) * 100) + '%; '+
-				'}</style>';
-			if (css){
-				$DOM.head.append(css);
-			}
+			g.screen.resizeMap();
 			
 			audio.ambientInit();
 			console.info('loadGameState ', data);

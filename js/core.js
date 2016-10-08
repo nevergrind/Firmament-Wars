@@ -54,7 +54,22 @@ var g = {
 	screen: {
 		fullScreen: true,
 		width: window.innerWidth,
-		height: window.innerHeight
+		height: window.innerHeight,
+		resizeMap: function(){
+			// set worldWrap CSS
+			$("#mapStyle").remove();
+			var css = 
+				'<style id="mapStyle">#worldWrap{ '+
+					'position: absolute; '+
+					'top: 0%; '+
+					'left: 0%; '+
+					'width: ' + ((g.map.sizeX / window.innerWidth) * 100) + '%; '+
+					'height: ' + ((g.map.sizeY / window.innerHeight) * 100) + '%; '+
+				'}</style>';
+			if (css){
+				$DOM.head.append(css);
+			}
+		}
 	},
 	mouse: {
 		zoom: 100,
@@ -490,6 +505,7 @@ function resizeWindow() {
 	if (g.screen.fullScreen){
 		g.screen.width = winWidth;
 		g.screen.height = winHeight;
+		g.screen.resizeMap();
 	}
     // game ratio
     var widthToHeight = g.screen.width / g.screen.height;
