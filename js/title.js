@@ -71,23 +71,38 @@ var title = {
 				}, 12000);
 			}
 		})();
+		refreshGames();
 	})(),
 	animateLogo: function(){
 		var globeDelay = 1,
 			globeYoyo = 6;
-		// blur
-		TweenMax.to('#firmamentWarsGlow', globeYoyo, {
-			delay: globeDelay,
-			transformOrigin: '0% 100%',
-			transformPerspective: 100,
-			scale: 1.25,
-			repeat: -1,
-			yoyo: true,
-			ease: Power1.easeInOut
-		});
 		// animate stars
-		TweenMax.to('#firmamentWarsStars', 60, {
-			backgroundPosition: '-1024px 0px', 
+		TweenMax.to('#firmamentWarsStars1', 120, {
+			backgroundPosition: '-800px 0px', 
+			repeat: -1,
+			ease: Linear.easeNone
+		});
+		TweenMax.to('#firmamentWarsStars2', 80, {
+			startAt: {
+				backgroundPosition: '250px 250px', 
+			},
+			backgroundPosition: '-1050px 250px', 
+			repeat: -1,
+			ease: Linear.easeNone
+		});
+		TweenMax.to('#firmamentWarsStars3', 40, {
+			startAt: {
+				backgroundPosition: '600px 500px', 
+			},
+			backgroundPosition: '-200px 500px', 
+			repeat: -1,
+			ease: Linear.easeNone
+		});
+		TweenMax.to('#firmamentWarsStars4', 20, {
+			startAt: {
+				backgroundPosition: '400px 600px', 
+			},
+			backgroundPosition: '-400px 600px', 
 			repeat: -1,
 			ease: Linear.easeNone
 		});
@@ -109,7 +124,10 @@ var title = {
 			ease: Quad.easeIn
 		});
 		TweenMax.to('#firmamentWarsLogo, #firmamentWarsBlur', globeDelay, {
-			top: 0,
+			startAt: {
+				yPercent: -50
+			},
+			top: '50%',
 			onComplete: function(){
 				TweenMax.to('#firmamentWarsBlur', 4, {
 					startAt: {
@@ -143,7 +161,7 @@ var title = {
 		});
 		// globe
 		TweenMax.to('#titleGlobe', globeDelay, {
-			top: 0
+			bottom: '0%'
 		});
 	},
 	mapData: {
@@ -291,10 +309,6 @@ $("#menu").on("click", ".wars", function(){
 	g.id = $(this).data("id");
 	joinGame();
 });
-// initializes refresh games
-$("#refreshGames").on("click", function(){
-	refreshGames();
-}).trigger("click");
 
 $("#create").on("click", function(){
 	TweenMax.to(document.getElementById("createGameWrap"), .5, {
@@ -403,7 +417,7 @@ $("#toggleNation").on("click", function(){
 	g.isModalOpen = true;
 });
 
-$("#flagDropdown").on('click', '.flagSelect', function(){
+$("#flagDropdown").on('click', '.flagSelect', function(e){
 	my.selectedFlag = $(this).text();
 	my.selectedFlagFull = my.selectedFlag === "Nepal" ? my.selectedFlag+".png" : my.selectedFlag+".jpg";
 	$(".flagPurchaseStatus").css("display", "none");
@@ -436,6 +450,7 @@ $("#flagDropdown").on('click', '.flagSelect', function(){
 			scale: 1
 		});
 	});
+	e.preventDefault();
 });
 
 $("#submitNationName").on("mousedown", function(){

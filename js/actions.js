@@ -139,9 +139,7 @@ var action = {
 		}
 		if (t.units <= 254){
 			// determine number
-			var deployedUnits = my.manpower < my.maxDeployment ? 
-				my.manpower : 
-				my.maxDeployment,
+			var deployedUnits = my.manpower < my.maxDeployment ? my.manpower : my.maxDeployment,
 				tgt = my.tgt;
 			var rem = 0;
 			if (t.units + deployedUnits > 255){
@@ -151,12 +149,8 @@ var action = {
 				rem = my.manpower - deployedUnits;
 			}
 			console.log('deploy: ', tgt, t.units, deployedUnits);
-			game.tiles[tgt].units = t.units + deployedUnits;
-			//
+			// game.tiles[tgt].units = t.units + deployedUnits;
 			// do it
-			//
-			//
-			audio.move();
 			$.ajax({
 				url: 'php/deploy.php',
 				data: {
@@ -166,6 +160,7 @@ var action = {
 			}).done(function(data) {
 				console.info("deploy: ", data);
 				if (data.production !== undefined){
+					audio.move();
 					my.manpower = data.manpower;
 					DOM.manpower.textContent = my.manpower;
 					setProduction(data);

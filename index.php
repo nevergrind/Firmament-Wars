@@ -40,20 +40,25 @@
 	<meta name="mobile-web-app-capable" content="yes">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-	<link rel='stylesheet' type='text/css' href="css/fw1.css?v1">
+	<link rel='stylesheet' type='text/css' href="css/fw1.css?v=1">
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
 
 <body id="body">
 
 	<div id="firmamentWarsLogoWrap" class="titleBG">
-		<img src="images/firmamentWarsTitle90.jpg" title="Firmament Wars Official Logo" class="titleBG">
-		<img src="images/firmamentWarsTitle_logoBG.png" id="firmamentWarsGlow" class="titleBG">
-		<div id="firmamentWarsStars" class="titleBG"></div>
+		<img src="images/firmamentWarsTitle90.jpg" title="Firmament Wars Official Logo" class="titleBG fwHidden">
 		
-		<img src="images/FirmamentWarsTitle_globe3.png" id="titleGlobe" class="titleBG">
-		<img src="images/firmamentWarsTitle_logoBlur.png" id="firmamentWarsBlur" class="titleBG fwHidden">
-		<img src="images/firmamentWarsTitle_logo.png" id="firmamentWarsLogo" class="titleBG fwHidden">
+		<div id="firmamentWarsStars1" class="titleBG titleStars"></div>
+		<div id="firmamentWarsStars2" class="titleBG titleStars"></div>
+		<div id="firmamentWarsStars3" class="titleBG titleStars"></div>
+		<div id="firmamentWarsStars4" class="titleBG titleStars"></div>
+		
+		<img src="images/title/firmamentWarsTitle_logoBG.png" id="firmamentWarsGlow" class="titleBG">
+		
+		<img src="//i.imgur.com/tC2IPv4.png" id="titleGlobe" class="titleBG">
+		<img src="images/title/firmamentWarsTitle_logoBlur.png" id="firmamentWarsBlur" class="titleBG fwHidden">
+		<img src="images/title/firmamentWarsTitle_logo.png" id="firmamentWarsLogo" class="titleBG fwHidden">
 	</div>
 	
 	<div id="mainWrap" class="portal">
@@ -177,8 +182,6 @@
 				</div>
 				<div>
 					<div id="menuHead">
-						<button id="refreshGames" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Refresh Games</button>
-						
 						<?php
 						if (isset($_SESSION['email']) && $whitelisted){
 							echo
@@ -192,21 +195,17 @@
 				<hr class="fancyhr">
 				<div id='refreshGameWrap'>
 					<div id="menuContent" class='buffer2 shadow4'></div>
-					<div id='joinGameWrap'>
-							<div class="pull-left fw-text">
-								<?php
-								if (isset($_SESSION['email']) && $whitelisted){
-									echo
-									'
-									<hr class="fancyhr">
-									<form id="joinGamePasswordWrap">
-										Game <input id="joinGameName" class="joinGameInputs" type="text" maxlength="240" autocomplete="off"/>
-										Password <input id="joinGamePassword" class="joinGameInputs" type="text" maxlength="240"/>
-										<button id="joinGame" type="button" class="btn btn-md fwGreen btn-responsive shadow4">Join Game</button>
-									</form>';
-								}
-								?>
-						</div>
+					<div id='joinGameWrap' class='fw-text'>
+						<?php
+						if (isset($_SESSION['email']) && $whitelisted){
+							echo'<hr class="fancyhr">
+							<form id="joinGamePasswordWrap">
+								Game <input id="joinGameName" class="joinGameInputs" type="text" maxlength="240" autocomplete="off"/>
+								Password <input id="joinGamePassword" class="joinGameInputs" type="text" maxlength="240"/>
+								<button id="joinGame" type="button" class="btn btn-md fwGreen btn-responsive shadow4">Join Game</button>
+							</form>';
+						}
+						?>
 					</div>
 				</div>
 			</div>
@@ -274,7 +273,7 @@
 	
 		<div id="joinGameLobby" class="shadow4">
 		
-			<img id="worldTitle" src="images/firmamentWarsNight2.jpg">
+			<img id="worldTitle" src="//imgur.com/87z2KwQ.jpg">
 		
 			<div id="lobbyLeftCol">
 			
@@ -311,9 +310,9 @@
 					</div>
 				</div>
 				
-				<div id="lobbyButtons" class="fw-primary text-center lobbyRelWrap">
-					<button id='startGame' type='button' class='btn btn-default btn-md btn-block btn-responsive shadow4'>Start Game</button>
-					<button id='cancelGame' type='button' class='btn btn-default btn-md btn-block btn-responsive shadow4'>Exit</button>
+				<div id="lobbyButtonWrap" class="fw-primary text-center lobbyRelWrap">
+					<button id='startGame' type='button' class='btn btn-default btn-md btn-block btn-responsive shadow4 lobbyButtons'>Start Game</button>
+					<button id='cancelGame' type='button' class='btn btn-default btn-md btn-block btn-responsive shadow4 lobbyButtons'>Exit</button>
 					<div id='countdown' class='text-warning'></div>
 				</div>
 			</div>
@@ -845,14 +844,13 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script src="js/libs/DrawSVGPlugin.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/utils/Draggable.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/utils/Draggable.min.js"></script>
 <script src="js/libs/ScrambleTextPlugin.min.js"></script>
 <script src="js/libs/SplitText.min.js"></script>
 <script src="js/libs/ThrowPropsPlugin.min.js"></script> 
 <script src="js/libs/MorphSVGPlugin.min.js"></script> 
 <script src="js/libs/AttrPlugin.min.js"></script>
 <script src="js/libs/bootstrap.min.js"></script>
-<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/findShapeIndex.js"></script>
 
 <?php
 	require($_SERVER['DOCUMENT_ROOT'] . "/includes/ga.php");
@@ -867,6 +865,7 @@
 		if(location.host==='localhost' || 1){
 			var _scriptLoader = [
 				'core',
+				'audio',
 				'title',
 				'lobby',
 				'map',
@@ -887,7 +886,7 @@
 		var target = d.getElementsByTagName('script')[0];
 		for(var i=0, len=_scriptLoader.length; i<len; i++){
 			var x=d.createElement('script');
-			x.src = 'js/'+_scriptLoader[i]+'.js?v1';
+			x.src = 'js/'+_scriptLoader[i]+'.js?v=1';
 			x.async=false;
 			target.parentNode.appendChild(x);
 		}

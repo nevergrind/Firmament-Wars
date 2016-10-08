@@ -10,8 +10,8 @@ var lobby = {
 		{ account: '' },
 		{ account: '' }
 	],
-	startClassOn: "btn btn-info btn-md btn-block btn-responsive shadow4",
-	startClassOff: "btn btn-default btn-md btn-block btn-responsive shadow4",
+	startClassOn: "btn btn-info btn-md btn-block btn-responsive shadow4 lobbyButtons",
+	startClassOff: "btn btn-default btn-md btn-block btn-responsive shadow4 lobbyButtons",
 	updateGovernmentWindow: function(government){
 		var str = '';
 		if (government === "Despotism"){
@@ -136,7 +136,7 @@ var lobby = {
 				str += 
 				'<div id="lobbyRow' +i+ '" class="row lobbyRow">\
 					<div class="col-xs-2">\
-						<img id="lobbyFlag' +i+ '" data-placement="right" class="lobbyFlags w100 block center p' + i + 'b player' +i+ '" src="images/flags/blank.png">\
+						<img id="lobbyFlag' +i+ '" data-placement="right" class="lobbyFlags block center p' + i + 'b player' +i+ '" src="images/flags/blank.png">\
 					</div>\
 					<div class="col-xs-6 lobbyDetails">\
 						<span id="lobbyAccount' +i+ '"></span>\
@@ -488,9 +488,7 @@ function loadGameState(x){
 			}
 			initDom();
 			// set worldWrap CSS
-			var css = '';
-			if (g.map.name === "Flat Earth"){
-				css = 
+			var css = 
 				'<style>#worldWrap{ '+
 					'position: absolute; '+
 					'top: 0%; '+
@@ -498,7 +496,6 @@ function loadGameState(x){
 					'width: ' + ((g.map.sizeX / g.screen.width) * 100) + '%; '+
 					'height: ' + ((g.map.sizeY / g.screen.height) * 100) + '%; '+
 				'}</style>';
-			}
 			if (css){
 				$DOM.head.append(css);
 			}
@@ -661,8 +658,11 @@ function loadGameState(x){
 			var str = '';
 			// init diplomacyPlayers
 			for (var i=0, len=game.player.length; i<len; i++){
-				var p = game.player[i];
+				var p = game.player[i],
+					_flagArr = p.flag.split("."),
+					_flag = _flagArr[0];
 				if (p.flag){
+					var flag
 					// console.info(game.player[i]);
 					if (p.flag === 'Default.jpg'){
 						str += 
@@ -673,7 +673,8 @@ function loadGameState(x){
 									str += '<i class="fa fa-flag surrender"></i>';
 								}
 								str += '<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>' +
-								'<img src="images/flags/Player' + p.player + '.jpg" class="player' + p.player + ' inlineFlag diploFlag p' + p.player + 'b" data-toggle="tooltip" title="'+ p.account + '"><span class="diploNames">' + p.nation + '</span>';
+								'<img src="images/flags/Player' + p.player + '.jpg" class="player' + p.player + ' inlineFlag diploFlag p' + p.player + 'b" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag + '">' +
+								'<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + p.nation + '</span>';
 					} else {
 						str += 
 						'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">';
@@ -683,13 +684,21 @@ function loadGameState(x){
 									str += '<i class="fa fa-flag surrender"></i>';
 								}
 								str += '<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>' +
-								'<img src="images/flags/' + p.flag + '" class="inlineFlag diploFlag p' + p.player + 'b" data-toggle="tooltip" title="'+ p.account + '"><span class="diploNames">' + p.nation + '</span>';
+								'<img src="images/flags/' + p.flag + '" class="inlineFlag diploFlag p' + p.player + 'b" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag + '">' +
+								'<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + p.nation + '</span>';
 					}
 					str += '</div>';
 				}
 			}
 			
 			document.getElementById('diplomacy-ui').innerHTML = str;
+			/*
+			$('#lobbyFlag' + i)
+				.attr('title', flagName[0])
+				.tooltip({
+					container: 'body'
+				});
+				*/
 			$('[data-toggle="tooltip"]').tooltip({
 				delay: {
 					show: 0,
@@ -773,38 +782,7 @@ function loadGameState(x){
 				}
 				getGameState();
 			}, 100);
-			var delay = 140;
-			// animate water
-			TweenMax.to('#worldWater1', delay, {
-				backgroundPosition: '-800px 0px',
-				repeat: -1,
-				ease: Linear.easeNone
-			});
-			TweenMax.to('#worldWater2', delay, {
-				startAt: {
-					backgroundPosition: '400px 300px'
-				},
-				backgroundPosition: '1200px 300px', 
-				repeat: -1,
-				ease: Linear.easeNone
-			});
-			TweenMax.to('#worldWater3', delay, {
-				startAt: {
-					backgroundPosition: '200px 150px', 
-				},
-				backgroundPosition: '200px -650px', 
-				repeat: -1,
-				ease: Linear.easeNone
-			});
-			TweenMax.to('#worldWater4', delay, {
-				startAt: {
-					backgroundPosition: '100px 400px', 
-				},
-				backgroundPosition: '100px 1200px', 
-				repeat: -1,
-				ease: Linear.easeNone
-			});
-			
+			animate.water();
 		}).fail(function(data){
 			serverError(data);
 		}).always(function(){
@@ -875,4 +853,5 @@ $("#joinGameLobby").on('click', '.governmentChoice', function(e){
 	}).done(function(){
 		lobby.updateGovernmentWindow(government);
 	});
+	e.preventDefault();
 });

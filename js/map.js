@@ -79,10 +79,9 @@ $("#worldWrap").on("mousemove", function(e){
 		setMousePosition(e.originalEvent.layerX, e.originalEvent.layerY);
 	} else {
 		setMousePosition(e.offsetX, e.offsetY);
-		//console.info(e.offsetX, e.offsetY);
 	}
 });
-$("#gameWrap").on('click', '#surrender', function(){
+$("#gameWrap").on('click', '#surrender', function(e){
 	exitGame();
 });
 $("#createGameWrap").on('click', '.mapSelect', function(){
@@ -93,5 +92,5 @@ $("#createGameWrap").on('click', '.mapSelect', function(){
 	document.getElementById('createGameMap').innerHTML = x;
 	document.getElementById('createGameTiles').innerHTML = title.mapData[key].tiles;
 	document.getElementById('createGamePlayers').innerHTML = title.mapData[key].players;
-	
+	e.preventDefault();
 });

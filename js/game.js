@@ -174,7 +174,7 @@ function showTarget(e, hover, skipOldTgtUpdate){
 }
 function setTileUnits(i, unitColor){
 	var e = document.getElementById('unit' + i);
-	e.textContent = game.tiles[i].units === 0 ? "" : game.tiles[i].units;
+	e.textContent = game.tiles[i].units === 0 ? "" : ~~game.tiles[i].units;
 	if (unitColor === '#00ff00'){
 		TweenMax.to(e, .05, {
 			startAt: {

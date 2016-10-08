@@ -599,5 +599,30 @@ var animate = {
 				}
 			});
 		})(count,d,interval);
+	},
+	water: function(){
+		var delay = 100;
+		// animate water
+		TweenMax.to('#worldWater1', delay, {
+			backgroundPosition: '-800px 0px',
+			repeat: -1,
+			ease: Linear.easeNone
+		});
+		TweenMax.to('#worldWater2', delay, {
+			startAt: {
+				backgroundPosition: '400px 300px'
+			},
+			backgroundPosition: '1200px 300px', 
+			repeat: -1,
+			ease: Linear.easeNone
+		});
+		TweenMax.to('#worldWater3', delay, {
+			startAt: {
+				backgroundPosition: '200px 150px', 
+			},
+			backgroundPosition: '200px -650px', 
+			repeat: -1,
+			ease: Linear.easeNone
+		});
 	}
 }

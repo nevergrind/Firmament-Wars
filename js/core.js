@@ -52,8 +52,9 @@ var g = {
 		return new TweenMax.delayedCall(0, '');
 	},
 	screen: {
-		width: 1024,
-		height: 768
+		fullScreen: true,
+		width: window.innerWidth,
+		height: window.innerHeight
 	},
 	mouse: {
 		zoom: 100,
@@ -121,7 +122,7 @@ g.init = (function(){
 	console.info("Initializing game...");
 	$('[title]').tooltip();
 	// build map drop-down 
-	var s = "<li><a class='flagSelect' href='#'>Default</a></li>";
+	var s = "<li><a class='flagSelect'>Default</a></li>";
 	var flagData = {
 		Africa: {
 			group: "Africa",
@@ -483,12 +484,18 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
 })($);
 
 function resizeWindow() {
-    var e = document.getElementById('body');
+    var e = document.getElementById('body'),
+		winWidth = window.innerWidth,
+		winHeight = window.innerHeight;
+	if (g.screen.fullScreen){
+		g.screen.width = winWidth;
+		g.screen.height = winHeight;
+	}
     // game ratio
     var widthToHeight = g.screen.width / g.screen.height;
     // current window size
-    var w = window.innerWidth > g.screen.width ? g.screen.width : window.innerWidth;
-    var h = window.innerHeight > g.screen.height ? g.screen.height : window.innerHeight;
+    var w = winWidth > g.screen.width ? g.screen.width : winWidth;
+    var h = winHeight > g.screen.height ? g.screen.height : winHeight;
     if(w / h > widthToHeight){
     	// too tall
     	w = h * widthToHeight;
@@ -500,29 +507,9 @@ function resizeWindow() {
     	e.style.width = w + 'px';
     	e.style.height = h + 'px';
     }
-	/* various responsive options
-		// e.style.marginTop = (-h / 2) + 'px';
-		// e.style.marginLeft = (-w / 2) + 'px';
-		x: 0,
-		y: 0,
-		xPercent: -50,
-		yPercent: -50,
-		left: '50%',
-		top: '50%'
-	*/
-	/* old firefox code
 	TweenMax.set("body", {
-		left: '50%',
-		top: '50%',
-		marginLeft: ~~(-w / 2),
-		marginTop: ~~(-h / 2),
-		opacity: 1,
-		force3D: true
-	});
-	*/
-	TweenMax.set("body", {
-		x: ~~(w/2 + ((window.innerWidth - w) / 2)),
-		y: ~~(h/2 + ((window.innerHeight - h) / 2)),
+		x: ~~(w/2 + ((winWidth - w) / 2)),
+		y: ~~(h/2 + ((winHeight - h) / 2)),
 		opacity: 1,
 		yPercent: -50,
 		xPercent: -50,
@@ -534,6 +521,10 @@ function resizeWindow() {
 	}
 	g.resizeX = w / g.screen.width;
 	g.resizeY = h / g.screen.height;
+	TweenMax.set("#worldTitle", {
+		xPercent: -50,
+		yPercent: -50
+	});
 }
 
 
@@ -550,7 +541,7 @@ function chat(msg) {
 				z.parentNode.removeChild(z);
 			}
 		}
-	}, 9000);
+	}, 12000);
 }
 var video = {
 	cache: {},
@@ -561,7 +552,6 @@ var video = {
 				'nuke.png',
 				'smoke.png',
 				'goldSmoke.png',
-				'fireball.png',
 				'bulwark.png'
 			];
 			for (var i=0, len=x.length; i<len; i++){
@@ -572,155 +562,6 @@ var video = {
 		}
 	}
 }
-var audio = {
-	ext: (function(a){
-		return !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, '')) ? 'mp3' : 'ogg'
-	})(document.createElement('audio')),
-	on: (function(a){
-		return !!a.canPlayType ? true : false;
-	})(document.createElement('audio')),
-	play: function(foo, bg){
-		if (foo && audio.ext === 'mp3') {
-			if (bg){
-				DOM.bgmusic.src = "music/" + foo + "." + audio.ext;
-			} else {
-				new Audio("sound/" + foo + "." + audio.ext).play();
-			}
-		}
-	},
-	toggle: function(){
-		if (g.config.audio.musicOn){
-			g.config.audio.musicOn = false;
-			audio.pause();
-			document.getElementById('musicToggle').className = 'fa fa-volume-off';
-			var foo = JSON.stringify(g.config);
-			localStorage.setItem('config', foo);
-		} else {
-			g.config.audio.musicOn = true;
-			audio.start();
-			document.getElementById('musicToggle').className = 'fa fa-volume-up';
-			var foo = JSON.stringify(g.config);
-			localStorage.setItem('config', foo);
-			audio.play("ReturnOfTheFallen", 1);
-		}
-	},
-	pause: function(){
-		DOM.bgmusic.pause();
-	},
-	start: function(){
-		DOM.bgmusic.play();
-	},
-	ambientTrack: 0,
-	ambientTotalTracks: 8,
-	ambientInit: function(){
-		if (audio.ext === 'mp3' && g.config.audio.musicOn){
-			audio.pause();
-			audio.ambientTrack = ~~(Math.random() * audio.ambientTotalTracks);
-			audio.ambientPlay();
-		}
-	},
-	ambientPlay: function(){
-		if (audio.ext === 'mp3' && g.config.audio.musicOn){
-			audio.ambientTrack++;
-			var x = new Audio("music/ambient" + (audio.ambientTrack % audio.ambientTotalTracks) + "." + audio.ext);
-			x.onended = function(){
-				audio.ambientPlay();
-			}
-			x.play();
-		}
-	},
-	fade: function(){
-		var x = {
-			vol: 1
-		}
-		TweenMax.to(x, 2.5, {
-			vol: 0,
-			ease: Linear.easeNone,
-			onUpdate: function(){
-				DOM.bgmusic.volume = x.vol;
-			}
-		});
-	},
-	move: function(){
-		audio.play('boots' + ~~(Math.random()*3));
-	},
-	cache: {},
-	load: {
-		title: function(){
-			if (audio.ext === 'mp3'){
-				var x = [
-					'click', 
-					'beep'
-				];
-				for (var i=0, len=x.length; i<len; i++){
-					var z = x[i];
-					audio.cache[z] = new Audio("sound/" + z + ".mp3");
-				}
-			}
-		},
-		game: function(){
-			if (audio.ext === 'mp3'){
-				var x = [
-					'machine0',
-					'machine1',
-					'machine2',
-					'machine3',
-					'machine4',
-					'machine5',
-					'machine6',
-					'machine7',
-					'machine8',
-					'machine9',
-					'boots0',
-					'boots1',
-					'boots2',
-					'chat', 
-					'food', 
-					'culture',
-					'error',
-					'build',
-					'grenade5',
-					'grenade6',
-					'grenade8',
-					'missile7',
-					'bomb9',
-					'warning',
-					'research'
-				];
-				for (var i=0, len=x.length; i<len; i++){
-					var z = x[i];
-					audio.cache[z] = new Audio("sound/" + z + ".mp3");
-				}
-			}
-		}
-	}
-}
-audio.init = (function(){
-	console.info("Checking local data...");
-	$("#musicToggle").on('mousedown', function(){
-		audio.toggle();
-	});
-	var config = localStorage.getItem('config');
-	if (config === null){
-		// initialize
-		var x = g.config;
-		var foo = JSON.stringify(x);
-		localStorage.setItem('config', foo);
-	} else {
-		var foo = JSON.parse(config);
-		g.config.audio = foo.audio;
-	}
-	console.info("Initializing audio...");
-	audio.load.title();
-	audio.play("ReturnOfTheFallen", 1);
-	if (g.config.audio.musicOn){
-		document.getElementById('musicToggle').className = 'fa fa-volume-up';
-	} else {
-		audio.pause();
-		document.getElementById('musicToggle').className = 'fa fa-volume-off';
-	}
-	g.checkPlayerData();
-})();
 
 function Msg(msg, d) {
 	DOM.Msg.innerHTML = msg;
@@ -801,8 +642,6 @@ function refreshGames(bypass){
 			str += "</table>";
 			e.innerHTML = str;
 		}
-		console.clear();
-		console.info("MODAL: ", g.isModalOpen);
 		var e = $(".wars").filter(":first");
 		if (!g.isModalOpen){
 			// modal not open
@@ -841,8 +680,8 @@ function exitGame(bypass){
 }
 
 function serverError(data){
-	Msg('The server reported an error.');
-	console.info(data);
+	// Msg('The server reported an error.');
+	console.error('The server reported an error.');
 	/*
 	setTimeout(function(){
 		window.onbeforeunload = null;
@@ -856,8 +695,10 @@ $(window).on('resize orientationchange', function() {
 }).on('load', function(){
 	resizeWindow();
 	// background map
-	TweenMax.to("#worldTitle", 240, {
+	TweenMax.to("#worldTitle", 300, {
 		startAt: {
+			xPercent: -50,
+			yPercent: -50,
 			rotation: -360
 		},
 		rotation: 0,
