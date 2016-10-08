@@ -504,7 +504,7 @@ a:hover{
 	padding: 0 .5em;
 }
 #diplomacy-ui{
-	font-size: 1em;
+	font-size: 1.125em;
 	position: absolute;
 	left: .25em;
 	top: .25em;
@@ -801,9 +801,11 @@ table td, .table th, .table td {
 }
 #worldWater2{
 	opacity: .4;
+	background: url('../images/water13.jpg');
 }
 #worldWater3{
 	opacity: .4;
+	background: url('../images/water12.jpg');
 }
 #world{
 	position: absolute;

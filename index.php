@@ -114,7 +114,7 @@
 					<a href="//github.com/Maelfyn/Nevergrind">
 						<i class="fa fa-github text-primary pointer"></i>
 					</a>
-					<a href="//reddit.com/r/nevergrind">
+					<a href="//reddit.com/r/firmamentwars">
 						<i class="fa fa-reddit text-primary pointer"></i>
 					</a>
 					<a href="//goo.gl/BFsmf2">
