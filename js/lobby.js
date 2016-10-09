@@ -489,7 +489,7 @@ function loadGameState(x){
 			initDom();
 			g.screen.resizeMap();
 			
-			audio.ambientInit();
+			audio.gameMusicInit();
 			console.info('loadGameState ', data);
 			// only when refreshing page while testing
 			audio.load.game();
@@ -644,7 +644,10 @@ function loadGameState(x){
 				// food, culture, def bars
 				animate.initMapBars(i);
 			}
-			var str = '';
+			var str = '<div id="diploHead">\
+				<span id="options" class="pointer options">Options</span> |\
+				<span id="surrender" class="pointer">Surrender</span>\
+			</div><hr class="fancyhr">';
 			// init diplomacyPlayers
 			for (var i=0, len=game.player.length; i<len; i++){
 				var p = game.player[i],
@@ -656,22 +659,12 @@ function loadGameState(x){
 					if (p.flag === 'Default.jpg'){
 						str += 
 						'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">';
-								if (my.player === p.player){
-									str += '<i id="surrender" class="fa fa-flag pointer" data-placement="right" data-toggle="tooltip" title="Surrender"></i>';
-								} else {
-									str += '<i class="fa fa-flag surrender"></i>';
-								}
 								str += '<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>' +
 								'<img src="images/flags/Player' + p.player + '.jpg" class="player' + p.player + ' inlineFlag diploFlag p' + p.player + 'b" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag + '">' +
 								'<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + p.nation + '</span>';
 					} else {
 						str += 
 						'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">';
-								if (my.player === p.player){
-									str += '<i id="surrender" class="fa fa-flag pointer"  data-placement="right" data-toggle="tooltip" title="Surrender"></i>';
-								} else {
-									str += '<i class="fa fa-flag surrender"></i>';
-								}
 								str += '<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>' +
 								'<img src="images/flags/' + p.flag + '" class="inlineFlag diploFlag p' + p.player + 'b" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag + '">' +
 								'<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + p.nation + '</span>';
@@ -681,13 +674,7 @@ function loadGameState(x){
 			}
 			
 			document.getElementById('diplomacy-ui').innerHTML = str;
-			/*
-			$('#lobbyFlag' + i)
-				.attr('title', flagName[0])
-				.tooltip({
-					container: 'body'
-				});
-				*/
+			
 			$('[data-toggle="tooltip"]').tooltip({
 				delay: {
 					show: 0,

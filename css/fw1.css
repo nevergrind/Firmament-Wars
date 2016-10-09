@@ -30,7 +30,8 @@ header{
 	left: 0%;
 	width: 100%;
 	font-size: 1.375em;
-	padding: .25em;
+	padding: .25em .5em;
+	word-spacing: .05em;
 }
 #mainWrap{
 	position: absolute;
@@ -44,9 +45,6 @@ a{
 }
 .fwFont{
 	color: #aef;
-}
-#headerWrap{
-	padding: 0 6px;
 }
 audio{
 	display: none;
@@ -349,7 +347,7 @@ a:hover{
 	overflow: auto;
 	text-align: left;
 	width: 100%;
-	height: 82%;
+	height: 92%;
 	font-family: Consolas, monospace;
 	color: #bef;
 	text-shadow: .5px .5px #357, 1px 1px #357, 1.5px 1.5px #357, 2px 2px #357;
@@ -501,6 +499,14 @@ a:hover{
 	margin: 0;
 	padding: 0 .5em;
 }
+#diploHead{
+	font-family: Times New Roman, serif;
+	font-size: 1em;
+	color: #8df;
+	margin-bottom: .25em;
+	letter-spacing: .25em;
+	font-variant: small-caps;
+}
 #diplomacy-ui{
 	font-size: 1.125em;
 	position: absolute;
@@ -641,7 +647,8 @@ a:hover{
 	margin: 2% 0;
 }
 #researchHead{
-	font-size: 1.5em;
+	font-family: Times New Roman, serif;
+	font-size: 1.625em;
 	font-variant: small-caps;
 	letter-spacing: .25em;
 }
@@ -788,6 +795,7 @@ table td, .table th, .table td {
 	left: 0%;
 	width: 195.31%;
 	height: 143.22%;
+	background: #00061a;
 }
 .worldWater{
 	position: absolute;
@@ -795,15 +803,16 @@ table td, .table th, .table td {
 	left: -50%;
 	width: 200%;
 	height: 200%;
+	opacity: .8;
 	background: url('../images/water14.jpg');
 }
 #worldWater2{
-	opacity: .3;
+	opacity: .5;
 	background: url('../images/water13.jpg');
 }
 #worldWater3{
-	opacity: .1;
-	background: url('../images/water8.jpg');
+	opacity: .5;
+	background: url('../images/water13.jpg');
 }
 #world{
 	position: absolute;
@@ -938,8 +947,9 @@ circle{
 }
 #nationFlag{
 	position: absolute;
+	top: 3em;
+	right: 1em;
 	width: 30%;
-	right: .5em;
 }
 #nation-ui{
 	margin-top: 3%;
@@ -1108,12 +1118,10 @@ circle{
 #menuOnline{
 	color: #bef;
 }
-#musicToggle{
-	cursor: pointer;
+.soundSlider{
+	cursor: pointer !important;
 	width: 1em;
 	margin-right: .25em;
-}
-#musicToggle{
 }
 #Msg{
 	opacity: 0;
@@ -1528,6 +1536,9 @@ table {
 	font-variant: small-caps;
 	letter-spacing: .1em;
 }
+#optionsFormWrap{
+	padding: 0 3em;
+}
 /* helper classes */
 .no-point{
 	pointer-events: none;
@@ -1540,6 +1551,10 @@ table {
 	margin-top: 12px;
 }
 /* bootstrap overwrites */
+.slider-handle{
+	cursor: pointer;
+	background-image: linear-gradient(to bottom, #8bf 0, #0480be 100%)
+}
 .fa{
 	cursor: default;
 	/* background: none !important; */
@@ -1635,7 +1650,6 @@ input[type=number]::-webkit-outer-spin-button {
 	border-color: #111;
 }
 .tooltip-inner {
-	min-width: 150px;
 	background: rgba(16, 56, 96, 1);
 	color: #aef;
 	text-shadow: 1px 1px #000;

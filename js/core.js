@@ -117,7 +117,8 @@ var g = {
 	},
 	config: {
 		audio: {
-			musicOn: false
+			musicVolume: 0,
+			soundVolume: 50
 		}
 	},
 	geo: {},

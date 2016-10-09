@@ -7,54 +7,73 @@ var audio = {
 		return !!a.canPlayType ? true : false;
 	})(document.createElement('audio')),
 	play: function(foo, bg){
-		if (foo && audio.ext === 'mp3') {
+		if (foo && audio.ext === 'mp3' && g.config.audio.soundVolume) {
 			if (bg){
+				// music
+				DOM.bgmusic.pause();
 				DOM.bgmusic.src = "music/" + foo + "." + audio.ext;
+				DOM.bgmusic.play();
 			} else {
-				new Audio("sound/" + foo + "." + audio.ext).play();
+				// sfx
+				var sfx = new Audio("sound/" + foo + "." + audio.ext);
+				sfx.volume = g.config.audio.soundVolume / 100;
+				sfx.play();
 			}
 		}
 	},
-	toggle: function(){
-		if (g.config.audio.musicOn){
-			g.config.audio.musicOn = false;
-			audio.pause();
-			document.getElementById('musicToggle').className = 'fa fa-volume-off';
-			var foo = JSON.stringify(g.config);
-			localStorage.setItem('config', foo);
+	save: function(){
+		// save to storage
+		var foo = JSON.stringify(g.config);
+		localStorage.setItem('config', foo);
+	},
+	setMusicVolume: function(val){
+		if (g.config.audio.musicVolume){
+			if (!val){
+				audio.pause();
+			}
 		} else {
-			g.config.audio.musicOn = true;
-			audio.start();
-			document.getElementById('musicToggle').className = 'fa fa-volume-up';
-			var foo = JSON.stringify(g.config);
-			localStorage.setItem('config', foo);
-			audio.play("ReturnOfTheFallen", 1);
+			// start playing music
+			audio.musicStart();
 		}
+		DOM.bgmusic.volume = val / 100;
+		g.config.audio.musicVolume = val;
+		audio.save();
+	},
+	setSoundVolume: function(val){
+		g.config.audio.soundVolume = val;
+		audio.save();
 	},
 	pause: function(){
 		DOM.bgmusic.pause();
 	},
-	start: function(){
-		DOM.bgmusic.play();
-	},
-	ambientTrack: 0,
-	ambientTotalTracks: 8,
-	ambientInit: function(){
-		if (audio.ext === 'mp3' && g.config.audio.musicOn){
+	trackIndex: 0,
+	totalTracks: 1,
+	gameMusicInit: function(){
+		if (audio.ext === 'mp3' && g.config.audio.musicVolume){
 			audio.pause();
-			audio.ambientTrack = ~~(Math.random() * audio.ambientTotalTracks);
-			audio.ambientPlay();
+			audio.trackIndex = ~~(Math.random() * audio.totalTracks);
+			audio.gameMusicPlayNext();
 		}
 	},
-	ambientPlay: function(){
-		if (audio.ext === 'mp3' && g.config.audio.musicOn){
-			audio.ambientTrack++;
-			// var x = new Audio("music/ambient" + (audio.ambientTrack % audio.ambientTotalTracks) + "." + audio.ext);
-			var x = new Audio("music/WaitingBetweenWorlds." + audio.ext);
-			x.onended = function(){
-				audio.ambientPlay();
+	// rotating music tracks in game
+	gameMusicPlayNext: function(){
+		// FIX IT SO IT USES BGAUDIO
+		if (audio.ext === 'mp3'){
+			var tracks = [
+				'WaitingBetweenWorlds'
+			]
+			audio.trackIndex++;
+			// future various tracks
+			if (my.government){}
+			DOM.bgmusic.src = "music/" + tracks[audio.trackIndex % audio.totalTracks] +"." + audio.ext;
+			DOM.bgmusic.onended = function(){
+				audio.gameMusicPlayNext();
 			}
-			x.play();
+			if (g.config.audio.musicVolume){
+				DOM.bgmusic.play();
+			} else {
+				DOM.bgmusic.pause();
+			}
 		}
 	},
 	fade: function(){
@@ -121,31 +140,65 @@ var audio = {
 				}
 			}
 		}
+	},
+	musicStart: function(){
+		if (g.view !== 'game'){
+			audio.play("ReturnOfTheFallen", 1);
+		} else {
+			audio.gameMusicPlayNext();
+		}
 	}
 }
 audio.init = (function(){
 	console.info("Checking local data...");
-	$("#musicToggle").on('mousedown', function(){
-		audio.toggle();
-	});
 	var config = localStorage.getItem('config');
 	if (config === null){
 		// initialize
-		var x = g.config;
-		var foo = JSON.stringify(x);
-		localStorage.setItem('config', foo);
+		audio.save();
 	} else {
 		var foo = JSON.parse(config);
-		g.config.audio = foo.audio;
+		console.warn(foo.audio);
+		if (g.config.audio.musicOn === undefined){
+			g.config.audio = foo.audio;
+		}
 	}
-	console.info("Initializing audio...");
+	console.info("Initializing audio...", g.config.audio);
 	audio.load.title();
-	audio.play("ReturnOfTheFallen", 1);
-	if (g.config.audio.musicOn){
-		document.getElementById('musicToggle').className = 'fa fa-volume-up';
-	} else {
+	if (!g.config.audio.musicVolume){
 		audio.pause();
-		document.getElementById('musicToggle').className = 'fa fa-volume-off';
+	} else {
+		audio.musicStart();
 	}
 	g.checkPlayerData();
+	var initComplete = false;
+	$("#musicSlider").slider({
+		min  : 0, 
+		max  : 100, 
+		value: g.config.audio.musicVolume, 
+		formatter: function(value) {
+			if (initComplete){
+				audio.setMusicVolume(value);
+				return value;
+			} else {
+				return g.config.audio.musicVolume;
+			}
+		}
+	}).slider('setValue', g.config.audio.musicVolume);
+	$("#soundSlider").slider({
+		min  : 0, 
+		max  : 100, 
+		value: g.config.audio.soundVolume, 
+		tooltip_position: 'bottom',
+		formatter: function(value) {
+			if (initComplete){
+				audio.setSoundVolume(value);
+				return value;
+			} else {
+				return g.config.audio.soundVolume
+			}
+		}
+	}).on('slideStop', function(val){
+		audio.play('machine0');
+	}).slider('setValue', g.config.audio.soundVolume);
+	initComplete = true;
 })();

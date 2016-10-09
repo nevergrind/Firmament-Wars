@@ -29,6 +29,7 @@ var action = {
 			my.attackOn = false;
 			my.attackName = '';
 			my.clearHud();
+			showTarget(document.getElementById('land' + my.tgt));
 			return;
 		}
 		if (my.production < o.cost){
@@ -664,12 +665,12 @@ $(document).on('keyup', function(e) {
 		}
 	} else if (g.view === 'game'){
 		if (g.chatOn){
-			if (x === 13 || x === 27){
+			if (x === 13){
 				// enter/esc - sends chat
 				toggleChatMode(true);
 			} else if (x === 27){
 				// esc
-				toggleChatMode(true);
+				toggleChatMode();
 			}
 		} else {
 			// game hotkeys
@@ -681,9 +682,7 @@ $(document).on('keyup', function(e) {
 				my.attackOn = false;
 				my.attackName = '';
 				my.clearHud();
-				if (g.chatOn){
-					toggleChatMode();
-				}
+				showTarget(document.getElementById('land' + my.tgt));
 			} else if (x === 65){
 				// a
 				var o = new Target();

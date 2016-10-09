@@ -81,7 +81,7 @@ $("#worldWrap").on("mousemove", function(e){
 		setMousePosition(e.offsetX, e.offsetY);
 	}
 });
-$("#gameWrap").on('click', '#surrender', function(e){
+$("#diplomacy-ui").on('click', '#surrender', function(e){
 	exitGame();
 });
 $("#createGameWrap").on('click', '.mapSelect', function(e){

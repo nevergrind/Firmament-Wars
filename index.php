@@ -40,11 +40,14 @@
 	<meta name="mobile-web-app-capable" content="yes">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
 	<link rel='stylesheet' type='text/css' href="css/fw1.css?v=2">
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
 
 <body id="body">
+		
+	<div id="titleViewBackdrop"></div>
 
 	<div id="firmamentWarsLogoWrap" class="titleBG">
 		<img src="images/firmamentWarsTitle90.jpg" title="Firmament Wars Official Logo" class="titleBG fwHidden">
@@ -65,16 +68,10 @@
 	
 		<div id="titleMain" class="portal">
 			
-			<header class="shadow4">
-				<div id="headerWrap">
+			<header class="shadow4 text-primary">
 				<?php
 				
 				require('php/connect1.php');
-				echo '<div class="accountDetails text-primary">
-						<i id="musicToggle" class="fa fa-volume-off" 
-						data-toggle="tooltip" 
-						data-placement="right" 
-						title="Toggle music"></i>';
 				if (isset($_SESSION['email'])){
 					// crystals
 					$query = "select crystals from accounts where email='". $_SESSION['email'] ."' limit 1";
@@ -91,13 +88,15 @@
 					</span>&ensp;
 					<a target="_blank" href="/account">Account</a>&ensp;
 					<a target="_blank" href="/store">Store</a>&ensp;
+					<span id="options" class="pointer options">Options</span>&ensp;
 					<span id="logout" class="pointer">Logout</span>';
+					?>
+					<?php
 				} else {
 					echo 
 					'<a id="login" href="/login.php?back=/games/firmament-wars">Login</a>';
 				}
 				echo '
-				</div>
 				<div class="pull-right text-primary">
 					<a href="//www.youtube.com/user/Maelfyn">
 						<i class="fa fa-youtube text-primary pointer"></i>
@@ -126,7 +125,6 @@
 				</div>';
 				
 				?>
-				</div>
 			</header>
 			
 			<div id="menu" class="fw-primary">
@@ -211,25 +209,6 @@
 			</div>
 			
 			<div id="titleChat" class="fw-primary text-center">
-				<div id='chatAd'>
-					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-					<!-- xy responsive -->
-					<?php
-					if ($_SERVER['SERVER_NAME'] !== 'localhost'){
-					echo '<ins class="adsbygoogle"
-						 style="display:block"
-						 data-ad-client="ca-pub-8697751823759563"
-						 data-ad-slot="1466592983"
-						 data-ad-format="auto"></ins>';
-					}
-					?>
-					<script>
-					if (location.hostname !== 'localhost'){
-						(adsbygoogle = window.adsbygoogle || []).push({});
-					}
-					</script>
-				</div>
-				<hr class="fancyhr">
 				<div id="titleChatLog">
 				<?php
 					/*
@@ -319,8 +298,6 @@
 			
 		</div>
 		
-		<div id="titleViewBackdrop"></div>
-		
 		<div id='createGameWrap' class='fw-primary titleModal'>
 			<h2 class='header text-center'>Create Game</h2>
 			<hr class="fancyhr">
@@ -399,50 +376,50 @@
 		</div>
 		
 		<div id="configureNation" class="fw-primary container titleModal">
+			<img id="nationFlag" src="images/flags/<?php echo $flag; ?>">
 			<div class="row text-center">
 				<div class='col-xs-12'>
 					<h2 class='header'>Configure Nation</h2>
 					<hr class="fancyhr">
 				</div>
 			</div>
-			<img id="nationFlag" src="images/flags/<?php echo $flag; ?>">
 			<div class='row fw-text'>
-				<div class='col-xs-4'>
+				<div class='col-xs-3'>
 					Account:
 				</div>
-				<div class='col-xs-4'>
+				<div class='col-xs-5'>
 					<div><?php echo $_SESSION['account']; ?></div>
 				</div>
 			</div>
 			<div class='row fw-text'>
-				<div class='col-xs-4'>
+				<div class='col-xs-3'>
 					Name:
 				</div>
-				<div class='col-xs-4' id="nationName">
+				<div class='col-xs-5' id="nationName">
 					<div><?php echo $nation; ?></div>
 				</div>
 			</div>
 			<div class='row fw-text'>
-				<div class='col-xs-4'>
+				<div class='col-xs-3'>
 					Wins:
 				</div>
-				<div class='col-xs-4'>
+				<div class='col-xs-5'>
 					<?php echo $wins; ?>
 				</div>
 			</div>
 			<div class='row fw-text'>
-				<div class='col-xs-4'>
+				<div class='col-xs-3'>
 					Losses:
 				</div>
-				<div class='col-xs-4'>
+				<div class='col-xs-5'>
 					<?php echo $losses; ?>
 				</div>
 			</div>
 			<div class='row fw-text'>
-				<div class='col-xs-4'>
+				<div class='col-xs-3'>
 					Disconnects:
 				</div>
-				<div class='col-xs-4'>
+				<div class='col-xs-5'>
 					<?php echo $disconnects; ?>
 				</div>
 			</div>
@@ -837,6 +814,39 @@
 
 	<audio id="bgmusic" autoplay loop preload="auto"></audio>
 	
+	<div id="optionsModal" class='fw-primary titleModal'>
+		<h2 class='header text-center'>Options</h2>
+		<hr class="fancyhr">
+		<div id="optionsFormWrap" class="container w100">
+		
+			<div class='row buffer2'>
+				<div class='col-xs-4'>
+					Music Volume
+				</div>
+				<div class='col-xs-8 text-right'>
+					<input id="musicSlider" class="sliders" type="text"/>
+				</div>
+			</div>
+			
+			<div class='row buffer2'>
+				<div class='col-xs-4'>
+					Sound Effect Volume
+				</div>
+				<div class='col-xs-8 text-right'>
+					<input id="soundSlider" class="sliders" type="text"/>
+				</div>
+			</div>
+			
+		</div>
+		
+		<div class="buffer2">
+			<hr class='fancyhr'>
+		</div>
+		<div class='text-center'>
+			<button id='optionsDone' type='button' class='btn btn-md fwGreen btn-responsive shadow4'>Done</button>
+		</div>
+	</div>
+	
 	<div id="Msg" class="shadow4"></div>
 	<div id="screenFlash"></div>
 	<div id="overlay" class="portal"></div>
@@ -851,6 +861,7 @@
 <script src="js/libs/MorphSVGPlugin.min.js"></script> 
 <script src="js/libs/AttrPlugin.min.js"></script>
 <script src="js/libs/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/bootstrap-slider.min.js"></script>
 
 <?php
 	require($_SERVER['DOCUMENT_ROOT'] . "/includes/ga.php");

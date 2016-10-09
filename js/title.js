@@ -212,14 +212,16 @@ var title = {
 	hideBackdrop: function(){
 		var e = document.getElementById("configureNation"),
 			e2 = document.getElementById("titleViewBackdrop"),
-			e3 = document.getElementById('createGameWrap');
-		TweenMax.to([e,e2,e3], .2, {
+			e3 = document.getElementById('createGameWrap')
+			e4 = document.getElementById('optionsModal');
+		TweenMax.to([e,e2,e3,e4], .2, {
 			alpha: 0,
 			ease: Linear.easeNone,
 			onComplete: function(){
-				e.style.visibility = "hidden";
-				e2.style.visibility = "hidden";
-				e3.style.visibility = 'hidden';
+				console.info(this.target.id);
+				TweenMax.set(this.target, {
+					visibility: 'hidden'
+				});
 			}
 		});
 		g.isModalOpen = false;
@@ -337,6 +339,29 @@ $("#create").on("click", function(){
 
 $("#createGame").on("mousedown", function(e){
 	title.createGame();
+});
+$("body").on("click", '#options', function(){
+	TweenMax.to(document.getElementById("optionsModal"), .5, {
+		startAt: {
+			visibility: 'visible',
+			scale: .8,
+			alpha: 0
+		},
+		scale: 1,
+		alpha: 1
+	});
+	TweenMax.to(document.getElementById("titleViewBackdrop"), .25, {
+		startAt: {
+			visibility: 'visible',
+			opacity: 0
+		},
+		opacity: 1,
+		ease: Linear.easeNone
+	});
+	g.isModalOpen = true;
+});
+$("#optionsDone").on("click", function(){
+	title.hideBackdrop();
 });
 
 function joinGame(){

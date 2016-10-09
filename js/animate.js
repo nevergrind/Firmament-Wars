@@ -220,7 +220,7 @@ var animate = {
 		}
 		var x = 0,
 			y = 0;
-		for (var i=0; i<9; i++){
+		for (var i=0; i<20; i++){
 			(function(Math){
 				var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
 				x = box.x + (Math.random() * (box.width * .8)) + box.width * .1;
@@ -232,7 +232,7 @@ var animate = {
 				circ.setAttributeNS(null,"stroke","#ffff55");
 				DOM.mapAnimations.appendChild(circ);
 				
-				var delay = Math.random()*.2;
+				var delay = Math.random()*.3;
 				TweenMax.to(circ, .5, {
 					delay: delay,
 					attr: {
@@ -601,14 +601,18 @@ var animate = {
 		})(count,d,interval);
 	},
 	water: function(){
-		var delay = 100;
+		var delay = 130,
+			delay2 = 10,
+			e1 = document.getElementById('worldWater1'),
+			e2 = document.getElementById('worldWater2'),
+			e3 = document.getElementById('worldWater3');
 		// animate water
-		TweenMax.to('#worldWater1', delay, {
+		TweenMax.to(e1, delay, {
 			backgroundPosition: '-800px 0px',
 			repeat: -1,
 			ease: Linear.easeNone
 		});
-		TweenMax.to('#worldWater2', delay, {
+		TweenMax.to(e2, delay, {
 			startAt: {
 				backgroundPosition: '400px 300px'
 			},
@@ -616,12 +620,13 @@ var animate = {
 			repeat: -1,
 			ease: Linear.easeNone
 		});
-		TweenMax.to('#worldWater3', delay, {
+		TweenMax.to(e3, delay, {
 			startAt: {
 				backgroundPosition: '200px 150px', 
 			},
 			backgroundPosition: '200px -650px', 
 			repeat: -1,
+			yoyo: true,
 			ease: Linear.easeNone
 		});
 	},
