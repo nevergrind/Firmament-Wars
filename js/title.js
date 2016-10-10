@@ -1,5 +1,6 @@
 // title.js
 var title = {
+	players: [],
 	init: (function(){
 		console.info("Initializing title screen...");
 		// prevents auto scroll while scrolling
@@ -25,6 +26,10 @@ var title = {
 			type: 'GET',
 			url: 'php/initChatId.php'
 		}).done(function(data){
+			title.titleUpdate = $("#titleChatPlayers").length;
+			if (!title.titleUpdate){
+				$("#titleChat, #titleMenu").remove();
+			}
 			(function repeat(){
 				if (g.view === 'title'){
 					var start = Date.now();
@@ -33,18 +38,57 @@ var title = {
 						url: "php/titleUpdate.php"
 					}).done(function(data){
 						// report chat messages
-						console.log("Ping: ", Date.now() - start, data);
+						console.log("Ping: ", Date.now() - start);
 						var len = data.chat.length;
 						if (len > 0){
+							// get chat messages
 							for (var i=0; i<len; i++){
 								if (data.chat[i]){
 									title.chat(data.chat[i]);
 								}
 							}
 						}
+						// set title players
+						if (data.playerData !== undefined){
+							// console.warn(data.playerData);
+							var p = data.playerData,
+								foundPlayers = [];
+							for (var i=0, len=p.length; i<len; i++){
+								// add new players
+								var account = p[i].account,
+									flag = p[i].flag;
+								if (title.players[account] === undefined){
+									// console.info("ADDING PLAYER: " + account);
+									title.players[account] = {
+										flag: flag
+									}
+									var e = document.createElement('div');
+									e.className = "titlePlayer";
+									e.id = "titlePlayer" + account;
+									var flagName = flag.split(".");
+									flagName = flagName[0];
+									e.innerHTML = '<img class="inlineFlag" title="' + flagName + '" src="images/flags/' + flag +'"> ' + account;
+									if (title.titleUpdate){
+										DOM.titleChatPlayers.appendChild(e);
+									}
+								}
+								foundPlayers.push(account);
+							}
+							// remove missing players
+							for (var key in title.players){
+								if (foundPlayers.indexOf(key) === -1){
+									// console.info("REMOVING PLAYER: " + key);
+									delete title.players[key];
+									var e = document.getElementById('titlePlayer' + key);
+									e.parentNode.removeChild(e);
+								}
+							}
+						}
 					}).always(function(){
 						setTimeout(function(){
-							repeat();
+							if (title.titleUpdate){
+								repeat();
+							}
 						}, 1000);
 					});
 				}
@@ -67,8 +111,10 @@ var title = {
 		(function repeat(){
 			if (g.view === 'title'){
 				setTimeout(function(){
-					refreshGames(true);
-					repeat();
+					if (title.titleUpdate){
+						refreshGames(true);
+						repeat();
+					}
 				}, interval);
 			}
 		})();
@@ -304,7 +350,7 @@ $("#logout").on('click', function() {
 	playerLogout();
 });
 
-$("#menu").on("click", ".wars", function(){
+$("#titleMenu").on("click", ".wars", function(){
 	$(".wars").removeClass("selected");
 	$(this).addClass("selected");
 	g.id = $(this).data("id");
@@ -360,7 +406,7 @@ $("body").on("click", '#options', function(){
 	});
 	g.isModalOpen = true;
 });
-$("#optionsDone").on("click", function(){
+$("#optionsDone, #cancelCreateGame").on("click", function(){
 	title.hideBackdrop();
 });
 
@@ -396,9 +442,17 @@ function joinGame(){
 
 // cached values on client to reduce DB load
 
-$("#menu").on("click", "#joinGame", function(){
-	console.info("JOINING: "+g.id);
+$("#titleMenu").on("click", "#joinGame", function(){
+	$("#joinGameName, #joinGamePassword").val('');
 	joinGame();
+}).on("click", "#joinPrivateGame", function(){
+	var name = $("#joinGameName").val(),
+		pw = $("#joinGamePassword").val();
+	if (!name || !pw){
+		Msg("Game name or password are not valid!");
+	} else {
+		joinGame();
+	}
 });
 
 $("#mainWrap").on("click", "#cancelGame", function(){
@@ -458,11 +512,10 @@ $("#flagDropdown").on('click', '.flagSelect', function(e){
 		}
 	}).done(function(data) {
 		$("#offerFlag").css("display", "none");
-		$("#nationFlag").attr("src", "images/flags/" + my.selectedFlagFull);
+		$(".nationFlag").attr("src", "images/flags/" + my.selectedFlagFull);
 		$("#flagPurchased").css("display", "block");
 		Msg("Your nation's flag is now: " + my.selectedFlag);
 		document.getElementById('selectedFlag').textContent = my.selectedFlag;
-		document.getElementById('titleFlag').src = "images/flags/" + my.selectedFlagFull;
 	}).fail(function(e){
 		$("#flagPurchased").css("display", "none");
 		$("#offerFlag").css("display", "block");
@@ -507,10 +560,9 @@ $("#buyFlag").on("click", function(){
 		$("#crystalCount").text(data);
 		$("#flagPurchased").css("display", "block");
 		$("#offerFlag").css("display", "none");
-		$("#nationFlag").attr("src", "images/flags/" + my.selectedFlagFull);
+		$(".nationFlag").attr("src", "images/flags/" + my.selectedFlagFull);
 		Msg("Your nation's flag is now: " + my.selectedFlag);
 		document.getElementById('selectedFlag').textContent = my.selectedFlag;
-		document.getElementById('titleFlag').src = "images/flags/" + my.selectedFlagFull;
 	}).fail(function(e){
 		// not enough money
 		Msg(e.statusText);

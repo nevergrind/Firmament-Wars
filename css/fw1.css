@@ -306,25 +306,29 @@ a:hover{
 	color: #1e1;
 	text-shadow: .5px .5px #050, 1px 1px #050, 1.5px 1.5px #050, 2px 2px #050;
 }
+#titleMenu{
+	position: absolute;
+	top: 7%;
+	right: 0%;
+	width: 45%;
+	overflow: hidden;
+	padding: .5em;
+	height: 91%;
+}
 /* title chat */
 #titleChat{
 	position: absolute;
-	padding: .5em;
+	padding: 0;
 	top: 7%;
-	left: 56%;
-	width: 43%;
+	left: 0%;
+	width: 54.8%;
 	height: 91%;
 }
 #title-chat-input{
-	padding: 0 2%;
+	padding: 0 1%;
 	width: 100%;
 	border: 1px solid #2e6da4;
 	border-right: none;
-}
-.titleRelWrap{
-	position: relative;
-	top: 0%;
-	margin-top: 4%;
 }
 #chatAd{
 	position: relative;
@@ -342,27 +346,46 @@ a:hover{
 	border-radius: 4px;
 	background: rgba(255,255,255,.1);
 }
-#titleChatLog{
-	position: relative;
+#titleChatPlayers{
+	position: absolute;
+	top: 1%;
+	left: 1%;
 	overflow: auto;
 	text-align: left;
-	width: 100%;
-	height: 92%;
+	width: 38%;
+	height: 94%;
 	font-family: Consolas, monospace;
 	color: #bef;
 	text-shadow: .5px .5px #357, 1px 1px #357, 1.5px 1.5px #357, 2px 2px #357;
 	border-radius: 4px;
-	padding: 0 .5em;
-	margin: 1em 0;
+	padding: .25em .5em;
+	margin: 0;
+	border: 1px solid #357;
+	background: rgba(0,55,155,.2);
+}
+#titleChatLog{
+	position: relative;
+	overflow: auto;
+	text-align: left;
+	top: 1%;
+	left: 40%;
+	width: 59%;
+	height: 94%;
+	font-family: Consolas, monospace;
+	color: #bef;
+	text-shadow: .5px .5px #357, 1px 1px #357, 1.5px 1.5px #357, 2px 2px #357;
+	padding: .25em .5em;
+	margin: 0;
+	border-radius: 4px;
+	border: 1px solid #357;
+	background: rgba(0,0,0,.5);
 }
 #titleChatWrap{
 	position: absolute;
-	padding: .5em;
-	bottom: 0em;
-	top: auto;
+	padding: 0 1%;
+	bottom: .5%;
+	width: 100%;
 	left: 0;
-	right: 0;
-	margin-top: .5em;
 	font-family: Consolas, monospace;
 	color: #bef;
 	text-shadow: 2px 2px 0 #357;
@@ -945,11 +968,15 @@ circle{
 .w100{
 	width: 100%;
 }
+.bigFont{
+	font-size: 1.25em;
+}
 #nationFlag{
 	position: absolute;
 	top: 3em;
 	right: 1em;
-	width: 30%;
+	height: 7em;
+	margin-top: .5em;
 }
 #nation-ui{
 	margin-top: 3%;
@@ -983,9 +1010,6 @@ circle{
 .active{
     background-color: #286090;
     border-color: #204d74;
-}
-#joinGame{
-	float: right;
 }
 #joinGameLobby{
 	visibility: hidden;
@@ -1073,15 +1097,6 @@ circle{
 	margin: 0 auto;
 	max-width: 200px;
 }
-#menu{
-	position: absolute;
-	top: 7%;
-	left: 1%;
-	width: 54%;
-	overflow: hidden;
-	padding: .5em 1em;
-	height: 91%;
-}
 .joinGameInputs{
 	color: #bef;
 	background: none;
@@ -1089,10 +1104,10 @@ circle{
 	margin: 0 .5em;
 	padding: .25em .5em;
 	border-radius: 4px;
-	width: 22%;
+	width: 5.5em;
 }
 #refreshGameWrap{
-	height: 82%;
+	height: 65%;
 }
 #menuContent{
 	height: 100%;
@@ -1479,12 +1494,11 @@ table {
 	color: #b5a170;
 	margin-right: .375em;
 }
+#myNationWrap{
+	margin: .5em 0;
+}
 .mapFlag{
 	pointer-events: none;
-}
-#titleFlag{
-	float: right;
-	height: 2.2em;
 }
 .inlineFlag{
 	display: inline-block;
@@ -1592,9 +1606,6 @@ table {
 }
 .buffer2{
 	margin-top: 1em;
-}
-.buffer3{
-	margin-top: 2em;
 }
 #createGameMapWrap{
 }

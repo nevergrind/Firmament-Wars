@@ -207,6 +207,8 @@ g.init = (function(){
 					lobby.updateGovernmentWindow(my.government);
 				}, 111);
 			}
+		}).fail(function(data){
+			Msg(data.responseText);
 		}).always(function(){
 			g.unlock();
 		});
@@ -446,7 +448,8 @@ function initDom(){
 		mapAnimations: d.getElementById('mapAnimations'),
 		mapCapitals: d.getElementById('mapCapitals'),
 		mapUpgrades: d.getElementById('mapUpgrades'),
-		mapBars: d.getElementById('mapBars')
+		mapBars: d.getElementById('mapBars'),
+		titleChatPlayers: d.getElementById('titleChatPlayers')
 	}
 }
 initDom();

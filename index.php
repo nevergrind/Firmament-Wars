@@ -41,7 +41,7 @@
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
-	<link rel='stylesheet' type='text/css' href="css/fw1.css?v=2">
+	<link rel='stylesheet' type='text/css' href="css/fw1.css?v=0-0-4">
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
 
@@ -127,7 +127,7 @@
 				?>
 			</header>
 			
-			<div id="menu" class="fw-primary">
+			<div id="titleMenu" class="fw-primary">
 				<div id='menuOnline'>
 					<div>
 					<?php
@@ -178,37 +178,55 @@
 					?>
 					</div>
 				</div>
-				<div>
-					<div id="menuHead">
-						<?php
-						if (isset($_SESSION['email']) && $whitelisted){
-							echo
-							'<button id="create" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Create Game</button>
-							<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>
-							<img id="titleFlag" src="images/flags/' . $_SESSION['flag'] . '" class="inlineFlag">';
-						}
-						?>
-					</div>
+				<div id="menuHead">
+					<?php
+					if (isset($_SESSION['email']) && $whitelisted){
+						echo
+						'<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>
+						<span class="header pull-right bigFont">My Nation</span>
+						<hr class="fancyhr">';
+					}
+					?>
 				</div>
-				<hr class="fancyhr">
-				<div id='refreshGameWrap'>
-					<div id="menuContent" class='buffer2 shadow4'></div>
-					<div id='joinGameWrap' class='fw-text'>
-						<?php
-						if (isset($_SESSION['email']) && $whitelisted){
-							echo'<hr class="fancyhr">
-							<form id="joinGamePasswordWrap">
-								Game <input id="joinGameName" class="joinGameInputs" type="text" maxlength="240" autocomplete="off"/>
-								Password <input id="joinGamePassword" class="joinGameInputs" type="text" maxlength="240"/>
-								<button id="joinGame" type="button" class="btn btn-md fwGreen btn-responsive shadow4">Join Game</button>
-							</form>';
-						}
-						?>
-					</div>
+				
+				<div id="myNationWrap" class="container tight w100">
+					<?php require('php/myNation.php'); ?>
 				</div>
+				
+				<?php
+				if (isset($_SESSION['email']) && $whitelisted){
+				echo 
+				'<div>
+					<hr class="fancyhr">
+					<button id="create" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Create Game</button>
+					<button id="joinGame" type="button" class="btn btn-md fwBlue btn-responsive shadow4">Join Game</button>
+					<span class="header pull-right bigFont">Public Games</span>
+					<hr class="fancyhr">
+				</div>
+				<div id="refreshGameWrap">
+					<div id="menuContent" class="buffer2 shadow4"></div>
+				</div>
+				<div id="joinGameWrap" class="fw-text">
+					<hr class="fancyhr">
+					<div class="text-right">
+						<span class="header bigFont">Private Game</span>
+					</div>
+					<hr class="fancyhr">
+					<form id="joinGamePasswordWrap">
+						Game <input id="joinGameName" class="joinGameInputs" type="text" maxlength="240" autocomplete="off"/>
+						Password <input id="joinGamePassword" class="joinGameInputs" type="text" maxlength="240"/>
+						<button id="joinPrivateGame" type="button" class="btn btn-md fwBlue btn-responsive shadow4 pull-right">Join Game</button>
+					</form>
+				</div>';} 
+				?>
 			</div>
 			
 			<div id="titleChat" class="fw-primary text-center">
+				<?php
+					if (isset($_SESSION['email'])){
+						echo '<div id="titleChatPlayers"></div>';
+					}
+				?>
 				<div id="titleChatLog">
 				<?php
 					/*
@@ -232,12 +250,11 @@
 				?>
 				</div>
 				
-				<div id="titleChatWrap" class="titleRelWrap">
+				<div id="titleChatWrap">
 					
 					<?php
 					if (isset($_SESSION['email']) && $whitelisted){
 						echo '
-						<hr class="fancyhr">
 						<div class="input-group">
 							<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" autocomplete="off"/>
 							<div id="titleChatSend" class="input-group-btn">
@@ -371,58 +388,19 @@
 				<hr class='fancyhr'>
 			</div>
 			<div class='text-center'>
-				<button id='createGame' type='button' class='btn btn-md fwGreen btn-responsive shadow4'>Create Game Lobby</button>
+				<button id='createGame' type='button' class='btn btn-md fwGreen btn-responsive shadow4'>Create Game</button>
+				<button id='cancelCreateGame' type='button' class='btn btn-md fwGreen btn-responsive shadow4'>Cancel</button>
 			</div>
 		</div>
 		
 		<div id="configureNation" class="fw-primary container titleModal">
-			<img id="nationFlag" src="images/flags/<?php echo $flag; ?>">
 			<div class="row text-center">
 				<div class='col-xs-12'>
 					<h2 class='header'>Configure Nation</h2>
 					<hr class="fancyhr">
 				</div>
 			</div>
-			<div class='row fw-text'>
-				<div class='col-xs-3'>
-					Account:
-				</div>
-				<div class='col-xs-5'>
-					<div><?php echo $_SESSION['account']; ?></div>
-				</div>
-			</div>
-			<div class='row fw-text'>
-				<div class='col-xs-3'>
-					Name:
-				</div>
-				<div class='col-xs-5' id="nationName">
-					<div><?php echo $nation; ?></div>
-				</div>
-			</div>
-			<div class='row fw-text'>
-				<div class='col-xs-3'>
-					Wins:
-				</div>
-				<div class='col-xs-5'>
-					<?php echo $wins; ?>
-				</div>
-			</div>
-			<div class='row fw-text'>
-				<div class='col-xs-3'>
-					Losses:
-				</div>
-				<div class='col-xs-5'>
-					<?php echo $losses; ?>
-				</div>
-			</div>
-			<div class='row fw-text'>
-				<div class='col-xs-3'>
-					Disconnects:
-				</div>
-				<div class='col-xs-5'>
-					<?php echo $disconnects; ?>
-				</div>
-			</div>
+			<?php require('php/myNation.php'); ?>
 			<div class="row text-center buffer2">
 				<div class='col-xs-12'>
 					<hr class="fancyhr">
@@ -455,8 +433,10 @@
 					<div class="dropdown">
 						<button class="btn dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">
 							<span id="selectedFlag"><?php 
-								$flagShort = explode(".", $_SESSION['flag']);
-								echo $flagShort[0];
+								if (isset($_SESSION['flag'])){
+									$flagShort = explode(".", $_SESSION['flag']);
+									echo $flagShort[0];
+								}
 								?></span>
 							<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 						</button>
@@ -470,7 +450,10 @@
 					</div>
 				</div>
 				<div class="col-xs-6">
-					<img id="updateNationFlag" class="w100 block center" src="images/flags/<?php echo $flag; ?>">
+					
+					<img id="updateNationFlag" class="w100 block center" src="images/flags/<?php 
+						if (isset($_SESSION['flag'])){ echo $flag; }
+					?>">
 					<div id="offerFlag" class="flagPurchasedStatus shadow4">
 						<h5 class="text-center">Buy flag?</h5>
 						<div class="center block">
@@ -867,11 +850,6 @@
 	require($_SERVER['DOCUMENT_ROOT'] . "/includes/ga.php");
 ?>
 <script>
-	if (location.host === 'nevergrind.com'){
-		if (location.hash !== "#beta"){
-		}
-	}
-	patchVersion="0-0-1";
 	(function(d){
 		if(location.host==='localhost' || 1){
 			var _scriptLoader = [
@@ -884,22 +862,17 @@
 				'actions',
 				'animate'
 			];
-		}else{
+		} else {
 			var _scriptLoader = [
-				'fw-'+patchVersion
+				'firmament-wars_0-0-4'
 			];
 		}
-		if (location.hash !== ""){
-			var _scriptLoader = [
-				'fw-'+patchVersion
-			];
-		}
-		var target = d.getElementsByTagName('script')[0];
+		var target = d.getElementsByTagName('script')[0].parentNode;
 		for(var i=0, len=_scriptLoader.length; i<len; i++){
-			var x=d.createElement('script');
-			x.src = 'js/'+_scriptLoader[i]+'.js?v=2';
-			x.async=false;
-			target.parentNode.appendChild(x);
+			var x = d.createElement('script');
+			x.src = 'js/'+_scriptLoader[i]+'.js?v=0-0-4';
+			x.async = false;
+			target.appendChild(x);
 		}
 	})(document);
 </script>
