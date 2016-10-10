@@ -133,6 +133,8 @@
 					<?php
 					if (isset($_SESSION['email']) && $whitelisted){
 						require('php/checkDisconnectsByAccount.php');
+						// remove players that left
+						mysqli_query($link, 'delete from fwtitle where timestamp < date_sub(now(), interval 1 minute)');
 						
 						// check if nation exists; create if not
 						$query = 'select count(row) from fwnations where account=?';
@@ -209,7 +211,7 @@
 				<div id="joinGameWrap" class="fw-text">
 					<hr class="fancyhr">
 					<div class="text-right">
-						<span class="header bigFont">Private Game</span>
+						<span class="header bigFont">Join A Private Game</span>
 					</div>
 					<hr class="fancyhr">
 					<form id="joinGamePasswordWrap">
@@ -258,7 +260,7 @@
 						<div class="input-group">
 							<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" autocomplete="off"/>
 							<div id="titleChatSend" class="input-group-btn">
-								<button class="btn shadow4 fwBlue">Send</button>
+								<button class="btn shadow4 fwBlue">Chat</button>
 							</div>
 						</div>';
 					}

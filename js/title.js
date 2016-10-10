@@ -66,8 +66,7 @@ var title = {
 									e.className = "titlePlayer";
 									e.id = "titlePlayer" + account;
 									var flagName = flag.split(".");
-									flagName = flagName[0];
-									e.innerHTML = '<img class="inlineFlag" title="' + flagName + '" src="images/flags/' + flag +'"> ' + account;
+									e.innerHTML = '<img class="inlineFlag" src="images/flags/' + flag +'"> ' + account;
 									if (title.titleUpdate){
 										DOM.titleChatPlayers.appendChild(e);
 									}
@@ -79,8 +78,8 @@ var title = {
 								if (foundPlayers.indexOf(key) === -1){
 									// console.info("REMOVING PLAYER: " + key);
 									delete title.players[key];
-									var e = document.getElementById('titlePlayer' + key);
-									e.parentNode.removeChild(e);
+									var z = document.getElementById('titlePlayer' + key);
+									z.parentNode.removeChild(z);
 								}
 							}
 						}

@@ -623,13 +623,10 @@ a:hover{
 	text-overflow: ellipsis;
 }
 .diploNames{
-	display: inline-block;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space: nowrap;
-	max-width: 78%;
-	top: .1875em;
 	position: relative;
+	display: inline-block;
+	white-space: nowrap;
+	top: .125em;
 }
 #surrender{
 	margin-right: .375em;
@@ -1104,7 +1101,7 @@ circle{
 	margin: 0 .5em;
 	padding: .25em .5em;
 	border-radius: 4px;
-	width: 5.5em;
+	width: 18%;
 }
 #refreshGameWrap{
 	height: 65%;

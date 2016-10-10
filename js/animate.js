@@ -257,9 +257,7 @@ var animate = {
 				});
 			})(Math);
 		}
-		for (var i=0; i<2; i++){
-			animate.smoke(tile, x, y, .7);
-		}
+		animate.smoke(tile, x, y, .7);
 	},
 	missile: function(attacker, defender, playSound){
 		if (playSound){
@@ -407,9 +405,7 @@ var animate = {
 				});
 			})(Math);
 		}
-		for (var i=0; i<3; i++){
-			animate.smoke(tile, x, y, 1);
-		}
+		animate.smoke(tile, x, y, 1);
 	},
 	nuke: function(tile){
 		var e2 = document.getElementById('unit' + tile),
@@ -510,13 +506,7 @@ var animate = {
 						this.target.parentNode.removeChild(this.target);
 					}
 				});
-				for (var i=0; i<3; i++){
-					(function(i){
-						setTimeout(function(){
-							animate.smoke(tile, x, y);
-						}, i * 100);
-					})(i);
-				}
+				animate.smoke(tile, x, y);
 			}
 		});
 	},
