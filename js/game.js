@@ -261,76 +261,58 @@ function getGameState(){
 				var len = data.chat.length;
 				if (len > 0){
 					for (var i=0; i<len; i++){
-						var z = data.chat[i];
+						var z = data.chat[i],
+							evt = z.event;
+							
 						if (z.message){
-							chat(z.message);
+							console.warn(evt, evt.length, my.player + '');
+							if (evt.length === 1){
+								if (evt === my.player + ''){
+									chat(z.message);
+								}
+							} else {
+								chat(z.message);
+							}
 						}
-						if (!z.event){
+						if (!evt){
 							// nothing
-						} else if (z.event === 'chatsfx'){
+						} else if (evt === 'chatsfx'){
 							// chat events that get a sfx
 							audio.play('chat');
-						} else if (z.event.indexOf('food') === 0){
-							if (z.event.indexOf(my.account) > -1){
+						} else if (evt.indexOf('food') === 0){
+							if (evt.indexOf(my.account) > -1){
 								audio.play('food');
 							}
-						} else if (z.event.indexOf('upgrade') === 0){
-							var a = z.event.split('|'),
+						} else if (evt.indexOf('upgrade') === 0){
+							var a = evt.split('|'),
 								tile = a[1];
 							// fetch updated tile defense data
 							updateTileDefense(tile);
 							animate.upgrade(tile);
-						} else if (z.event.indexOf('cannons') === 0){
-							var a = z.event.split('|'),
+						} else if (evt.indexOf('cannons') === 0){
+							var a = evt.split('|'),
 								tile = a[1],
 								account = a[2];
 							if (my.account !== account){
 								animate.cannons(tile, false);
 							}
-						} else if (z.event.indexOf('missile') === 0){
-							var a = z.event.split('|'),
+						} else if (evt.indexOf('missile') === 0){
+							var a = evt.split('|'),
 								attacker = a[1],
 								defender = a[2],
 								account = a[3];
 							animate.missile(attacker, defender, true);
-						} else if (z.event.indexOf('nuke') === 0){
+						} else if (evt.indexOf('nuke') === 0){
 							audio.play('warning');
 							var a = z.event.split('|'),
-								tile = a[1],
-								account = a[2],
-								e3 = document.getElementById('unit' + tile),
-								box = e3.getBBox();
-								dot = document.createElementNS("http://www.w3.org/2000/svg","ellipse"),
-								x = box.x,
-								y = box.y;
-							// red dot
-							dot.setAttributeNS(null,"cx",x+ (box.width/2) + (Math.random()*12-6));
-							dot.setAttributeNS(null,"cy",y+ (box.height/2) + (Math.random()*12-6));
-							dot.setAttributeNS(null,"rx",1);
-							dot.setAttributeNS(null,"ry",1);
-							dot.setAttributeNS(null,"fill",'red');
-							dot.setAttributeNS(null,"stroke",'none');
-							DOM.world.appendChild(dot);
-							// animate and remove
-							TweenMax.to(dot, .1, {
-								startAt: {
-									opacity: 1
-								},
-								fill: '#00ff00',
-								ease: SteppedEase.config(1),
-								repeat: -1,
-								yoyo: true
-							});
-							(function(dot){
-								setTimeout(function(){
-									dot.parentNode.removeChild(dot);
-								}, 5000);
-							})(dot);
+								tile = a[1];
 							(function(tile){
 								setTimeout(function(){
 									animate.nuke(tile);
 								}, 5000);
 							})(tile);
+						} else if (evt.indexOf('revolution') === 0){
+							audio.play('sniper0');
 						}
 					}
 				}
@@ -402,7 +384,9 @@ function getGameState(){
 							initOffensiveTooltips();
 						}
 					}
+					// filled food bar
 					if (data.get !== undefined){
+						// was it special?
 						if (!data.getBonus){
 							// no bonus troops; only broadcast to self
 							chat(data.get + ': ' + my.nation + ' receives <span class="chat-manpower">' + data.manpowerBonus + '</span> armies!');

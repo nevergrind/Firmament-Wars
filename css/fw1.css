@@ -209,14 +209,10 @@ a:hover{
 	visibility: hidden;
 	opacity: 0;
 }
-#firmamentWarsGlow{
-	top: auto;
-	bottom: 0;
-}
 #titleGlobe{
 	top: auto;
 	bottom: -20%;
-	width: 80%;
+	width: 100%;
 }
 #firmamentWarsLogo, #firmamentWarsBlur{
 	top: 30%;
@@ -258,6 +254,9 @@ a:hover{
 	font-size: 1em;
 	vertical-align: bottom;
 	pointer-events: none;
+}
+.uppercase{
+	text-transform: uppercase;
 }
 .chat-img{
 	max-width: 40%;
@@ -618,15 +617,15 @@ a:hover{
 }
 .diplomacyPlayers{
 	position: relative;
-	line-height: 1.125em;
-	white-space: nowrap;
-	text-overflow: ellipsis;
+	line-height: 1.25em;
 }
 .diploNames{
 	position: relative;
-	display: inline-block;
-	white-space: nowrap;
 	top: .125em;
+}
+#lobbyFirmamentWarsLogo{
+	opacity: 1;
+	width: 100%;
 }
 #surrender{
 	margin-right: .375em;
@@ -1505,7 +1504,6 @@ table {
 }
 .diploFlag{
 	position: relative;
-	bottom: .125em;
 }
 .barWrap{
 	overflow: hidden;

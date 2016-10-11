@@ -41,7 +41,7 @@
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
-	<link rel='stylesheet' type='text/css' href="css/fw1.css?v=0-0-4">
+	<link rel='stylesheet' type='text/css' href="css/fw1.css?v=0-0-5">
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
 
@@ -57,9 +57,7 @@
 		<div id="firmamentWarsStars3" class="titleBG titleStars"></div>
 		<div id="firmamentWarsStars4" class="titleBG titleStars"></div>
 		
-		<img src="images/title/firmamentWarsTitle_logoBG.png" id="firmamentWarsGlow" class="titleBG">
-		
-		<img src="//i.imgur.com/tC2IPv4.png" id="titleGlobe" class="titleBG">
+		<img src="images/title/FirmamentWarsTitle_globe4.png" id="titleGlobe" class="titleBG">
 		<img src="images/title/firmamentWarsTitle_logoBlur.png" id="firmamentWarsBlur" class="titleBG fwHidden">
 		<img src="images/title/firmamentWarsTitle_logo.png" id="firmamentWarsLogo" class="titleBG fwHidden">
 	</div>
@@ -289,7 +287,9 @@
 			</div>
 			
 			<div id="lobbyRightCol">
+			
 				<div id="lobbyGame" class="fw-primary">
+					<img src="images/title/firmamentWarsTitle_logo_cropped_640x206.png" id="lobbyFirmamentWarsLogo">
 					<div class='text-primary text-center margin-top'>Game Name:</div> 
 					<div id='lobbyGameName' class='text-center'></div>
 					<div class='text-primary text-center margin-top'>Max Players:</div>
@@ -872,7 +872,7 @@
 		var target = d.getElementsByTagName('script')[0].parentNode;
 		for(var i=0, len=_scriptLoader.length; i<len; i++){
 			var x = d.createElement('script');
-			x.src = 'js/'+_scriptLoader[i]+'.js?v=0-0-4';
+			x.src = 'js/'+_scriptLoader[i]+'.js?v=0-0-5';
 			x.async = false;
 			target.appendChild(x);
 		}
