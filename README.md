@@ -1,4 +1,5 @@
 # Firmament-Wars
-A multiplayer real-time grand strategy game planned for release in fall of 2016.
+[Firmament Wars is a multiplayer real-time grand strategy browser game](https://nevergrind.com/games/firmament-wars). Firmament Wars is planned for release in late 2016.
 
-https://nevergrind.com/games/firmament-wars
+
+
