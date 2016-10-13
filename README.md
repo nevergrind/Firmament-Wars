@@ -1,7 +1,7 @@
 # Firmament-Wars
 [Firmament Wars is a multiplayer real-time strategy browser game](https://nevergrind.com/games/firmament-wars). Firmament Wars is planned for release in late 2016. Check our [About Firmament Wars](https://nevergrind.com/blog/about-firmament-wars/) page to learn more about the project.
 
-# Developer's Favorites
+# GitHub Projects Used in Firmament Wars
 
 All projects shown below are used to create Firmament Wars.
 
