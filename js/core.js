@@ -6,7 +6,8 @@ $.ajaxSetup({
 TweenMax.defaultEase = Quad.easeOut;
 
 var g = {
-	id: 0,
+	name: "",
+	password: "",
 	focusUpdateNationName: false,
 	focusGameName: false,
 	view: "title",
@@ -648,14 +649,14 @@ function refreshGames(bypass){
 			var str = 
 			'<table id="gameTable" class="table table-condensed table-borderless">\
 				<tr>\
-					<th class="gameTableCol1 warCells">Game</th>\
+					<th class="gameTableCol1 warCells">Game Name</th>\
 					<th class="gameTableCol2 warCells">Map</th>\
 					<th class="gameTableCol3 warCells">Players</th>\
 				</tr>';
 			// body
 			for (var i=0, len=data.length; i<len; i++){
 				str += 
-				"<tr class='wars no-select' data-id='" + data[i].row + "'>\
+				"<tr class='wars no-select' data-name='" + data[i].name + "'>\
 					<td class='warCells'>"+ data[i].name + "</td>\
 					<td class='warCells'>" + data[i].map + "</td>\
 					<td class='warCells'>" + data[i].players + "/" + data[i].max + "</td>\
@@ -664,15 +665,6 @@ function refreshGames(bypass){
 			// foot
 			str += "</table>";
 			e.innerHTML = str;
-		}
-		var e = $(".wars").filter(":first");
-		if (!g.isModalOpen){
-			// modal not open
-			e.trigger("click");
-		} else {
-			// modal open - do this to avoid messing with dropdowns
-			e.addClass('selected');
-			g.id = e.data('id');
 		}
 	}).fail(function(e){
 		console.info(e.responseText);

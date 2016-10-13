@@ -153,20 +153,24 @@ var title = {
 			ease: Linear.easeNone
 		});
 		// logo
-		TweenMax.to('#firmamentWarsLogo, #firmamentWarsBlur', globeDelay, {
+		TweenMax.to('#firmamentWarsLogo', globeDelay, {
 			startAt: {
 				visibility: 'visible',
-				opacity: 0
+				scale: 0,
+				alpha: 0
 			},
-			opacity: 1,
+			alpha: 1,
+			scale: 1,
 			ease: Quad.easeIn
 		});
 		TweenMax.to('#firmamentWarsBlur', globeDelay, {
 			startAt: {
 				visibility: 'visible',
-				scaleX: 0
+				scaleX: 0,
+				alpha: 1
 			},
 			scaleX: 1,
+			alpha: 1,
 			ease: Quad.easeIn
 		});
 		TweenMax.to('#firmamentWarsLogo, #firmamentWarsBlur', globeDelay, {
@@ -304,6 +308,34 @@ var title = {
 			});
 		}
 	},
+	joinGame: function(){
+		g.name = $("#joinGameName").val();
+		if (!g.name){
+			Msg("Game name is not valid!", 1.5);
+			return;
+		}
+		g.password = $("#joinGamePassword").val();
+		g.lock();
+		audio.play('click');
+		$.ajax({
+			url: 'php/joinGame.php',
+			data: {
+				name: g.name,
+				password: g.password
+			}
+		}).done(function(data) {
+			console.info(data);
+			my.player = data.player;
+			g.map = data.mapData;
+			lobby.init(data);
+			lobby.join(); // normal join
+		}).fail(function(data){
+			console.info(data);
+			Msg(data.statusText, 1.5);
+		}).always(function(){
+			g.unlock();
+		});
+	},
 	submitNationName: function(){
 		var x = $("#updateNationName").val();
 		g.lock();
@@ -350,12 +382,14 @@ $("#logout").on('click', function() {
 });
 
 $("#titleMenu").on("click", ".wars", function(){
-	$(".wars").removeClass("selected");
-	$(this).addClass("selected");
-	g.id = $(this).data("id");
+	var gameName = $(this).data("name");
+	$("#joinGameName").val(gameName);
+	$("#joinGamePassword").val('');
 }).on("dblclick", ".wars", function(){
-	g.id = $(this).data("id");
-	joinGame();
+	var gameName = $(this).data("name");
+	$("#joinGameName").val(gameName);
+	$("#joinGamePassword").val('');
+	title.joinGame();
 });
 
 $("#create").on("click", function(){
@@ -409,49 +443,11 @@ $("#optionsDone, #cancelCreateGame").on("click", function(){
 	title.hideBackdrop();
 });
 
-function joinGame(){
-	var name = $("#joinGameName").val();
-	if (!g.id && !name){
-		Msg("Invalid game data.", 1.5);
-		return;
-	}
-	var pw = $("#joinGamePassword").val();
-	g.lock();
-	audio.play('click');
-	$.ajax({
-		url: 'php/joinGame.php',
-		data: {
-			gameId: g.id,
-			name: name,
-			pw: pw
-		}
-	}).done(function(data) {
-		console.info(data);
-		my.player = data.player;
-		g.map = data.mapData;
-		lobby.init(data);
-		lobby.join(); // normal join
-	}).fail(function(data){
-		console.info(data);
-		Msg(data.statusText, 1.5);
-	}).always(function(){
-		g.unlock();
-	});
-}
 
 // cached values on client to reduce DB load
 
 $("#titleMenu").on("click", "#joinGame", function(){
-	$("#joinGameName, #joinGamePassword").val('');
-	joinGame();
-}).on("click", "#joinPrivateGame", function(){
-	var name = $("#joinGameName").val(),
-		pw = $("#joinGamePassword").val();
-	if (!name || !pw){
-		Msg("Game name or password are not valid!");
-	} else {
-		joinGame();
-	}
+	title.joinGame();
 });
 
 $("#mainWrap").on("click", "#cancelGame", function(){

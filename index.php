@@ -84,9 +84,14 @@
 						<i class="fa fa-diamond" title="Never Crystals"></i>
 						<span id="crystalCount" class="text-primary" >' .$crystals.'</span>
 					</span>&ensp;
-					<a target="_blank" href="/account">Account</a>&ensp;
-					<a target="_blank" href="/store">Store</a>&ensp;
-					<span id="options" class="pointer options">Options</span>&ensp;
+					<a href="/account">Account</a>&ensp;
+					<a href="/store">Store</a>&ensp;
+					<a href="/forums" title="Nevergrind Browser Game Forums">Forums</a>&ensp; 
+					<a href="/blog" title="Nevergrind Browser Game Development News and Articles">Blog</a>&ensp; 
+					<a id="options" class="pointer options">Options</a>&ensp; 
+					
+					
+					
 					<span id="logout" class="pointer">Logout</span>';
 					?>
 					<?php
@@ -183,7 +188,7 @@
 					if (isset($_SESSION['email']) && $whitelisted){
 						echo
 						'<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>
-						<span class="header pull-right bigFont">My Nation</span>
+						<span class="header pull-right bigFont">Configure Nation</span>
 						<hr class="fancyhr">';
 					}
 					?>
@@ -196,30 +201,39 @@
 				<?php
 				if (isset($_SESSION['email']) && $whitelisted){
 				echo 
-				'<div>
-					<hr class="fancyhr">
-					<button id="create" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Create Game</button>
-					<button id="joinGame" type="button" class="btn btn-md fwBlue btn-responsive shadow4">Join Game</button>
-					<span class="header pull-right bigFont">Public Games</span>
-					<hr class="fancyhr">
-				</div>
-				<div id="refreshGameWrap">
-					<div id="menuContent" class="buffer2 shadow4"></div>
-				</div>
-				<div id="joinGameWrap" class="fw-text">
+				'<div class="fw-text">
 					<hr class="fancyhr">
 					<div class="text-right">
-						<span class="header bigFont">Join A Private Game</span>
+						<button id="joinGame" type="button" class="btn btn-md fwBlue btn-responsive shadow4 pull-left">Join Game</button>
+						<span class="header bigFont">Join Game</span>
 					</div>
 					<hr class="fancyhr">
 					<form id="joinGamePasswordWrap">
-						Game <input id="joinGameName" class="joinGameInputs" type="text" maxlength="240" autocomplete="off"/>
-						Password <input id="joinGamePassword" class="joinGameInputs" type="text" maxlength="240"/>
-						<button id="joinPrivateGame" type="button" class="btn btn-md fwBlue btn-responsive shadow4 pull-right">Join Game</button>
+						<div class="input-group" class="shadow4">
+							<span class="input-group-addon fwBlueSpan">Name</span>
+							<input placeholder="Game Name" id="joinGameName" type="text" class="form-control fwBlueInput" class="joinGameInputs">
+							<span class="input-group-addon fwBlueSpan">Password</span>
+							<input placeholder="For Private Games" id="joinGamePassword" type="text" class="form-control fwBlueInput" class="joinGameInputs">
+						</div>
 					</form>
-				</div>';} 
+				</div>
+
+				<div id="refreshGameWrap">
+					<div id="menuContent" class="buffer2 shadow4"></div>
+				</div>
+				
+				<div>
+					<hr class="fancyhr">
+					<button id="create" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Create Game</button>
+					<span class="header pull-right bigFont">Create Game</span>
+					<hr class="fancyhr">
+				</div>';}
 				?>
 			</div>
+			<!--
+				Game Name <input id="joinGameName" class="joinGameInputs" type="text" maxlength="240" autocomplete="off"/>
+				Password <input id="joinGamePassword" class="joinGameInputs" type="text" maxlength="240"/>
+			-->
 			
 			<div id="titleChat" class="fw-primary text-center">
 				<?php
@@ -269,7 +283,7 @@
 	
 		<div id="joinGameLobby" class="shadow4">
 		
-			<img id="worldTitle" src="//imgur.com/87z2KwQ.jpg">
+			<img id="worldTitle" src="images/firmamentWarsNight4.jpg">
 		
 			<div id="lobbyLeftCol">
 			

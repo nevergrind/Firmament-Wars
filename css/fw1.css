@@ -390,6 +390,16 @@ a:hover{
 	text-shadow: 2px 2px 0 #357;
 	border-radius: 0;
 }
+.fwBlueSpan{
+	background: rgba(16,56,96,1);
+	color: #aef !important;
+	border: 1px solid #2e6da4;
+}
+.fwBlueInput{
+	background: rgba(0,12,32,1);
+	color: #fff !important;
+	border: 1px solid #2e6da4;
+}
 .fwBlue{
 	background: rgba(16,56,96,1);
 	color: #aef !important;
@@ -763,14 +773,6 @@ table td, .table th, .table td {
 	text-align: center;
 	z-index: 9999;
 }
-#joinGameWrap{
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	top: auto;
-	padding: .5em;
-}
 .endBtn{
 	border: 1px solid #3377dd;
 	box-shadow: 0 0 20px rgba(0,40,148,1) inset;
@@ -1100,7 +1102,7 @@ circle{
 	margin: 0 .5em;
 	padding: .25em .5em;
 	border-radius: 4px;
-	width: 18%;
+	width: 25%;
 }
 #refreshGameWrap{
 	height: 65%;
@@ -1233,14 +1235,14 @@ circle{
 }
 .wars:hover{
 	color: #9df;
+	background: rgba(0,64,128,.8);
 }
 .wars:active{
 	color: #7be;
 }
-.selected{
-	background: rgba(0,64,128,.8);
-}
-.table-borderless tbody tr td, .table-borderless tbody tr th, .table-borderless thead tr th {
+.table-borderless tbody tr td, 
+.table-borderless tbody tr th, 
+.table-borderless thead tr th {
     border: none;
 }
 .warCells{
@@ -1290,7 +1292,7 @@ table {
 }
 #lobbyWrap{
 	width: 100%;
-	padding: 0 1em;
+	padding: 0 1% 0 0;
 }
 .lobbyRow{
 	display: none;
@@ -1673,6 +1675,9 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .pointer{
 	cursor: pointer;
+}
+.text{
+	cursor: text !important;
 }
 .crosshair{
 	cursor: crosshair;
