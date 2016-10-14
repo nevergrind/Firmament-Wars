@@ -111,13 +111,13 @@ var title = {
 			if (g.view === 'title'){
 				setTimeout(function(){
 					if (title.titleUpdate){
-						refreshGames(true);
+						refreshGames();
 						repeat();
 					}
 				}, interval);
 			}
 		})();
-		refreshGames();
+		refreshGames(true);
 	})(),
 	animateLogo: function(){
 		var globeDelay = 1,
@@ -240,6 +240,25 @@ var title = {
 		DOM.titleChatLog.appendChild(z);
 		if (!title.chatDrag){
 			DOM.titleChatLog.scrollTop = DOM.titleChatLog.scrollHeight;
+		}
+		console.info("MSG: ", msg);
+		if (!document.hasFocus()){
+			// it's a player message
+			if (msg.indexOf("images/flags") > -1){
+				var flagArr = msg.split('"'),
+					flagPath = flagArr[1],
+					bodyArr = msg.split(':'),
+					body = bodyArr[1],
+					msgArr = bodyArr[0].split('>'),
+					msg = msgArr[1] + ' says:';
+				Notification.requestPermission(function(){
+					new Notification(msg, {
+						icon: flagPath,
+						tag: "Nevergrind",
+						body: body
+					});
+				});
+			}
 		}
 	}, 
 	sendMsg: function(bypass){

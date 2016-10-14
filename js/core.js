@@ -494,15 +494,18 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
 // browser dependent
 (function($){
 	if (isMSIE || isMSIE11){
-		$("head").append('<style> text { fill: #ffffff; stroke-width: 0px; } </style>');
+		window.stop();
+		alert("Firmament Wars does not support Internet Explorer. Consider using Chrome or Firefox for an enjoyable experience.");
+		// $("head").append('<style> text { fill: #ffffff; stroke-width: 0px; } </style>');
 	} else if (isSafari){
+		window.stop();
+		alert("Firmament Wars does not support Safari. Consider using Chrome or Firefox for an enjoyable experience.");
 		$("head").append('<style> text { fill: #ffffff; stroke: #ffffff; stroke-width: 0px; } </style>');
 	}
 	if (isMobile){
+		window.stop();
 		$("head").append('<style> *{ box-shadow: none !important; } </style>');
-		//$("html").html("Firmament Wars is currently not available on mobile devices. Sorry about that! It runs like trash on mobile, so I'm probably doing you a favor.");
-	} else {
-		$("#gameTopLeft").remove();
+		alert("Firmament Wars is currently not available on mobile devices. Sorry about that! It runs like trash on mobile, so I'm probably doing you a favor.");
 	}
 })($);
 
@@ -630,10 +633,7 @@ function playerLogout(){
     });
 }
 
-function refreshGames(bypass){
-	if (!bypass){
-		g.lock();
-	}
+function refreshGames(click){
 	$.ajax({
 		type: 'GET',
 		url: 'php/refreshGames.php'
@@ -665,14 +665,13 @@ function refreshGames(bypass){
 			// foot
 			str += "</table>";
 			e.innerHTML = str;
+			if (click){
+				$(".wars").filter(":first").trigger("click");
+			}
 		}
 	}).fail(function(e){
 		console.info(e.responseText);
 		Msg("Server error.");
-	}).always(function(){
-		if (!bypass){
-			g.unlockFade(.5);
-		}
 	});
 }
 

@@ -187,8 +187,9 @@
 					<?php
 					if (isset($_SESSION['email']) && $whitelisted){
 						echo
-						'<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>
-						<span class="header pull-right bigFont">Configure Nation</span>
+						'
+						<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>
+						
 						<hr class="fancyhr">';
 					}
 					?>
@@ -202,17 +203,19 @@
 				if (isset($_SESSION['email']) && $whitelisted){
 				echo 
 				'<div class="fw-text">
-					<hr class="fancyhr">
-					<div class="text-right">
-						<button id="joinGame" type="button" class="btn btn-md fwBlue btn-responsive shadow4 pull-left">Join Game</button>
-						<span class="header bigFont">Join Game</span>
+				
+					<div>
+						<hr class="fancyhr">
+						<button id="create" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Create Game</button>
+						<button id="joinGame" type="button" class="btn btn-md fwBlue btn-responsive shadow4">Join Game</button>
 					</div>
+					
 					<hr class="fancyhr">
 					<form id="joinGamePasswordWrap">
 						<div class="input-group" class="shadow4">
-							<span class="input-group-addon fwBlueSpan">Name</span>
+							<span class="input-group-addon fwBlueSpan">Name:</span>
 							<input placeholder="Game Name" id="joinGameName" type="text" class="form-control fwBlueInput" class="joinGameInputs">
-							<span class="input-group-addon fwBlueSpan">Password</span>
+							<span class="input-group-addon fwBlueSpan">Password:</span>
 							<input placeholder="For Private Games" id="joinGamePassword" type="text" class="form-control fwBlueInput" class="joinGameInputs">
 						</div>
 					</form>
@@ -220,13 +223,6 @@
 
 				<div id="refreshGameWrap">
 					<div id="menuContent" class="buffer2 shadow4"></div>
-				</div>
-				
-				<div>
-					<hr class="fancyhr">
-					<button id="create" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Create Game</button>
-					<span class="header pull-right bigFont">Create Game</span>
-					<hr class="fancyhr">
 				</div>';}
 				?>
 			</div>
@@ -238,10 +234,10 @@
 			<div id="titleChat" class="fw-primary text-center">
 				<?php
 					if (isset($_SESSION['email'])){
-						echo '<div id="titleChatPlayers"></div>';
+						echo '<div id="titleChatPlayers" class="titlePanelLeft"></div>';
 					}
 				?>
-				<div id="titleChatLog">
+				<div id="titleChatLog" class="titlePanelLeft">
 				<?php
 					/*
 					echo '
@@ -294,7 +290,7 @@
 					
 					<div id="lobbyChatWrap" class="lobbyRelWrap input-group">
 						<input id="lobby-chat-input" class="fw-text noselect nobg form-control" type='text' maxlength="240" autocomplete="off"/>
-						<span id="lobbyChatSend" class="input-group-addon shadow4 fwBlue">Send</span>
+						<span id="lobbyChatSend" class="input-group-addon shadow4 fwBlue">Chat</span>
 					</div>
 				</div>
 				
@@ -850,8 +846,31 @@
 	<div id="screenFlash"></div>
 	<div id="overlay" class="portal"></div>
 </body>
+<script>
+var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0,
+isMSIE = /*@cc_on!@*/ false,
+isMSIE11 = !!navigator.userAgent.match(/Trident\/7\./);
+if (isMSIE || isMSIE11){
+	alert("Firmament Wars does not support Internet Explorer. Consider using Chrome or Firefox for an enjoyable experience.");
+	var x = 1 / 0;
+} else if (isSafari){
+	alert("Firmament Wars does not support Safari. Consider using Chrome or Firefox for an enjoyable experience.");
+	$("head").append('<style> text { fill: #ffffff; stroke: #ffffff; stroke-width: 0px; } </style>');
+	window.stop();
+}
+if (isMobile){
+	$("head").append('<style> *{ box-shadow: none !important; } </style>');
+	alert("Firmament Wars is currently not available on mobile devices. Sorry about that! It runs like trash on mobile, so I'm probably doing you a favor.");
+	window.stop();
+}
+(function(){
+})();
+
+</script>
+
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="js/libs/DrawSVGPlugin.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/utils/Draggable.min.js"></script>
 <script src="js/libs/ScrambleTextPlugin.min.js"></script>
