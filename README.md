@@ -12,14 +12,14 @@ All projects shown below are used to create Firmament Wars.
 
 # Developer
 
-* Joe Leonard
-  * [Game Development Blog](https://nevergrind.com/blog)
-  * [Nevergrind Forums](https://nevergrind.com/forums)
-  * [GitHub](https://github.com/Maelfyn)
-  * [Facebook](https://www.facebook.com/neverworksgames)
-  * [Twitter @NeverworksGames](https://twitter.com/neverworksgames)
-  * [YouTube](https://www.youtube.com/user/Maelfyn)
-  * [LinkedIn](https://www.linkedin.com/company/neverworks-games-llc)
-  * [IndieDB](http://www.indiedb.com/games/firmament-wars)
-  * [Reddit](https://www.reddit.com/r/firmamentwars)
-  * [Google+](https://plus.google.com/+Maelfyn)
+[Joe Leonard](https://www.linkedin.com/in/joseph-leonard-78b56287) is a software engineer at [Synergist Computing](https://www.linkedin.com/company/synergist-computing).
+* [Game Development Blog](https://nevergrind.com/blog)
+* [Nevergrind Forums](https://nevergrind.com/forums)
+* [GitHub](https://github.com/Maelfyn)
+* [Facebook](https://www.facebook.com/neverworksgames)
+* [Twitter @NeverworksGames](https://twitter.com/neverworksgames)
+* [YouTube](https://www.youtube.com/user/Maelfyn)
+* [LinkedIn](https://www.linkedin.com/company/neverworks-games-llc)
+* [IndieDB](http://www.indiedb.com/games/firmament-wars)
+* [Reddit](https://www.reddit.com/r/firmamentwars)
+* [Google+](https://plus.google.com/+Maelfyn)
