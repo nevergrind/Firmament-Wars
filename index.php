@@ -41,7 +41,7 @@
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
-	<link rel='stylesheet' type='text/css' href="css/fw1.css?v=0-0-5">
+	<link rel='stylesheet' type='text/css' href="css/fw1.css?v=0-0-6">
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
 
@@ -846,39 +846,17 @@
 	<div id="screenFlash"></div>
 	<div id="overlay" class="portal"></div>
 </body>
-<script>
-var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0,
-isMSIE = /*@cc_on!@*/ false,
-isMSIE11 = !!navigator.userAgent.match(/Trident\/7\./);
-if (isMSIE || isMSIE11){
-	alert("Firmament Wars does not support Internet Explorer. Consider using Chrome or Firefox for an enjoyable experience.");
-	var x = 1 / 0;
-} else if (isSafari){
-	alert("Firmament Wars does not support Safari. Consider using Chrome or Firefox for an enjoyable experience.");
-	$("head").append('<style> text { fill: #ffffff; stroke: #ffffff; stroke-width: 0px; } </style>');
-	window.stop();
-}
-if (isMobile){
-	$("head").append('<style> *{ box-shadow: none !important; } </style>');
-	alert("Firmament Wars is currently not available on mobile devices. Sorry about that! It runs like trash on mobile, so I'm probably doing you a favor.");
-	window.stop();
-}
-(function(){
-})();
-
-</script>
-
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="js/libs/DrawSVGPlugin.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/utils/Draggable.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/utils/Draggable.min.js"></script>
 <script src="js/libs/ScrambleTextPlugin.min.js"></script>
 <script src="js/libs/SplitText.min.js"></script>
 <script src="js/libs/ThrowPropsPlugin.min.js"></script> 
 <script src="js/libs/MorphSVGPlugin.min.js"></script> 
-<script src="js/libs/AttrPlugin.min.js"></script>
-<script src="js/libs/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/AttrPlugin.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/bootstrap-slider.min.js"></script>
 
 <?php
@@ -899,13 +877,13 @@ if (isMobile){
 			];
 		} else {
 			var _scriptLoader = [
-				'firmament-wars_0-0-4'
+				'firmament-wars_0-0-6'
 			];
 		}
 		var target = d.getElementsByTagName('script')[0].parentNode;
 		for(var i=0, len=_scriptLoader.length; i<len; i++){
 			var x = d.createElement('script');
-			x.src = 'js/'+_scriptLoader[i]+'.js?v=0-0-5';
+			x.src = 'js/'+_scriptLoader[i]+'.js?v=0-0-6';
 			x.async = false;
 			target.appendChild(x);
 		}

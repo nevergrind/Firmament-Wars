@@ -323,6 +323,11 @@ a:hover{
 	width: 54.8%;
 	bottom: 2%;
 }
+#titleChatLog{
+	left: 40%;
+	width: 59%;
+	background: rgba(0,0,0,.5);
+}
 #title-chat-input{
 	padding: 0 1%;
 	width: 100%;
@@ -365,11 +370,6 @@ a:hover{
 	left: 1%;
 	width: 38%;
 	background: rgba(0,55,155,.2);
-}
-#titleChatLog{
-	left: 40%;
-	width: 59%;
-	background: rgba(0,0,0,.5);
 }
 #titleChatWrap{
 	position: absolute;
