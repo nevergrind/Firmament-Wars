@@ -133,6 +133,24 @@ var g = {
 	},
 	removeContainers: function(){
 		$("#firmamentWarsLogoWrap, #mainWrap").remove();
+	},
+	sendNotification: function(msg){
+		if (!document.hasFocus()){
+			// it's a player message
+			if (msg.indexOf("images/flags") > -1){
+				var flagArr = msg.split('"'),
+					flagPath = flagArr[1],
+					bodyArr = msg.split(':'),
+					body = bodyArr[1],
+					msgArr = bodyArr[0].split('>'),
+					msg = msgArr[1] + ' says:';
+				new Notification(msg, {
+					icon: flagPath,
+					tag: "Nevergrind",
+					body: body
+				});
+			}
+		}
 	}
 }
 g.init = (function(){
@@ -223,6 +241,38 @@ g.init = (function(){
 	*/
 })();
 // game data values
+function Stats(){
+	var o = {
+		overview: {
+			score: 0,
+			unitScore: 0,
+			structureScore: 0,
+			weaponScore: 0,
+			resourceScore: 0
+		},
+		units: {
+			produced: 0,
+			killed: 0,
+			lost: 0
+		},
+		structures: {
+			bunkers: 0,
+			walls: 0,
+			fortresses: 0
+		},
+		weapons: {
+			cannons: 0,
+			missiles: 0,
+			nukes: 0
+		},
+		resources: {
+			food: 0,
+			culture: 0,
+			energy: 0
+		}
+	}
+	return o;
+}
 var game = {
 	tiles: [],
 	initialized: false,
@@ -230,6 +280,18 @@ var game = {
 	updateTopTile: function(i){
 		document.getElementById('topTile')
 			.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#land' + i);
+	},
+	stats: {
+		duration: Date.now(),
+		player: [
+		],
+		init: (function(totalPlayers){
+			setTimeout(function(){
+				for (var i=1; i<totalPlayers; i++){
+					game.stats.player[i] = new Stats();
+				}
+			});
+		})(8)
 	}
 }
 // player data values
@@ -637,7 +699,7 @@ function refreshGames(click){
 		type: 'GET',
 		url: 'php/refreshGames.php'
 	}).done(function(data) {
-		var e = document.getElementById('menuContent');
+		var e = document.getElementById('refreshGameWrap');
 		if (e === null){
 			return;
 		}

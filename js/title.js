@@ -118,6 +118,7 @@ var title = {
 			}
 		})();
 		refreshGames(true);
+		Notification.requestPermission();
 	})(),
 	animateLogo: function(){
 		var globeDelay = 1,
@@ -241,25 +242,7 @@ var title = {
 		if (!title.chatDrag){
 			DOM.titleChatLog.scrollTop = DOM.titleChatLog.scrollHeight;
 		}
-		console.info("MSG: ", msg);
-		if (!document.hasFocus()){
-			// it's a player message
-			if (msg.indexOf("images/flags") > -1){
-				var flagArr = msg.split('"'),
-					flagPath = flagArr[1],
-					bodyArr = msg.split(':'),
-					body = bodyArr[1],
-					msgArr = bodyArr[0].split('>'),
-					msg = msgArr[1] + ' says:';
-				Notification.requestPermission(function(){
-					new Notification(msg, {
-						icon: flagPath,
-						tag: "Nevergrind",
-						body: body
-					});
-				});
-			}
-		}
+		g.sendNotification(msg);
 	}, 
 	sendMsg: function(bypass){
 		var message = $DOM.titleChatInput.val();
@@ -556,10 +539,10 @@ $("#updateNationName").on("focus", function(){
 }).on("blur", function(){
 	g.focusUpdateNationName = false;
 });
-$("#menuContent").on("focus", "#gameName", function(){
+$("#refreshGameWrap").on("focus", "#gameName", function(){
 	g.focusGameName = true;
 })
-$("#menuContent").on("blur", "#gameName", function(){
+$("#refreshGameWrap").on("blur", "#gameName", function(){
 	g.focusGameName = false;
 });
 

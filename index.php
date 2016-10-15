@@ -213,15 +213,15 @@
 					<hr class="fancyhr">
 					<form id="joinGamePasswordWrap">
 						<div class="input-group" class="shadow4">
-							<span class="input-group-addon fwBlueSpan">Name:</span>
+							<span class="input-group-addon fwGameLabel">Name:</span>
 							<input placeholder="Game Name" id="joinGameName" type="text" class="form-control fwBlueInput" class="joinGameInputs">
-							<span class="input-group-addon fwBlueSpan">Password:</span>
+							<span class="input-group-addon fwGameLabel">Password:</span>
 							<input placeholder="For Private Games" id="joinGamePassword" type="text" class="form-control fwBlueInput" class="joinGameInputs">
 						</div>
 					</form>
 				</div>
 
-				<div id="refreshGameWrap">
+				<div id="refreshGameWrap" class="buffer2">
 					<div id="menuContent" class="buffer2 shadow4"></div>
 				</div>';}
 				?>
@@ -232,33 +232,6 @@
 			-->
 			
 			<div id="titleChat" class="fw-primary text-center">
-				<?php
-					if (isset($_SESSION['email'])){
-						echo '<div id="titleChatPlayers" class="titlePanelLeft"></div>';
-					}
-				?>
-				<div id="titleChatLog" class="titlePanelLeft">
-				<?php
-					/*
-					echo '
-						<div class="chat-warning">MESSAGE OF THE DAY: </div>
-						<div class="chat-warning">Closed beta event on 10/5 @ 8 p.m. EST</div>
-						<div>A teamspeak server is available for voice chat!</div>
-						<div>Download TeamSpeak at <a target="_blank" href="https://www.teamspeak.com/downloads">https://www.teamspeak.com/downloads</a></div>
-						<div>Connect to GhostGaming.gavs.us and join the Firmament Wars channel</div>
-					';
-					*/
-					if (!$whitelisted){
-						echo '<div class="chat-alert">You currently do not have access to play Firmament Wars. You must get beta access from the administrator.</div>';
-					}
-					$result = mysqli_query($link, 'select count(row) count from `fwplayers` where timestamp > date_sub(now(), interval 20 second)');
-					// Associative array
-					while ($row = mysqli_fetch_assoc($result)){
-						$total = $row['count']*1;
-						echo '<div>There '. ($total === 1 ? 'is' : 'are') .' '. $row["count"] . ' '. ($total === 1 ? 'person' : 'people') .' playing Firmament Wars</div>';
-					}
-				?>
-				</div>
 				
 				<div id="titleChatWrap">
 					
@@ -274,6 +247,34 @@
 					}
 					?>
 				</div>
+			</div>
+			<?php
+				if (isset($_SESSION['email'])){
+					echo '<div id="titleChatPlayers" class="titlePanelLeft"></div>';
+				}
+			?>
+			
+			<div id="titleChatLog" class="titlePanelLeft">
+			<?php
+				/*
+				echo '
+					<div class="chat-warning">MESSAGE OF THE DAY: </div>
+					<div class="chat-warning">Closed beta event on 10/5 @ 8 p.m. EST</div>
+					<div>A teamspeak server is available for voice chat!</div>
+					<div>Download TeamSpeak at <a target="_blank" href="https://www.teamspeak.com/downloads">https://www.teamspeak.com/downloads</a></div>
+					<div>Connect to GhostGaming.gavs.us and join the Firmament Wars channel</div>
+				';
+				*/
+				if (!$whitelisted){
+					echo '<div class="chat-alert">You currently do not have access to play Firmament Wars. You must get beta access from the administrator.</div>';
+				}
+				$result = mysqli_query($link, 'select count(row) count from `fwplayers` where timestamp > date_sub(now(), interval 20 second)');
+				// Associative array
+				while ($row = mysqli_fetch_assoc($result)){
+					$total = $row['count']*1;
+					echo '<div>There '. ($total === 1 ? 'is' : 'are') .' '. $row["count"] . ' '. ($total === 1 ? 'person' : 'people') .' playing Firmament Wars</div>';
+				}
+			?>
 			</div>
 		</div>
 	

@@ -84,6 +84,7 @@ var lobby = {
 		if (!lobby.chatDrag){
 			DOM.lobbyChatLog.scrollTop = DOM.lobbyChatLog.scrollHeight;
 		}
+		g.sendNotification(msg);
 	},
 	chatDrag: false,
 	gameStarted: false,

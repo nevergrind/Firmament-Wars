@@ -310,9 +310,26 @@ a:hover{
 	top: 7%;
 	right: 0%;
 	width: 45%;
+	bottom: 2%;
 	overflow: hidden;
-	padding: .375em .75em;
-	height: 91%;
+	padding: .5% .75%;
+	z-index: 100;
+}
+#refreshGameWrap{
+	position: relative;
+	top: 0; bottom: 0; left: 0; right: 0;
+	color: #bef;
+	height: 73%;
+	margin-top: .5%;
+	background: rgba(0,0,0,.5);
+	overflow-y: auto;
+}
+#gameTable{
+	table-layout: fixed;
+	width: 100%;
+	padding: 0 1%;
+	margin: 0;
+	color: #fff;
 }
 /* title chat */
 #titleChat{
@@ -324,8 +341,9 @@ a:hover{
 	bottom: 2%;
 }
 #titleChatLog{
-	left: 40%;
-	width: 59%;
+	position: absolute;
+	left: 22%;
+	width: 32.33%;
 	background: rgba(0,0,0,.5);
 }
 #title-chat-input{
@@ -354,21 +372,20 @@ a:hover{
 .titlePanelLeft{
 	position: absolute;
 	font-family: Consolas, monospace;
-	top: 1%;
-	bottom: 5%;
+	top: 8%;
+	bottom: 7%;
 	text-shadow: .5px .5px #357, 1px 1px #357, 1.5px 1.5px #357, 2px 2px #357;
 	color: #bef;
 	border-radius: 4px;
 	border: 1px solid #357;
 	margin: 0;
 	padding: .25em .5em;
-	text-align: left;
 	overflow: auto;
 }
 
 #titleChatPlayers{
-	left: 1%;
-	width: 38%;
+	left: .5%;
+	width: 21%;
 	background: rgba(0,55,155,.2);
 }
 #titleChatWrap{
@@ -383,7 +400,7 @@ a:hover{
 	border-radius:
 	0;
 }
-.fwBlueSpan{
+.fwGameLabel{
 	background: rgba(16,56,96,1);
 	color: #aef !important;
 	border: 1px solid #2e6da4;
@@ -1057,7 +1074,6 @@ circle{
 	color: #bef;
 	text-shadow: 2px 2px 0 #357;
 	border-radius: 4px;
-	outline: 1px solid #f00;
 }
 #lobbyChatWrap{
 	position: absolute;
@@ -1095,23 +1111,6 @@ circle{
 	border-radius: 4px;
 	width: 25%;
 }
-#refreshGameWrap{
-	position: relative;
-	top: 1%;
-	height: 68%;
-	background: rgba(0,0,0,.5);
-}
-#menuContent{
-	height: 100%;
-	overflow-y: auto;
-	margin: 0;
-}
-#gameTable{
-	table-layout: fixed;
-	width: 100%;
-	padding: 0 1%;
-	margin: 0;
-}
 .gameTableCol1{
 	width: 50%;
 }
@@ -1120,9 +1119,6 @@ circle{
 }
 .gameTableCol3{
 	width: 15%;
-}
-#menuOnline{
-	color: #bef;
 }
 .soundSlider{
 	cursor: pointer !important;
@@ -1676,12 +1672,35 @@ input[type=number]::-webkit-outer-spin-button {
 	cursor: crosshair;
 }
 /* responsive height */
+@media all and (max-height: 1080px) and (min-height: 1040px){
+	#refreshGameWrap{
+		height: 72%;
+	}
+}
+@media all and (max-height: 1040px) and (min-height: 980px){
+	#refreshGameWrap{
+		height: 70.5%;
+	}
+}
+@media all and (max-height: 980px) and (min-height: 940px){
+	#refreshGameWrap{
+		height: 69%;
+	}
+}
+@media all and (max-height: 940px) and (min-height: 900px){
+	#refreshGameWrap{
+		height: 67.5%;
+	}
+	#lobbyChatLog{
+		height: 82%;
+	}
+}
 @media all and (max-height: 900px) and (min-height: 870px){
 	.titlePanelLeft{
-		bottom: 5.5%;
+		bottom: 7.3%;
 	}
 	#refreshGameWrap{
-		height: 66%;
+		height: 65%;
 	}
 	#lobbyChatLog{
 		height: 82%;
@@ -1689,10 +1708,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
 @media all and (max-height: 870px) and (min-height: 840px){
 	.titlePanelLeft{
-		bottom: 5.5%;
+		bottom: 7.6%;
 	}
 	#refreshGameWrap{
-		height: 64%;
+		height: 63%;
 	}
 	#lobbyChatLog{
 		height: 80%;
@@ -1700,10 +1719,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
 @media all and (max-height: 840px) and (min-height: 720px){
 	.titlePanelLeft{
-		bottom: 6.25%;
+		bottom: 8%;
 	}
 	#refreshGameWrap{
-		height: 60%;
+		height: 60.5%;
 	}
 	#lobbyChatLog{
 		height: 78%;
@@ -1711,10 +1730,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
 @media all and (max-height: 720px) and (min-height: 670px){
 	.titlePanelLeft{
-		bottom: 6.75%;
+		bottom: 8.5%;
 	}
 	#refreshGameWrap{
-		height: 55%;
+		height: 58%;
 	}
 	#lobbyChatLog{
 		height: 76%;
@@ -1722,10 +1741,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
 @media all and (max-height: 670px) and (min-height: 620px){
 	.titlePanelLeft{
-		bottom: 7.25%;
+		bottom: 9%;
 	}
 	#refreshGameWrap{
-		height: 53%;
+		height: 55%;
 	}
 	#lobbyChatLog{
 		height: 74%;
@@ -1733,7 +1752,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 @media all and (max-height: 620px) and (min-height: 550px){
 	.titlePanelLeft{
-		bottom: 8%;
+		bottom: 9.5%;
 	}
 	#refreshGameWrap{
 		height: 49%;
@@ -1744,10 +1763,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
 @media all and (max-height: 550px) and (min-height: 500px){
 	.titlePanelLeft{
-		bottom: 9.5%;
+		bottom: 10%;
 	}
 	#refreshGameWrap{
-		height: 43%;
+		height: 44%;
 	}
 	#lobbyChatLog{
 		height: 70%;
@@ -1755,10 +1774,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
 @media all and (max-height: 500px) and (min-height: 450px){
 	.titlePanelLeft{
-		bottom: 9.5%;
+		bottom: 11%;
 	}
 	#refreshGameWrap{
-		height: 37%;
+		height: 36%;
 	}
 	#lobbyChatLog{
 		height: 68%;
@@ -1766,10 +1785,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
 @media all and (max-height: 450px) and (min-height: 350px){
 	.titlePanelLeft{
-		bottom: 12%;
+		bottom: 13%;
 	}
 	#refreshGameWrap{
-		height: 25%;
+		height: 30%;
 	}
 	#lobbyChatLog{
 		height: 66%;
@@ -1777,10 +1796,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
 @media all and (max-height: 350px) and (min-height: 250px){
 	.titlePanelLeft{
-		bottom: 15%;
+		bottom: 16%;
 	}
 	#refreshGameWrap{
-		height: 20%;
+		height: 23%;
 	}
 	#lobbyChatLog{
 		height: 64%;
@@ -1788,10 +1807,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
 @media all and (max-height: 250px) and (min-height: 0px){
 	.titlePanelLeft{
-		bottom: 18%;
+		bottom: 21%;
 	}
 	#refreshGameWrap{
-		height: 15%;
+		height: 20%;
 	}
 	#lobbyChatLog{
 		height: 60%;
