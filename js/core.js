@@ -4,7 +4,6 @@ $.ajaxSetup({
 	timeout: 4000
 });
 TweenMax.defaultEase = Quad.easeOut;
-
 var g = {
 	name: "",
 	password: "",

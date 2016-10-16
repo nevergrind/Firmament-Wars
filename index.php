@@ -1,5 +1,6 @@
 <?php
 	session_start();
+	
 	if($_SERVER["SERVER_NAME"] === "localhost"){
 		error_reporting(E_ALL);
 		ini_set('display_errors', true);
@@ -41,7 +42,7 @@
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
-	<link rel='stylesheet' type='text/css' href="css/fw1.css?v=0-0-7">
+	<link rel='stylesheet' type='text/css' href="css/fw1.css?v=0-0-8">
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
 
@@ -214,7 +215,7 @@
 			
 					<input type="text" class="joinGameInputs fwBlueInput" id="joinGamePassword" placeholder="Password (Optional)" title="For private games">
 					
-					<button id="joinGame" type="button" class="btn btn-md fwBlue btn-responsive shadow4 pull-right">Join Game</button>
+					<button id="joinGame" type="button" class="btn btn-md fwBlue btn-responsive shadow4">Join Game</button>
 				</div>
 
 				<div id="refreshGameWrap" class="buffer2">
@@ -850,6 +851,7 @@
 		if(location.host==='localhost' || 1){
 			var _scriptLoader = [
 				'core',
+				'ws',
 				'audio',
 				'title',
 				'lobby',
@@ -860,13 +862,13 @@
 			];
 		} else {
 			var _scriptLoader = [
-				'firmament-wars_0-0-7'
+				'firmament-wars_0-0-8'
 			];
 		}
 		var target = d.getElementsByTagName('script')[0].parentNode;
 		for(var i=0, len=_scriptLoader.length; i<len; i++){
 			var x = d.createElement('script');
-			x.src = 'js/'+_scriptLoader[i]+'.js?v=0-0-7';
+			x.src = 'js/'+_scriptLoader[i]+'.js?v=0-0-8';
 			x.async = false;
 			target.appendChild(x);
 		}

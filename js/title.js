@@ -111,7 +111,7 @@ var title = {
 			$('[title]').tooltip();
 			title.animateLogo();
 		}, 100);
-		var interval = location.host === 'localhost' ? 1000 : 12000;
+		var interval = location.host === 'localhost' ? 1000 : 10000;
 		(function repeat(){
 			if (g.view === 'title'){
 				setTimeout(function(){
