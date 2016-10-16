@@ -107,6 +107,7 @@ a:hover{
 .fancyhr{
 	border: 0; 
 	height: 1px; 
+	margin: 1% 0;
 	background-image: -webkit-linear-gradient(
 		left, 
 		rgba(16,64,176,.4), 
@@ -131,7 +132,6 @@ a:hover{
 		rgba(32,128,232,1), 
 		rgba(16,64,176,.4)
 	); 
-	margin:8px 0;
 }
 .shadow1{
 	text-shadow:
@@ -211,7 +211,7 @@ a:hover{
 }
 #titleGlobe{
 	top: auto;
-	bottom: -20%;
+	bottom: -10%;
 	width: 100%;
 }
 #firmamentWarsLogo, #firmamentWarsBlur{
@@ -340,6 +340,17 @@ a:hover{
 	width: 54.8%;
 	bottom: 2%;
 }
+#titleChatWrap{
+	position: absolute;
+	padding: 0%;
+	bottom: 3%;
+	width: 53.8%;
+	left: .5%;
+	font-family: Consolas, monospace;
+	color: #bef;
+	text-shadow: 2px 2px 0 #357;
+	border-radius: 0;
+}
 #titleChatLog{
 	position: absolute;
 	left: 22%;
@@ -347,7 +358,7 @@ a:hover{
 	background: rgba(0,0,0,.5);
 }
 #title-chat-input{
-	padding: 0 1%;
+	padding: 0 2%;
 	width: 100%;
 	border: 1px solid #2e6da4;
 	border-right: none;
@@ -388,26 +399,9 @@ a:hover{
 	width: 21%;
 	background: rgba(0,55,155,.2);
 }
-#titleChatWrap{
-	position: absolute;
-	padding: 0 1%;
-	bottom: .75%;
-	width: 100%;
-	left: 0;
-	font-family: Consolas, monospace;
-	color: #bef;
-	text-shadow: 2px 2px 0 #357;
-	border-radius:
-	0;
-}
 .fwGameLabel{
 	background: rgba(16,56,96,1);
 	color: #aef !important;
-	border: 1px solid #2e6da4;
-}
-.fwBlueInput{
-	background: rgba(0,12,32,1);
-	color: #fff !important;
 	border: 1px solid #2e6da4;
 }
 .fwBlue{
@@ -970,10 +964,9 @@ circle{
 }
 #nationFlag{
 	position: absolute;
-	top: 3em;
-	right: 1em;
+	margin-top: 0%;
+	right: 1%;
 	height: 7em;
-	margin-top: .5em;
 }
 #nation-ui{
 	margin-top: 3%;
@@ -1106,10 +1099,15 @@ circle{
 	color: #bef;
 	background: none;
 	border: 1px solid #2e6da4;
-	margin: 0 .5em;
+	margin: 0;
 	padding: .25em .5em;
 	border-radius: 4px;
-	width: 25%;
+	width: 33%;
+}
+.fwBlueInput{
+	background: rgba(0,12,32,1);
+	color: #fff !important;
+	border: 1px solid #2e6da4;
 }
 .gameTableCol1{
 	width: 50%;
@@ -1700,7 +1698,7 @@ input[type=number]::-webkit-outer-spin-button {
 		bottom: 7.3%;
 	}
 	#refreshGameWrap{
-		height: 65%;
+		height: 66.5%;
 	}
 	#lobbyChatLog{
 		height: 82%;
@@ -1711,62 +1709,95 @@ input[type=number]::-webkit-outer-spin-button {
 		bottom: 7.6%;
 	}
 	#refreshGameWrap{
-		height: 63%;
+		height: 64.5%;
 	}
 	#lobbyChatLog{
 		height: 80%;
 	}
 }
-@media all and (max-height: 840px) and (min-height: 720px){
+@media all and (max-height: 840px) and (min-height: 780px){
 	.titlePanelLeft{
 		bottom: 8%;
 	}
 	#refreshGameWrap{
-		height: 60.5%;
+		height: 63%;
 	}
 	#lobbyChatLog{
 		height: 78%;
 	}
 }
-@media all and (max-height: 720px) and (min-height: 670px){
+@media all and (max-height: 780px) and (min-height: 740px){
+	.titlePanelLeft{
+		bottom: 8%;
+	}
+	#refreshGameWrap{
+		height: 61%;
+	}
+	#lobbyChatLog{
+		height: 78%;
+	}
+}
+@media all and (max-height: 740px) and (min-height: 700px){
 	.titlePanelLeft{
 		bottom: 8.5%;
 	}
 	#refreshGameWrap{
-		height: 58%;
+		height: 59%;
 	}
 	#lobbyChatLog{
 		height: 76%;
 	}
 }
-@media all and (max-height: 670px) and (min-height: 620px){
+@media all and (max-height: 700px) and (min-height: 660px){
+	.titlePanelLeft{
+		bottom: 8.5%;
+	}
+	#refreshGameWrap{
+		height: 57%;
+	}
+	#lobbyChatLog{
+		height: 76%;
+	}
+}
+@media all and (max-height: 660px) and (min-height: 620px){
 	.titlePanelLeft{
 		bottom: 9%;
 	}
 	#refreshGameWrap{
-		height: 55%;
+		height: 53.5%;
 	}
 	#lobbyChatLog{
 		height: 74%;
 	}
 }
-@media all and (max-height: 620px) and (min-height: 550px){
+@media all and (max-height: 620px) and (min-height: 580px){
 	.titlePanelLeft{
 		bottom: 9.5%;
 	}
 	#refreshGameWrap{
-		height: 49%;
+		height: 50%;
 	}
 	#lobbyChatLog{
 		height: 72%;
 	}
 }
-@media all and (max-height: 550px) and (min-height: 500px){
+@media all and (max-height: 580px) and (min-height: 540px){
+	.titlePanelLeft{
+		bottom: 9.5%;
+	}
+	#refreshGameWrap{
+		height: 47%;
+	}
+	#lobbyChatLog{
+		height: 72%;
+	}
+}
+@media all and (max-height: 540px) and (min-height: 500px){
 	.titlePanelLeft{
 		bottom: 10%;
 	}
 	#refreshGameWrap{
-		height: 44%;
+		height: 43%;
 	}
 	#lobbyChatLog{
 		height: 70%;

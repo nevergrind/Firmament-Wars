@@ -50,7 +50,6 @@ var title = {
 						}
 						// set title players
 						if (data.playerData !== undefined){
-							// console.warn(data.playerData);
 							var p = data.playerData,
 								foundPlayers = [];
 							for (var i=0, len=p.length; i<len; i++){
@@ -66,9 +65,15 @@ var title = {
 									e.className = "titlePlayer";
 									e.id = "titlePlayer" + account;
 									var flagName = flag.split(".");
-									e.innerHTML = '<img class="inlineFlag" src="images/flags/' + flag +'"> ' + account;
+									e.innerHTML = '<img id="titlePlayerFlag_' + account + '" class="inlineFlag" src="images/flags/' + flag +'"> ' + account;
 									if (title.titleUpdate){
 										DOM.titleChatPlayers.appendChild(e);
+									}
+								} else if (title.players[account].flag !== flag){
+									// replace player flag
+									var flagElement = document.getElementById("titlePlayerFlag_" + account);
+									if (flagElement !== null){
+										flagElement.src = 'images/flags/' + flag;
 									}
 								}
 								foundPlayers.push(account);
@@ -230,19 +235,21 @@ var title = {
 	chatDrag: false,
 	chatOn: false,
 	chat: function (msg, type){
-		while (DOM.titleChatLog.childNodes.length > 500) {
-			DOM.titleChatLog.removeChild(DOM.titleChatLog.firstChild);
+		if (DOM.titleChatLog !== null){
+			while (DOM.titleChatLog.childNodes.length > 500) {
+				DOM.titleChatLog.removeChild(DOM.titleChatLog.firstChild);
+			}
+			var z = document.createElement('div');
+			if (type){
+				z.className = type;
+			}
+			z.innerHTML = msg;
+			DOM.titleChatLog.appendChild(z);
+			if (!title.chatDrag){
+				DOM.titleChatLog.scrollTop = DOM.titleChatLog.scrollHeight;
+			}
+			g.sendNotification(msg);
 		}
-		var z = document.createElement('div');
-		if (type){
-			z.className = type;
-		}
-		z.innerHTML = msg;
-		DOM.titleChatLog.appendChild(z);
-		if (!title.chatDrag){
-			DOM.titleChatLog.scrollTop = DOM.titleChatLog.scrollHeight;
-		}
-		g.sendNotification(msg);
 	}, 
 	sendMsg: function(bypass){
 		var message = $DOM.titleChatInput.val();

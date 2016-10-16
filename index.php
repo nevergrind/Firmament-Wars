@@ -41,7 +41,7 @@
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
-	<link rel='stylesheet' type='text/css' href="css/fw1.css?v=0-0-6">
+	<link rel='stylesheet' type='text/css' href="css/fw1.css?v=0-0-7">
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
 
@@ -188,13 +188,13 @@
 					if (isset($_SESSION['email']) && $whitelisted){
 						echo
 						'
-						<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>
-						
-						<hr class="fancyhr">';
+						<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>';
 					}
 					?>
 				</div>
-				
+						
+				<hr class="fancyhr">
+			
 				<div id="myNationWrap" class="container tight w100">
 					<?php require('php/myNation.php'); ?>
 				</div>
@@ -203,22 +203,18 @@
 				if (isset($_SESSION['email']) && $whitelisted){
 				echo 
 				'<div class="fw-text">
+					<hr class="fancyhr">
 				
 					<div>
-						<hr class="fancyhr">
 						<button id="create" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Create Game</button>
-						<button id="joinGame" type="button" class="btn btn-md fwBlue btn-responsive shadow4">Join Game</button>
 					</div>
 					
 					<hr class="fancyhr">
-					<form id="joinGamePasswordWrap">
-						<div class="input-group" class="shadow4">
-							<span class="input-group-addon fwGameLabel">Name:</span>
-							<input placeholder="Game Name" id="joinGameName" type="text" class="form-control fwBlueInput" class="joinGameInputs">
-							<span class="input-group-addon fwGameLabel">Password:</span>
-							<input placeholder="For Private Games" id="joinGamePassword" type="text" class="form-control fwBlueInput" class="joinGameInputs">
-						</div>
-					</form>
+					<input type="text" class="joinGameInputs fwBlueInput" id="joinGameName" placeholder="Game Name">
+			
+					<input type="text" class="joinGameInputs fwBlueInput" id="joinGamePassword" placeholder="Password (Optional)" title="For private games">
+					
+					<button id="joinGame" type="button" class="btn btn-md fwBlue btn-responsive shadow4 pull-right">Join Game</button>
 				</div>
 
 				<div id="refreshGameWrap" class="buffer2">
@@ -226,55 +222,41 @@
 				</div>';}
 				?>
 			</div>
-			<!--
-				Game Name <input id="joinGameName" class="joinGameInputs" type="text" maxlength="240" autocomplete="off"/>
-				Password <input id="joinGamePassword" class="joinGameInputs" type="text" maxlength="240"/>
-			-->
 			
 			<div id="titleChat" class="fw-primary text-center">
-				
-				<div id="titleChatWrap">
-					
-					<?php
-					if (isset($_SESSION['email']) && $whitelisted){
-						echo '
-						<div class="input-group">
-							<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" autocomplete="off"/>
-							<div id="titleChatSend" class="input-group-btn">
-								<button class="btn shadow4 fwBlue">Chat</button>
-							</div>
-						</div>';
-					}
-					?>
-				</div>
 			</div>
+			
 			<?php
 				if (isset($_SESSION['email'])){
-					echo '<div id="titleChatPlayers" class="titlePanelLeft"></div>';
+					echo '<div id="titleChatPlayers" class="titlePanelLeft"></div>
+					<div id="titleChatLog" class="titlePanelLeft">';
+					if (!$whitelisted){
+						echo '<div class="chat-alert">You currently do not have access to play Firmament Wars. You must get beta access from the administrator.</div>';
+					}
+					$result = mysqli_query($link, 'select count(row) count from `fwplayers` where timestamp > date_sub(now(), interval 20 second)');
+					// Associative array
+					while ($row = mysqli_fetch_assoc($result)){
+						$total = $row['count']*1;
+						echo '<div>There '. ($total === 1 ? 'is' : 'are') .' '. $row["count"] . ' '. ($total === 1 ? 'person' : 'people') .' playing Firmament Wars</div>';
+					}
 				}
 			?>
+			</div>
 			
-			<div id="titleChatLog" class="titlePanelLeft">
-			<?php
-				/*
-				echo '
-					<div class="chat-warning">MESSAGE OF THE DAY: </div>
-					<div class="chat-warning">Closed beta event on 10/5 @ 8 p.m. EST</div>
-					<div>A teamspeak server is available for voice chat!</div>
-					<div>Download TeamSpeak at <a target="_blank" href="https://www.teamspeak.com/downloads">https://www.teamspeak.com/downloads</a></div>
-					<div>Connect to GhostGaming.gavs.us and join the Firmament Wars channel</div>
-				';
-				*/
-				if (!$whitelisted){
-					echo '<div class="chat-alert">You currently do not have access to play Firmament Wars. You must get beta access from the administrator.</div>';
+				
+			<div id="titleChatWrap">
+					
+				<?php
+				if (isset($_SESSION['email']) && $whitelisted){
+					echo '
+					<div class="input-group">
+						<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" autocomplete="off"/>
+						<div id="titleChatSend" class="input-group-btn">
+							<button class="btn shadow4 fwBlue">Chat</button>
+						</div>
+					</div>';
 				}
-				$result = mysqli_query($link, 'select count(row) count from `fwplayers` where timestamp > date_sub(now(), interval 20 second)');
-				// Associative array
-				while ($row = mysqli_fetch_assoc($result)){
-					$total = $row['count']*1;
-					echo '<div>There '. ($total === 1 ? 'is' : 'are') .' '. $row["count"] . ' '. ($total === 1 ? 'person' : 'people') .' playing Firmament Wars</div>';
-				}
-			?>
+				?>
 			</div>
 		</div>
 	
@@ -878,13 +860,13 @@
 			];
 		} else {
 			var _scriptLoader = [
-				'firmament-wars_0-0-6'
+				'firmament-wars_0-0-7'
 			];
 		}
 		var target = d.getElementsByTagName('script')[0].parentNode;
 		for(var i=0, len=_scriptLoader.length; i<len; i++){
 			var x = d.createElement('script');
-			x.src = 'js/'+_scriptLoader[i]+'.js?v=0-0-6';
+			x.src = 'js/'+_scriptLoader[i]+'.js?v=0-0-7';
 			x.async = false;
 			target.appendChild(x);
 		}
