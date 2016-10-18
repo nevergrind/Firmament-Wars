@@ -9,6 +9,7 @@ All projects shown below are used to create Firmament Wars.
 * [JQuery](https://github.com/jquery/jquery)
 * [Greensock Animation Platform](https://github.com/greensock/GreenSock-JS)
 * [Bootstrap](https://github.com/twbs/bootstrap)
+* [Ratchet](https://github.com/ratchetphp/Ratchet)
 
 # Developer
 
