@@ -232,11 +232,12 @@ var animate = {
 				circ.setAttributeNS(null,"stroke","#ffff55");
 				DOM.mapAnimations.appendChild(circ);
 				
-				var delay = Math.random()*.3;
-				TweenMax.to(circ, .5, {
+				var delay = i * .015;
+				console.info(delay);
+				TweenMax.to(circ, .3, {
 					delay: delay,
 					attr: {
-						r: 0
+						r: 4
 					},
 					onUpdate: function(){
 						TweenMax.set(circ, {
@@ -247,13 +248,12 @@ var animate = {
 						this.target.parentNode.removeChild(this.target);
 					}
 				});
-				TweenMax.to(circ, .5, {
+				TweenMax.to(circ, .3, {
 					delay: delay,
 					startAt:{
 						opacity: 1
 					},
-					opacity: 0,
-					ease: Power4.easeOut
+					opacity: 0
 				});
 			})(Math);
 		}
@@ -373,8 +373,9 @@ var animate = {
 				circ.setAttributeNS(null,"stroke",'#ffffaa');
 				DOM.mapAnimations.appendChild(circ);
 				
+				var delay = i * .05;
 				TweenMax.to(circ, .75, {
-					delay: Math.random() * .25,
+					delay: delay,
 					attr: {
 						r: 32
 					},
