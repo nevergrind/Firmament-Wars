@@ -157,7 +157,6 @@ audio.init = (function(){
 		audio.save();
 	} else {
 		var foo = JSON.parse(config);
-		console.warn(foo.audio);
 		if (g.config.audio.musicOn === undefined){
 			g.config.audio = foo.audio;
 		}

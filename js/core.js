@@ -554,12 +554,12 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
 // browser dependent
 (function($){
 	if (isMSIE || isMSIE11){
-		window.stop();
 		alert("Firmament Wars does not support Internet Explorer. Consider using Chrome or Firefox for an enjoyable experience.");
+		window.stop();
 		// $("head").append('<style> text { fill: #ffffff; stroke-width: 0px; } </style>');
 	} else if (isSafari){
-		window.stop();
 		alert("Firmament Wars does not support Safari. Consider using Chrome or Firefox for an enjoyable experience.");
+		window.stop();
 		// $("head").append('<style> text { fill: #ffffff; stroke: #ffffff; stroke-width: 0px; } </style>');
 	}
 	if (isMobile){
