@@ -1,1 +1,1 @@
-php c:/xampp/htdocs/games/firmament-wars/php/ratchet/bin/push-server.php
+php c:/xampp/htdocs/games/firmament-wars/socket/bin/push-server.php
