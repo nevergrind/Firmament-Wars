@@ -2,23 +2,18 @@
 namespace MyApp;
 use Ratchet\ConnectionInterface;
 use Ratchet\Wamp\WampServerInterface;
-
+// used to server push from PHP scripts
 class Pusher implements WampServerInterface {
     /**
      * A lookup of all the topics clients have subscribed to
      */
     protected $subscribedTopics = array();
 
-    public function onSubscribe(ConnectionInterface $conn, $topic) {
-        $this->subscribedTopics[$topic->getId()] = $topic;
-    }
-
     /**
      * @param string JSON'ified string we'll receive from ZeroMQ
      */
-    public function onBlogEntry($entry) {
+    public function pushData($entry) {
         $entryData = json_decode($entry, true);
-
         // If the lookup topic object isn't set there is no one to publish to
         if (!array_key_exists($entryData['category'], $this->subscribedTopics)) {
             return;
@@ -28,6 +23,10 @@ class Pusher implements WampServerInterface {
 
         // re-send the data to all the clients subscribed to that category
         $topic->broadcast($entryData);
+    }
+
+    public function onSubscribe(ConnectionInterface $conn, $topic) {
+        $this->subscribedTopics[$topic->getId()] = $topic;
     }
     public function onUnSubscribe(ConnectionInterface $conn, $topic) {
     }

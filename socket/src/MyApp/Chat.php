@@ -2,7 +2,9 @@
 namespace MyApp;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
-
+// class used for Websocket connection
+// opted to use server push class instead
+// keeping this around in case I need Websocket for future use
 class Chat implements MessageComponentInterface {
     protected $clients;
 
@@ -33,7 +35,6 @@ class Chat implements MessageComponentInterface {
     public function onClose(ConnectionInterface $conn) {
         // The connection is closed, remove it, as we can no longer send it messages
         $this->clients->detach($conn);
-
         echo "Connection {$conn->resourceId} has disconnected\n";
     }
 

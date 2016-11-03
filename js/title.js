@@ -40,6 +40,7 @@ var title = {
 						// report chat messages
 						console.log("Ping: ", Date.now() - start);
 						var len = data.chat.length;
+						/*
 						if (len > 0){
 							// get chat messages
 							for (var i=0; i<len; i++){
@@ -48,6 +49,7 @@ var title = {
 								}
 							}
 						}
+						*/
 						// set title players
 						if (data.playerData !== undefined){
 							var p = data.playerData,
@@ -111,7 +113,7 @@ var title = {
 			$('[title]').tooltip();
 			title.animateLogo();
 		}, 100);
-		var interval = location.host === 'localhost' ? 1000 : 10000;
+		var interval = location.host === 'localhost' ? 10000 : 10000;
 		(function repeat(){
 			if (g.view === 'title'){
 				setTimeout(function(){
@@ -516,10 +518,14 @@ $("#flagDropdown").on('click', '.flagSelect', function(e){
 		}
 	}).done(function(data) {
 		$("#offerFlag").css("display", "none");
-		$(".nationFlag").attr("src", "images/flags/" + my.selectedFlagFull);
+		$(".nationFlag").attr({
+			src: "images/flags/" + my.selectedFlagFull,
+			title: my.selectedFlag
+		});
 		$("#flagPurchased").css("display", "block");
 		Msg("Your nation's flag is now: " + my.selectedFlag);
 		document.getElementById('selectedFlag').textContent = my.selectedFlag;
+		$("[title]").tooltip('fixTitle');
 	}).fail(function(e){
 		$("#flagPurchased").css("display", "none");
 		$("#offerFlag").css("display", "block");
@@ -564,9 +570,13 @@ $("#buyFlag").on("click", function(){
 		$("#crystalCount").text(data);
 		$("#flagPurchased").css("display", "block");
 		$("#offerFlag").css("display", "none");
-		$(".nationFlag").attr("src", "images/flags/" + my.selectedFlagFull);
+		$(".nationFlag").attr({
+			src: "images/flags/" + my.selectedFlagFull,
+			title: my.selectedFlag
+		});
 		Msg("Your nation's flag is now: " + my.selectedFlag);
 		document.getElementById('selectedFlag').textContent = my.selectedFlag;
+		$("[title]").tooltip('fixTitle');
 	}).fail(function(e){
 		// not enough money
 		Msg(e.statusText);

@@ -117,7 +117,7 @@ var g = {
 	},
 	config: {
 		audio: {
-			musicVolume: 0,
+			musicVolume: 50,
 			soundVolume: 50
 		}
 	},

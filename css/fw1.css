@@ -1001,6 +1001,10 @@ circle{
     background-color: #286090;
     border-color: #204d74;
 }
+#joinGame{
+	position: relative;
+	top: -1px;
+}
 #joinGameLobby{
 	visibility: hidden;
 	position: absolute;

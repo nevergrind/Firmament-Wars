@@ -39,10 +39,27 @@
 	<meta name="twitter:widgets:csp" content="on">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
+	<script>
+		var version = "0-0-9";
+	</script>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
-	<link rel='stylesheet' type='text/css' href="css/fw1.css?v=0-0-8">
+	<script>
+	(function(d){
+		var css = [
+			'fw1'
+		]
+		for (var i=0, len=css.length; i<len; i++){
+			var link = document.createElement('link');
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = 'css/' + css[i] + '.css?version=' + version;
+			d.head.appendChild(link);
+		}
+	})(document);
+	</script>
+	
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
 
@@ -213,7 +230,7 @@
 					<hr class="fancyhr">
 					<input type="text" class="joinGameInputs fwBlueInput" id="joinGameName" placeholder="Game Name">
 			
-					<input type="text" class="joinGameInputs fwBlueInput" id="joinGamePassword" placeholder="Password (Optional)" title="For private games">
+					<input type="text" class="joinGameInputs fwBlueInput" id="joinGamePassword" placeholder="Password (Optional)">
 					
 					<button id="joinGame" type="button" class="btn btn-md fwBlue btn-responsive shadow4">Join Game</button>
 				</div>
@@ -866,12 +883,11 @@
 				'firmament-wars_0-0-8'
 			];
 		}
-		var target = d.getElementsByTagName('script')[0].parentNode;
 		for(var i=0, len=_scriptLoader.length; i<len; i++){
 			var x = d.createElement('script');
 			x.src = 'js/'+_scriptLoader[i]+'.js?v=0-0-8';
 			x.async = false;
-			target.appendChild(x);
+			d.head.appendChild(x);
 		}
 	})(document);
 </script>
