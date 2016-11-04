@@ -1,15 +1,17 @@
 # Firmament-Wars
 [Firmament Wars is a multiplayer real-time strategy browser game](https://nevergrind.com/games/firmament-wars). Firmament Wars is planned for release in late 2016. Check our [About Firmament Wars](https://nevergrind.com/blog/about-firmament-wars/) page to learn more about the project.
 
-# GitHub Projects Used in Firmament Wars
+# Firmament Wars Technology Stack
 
-All projects shown below are used to create Firmament Wars.
+All projects shown helped create Firmament Wars.
 
 * [Bootstrap Slider](https://github.com/seiyria/bootstrap-slider)
 * [JQuery](https://github.com/jquery/jquery)
 * [Greensock Animation Platform](https://github.com/greensock/GreenSock-JS)
 * [Bootstrap](https://github.com/twbs/bootstrap)
 * [Ratchet](https://github.com/ratchetphp/Ratchet)
+* [AutobahnJS](https://github.com/crossbario/autobahn-js)
+* [ZeroMQ](https://github.com/mkoppanen/php-zmq)
 
 # Developer
 
