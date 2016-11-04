@@ -256,7 +256,11 @@
 			
 			<?php
 				if (isset($_SESSION['email'])){
-					echo '<div id="titleChatPlayers" class="titlePanelLeft"></div>
+					echo '
+					<div id="titleChatPlayers" class="titlePanelLeft">
+						<div id="titleChatHeader" class="chat-warning">Global</div>
+						<div id="titleChatBody"></div>
+					</div>
 					<div id="titleChatLog" class="titlePanelLeft">';
 					if (!$whitelisted){
 						echo '<div class="chat-alert">You currently do not have access to play Firmament Wars. You must get beta access from the administrator.</div>';
@@ -280,7 +284,7 @@
 					<div class="input-group">
 						<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" autocomplete="off"/>
 						<div id="titleChatSend" class="input-group-btn">
-							<button class="btn shadow4 fwBlue">Chat</button>
+							<button class="btn shadow4 fwBlue">Send</button>
 						</div>
 					</div>';
 				}

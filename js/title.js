@@ -25,78 +25,10 @@ var title = {
 		$.ajax({
 			type: 'GET',
 			url: 'php/initChatId.php'
-		}).done(function(data){
-			// only update if logged in
-			title.titleUpdate = $("#titleChatPlayers").length;
-			if (title.titleUpdate){
-				// title chat loop
-				(function repeat(){
-					if (g.view === 'title'){
-						var start = Date.now();
-						$.ajax({
-							type: "POST",
-							url: "php/titleUpdate.php",
-							data: {
-								channel: my.channel
-							}
-						}).done(function(data){
-							// report chat messages
-							console.log("Ping: ", Date.now() - start);
-							// set title players
-							if (data.playerData !== undefined){
-								var p = data.playerData,
-									foundPlayers = [];
-								for (var i=0, len=p.length; i<len; i++){
-									// add new players
-									var account = p[i].account,
-										flag = p[i].flag;
-									if (title.players[account] === undefined){
-										// console.info("ADDING PLAYER: " + account);
-										title.players[account] = {
-											flag: flag
-										}
-										var e = document.createElement('div');
-										e.className = "titlePlayer";
-										e.id = "titlePlayer" + account;
-										var flagName = flag.split(".");
-										e.innerHTML = '<img id="titlePlayerFlag_' + account + '" class="inlineFlag" src="images/flags/' + flag +'"> ' + account;
-										if (title.titleUpdate){
-											DOM.titleChatPlayers.appendChild(e);
-										}
-									} else if (title.players[account].flag !== flag){
-										// replace player flag
-										var flagElement = document.getElementById("titlePlayerFlag_" + account);
-										if (flagElement !== null){
-											flagElement.src = 'images/flags/' + flag;
-										}
-									}
-									foundPlayers.push(account);
-								}
-								// remove missing players
-								for (var key in title.players){
-									if (foundPlayers.indexOf(key) === -1){
-										// console.info("REMOVING PLAYER: " + key);
-										delete title.players[key];
-										var z = document.getElementById('titlePlayer' + key);
-										z.parentNode.removeChild(z);
-									}
-								}
-							}
-						}).always(function(){
-							setTimeout(function(){
-								if (title.titleUpdate){
-									repeat();
-								}
-							}, 5000);
-						});
-					}
-				})();
-			} else {
-				$("#titleChat, #titleMenu").remove();
-			}
+		}).done(function(){
+			title.updatePlayers();
 		});
 		setTimeout(function(){
-			title.chat("You have joined the global chat lobby.", "chat-warning");
 			var str = '';
 			for (var key in title.mapData){
 				str += "<li><a class='mapSelect' href='#'>" + title.mapData[key].name + "</a></li>";
@@ -123,6 +55,76 @@ var title = {
 		refreshGames(true);
 		Notification.requestPermission();
 	})(),
+	updatePlayers: function(data){
+		// only update if logged in
+		title.titleUpdate = $("#titleChatPlayers").length;
+		if (title.titleUpdate){
+			// title chat loop
+			(function repeat(){
+				if (g.view === 'title'){
+					var start = Date.now();
+					$.ajax({
+						type: "POST",
+						url: "php/titleUpdate.php",
+						data: {
+							channel: my.channel
+						}
+					}).done(function(data){
+						// report chat messages
+						console.log("Ping: ", Date.now() - start);
+						// set title players
+						if (data.playerData !== undefined){
+							var p = data.playerData,
+								foundPlayers = [];
+							for (var i=0, len=p.length; i<len; i++){
+								// add new players
+								var account = p[i].account,
+									flag = p[i].flag;
+								if (title.players[account] === undefined){
+									// console.info("ADDING PLAYER: " + account);
+									title.players[account] = {
+										flag: flag
+									}
+									var e = document.createElement('div');
+									e.className = "titlePlayer";
+									e.id = "titlePlayer" + account;
+									var flagName = flag.split(".");
+									e.innerHTML = '<img id="titlePlayerFlag_' + account + '" class="inlineFlag" src="images/flags/' + flag +'"> ' + account;
+									if (title.titleUpdate){
+										DOM.titleChatBody.appendChild(e);
+									}
+								} else if (title.players[account].flag !== flag){
+									// replace player flag
+									var flagElement = document.getElementById("titlePlayerFlag_" + account);
+									if (flagElement !== null){
+										flagElement.src = 'images/flags/' + flag;
+									}
+								}
+								foundPlayers.push(account);
+							}
+							// remove missing players
+							for (var key in title.players){
+								if (foundPlayers.indexOf(key) === -1){
+									// console.info("REMOVING PLAYER: " + key);
+									delete title.players[key];
+									var z = document.getElementById('titlePlayer' + key);
+									z.parentNode.removeChild(z);
+								}
+							}
+						}
+					}).always(function(){
+						setTimeout(function(){
+							if (title.titleUpdate){
+								repeat();
+							}
+						}, 5000);
+					});
+				}
+			})();
+		} else {
+			$("#titleChat, #titleMenu").remove();
+		}
+	},
 	animateLogo: function(){
 		var globeDelay = 1,
 			globeYoyo = 6;
@@ -233,7 +235,7 @@ var title = {
 	chatDrag: false,
 	chatOn: false,
 	chat: function (msg, type){
-		if (DOM.titleChatLog !== null){
+		if (g.view === 'title'){
 			while (DOM.titleChatLog.childNodes.length > 500) {
 				DOM.titleChatLog.removeChild(DOM.titleChatLog.firstChild);
 			}
@@ -251,16 +253,21 @@ var title = {
 	}, 
 	sendMsg: function(bypass){
 		var message = $DOM.titleChatInput.val();
+		// bypass via ENTER or chat has focus
 		if (bypass || title.chatOn){
-			// bypass via ENTER or chat has focus
 			if (message){
-				// send ajax chat msg
-				$.ajax({
-					url: 'php/insertTitleChat.php',
-					data: {
-						message: message
-					}
-				});
+				// is it a command?
+				if (message.indexOf('/channel ') === 0){
+					var arr = message.split("/channel ");
+					socket.setChannel(arr[1]);
+				} else {
+					$.ajax({
+						url: 'php/insertTitleChat.php',
+						data: {
+							message: message
+						}
+					});
+				}
 			}
 			$DOM.titleChatInput.val('');
 		}
@@ -305,6 +312,7 @@ var title = {
 				}
 			}).done(function(data) {
 				my.player = data.player;
+				game.id = data.gameId;
 				console.info("Creating: ", data);
 				lobby.init(data);
 				lobby.join(); // create
@@ -333,6 +341,7 @@ var title = {
 		}).done(function(data) {
 			console.info(data);
 			my.player = data.player;
+			game.id = data.gameId;
 			g.map = data.mapData;
 			lobby.init(data);
 			lobby.join(); // normal join

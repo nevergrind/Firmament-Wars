@@ -215,6 +215,7 @@ g.init = (function(){
 			if (data.gameId > 0){
 				console.info("Auto joined game:" + (data.gameId));
 				my.player = data.player;
+				game.id = data.gameId;
 				// join lobby in progress
 				setTimeout(function(){
 					lobby.init(data);
@@ -273,6 +274,7 @@ function Stats(){
 	return o;
 }
 var game = {
+	name: '',
 	tiles: [],
 	initialized: false,
 	player: [0,0,0,0,0,0,0,0,0], // cached values on client to reduce DB load
@@ -511,7 +513,7 @@ function initDom(){
 		mapCapitals: d.getElementById('mapCapitals'),
 		mapUpgrades: d.getElementById('mapUpgrades'),
 		mapBars: d.getElementById('mapBars'),
-		titleChatPlayers: d.getElementById('titleChatPlayers')
+		titleChatBody: d.getElementById('titleChatBody')
 	}
 }
 initDom();

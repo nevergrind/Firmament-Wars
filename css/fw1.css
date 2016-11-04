@@ -343,6 +343,20 @@ tbody{
 	width: 54.8%;
 	bottom: 2%;
 }
+#titleChatHeader{
+	text-align: center;
+	background: rgba(0, 0, 0, .7);
+	margin-bottom: .25em;
+	padding: .125em 0;
+	border-bottom: 1px solid #357;
+    background: -webkit-radial-gradient(top center, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0,0,0,1) 100%);
+    background: -moz-radial-gradient(top center, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0,0,0,1) 100%);
+    background: -ms-radial-gradient(top center, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0,0,0,1) 100%);
+    background: -o-radial-gradient(top center, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0,0,0,1) 100%);
+}
+.titlePlayer{
+	padding: 0 .5em;
+}
 #titleChatWrap{
 	position: absolute;
 	padding: 0%;
@@ -400,6 +414,7 @@ tbody{
 #titleChatPlayers{
 	left: .5%;
 	width: 21%;
+	padding: 0;
 	background: rgba(0,55,155,.2);
 }
 .fwGameLabel{
