@@ -331,6 +331,9 @@ a:hover{
 	margin: 0;
 	color: #fff;
 }
+tbody{
+	border: 0;
+}
 /* title chat */
 #titleChat{
 	position: absolute;

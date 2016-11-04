@@ -295,6 +295,7 @@ var game = {
 }
 // player data values
 var my = {
+	channel: 'Global',
 	player: 1,
 	gameName: 'Earth Alpha',
 	max: 8,
@@ -698,21 +699,15 @@ function refreshGames(click){
 		type: 'GET',
 		url: 'php/refreshGames.php'
 	}).done(function(data) {
-		var e = document.getElementById('refreshGameWrap');
+		var e = document.getElementById('gameTableBody');
 		if (e === null){
 			return;
 		}
 		if (!data.length){
-			e.innerHTML = "<div class='text-center text-warning buffer2'>No active games found. Create a game to play!</div>";
+			e.innerHTML = "<td colspan='3' class='text-center text-warning buffer2'>No active games found. Create a game to play!</td>";
 		} else {
 			// head
-			var str = 
-			'<table id="gameTable" class="table table-condensed table-borderless">\
-				<tr>\
-					<th class="gameTableCol1 warCells">Game Name</th>\
-					<th class="gameTableCol2 warCells">Map</th>\
-					<th class="gameTableCol3 warCells">Players</th>\
-				</tr>';
+			var str = '';
 			// body
 			for (var i=0, len=data.length; i<len; i++){
 				str += 
@@ -722,8 +717,6 @@ function refreshGames(click){
 					<td class='warCells'>" + data[i].players + "/" + data[i].max + "</td>\
 				</tr>";
 			}
-			// foot
-			str += "</table>";
 			e.innerHTML = str;
 			if (click){
 				$(".wars").filter(":first").trigger("click");
@@ -756,12 +749,6 @@ function exitGame(bypass){
 function serverError(data){
 	// Msg('The server reported an error.');
 	console.error('The server reported an error.');
-	/*
-	setTimeout(function(){
-		window.onbeforeunload = null;
-		location.reload();
-	}, 5000);
-	*/
 }
 
 $(window).on('resize orientationchange', function() {

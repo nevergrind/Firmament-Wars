@@ -236,7 +236,17 @@
 				</div>
 
 				<div id="refreshGameWrap" class="buffer2">
-					<div id="menuContent" class="buffer2 shadow4"></div>
+					<table id="gameTable" class="table table-condensed table-borderless">
+						<thead>
+							<tr>
+								<th class="gameTableCol1 warCells">Game Name</th>
+								<th class="gameTableCol2 warCells">Map</th>
+								<th class="gameTableCol3 warCells">Players</th>
+							</tr>
+						</thead>
+						<tbody id="gameTableBody">
+						</tbody>
+					</table>
 				</div>';}
 				?>
 			</div>
