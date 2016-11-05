@@ -268,10 +268,10 @@ function getGameState(){
 							console.warn(evt, evt.length, my.player + '');
 							if (evt.length === 1){
 								if (evt === my.player + ''){
-									chat(z.message);
+									game.chat(z.message);
 								}
 							} else {
-								chat(z.message);
+								game.chat(z.message);
 							}
 						}
 						if (!evt){
@@ -378,7 +378,7 @@ function getGameState(){
 					setResources(data);
 					if (data.cultureMsg !== undefined){
 						if (data.cultureMsg){
-							chat(data.cultureMsg);
+							game.chat(data.cultureMsg);
 							audio.play('culture');
 							// recruit bonus changes
 							initOffensiveTooltips();
@@ -389,7 +389,7 @@ function getGameState(){
 						// was it special?
 						if (!data.getBonus){
 							// no bonus troops; only broadcast to self
-							chat(data.get + ': ' + my.nation + ' receives <span class="chat-manpower">' + data.manpowerBonus + '</span> armies!');
+							game.chat(data.get + ': ' + my.nation + ' receives <span class="chat-manpower">' + data.manpowerBonus + '</span> armies!');
 						}
 					}
 				}).fail(function(data){

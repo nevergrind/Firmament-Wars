@@ -74,23 +74,29 @@ var lobby = {
 		document.getElementById('lobbyGovernment' + my.player).innerHTML = government;
 		document.getElementById('lobbyGovernmentDescription').innerHTML = str;
 	},
-	chat: function (msg){
+	chat: function (msg, type){
 		while (DOM.lobbyChatLog.childNodes.length > 200) {
 			DOM.lobbyChatLog.removeChild(DOM.lobbyChatLog.firstChild);
 		}
 		var z = document.createElement('div');
+		if (type){
+			z.className = type;
+		}
 		z.innerHTML = msg;
 		DOM.lobbyChatLog.appendChild(z);
 		if (!lobby.chatDrag){
 			DOM.lobbyChatLog.scrollTop = DOM.lobbyChatLog.scrollHeight;
 		}
 		g.sendNotification(msg);
+		if (!document.hasFocus()){
+			audio.play('chat');
+		}
 	},
 	chatDrag: false,
 	gameStarted: false,
 	chatOn: false,
 	sendMsg: function(bypass){
-		var message = $DOM.lobbyChatInput.val();
+		var message = $DOM.lobbyChatInput.val().trim();
 		if (bypass || lobby.chatOn){
 			// bypass via ENTER or chat has focus
 			if (message){

@@ -5,6 +5,8 @@ $.ajaxSetup({
 });
 TweenMax.defaultEase = Quad.easeOut;
 var g = {
+	defaultTitle: 'Firmament Wars | Multiplayer Grand Strategy Warfare',
+	titleFlashing: false,
 	name: "",
 	password: "",
 	focusUpdateNationName: false,
@@ -133,25 +135,54 @@ var g = {
 	removeContainers: function(){
 		$("#firmamentWarsLogoWrap, #mainWrap").remove();
 	},
+	notification: {},
 	sendNotification: function(msg){
 		if (!document.hasFocus()){
 			// it's a player message
+			var type = 'says';
 			if (msg.indexOf("images/flags") > -1){
 				var flagArr = msg.split('"'),
 					flagPath = flagArr[1],
 					bodyArr = msg.split(':'),
 					body = bodyArr[1],
-					msgArr = bodyArr[0].split('>'),
-					msg = msgArr[1] + ' says:';
-				new Notification(msg, {
+					msgArr = bodyArr[0].split('>');
+				my.lastReceivedWhisper = msgArr[1];
+				var msg = my.lastReceivedWhisper + ' says:';
+				if (my.lastReceivedWhisper.indexOf(' whispers') > -1){
+					msg = my.lastReceivedWhisper + ':';
+					my.lastReceivedWhisper = my.lastReceivedWhisper.split(" ").shift();
+					type = 'whispers';
+				}
+				g.notification = new Notification(msg, {
 					icon: flagPath,
 					tag: "Nevergrind",
 					body: body
 				});
 			}
+			// title flash
+			if (!g.titleFlashing){
+				g.titleFlashing = true;
+				(function repeat(toggle){
+					if (!document.hasFocus()){
+						if (toggle % 2 === 0){
+							document.title = my.lastReceivedWhisper + ' ' + type + '...';
+						} else {
+							document.title = g.defaultTitle;
+						}
+						setTimeout(repeat, 3000, ++toggle);
+					}
+				})(0);
+			}
 		}
 	}
 }
+$(window).focus(function(){
+	document.title = g.defaultTitle;
+	g.titleFlashing = false;
+	if (g.notification.close !== undefined){
+		g.notification.close();
+	}
+});
 g.init = (function(){
 	console.info("Initializing game...");
 	$('[title]').tooltip();
@@ -293,11 +324,30 @@ var game = {
 				}
 			});
 		})(8)
+	},
+	chat: function(msg, type){
+		while (DOM.chatContent.childNodes.length > 10) {
+			DOM.chatContent.removeChild(DOM.chatContent.firstChild);
+		}
+		var z = document.createElement('div');
+		if (type){
+			z.className = type;
+		}
+		z.innerHTML = msg;
+		DOM.chatContent.appendChild(z);
+		setTimeout(function(){
+			if (z !== undefined){
+				if (z.parentNode !== null){ 
+					z.parentNode.removeChild(z);
+				}
+			}
+		}, 12000);
 	}
 }
 // player data values
 var my = {
-	channel: 'Global',
+	lastReceivedWhisper: '',
+	channel: 'global',
 	player: 1,
 	gameName: 'Earth Alpha',
 	max: 8,
@@ -443,6 +493,10 @@ var my = {
 				});
 			}
 		}
+	},
+	// return client-side inline chat flag
+	inlineFlag: function(){
+		return '<img src="images/flags/' + my.flag + '" class="inlineFlag">';
 	}
 }
 var timer = {
@@ -618,21 +672,6 @@ function resizeWindow() {
 }
 
 
-function chat(msg) {
-    while (DOM.chatContent.childNodes.length > 10) {
-        DOM.chatContent.removeChild(DOM.chatContent.firstChild);
-    }
-    var z = document.createElement('div');
-    z.innerHTML = msg;
-    DOM.chatContent.appendChild(z);
-	setTimeout(function(){
-		if (z !== undefined){
-			if (z.parentNode !== null){ 
-				z.parentNode.removeChild(z);
-			}
-		}
-	}, 12000);
-}
 var video = {
 	cache: {},
 	load: {

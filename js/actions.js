@@ -106,7 +106,7 @@ var action = {
 				audio.move();
 			}
 			if (data.rewardMsg !== undefined){
-				chat(data.rewardMsg);
+				game.chat(data.rewardMsg);
 			}
 			if (data.production !== undefined){
 				setProduction(data);
@@ -458,12 +458,11 @@ var action = {
 // key bindings
 function toggleChatMode(send){
 	g.chatOn = g.chatOn ? false : true;
-	console.info('CHAT', g.chatOn);
 	if (g.chatOn){
 		$DOM.chatInput.focus();
 		DOM.chatInput.className = 'fw-text noselect nobg chatOn';
 	} else {
-		var message = $DOM.chatInput.val();
+		var message = $DOM.chatInput.val().trim();
 		if (send && message){
 			// send ajax chat msg
 			$.ajax({
@@ -612,9 +611,9 @@ var research = {
 	},
 	report: function(data, tech){
 		setProduction(data);
-		chat('You have finished researching ' + tech + '.');
+		game.chat('You have finished researching ' + tech + '.');
 		if (data.cultureMsg){
-			chat(data.cultureMsg);
+			game.chat(data.cultureMsg);
 		}
 		audio.play('research');
 		action.setMenu();

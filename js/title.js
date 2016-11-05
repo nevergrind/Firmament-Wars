@@ -25,8 +25,11 @@ var title = {
 		$.ajax({
 			type: 'GET',
 			url: 'php/initChatId.php'
-		}).done(function(){
+		}).done(function(data){
+			my.account = data.account;
+			my.flag = data.flag;
 			title.updatePlayers();
+			socket.enableWhisper();
 		});
 		setTimeout(function(){
 			var str = '';
@@ -112,6 +115,7 @@ var title = {
 								}
 							}
 						}
+						document.getElementById('titleChatHeaderCount').textContent = len;
 					}).always(function(){
 						setTimeout(function(){
 							if (title.titleUpdate){
@@ -129,12 +133,12 @@ var title = {
 		var globeDelay = 1,
 			globeYoyo = 6;
 		// animate stars
-		TweenMax.to('#firmamentWarsStars1', 120, {
+		TweenMax.to('#firmamentWarsStars1', 240, {
 			backgroundPosition: '-800px 0px', 
 			repeat: -1,
 			ease: Linear.easeNone
 		});
-		TweenMax.to('#firmamentWarsStars2', 80, {
+		TweenMax.to('#firmamentWarsStars2', 170, {
 			startAt: {
 				backgroundPosition: '250px 250px', 
 			},
@@ -142,7 +146,7 @@ var title = {
 			repeat: -1,
 			ease: Linear.easeNone
 		});
-		TweenMax.to('#firmamentWarsStars3', 40, {
+		TweenMax.to('#firmamentWarsStars3', 90, {
 			startAt: {
 				backgroundPosition: '600px 500px', 
 			},
@@ -150,7 +154,7 @@ var title = {
 			repeat: -1,
 			ease: Linear.easeNone
 		});
-		TweenMax.to('#firmamentWarsStars4', 20, {
+		TweenMax.to('#firmamentWarsStars4', 50, {
 			startAt: {
 				backgroundPosition: '400px 600px', 
 			},
@@ -249,22 +253,59 @@ var title = {
 				DOM.titleChatLog.scrollTop = DOM.titleChatLog.scrollHeight;
 			}
 			g.sendNotification(msg);
+			if (!document.hasFocus()){
+				audio.play('chat');
+			}
 		}
-	}, 
+	},
+	sendWhisper: function(msg, splitter){
+		var arr = msg.split(splitter);
+		var account = arr[1].split(" ").shift();
+		var test = arr[1].split(" ");
+		test.shift();
+		console.info(test);
+		var msg = test.join(" ");
+		$.ajax({
+			url: 'php/insertWhisper.php',
+			data: {
+				account: account,
+				message: msg
+			}
+		});
+		title.chat(my.inlineFlag() + 'To ' + account + ': ' + msg, 'chat-whisper');
+	},
+	receiveWhisper: function(msg, type){
+		if (g.view === 'title'){
+			title.chat(msg, type);
+		} else if (g.view === 'lobby'){
+			lobby.chat(msg, type);
+		} else {
+			game.chat(msg, type);
+		}
+	},
+	changeChannel: function(msg, splitter){
+		var arr = msg.split(splitter);
+		socket.setChannel(arr[1]);
+	},
 	sendMsg: function(bypass){
-		var message = $DOM.titleChatInput.val();
+		var msg = $DOM.titleChatInput.val().trim();
 		// bypass via ENTER or chat has focus
 		if (bypass || title.chatOn){
-			if (message){
+			if (msg){
 				// is it a command?
-				if (message.indexOf('/channel ') === 0){
-					var arr = message.split("/channel ");
-					socket.setChannel(arr[1]);
+				if (msg.indexOf('/join ') === 0){
+					title.changeChannel(msg, '/join ');
+				} else if (msg.indexOf('/j ') === 0){
+					title.changeChannel(msg, '/j ');
+				} else if (msg.indexOf('/whisper ') === 0){
+					title.sendWhisper(msg , '/whisper ');
+				} else if (msg.indexOf('/w ') === 0){
+					title.sendWhisper(msg , '/w ');
 				} else {
 					$.ajax({
 						url: 'php/insertTitleChat.php',
 						data: {
-							message: message
+							message: msg
 						}
 					});
 				}
@@ -395,6 +436,7 @@ $("img").on('dragstart', function(event) {
 
 $("#logout").on('click', function() {
 	playerLogout();
+	return false;
 });
 
 $("#titleMenu").on("click", ".wars", function(){

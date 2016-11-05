@@ -40,7 +40,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
 	<script>
-		var version = "0-0-9";
+		var version = "0-0-10";
 	</script>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -106,16 +106,9 @@
 					<a href="/store">Store</a>&ensp;
 					<a href="/forums" title="Nevergrind Browser Game Forums">Forums</a>&ensp; 
 					<a href="/blog" title="Nevergrind Browser Game Development News and Articles">Blog</a>&ensp; 
-					<a id="options" class="pointer options">Options</a>&ensp; 
-					
-					
-					
-					<span id="logout" class="pointer">Logout</span>';
+					<a id="options" class="pointer options">Options</a>';
 					?>
 					<?php
-				} else {
-					echo 
-					'<a id="login" href="/login.php?back=/games/firmament-wars">Login</a>';
 				}
 				echo '
 				<div class="pull-right text-primary">
@@ -142,8 +135,13 @@
 					</a>
 					<a href="http://www.indiedb.com/games/firmament-wars">
 						<i class="fa fa-gamepad text-primary pointer"></i>
-					</a>
-				</div>';
+					</a>';
+				if (isset($_SESSION['email'])){
+					echo '&ensp;<a id="logout" class="btn fwBlue shadow4">Logout</a>';
+				} else {
+					echo '&ensp;<a id="login" class="btn btn-primary fwBlue shadow4" href="/login.php?back=/games/firmament-wars">Login</a>';
+				}
+				echo '</div>';
 				
 				?>
 			</header>
@@ -258,18 +256,26 @@
 				if (isset($_SESSION['email'])){
 					echo '
 					<div id="titleChatPlayers" class="titlePanelLeft">
-						<div id="titleChatHeader" class="chat-warning">Global</div>
+						<div id="titleChatHeader" class="chat-warning nowrap">
+							<span id="titleChatHeaderChannel">global</span> 
+							(<span id="titleChatHeaderCount">1</span>)
+						</div>
 						<div id="titleChatBody"></div>
 					</div>
 					<div id="titleChatLog" class="titlePanelLeft">';
 					if (!$whitelisted){
 						echo '<div class="chat-alert">You currently do not have access to play Firmament Wars. You must get beta access from the administrator.</div>';
 					}
+					$total = 0;
+					$result = mysqli_query($link, 'select count(row) count from `fwtitle` where timestamp > date_sub(now(), interval 20 second)');
+					while ($row = mysqli_fetch_assoc($result)){
+						$total += $row['count'];
+					}
 					$result = mysqli_query($link, 'select count(row) count from `fwplayers` where timestamp > date_sub(now(), interval 20 second)');
 					// Associative array
 					while ($row = mysqli_fetch_assoc($result)){
-						$total = $row['count']*1;
-						echo '<div>There '. ($total === 1 ? 'is' : 'are') .' '. $row["count"] . ' '. ($total === 1 ? 'person' : 'people') .' playing Firmament Wars</div>';
+						$total += $row['count'];
+						echo '<div>There '. ($total === 1 ? 'is' : 'are') .' '. $total . ' '. ($total === 1 ? 'person' : 'people') .' playing Firmament Wars on Broken.Net</div>';
 					}
 				}
 			?>

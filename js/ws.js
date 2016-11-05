@@ -19,29 +19,42 @@ var socket = {
 				}
 				title.chat("You have joined channel: " + data.channel + ".", "chat-warning");
 				socket.zmq.subscribe('title:' + data.channel, function(topic, data) {
-					title.chat(data.message);
+					title.chat(data.message, data.type);
 				});
 				// update display of channel
-				document.getElementById('titleChatHeader').textContent = data.channel;
+				document.getElementById('titleChatHeaderChannel').textContent = data.channel;
 				document.getElementById('titleChatBody').innerHTML = '';
 				title.updatePlayers();
 			});
 		}
 	},
+	enableWhisper: function(){
+		setTimeout(function(){
+			var channel = 'account:' + my.account;
+			socket.zmq.subscribe(channel, function(topic, data) {
+				title.receiveWhisper(data.message, 'chat-whisper');
+			});
+		}, 500);
+		/* publish examples topic, event, exclude, eligible
+			socket.zmq.sessionid()
+			sess.publish(myEvent1Topic, "Hello world!", [], [mySessionId] );
+			sess.publish(myEvent1Topic, "Foobar!", [client1SessionId, client23SessionId], [mySessionId]);
+		*/
+	},
 	joinLobby: function(){
-		this.zmq.unsubscribe('title:' + my.channel);
+		socket.zmq.unsubscribe('title:' + my.channel);
 		// game updates
-		this.zmq.subscribe('lobby:' + game.id, function(topic, data) {
+		socket.zmq.subscribe('lobby:' + game.id, function(topic, data) {
 			console.info('lobby: ' + game.id, data);
-			// title.chat(data.message);
+			// lobby.chat(data.message, data.type);
 		});
 	},
 	joinGame: function(){
-		this.zmq.unsubscribe('game:' + game.id);
+		socket.zmq.unsubscribe('game:' + game.id);
 		// game updates
-		this.zmq.subscribe('game:' + game.id, function(topic, data) {
+		socket.zmq.subscribe('game:' + game.id, function(topic, data) {
 			console.info('game: '+ game.id, data);
-			// title.chat(data.message);
+			// game.chat(data.message, data.type);
 		});
 	}
 }
@@ -51,7 +64,7 @@ socket.zmq = new ab.Session('wss://' + location.hostname + '/wss2/', function(){
 	// chat updates
 	title.chat("You have joined channel: " + my.channel + ".", "chat-warning");
 	socket.zmq.subscribe('title:' + my.channel, function(topic, data) {
-		title.chat(data.message);
+		title.chat(data.message, data.type);
 	});
 }, function(){
 	console.warn('WebSocket connection closed');
