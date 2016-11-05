@@ -166,51 +166,18 @@ var title = {
 		TweenMax.to('#firmamentWarsLogo', globeDelay, {
 			startAt: {
 				visibility: 'visible',
-				scale: 0,
 				alpha: 0
 			},
 			alpha: 1,
-			scale: 1,
 			ease: Quad.easeIn
 		});
-		TweenMax.to('#firmamentWarsBlur', globeDelay, {
+		TweenMax.to('#firmamentWarsLogo', globeDelay, {
 			startAt: {
-				visibility: 'visible',
-				scaleX: 0,
-				alpha: 1
+				yPercent: -50,
+				y: '-15%'
 			},
-			scaleX: 1,
-			alpha: 1,
-			ease: Quad.easeIn
-		});
-		TweenMax.to('#firmamentWarsLogo, #firmamentWarsBlur', globeDelay, {
-			startAt: {
-				yPercent: -50
-			},
-			top: '50%',
+			y: '0%',
 			onComplete: function(){
-				TweenMax.to('#firmamentWarsBlur', 4, {
-					startAt: {
-						transformOrigin: '50% 50%',
-						scaleX: 1,
-						scaleY: 1
-					},
-					ease: Linear.easeNone,
-					scaleX: 1.2,
-					scaleY: 1.1,
-					repeat: -1,
-					yoyo: true
-				});
-				TweenMax.to('#firmamentWarsBlur', 1.666, {
-					startAt: {
-						transformOrigin: '50% 50%',
-						skewX: 0,
-					},
-					ease: Linear.easeNone,
-					skewX: 5,
-					repeat: -1,
-					yoyo: true
-				});
 				TweenMax.to('#titleMain', .5, {
 					startAt: {
 						visibility: 'visible'
@@ -221,7 +188,10 @@ var title = {
 		});
 		// globe
 		TweenMax.to('#titleGlobe', globeDelay, {
-			bottom: '0%'
+			startAt: {
+				y: '15%'
+			},
+			y: '0%'
 		});
 	},
 	mapData: {

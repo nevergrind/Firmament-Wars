@@ -211,11 +211,16 @@ a:hover{
 }
 #titleGlobe{
 	top: auto;
-	bottom: -10%;
+	bottom: -15%;
 	width: 100%;
 }
-#firmamentWarsLogo, #firmamentWarsBlur{
-	top: 30%;
+#firmamentWarsLogo{
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	top: 0%;
+	width: 100%;
+	max-width: 1400px;
 }
 /* Firmament Wars */
 #gameWrap{

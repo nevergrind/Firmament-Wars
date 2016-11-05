@@ -40,7 +40,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
 	<script>
-		var version = "0-0-10";
+		var version = "0-0-11";
 	</script>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -76,7 +76,6 @@
 		<div id="firmamentWarsStars4" class="titleBG titleStars"></div>
 		
 		<img src="images/title/FirmamentWarsTitle_globe4.png" id="titleGlobe" class="titleBG">
-		<img src="images/title/firmamentWarsTitle_logoBlur.png" id="firmamentWarsBlur" class="titleBG fwHidden">
 		<img src="images/title/firmamentWarsTitle_logo.png" id="firmamentWarsLogo" class="titleBG fwHidden">
 	</div>
 	
@@ -905,7 +904,7 @@
 		}
 		for(var i=0, len=_scriptLoader.length; i<len; i++){
 			var x = d.createElement('script');
-			x.src = 'js/'+_scriptLoader[i]+'.js?v=0-0-8';
+			x.src = 'js/'+_scriptLoader[i]+'.js?v=' + version;
 			x.async = false;
 			d.head.appendChild(x);
 		}
