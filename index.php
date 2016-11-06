@@ -31,7 +31,7 @@
 	<title>Firmament Wars | Multiplayer Grand Strategy Warfare</title>
 	<meta charset="utf-8">
 	<meta name="keywords" content="risk, civilization, realtime, multiplayer, free, strategy">
-	<meta name="description" content="Firmament Wars is a grand strategy browser game with free online multiplayer. Climb the leaderboards and compete in realtime with eight players for global domination!">
+	<meta name="description" content="Firmament Wars is a free online grand strategy browser game. Climb the leaderboards and compete in FFA and team modes with up to eight players for global domination!">
 	<meta name="author" content="Joe Leonard">
 	<meta name="referrer" content="always">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>

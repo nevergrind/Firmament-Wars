@@ -85,17 +85,7 @@ var title = {
 									flag = p[i].flag;
 								if (title.players[account] === undefined){
 									// console.info("ADDING PLAYER: " + account);
-									title.players[account] = {
-										flag: flag
-									}
-									var e = document.createElement('div');
-									e.className = "titlePlayer";
-									e.id = "titlePlayer" + account;
-									var flagName = flag.split(".");
-									e.innerHTML = '<img id="titlePlayerFlag_' + account + '" class="inlineFlag" src="images/flags/' + flag +'"> ' + account;
-									if (title.titleUpdate){
-										DOM.titleChatBody.appendChild(e);
-									}
+									title.addPlayer(account, flag);
 								} else if (title.players[account].flag !== flag){
 									// replace player flag
 									var flagElement = document.getElementById("titlePlayerFlag_" + account);
@@ -108,10 +98,8 @@ var title = {
 							// remove missing players
 							for (var key in title.players){
 								if (foundPlayers.indexOf(key) === -1){
-									// console.info("REMOVING PLAYER: " + key);
-									delete title.players[key];
-									var z = document.getElementById('titlePlayer' + key);
-									z.parentNode.removeChild(z);
+									console.info("REMOVING PLAYER: " + key);
+									title.removePlayer(key);
 								}
 							}
 						}
@@ -127,6 +115,39 @@ var title = {
 			})();
 		} else {
 			$("#titleChat, #titleMenu").remove();
+		}
+	},
+	// adds player to chat room
+	addPlayer: function(account, flag){
+		title.players[account] = {
+			flag: flag
+		}
+		var e = document.createElement('div');
+		e.className = "titlePlayer";
+		e.id = "titlePlayer" + account;
+		var flagName = flag.split(".");
+		e.innerHTML = '<img id="titlePlayerFlag_' + account + '" class="inlineFlag" src="images/flags/' + flag +'"> ' + account;
+		if (title.titleUpdate){
+			DOM.titleChatBody.appendChild(e);
+		}
+	},
+	removePlayer: function(data){
+		// fix this
+		delete title.players[data.account];
+		var z = document.getElementById('titlePlayer' + data.account);
+		console.info("Removing: ", data.account, z);
+		if (z !== null){
+			z.parentNode.removeChild(z);
+		}
+	},
+	chatReceive: function(data){
+		if (data.type === 'remove'){
+			title.removePlayer(data);
+		} else if (data.type === 'add'){
+			console.info(data);
+			title.addPlayer(data.account, data.flag);
+		} else {
+			title.chat(data.message, data.type);
 		}
 	},
 	animateLogo: function(){
@@ -209,7 +230,7 @@ var title = {
 	chatDrag: false,
 	chatOn: false,
 	chat: function (msg, type){
-		if (g.view === 'title'){
+		if (g.view === 'title' && msg){
 			while (DOM.titleChatLog.childNodes.length > 500) {
 				DOM.titleChatLog.removeChild(DOM.titleChatLog.firstChild);
 			}

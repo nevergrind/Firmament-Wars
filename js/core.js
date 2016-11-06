@@ -153,14 +153,16 @@ var g = {
 					my.lastReceivedWhisper = my.lastReceivedWhisper.split(" ").shift();
 					type = 'whispers';
 				}
-				g.notification = new Notification(msg, {
-					icon: flagPath,
-					tag: "Nevergrind",
-					body: body
-				});
+				if (my.lastReceivedWhisper){
+					g.notification = new Notification(msg, {
+						icon: flagPath,
+						tag: "Nevergrind",
+						body: body
+					});
+				}
 			}
 			// title flash
-			if (!g.titleFlashing){
+			if (!g.titleFlashing && my.lastReceivedWhisper){
 				g.titleFlashing = true;
 				(function repeat(toggle){
 					if (!document.hasFocus()){
