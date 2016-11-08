@@ -140,16 +140,6 @@ var title = {
 			z.parentNode.removeChild(z);
 		}
 	},
-	chatReceive: function(data){
-		if (data.type === 'remove'){
-			title.removePlayer(data);
-		} else if (data.type === 'add'){
-			console.info(data);
-			title.addPlayer(data.account, data.flag);
-		} else {
-			title.chat(data.message, data.type);
-		}
-	},
 	animateLogo: function(){
 		var globeDelay = 1,
 			globeYoyo = 6;
@@ -159,7 +149,7 @@ var title = {
 			repeat: -1,
 			ease: Linear.easeNone
 		});
-		TweenMax.to('#firmamentWarsStars2', 170, {
+		TweenMax.to('#firmamentWarsStars2', 150, {
 			startAt: {
 				backgroundPosition: '250px 250px', 
 			},
@@ -167,7 +157,7 @@ var title = {
 			repeat: -1,
 			ease: Linear.easeNone
 		});
-		TweenMax.to('#firmamentWarsStars3', 90, {
+		TweenMax.to('#firmamentWarsStars3', 70, {
 			startAt: {
 				backgroundPosition: '600px 500px', 
 			},
@@ -175,7 +165,7 @@ var title = {
 			repeat: -1,
 			ease: Linear.easeNone
 		});
-		TweenMax.to('#firmamentWarsStars4', 50, {
+		TweenMax.to('#firmamentWarsStars4', 30, {
 			startAt: {
 				backgroundPosition: '400px 600px', 
 			},
@@ -249,23 +239,38 @@ var title = {
 			}
 		}
 	},
+	chatReceive: function(data){
+		console.info(data);
+		if (data.type === 'remove'){
+			title.removePlayer(data);
+		} else if (data.type === 'add'){
+			console.info(data);
+			title.addPlayer(data.account, data.flag);
+		} else {
+			if (data.message !== undefined){
+				title.chat(data.message, data.type);
+			}
+		}
+	},
 	sendWhisper: function(msg, splitter){
+		// account
 		var arr = msg.split(splitter);
 		var account = arr[1].split(" ").shift();
-		var test = arr[1].split(" ");
-		test.shift();
-		console.info(test);
-		var msg = test.join(" ");
+		// message
+		var splitLen = splitter.length;
+		var accountLen = account.length;
+		var msg = msg.substr(splitLen + accountLen + 1);
 		$.ajax({
 			url: 'php/insertWhisper.php',
 			data: {
 				account: account,
-				message: msg
+				message: msg,
+				action: 'send'
 			}
 		});
-		title.chat(my.inlineFlag() + 'To ' + account + ': ' + msg, 'chat-whisper');
 	},
 	receiveWhisper: function(msg, type){
+		console.info(msg, type);
 		if (g.view === 'title'){
 			title.chat(msg, type);
 		} else if (g.view === 'lobby'){

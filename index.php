@@ -40,7 +40,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
 	<script>
-		var version = "0-0-11";
+		var version = "0-0-12";
 	</script>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -136,9 +136,9 @@
 						<i class="fa fa-gamepad text-primary pointer"></i>
 					</a>';
 				if (isset($_SESSION['email'])){
-					echo '&ensp;<a id="logout" class="btn fwBlue shadow4">Logout</a>';
+					echo '&ensp;<a id="logout" class="btn fwBlue btn-responsive shadow4">Logout</a>';
 				} else {
-					echo '&ensp;<a id="login" class="btn btn-primary fwBlue shadow4" href="/login.php?back=/games/firmament-wars">Login</a>';
+					echo '&ensp;<a id="login" class="btn btn-responsive fwBlue shadow4" href="/login.php?back=/games/firmament-wars">Login</a>';
 				}
 				echo '</div>';
 				
@@ -287,7 +287,7 @@
 				if (isset($_SESSION['email']) && $whitelisted){
 					echo '
 					<div class="input-group">
-						<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" autocomplete="off"/>
+						<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" autocomplete="off" spellcheck="false" />
 						<div id="titleChatSend" class="input-group-btn">
 							<button class="btn shadow4 fwBlue">Send</button>
 						</div>
@@ -309,7 +309,7 @@
 					<div id="lobbyChatLog"></div>
 					
 					<div id="lobbyChatWrap" class="lobbyRelWrap input-group">
-						<input id="lobby-chat-input" class="fw-text noselect nobg form-control" type='text' maxlength="240" autocomplete="off"/>
+						<input id="lobby-chat-input" class="fw-text noselect nobg form-control" type='text' maxlength="240" autocomplete="off" spellcheck="false"/>
 						<span id="lobbyChatSend" class="input-group-addon shadow4 fwBlue">Chat</span>
 					</div>
 				</div>
@@ -814,7 +814,7 @@
 				</td>
 			</tr>
 		</table>
-		<input id="chat-input" class="fw-text noselect nobg" type='text' maxlength="240" autocomplete="off"/>
+		<input id="chat-input" class="fw-text noselect nobg" type='text' maxlength="240" autocomplete="off" spellcheck="false"/>
 			
 		<div id="worldWrap">
 			<div id="worldWater1"></div>

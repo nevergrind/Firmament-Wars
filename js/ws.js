@@ -14,8 +14,7 @@ var socket = {
 				console.info("NEW CHANNEL: " + data);
 				var o = {
 					type: 'remove',
-					account: my.account,
-					id: 'titlePlayer' + my.account
+					account: my.account
 				}
 				// removes id
 				socket.zmq.publish('title:' + my.channel, o);
@@ -48,20 +47,35 @@ var socket = {
 		setTimeout(function(){
 			var channel = 'account:' + my.account;
 			socket.zmq.subscribe(channel, function(topic, data) {
-				title.receiveWhisper(data.message, 'chat-whisper');
+				if (data.message){
+					if (data.action === 'send'){
+						// message sent to user
+						var msg = data.flag + data.account + ' whispers: ' + data.message;
+						title.receiveWhisper(msg, 'chat-whisper');
+						$.ajax({
+							url: 'php/insertWhisper.php',
+							data: {
+								account: data.account,
+								message: data.message
+							}
+						});
+					} else {
+						// message receive confirmation to original sender
+						var msg = data.flag + 'To ' + data.account + ': ' + data.message;
+						title.receiveWhisper(msg, 'chat-whisper');
+					}
+				}
 			});
+			(function keepAliveWs(){
+				socket.zmq.publish(channel, {message: ""});
+				setTimeout(keepAliveWs, 180000);
+			})();
 		}, 500);
-		/* publish examples topic, event, exclude, eligible
-			socket.zmq.sessionid()
-			sess.publish(myEvent1Topic, "Hello world!", [], [mySessionId] );
-			sess.publish(myEvent1Topic, "Foobar!", [client1SessionId, client23SessionId], [mySessionId]);
-		*/
 	},
 	joinLobby: function(){
 		socket.zmq.unsubscribe('title:' + my.channel);
 		// game updates
 		socket.zmq.subscribe('lobby:' + game.id, function(topic, data) {
-			console.info('lobby: ' + game.id, data);
 			// lobby.chat(data.message, data.type);
 			title.chatReceive(data);
 		});
@@ -70,7 +84,6 @@ var socket = {
 		socket.zmq.unsubscribe('game:' + game.id);
 		// game updates
 		socket.zmq.subscribe('game:' + game.id, function(topic, data) {
-			console.info('game: '+ game.id, data);
 			// game.chat(data.message, data.type);
 			title.chatReceive(data);
 		});
