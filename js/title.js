@@ -29,7 +29,6 @@ var title = {
 			my.account = data.account;
 			my.flag = data.flag;
 			title.updatePlayers();
-			socket.enableWhisper();
 		});
 		setTimeout(function(){
 			var str = '';
@@ -42,7 +41,7 @@ var title = {
 			}
 			$('[title]').tooltip();
 			title.animateLogo();
-		}, 100);
+		}, 200);
 		var interval = location.host === 'localhost' ? 10000 : 10000;
 		(function repeat(){
 			if (g.view === 'title'){
@@ -98,8 +97,11 @@ var title = {
 							// remove missing players
 							for (var key in title.players){
 								if (foundPlayers.indexOf(key) === -1){
-									console.info("REMOVING PLAYER: " + key);
-									title.removePlayer(key);
+									var x = {
+										account: key
+									}
+									console.info("REMOVING PLAYER: " + x.account);
+									title.removePlayer(x);
 								}
 							}
 						}
@@ -234,21 +236,49 @@ var title = {
 				DOM.titleChatLog.scrollTop = DOM.titleChatLog.scrollHeight;
 			}
 			g.sendNotification(msg);
-			if (!document.hasFocus()){
-				audio.play('chat');
-			}
 		}
 	},
 	chatReceive: function(data){
-		console.info(data);
-		if (data.type === 'remove'){
-			title.removePlayer(data);
-		} else if (data.type === 'add'){
-			console.info(data);
-			title.addPlayer(data.account, data.flag);
+		// console.info(data);
+		if (g.view === 'title'){
+			// title
+			if (data.type === 'remove'){
+				title.removePlayer(data);
+			} else if (data.type === 'add'){
+				console.info(data);
+				title.addPlayer(data.account, data.flag);
+			} else {
+				if (data.message !== undefined){
+					title.chat(data.message, data.type);
+				}
+			}
+		} else if (g.view === 'lobby'){
+			// lobby
+			console.info('lobby receive: ', data);
+			if (data.type === 'remove'){
+				lobby.removePlayer(data);
+			} else if (data.type === 'add'){
+				console.info(data);
+				lobby.addPlayer(data.account, data.flag);
+			} else {
+				if (data.message !== undefined){
+					lobby.chat(data.message, data.type);
+				}
+			}
 		} else {
-			if (data.message !== undefined){
-				title.chat(data.message, data.type);
+			// game
+			console.info('game receive: ', data);
+			if (data.type === 'tile'){
+				game.updateTile(data);
+			} else if (data.type === 'add'){
+				game.addPlayer(data.account, data.flag);
+			} else if (data.type === 'remove'){
+				console.info(data);
+				game.addPlayer(data.account, data.flag);
+			} else {
+				if (data.message !== undefined){
+					game.chat(data.message, data.type);
+				}
 			}
 		}
 	},
@@ -350,9 +380,11 @@ var title = {
 			}).done(function(data) {
 				my.player = data.player;
 				game.id = data.gameId;
+				game.name = data.gameName;
 				console.info("Creating: ", data);
 				lobby.init(data);
 				lobby.join(); // create
+				socket.joinGame();
 			}).fail(function(e){
 				console.info(e.responseText);
 				Msg(e.statusText);
@@ -375,13 +407,15 @@ var title = {
 				name: g.name,
 				password: g.password
 			}
-		}).done(function(data) {
+		}).done(function(data){
 			console.info(data);
 			my.player = data.player;
-			game.id = data.gameId;
+			game.id = data.id;
+			game.name = data.gameName;
 			g.map = data.mapData;
 			lobby.init(data);
 			lobby.join(); // normal join
+			socket.joinGame();
 		}).fail(function(data){
 			console.info(data);
 			Msg(data.statusText, 1.5);

@@ -45,7 +45,6 @@ class Pusher implements WampServerInterface {
 		if (isset($event['message'])){
 			$event = strip_tags($event['message']);
 		}
-		var_dump($event);
 		$topic->broadcast($event);
         // $conn->close();
     }

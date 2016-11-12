@@ -10,8 +10,8 @@ html{
 	font-family: Arial, sans-serif;
 	-ms-touch-action: manipulation;
 	touch-action: manipulation;
-	background: #000;
 	overflow: hidden;
+	display: block;
 }
 input{
 	cursor: text;
@@ -1088,6 +1088,21 @@ circle{
 	top: 0%;
 	margin-top: 4%;
 }
+.lobbyAccounts{
+	font-size: 1em;
+	line-height: 1em;
+	color: #ffff1a;
+	text-shadow: .5px .5px #550, 1px 1px #550, 1.5px 1.5px #550, 2px 2px #550;
+}
+.lobbyNames{
+	font-family: Times New Roman, serif;
+	font-size: 1.125em;
+	line-height: 1.5em;
+	color: #8df;
+	text-shadow: .5px .5px #145, 1px 1px #145, 1.5px 1.5px #145, 2px 2px #145;
+	letter-spacing: .25em;
+	font-variant: small-caps;
+}
 #lobbyChatLogWrap{
 	height: 35%;
 	border-radius: 6px 6px 0 0;
@@ -1321,7 +1336,6 @@ table {
 .lobbyRow{
 	display: none;
 	height: 3em;
-	line-height: 3em;
 	margin-top: .5em;
 }
 .lobbyCaret{
@@ -1526,7 +1540,7 @@ table {
 	display: inline-block;
 	margin: 0 .5em .1em 0;
 	height: 1em;
-	outline-width: 2px;
+	outline-width: 1px;
 }
 .diploFlag{
 	position: relative;

@@ -159,6 +159,9 @@ var g = {
 						tag: "Nevergrind",
 						body: body
 					});
+					g.notification.onclick = function(){
+						window.focus();
+					}
 				}
 			}
 			// title flash
@@ -175,6 +178,7 @@ var g = {
 					}
 				})(0);
 			}
+			audio.play('chat');
 		}
 	}
 }
@@ -256,6 +260,7 @@ g.init = (function(){
 					initResources(data); // setResources(data);
 					my.government = data.government;
 					lobby.updateGovernmentWindow(my.government);
+					socket.joinGame();
 				}, 111);
 			}
 		}).fail(function(data){

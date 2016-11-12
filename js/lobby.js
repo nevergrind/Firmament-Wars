@@ -88,9 +88,6 @@ var lobby = {
 			DOM.lobbyChatLog.scrollTop = DOM.lobbyChatLog.scrollHeight;
 		}
 		g.sendNotification(msg);
-		if (!document.hasFocus()){
-			audio.play('chat');
-		}
 	},
 	chatDrag: false,
 	gameStarted: false,
@@ -146,7 +143,8 @@ var lobby = {
 						<img id="lobbyFlag' +i+ '" data-placement="right" class="lobbyFlags block center p' + i + 'b player' +i+ '" src="images/flags/blank.png">\
 					</div>\
 					<div class="col-xs-6 lobbyDetails">\
-						<span id="lobbyAccount' +i+ '"></span>\
+						<div id="lobbyAccount' +i+ '" class="lobbyAccounts"></div>\
+						<div id="lobbyName' +i+ '" class="lobbyNames nowrap"></div>\
 					</div>\
 					<div class="col-xs-4">';
 					if (i === x.player){
@@ -218,12 +216,13 @@ var lobby = {
 						for (var i=1; i<=8; i++){
 							var data = x.playerData[i-1];
 							//console.info(i, lobby.data[i], data);
-							// player exists
 							if (data !== undefined){
+								// player exists
 								document.getElementById("lobbyRow" + i).style.display = 'block';
-								// different player account
 								if (lobby.data[i].account !== data.account){
+									// different player account
 									document.getElementById("lobbyAccount" + i).innerHTML = data.account;
+									document.getElementById("lobbyName" + i).innerHTML = data.nation;
 									if (data.flag !== 'Default.jpg'){
 										document.getElementById("lobbyFlag" + i).src = 'images/flags/' + data.flag;
 										var flagName = data.flag.split(".");
@@ -253,16 +252,6 @@ var lobby = {
 								e.className = lobby.startClassOff;
 							} else {
 								e.className = lobby.startClassOn;
-							}
-						}
-						
-						// report chat messages
-						var len = x.chat.length;
-						if (len > 0){
-							for (var i=0; i<len; i++){
-								if (x.chat[i]){
-									lobby.chat(x.chat[i]);
-								}
 							}
 						}
 					}

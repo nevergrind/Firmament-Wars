@@ -44,62 +44,70 @@ var socket = {
 		}
 	},
 	enableWhisper: function(){
-		setTimeout(function(){
-			var channel = 'account:' + my.account;
-			socket.zmq.subscribe(channel, function(topic, data) {
-				if (data.message){
-					if (data.action === 'send'){
-						// message sent to user
-						var msg = data.flag + data.account + ' whispers: ' + data.message;
-						title.receiveWhisper(msg, 'chat-whisper');
-						$.ajax({
-							url: 'php/insertWhisper.php',
-							data: {
-								account: data.account,
-								message: data.message
-							}
-						});
-					} else {
-						// message receive confirmation to original sender
-						var msg = data.flag + 'To ' + data.account + ': ' + data.message;
-						title.receiveWhisper(msg, 'chat-whisper');
-					}
+		var channel = 'account:' + my.account;
+		socket.zmq.subscribe(channel, function(topic, data) {
+			if (data.message){
+				if (data.action === 'send'){
+					// message sent to user
+					var msg = data.flag + data.account + ' whispers: ' + data.message;
+					title.receiveWhisper(msg, 'chat-whisper');
+					$.ajax({
+						url: 'php/insertWhisper.php',
+						data: {
+							account: data.account,
+							message: data.message
+						}
+					});
+				} else {
+					// message receive confirmation to original sender
+					var msg = data.flag + 'To ' + data.account + ': ' + data.message;
+					title.receiveWhisper(msg, 'chat-whisper');
 				}
-			});
-			(function keepAliveWs(){
-				socket.zmq.publish(channel, {message: ""});
-				setTimeout(keepAliveWs, 180000);
-			})();
-		}, 500);
+			}
+		});
+		(function keepAliveWs(){
+			socket.zmq.publish(channel, {message: ""});
+			setTimeout(keepAliveWs, 180000);
+		})();
 	},
-	joinLobby: function(){
+	joinGame: function(){
 		socket.zmq.unsubscribe('title:' + my.channel);
 		// game updates
-		socket.zmq.subscribe('lobby:' + game.id, function(topic, data) {
+		console.info("Subscribing to game:" + game.id);
+		socket.zmq.subscribe('game:' + game.id, function(topic, data) {
 			// lobby.chat(data.message, data.type);
 			title.chatReceive(data);
 		});
 	},
-	joinGame: function(){
-		socket.zmq.unsubscribe('game:' + game.id);
-		// game updates
-		socket.zmq.subscribe('game:' + game.id, function(topic, data) {
-			// game.chat(data.message, data.type);
-			title.chatReceive(data);
+	connectionTries: 0,
+	connectionRetryDuration: 250,
+	init: function(){
+		socket.zmq = new ab.Session('wss://' + location.hostname + '/wss2/', function(){
+			socket.connectionSuccess();
+		}, function(){
+			socket.connectionFailure();
+		}, {
+			'skipSubprotocolCheck': true
 		});
 	},
-	
+	connectionSuccess: function(){
+		console.info("Socket connection established with server");
+		// chat updates
+		if (g.view === 'title'){
+			title.chat("You have joined channel: " + my.channel + ".", "chat-warning");
+			socket.zmq.subscribe('title:' + my.channel, function(topic, data) {
+				title.chatReceive(data);
+			});
+		} else {
+			// lobby/game code
+		}
+		socket.enableWhisper();
+	},
+	connectionFailure: function(){
+		console.warn('WebSocket connection failed. Retrying...');
+		if (++socket.connectionTries * socket.connectionRetryDuration < 60000){
+			setTimeout(socket.init, socket.connectionRetryDuration);
+		}
+	}
 }
-
-socket.zmq = new ab.Session('wss://' + location.hostname + '/wss2/', function(){
-	console.info("Connection established with server");
-	// chat updates
-	title.chat("You have joined channel: " + my.channel + ".", "chat-warning");
-	socket.zmq.subscribe('title:' + my.channel, function(topic, data) {
-		title.chatReceive(data);
-	});
-}, function(){
-	console.warn('WebSocket connection closed');
-}, {
-	'skipSubprotocolCheck': true
-});
+socket.init();
