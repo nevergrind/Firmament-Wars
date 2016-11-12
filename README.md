@@ -15,7 +15,7 @@ All projects shown helped create Firmament Wars.
 
 # Developer
 
-[Joe Leonard](https://www.linkedin.com/in/joseph-leonard-78b56287) is a software engineer at [Synergist Computing](https://www.linkedin.com/company/synergist-computing).
+[Joe Leonard](https://www.linkedin.com/in/joseph-leonard-78b56287) is a software engineer at [Synergist Computing](http://www.synergistcomputing.com).
 * [Game Development Blog](https://nevergrind.com/blog)
 * [Nevergrind Forums](https://nevergrind.com/forums)
 * [GitHub](https://github.com/Maelfyn)
