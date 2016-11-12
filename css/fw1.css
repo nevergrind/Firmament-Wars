@@ -1082,6 +1082,7 @@ circle{
 .lobbyFlags{
 	max-height: 2.8em;
 	margin-top: .1em;
+	margin-right: 0;
 }
 .lobbyRelWrap{
 	position: relative;
@@ -1089,19 +1090,23 @@ circle{
 	margin-top: 4%;
 }
 .lobbyAccounts{
-	font-size: 1em;
-	line-height: 1em;
+	margin-top: .25em;
+	font-size: 1.5vh;
+	line-height: 1.5vh;
 	color: #ffff1a;
 	text-shadow: .5px .5px #550, 1px 1px #550, 1.5px 1.5px #550, 2px 2px #550;
 }
 .lobbyNames{
 	font-family: Times New Roman, serif;
-	font-size: 1.125em;
-	line-height: 1.5em;
+	font-size: 2vh;
+	line-height: 2.5vh;
 	color: #8df;
 	text-shadow: .5px .5px #145, 1px 1px #145, 1.5px 1.5px #145, 2px 2px #145;
-	letter-spacing: .25em;
+	letter-spacing: .125em;
 	font-variant: small-caps;
+}
+.govDropdown{
+	margin-top: .125em;
 }
 #lobbyChatLogWrap{
 	height: 35%;
@@ -1335,7 +1340,8 @@ table {
 }
 .lobbyRow{
 	display: none;
-	height: 3em;
+	height: 2.8em;
+	line-height: 2.8em;
 	margin-top: .5em;
 }
 .lobbyCaret{

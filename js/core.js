@@ -250,9 +250,11 @@ g.init = (function(){
 		}).done(function(data) {
 			console.info('rejoin ', data);
 			if (data.gameId > 0){
+				socket.removePlayer(my.account);
 				console.info("Auto joined game:" + (data.gameId));
 				my.player = data.player;
 				game.id = data.gameId;
+				g.map = data.mapData;
 				// join lobby in progress
 				setTimeout(function(){
 					lobby.init(data);

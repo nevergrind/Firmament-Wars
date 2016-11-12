@@ -29,6 +29,13 @@ var title = {
 			my.account = data.account;
 			my.flag = data.flag;
 			title.updatePlayers();
+			(function repeat(){
+				if (socket.enabled){
+					socket.enableWhisper();
+				} else {
+					setTimeout(repeat, 100);
+				}
+			})();
 		});
 		setTimeout(function(){
 			var str = '';
@@ -42,7 +49,7 @@ var title = {
 			$('[title]').tooltip();
 			title.animateLogo();
 		}, 200);
-		var interval = location.host === 'localhost' ? 10000 : 10000;
+		var interval = location.host === 'localhost' ? 1000 : 10000;
 		(function repeat(){
 			if (g.view === 'title'){
 				setTimeout(function(){
@@ -255,11 +262,14 @@ var title = {
 		} else if (g.view === 'lobby'){
 			// lobby
 			console.info('lobby receive: ', data);
-			if (data.type === 'remove'){
-				lobby.removePlayer(data);
-			} else if (data.type === 'add'){
-				console.info(data);
-				lobby.addPlayer(data.account, data.flag);
+			if (data.type === 'hostLeft'){
+				lobby.hostLeft();
+			} else if (data.type === 'government'){
+				lobby.updateGovernment(data);
+			} else if (data.type === 'countdown'){
+				lobby.countdown(data);
+			} else if (data.type === 'update'){
+				lobby.updatePlayer(data);
 			} else {
 				if (data.message !== undefined){
 					lobby.chat(data.message, data.type);
@@ -378,6 +388,7 @@ var title = {
 					map: title.mapData[g.map.key].name
 				}
 			}).done(function(data) {
+				socket.removePlayer(my.account);
 				my.player = data.player;
 				game.id = data.gameId;
 				game.name = data.gameName;
@@ -408,6 +419,7 @@ var title = {
 				password: g.password
 			}
 		}).done(function(data){
+			socket.removePlayer(my.account);
 			console.info(data);
 			my.player = data.player;
 			game.id = data.id;

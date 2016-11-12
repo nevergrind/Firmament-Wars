@@ -13,6 +13,7 @@ var lobby = {
 	startClassOn: "btn btn-info btn-md btn-block btn-responsive shadow4 lobbyButtons",
 	startClassOff: "btn btn-default btn-md btn-block btn-responsive shadow4 lobbyButtons",
 	updateGovernmentWindow: function(government){
+		// updates government description
 		var str = '';
 		if (government === "Despotism"){
 			str = '<div id="lobbyGovName" class="text-primary">Despotism</div>\
@@ -93,17 +94,24 @@ var lobby = {
 	gameStarted: false,
 	chatOn: false,
 	sendMsg: function(bypass){
-		var message = $DOM.lobbyChatInput.val().trim();
+		var msg = $DOM.lobbyChatInput.val().trim();
 		if (bypass || lobby.chatOn){
 			// bypass via ENTER or chat has focus
-			if (message){
-				// send ajax chat msg
-				$.ajax({
-					url: 'php/insertLobbyChat.php',
-					data: {
-						message: message
-					}
-				});
+			if (msg){
+				// is it a command?
+				if (msg.indexOf('/whisper ') === 0){
+					title.sendWhisper(msg, '/whisper ');
+				} else if (msg.indexOf('/w ') === 0){
+					title.sendWhisper(msg, '/w ');
+				} else {
+					// send ajax chat msg
+					$.ajax({
+						url: 'php/insertLobbyChat.php',
+						data: {
+							message: msg
+						}
+					});
+				}
 			}
 			$DOM.lobbyChatInput.val('');
 		}
@@ -150,7 +158,7 @@ var lobby = {
 					if (i === x.player){
 						// me
 						str += 
-						'<div class="dropdown">\
+						'<div class="dropdown govDropdown">\
 							<button class="btn btn-primary dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">\
 								<span id="lobbyGovernment' +i+ '">Despotism</span>\
 								<i class="fa fa-caret-down text-warning lobbyCaret"></i>\
@@ -168,7 +176,7 @@ var lobby = {
 					} else {
 						// not me
 						str += 
-						'<div class="dropdown">\
+						'<div class="dropdown govDropdown">\
 							<button style="cursor: default" class="btn btn-primary dropdown-toggle shadow4 fwDropdownButton fwDropdownButtonEnemy" type="button">\
 								<span id="lobbyGovernment' +i+ '" class="pull-left">Despotism</span>\
 								<i class="fa fa-caret-down text-disabled lobbyCaret"></i>\
@@ -184,7 +192,7 @@ var lobby = {
 	},
 	join: function(d){
 		console.info("Joining lobby...");
-		var loadTime = Date.now() - g.startTime; 
+		var loadTime = Date.now() - g.startTime;
 		if (loadTime < 1000){
 			d = 0;
 		}
@@ -203,78 +211,128 @@ var lobby = {
 				});
 			}
 		});
-		
-		(function repeat(){
-			if (g.view === "lobby"){
-				$.ajax({
-					type: "GET",
-					url: "php/updateLobby.php"
-				}).done(function(x){
-					if (g.view === "lobby"){
-						my.totalPlayers = x.totalPlayers;
-						console.info(x);
-						for (var i=1; i<=8; i++){
-							var data = x.playerData[i-1];
-							//console.info(i, lobby.data[i], data);
-							if (data !== undefined){
-								// player exists
-								document.getElementById("lobbyRow" + i).style.display = 'block';
-								if (lobby.data[i].account !== data.account){
-									// different player account
-									document.getElementById("lobbyAccount" + i).innerHTML = data.account;
-									document.getElementById("lobbyName" + i).innerHTML = data.nation;
-									if (data.flag !== 'Default.jpg'){
-										document.getElementById("lobbyFlag" + i).src = 'images/flags/' + data.flag;
-										var flagName = data.flag.split(".");
-										$('#lobbyFlag' + i)
-											.attr('title', flagName[0])
-											.tooltip({
-												container: 'body'
-											});
+		if (!d){
+			// load game
+			console.clear();
+			console.warn("PAGE REFRESH!");
+			loadGameState(); // page refresh
+		} else {
+			// load lobby
+			var count = 0;
+			(function repeat(){
+				if (g.view === "lobby"){
+					$.ajax({
+						type: "GET",
+						url: "php/updateLobby.php"
+					}).done(function(x){
+						count++;
+						if (g.view === "lobby"){
+							// reality check of presence data every 5 seconds 
+							my.totalPlayers = x.totalPlayers;
+							// console.info(x);
+							for (var i=1; i<=8; i++){
+								var data = x.playerData[i-1];
+								if (data !== undefined){
+									if (data.account !== lobby.data[i].account){
+										// REMOVE WHEN DONE TESTING
+										if (count < 2){
+											lobby.updatePlayer(data);
+										}
 									}
 								}
-								if (lobby.data[i].government !== data.government){
-									// update button & window
-									document.getElementById('lobbyGovernment' + i).innerHTML = data.government;
-								}
-								lobby.data[i] = data;
-							} else {
-								// player left
-								document.getElementById("lobbyRow" + i).style.display = 'none';
-								lobby.data[i] = { account: '' };
 							}
 						}
-						// check if start button should light up
-						//console.info(x);
-						if (x.player === 1){
-							var e = document.getElementById("startGame");
-							if (x.totalPlayers === 1){
-								e.className = lobby.startClassOff;
-							} else {
-								e.className = lobby.startClassOn;
-							}
+						// make sure host didn't disconnect
+						if (!x.hostFound){
+							lobby.hostLeft();
 						}
-					}
-					// still in the lobby?
-					if (x.startGame){
-						if (!lobby.gameStarted){
-							lobby.gameStarted = true;
-							lobbyCountdown(x);
-						}
-					}
-					if (!x.hostFound){
-						Msg("The host has left the lobby.");
-						setTimeout(function(){
-							exitGame(true);
-						}, 500);
-					}
-					setTimeout(repeat, 1000);
-				}).fail(function(data){
-					serverError(data);
+						setTimeout(repeat, 5000);
+					}).fail(function(data){
+						serverError(data);
+					});
+				}
+			})();
+			delete lobby.join;
+		}
+	},
+	hostLeft: function(){
+		Msg("The host has left the lobby.");
+		setTimeout(function(){
+			exitGame(true);
+		}, 500);
+	},
+	updatePlayer: function(data){
+		var i = data.player;
+		if (data.account !== undefined){
+			// add
+			console.info("ADD PLAYER: ", data);
+			document.getElementById("lobbyRow" + i).style.display = 'block';
+			// different player account
+			document.getElementById("lobbyAccount" + i).innerHTML = data.account;
+			document.getElementById("lobbyName" + i).innerHTML = data.nation;
+			document.getElementById("lobbyFlag" + i).src = 'images/flags/' + data.flag;
+			$('#lobbyFlag' + i)
+				.attr('title', data.flag.split(".").shift())
+				.tooltip({
+					container: 'body'
 				});
+			lobby.updateGovernment(data);
+			my.totalPlayers++;
+			lobby.data[i] = data;
+		} else {
+			// remove
+			console.info("REMOVE PLAYER: ", data);
+			document.getElementById("lobbyRow" + i).style.display = 'none';
+			lobby.data[i] = { account: '' };
+			my.totalPlayers--;
+		}
+		if (my.player === 1){
+			// set start game button
+			var e = document.getElementById("startGame");
+			if (my.totalPlayers === 1){
+				e.className = lobby.startClassOff;
+			} else {
+				e.className = lobby.startClassOn;
 			}
-		})();
-		delete lobby.join;
+		}
+	},
+	updateGovernment: function(data){
+		// update button & window
+		var i = data.player;
+		document.getElementById('lobbyGovernment' + i).innerHTML = data.government;
+		lobby.data[i].government = data.government;
+	},
+	countdown: function(data){
+		// still in the lobby?
+		if (!lobby.gameStarted){
+			lobby.gameStarted = true;
+			new Audio('sound/beepHi.mp3');
+			// normal countdown
+			var e = document.getElementById('countdown');
+			e.style.display = 'block';
+			(function repeating(secondsToStart){
+				e.textContent = "Starting game in " + secondsToStart--;
+				if (secondsToStart >= 0){
+					audio.play('beep');
+					setTimeout(repeating, 1000, secondsToStart);
+				} else {
+					audio.play('beepHi');
+					audio.load.game();
+					video.load.game();
+				}
+				if (secondsToStart === 1){
+					TweenMax.to('#mainWrap', 1.5, {
+						delay: 1,
+						alpha: 0,
+						ease: Linear.easeNone,
+						onComplete: function(){
+							loadGameState();
+						}
+					});
+					audio.fade();
+				}
+			})(5);
+		}
 	},
 	governmentIcon: function(government){
 		var icon = {
@@ -433,17 +491,13 @@ function Nation(){
 	return this;
 }
 
-function loadGameState(x){
+function loadGameState(){
 	g.lock(1);
 	var e1 = document.getElementById("mainWrap");
 	if (e1 !== null){
 		TweenMax.to(e1, .5, {
 			alpha: 0
 		});
-	}
-	console.info(x);
-	if (x !== undefined){
-		g.map.key = x.map.replace(/ /g, '');
 	}
 	// load map
 	console.warn("Loading: " + g.map.key + ".php");
@@ -765,7 +819,7 @@ function loadGameState(x){
 	});
 }
 function startGame(){
-	if (my.totalPlayers >= 2){
+	if (my.totalPlayers >= 2 && my.player === 1){
 		document.getElementById("startGame").style.display = "none";
 		g.lock(1);
 		audio.play('click');
@@ -782,48 +836,15 @@ function startGame(){
 		});
 	}
 }
-function lobbyCountdown(x){
-	var loadTime = Date.now() - g.startTime;
-	if (loadTime < 1000){
-		loadGameState(x); // page refresh
-	} else {
-		new Audio('sound/beepHi.mp3');
-		// normal countdown
-		var e = document.getElementById('countdown');
-		e.style.display = 'block';
-		(function repeating(secondsToStart){
-			e.textContent = "Starting game in " + secondsToStart--;
-			if (secondsToStart >= 0){
-				audio.play('beep');
-				setTimeout(repeating, 1000, secondsToStart);
-			} else {
-				audio.play('beepHi');
-				audio.load.game();
-				video.load.game();
-			}
-			if (secondsToStart === 1){
-				TweenMax.to('#mainWrap', 1.5, {
-					delay: 1,
-					alpha: 0,
-					ease: Linear.easeNone,
-					onComplete: function(){
-						loadGameState();
-					}
-				});
-				audio.fade();
-			}
-		})(5);
-	}
-}
 $("#joinGameLobby").on('click', '.governmentChoice', function(e){
+	// changes player's own government only
 	var government = $(this).text();
+	lobby.updateGovernmentWindow(government);
 	$.ajax({
 		url: "php/changeGovernment.php",
 		data: {
 			government: government
 		}
-	}).done(function(){
-		lobby.updateGovernmentWindow(government);
 	});
 	e.preventDefault();
 });

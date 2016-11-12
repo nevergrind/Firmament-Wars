@@ -1,5 +1,25 @@
 // client-side web sockets
 var socket = {
+	removePlayer: function(account){
+		var o = {
+			type: 'remove',
+			account: my.account
+		}
+		// removes id
+		socket.zmq.publish('title:' + my.channel, o);
+		delete title.players[account];
+	},
+	addPlayer: function(account, flag){
+		var o = {
+			type: 'add',
+			account: my.account,
+			flag: my.flag
+		}
+		socket.zmq.publish('title:' + my.channel, o);
+		title.players[account] = {
+			flag: flag
+		}
+	},
 	setChannel: function(channel){
 		// change channel on title screen
 		if (g.view === 'title'){
@@ -12,12 +32,8 @@ var socket = {
 				}
 			}).done(function(data){
 				console.info("NEW CHANNEL: " + data);
-				var o = {
-					type: 'remove',
-					account: my.account
-				}
 				// removes id
-				socket.zmq.publish('title:' + my.channel, o);
+				socket.removePlayer(my.account);
 				// unsubs
 				socket.zmq.unsubscribe('title:' + my.channel);
 				// set new channel data
@@ -29,13 +45,8 @@ var socket = {
 				socket.zmq.subscribe('title:' + data.channel, function(topic, data) {
 					title.chatReceive(data);
 				});
-				var o = {
-					type: 'add',
-					account: my.account,
-					flag: my.flag
-				}
 				// add id
-				socket.zmq.publish('title:' + my.channel, o);
+				socket.addPlayer(my.account, my.flag);
 				// update display of channel
 				document.getElementById('titleChatHeaderChannel').textContent = data.channel;
 				document.getElementById('titleChatBody').innerHTML = '';
@@ -45,7 +56,9 @@ var socket = {
 	},
 	enableWhisper: function(){
 		var channel = 'account:' + my.account;
+		console.info("Subscribing to " + channel);
 		socket.zmq.subscribe(channel, function(topic, data) {
+			console.warn(data.action, data);
 			if (data.message){
 				if (data.action === 'send'){
 					// message sent to user
@@ -54,6 +67,7 @@ var socket = {
 					$.ajax({
 						url: 'php/insertWhisper.php',
 						data: {
+							action: "",
 							account: data.account,
 							message: data.message
 						}
@@ -75,10 +89,10 @@ var socket = {
 		// game updates
 		console.info("Subscribing to game:" + game.id);
 		socket.zmq.subscribe('game:' + game.id, function(topic, data) {
-			// lobby.chat(data.message, data.type);
 			title.chatReceive(data);
 		});
 	},
+	enabled: false,
 	connectionTries: 0,
 	connectionRetryDuration: 250,
 	init: function(){
@@ -101,10 +115,11 @@ var socket = {
 		} else {
 			// lobby/game code
 		}
-		socket.enableWhisper();
+		socket.enabled = true;
 	},
 	connectionFailure: function(){
 		console.warn('WebSocket connection failed. Retrying...');
+		socket.enabled = false;
 		if (++socket.connectionTries * socket.connectionRetryDuration < 60000){
 			setTimeout(socket.init, socket.connectionRetryDuration);
 		}
