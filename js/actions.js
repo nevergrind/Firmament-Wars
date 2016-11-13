@@ -183,7 +183,6 @@ var action = {
 			return;
 		}
 		if (t.units <= 254){
-			
 			$.ajax({
 				url: 'php/recruit.php',
 				data: {
@@ -333,8 +332,6 @@ var action = {
 						attacker: attacker,
 						defender: defender
 					}
-				}).done(function(data) {
-					console.info('Missile Hit!', data);
 				}).fail(function(e){
 					console.info('error: ', e);
 					if (e.statusText){

@@ -10,8 +10,17 @@ var lobby = {
 		{ account: '' },
 		{ account: '' }
 	],
-	startClassOn: "btn btn-info btn-md btn-block btn-responsive shadow4 lobbyButtons",
+	startClassOn:  "btn btn-info btn-md btn-block btn-responsive shadow4 lobbyButtons",
 	startClassOff: "btn btn-default btn-md btn-block btn-responsive shadow4 lobbyButtons",
+	totalPlayers: function(){
+		var count = 0;
+		for (var i=0, len=lobby.data.length; i<len; i++){
+			if (lobby.data[i].account){
+				count++;
+			}
+		}
+		return count;
+	},
 	updateGovernmentWindow: function(government){
 		// updates government description
 		var str = '';
@@ -226,13 +235,10 @@ var lobby = {
 						url: "php/updateLobby.php"
 					}).done(function(x){
 						if (g.view === "lobby"){
-							// reality check of presence data every 5 seconds 
-							my.totalPlayers = 0;
-							console.info(x);
+							// reality check of presence data every 5 seconds
 							for (var i=1; i<=8; i++){
 								var data = x.playerData[i];
 								if (data !== undefined){
-									my.totalPlayers++;
 									// server defined
 									if (data.account !== lobby.data[i].account){
 										lobby.updatePlayer(data);
@@ -284,19 +290,20 @@ var lobby = {
 					container: 'body'
 				});
 			lobby.updateGovernment(data);
-			my.totalPlayers++;
 			lobby.data[i] = data;
 		} else {
 			// remove
 			console.info("REMOVE PLAYER: ", data);
 			document.getElementById("lobbyRow" + i).style.display = 'none';
 			lobby.data[i] = { account: '' };
-			my.totalPlayers--;
 		}
+		lobby.styleStartGame();
+	},
+	styleStartGame: function(){
 		if (my.player === 1){
 			// set start game button
 			var e = document.getElementById("startGame");
-			if (my.totalPlayers === 1){
+			if (lobby.totalPlayers() === 1){
 				e.className = lobby.startClassOff;
 			} else {
 				e.className = lobby.startClassOn;
@@ -813,7 +820,7 @@ function loadGameState(){
 						return "To leave the game use the surrender flag instead!";
 					}
 				}
-				getGameState();
+				game.startGameState();
 			}, 100);
 			animate.water();
 		}).fail(function(data){
@@ -826,7 +833,7 @@ function loadGameState(){
 	});
 }
 function startGame(){
-	if (my.totalPlayers >= 2 && my.player === 1){
+	if (lobby.totalPlayers() >= 2 && my.player === 1){
 		document.getElementById("startGame").style.display = "none";
 		g.lock(1);
 		audio.play('click');

@@ -137,7 +137,7 @@ var g = {
 	},
 	notification: {},
 	sendNotification: function(msg){
-		if (!document.hasFocus()){
+		if (!document.hasFocus() && g.view !== 'game'){
 			// it's a player message
 			var type = 'says';
 			if (msg.indexOf("images/flags") > -1){
@@ -391,15 +391,31 @@ var game = {
 			});
 		}
 	},
-	getState: function(){
+	startGameState: function(){
+		// add function to get player data list?
+		game.getGameState();
+		(function repeat(){
+			if (!g.over){
+				game.getPlayerState();
+				setTimeout(repeat, 5000);
+			}
+		})();
+		setInterval(function(){
+			if (!g.over){
+				game.updateResources();
+			}
+		}, 5000);
+		delete game.startGameState;
+	},
+	getGameState: function(){
+		// this is now a reality check in case zmq messes up?
+		// or check that players are still online?
 		$.ajax({
 			type: "GET",
 			url: "php/getGameState.php"
 		}).done(function(data){
-			// this is now a reality check in case zmq messes up
-			var tiles = data.tiles;
 			// get tile data
-			for (var i=0, len=tiles.length; i<len; i++){
+			for (var i=0, len=data.tiles.length; i<len; i++){
 				var d = data.tiles[i],
 					updateTargetStatus = false;
 				// check player value
@@ -459,6 +475,68 @@ var game = {
 			console.info(data.responseText);
 		});
 	},
+	getPlayerState: function(){
+		console.info("getPlayerState");
+	},
+	updateDefense: function(data){
+		var i = data.tile;
+		game.tiles[i].defense = data.defense;
+		animate.updateMapBars(i);
+		if (my.tgt === i){
+			showTarget(document.getElementById('land' + my.tgt));
+		}
+	},
+	updateTile: function(d){
+		var i = d.tile,
+			p = d.player;
+		// check player value
+		if (!game.tiles[i].units){
+			// set text visible if uninhabited
+			// this confuses me still...
+			TweenMax.set(document.getElementById('unit' + i), {
+				visibility: 'visible'
+			});
+		}
+		// only update client data
+		game.tiles[i].player = p;
+		game.tiles[i].account = game.player[p].account;
+		game.tiles[i].nation = game.player[p].nation;
+		game.tiles[i].flag = game.player[p].flag;
+		var newFlag = !game.player[p].flag ? 
+			'blank.png' : 
+			game.player[p].flag;
+		// change flag
+		var flag = document.getElementById('flag' + i);
+		if (flag !== null){
+			flag.href.baseVal = "images/flags/" + newFlag;
+		}
+		var land = document.getElementById('land' + i);
+		// land color
+		TweenMax.set(land, {
+			fill: color[p]
+		});
+		
+		// check unit value
+		if (d.units){
+			if (d.units !== game.tiles[i].units){
+				var unitColor = d.units > game.tiles[i].units ? '#00ff00' : '#ff0000';
+				game.tiles[i].units = d.units;
+				setTileUnits(i, unitColor);
+				if (p){
+					TweenMax.to(".mapBars" + i, 1, {
+						opacity: 1,
+						ease: Linear.easeNone
+					});
+				}
+			}
+		}
+		
+		if (my.tgt === i){
+			// update this tile within loop cycle?
+			showTarget(land);
+			game.updateTopTile(i);
+		}
+	},
 	updateResources: function(){
 		$.ajax({
 			type: "GET",
@@ -497,7 +575,6 @@ var my = {
 	player: 1,
 	gameName: 'Earth Alpha',
 	max: 8,
-	totalPlayers: 0,
 	tgt: 1,
 	lastTgt: 1,
 	capital: 0,

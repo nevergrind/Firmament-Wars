@@ -275,25 +275,31 @@ var title = {
 			
 			if (data.type === 'cannons'){
 				animate.cannons(data.tile, false);
+				game.updateTile(data);
 			} else if (data.type === 'missile'){
 				animate.missile(data.attacker, data.defender, true);
 			} else if (data.type === 'nuke'){
 				setTimeout(function(){
 					animate.nuke(data.tile);
 				}, 5000);
+			} else if (data.type === 'nukeHit'){
+				game.updateTile(data);
+				game.updateDefense(data);
 			} else if (data.type === 'gunfire'){
+				// defender tile update
 				animate.gunfire(data.tile, data.attacker === my.account);
+				game.updateTile(data);
+			} else if (data.type === 'updateTile'){
+				// attacker tile update
+				game.updateTile(data);
 			} else if (data.type === 'food'){
 				if (data.account.indexOf(my.account) > -1){
 					audio.play('food');
 				}
 			} else if (data.type === 'upgrade'){
 				// fetch updated tile defense data
-				// TODO: Prob not needed after tile update by tileId
-				updateTileDefense(data.tile);
+				game.updateDefense(data);
 				animate.upgrade(data.tile);
-			} else if (data.type === 'tile'){
-				game.updateTile(data);
 			} else if (data.type === 'eliminated'){
 				game.eliminatePlayer(data);
 			}
@@ -416,6 +422,7 @@ var title = {
 				lobby.init(data);
 				lobby.join(); // create
 				socket.joinGame();
+				lobby.styleStartGame();
 			}).fail(function(e){
 				console.info(e.responseText);
 				Msg(e.statusText);

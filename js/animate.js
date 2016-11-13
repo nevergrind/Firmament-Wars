@@ -95,6 +95,7 @@ var animate = {
 			y = box.y + box.height/2 + 10;
 		$(".mapBars" + tile).remove();
 		this.initMapBars(tile, x, y);
+		console.info("UPDATING MAP BARS");
 	},
 	initMapBars: function(i, x, y){
 		var e = document.getElementById('unit' + i);
@@ -455,7 +456,6 @@ var animate = {
 		// start bomb explosion sequence
 		TweenMax.to(g, 1, {
 			onComplete: function(){
-				updateTileDefense(tile);
 				audio.play('bomb9');
 				TweenMax.to(DOM.screenFlash, .1, {
 					startAt: {

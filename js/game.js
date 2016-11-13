@@ -184,20 +184,6 @@ function setTileUnits(i, unitColor){
 	}
 }
 
-function getGameState(){
-	// add function to get player data list?
-	(function repeat(){
-		if (!g.over){
-			game.getState();
-			setTimeout(repeat, 1000);
-		}
-	})();
-	setInterval(function(){
-		if (!g.over){
-			game.updateResources();
-		}
-	}, 5000);
-}
 function gameDefeat(){
 	new Audio('sound/shotgun2.mp3');
 	$.ajax({
@@ -255,21 +241,6 @@ function gameVictory(){
 		serverError(data);
 	});
 	g.keepAlive();
-}
-function updateTileDefense(tile){
-	$.ajax({
-		type: "GET",
-		url: "php/updateTileDefense.php"
-	}).done(function(data){
-		for (var i=0, len=data.length; i<len; i++){
-			var d = data[i];
-			game.tiles[i].defense = d.defense;
-			showTarget(document.getElementById('land' + my.tgt));
-		}
-		if (tile !== undefined){
-			animate.updateMapBars(tile);
-		}
-	});
 }
 function triggerEndGame(msg){
 	$("*").off('click mousedown keydown keyup keypress');
