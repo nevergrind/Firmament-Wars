@@ -396,6 +396,7 @@ var game = {
 			type: "GET",
 			url: "php/getGameState.php"
 		}).done(function(data){
+			// this is now a reality check in case zmq messes up
 			var tiles = data.tiles;
 			// get tile data
 			for (var i=0, len=tiles.length; i<len; i++){
@@ -403,20 +404,22 @@ var game = {
 					updateTargetStatus = false;
 				// check player value
 				if (d.player !== game.tiles[i].player){
-					// set text visible if uninhabited
+					// player value has changed
 					if (!game.tiles[i].units){
+						// set text visible if uninhabited
+						// this confuses me still...
 						TweenMax.set(document.getElementById('unit' + i), {
 							visibility: 'visible'
 						});
 					}
-					// only update client data if there's a difference
+					// only update client data
 					game.tiles[i].player = d.player;
 					game.tiles[i].account = game.player[d.player].account;
 					game.tiles[i].nation = game.player[d.player].nation;
 					game.tiles[i].flag = game.player[d.player].flag;
-					var e1 = document.getElementById('land' + i);
+					
 					if (my.tgt === i){
-						// attacker won 
+						// current target was updated
 						updateTargetStatus = true;
 					}
 					var newFlag = !game.player[d.player].flag ? 
@@ -426,7 +429,7 @@ var game = {
 					if (e5 !== null){
 						e5.href.baseVal = "images/flags/" + newFlag;
 					}
-					TweenMax.set(e1, {
+					TweenMax.set(document.getElementById('land' + i), {
 						fill: color[d.player]
 					});
 				}

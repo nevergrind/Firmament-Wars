@@ -235,7 +235,9 @@ var title = {
 			if (!title.chatDrag){
 				DOM.titleChatLog.scrollTop = DOM.titleChatLog.scrollHeight;
 			}
-			g.sendNotification(msg);
+			if (type !== 'chat-white'){
+				g.sendNotification(msg);
+			}
 		}
 	},
 	chatReceive: function(data){
