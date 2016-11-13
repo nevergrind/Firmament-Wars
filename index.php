@@ -40,7 +40,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
 	<script>
-		var version = "0-0-15";
+		var version = "0-0-16";
 	</script>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -151,11 +151,11 @@
 				?>
 			</header>
 			
-			<div id="titleMenu" class="fw-primary">
-				<div id='menuOnline'>
-					<div>
-					<?php
-					if (isset($_SESSION['email']) && $whitelisted){
+			<?php
+			if (isset($_SESSION['email']) && $whitelisted){
+				echo '<div id="titleMenu" class="fw-primary">
+					<div id="menuOnline">
+						<div>';
 						require('php/checkDisconnectsByAccount.php');
 						// remove players that left
 						mysqli_query($link, 'delete from fwtitle where timestamp < date_sub(now(), interval 1 minute)');
@@ -200,30 +200,20 @@
 							$_SESSION['nation'] = $nation;
 							$_SESSION['flag'] = $flag;
 						}
-					}
-					?>
-					</div>
-				</div>
-				<div id="menuHead">
-					<?php
-					if (isset($_SESSION['email']) && $whitelisted){
 						echo
 						'
-						<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>';
-					}
-					?>
+							</div>
+						</div>
+						<div id="menuHead">
+						<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>
 				</div>
 						
 				<hr class="fancyhr">
 			
-				<div id="myNationWrap" class="container tight w100">
-					<?php require('php/myNation.php'); ?>
-				</div>
-				
-				<?php
-				if (isset($_SESSION['email']) && $whitelisted){
-				echo 
-				'<div class="fw-text">
+				<div id="myNationWrap" class="container tight w100">';
+				require('php/myNation.php'); 
+				echo '</div>
+				<div class="fw-text">
 					<hr class="fancyhr">
 				
 					<div>
@@ -250,12 +240,15 @@
 						<tbody id="gameTableBody">
 						</tbody>
 					</table>
-				</div>';}
-				?>
+				</div>
 			</div>
 			
 			<div id="titleChat" class="fw-primary text-center">
-			</div>
+			</div>';
+			}
+			?>
+			
+			
 			
 			<?php
 				if (isset($_SESSION['email'])){

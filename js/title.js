@@ -29,13 +29,6 @@ var title = {
 			my.account = data.account;
 			my.flag = data.flag;
 			title.updatePlayers();
-			(function repeat(){
-				if (socket.enabled){
-					socket.enableWhisper();
-				} else {
-					setTimeout(repeat, 100);
-				}
-			})();
 		});
 		setTimeout(function(){
 			var str = '';
@@ -246,7 +239,6 @@ var title = {
 		}
 	},
 	chatReceive: function(data){
-		// console.info(data);
 		if (g.view === 'title'){
 			// title
 			if (data.type === 'remove'){
@@ -278,17 +270,43 @@ var title = {
 		} else {
 			// game
 			console.info('game receive: ', data);
-			if (data.type === 'tile'){
+			
+			if (data.type === 'cannons'){
+				animate.cannons(data.tile, false);
+			} else if (data.type === 'missile'){
+				animate.missile(data.attacker, data.defender, true);
+			} else if (data.type === 'nuke'){
+				setTimeout(function(){
+					animate.nuke(data.tile);
+				}, 5000);
+			} else if (data.type === 'gunfire'){
+				animate.gunfire(data.tile, data.attacker === my.account);
+			} else if (data.type === 'food'){
+				if (data.account.indexOf(my.account) > -1){
+					audio.play('food');
+				}
+			} else if (data.type === 'upgrade'){
+				// fetch updated tile defense data
+				// TODO: Prob not needed after tile update by tileId
+				updateTileDefense(data.tile);
+				animate.upgrade(data.tile);
+			} else if (data.type === 'tile'){
 				game.updateTile(data);
-			} else if (data.type === 'add'){
-				game.addPlayer(data.account, data.flag);
-			} else if (data.type === 'remove'){
-				console.info(data);
-				game.addPlayer(data.account, data.flag);
-			} else {
-				if (data.message !== undefined){
+			} else if (data.type === 'eliminated'){
+				game.eliminatePlayer(data);
+			}
+			
+			if (data.message){
+				if (data.type === 'gunfire'){
+					if (data.defender === my.account){
+						game.chat(data.message, data.type);
+					}
+				} else {
 					game.chat(data.message, data.type);
 				}
+			}
+			if (data.sfx){
+				audio.play(data.sfx);
 			}
 		}
 	},

@@ -213,40 +213,44 @@ var lobby = {
 		});
 		if (!d){
 			// load game
-			console.clear();
-			console.warn("PAGE REFRESH!");
 			loadGameState(); // page refresh
 		} else {
 			// load lobby
-			var count = 0;
 			(function repeat(){
 				if (g.view === "lobby"){
 					$.ajax({
 						type: "GET",
 						url: "php/updateLobby.php"
 					}).done(function(x){
-						count++;
 						if (g.view === "lobby"){
 							// reality check of presence data every 5 seconds 
-							my.totalPlayers = x.totalPlayers;
-							// console.info(x);
+							my.totalPlayers = 0;
+							console.info(x);
 							for (var i=1; i<=8; i++){
-								var data = x.playerData[i-1];
+								var data = x.playerData[i];
 								if (data !== undefined){
+									my.totalPlayers++;
+									// server defined
 									if (data.account !== lobby.data[i].account){
-										// REMOVE WHEN DONE TESTING
-										if (count < 2){
-											lobby.updatePlayer(data);
+										lobby.updatePlayer(data);
+									}
+								} else {
+									// not defined on server
+									if (lobby.data[i].account){
+										lobby.chat(lobby.data[i].account + " has disconnected", 'chat-warning')
+										var o = {
+											player: i
 										}
+										lobby.updatePlayer(o);
 									}
 								}
 							}
+							// make sure host didn't disconnect
+							if (x.playerData[1] === undefined){
+								lobby.hostLeft();
+							}
+							setTimeout(repeat, 5000);
 						}
-						// make sure host didn't disconnect
-						if (!x.hostFound){
-							lobby.hostLeft();
-						}
-						setTimeout(repeat, 5000);
 					}).fail(function(data){
 						serverError(data);
 					});
@@ -261,7 +265,7 @@ var lobby = {
 			exitGame(true);
 		}, 500);
 	},
-	updatePlayer: function(data){
+	updatePlayer: function(data, i){
 		var i = data.player;
 		if (data.account !== undefined){
 			// add
@@ -488,6 +492,7 @@ function Nation(){
 	this.account = "";
 	this.nation = "";
 	this.flag = "";
+	this.alive = true;
 	return this;
 }
 
@@ -520,7 +525,7 @@ function loadGameState(){
 			g.map.name = data.mapData.name;
 			g.map.tiles = data.mapData.tiles;
 			
-			console.warn(data.tiles.length, g.map.tiles);
+			// console.warn(data.tiles.length, g.map.tiles);
 			if (data.tiles.length < g.map.tiles){
 				if (g.loadAttempts < 10){
 					setTimeout(function(){
@@ -774,8 +779,7 @@ function loadGameState(){
 						var box = this.getBBox();
 						var x = Math.round(box.x + (box.width/2));
 						var y = Math.round(box.y + (box.height/2));
-						console.clear();
-						console.warn(this.id, x, y, e.which);
+						// console.warn(this.id, x, y, e.which);
 						triggerAction(this);
 					});
 				}

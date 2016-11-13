@@ -233,7 +233,6 @@ var animate = {
 				DOM.mapAnimations.appendChild(circ);
 				
 				var delay = i * .015;
-				console.info(delay);
 				TweenMax.to(circ, .3, {
 					delay: delay,
 					attr: {

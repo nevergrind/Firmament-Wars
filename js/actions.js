@@ -99,8 +99,6 @@ var action = {
 			if (game.tiles[defender].player !== my.player){
 				if (!game.tiles[defender].units){
 					audio.move();
-				} else {
-					animate.gunfire(defender, true);
 				}
 			} else {
 				audio.move();
@@ -456,23 +454,27 @@ var action = {
 }
 
 // key bindings
-function toggleChatMode(send){
+function toggleChatMode(bypass){
 	g.chatOn = g.chatOn ? false : true;
 	if (g.chatOn){
 		$DOM.chatInput.focus();
 		DOM.chatInput.className = 'fw-text noselect nobg chatOn';
 	} else {
-		var message = $DOM.chatInput.val().trim();
-		if (send && message){
+		var msg = $DOM.chatInput.val().trim();
+		if (bypass && msg){
 			// send ajax chat msg
-			$.ajax({
-				url: 'php/insertChat.php',
-				data: {
-					message: message
-				}
-			}).done(function(data) {
-				console.info("data: ", data);
-			});
+			if (msg.indexOf('/whisper ') === 0){
+				title.sendWhisper(msg, '/whisper ');
+			} else if (msg.indexOf('/w ') === 0){
+				title.sendWhisper(msg, '/w ');
+			} else {
+				$.ajax({
+					url: 'php/insertChat.php',
+					data: {
+						message: msg
+					}
+				});
+			}
 		}
 		$DOM.chatInput.val('').blur();
 		DOM.chatInput.className = 'fw-text noselect nobg';

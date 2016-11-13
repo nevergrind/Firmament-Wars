@@ -250,7 +250,6 @@ g.init = (function(){
 		}).done(function(data) {
 			console.info('rejoin ', data);
 			if (data.gameId > 0){
-				socket.removePlayer(my.account);
 				console.info("Auto joined game:" + (data.gameId));
 				my.player = data.player;
 				game.id = data.gameId;
@@ -351,11 +350,146 @@ var game = {
 				}
 			}
 		}, 12000);
+	},
+	alivePlayers: function(){
+		var count = 0;
+		for (var i=0, len=game.player.length; i<len; i++){
+			if (game.player[i].account){
+				if (game.player[i].alive){
+					count++;
+				}
+			}
+		}
+		return count;
+	},
+	eliminatePlayer: function(data){
+		// player eliminated
+		var i = data.player;
+		game.player[i].alive = false;
+		if ($(".alive").length > 1){
+			// found a player on diplomacy panel
+			$("#diplomacyPlayer" + i).removeClass('alive');
+			var playerLen = $(".alive").length;
+			if (playerLen < 2){
+				// game done
+				g.done = 1;
+				// game over?
+				if (!g.over){
+					if (i === my.player){
+						gameDefeat();
+					} else if (game.alivePlayers() === 1){
+						gameVictory();
+					}
+				}
+			}
+			// remove
+			TweenMax.to('#diplomacyPlayer' + i, 1, {
+				autoAlpha: 0,
+				onComplete: function(){
+					$("#diplomacyPlayer" + i).css('display', 'none');
+				}
+			});
+		}
+	},
+	getState: function(){
+		$.ajax({
+			type: "GET",
+			url: "php/getGameState.php"
+		}).done(function(data){
+			var tiles = data.tiles;
+			// get tile data
+			for (var i=0, len=tiles.length; i<len; i++){
+				var d = data.tiles[i],
+					updateTargetStatus = false;
+				// check player value
+				if (d.player !== game.tiles[i].player){
+					// set text visible if uninhabited
+					if (!game.tiles[i].units){
+						TweenMax.set(document.getElementById('unit' + i), {
+							visibility: 'visible'
+						});
+					}
+					// only update client data if there's a difference
+					game.tiles[i].player = d.player;
+					game.tiles[i].account = game.player[d.player].account;
+					game.tiles[i].nation = game.player[d.player].nation;
+					game.tiles[i].flag = game.player[d.player].flag;
+					var e1 = document.getElementById('land' + i);
+					if (my.tgt === i){
+						// attacker won 
+						updateTargetStatus = true;
+					}
+					var newFlag = !game.player[d.player].flag ? 
+						'blank.png' : 
+						game.player[d.player].flag;
+					var e5 = document.getElementById('flag' + i);
+					if (e5 !== null){
+						e5.href.baseVal = "images/flags/" + newFlag;
+					}
+					TweenMax.set(e1, {
+						fill: color[d.player]
+					});
+				}
+				// check unit value
+				if (d.units !== game.tiles[i].units){
+					var unitColor = d.units > game.tiles[i].units ? '#00ff00' : '#ff0000';
+					game.tiles[i].units = d.units;
+					if (my.tgt === i){
+						// defender won
+						updateTargetStatus = true;
+					}
+					setTileUnits(i, unitColor);
+					if (d.player){
+						TweenMax.to(".mapBars" + i, 1, {
+							opacity: 1,
+							ease: Linear.easeNone
+						});
+					}
+				}
+				if (updateTargetStatus){
+					// update this tile within loop cycle?
+					showTarget(document.getElementById('land' + i));
+					game.updateTopTile(i);
+				}
+			}
+		}).fail(function(data){
+			console.info(data.responseText);
+		});
+	},
+	updateResources: function(){
+		$.ajax({
+			type: "GET",
+			url: "php/updateResources.php"
+		}).done(function(data){
+			console.info('resource: ', data);
+			setResources(data);
+			if (data.cultureMsg !== undefined){
+				if (data.cultureMsg){
+					game.chat(data.cultureMsg);
+					audio.play('culture');
+					// recruit bonus changes
+					initOffensiveTooltips();
+				}
+			}
+			// filled food bar
+			if (data.get !== undefined){
+				// was it special?
+				if (!data.getBonus){
+					// no bonus troops; only broadcast to self
+					game.chat(data.get + ': ' + my.nation + ' receives <span class="chat-manpower">' + data.manpowerBonus + '</span> armies!');
+					audio.play('food');
+				}
+			}
+		}).fail(function(data){
+			console.info(data.responseText);
+			serverError(data);
+		});
 	}
 }
 // player data values
 var my = {
 	lastReceivedWhisper: '',
+	account: '',
 	channel: 'global',
 	player: 1,
 	gameName: 'Earth Alpha',

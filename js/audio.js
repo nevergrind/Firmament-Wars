@@ -64,8 +64,11 @@ var audio = {
 			]
 			audio.trackIndex++;
 			// future various tracks
-			if (my.government){}
+			if (my.government){
+				// government specific tracks?
+			}
 			DOM.bgmusic.src = "music/" + tracks[audio.trackIndex % audio.totalTracks] +"." + audio.ext;
+			DOM.bgmusic.volume = g.config.audio.musicVolume / 100;
 			DOM.bgmusic.onended = function(){
 				audio.gameMusicPlayNext();
 			}
