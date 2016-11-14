@@ -129,6 +129,7 @@ var lobby = {
 		}
 	},
 	init: function(x){
+		socket.unsubscribe('title:refreshGames');
 		// build the lobby DOM
 		$("#lobby-chat-input").on('focus', function(){
 			lobby.chatOn = true;
@@ -272,7 +273,7 @@ var lobby = {
 		Msg("The host has left the lobby.");
 		setTimeout(function(){
 			exitGame(true);
-		}, 500);
+		}, 1000);
 	},
 	updatePlayer: function(data, i){
 		var i = data.player;
@@ -319,7 +320,6 @@ var lobby = {
 	countdown: function(data){
 		// still in the lobby?
 		if (!lobby.gameStarted){
-			socket.unsubscribe('title:refreshGames');
 			lobby.gameStarted = true;
 			new Audio('sound/beepHi.mp3');
 			// normal countdown

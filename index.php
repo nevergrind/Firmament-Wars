@@ -890,10 +890,10 @@
 		if(location.host==='localhost' || 1){
 			var _scriptLoader = [
 				'core',
-				'ws',
-				'audio',
 				'title',
 				'lobby',
+				'ws',
+				'audio',
 				'map',
 				'game',
 				'actions',

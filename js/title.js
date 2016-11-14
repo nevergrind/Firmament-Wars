@@ -1,6 +1,7 @@
 // title.js
 var title = {
 	players: [],
+	games: [],
 	init: (function(){
 		console.info("Initializing title screen...");
 		// prevents auto scroll while scrolling
@@ -143,11 +144,35 @@ var title = {
 	updateGame: function(data){
 		console.info('updateGame: ', data, data.type);
 		if (data.type === 'update'){
-			
+			title.refreshPlayers(data);
 		} else if (data.type === 'add'){
-			
+			title.addGame(data);
 		} else if (data.type === 'remove'){
-			
+			title.removeGame(data);
+		}
+	},
+	refreshPlayers: function(data){
+		// player joined or left
+	},
+	addGame: function(data){
+		// created game
+		var e = document.createElement('tr');
+		e.id = 'game_' + data.id;
+		e.className = 'wars no-select';
+		e.setAttribute('data-name', data.name);
+		e.innerHTML = 
+			"<td class='warCells'>"+ data.name + "</td>\
+			<td class='warCells'>" + data.map + "</td>\
+			<td class='warCells'><span id='game_players_" + data.id + "'>1</span>/" + data.max + "</td>";
+		DOM.gameTableBody.insertBefore(e, DOM.gameTableBody.childNodes[0]);
+	},
+	removeGame: function(data){
+		// game countdown started or exited
+		var index = title.games.indexOf(data.id);
+		title.games.splice(index, 1);
+		var e = document.getElementById('game_' + data.id);
+		if (e !== null){
+			e.parentNode.removeChild(e);
 		}
 	},
 	animateLogo: function(){

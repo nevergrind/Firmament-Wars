@@ -721,6 +721,7 @@ var DOM;
 function initDom(){
 	var d = document;
 	DOM = {
+		gameTableBody: d.getElementById('gameTableBody'),
 		food: d.getElementById('food'),
 		production: d.getElementById('production'),
 		culture: d.getElementById('culture'),
@@ -958,23 +959,20 @@ function refreshGames(){
 		if (e === null){
 			return;
 		}
-		if (!data.length){
-			e.innerHTML = "<td colspan='3' class='text-center text-warning buffer2'>No active games found. Create a game to play!</td>";
-		} else {
-			// head
-			var str = '';
-			// body
-			for (var i=0, len=data.length; i<len; i++){
-				str += 
-				"<tr class='wars no-select' data-name='" + data[i].name + "'>\
-					<td class='warCells'>"+ data[i].name + "</td>\
-					<td class='warCells'>" + data[i].map + "</td>\
-					<td class='warCells'>" + data[i].players + "/" + data[i].max + "</td>\
-				</tr>";
-			}
-			e.innerHTML = str;
-			$(".wars").filter(":first").trigger("click");
+		// head
+		var str = '';
+		// body
+		for (var i=0, len=data.length; i<len; i++){
+			title.games.push(data[i].id);
+			str += 
+			"<tr id='game_"+ data[i].id +"' class='wars no-select' data-name='" + data[i].name + "'>\
+				<td class='warCells'>"+ data[i].name + "</td>\
+				<td class='warCells'>" + data[i].map + "</td>\
+				<td class='warCells'><span id='game_players_"+ data[i].id +"'>" + data[i].players + "</span>/" + data[i].max + "</td>\
+			</tr>";
 		}
+		e.innerHTML = str;
+		$(".wars").filter(":first").trigger("click");
 	}).fail(function(e){
 		console.info(e.responseText);
 		Msg("Server error.");
