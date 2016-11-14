@@ -219,7 +219,7 @@ function gameVictory(){
 		type: "GET",
 		url: "php/gameVictory.php"
 	}).done(function(data){
-		if (data.gameAbandoned){
+		if (data.ceaseFire){
 			var msg = 
 			'<p>Armistice!</p>'+
 			'<div>The campaign has been suspended!</div>'+

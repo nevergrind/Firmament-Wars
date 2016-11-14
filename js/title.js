@@ -302,6 +302,8 @@ var title = {
 				animate.upgrade(data.tile);
 			} else if (data.type === 'eliminated'){
 				game.eliminatePlayer(data);
+			} else if (data.type === 'disconnect'){
+				game.eliminatePlayer(data);
 			}
 			
 			if (data.message){

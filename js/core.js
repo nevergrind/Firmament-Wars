@@ -394,12 +394,6 @@ var game = {
 	startGameState: function(){
 		// add function to get player data list?
 		game.getGameState();
-		(function repeat(){
-			if (!g.over){
-				game.getPlayerState();
-				setTimeout(repeat, 5000);
-			}
-		})();
 		setInterval(function(){
 			if (!g.over){
 				game.updateResources();
@@ -474,9 +468,6 @@ var game = {
 		}).fail(function(data){
 			console.info(data.responseText);
 		});
-	},
-	getPlayerState: function(){
-		console.info("getPlayerState");
 	},
 	updateDefense: function(data){
 		var i = data.tile;
