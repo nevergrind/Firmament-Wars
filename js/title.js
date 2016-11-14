@@ -42,6 +42,7 @@ var title = {
 			$('[title]').tooltip();
 			title.animateLogo();
 		}, 200);
+		/*
 		var interval = location.host === 'localhost' ? 1000 : 10000;
 		(function repeat(){
 			if (g.view === 'title'){
@@ -53,13 +54,13 @@ var title = {
 				}, interval);
 			}
 		})();
+		*/
 		// init game refresh
-		refreshGames(true);
+		refreshGames();
 		Notification.requestPermission();
 	})(),
 	updatePlayers: function(data){
-		// only update if logged in
-		title.titleUpdate = $("#titleChatPlayers").length;
+		title.titleUpdate = $("#titleChatPlayers").length; // player is logged in
 		if (title.titleUpdate){
 			// title chat loop
 			(function repeat(){
@@ -107,15 +108,12 @@ var title = {
 						}
 						document.getElementById('titleChatHeaderCount').textContent = len;
 					}).always(function(){
-						setTimeout(function(){
-							if (title.titleUpdate){
-								repeat();
-							}
-						}, 5000);
+						setTimeout(repeat, 5000);
 					});
 				}
 			})();
 		} else {
+			// not logged in
 			$("#titleChat, #titleMenu").remove();
 		}
 	},
@@ -140,6 +138,16 @@ var title = {
 		console.info("Removing: ", data.account, z);
 		if (z !== null){
 			z.parentNode.removeChild(z);
+		}
+	},
+	updateGame: function(data){
+		console.info('updateGame: ', data, data.type);
+		if (data.type === 'update'){
+			
+		} else if (data.type === 'add'){
+			
+		} else if (data.type === 'remove'){
+			
 		}
 	},
 	animateLogo: function(){
@@ -398,10 +406,10 @@ var title = {
 	createGame: function(){
 		var name = $("#gameName").val(),
 			pw = $("#gamePassword").val(),
-			players = $("#gamePlayers").val()*1;
+			max = $("#gamePlayers").val() * 1;
 		if (name.length < 1 || name.length > 32){
 			Msg("Game name must be at least 4-32 characters.");
-		} else if (players < 2 || players > 8 || players % 1 !== 0){
+		} else if (max < 2 || max > 8 || max % 1 !== 0){
 			Msg("Game must have 2-8 players.");
 		} else {
 			title.hideBackdrop();
@@ -412,8 +420,8 @@ var title = {
 				data: {
 					name: name,
 					pw: pw,
-					players: players,
-					map: title.mapData[g.map.key].name
+					map: title.mapData[g.map.key].name,
+					max: max
 				}
 			}).done(function(data) {
 				socket.removePlayer(my.account);

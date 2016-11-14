@@ -319,6 +319,7 @@ var lobby = {
 	countdown: function(data){
 		// still in the lobby?
 		if (!lobby.gameStarted){
+			socket.unsubscribe('title:refreshGames');
 			lobby.gameStarted = true;
 			new Audio('sound/beepHi.mp3');
 			// normal countdown

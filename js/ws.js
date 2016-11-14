@@ -20,6 +20,13 @@ var socket = {
 			flag: flag
 		}
 	},
+	unsubscribe: function(channel){
+		try {
+			socket.zmq.unsubscribe(channel);
+		} catch(err){
+			console.warn(err);
+		}
+	},
 	setChannel: function(channel){
 		// change channel on title screen
 		if (g.view === 'title'){
@@ -35,11 +42,7 @@ var socket = {
 				// removes id
 				socket.removePlayer(my.account);
 				// unsubs
-				try {
-					socket.zmq.unsubscribe('title:' + my.channel);
-				} catch(err){
-					console.warn(err);
-				}
+				socket.unsubscribe('title:' + my.channel);
 				// set new channel data
 				my.channel = data.channel;
 				for (var key in title.players){
@@ -62,7 +65,6 @@ var socket = {
 		var channel = 'account:' + my.account;
 		console.info("Subscribing to " + channel);
 		socket.zmq.subscribe(channel, function(topic, data) {
-			console.warn(data);
 			if (data.message){
 				if (data.action === 'send'){
 					// message sent to user
@@ -91,11 +93,7 @@ var socket = {
 	joinGame: function(){
 		(function repeat(){
 			if (socket.enabled){
-				try {
-					socket.zmq.unsubscribe('title:' + my.channel);
-				} catch(err){
-					console.warn(err);
-				}
+				socket.unsubscribe('title:' + my.channel);
 				// game updates
 				console.info("Subscribing to game:" + game.id);
 				socket.zmq.subscribe('game:' + game.id, function(topic, data) {
@@ -123,13 +121,16 @@ var socket = {
 		}
 	},
 	connectionSuccess: function(){
+		socket.enabled = true;
 		console.info("Socket connection established with server:", g.view);
 		// chat updates
 		title.chat("You have joined channel: " + my.channel + ".", "chat-warning");
 		socket.zmq.subscribe('title:' + my.channel, function(topic, data) {
 			title.chatReceive(data);
 		});
-		socket.enabled = true;
+		socket.zmq.subscribe('title:refreshGames', function(topic, data) {
+			title.updateGame(data);
+		});
 		(function repeat(){
 			if (my.account){
 				socket.enableWhisper();

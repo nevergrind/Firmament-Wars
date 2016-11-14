@@ -949,7 +949,7 @@ function playerLogout(){
     });
 }
 
-function refreshGames(click){
+function refreshGames(){
 	$.ajax({
 		type: 'GET',
 		url: 'php/refreshGames.php'
@@ -973,9 +973,7 @@ function refreshGames(click){
 				</tr>";
 			}
 			e.innerHTML = str;
-			if (click){
-				$(".wars").filter(":first").trigger("click");
-			}
+			$(".wars").filter(":first").trigger("click");
 		}
 	}).fail(function(e){
 		console.info(e.responseText);

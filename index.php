@@ -108,13 +108,16 @@
 						<span id="crystalCount" class="text-primary" >' .$crystals.'</span>
 					</span>&ensp;
 					<a href="/account">Account</a>&ensp;
-					<a href="/store">Store</a>&ensp;
-					<a href="/forums" title="Nevergrind Browser Game Forums">Forums</a>&ensp; 
-					<a href="/blog" title="Nevergrind Browser Game Development News and Articles">Blog</a>&ensp; 
-					<a id="options" class="pointer options">Options</a>';
-					?>
-					<?php
+					<a href="/store">Store</a>&ensp;';
 				}
+				echo
+					'<a href="/forums" title="Nevergrind Browser Game Forums">Forums</a>&ensp; 
+					<a href="/blog" title="Nevergrind Browser Game Development News and Articles">Blog</a>&ensp;';
+					
+				if (isset($_SESSION['email'])){
+					echo '<a id="options" class="pointer options">Options</a>';
+				}
+				
 				echo '
 				<div class="pull-right text-primary">
 					<a href="//www.youtube.com/user/Maelfyn">
