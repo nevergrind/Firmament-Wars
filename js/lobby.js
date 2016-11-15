@@ -129,7 +129,6 @@ var lobby = {
 		}
 	},
 	init: function(x){
-		socket.unsubscribe('title:refreshGames');
 		// build the lobby DOM
 		$("#lobby-chat-input").on('focus', function(){
 			lobby.chatOn = true;
@@ -318,6 +317,7 @@ var lobby = {
 		lobby.data[i].government = data.government;
 	},
 	countdown: function(data){
+		socket.unsubscribe('title:refreshGames');
 		// still in the lobby?
 		if (!lobby.gameStarted){
 			lobby.gameStarted = true;

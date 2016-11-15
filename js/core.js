@@ -394,11 +394,7 @@ var game = {
 	startGameState: function(){
 		// add function to get player data list?
 		game.getGameState();
-		setInterval(function(){
-			if (!g.over){
-				game.updateResources();
-			}
-		}, 5000);
+		setInterval(game.updateResources, 5000);
 		delete game.startGameState;
 	},
 	getGameState: function(){
@@ -529,33 +525,35 @@ var game = {
 		}
 	},
 	updateResources: function(){
-		$.ajax({
-			type: "GET",
-			url: "php/updateResources.php"
-		}).done(function(data){
-			console.info('resource: ', data);
-			setResources(data);
-			if (data.cultureMsg !== undefined){
-				if (data.cultureMsg){
-					game.chat(data.cultureMsg);
-					audio.play('culture');
-					// recruit bonus changes
-					initOffensiveTooltips();
+		if (!g.over){
+			$.ajax({
+				type: "GET",
+				url: "php/updateResources.php"
+			}).done(function(data){
+				console.info('resource: ', data);
+				setResources(data);
+				if (data.cultureMsg !== undefined){
+					if (data.cultureMsg){
+						game.chat(data.cultureMsg);
+						audio.play('culture');
+						// recruit bonus changes
+						initOffensiveTooltips();
+					}
 				}
-			}
-			// filled food bar
-			if (data.get !== undefined){
-				// was it special?
-				if (!data.getBonus){
-					// no bonus troops; only broadcast to self
-					game.chat(data.get + ': ' + my.nation + ' receives <span class="chat-manpower">' + data.manpowerBonus + '</span> armies!');
-					audio.play('food');
+				// filled food bar
+				if (data.get !== undefined){
+					// was it special?
+					if (!data.getBonus){
+						// no bonus troops; only broadcast to self
+						game.chat(data.get + ': ' + my.nation + ' receives <span class="chat-manpower">' + data.manpowerBonus + '</span> armies!');
+						audio.play('food');
+					}
 				}
-			}
-		}).fail(function(data){
-			console.info(data.responseText);
-			serverError(data);
-		});
+			}).fail(function(data){
+				console.info(data.responseText);
+				serverError(data);
+			});
+		}
 	}
 }
 // player data values
@@ -963,12 +961,13 @@ function refreshGames(){
 		var str = '';
 		// body
 		for (var i=0, len=data.length; i<len; i++){
-			title.games.push(data[i].id);
+			var d = data[i];
+			title.games[d.id] = d.players * 1;
 			str += 
-			"<tr id='game_"+ data[i].id +"' class='wars no-select' data-name='" + data[i].name + "'>\
-				<td class='warCells'>"+ data[i].name + "</td>\
-				<td class='warCells'>" + data[i].map + "</td>\
-				<td class='warCells'><span id='game_players_"+ data[i].id +"'>" + data[i].players + "</span>/" + data[i].max + "</td>\
+			"<tr id='game_"+ d.id +"' class='wars no-select' data-name='" + d.name + "'>\
+				<td class='warCells'>"+ d.name + "</td>\
+				<td class='warCells'>" + d.map + "</td>\
+				<td class='warCells'><span id='game_players_"+ d.id +"'>" + d.players + "</span>/" + d.max + "</td>\
 			</tr>";
 		}
 		e.innerHTML = str;

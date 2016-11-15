@@ -102,7 +102,7 @@ var title = {
 									var x = {
 										account: key
 									}
-									console.info("REMOVING PLAYER: " + x.account);
+									// console.info("REMOVING PLAYER: " + x.account);
 									title.removePlayer(x);
 								}
 							}
@@ -136,26 +136,33 @@ var title = {
 		// fix this
 		delete title.players[data.account];
 		var z = document.getElementById('titlePlayer' + data.account);
-		console.info("Removing: ", data.account, z);
 		if (z !== null){
 			z.parentNode.removeChild(z);
 		}
 	},
 	updateGame: function(data){
-		console.info('updateGame: ', data, data.type);
-		if (data.type === 'update'){
-			title.refreshPlayers(data);
-		} else if (data.type === 'add'){
+		console.info('updateGame: ', data);
+		if (data.type === 'addToGame'){
+			title.addToGame(data);
+		} else if (data.type === 'removeFromGame'){
+			title.removeFromGame(data);
+		} else if (data.type === 'addGame'){
 			title.addGame(data);
-		} else if (data.type === 'remove'){
+		} else if (data.type === 'removeGame'){
 			title.removeGame(data);
 		}
 	},
-	refreshPlayers: function(data){
+	addToGame: function(data){
 		// player joined or left
+		console.info("addToGame");
+	},
+	removeFromGame: function(data){
+		// player joined or left
+		console.info("removeFromGame");
 	},
 	addGame: function(data){
 		// created game
+		title.games[data.id] = 1;
 		var e = document.createElement('tr');
 		e.id = 'game_' + data.id;
 		e.className = 'wars no-select';
@@ -168,8 +175,7 @@ var title = {
 	},
 	removeGame: function(data){
 		// game countdown started or exited
-		var index = title.games.indexOf(data.id);
-		title.games.splice(index, 1);
+		title.games[data.id] = 0;
 		var e = document.getElementById('game_' + data.id);
 		if (e !== null){
 			e.parentNode.removeChild(e);
