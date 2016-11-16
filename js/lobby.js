@@ -1,3 +1,4 @@
+// lobby.js
 var lobby = {
 	data: [
 		{ account: '' }, 
@@ -130,20 +131,6 @@ var lobby = {
 	},
 	init: function(x){
 		// build the lobby DOM
-		$("#lobby-chat-input").on('focus', function(){
-			lobby.chatOn = true;
-		}).on('blur', function(){
-			lobby.chatOn = false;
-		});
-		$("#lobbyChatSend").on('click', function(){
-			lobby.sendMsg(true);
-		});
-		// prevents auto scroll while scrolling
-		$("#lobbyChatLog").on('mousedown', function(){
-			lobby.chatDrag = true;
-		}).on('mouseup', function(){
-			lobby.chatDrag = false;
-		});
 		console.info("Initializing lobby...");
 		var e1 = document.getElementById("lobbyGameName");
 		if (e1 !== null){
@@ -851,15 +838,3 @@ function startGame(){
 		});
 	}
 }
-$("#joinGameLobby").on('click', '.governmentChoice', function(e){
-	// changes player's own government only
-	var government = $(this).text();
-	lobby.updateGovernmentWindow(government);
-	$.ajax({
-		url: "php/changeGovernment.php",
-		data: {
-			government: government
-		}
-	});
-	e.preventDefault();
-});

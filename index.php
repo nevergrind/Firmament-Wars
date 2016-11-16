@@ -40,7 +40,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
 	<script>
-		var version = "0-0-18";
+		var version = "0-0-19";
 	</script>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -887,8 +887,12 @@
 ?>
 <script>
 	(function(d){
-		if(location.host==='localhost' || 1){
-			var _scriptLoader = [
+		if (location.host === 'nevergrind.com' || location.hash === '#test'){
+			var scripts = [
+				'fw_' + version
+			]
+		} else {
+			var scripts = [
 				'core',
 				'title',
 				'lobby',
@@ -897,16 +901,14 @@
 				'map',
 				'game',
 				'actions',
-				'animate'
-			];
-		} else {
-			var _scriptLoader = [
-				'firmament-wars_0-0-8'
-			];
+				'events',
+				'animate',
+				'stats'
+			]
 		}
-		for(var i=0, len=_scriptLoader.length; i<len; i++){
+		for(var i=0, len=scripts.length; i<len; i++){
 			var x = d.createElement('script');
-			x.src = 'js/'+_scriptLoader[i]+'.js?v=' + version;
+			x.src = 'js/' + scripts[i]+'.js?v=' + version;
 			x.async = false;
 			d.head.appendChild(x);
 		}

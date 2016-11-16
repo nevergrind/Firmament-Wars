@@ -1,3 +1,4 @@
+// ws.js 
 // client-side web sockets
 var socket = {
 	removePlayer: function(account){
@@ -63,7 +64,7 @@ var socket = {
 	},
 	enableWhisper: function(){
 		var channel = 'account:' + my.account;
-		console.info("Subscribing to " + channel);
+		// console.info("Subscribing to " + channel);
 		socket.zmq.subscribe(channel, function(topic, data) {
 			if (data.message){
 				if (data.action === 'send'){
@@ -86,6 +87,9 @@ var socket = {
 			}
 		});
 		(function keepAliveWs(){
+			setTimeout(function(){
+			console.clear();
+			}, 10000);
 			socket.zmq.publish(channel, {type: "keepAlive"});
 			setTimeout(keepAliveWs, 180000);
 		})();
@@ -95,7 +99,7 @@ var socket = {
 			if (socket.enabled){
 				socket.unsubscribe('title:' + my.channel);
 				// game updates
-				console.info("Subscribing to game:" + game.id);
+				// console.info("Subscribing to game:" + game.id);
 				socket.zmq.subscribe('game:' + game.id, function(topic, data) {
 					title.chatReceive(data);
 				});
@@ -122,7 +126,7 @@ var socket = {
 	},
 	connectionSuccess: function(){
 		socket.enabled = true;
-		console.info("Socket connection established with server:", g.view);
+		console.info("Socket connection established with server");
 		// chat updates
 		title.chat("You have joined channel: " + my.channel + ".", "chat-warning");
 		socket.zmq.subscribe('title:' + my.channel, function(topic, data) {
@@ -130,6 +134,9 @@ var socket = {
 		});
 		socket.zmq.subscribe('title:refreshGames', function(topic, data) {
 			title.updateGame(data);
+		});
+		socket.zmq.subscribe('admin:broadcast', function(topic, data) {
+			g.chat(data.msg, data.type);
 		});
 		(function repeat(){
 			if (my.account){

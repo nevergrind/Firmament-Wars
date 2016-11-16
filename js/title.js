@@ -43,22 +43,36 @@ var title = {
 			$('[title]').tooltip();
 			title.animateLogo();
 		}, 200);
-		/*
-		var interval = location.host === 'localhost' ? 1000 : 10000;
-		(function repeat(){
-			if (g.view === 'title'){
-				setTimeout(function(){
-					if (title.titleUpdate){
-						refreshGames();
-						repeat();
-					}
-				}, interval);
-			}
-		})();
-		*/
 		// init game refresh
-		refreshGames();
 		Notification.requestPermission();
+		// initial refresh of games
+		$.ajax({
+			type: 'GET',
+			url: 'php/refreshGames.php'
+		}).done(function(data) {
+			var e = document.getElementById('gameTableBody');
+			if (e === null){
+				return;
+			}
+			// head
+			var str = '';
+			// body
+			for (var i=0, len=data.length; i<len; i++){
+				var d = data[i];
+				title.games[d.id] = d.players * 1;
+				str += 
+				"<tr id='game_"+ d.id +"' class='wars no-select' data-name='" + d.name + "'>\
+					<td class='warCells'>"+ d.name + "</td>\
+					<td class='warCells'>" + d.map + "</td>\
+					<td class='warCells'><span id='game_players_"+ d.id +"'>" + d.players + "</span>/" + d.max + "</td>\
+				</tr>";
+			}
+			e.innerHTML = str;
+			$(".wars").filter(":first").trigger("click");
+		}).fail(function(e){
+			console.info(e.responseText);
+			Msg("Server error.");
+		});
 	})(),
 	updatePlayers: function(data){
 		title.titleUpdate = $("#titleChatPlayers").length; // player is logged in
@@ -75,7 +89,7 @@ var title = {
 						}
 					}).done(function(data){
 						// report chat messages
-						console.log("Ping: ", Date.now() - start);
+						console.log("Ping: ", Date.now() - start, data);
 						// set title players
 						if (data.playerData !== undefined){
 							var p = data.playerData,
@@ -108,6 +122,41 @@ var title = {
 							}
 						}
 						document.getElementById('titleChatHeaderCount').textContent = len;
+						// game data sanity check
+						var serverGames = [];
+						if (data.gameData !== undefined){
+							var p = data.gameData;
+							for (var i=0, len=p.length; i<len; i++){
+								serverGames[p[i].id] = {
+									players: p[i].players * 1,
+									max: p[i].max * 1
+								}
+							}
+						}
+						// remove games if they're not found in server games
+						title.games.forEach(function(e, ind){
+							// console.info(serverGames[ind]);
+							if (serverGames[ind] === undefined){
+								// game timed out, not found
+								var o = {
+									id: ind
+								}
+								// console.info("REMOVING: ", o);
+								title.removeGame(o);
+							} else {
+								// found game
+								if (serverGames[ind].players !== title.games[ind]){
+									// player count does not match... fixing
+									// console.info("PLAYER COUNT WRONG!");
+									var o = {
+										id: ind,
+										players: serverGames[ind].players,
+										max: serverGames[ind].max
+									}
+									title.setToGame(o);
+								}
+							}
+						});
 					}).always(function(){
 						setTimeout(repeat, 5000);
 					});
@@ -141,7 +190,6 @@ var title = {
 		}
 	},
 	updateGame: function(data){
-		console.info('updateGame: ', data);
 		if (data.type === 'addToGame'){
 			title.addToGame(data);
 		} else if (data.type === 'removeFromGame'){
@@ -152,16 +200,52 @@ var title = {
 			title.removeGame(data);
 		}
 	},
+	updatePlayerText: function(id){
+		var e = document.getElementById('game_players_' + id);
+		if (e !== null){
+			e.textContent = title.games[id];
+		}
+	},
+	setToGame: function(data){
+		// refreshGames corrects player values
+		// console.info("setToGame", data);
+		var id = data.id;
+		title.games[id] = data.players;
+		title.updatePlayerText(id);
+	},
 	addToGame: function(data){
 		// player joined or left
-		console.info("addToGame");
+		// console.info("addToGame", data);
+		var id = data.id;
+		if (title.games[id] !== undefined){
+			if (title.games[id] + 1 > data.max){
+				title.games[id] = data.max;
+			} else {
+				title.games[id]++;
+			}
+		} else {
+			title.games[id] = 1;
+		}
+		title.updatePlayerText(id);
 	},
 	removeFromGame: function(data){
 		// player joined or left
-		console.info("removeFromGame");
+		// console.info("removeFromGame", data);
+		var id = data.id;
+		if (title.games[id] !== undefined){
+			if (title.games[id] - 1 < 1){
+				title.games[id] = 1;
+			} else {
+				title.games[id]--;
+			}
+		} else {
+			title.games[id] = 1;
+		}
+		title.updatePlayerText(id);
 	},
 	addGame: function(data){
 		// created game
+		// console.info("addGame", data);
 		title.games[data.id] = 1;
 		var e = document.createElement('tr');
 		e.id = 'game_' + data.id;
@@ -175,7 +259,8 @@ var title = {
 	},
 	removeGame: function(data){
 		// game countdown started or exited
-		title.games[data.id] = 0;
+		// console.info("removeGame", data);
+		delete title.games[data.id];
 		var e = document.getElementById('game_' + data.id);
 		if (e !== null){
 			e.parentNode.removeChild(e);
@@ -285,7 +370,7 @@ var title = {
 			if (data.type === 'remove'){
 				title.removePlayer(data);
 			} else if (data.type === 'add'){
-				console.info(data);
+				// console.info(data);
 				title.addPlayer(data.account, data.flag);
 			} else {
 				if (data.message !== undefined){
@@ -294,7 +379,7 @@ var title = {
 			}
 		} else if (g.view === 'lobby'){
 			// lobby
-			console.info('lobby receive: ', data);
+			// console.info('lobby receive: ', data);
 			if (data.type === 'hostLeft'){
 				lobby.hostLeft();
 			} else if (data.type === 'government'){
@@ -310,7 +395,7 @@ var title = {
 			}
 		} else {
 			// game
-			console.info('game receive: ', data);
+			// console.info('game receive: ', data);
 			
 			if (data.type === 'cannons'){
 				animate.cannons(data.tile, false);
@@ -377,7 +462,7 @@ var title = {
 		});
 	},
 	receiveWhisper: function(msg, type){
-		console.info(msg, type);
+		// console.info(msg, type);
 		if (g.view === 'title'){
 			title.chat(msg, type);
 		} else if (g.view === 'lobby'){
@@ -425,7 +510,7 @@ var title = {
 			alpha: 0,
 			ease: Linear.easeNone,
 			onComplete: function(){
-				console.info(this.target.id);
+				// console.info(this.target.id);
 				TweenMax.set(this.target, {
 					visibility: 'hidden'
 				});
@@ -459,7 +544,7 @@ var title = {
 				my.player = data.player;
 				game.id = data.gameId;
 				game.name = data.gameName;
-				console.info("Creating: ", data);
+				// console.info("Creating: ", data);
 				lobby.init(data);
 				lobby.join(); // create
 				socket.joinGame();
@@ -488,7 +573,7 @@ var title = {
 			}
 		}).done(function(data){
 			socket.removePlayer(my.account);
-			console.info(data);
+			// console.info(data);
 			my.player = data.player;
 			game.id = data.id;
 			game.name = data.gameName;
@@ -514,7 +599,7 @@ var title = {
 			}
 		}).done(function(data) {
 			$("#nationName").text(data);
-			animateNationName();
+			animate.nationName();
 		}).fail(function(e){
 			Msg(e.statusText);
 		}).always(function(){
@@ -522,229 +607,3 @@ var title = {
 		});
 	}
 }
-$("#bgmusic").on('ended', function() {
-	var x = document.getElementById('bgmusic');
-	x.currentTime = 0;
-	x.play();
-});
-$("#bgamb1").on('ended', function() {
-	var x = document.getElementById('bgamb1');
-	x.currentTime = 0;
-	x.play();
-});
-$("#bgamb2").on('ended', function() {
-	var x = document.getElementById('bgamb2');
-	x.currentTime = 0;
-	x.play();
-});
-$("#gameView").on('dragstart', 'img', function(e) {
-	e.preventDefault();
-});
-$("img").on('dragstart', function(event) {
-	event.preventDefault();
-});
-
-$("#logout").on('click', function() {
-	playerLogout();
-	return false;
-});
-
-$("#titleMenu").on("click", ".wars", function(){
-	var gameName = $(this).data("name");
-	$("#joinGameName").val(gameName);
-	$("#joinGamePassword").val('');
-}).on("dblclick", ".wars", function(){
-	var gameName = $(this).data("name");
-	$("#joinGameName").val(gameName);
-	$("#joinGamePassword").val('');
-	title.joinGame();
-});
-
-$("#create").on("click", function(){
-	TweenMax.to(document.getElementById("createGameWrap"), .5, {
-		startAt: {
-			visibility: 'visible',
-			scale: .8,
-			alpha: 0
-		},
-		scale: 1,
-		alpha: 1
-	});
-	TweenMax.to(document.getElementById("titleViewBackdrop"), .25, {
-		startAt: {
-			visibility: 'visible',
-			opacity: 0
-		},
-		opacity: 1,
-		ease: Linear.easeNone,
-		onComplete: function(){
-			$("#gameName").focus();
-		}
-	});
-	g.isModalOpen = true;
-});
-
-$("#createGame").on("mousedown", function(e){
-	title.createGame();
-});
-$("body").on("click", '#options', function(){
-	TweenMax.to(document.getElementById("optionsModal"), .5, {
-		startAt: {
-			visibility: 'visible',
-			scale: .8,
-			alpha: 0
-		},
-		scale: 1,
-		alpha: 1
-	});
-	TweenMax.to(document.getElementById("titleViewBackdrop"), .25, {
-		startAt: {
-			visibility: 'visible',
-			opacity: 0
-		},
-		opacity: 1,
-		ease: Linear.easeNone
-	});
-	g.isModalOpen = true;
-});
-$("#optionsDone, #cancelCreateGame").on("click", function(){
-	title.hideBackdrop();
-});
-
-
-// cached values on client to reduce DB load
-
-$("#titleMenu").on("click", "#joinGame", function(){
-	title.joinGame();
-});
-
-$("#mainWrap").on("click", "#cancelGame", function(){
-	exitGame();
-}).on("click", "#startGame", function(){
-	startGame();
-});
-
-function animateNationName(){
-	var tl = new TimelineMax();
-	var split = new SplitText("#nationName", {
-		type: "words,chars"
-	});
-	var chars = split.chars;
-	tl.staggerFromTo(chars, .05, {
-		immediateRender: true,
-		alpha: 0
-	}, {
-		delay: .25,
-		alpha: 1
-	}, .016);
-}
-$("#toggleNation").on("click", function(){
-	var e = document.getElementById("configureNation"),
-		e2 = document.getElementById("titleViewBackdrop");
-	TweenMax.to(e, .5, {
-		startAt: {
-			visibility: 'visible',
-			scale: .8,
-			alpha: 0
-		},
-		scale: 1,
-		alpha: 1
-	});
-	TweenMax.to(e2, .5, {
-		startAt: {
-			visibility: 'visible',
-			opacity: 0
-		},
-		opacity: 1
-	});
-	g.isModalOpen = true;
-});
-
-$("#flagDropdown").on('click', '.flagSelect', function(e){
-	my.selectedFlag = $(this).text();
-	my.selectedFlagFull = my.selectedFlag === "Nepal" ? my.selectedFlag+".png" : my.selectedFlag+".jpg";
-	$(".flagPurchaseStatus").css("display", "none");
-	$("#updateNationFlag")
-		.attr("src", "images/flags/" + my.selectedFlagFull)
-		.css("display", "block");
-	g.lock(1);
-	$.ajax({
-		url: 'php/updateFlag.php',
-		data: {
-			flag: my.selectedFlagFull
-		}
-	}).done(function(data) {
-		$("#offerFlag").css("display", "none");
-		$(".nationFlag").attr({
-			src: "images/flags/" + my.selectedFlagFull,
-			title: my.selectedFlag
-		});
-		$("#flagPurchased").css("display", "block");
-		Msg("Your nation's flag is now: " + my.selectedFlag);
-		document.getElementById('selectedFlag').textContent = my.selectedFlag;
-		$("[title]").tooltip('fixTitle');
-	}).fail(function(e){
-		$("#flagPurchased").css("display", "none");
-		$("#offerFlag").css("display", "block");
-	}).always(function(){
-		g.unlock(1);
-		TweenMax.fromTo("#updateNationFlag", 1, {
-			alpha: .25,
-			scale: .9
-		}, {
-			alpha: 1,
-			scale: 1
-		});
-	});
-	e.preventDefault();
-});
-
-$("#submitNationName").on("mousedown", function(){
-	title.submitNationName();
-});
-
-
-$("#updateNationName").on("focus", function(){
-	g.focusUpdateNationName = true;
-}).on("blur", function(){
-	g.focusUpdateNationName = false;
-});
-$("#refreshGameWrap").on("focus", "#gameName", function(){
-	g.focusGameName = true;
-})
-$("#refreshGameWrap").on("blur", "#gameName", function(){
-	g.focusGameName = false;
-});
-
-$("#buyFlag").on("click", function(){
-	g.lock();
-	$.ajax({
-		url: 'php/buyFlag.php',
-		data: {
-			flag: my.selectedFlagFull
-		}
-	}).done(function(data) {
-		$("#crystalCount").text(data);
-		$("#flagPurchased").css("display", "block");
-		$("#offerFlag").css("display", "none");
-		$(".nationFlag").attr({
-			src: "images/flags/" + my.selectedFlagFull,
-			title: my.selectedFlag
-		});
-		Msg("Your nation's flag is now: " + my.selectedFlag);
-		document.getElementById('selectedFlag').textContent = my.selectedFlag;
-		$("[title]").tooltip('fixTitle');
-	}).fail(function(e){
-		// not enough money
-		Msg(e.statusText);
-	}).always(function(){
-		g.unlock();
-	});
-});
-$("#titleViewBackdrop").on('click', function(){
-	title.hideBackdrop();
-});
-$("#configureNationDone").on('click', function(){
-	audio.play('click');
-	title.hideBackdrop();
-});

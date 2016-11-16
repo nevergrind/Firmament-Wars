@@ -1,4 +1,4 @@
-
+// audio.js
 var audio = {
 	ext: (function(a){
 		return !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, '')) ? 'mp3' : 'ogg'
@@ -164,7 +164,7 @@ audio.init = (function(){
 			g.config.audio = foo.audio;
 		}
 	}
-	console.info("Initializing audio...", g.config.audio);
+	// console.info("Initializing audio...", g.config.audio);
 	audio.load.title();
 	if (!g.config.audio.musicVolume){
 		audio.pause();

@@ -1,5 +1,19 @@
-
+// animate.js
 var animate = {
+	nationName: function(){
+		var tl = new TimelineMax();
+		var split = new SplitText("#nationName", {
+			type: "words,chars"
+		});
+		var chars = split.chars;
+		tl.staggerFromTo(chars, .05, {
+			immediateRender: true,
+			alpha: 0
+		}, {
+			delay: .25,
+			alpha: 1
+		}, .016);
+	},
 	randomColor: function(){
 		var x = ~~(Math.random()*6),
 			c = '#ffffff';

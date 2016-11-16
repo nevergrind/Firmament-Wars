@@ -1,1 +1,1 @@
-copy /b beginWrap.js+functions4.js+core.js+battle.js+skills.js+monsters.js+quests.js+town.js+items.js+ui.js+endWrap.js ..\minified\scripts\nevergrind-1-0-98.js
+copy /b beginWrap.js+core.js+title.js+lobby.js+ws.js+audio.js+map.js+game.js+actions.js+events.js+animate.js+stats.js+endWrap.js fw_0-0-19.js

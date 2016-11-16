@@ -1,7 +1,7 @@
 // core.js
 $.ajaxSetup({
 	type: 'POST',
-	timeout: 4000
+	timeout: 5000
 });
 TweenMax.defaultEase = Quad.easeOut;
 var g = {
@@ -180,15 +180,11 @@ var g = {
 			}
 			audio.play('chat');
 		}
+	},
+	chat: function(msg, type){
+		window[g.view].chat(msg, type);
 	}
 }
-$(window).focus(function(){
-	document.title = g.defaultTitle;
-	g.titleFlashing = false;
-	if (g.notification.close !== undefined){
-		g.notification.close();
-	}
-});
 g.init = (function(){
 	console.info("Initializing game...");
 	$('[title]').tooltip();
@@ -270,48 +266,7 @@ g.init = (function(){
 			g.unlock();
 		});
 	}
-	/*
-	$("#prevUnit").on('mousedown', function(){
-		my.nextTarget(true);
-	});
-	$("#nextUnit").on('mousedown', function(){
-		my.nextTarget(false);
-	});
-	*/
 })();
-// game data values
-function Stats(){
-	var o = {
-		overview: {
-			score: 0,
-			unitScore: 0,
-			structureScore: 0,
-			weaponScore: 0,
-			resourceScore: 0
-		},
-		units: {
-			produced: 0,
-			killed: 0,
-			lost: 0
-		},
-		structures: {
-			bunkers: 0,
-			walls: 0,
-			fortresses: 0
-		},
-		weapons: {
-			cannons: 0,
-			missiles: 0,
-			nukes: 0
-		},
-		resources: {
-			food: 0,
-			culture: 0,
-			energy: 0
-		}
-	}
-	return o;
-}
 var game = {
 	name: '',
 	tiles: [],
@@ -948,38 +903,7 @@ function playerLogout(){
     });
 }
 
-function refreshGames(){
-	$.ajax({
-		type: 'GET',
-		url: 'php/refreshGames.php'
-	}).done(function(data) {
-		var e = document.getElementById('gameTableBody');
-		if (e === null){
-			return;
-		}
-		// head
-		var str = '';
-		// body
-		for (var i=0, len=data.length; i<len; i++){
-			var d = data[i];
-			title.games[d.id] = d.players * 1;
-			str += 
-			"<tr id='game_"+ d.id +"' class='wars no-select' data-name='" + d.name + "'>\
-				<td class='warCells'>"+ d.name + "</td>\
-				<td class='warCells'>" + d.map + "</td>\
-				<td class='warCells'><span id='game_players_"+ d.id +"'>" + d.players + "</span>/" + d.max + "</td>\
-			</tr>";
-		}
-		e.innerHTML = str;
-		$(".wars").filter(":first").trigger("click");
-	}).fail(function(e){
-		console.info(e.responseText);
-		Msg("Server error.");
-	});
-}
-
 function exitGame(bypass){
-	
 	if (g.view === 'game'){
 		var r = confirm("Are you sure you want to surrender?");
 	}
@@ -1000,20 +924,3 @@ function serverError(data){
 	// Msg('The server reported an error.');
 	console.error('The server reported an error.');
 }
-
-$(window).on('resize orientationchange', function() {
-	resizeWindow();
-}).on('load', function(){
-	resizeWindow();
-	// background map
-	TweenMax.to("#worldTitle", 300, {
-		startAt: {
-			xPercent: -50,
-			yPercent: -50,
-			rotation: -360
-		},
-		rotation: 0,
-		repeat: -1,
-		ease: Linear.easeNone
-	});
-});
