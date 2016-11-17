@@ -257,6 +257,8 @@ var lobby = {
 	},
 	hostLeft: function(){
 		Msg("The host has left the lobby.");
+		console.info("HOST LEFT");
+		return;
 		setTimeout(function(){
 			exitGame(true);
 		}, 1000);

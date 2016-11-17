@@ -89,7 +89,7 @@ var title = {
 						}
 					}).done(function(data){
 						// report chat messages
-						console.log("Ping: ", Date.now() - start, data);
+						console.log("Ping: ", Date.now() - start);
 						// set title players
 						if (data.playerData !== undefined){
 							var p = data.playerData,
@@ -540,6 +540,7 @@ var title = {
 					max: max
 				}
 			}).done(function(data) {
+				console.info(data);
 				socket.removePlayer(my.account);
 				my.player = data.player;
 				game.id = data.gameId;

@@ -159,7 +159,6 @@
 				echo '<div id="titleMenu" class="fw-primary">
 					<div id="menuOnline">
 						<div>';
-						require('php/checkDisconnectsByAccount.php');
 						// remove players that left
 						mysqli_query($link, 'delete from fwtitle where timestamp < date_sub(now(), interval 1 minute)');
 						
@@ -893,6 +892,7 @@
 			]
 		} else {
 			var scripts = [
+				'stats',
 				'core',
 				'title',
 				'lobby',
@@ -902,8 +902,7 @@
 				'game',
 				'actions',
 				'events',
-				'animate',
-				'stats'
+				'animate'
 			]
 		}
 		for(var i=0, len=scripts.length; i<len; i++){
