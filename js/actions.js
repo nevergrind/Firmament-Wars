@@ -94,7 +94,7 @@ var action = {
 				split: my.splitAttack ? 1 : 0
 			}
 		}).done(function(data){
-			console.info('attackTile', data);
+			// console.info('attackTile', data);
 			// animate attack
 			if (game.tiles[defender].player !== my.player){
 				if (!game.tiles[defender].units){
@@ -110,7 +110,7 @@ var action = {
 				setProduction(data);
 			}
 			// reset target if lost
-			console.warn(data.victory, attacker, my.tgt);
+			// console.warn(data.victory, attacker, my.tgt);
 			if (!data.victory){
 				showTarget(document.getElementById('land' + attacker));
 			}

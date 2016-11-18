@@ -73,6 +73,9 @@ var title = {
 			console.info(e.responseText);
 			Msg("Server error.");
 		});
+		setTimeout(function(){
+			g.keepAlive();
+		}, 300000);
 	})(),
 	updatePlayers: function(data){
 		title.titleUpdate = $("#titleChatPlayers").length; // player is logged in
@@ -345,7 +348,7 @@ var title = {
 	},
 	chatDrag: false,
 	chatOn: false,
-	chat: function (msg, type){
+	chat: function (msg, type, skip){
 		if (g.view === 'title' && msg){
 			while (DOM.titleChatLog.childNodes.length > 500) {
 				DOM.titleChatLog.removeChild(DOM.titleChatLog.firstChild);
@@ -359,7 +362,7 @@ var title = {
 			if (!title.chatDrag){
 				DOM.titleChatLog.scrollTop = DOM.titleChatLog.scrollHeight;
 			}
-			if (type !== 'chat-white'){
+			if (!skip){
 				g.sendNotification(msg);
 			}
 		}
@@ -396,7 +399,6 @@ var title = {
 		} else {
 			// game
 			// console.info('game receive: ', data);
-			
 			if (data.type === 'cannons'){
 				animate.cannons(data.tile, false);
 				game.updateTile(data);

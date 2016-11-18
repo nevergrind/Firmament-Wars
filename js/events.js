@@ -49,6 +49,7 @@ var events = {
 		});
 
 		$("#create").on("click", function(){
+			$("#gameName").val('');
 			TweenMax.to(document.getElementById("createGameWrap"), .5, {
 				startAt: {
 					visibility: 'visible',

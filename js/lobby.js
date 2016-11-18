@@ -85,7 +85,7 @@ var lobby = {
 		document.getElementById('lobbyGovernment' + my.player).innerHTML = government;
 		document.getElementById('lobbyGovernmentDescription').innerHTML = str;
 	},
-	chat: function (msg, type){
+	chat: function (msg, type, skip){
 		while (DOM.lobbyChatLog.childNodes.length > 200) {
 			DOM.lobbyChatLog.removeChild(DOM.lobbyChatLog.firstChild);
 		}
@@ -98,8 +98,7 @@ var lobby = {
 		if (!lobby.chatDrag){
 			DOM.lobbyChatLog.scrollTop = DOM.lobbyChatLog.scrollHeight;
 		}
-		console.info(type);
-		if (type !== 'chat-white'){
+		if (!skip){
 			g.sendNotification(msg);
 		}
 	},
@@ -788,7 +787,7 @@ function loadGameState(){
 					if (my.attackOn){
 						showTarget(this, true);
 					}
-					TweenMax.set(this, {
+					TweenMax.to(this, .15, {
 						fill: "hsl(+=0%, +=30%, +=15%)"
 					});
 				}).on("mouseleave", function(){

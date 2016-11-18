@@ -49,7 +49,7 @@ var socket = {
 				for (var key in title.players){
 					delete title.players[key];
 				}
-				title.chat("You have joined channel: " + data.channel + ".", "chat-warning");
+				title.chat("You have joined channel: " + data.channel + ".", "chat-warning", true);
 				socket.zmq.subscribe('title:' + data.channel, function(topic, data) {
 					title.chatReceive(data);
 				});
@@ -128,13 +128,15 @@ var socket = {
 		socket.enabled = true;
 		console.info("Socket connection established with server");
 		// chat updates
-		title.chat("You have joined channel: " + my.channel + ".", "chat-warning");
-		socket.zmq.subscribe('title:' + my.channel, function(topic, data) {
-			title.chatReceive(data);
-		});
-		socket.zmq.subscribe('title:refreshGames', function(topic, data) {
-			title.updateGame(data);
-		});
+		if (g.view === 'title'){
+			title.chat("You have joined channel: " + my.channel + ".", "chat-warning", true);
+			socket.zmq.subscribe('title:' + my.channel, function(topic, data) {
+				title.chatReceive(data);
+			});
+			socket.zmq.subscribe('title:refreshGames', function(topic, data) {
+				title.updateGame(data);
+			});
+		}
 		socket.zmq.subscribe('admin:broadcast', function(topic, data) {
 			g.chat(data.msg, data.type);
 		});

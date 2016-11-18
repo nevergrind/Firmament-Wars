@@ -225,7 +225,7 @@ g.init = (function(){
 		},
 		Miscellaneous: {
 			group: "Miscellaneous",
-			name: ['Anarcho-Capitalist', 'Christian', 'Edgemaster', 'European Union', 'High Energy', 'ISIS', 'Northwest Front', 'Pan-African Flag', 'Rainbow Flag', 'United Nations']
+			name: ['Anarcho-Capitalist', 'Christian', 'Edgemaster', 'European Union', 'High Energy', 'ISIS', 'Northwest Front', 'Pan-African Flag', 'pol', 'Rainbow Flag', 'United Nations']
 		},
 		SouthAmerica: {
 			group: "South America",
@@ -281,11 +281,11 @@ var game = {
 		player: [
 		],
 		init: (function(totalPlayers){
-			setTimeout(function(){
-				for (var i=1; i<totalPlayers; i++){
+			for (var i=1; i<totalPlayers; i++){
+				setTimeout(function(){
 					game.stats.player[i] = new Stats();
-				}
-			});
+				});
+			}
 		})(8)
 	},
 	chat: function(msg, type){
@@ -485,7 +485,7 @@ var game = {
 				type: "GET",
 				url: "php/updateResources.php"
 			}).done(function(data){
-				console.info('resource: ', data);
+				// console.info('resource: ', data);
 				setResources(data);
 				if (data.cultureMsg !== undefined){
 					if (data.cultureMsg){
@@ -895,11 +895,15 @@ function playerLogout(){
     g.lock();
     $.ajax({
 		type: 'GET',
+		url: 'php/deleteFromFwtitle.php'
+	});
+    $.ajax({
+		type: 'GET',
 		url: 'php/logout.php'
-    }).done(function(data) {
+    }).done(function(data){
         location.reload();
-    }).fail(function() {
-        Msg("Logout failed.");
+    }).fail(function(){
+        Msg("Logout failed. Is the server on fire?");
     });
 }
 

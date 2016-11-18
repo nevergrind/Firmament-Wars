@@ -109,7 +109,7 @@ var animate = {
 			y = box.y + box.height/2 + 10;
 		$(".mapBars" + tile).remove();
 		this.initMapBars(tile, x, y);
-		console.info("UPDATING MAP BARS");
+		// console.info("UPDATING MAP BARS");
 	},
 	initMapBars: function(i, x, y){
 		var e = document.getElementById('unit' + i);

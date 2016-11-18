@@ -208,7 +208,6 @@ function gameDefeat(){
 	}).fail(function(data){
 		serverError(data);
 	});
-	g.keepAlive();
 }
 
 
@@ -240,7 +239,6 @@ function gameVictory(){
 	}).fail(function(data){
 		serverError(data);
 	});
-	g.keepAlive();
 }
 function triggerEndGame(msg){
 	$("*").off('click mousedown keydown keyup keypress');
