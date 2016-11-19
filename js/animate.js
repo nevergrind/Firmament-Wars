@@ -606,29 +606,42 @@ var animate = {
 	},
 	water: function(){
 		var delay = 130,
-			delay2 = 10,
 			e1 = document.getElementById('worldWater1'),
 			e2 = document.getElementById('worldWater2'),
-			e3 = document.getElementById('worldWater3');
+			e3 = document.getElementById('worldWater3'),
+			e4 = document.getElementById('worldWater4');
 		// animate water
+		// up left
 		TweenMax.to(e1, delay, {
-			backgroundPosition: '-800px 0px',
+			backgroundPosition: '-800px -800px',
 			repeat: -1,
 			ease: Linear.easeNone
 		});
+		// down right
 		TweenMax.to(e2, delay, {
 			startAt: {
 				backgroundPosition: '400px 300px'
 			},
-			backgroundPosition: '1200px 300px', 
+			backgroundPosition: '1200px 1100px', 
 			repeat: -1,
 			ease: Linear.easeNone
 		});
+		// down left
 		TweenMax.to(e3, delay, {
 			startAt: {
 				backgroundPosition: '200px 150px', 
 			},
 			backgroundPosition: '200px -650px', 
+			repeat: -1,
+			yoyo: true,
+			ease: Linear.easeNone
+		});
+		// up right
+		TweenMax.to(e4, delay, {
+			startAt: {
+				backgroundPosition: '600px 250px', 
+			},
+			backgroundPosition: '-200px 1050px', 
 			repeat: -1,
 			yoyo: true,
 			ease: Linear.easeNone

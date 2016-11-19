@@ -38,7 +38,7 @@ var lobby = {
 				<div id="lobbyGovPerks">\
 					<div>3x starting culture</div>\
 					<div>+50% culture bonus</div>\
-					<div>Start with Great Tactician</div>\
+					<div>Start with two Great Tacticians</div>\
 					<div>1/2 cost structures</div>\
 				</div>';
 		} else if (government === "Democracy"){
@@ -149,7 +149,7 @@ var lobby = {
 						<img id="lobbyFlag' +i+ '" data-placement="right" class="lobbyFlags block center p' + i + 'b player' +i+ '" src="images/flags/blank.png">\
 					</div>\
 					<div class="col-xs-6 lobbyDetails">\
-						<div id="lobbyAccount' +i+ '" class="lobbyAccounts"></div>\
+						<div id="lobbyAccount' +i+ '" class="lobbyAccounts  chat-warning"></div>\
 						<div id="lobbyName' +i+ '" class="lobbyNames nowrap"></div>\
 					</div>\
 					<div class="col-xs-4">';

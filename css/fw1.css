@@ -855,15 +855,19 @@ table td, .table th, .table td {
 	width: 200%;
 	height: 200%;
 	opacity: .8;
-	background: url('../images/water14.jpg');
+	background: url('../images/water13.jpg');
 }
 #worldWater2{
 	opacity: .5;
-	background: url('../images/water13.jpg');
+	background: url('../images/water14.jpg');
 }
 #worldWater3{
 	opacity: .5;
-	background: url('../images/water13.jpg');
+	background: url('../images/water16.jpg');
+}
+#worldWater4{
+	opacity: .5;
+	background: url('../images/water2.jpg');
 }
 #world{
 	position: absolute;
@@ -1096,8 +1100,6 @@ circle{
 	margin-top: .25em;
 	font-size: 1em;
 	line-height: 1em;
-	color: #ffff1a;
-	text-shadow: .5px .5px #550, 1px 1px #550, 1.5px 1.5px #550, 2px 2px #550;
 }
 .lobbyNames{
 	font-family: Times New Roman, serif;
@@ -1608,6 +1610,109 @@ table {
 }
 .margin-top{
 	margin-top: 12px;
+}
+/* stat */
+#statWrap{
+	position: absolute;
+	top: 0%;
+	bottom: 0%;
+	margin: 0%;
+	left: 0;
+	right: 0;
+	z-index: 9999;
+	background: url('../images/firmamentWarsTitle90.jpg') 0% 0% / 100% 100%;
+	padding: 0;
+	overflow-y: scroll;
+}
+#statResult{
+	font-family: Times New Roman, serif;
+	font-size: 3.5em;
+	line-height: 1.7em;
+	color: #fff;
+	border-bottom: 1px solid #369;
+	padding: 0;
+	text-indent: .5em;
+	text-align: center;
+	letter-spacing: .025em;
+    background: -webkit-radial-gradient(center center, farthest-side, rgba(32,64,124,.5) 0%, rgba(0,0,0,.1) 100%);
+    background: -moz-radial-gradient(center center, farthest-side, rgba(32,64,124,.5) 0%, rgba(0,0,0,.1) 100%);
+    background: -ms-radial-gradient(center center, farthest-side, rgba(32,64,124,.5) 0%, rgba(0,0,0,.1) 100%);
+    background: -o-radial-gradient(center center, farthest-side, rgba(32,64,124,.5) 0%, rgba(0,0,0,.1) 100%);
+}
+.statResultFlag{
+	height: 1.675em;
+}
+#statTabWrap{
+	border-bottom: 1px solid #369;
+	margin-bottom: 1em;
+}
+.statTabs{
+	font-family: Times New Roman, serif;
+	font-variant: small-caps;
+	letter-spacing: 2px;
+	position: relative;
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	color: #bef;
+	width: 20%;
+	font-size: 1.75em;
+	cursor: pointer;
+	text-align: center;
+	background: rgba(0, 0, 0, .8);
+}
+.statTabs.active{
+    background: -webkit-radial-gradient(top center, farthest-side, rgba(48, 96, 155, 1) 0%, rgba(0,32,69,1) 100%);
+    background: -moz-radial-gradient(top center, farthest-side, rgba(48, 96, 155, 1) 0%, rgba(0,32,69,1) 100%);
+    background: -ms-radial-gradient(top center, farthest-side, rgba(48, 96, 155, 1) 0%, rgba(0,32,69,1) 100%);
+    background: -o-radial-gradient(top center, farthest-side, rgba(48, 96, 155, 1) 0%, rgba(0,32,69,1) 100%);
+	color: #d5faff;
+	box-shadow: 0 0 3px #17d inset;
+}
+.statTabs:hover{
+	color: #d5faff;
+}
+.statTabs:active{
+	color: #9cd;
+}
+#gameStatsTable{
+	border-spacing: 0;
+	padding: 1em;
+	font-size: 1.125em;
+}
+#gameStatsTable > tr > th{
+	font-size: 1.25em;
+	line-height: 1.25em !important;
+	padding: 0 !important;
+}
+.statSpacer{
+	height: 5px;
+}
+.statsFlags{
+	max-height: 3em;
+	margin: 0 .5em .5em;
+	float: left;
+}
+.statsPlayerWrap{
+	margin-left: 6.5em;
+}
+.statsAccount{
+	font-size: .875em;
+}
+.statsNation{
+	font-family: Times New Roman, serif;
+	font-size: 1.375em;
+	color: #8df;
+	text-shadow: .5px .5px #145, 1px 1px #145, 1.5px 1.5px #145, 2px 2px #145;
+	letter-spacing: .05em;
+	font-variant: small-caps;
+}
+.statsGov{
+	font-size: .875em;
+}
+.statBar{
+	line-height: 3em !important;
+	text-align: center;
 }
 /* bootstrap overwrites */
 .slider-handle{

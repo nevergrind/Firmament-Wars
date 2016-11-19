@@ -1,12 +1,50 @@
 // stats.js 
 // scoreboard data values
 var stats = {
+	events: (function(){
+		$("#statWrap").on('click', '.statTabs', function(){
+			$(".statTabs").removeClass('active');
+			$(this).addClass('active');
+			audio.play('click');
+			// load data
+			var id = $(this).attr('id');
+			if (id === 'statOverview'){
+				stats.loadOverview();
+			} else if (id === 'statUnits'){
+				stats.loadUnits();
+			} else if (id === 'statStructures'){
+				stats.loadStructures();
+			} else if (id === 'statWeapons'){
+				stats.loadWeapons();
+			} else if (id === 'statResources'){
+				stats.loadResources();
+			}
+		});
+	})(),
+	loadOverview: function(){
+		console.info('loadOverview');
+	},
+	loadUnits: function(){
+		console.info('loadUnits');
+	},
+	loadStructures: function(){
+		console.info('loadStructures');
+	},
+	loadWeapons: function(){
+		console.info('loadWeapons');
+	},
+	loadResources: function(){
+		console.info('loadResources');
+	},
 	get: function(){
 		$.ajax({
 			url: 'php/stats.php',
 		}).done(function(data){
 			console.info('stats: ', data);
+			stats.display(data);
 		});
+	},
+	display: function(data){
 	}
 }
 function Stats(){
