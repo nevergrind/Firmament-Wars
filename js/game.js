@@ -25,7 +25,7 @@ function updateTileInfo(tileId){
 	
 	var str = ''
 	DOM.targetFlag.innerHTML = 
-		'<img src="images/flags/' + flag + '" class="p' + t.player + 'b w100 block center">';
+		'<img src="images/flags/' + flag + '" class="w100 block center">';
 	
 	var str = '';
 	if (t.capital){
@@ -254,7 +254,15 @@ function triggerEndGame(msg){
 		e.style.display = 'block';
 		$("#endWar").on('mousedown', function(e){
 			if (e.which === 1){
-				location.reload();
+				$("#endWar").off();
+				g.view = 'stats';
+				TweenMax.to('#gameWrap', .5, {
+					alpha: 0,
+					onComplete: function(){ 
+						$("#diplomacy-ui, #ui2, #resources-ui, #chat-ui, #chat-input, #hud, #worldWrap, #victoryScreen").remove();
+						stats.get();
+					}
+				});
 			}
 		});
 		$("#spectate").on('mousedown', function(e){

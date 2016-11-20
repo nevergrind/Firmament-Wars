@@ -12,7 +12,7 @@
 	$whitelisted = 0;
 	
 	if($_SERVER["SERVER_NAME"] !== "localhost"){
-		require('php/resetGame.php');
+		unset($_SESSION['gameId']);
 		$query = 'select count(email) from fwwhitelist where email=?';
 		$stmt = $link->prepare($query);
 		$stmt->bind_param('s', $_SESSION['email']);
@@ -815,177 +815,15 @@
 				</td>
 			</tr>
 		</table>
+		
 		<input id="chat-input" class="fw-text noselect nobg" type='text' maxlength="240" autocomplete="off" spellcheck="false"/>
 			
-		<div id="worldWrap">
-			<div id="worldWater1"></div>
-			<div id="worldWater2"></div>
-			<div id="worldWater3"></div>
-			<div id="worldWater4"></div>
-		</div>
+		<div id="worldWrap"></div>
 		
 		<div id="hud" class="shadow4">Select Target</div>
 		<div id="victoryScreen" class="fw-primary fw-text no-select"></div>
 		
-		<div id="statWrap" class="fw-primary fw-text">
-			<div id="statResult">
-				Victory!
-				<img class="statResultFlag pull-left" src="images/flags/United States.jpg">
-				<img class="statResultFlag pull-right" src="images/flags/United States.jpg">
-			</div>
-			<div id="statTabWrap">
-				<div id="statOverview" class="statTabs active">
-					Overview
-				</div><div id="statUnits" class="statTabs">
-					Units
-				</div><div id="statStructures" class="statTabs">
-					Structures
-				</div><div id="statWeapons" class="statTabs">
-					Weapons
-				</div><div id="statResources" class="statTabs">
-					Resources
-				</div>
-			</div>
-			<table id="gameStatsTable" class="table">
-				<tr>
-					<th style="width: 30%"></th>
-					<th class="text-center">Units</th>
-					<th class="text-center">Structures</th>
-					<th class="text-center">Weapons</th>
-					<th class="text-center">Resources</th>
-					<th class="text-center text-stats">Total Score</th>
-				</tr>
-				
-				<tr class="stagBlue">
-					<td>
-						<img class="statsFlags" src="images/flags/United States.jpg">
-						<div class="statsPlayerWrap">
-							<div class="statsAccount chat-warning nowrap">Maelfyn</div>
-							<div class="statsNation nowrap">United States</div>
-						</div>
-					</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">235625</td>
-				</tr>
-				<tr class="statSpacer"></tr>
-				
-				<tr class="stagBlue">
-					<td>
-						<img class="statsFlags" src="images/flags/Italy.jpg">
-						<div class="statsPlayerWrap">
-							<div class="statsAccount chat-warning nowrap">Boudica</div>
-							<div class="statsNation nowrap">Italy</div>
-						</div>
-					</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">235625</td>
-				</tr>
-				<tr class="statSpacer"></tr>
-				
-				<tr class="stagBlue">
-					<td>
-						<img class="statsFlags" src="images/flags/USSR.jpg">
-						<div class="statsPlayerWrap">
-							<div class="statsAccount chat-warning nowrap">Hunter</div>
-							<div class="statsNation nowrap">USSR</div>
-						</div>
-					</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">235625</td>
-				</tr>
-				<tr class="statSpacer"></tr>
-				
-				<tr class="stagBlue">
-					<td>
-						<img class="statsFlags" src="images/flags/Croatia.jpg">
-						<div class="statsPlayerWrap">
-							<div class="statsAccount chat-warning nowrap">Mayonnaise</div>
-							<div class="statsNation nowrap">Croatia</div>
-						</div>
-					</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">235625</td>
-				</tr>
-				<tr class="statSpacer"></tr>
-				
-				<tr class="stagBlue">
-					<td>
-						<img class="statsFlags" src="images/flags/South Korea.jpg">
-						<div class="statsPlayerWrap">
-							<div class="statsAccount chat-warning nowrap">Limonata</div>
-							<div class="statsNation nowrap">South Korea</div>
-						</div>
-					</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">235625</td>
-				</tr>
-				<tr class="statSpacer"></tr>
-				
-				<tr class="stagBlue">
-					<td>
-						<img class="statsFlags" src="images/flags/Spain.jpg">
-						<div class="statsPlayerWrap">
-							<div class="statsAccount chat-warning nowrap">BCHS</div>
-							<div class="statsNation nowrap">Spain</div>
-						</div>
-					</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">235625</td>
-				</tr>
-				<tr class="statSpacer"></tr>
-				
-				<tr class="stagBlue">
-					<td>
-						<img class="statsFlags" src="images/flags/United Kingdom.jpg">
-						<div class="statsPlayerWrap">
-							<div class="statsAccount chat-warning nowrap">Culbertson</div>
-							<div class="statsNation nowrap">United Kingdom</div>
-						</div>
-					</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">235625</td>
-				</tr>
-				<tr class="statSpacer"></tr>
-				
-				<tr class="stagBlue">
-					<td>
-						<img class="statsFlags" src="images/flags/Nepal.png">
-						<div class="statsPlayerWrap">
-							<div class="statsAccount chat-warning nowrap">Old Thyme</div>
-							<div class="statsNation nowrap">Nepal</div>
-						</div>
-					</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">23562</td>
-					<td class="statBar">235625</td>
-				</tr>
-				<tr class="statSpacer"></tr>
-			</table>
-			<div id="statFooter"></div>
-		</div>
+		<div id="statWrap" class="fw-text"></div>
 		
 	</div>
 
@@ -1054,6 +892,7 @@
 		} else {
 			var scripts = [
 				'stats',
+				'animate',
 				'core',
 				'title',
 				'lobby',
@@ -1062,8 +901,7 @@
 				'map',
 				'game',
 				'actions',
-				'events',
-				'animate'
+				'events'
 			]
 		}
 		for(var i=0, len=scripts.length; i<len; i++){

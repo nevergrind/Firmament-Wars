@@ -186,7 +186,7 @@ var g = {
 	}
 }
 g.init = (function(){
-	console.info("Initializing game...");
+	// console.info("Initializing game...");
 	$('[title]').tooltip();
 	// build map drop-down 
 	var s = "<li><a class='flagSelect'>Default</a></li>";
@@ -244,9 +244,9 @@ g.init = (function(){
 			type: "GET",
 			url: 'php/rejoinGame.php' // check if already in a game
 		}).done(function(data) {
-			console.info('rejoin ', data);
+			// console.info('rejoin ', data);
 			if (data.gameId > 0){
-				console.info("Auto joined game:" + (data.gameId));
+				// console.info("Auto joined game:" + (data.gameId));
 				my.player = data.player;
 				game.id = data.gameId;
 				g.map = data.mapData;
@@ -275,18 +275,6 @@ var game = {
 	updateTopTile: function(i){
 		document.getElementById('topTile')
 			.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#land' + i);
-	},
-	stats: {
-		duration: Date.now(),
-		player: [
-		],
-		init: (function(totalPlayers){
-			for (var i=1; i<totalPlayers; i++){
-				setTimeout(function(){
-					game.stats.player[i] = new Stats();
-				});
-			}
-		})(8)
 	},
 	chat: function(msg, type){
 		while (DOM.chatContent.childNodes.length > 10) {
@@ -748,13 +736,13 @@ var $DOM = {
 }
 // team colors
 var color = [
-	"#002F73",
-	"#700000",
-	"#0000d0",
+	"#02063a",
+	"#bb0000",
+	"#0077ff",
 	"#b0b000",
 	"#006000",
 	"#b06000",
-	"#1177aa",
+	"#33ddff",
 	"#b050b0",
 	"#5500aa"
 ]
@@ -833,7 +821,7 @@ function resizeWindow() {
 	}
 	g.resizeX = w / g.screen.width;
 	g.resizeY = h / g.screen.height;
-	TweenMax.set("#worldTitle", {
+	TweenMax.set("#worldTitle, #statWorld", {
 		xPercent: -50,
 		yPercent: -50
 	});

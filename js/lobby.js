@@ -130,7 +130,7 @@ var lobby = {
 	},
 	init: function(x){
 		// build the lobby DOM
-		console.info("Initializing lobby...");
+		// console.info("Initializing lobby...");
 		var e1 = document.getElementById("lobbyGameName");
 		if (e1 !== null){
 			e1.innerHTML = x.name;
@@ -146,7 +146,7 @@ var lobby = {
 				str += 
 				'<div id="lobbyRow' +i+ '" class="row lobbyRow">\
 					<div class="col-xs-2">\
-						<img id="lobbyFlag' +i+ '" data-placement="right" class="lobbyFlags block center p' + i + 'b player' +i+ '" src="images/flags/blank.png">\
+						<img id="lobbyFlag' +i+ '" data-placement="right" class="lobbyFlags block center" src="images/flags/blank.png">\
 					</div>\
 					<div class="col-xs-6 lobbyDetails">\
 						<div id="lobbyAccount' +i+ '" class="lobbyAccounts  chat-warning"></div>\
@@ -189,7 +189,7 @@ var lobby = {
 		delete lobby.init;
 	},
 	join: function(d){
-		console.info("Joining lobby...");
+		// console.info("Joining lobby...");
 		var loadTime = Date.now() - g.startTime;
 		if (loadTime < 1000){
 			d = 0;
@@ -344,7 +344,7 @@ var lobby = {
 			Democracy: 'fa fa-institution', // fa-institution fa fa-balance-scale
 			Fundamentalism: 'fa fa-book',
 			Fascism: 'glyphicon glyphicon-fire',
-			Republic: 'glyphicon glyphicon-grain',
+			Republic: 'glyphicon glyphicon-grain', 
 			Communism: 'fa fa-flask'
 		};
 		return icon[government];
@@ -504,7 +504,7 @@ function loadGameState(){
 		});
 	}
 	// load map
-	console.warn("Loading: " + g.map.key + ".php");
+	// console.warn("Loading: " + g.map.key + ".php");
 	$.ajax({
 		type: 'GET',
 		url: 'maps/' + g.map.key + '.php'
@@ -544,7 +544,7 @@ function loadGameState(){
 			g.screen.resizeMap();
 			
 			audio.gameMusicInit();
-			console.info('loadGameState ', data);
+			// console.info('loadGameState ', data);
 			// only when refreshing page while testing
 			audio.load.game();
 			video.load.game();
@@ -713,14 +713,14 @@ function loadGameState(){
 					if (p.flag === 'Default.jpg'){
 						str += 
 						'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">';
-								str += '<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>' +
-								'<img src="images/flags/Player' + p.player + '.jpg" class="player' + p.player + ' inlineFlag diploFlag p' + p.player + 'b" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag + '">' +
+								str += '<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ p.player +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>' +
+								'<img src="images/flags/Player' + p.player + '.jpg" class="player' + p.player + ' inlineFlag diploFlag" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag + '">' +
 								'<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + p.nation + '</span>';
 					} else {
 						str += 
 						'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">';
-								str += '<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>' +
-								'<img src="images/flags/' + p.flag + '" class="inlineFlag diploFlag p' + p.player + 'b" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag + '">' +
+								str += '<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ p.player +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>' +
+								'<img src="images/flags/' + p.flag + '" class="inlineFlag diploFlag" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag + '">' +
 								'<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + p.nation + '</span>';
 					}
 					str += '</div>';

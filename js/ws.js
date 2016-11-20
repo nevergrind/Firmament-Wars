@@ -88,8 +88,8 @@ var socket = {
 		});
 		(function keepAliveWs(){
 			setTimeout(function(){
-			console.clear();
-			}, 10000);
+				console.clear();
+			}, 60000);
 			socket.zmq.publish(channel, {type: "keepAlive"});
 			setTimeout(keepAliveWs, 180000);
 		})();

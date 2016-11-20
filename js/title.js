@@ -3,7 +3,7 @@ var title = {
 	players: [],
 	games: [],
 	init: (function(){
-		console.info("Initializing title screen...");
+		// console.info("Initializing title screen...");
 		// prevents auto scroll while scrolling
 		$("#titleChatLog").on('mousedown', function(){
 			title.chatDrag = true;

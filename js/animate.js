@@ -651,7 +651,7 @@ var animate = {
 		var e1 = document.getElementById('land' + oldTgt),
 			e2 = document.getElementById('land' + newTgt);
 		TweenMax.set(e1, {
-			stroke: '#66ccff',
+			stroke: '#85daf2',
 			filter: '',
 			strokeWidth: 1
 		});

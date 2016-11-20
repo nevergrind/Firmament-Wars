@@ -888,16 +888,16 @@ table td, .table th, .table td {
 	fill-rule: evenodd;
 }
 .land{
-	fill: #002F73;
+	fill: #02063a;
 	fill-opacity: 1;
-	stroke: #66ccff;
+	stroke: #85daf2;
 	stroke-opacity: 1;
 	stroke-width: 1;
 	overflow: visible;
 	cursor: pointer;
 }
 .landOutline{
-	stroke: #66ccff;
+	stroke: #85daf2;
 }
 .unit{
 	visibility: hidden;
@@ -1466,80 +1466,95 @@ table {
 	display: none;
 }
 .player0{
-	color: #002F73;
-	background: #002F73;
+	color: #02063a;
+	background: #02063a;
 }
+/* gov icon */
 .player1{
-	color: #700000;
-	background: #700000;
+	color: #bb0000;
 }
-.p1b{
-	outline: 1px solid #700000;
+/* stat border */
+.pb1{
+	border: 1px solid #bb0000;
 }
-.diplo2{
-	color: #0000d0;
-	background: #08f;
-	border: 2px ridge #0000d0;
+/* star bar */
+.pbar1{
+	background: #bb0000;
 }
 .player2{
-	color: #0000d0;
-	background: #0000d0;
+	color: #0077ff;
 }
-.p2b{
-	outline: 1px solid #0000d0;
+.pb2{
+	border: 1px solid #0077ff;
+}
+.pbar2{
+	background: #0077ff;
 }
 .player3{
 	color: #b0b000;
-	background: #b0b000;
 }
-.p3b{
-	outline: 1px solid #b0b000;
+.pb3{
+	border: 1px solid #b0b000;
+}
+.pbar3{
+	background: #b0b000;
 }
 .player4{
 	color: #006000;
-	background: #006000;
 }
-.p4b{
-	outline: 1px solid #006000;
+.pb4{
+	border: 1px solid #006000;
+}
+.pbar4{
+	background: #006000;
 }
 .player5{
 	color: #b06000;
+}
+.pb5{
+	border: 1px solid #b06000;
+}
+.pbar5{
 	background: #b06000;
 }
-.p5b{
-	outline: 1px solid #b06000;
-}
 .player6{
-	color: #1177aa;
-	background: #1177aa;
+	color: #33ddff;
 }
-.p6b{
-	outline: 1px solid #1177aa;
+.pb6{
+	border: 1px solid #33ddff;
+}
+.pbar6{
+	background: #33ddff;
 }
 .player7{
 	color: #b050b0;
-	background: #b050b0;
 }
-.p7b{
-	outline: 1px solid #b050b0;
+.pb7{
+	border: 1px solid #b050b0;
+}
+.pbar7{
+	background: #b050b0;
 }
 .player8{
 	color: #5500aa;
+}
+.pb8{
+	border: 1px solid #5500aa;
+}
+.pbar8{
 	background: #5500aa;
 }
-.p8b{
-	outline: 1px solid #5500aa;
-}
 .player9{
-	color: #002F73;
-	background: #002F73;
+	color: #02063a;
+	background: #02063a;
 }
 .p9b{
-	outline: 1px solid #002F73;
+	outline: 1px solid #02063a;
 }
 .diploSquare{
-	color: #b5a170;
+	font-size: .875em;
 	margin-right: .375em;
+	text-shadow: 1px 1px #000;
 }
 #myNationWrap{
 	margin: .5em 0;
@@ -1613,6 +1628,7 @@ table {
 }
 /* stat */
 #statWrap{
+	display: none;
 	position: absolute;
 	top: 0%;
 	bottom: 0%;
@@ -1620,9 +1636,16 @@ table {
 	left: 0;
 	right: 0;
 	z-index: 9999;
-	background: url('../images/firmamentWarsTitle90.jpg') 0% 0% / 100% 100%;
 	padding: 0;
-	overflow-y: scroll;
+}
+#statWorld{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 200%;
+	max-width: 4400px;
+	height: auto;
+	z-index: -1;
 }
 #statResult{
 	font-family: Times New Roman, serif;
@@ -1685,6 +1708,11 @@ table {
 	line-height: 1.25em !important;
 	padding: 0 !important;
 }
+.statRow{
+	border: 1px solid #037;
+	border-left: none;
+	border-right: none;
+}
 .statSpacer{
 	height: 5px;
 }
@@ -1709,10 +1737,56 @@ table {
 }
 .statsGov{
 	font-size: .875em;
+	margin-right: .25em;
 }
-.statBar{
+#statFooter{
+	font-size: 2em;
+	font-family: Times New Roman, serif;
+	font-variant: small-caps;
+	letter-spacing: 2px;
+}
+#statDuration{
+	color: #8df;
+	display: inline-block;
+	padding: .25em 2.5em;
+	margin-left: 5%;
+}
+#statsOkWrap{
+	color: #8df;
+	padding: .25em 2.5em;
+	margin-right: 5%;
+}
+#statsOk:hover{
+	color: #d5faff;
+	cursor: pointer;
+}
+.statTD{
 	line-height: 3em !important;
 	text-align: center;
+}
+.statBar{
+	position: relative;
+	margin: .5em 10% 0;
+	color: #fff;
+	left: 0;
+	right: 0;
+	line-height: 2em;
+	border-radius: 5px;
+}
+.statBarBgWrap{
+	margin: 1px;
+}
+.statBarBg{
+	border-radius: 5px;
+	box-shadow: 0 6px 6px rgba(255,255,255,.4) inset,
+		0 -6px 6px rgba(0,0,0,.4) inset;
+}
+.statVal{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 }
 /* bootstrap overwrites */
 .slider-handle{
