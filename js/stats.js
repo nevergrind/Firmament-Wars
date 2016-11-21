@@ -24,14 +24,18 @@ var stats = {
 		</div>\
 		<table id="gameStatsTable" class="table">\
 		</table>\
-		<div id="statFooter">\
-			<div id="statDuration" class="fw-primary">Game Duration: <span id="gameDuration">'+ stats.gameDuration(data.gameDuration) +'</span></div>\
-			<div id="statsOkWrap" class="fw-primary pull-right">\
-				<span id="statsOk">Ok</span>\
+		<div id="statFooter" class="container-fluid">\
+			<div class="row">\
+				<div id="statQuote" class="col-xs-7 stagBlue">'+ stats.data.quote +'</div>\
+				<div id="statDuration" class="col-xs-4 stagBlue">Game Duration\
+					<button id="statsOk" class="btn btn-responsive fwBlue shadow4">Ok</button>\
+					<div id="gameDuration">'+ stats.gameDuration(data.gameDuration) +'</div>\
+				</div>\
 			</div>\
 		</div>';
 		document.getElementById('statWrap').style.display = 'block';
 		document.getElementById('statWrap').innerHTML = str;
+		stats.events();
 		TweenMax.to("#statWorld", 300, {
 			startAt: {
 				xPercent: -50,
@@ -51,7 +55,7 @@ var stats = {
 			alpha: 1
 		});
 	},
-	events: (function(){
+	events: function(){
 		$("#statWrap").on('click', '.statTabs', function(){
 			$(".statTabs").removeClass('active');
 			$(this).addClass('active');
@@ -62,7 +66,7 @@ var stats = {
 		}).on('click', '#statsOk', function(){
 			location.reload();
 		});
-	})(),
+	},
 	maxValue: {},
 	setLeaderValues: function(){
 		for (var i=1; i<=8; i++){
@@ -114,7 +118,7 @@ var stats = {
 		setTimeout(function(){
 			for (var i=1, len=a.length; i<len; i++){
 				var d = a[i];
-				(function(d, e){
+				(function(d, e, Circ){
 					TweenMax.to(d, delay, {
 						startAt: {
 							max: 0
@@ -122,16 +126,18 @@ var stats = {
 						max: d.max,
 						onUpdate: function(){
 							e.textContent = ~~d.max;
-						}
+						},
+						ease: Circ.easeOut
 					});
 					var bar = document.getElementById(d.id + '-bar');
 					TweenMax.to(bar, delay, {
 						startAt: {
 							width: 0
 						},
-						width : ((d.max / stats.maxValue[d.key]) * 100) + '%'
+						width : ((d.max / stats.maxValue[d.key]) * 100) + '%',
+						ease: Circ.easeOut
 					});
-				})(d, document.getElementById(d.id));
+				})(d, document.getElementById(d.id), Circ);
 			}
 		});
 	},
@@ -171,46 +177,36 @@ var stats = {
 						key: 'overviewTotal'
 					},
 				]
-				stats.animate(a, 3);
+				stats.animate(a, 1.5);
 				str += '<tr class="stagBlue statRow">' +
 					stats.playerCell(p, i) +
 					'<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
-							<div class="statBarBgWrap">\
-								<div id="p'+ i +'-units-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
-							</div>\
+							<div id="p'+ i +'-units-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
 							<div id="p'+ i +'-units" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
-							<div class="statBarBgWrap">\
-								<div id="p'+ i +'-structures-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
-							</div>\
+							<div id="p'+ i +'-structures-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
 							<div id="p'+ i +'-structures" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
-							<div class="statBarBgWrap">\
-								<div id="p'+ i +'-weapons-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
-							</div>\
+							<div id="p'+ i +'-weapons-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
 							<div id="p'+ i +'-weapons" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
-							<div class="statBarBgWrap">\
-								<div id="p'+ i +'-resources-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
-							</div>\
+							<div id="p'+ i +'-resources-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
 							<div id="p'+ i +'-resources" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
-							<div class="statBarBgWrap">\
-								<div id="p'+ i +'-total-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
-							</div>\
+							<div id="p'+ i +'-total-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
 							<div id="p'+ i +'-total" class="statVal chat-warning">0</div>\
 						</div>\
 					</td>\
@@ -251,38 +247,30 @@ var stats = {
 						key: 'lost'
 					},
 				]
-				stats.animate(a, 3);
+				stats.animate(a, 1.5);
 				str += '<tr class="stagBlue statRow">' +
 					stats.playerCell(p, i) +
 					'<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
-							<div class="statBarBgWrap">\
-								<div id="p'+ i +'-earned-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
-							</div>\
+							<div id="p'+ i +'-earned-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
 							<div id="p'+ i +'-earned" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
-							<div class="statBarBgWrap">\
-								<div id="p'+ i +'-deployed-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
-							</div>\
+							<div id="p'+ i +'-deployed-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
 							<div id="p'+ i +'-deployed" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
-							<div class="statBarBgWrap">\
-								<div id="p'+ i +'-killed-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
-							</div>\
+							<div id="p'+ i +'-killed-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
 							<div id="p'+ i +'-killed" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
-							<div class="statBarBgWrap">\
-								<div id="p'+ i +'-lost-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
-							</div>\
+							<div id="p'+ i +'-lost-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
 							<div id="p'+ i +'-lost" class="statVal">0</div>\
 						</div>\
 					</td>\
@@ -318,30 +306,24 @@ var stats = {
 						key: 'fortresses'
 					}
 				]
-				stats.animate(a, 1.5);
+				stats.animate(a, 1);
 				str += '<tr class="stagBlue statRow">' +
 					stats.playerCell(p, i) +
 					'<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
-							<div class="statBarBgWrap">\
-								<div id="p'+ i +'-bunkers-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
-							</div>\
+							<div id="p'+ i +'-bunkers-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
 							<div id="p'+ i +'-bunkers" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
-							<div class="statBarBgWrap">\
-								<div id="p'+ i +'-walls-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
-							</div>\
+							<div id="p'+ i +'-walls-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
 							<div id="p'+ i +'-walls" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
-							<div class="statBarBgWrap">\
-								<div id="p'+ i +'-fortresses-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
-							</div>\
+							<div id="p'+ i +'-fortresses-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
 							<div id="p'+ i +'-fortresses" class="statVal">0</div>\
 						</div>\
 					</td>\
@@ -377,30 +359,24 @@ var stats = {
 						key: 'nukes'
 					}
 				]
-				stats.animate(a, 1.5);
+				stats.animate(a, 1);
 				str += '<tr class="stagBlue statRow">'+
 					stats.playerCell(p, i) +
 					'<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
-							<div class="statBarBgWrap">\
-								<div id="p'+ i +'-cannons-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
-							</div>\
+							<div id="p'+ i +'-cannons-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
 							<div id="p'+ i +'-cannons" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
-							<div class="statBarBgWrap">\
-								<div id="p'+ i +'-missiles-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
-							</div>\
+							<div id="p'+ i +'-missiles-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
 							<div id="p'+ i +'-missiles" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
-							<div class="statBarBgWrap">\
-								<div id="p'+ i +'-nukes-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
-							</div>\
+							<div id="p'+ i +'-nukes-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
 							<div id="p'+ i +'-nukes" class="statVal">0</div>\
 						</div>\
 					</td>\
@@ -436,30 +412,24 @@ var stats = {
 						key: 'culture'
 					}
 				]
-				stats.animate(a, 3);
+				stats.animate(a, 1.5);
 				str += '<tr class="stagBlue statRow">' +
 					stats.playerCell(p, i) +
 					'<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
-							<div class="statBarBgWrap">\
-								<div id="p'+ i +'-energy-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
-							</div>\
+							<div id="p'+ i +'-energy-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
 							<div id="p'+ i +'-energy" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
-							<div class="statBarBgWrap">\
-								<div id="p'+ i +'-food-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
-							</div>\
+							<div id="p'+ i +'-food-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
 							<div id="p'+ i +'-food" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
-							<div class="statBarBgWrap">\
-								<div id="p'+ i +'-culture-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
-							</div>\
+							<div id="p'+ i +'-culture-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
 							<div id="p'+ i +'-culture" class="statVal">0</div>\
 						</div>\
 					</td>\
@@ -529,7 +499,6 @@ var stats = {
 		$.ajax({
 			url: 'php/stats.php',
 		}).done(function(data){
-			console.info(data);
 			stats.data = data;
 			stats.init(data);
 		});
