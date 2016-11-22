@@ -22,14 +22,13 @@ var stats = {
 				Resources\
 			</div>\
 		</div>\
-		<table id="gameStatsTable" class="table">\
-		</table>\
+		<table id="gameStatsTable" class="table"></table>\
 		<div id="statFooter" class="container-fluid">\
 			<div class="row">\
 				<div id="statQuote" class="col-xs-7 stagBlue">'+ stats.data.quote +'</div>\
-				<div id="statDuration" class="col-xs-4 stagBlue">Game Duration\
-					<button id="statsOk" class="btn btn-responsive fwBlue shadow4">Ok</button>\
-					<div id="gameDuration">'+ stats.gameDuration(data.gameDuration) +'</div>\
+				<div id="statDuration" class="col-xs-4 stagBlue text-center">\
+					<div id="gameDuration">Game Duration: '+ stats.gameDuration(data.gameDuration) +'</div>\
+					<button id="statsEndGame" class="btn btn-responsive fwBlue shadow4">End Game</button>\
 				</div>\
 			</div>\
 		</div>';
@@ -63,7 +62,7 @@ var stats = {
 			// load data
 			var id = $(this).attr('id');
 			stats.setView(id);
-		}).on('click', '#statsOk', function(){
+		}).on('click', '#statsEndGame', function(){
 			location.reload();
 		});
 	},
@@ -116,6 +115,22 @@ var stats = {
 	},
 	animate: function(a, delay){
 		setTimeout(function(){
+			/*
+			var x = {
+				beeps: 0
+			};
+			TweenMax.to(x, delay, {
+				onUpdate: function(){
+					x.beeps++;
+					if (x.beeps % 10 === 0){
+						audio.play('bullet' + ~~(Math.random()*10));
+					}
+				},
+                onComplete: function(){
+					audio.play('shotgun7');
+				}
+			});
+			*/
 			for (var i=1, len=a.length; i<len; i++){
 				var d = a[i];
 				(function(d, e, Circ){
@@ -443,12 +458,12 @@ var stats = {
 		var str = '<tr><th style="width: 30%"></th>';
 		for (var i=0, len=column.length; i<len; i++){
 			if (i === 4){
-				str += '<th class="text-center chat-warning">'+ column[i] +'</th>';
+				str += '<th class="text-center statHead chat-warning">'+ column[i] +'</th>';
 			} else {
-				str += '<th class="text-center">'+ column[i] +'</th>';
+				str += '<th class="text-center statHead">'+ column[i] +'</th>';
 			}
 		}
-		str += '</tr>';
+		str += '</tr><tr class="statSpacer2"></tr>';
 		return str;
 	},
 	playerCell: function(p, i){

@@ -433,8 +433,8 @@ var game = {
 		game.tiles[i].nation = game.player[p].nation;
 		game.tiles[i].flag = game.player[p].flag;
 		var newFlag = !game.player[p].flag ? 
-			'blank.png' : 
-			game.player[p].flag;
+			game.tiles[i].units ? 'Player0.jpg' : 'blank.png' 
+			: game.player[p].flag;
 		// change flag
 		var flag = document.getElementById('flag' + i);
 		if (flag !== null){
@@ -473,29 +473,32 @@ var game = {
 				type: "GET",
 				url: "php/updateResources.php"
 			}).done(function(data){
-				// console.info('resource: ', data);
+				console.info('resource: ', data);
 				setResources(data);
-				if (data.cultureMsg !== undefined){
-					if (data.cultureMsg){
-						game.chat(data.cultureMsg);
-						audio.play('culture');
-						// recruit bonus changes
-						initOffensiveTooltips();
-					}
-				}
-				// filled food bar
-				if (data.get !== undefined){
-					// was it special?
-					if (!data.getBonus){
-						// no bonus troops; only broadcast to self
-						game.chat(data.get + ': ' + my.nation + ' receives <span class="chat-manpower">' + data.manpowerBonus + '</span> armies!');
-						audio.play('food');
-					}
-				}
+				game.reportMilestones(data);
 			}).fail(function(data){
 				console.info(data.responseText);
 				serverError(data);
 			});
+		}
+	},
+	reportMilestones: function(data){
+		if (data.cultureMsg !== undefined){
+			if (data.cultureMsg){
+				game.chat(data.cultureMsg);
+				audio.play('culture');
+				// recruit bonus changes
+				initOffensiveTooltips();
+			}
+		}
+		// filled food bar
+		if (data.get !== undefined){
+			// was it special?
+			if (!data.getBonus){
+				// no bonus troops; only broadcast to self
+				game.chat(data.get + ': ' + my.nation + ' receives <span class="chat-manpower">' + data.manpowerBonus + '</span> armies!');
+				audio.play('food');
+			}
 		}
 	}
 }

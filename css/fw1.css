@@ -247,7 +247,7 @@ a:hover{
 	padding: 2%;
 }
 #chat-ui{
-	font-family: Consolas, monospace;
+	font-family: Arial, sans-serif;
 	display: table;
 	table-layout:fixed;
 	position: absolute;
@@ -376,7 +376,7 @@ tbody{
 	bottom: 3%;
 	width: 53.8%;
 	left: .5%;
-	font-family: Consolas, monospace;
+	font-family: Arial, sans-serif;
 	color: #bef;
 	text-shadow: 2px 2px 0 #357;
 	border-radius: 0;
@@ -411,14 +411,14 @@ tbody{
 #titlePlayerCountWrap{
 	float: right;
 	color: #aef;
-	font-family: Consolas, monospace;
+	font-family: Arial, sans-serif;
 	padding: .25em .5em;
 	border-radius: 4px;
 	background: rgba(255,255,255,.1);
 }
 .titlePanelLeft{
 	position: absolute;
-	font-family: Consolas, monospace;
+	font-family: Arial, sans-serif;
 	top: 8%;
 	bottom: 7%;
 	text-shadow: .5px .5px #357, 1px 1px #357, 1.5px 1.5px #357, 2px 2px #357;
@@ -500,7 +500,7 @@ tbody{
 	padding: .5% 1%;
 	z-index: 9999;
 	font-size: 1em;
-	font-family: Consolas, monospace;
+	font-family: Arial, sans-serif;
 	border-radius: 4px;
 	pointer-events: none;
 }
@@ -1125,7 +1125,7 @@ circle{
 	right: 1%;
 	width: 98%;
 	height: 83%;
-	font-family: Consolas, monospace;
+	font-family: Arial, sans-serif;
 	color: #bef;
 	text-shadow: 2px 2px 0 #357;
 	border-radius: 4px;
@@ -1138,7 +1138,7 @@ circle{
 	right: 1%;
 	margin: 0;
 	width: 98%;
-	font-family: Consolas, monospace;
+	font-family: Arial, sans-serif;
 	color: #bef;
 	text-shadow: 2px 2px 0 #357;
 	border-radius: 0;
@@ -1709,13 +1709,25 @@ table {
 	line-height: 1.25em !important;
 	padding: 0 !important;
 }
+.statHead{
+	box-shadow: 0 0 0 2px #151515 inset,
+		0 0 0 3px #357 inset;
+	border-radius: 7px 7px 0 0;
+    background: -webkit-linear-gradient(bottom, rgba(16, 64, 128, 1) 0%, rgba(0, 16, 64,1) 100%) !important;
+    background: -moz-linear-gradient(bottom, rgba(16, 64, 128, 1) 0%, rgba(0, 16, 64,1) 100%) !important;
+    background: -ms-linear-gradient(bottom, rgba(16, 64, 128, 1) 0%, rgba(0, 16, 64,1) 100%) !important;
+    background: -o-linear-gradient(bottom, rgba(16, 64, 128, 1) 0%, rgba(0, 16, 64,1) 100%) !important;
+}
 .statRow{
 	border: 1px solid #037;
 	border-left: none;
 	border-right: none;
 }
 .statSpacer{
-	height: 5px;
+	height: 2px;
+}
+.statSpacer2{
+	height: 0;
 }
 .statsFlags{
 	max-height: 3em;
@@ -1751,25 +1763,23 @@ table {
 	font-family: Palatino Linotype, Times New Roman, serif;
 	font-size: .925em;
 	padding: .25em .5em;
-	margin: 0 1em;
+	margin: 0 2em 0 .5em;
 }
 #statDuration{
 	padding: .25em 1em;
-	font-variant: small-caps;
-	margin: 0 1em;
-	letter-spacing: 2px;
 }
 #gameDuration{
-	text-indent: .5em;
+	letter-spacing: 2px;
+	font-variant: small-caps;
 }
-#statsOk{
-	font-family: Times New Roman, serif;
-	font-size: 1.25em;
+#statsEndGame{
+	font-family: Consolas, monospace;
+	font-size: .875em;
 	padding: .125em 1em;
-	float: right;
-	margin: .25em;
+	margin: .5em;
+	font-variant: normal;
 }
-#statsOk:hover{
+#statsEndGame:hover{
 	color: #d5faff;
 	cursor: pointer;
 }
@@ -1785,8 +1795,12 @@ table {
 	right: 0;
 	line-height: 2em;
 	border-radius: 5px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 .statBarBg{
+	width: 0;
 	border-radius: 5px;
 	box-shadow: 0 0 0 1px rgba(0,0,0,1) inset,
 		0 6px 6px rgba(255,255,255,.4) inset,

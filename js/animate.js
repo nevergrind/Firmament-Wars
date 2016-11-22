@@ -209,7 +209,7 @@ var animate = {
 				circ.setAttributeNS(null,"stroke",'#000');
 				DOM.world.appendChild(circ);
 				
-				TweenMax.to(circ, .125, {
+				TweenMax.to(circ, .2, {
 					delay: Math.random() * delay[sfx],
 					startAt:{
 						opacity: 1

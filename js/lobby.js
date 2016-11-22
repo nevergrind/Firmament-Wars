@@ -397,53 +397,63 @@ function setProduction(d){
 	});
 }
 function setResources(d){
-	setProduction(d);
+	console.info(d);
+	if (d.production !== undefined){
+		setProduction(d);
+	}
 	TweenMax.to(my, .3, {
-		food: d.food,
-		culture: d.culture,
+		food: d.food === undefined ? my.food : d.food,
+		culture: d.culture === undefined ? my.culture : d.culture,
 		ease: Quad.easeIn,
 		onUpdate: function(){
 			DOM.food.textContent = ~~my.food;
 			DOM.culture.textContent = ~~my.culture;
 		}
 	});
-	if (d.manpower > my.manpower){
-		TweenMax.fromTo('#manpower', .5, {
-			color: '#ffaa33'
-		}, {
-			color: '#ffff00',
-			repeat: -1,
-			yoyo: true
-			
-		});
-		TweenMax.to(my, .5, {
-			manpower: d.manpower,
-			onUpdate: function(){
-				DOM.manpower.textContent = ~~my.manpower;
-			}
-		});
+	if (d.manpower !== undefined){
+		if (d.manpower > my.manpower){
+			TweenMax.fromTo('#manpower', .5, {
+				color: '#ffaa33'
+			}, {
+				color: '#ffff00',
+				repeat: -1,
+				yoyo: true
+				
+			});
+			TweenMax.to(my, .5, {
+				manpower: d.manpower,
+				onUpdate: function(){
+					DOM.manpower.textContent = ~~my.manpower;
+				}
+			});
+		}
 	}
 	if (d.foodMax !== undefined){
-		if (d.foodMax > my.foodMax){
+		if (d.foodMax && d.foodMax > my.foodMax){
 			DOM.foodMax.textContent = d.foodMax;
 			my.foodMax = d.foodMax;
 		}
-			
-		if (d.cultureMax > my.cultureMax){
+	}
+	if (d.cultureMax !== undefined){
+		if (d.cultureMax && d.cultureMax > my.cultureMax){
 			DOM.cultureMax.textContent = d.cultureMax;
 			my.cultureMax = d.cultureMax;
 		}
 	}
 	if (d.sumFood !== undefined){
-		if (d.sumFood !== my.sumFood){
+		if (d.sumFood && d.sumFood !== my.sumFood){
 			DOM.sumFood.textContent = d.sumFood;
 			my.sumFood = d.sumFood;
 		}
-		if (d.sumProduction !== my.sumProduction){
+	}
+	if (d.sumProduction !== undefined){
+		if (d.sumProduction && d.sumProduction !== my.sumProduction){
 			DOM.sumProduction.textContent = d.sumProduction;
 			my.sumProduction = d.sumProduction;
 		}
-		if (d.sumCulture !== my.sumCulture){
+	}
+	if (d.sumCulture !== undefined){
+		if (d.sumCulture && d.sumCulture !== my.sumCulture){
 			DOM.sumCulture.textContent = d.sumCulture;
 			my.sumCulture = d.sumCulture;
 		}
@@ -455,18 +465,26 @@ function setResources(d){
 			my.oBonus = d.oBonus;
 			initOffensiveTooltips();
 		}
+	}
+	if (d.dBonus !== undefined){
 		if (my.dBonus !== d.dBonus){
 			DOM.dBonus.textContent = d.dBonus;
 			my.dBonus = d.dBonus;
 		}
+	}
+	if (d.turnBonus !== undefined){
 		if (my.turnBonus !== d.turnBonus){
 			DOM.turnBonus.textContent = d.turnBonus;
 			my.turnBonus = d.turnBonus;
 		}
+	}
+	if (d.foodBonus !== undefined){
 		if (my.foodBonus !== d.foodBonus){
 			DOM.foodBonus.textContent = d.foodBonus;
 			my.foodBonus = d.foodBonus;
 		}
+	}
+	if (d.cultureBonus !== undefined){
 		if (my.cultureBonus !== d.cultureBonus){
 			DOM.cultureBonus.textContent = d.cultureBonus;
 			my.cultureBonus = d.cultureBonus;
@@ -771,6 +789,9 @@ function loadGameState(){
 				if (isMSIE || isMSIE11){
 					zug.on("click", function(){
 						triggerAction(this);
+						TweenMax.to(this, .15, {
+							fill: "hsl(+=0%, +=30%, +=15%)"
+						});
 					});
 				} else {
 					zug.on("mousedown", function(e){
@@ -795,7 +816,13 @@ function loadGameState(){
 					if (game.tiles.length > 0){
 						var player = game.tiles[land] !== undefined ? game.tiles[land].player : 0;
 						TweenMax.to(this, .25, {
-							fill: color[player]
+							fill: color[player],
+							onComplete: function(){
+								// insurance
+								TweenMax.to(this, .25, {
+									fill: color[player]
+								});
+							}
 						});
 					}
 				});

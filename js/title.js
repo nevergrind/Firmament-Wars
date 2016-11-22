@@ -413,7 +413,7 @@ var title = {
 				game.updateDefense(data);
 			} else if (data.type === 'gunfire'){
 				// defender tile update
-				animate.gunfire(data.tile, data.attacker === my.account);
+				animate.gunfire(data.tile, data.player === my.player);
 				game.updateTile(data);
 			} else if (data.type === 'updateTile'){
 				// attacker tile update
@@ -434,6 +434,7 @@ var title = {
 			
 			if (data.message){
 				if (data.type === 'gunfire'){
+					// ? when I'm attacked?
 					if (data.defender === my.account){
 						game.chat(data.message, data.type);
 					}

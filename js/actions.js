@@ -3,7 +3,8 @@ function Target(o){
 	if (o === undefined){
 		o = {};
 	}
-	this.cost = o.cost ? o.cost : 10;
+	this.cost = o.cost ? o.cost : 
+		my.government === "Fascism" ? 8 : 10;
 	this.minimum = o.minimum !== undefined ? o.minimum : 2;
 	this.attackName = o.attackName ? o.attackName : 'attack';
 	this.splitAttack = o.splitAttack ? o.splitAttack : false;
@@ -86,6 +87,7 @@ var action = {
 		showTarget(that);
 		my.clearHud();
 		// send attack to server
+		var e1 = document.getElementById('land' + attacker);
 		$.ajax({
 			url: 'php/attackTile.php',
 			data: {
@@ -94,7 +96,7 @@ var action = {
 				split: my.splitAttack ? 1 : 0
 			}
 		}).done(function(data){
-			// console.info('attackTile', data);
+			console.info('attackTile', data);
 			// animate attack
 			if (game.tiles[defender].player !== my.player){
 				if (!game.tiles[defender].units){
@@ -103,22 +105,25 @@ var action = {
 			} else {
 				audio.move();
 			}
+			// barbarian message
 			if (data.rewardMsg !== undefined){
 				game.chat(data.rewardMsg);
+				setResources(data);
 			}
 			if (data.production !== undefined){
 				setProduction(data);
 			}
 			// reset target if lost
-			// console.warn(data.victory, attacker, my.tgt);
 			if (!data.victory){
-				showTarget(document.getElementById('land' + attacker));
+				showTarget(e1);
 			}
+			// process barbarian reward messages
+			game.reportMilestones(data);
 		}).fail(function(e){
 			audio.play('error');
 			Msg('You can only attack adjacent territories.', 1.5);
 			// set target attacker
-			showTarget(document.getElementById('land' + attacker));
+			showTarget(e1);
 		}).always(function(){
 			g.unlock();
 		});
