@@ -4,12 +4,12 @@ var stats = {
 	init: function(data){
 		var flag = my.flag === 'Default.jpg' ? 'Player'+ my.player +'.jpg' : my.flag;
 		var str = '<img id="statWorld" src="images/FlatWorld60.jpg">\
-		<div id="statResult">\
+		<div id="statResult" class="no-select">\
 			Victory!\
 			<img class="statResultFlag pull-left" src="images/flags/'+ flag +'">\
 			<img class="statResultFlag pull-right" src="images/flags/'+ flag +'">\
 		</div>\
-		<div id="statTabWrap">\
+		<div id="statTabWrap" class="no-select">\
 			<div id="statOverview" class="statTabs active">\
 				Overview\
 			</div><div id="statUnits" class="statTabs">\
@@ -25,7 +25,10 @@ var stats = {
 		<table id="gameStatsTable" class="table"></table>\
 		<div id="statFooter" class="container-fluid">\
 			<div class="row">\
-				<div id="statQuote" class="col-xs-7 stagBlue">'+ stats.data.quote +'</div>\
+				<div id="statQuote" class="col-xs-7 stagBlue">\
+					<div>'+ stats.data.quote +'</div>\
+					<div id="statVerse" class="text-right">'+ stats.data.verse +'</div>\
+				</div>\
 				<div id="statDuration" class="col-xs-4 stagBlue text-center">\
 					<div id="gameDuration">Game Duration: '+ stats.gameDuration(data.gameDuration) +'</div>\
 					<button id="statsEndGame" class="btn btn-responsive fwBlue shadow4">End Game</button>\
@@ -47,6 +50,12 @@ var stats = {
 		});
 		stats.setLeaderValues();
 		stats.setView('statOverview');
+		if (g.victory){
+			audio.play('victory');
+		} else {
+			audio.play('defeat');
+		}
+			
 		TweenMax.to('#gameWrap', .5, {
 			startAt: {
 				alpha: 0
@@ -58,7 +67,7 @@ var stats = {
 		$("#statWrap").on('click', '.statTabs', function(){
 			$(".statTabs").removeClass('active');
 			$(this).addClass('active');
-			audio.play('click');
+			audio.play('switch13');
 			// load data
 			var id = $(this).attr('id');
 			stats.setView(id);
@@ -106,34 +115,41 @@ var stats = {
 			}
 		}
 	},
+	currentTabId: '',
 	setView: function(id){
-		var str = stats[id]();
-		document.getElementById('gameStatsTable').innerHTML = str;
-		if (id === 'statOverview'){
-			
+		if (id !== stats.currentTabId){
+			stats.currentTabId = id;
+			var str = stats[id]();
+			document.getElementById('gameStatsTable').innerHTML = str;
 		}
 	},
+	barAnimate: new TweenMax.delayedCall(0, ''),
 	animate: function(a, delay){
 		setTimeout(function(){
-			/*
 			var x = {
-				beeps: 0
+				max: 100,
+				lastVal: 0
 			};
-			TweenMax.to(x, delay, {
+			stats.barAnimate.kill();
+			stats.barAnimate = TweenMax.to(x, delay, {
+				startAt: {
+					max: 0
+				},
+				max: 100,
 				onUpdate: function(){
-					x.beeps++;
-					if (x.beeps % 10 === 0){
-						audio.play('bullet' + ~~(Math.random()*10));
+					if (~~x.lastVal !== ~~x.max){
+						x.lastVal = x.max;
+						audio.play('rollover5');
 					}
 				},
-                onComplete: function(){
-					audio.play('shotgun7');
-				}
+				onComplete: function(){
+					audio.play('switch11');
+				},
+				ease: Sine.easeOut
 			});
-			*/
 			for (var i=1, len=a.length; i<len; i++){
 				var d = a[i];
-				(function(d, e, Circ){
+				(function(d, e, bar, Sine){
 					TweenMax.to(d, delay, {
 						startAt: {
 							max: 0
@@ -142,17 +158,16 @@ var stats = {
 						onUpdate: function(){
 							e.textContent = ~~d.max;
 						},
-						ease: Circ.easeOut
+						ease: Sine.easeOut
 					});
-					var bar = document.getElementById(d.id + '-bar');
 					TweenMax.to(bar, delay, {
 						startAt: {
 							width: 0
 						},
 						width : ((d.max / stats.maxValue[d.key]) * 100) + '%',
-						ease: Circ.easeOut
+						ease: Sine.easeOut
 					});
-				})(d, document.getElementById(d.id), Circ);
+				})(d, document.getElementById(d.id), document.getElementById(d.id + '-bar'), Sine);
 			}
 		});
 	},
@@ -498,7 +513,7 @@ var stats = {
 		} else {
 			min = ~~(data / 60 % 60);
 			if (min < 10){
-				min = '0' + min;
+				min = '0' + min + '';
 			}
 		}
 		return min;
@@ -506,7 +521,7 @@ var stats = {
 	seconds: function(data){
 		var sec = ~~(data % 60);
 		if (sec < 10){
-			return '0' + sec;
+			return '0' + sec + '';
 		}
 		return sec;
 	},

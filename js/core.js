@@ -20,6 +20,7 @@ var g = {
 	overlay: document.getElementById("overlay"),
 	over: 0,
 	done: 0,
+	victory: false,
 	startTime: Date.now(),
 	keyLock: false,
 	loadAttempts: 0,
@@ -473,7 +474,7 @@ var game = {
 				type: "GET",
 				url: "php/updateResources.php"
 			}).done(function(data){
-				console.info('resource: ', data);
+				// console.info('resource: ', data);
 				setResources(data);
 				game.reportMilestones(data);
 			}).fail(function(data){
@@ -665,6 +666,7 @@ var DOM;
 function initDom(){
 	var d = document;
 	DOM = {
+		gameWrap: d.getElementById('gameWrap'),
 		gameTableBody: d.getElementById('gameTableBody'),
 		food: d.getElementById('food'),
 		production: d.getElementById('production'),
@@ -824,7 +826,7 @@ function resizeWindow() {
 	}
 	g.resizeX = w / g.screen.width;
 	g.resizeY = h / g.screen.height;
-	TweenMax.set("#worldTitle, #statWorld", {
+	TweenMax.set("#worldTitle", {
 		xPercent: -50,
 		yPercent: -50
 	});
@@ -836,7 +838,6 @@ var video = {
 	load: {
 		game: function(){
 			var x = [
-				'missile.png', 
 				'nuke.png',
 				'smoke.png',
 				'goldSmoke.png',
@@ -892,6 +893,7 @@ function playerLogout(){
 		type: 'GET',
 		url: 'php/logout.php'
     }).done(function(data){
+		localStorage.removeItem('token');
         location.reload();
     }).fail(function(){
         Msg("Logout failed. Is the server on fire?");
@@ -919,3 +921,39 @@ function serverError(data){
 	// Msg('The server reported an error.');
 	console.error('The server reported an error.');
 }
+
+(function(){
+	var isLoggedIn = $("#titleMenu").length;
+	if (!isLoggedIn){
+		var email = localStorage.getItem('email');
+		var token = localStorage.getItem('token');
+		console.info(isLoggedIn, email, token);
+		if (email){
+			// attempt persistent login
+			if (token){
+				$.ajax({
+					type: 'POST',
+					url: '/php/master1.php',
+					data: {
+						run: "authenticate",
+						email: email,
+						token: token
+					}
+				}).done(function(data){
+					location.reload();
+				});
+			} else {
+				$.ajax({
+					type: 'POST',
+					url: '/php/master1.php',
+					data: {
+						run: "getToken",
+						email: email
+					}
+				}).done(function(data){
+					token = data;
+				});
+			}
+		}
+	}
+})();

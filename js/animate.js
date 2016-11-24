@@ -294,70 +294,73 @@ var animate = {
 		my.motionPath[2] = (my.motionPath[0] + my.motionPath[4]) / 2;
 		my.motionPath[3] = ((my.motionPath[1] + my.motionPath[5]) / 2) - (Math.abs(x1-x2)/3);
 		TweenMax.set(DOM.motionPath, {
-			ease: Circ.easeIn,
 			attr: {
 				d: "M " + my.motionPath[0] +","+ my.motionPath[1] + ' ' +
 					+ my.motionPath[4] +" "+ my.motionPath[5]
 			}
 		});
+		/*
 		var path = MorphSVGPlugin.pathDataToBezier('#motionPath', {
 			align: 'relative'
 		});
-		// create missile 591 93
-		var mis = document.createElementNS("http://www.w3.org/2000/svg", "image");
-		mis.setAttributeNS(null,"width",30);
-		mis.setAttributeNS(null,"height",5);
-		mis.setAttributeNS(null,"x",x1);
-		mis.setAttributeNS(null,"y",y1);
-		mis.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", "images/missile.png");
-		DOM.mapAnimations.appendChild(mis);
-		
-		var count = 0;
-		TweenMax.to(mis, 1.5, {
-			startAt: {
-				opacity: 1,
-				xPercent: -50,
-				yPercent: -50
-			},
 			bezier: {
 				values: path,
 				type: 'cubic',
 				curviness: 1.5,
 				autoRotate: true
 			},
-			ease: Power2.easeIn,
+		*/
+		var mis = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+		mis.setAttributeNS(null, "cx", x1);
+		mis.setAttributeNS(null, "cy", y1);
+		mis.setAttributeNS(null, "r", 12);
+		mis.setAttributeNS(null,"fill",'#bbe5fd');
+		mis.setAttributeNS(null,"stroke","#88ddff");
+		DOM.mapAnimations.appendChild(mis);
+		var count = 0;
+		TweenMax.to(mis, .1, {
+			attr: {
+				r: 3
+			},
+			repeat: -1
+		});
+		TweenMax.to(mis, 1, {
+			startAt: {
+				opacity: 1,
+				xPercent: -50,
+				yPercent: -50
+			},
+			attr: {
+				cx: x2,
+				cy: y2
+			},
+			ease: Power1.easeIn,
 			onUpdate: function(){
 				count++;
-				if (count % 5 === 0){
+				if (count % 4 === 0){
 					var x = x1 + mis._gsTransform.x;
 					var y = y1 + mis._gsTransform.y;
 					var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
 					svg.setAttributeNS(null, 'height', 40);
 					svg.setAttributeNS(null, 'width', 40);
-					svg.setAttributeNS(null,"x",x);
-					svg.setAttributeNS(null,"y",y);
+					svg.setAttributeNS(null, 'opacity', 1);
+					svg.setAttributeNS(null, "x", mis.getAttribute('cx'));
+					svg.setAttributeNS(null, "y", mis.getAttribute('cy'));
 					svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/smoke.png');
 					DOM.mapAnimations.appendChild(svg);
 					TweenMax.to(svg, .5, {
 						startAt: {
 							xPercent: -50,
 							yPercent: -50,
-							transformOrigin: '50% 50%',
-							opacity: 0
+							transformOrigin: '50% 50%'
 						},
-						opacity: 1,
-						scale: 1.5,
-						ease: Power3.easeOut,
+						scale: 3,
 						onComplete: function(){
-							TweenMax.to(this.target, .5, {
-								opacity: 0,
-								scale: 2,
-								ease: Linear.easeNone,
-								onComplete: function(){
-									this.target.parentNode.removeChild(this.target);
-								}
-							});
+							this.target.parentNode.removeChild(this.target);
 						}
+					});
+					TweenMax.to(svg, .5, {
+						alpha: 0
 					});
 				}
 			},
@@ -562,9 +565,8 @@ var animate = {
 	},
 	screenShake: function(count, d, interval, fade){
 		// number of shakes, distance of shaking, interval of shakes
-		var foo=0;
-		var M = Math;
-		(function doit(count,d,interval){
+		var foo = 0;
+		(function doit(count, d, interval, e, M){
 			var d2 = d/2;
 			if (fade){
 				if (foo % 2 === 0){
@@ -574,25 +576,25 @@ var animate = {
 					}
 				}
 			}
-			TweenMax.to(DOM.world, interval, {
+			TweenMax.to(e, interval, {
 				x: ~~(M.random()*(d)-d2),
 				y: ~~(M.random()*(d)-d2),
 				onComplete:function(){
-					TweenMax.to(DOM.world, interval, {
+					TweenMax.to(e, interval, {
 						x: ~~(M.random()*(d)-d2),
 						y: ~~(M.random()*(d)-d2),
 						onComplete:function(){
-							TweenMax.to(DOM.world, interval, {
+							TweenMax.to(e, interval, {
 								x: ~~(M.random()*(d)-d2),
 								y: ~~(M.random()*(d)-d2),
 								onComplete:function(){
-									TweenMax.to(DOM.world, interval,{
+									TweenMax.to(e, interval,{
 										x: 0,
 										y: 0,
 										onComplete: function(){
 											foo++;
 											if(foo < count){ 
-												doit(count,d,interval); 
+												doit(count, d, interval, e, M); 
 											}
 										}
 									});
@@ -602,7 +604,7 @@ var animate = {
 					});
 				}
 			});
-		})(count,d,interval);
+		})(count, d, interval, DOM.gameWrap, Math);
 	},
 	water: function(){
 		var delay = 130,

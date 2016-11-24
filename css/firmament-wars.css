@@ -12,6 +12,7 @@ html{
 	touch-action: manipulation;
 	overflow: hidden;
 	display: block;
+	background: #000;
 }
 input{
 	cursor: text;
@@ -260,6 +261,9 @@ a:hover{
 	vertical-align: bottom;
 	pointer-events: none;
 }
+#logout, #login{
+	font-size: .75em;
+}
 .uppercase{
 	text-transform: uppercase;
 }
@@ -272,6 +276,7 @@ a:hover{
 	text-shadow: .5px .5px #520, 1px 1px #520, 1.5px 1.5px #520, 2px 2px #520;
 }
 .chat-hidden{
+	font-family: Consolas, monospace;
 	color: #000000;
 	background: #000000;
 	text-shadow: none;
@@ -854,7 +859,7 @@ table td, .table th, .table td {
 	left: -50%;
 	width: 200%;
 	height: 200%;
-	opacity: .8;
+	opacity: 1;
 	background: url('../images/water13.jpg');
 }
 #worldWater2{
@@ -1710,7 +1715,9 @@ table {
 	padding: 0 !important;
 }
 .statHead{
-	box-shadow: 0 0 0 2px #151515 inset,
+	font-family: Times New Roman;
+	font-size: 1.125em;
+	box-shadow: 0 0 0 2px #0a1a4a inset,
 		0 0 0 3px #357 inset;
 	border-radius: 7px 7px 0 0;
     background: -webkit-linear-gradient(bottom, rgba(16, 64, 128, 1) 0%, rgba(0, 16, 64,1) 100%) !important;
@@ -1765,6 +1772,9 @@ table {
 	padding: .25em .5em;
 	margin: 0 2em 0 .5em;
 }
+#statVerse{
+	margin-top: .5em;
+}
 #statDuration{
 	padding: .25em 1em;
 }
@@ -1798,6 +1808,7 @@ table {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	background: rgba(0,0,0,.4);
 }
 .statBarBg{
 	width: 0;

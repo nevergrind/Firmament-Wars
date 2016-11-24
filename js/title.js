@@ -273,12 +273,18 @@ var title = {
 		var globeDelay = 1,
 			globeYoyo = 6;
 		// animate stars
-		TweenMax.to('#firmamentWarsStars1', 240, {
+		var stars = [
+			document.getElementById('firmamentWarsStars1'),
+			document.getElementById('firmamentWarsStars2'),
+			document.getElementById('firmamentWarsStars3'),
+			document.getElementById('firmamentWarsStars4')
+		]
+		TweenMax.to(stars[0], 240, {
 			backgroundPosition: '-800px 0px', 
 			repeat: -1,
 			ease: Linear.easeNone
 		});
-		TweenMax.to('#firmamentWarsStars2', 150, {
+		TweenMax.to(stars[1], 150, {
 			startAt: {
 				backgroundPosition: '250px 250px', 
 			},
@@ -286,7 +292,7 @@ var title = {
 			repeat: -1,
 			ease: Linear.easeNone
 		});
-		TweenMax.to('#firmamentWarsStars3', 70, {
+		TweenMax.to(stars[2], 70, {
 			startAt: {
 				backgroundPosition: '600px 500px', 
 			},
@@ -294,7 +300,7 @@ var title = {
 			repeat: -1,
 			ease: Linear.easeNone
 		});
-		TweenMax.to('#firmamentWarsStars4', 30, {
+		TweenMax.to(stars[3], 30, {
 			startAt: {
 				backgroundPosition: '400px 600px', 
 			},
@@ -303,7 +309,8 @@ var title = {
 			ease: Linear.easeNone
 		});
 		// logo
-		TweenMax.to('#firmamentWarsLogo', globeDelay, {
+		var fwLogo = document.getElementById('firmamentWarsLogo');
+		TweenMax.to(fwLogo, globeDelay, {
 			startAt: {
 				visibility: 'visible',
 				alpha: 0
@@ -311,7 +318,7 @@ var title = {
 			alpha: 1,
 			ease: Quad.easeIn
 		});
-		TweenMax.to('#firmamentWarsLogo', globeDelay, {
+		TweenMax.to(fwLogo, globeDelay, {
 			startAt: {
 				yPercent: -50,
 				y: '-15%'
@@ -327,7 +334,8 @@ var title = {
 			}
 		});
 		// globe
-		TweenMax.to('#titleGlobe', globeDelay, {
+		var globe = document.getElementById('titleGlobe');
+		TweenMax.to(globe, globeDelay, {
 			startAt: {
 				y: '15%'
 			},

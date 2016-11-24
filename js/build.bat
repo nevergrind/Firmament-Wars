@@ -1,1 +1,1 @@
-copy /b beginWrap.js+core.js+title.js+lobby.js+ws.js+audio.js+map.js+game.js+actions.js+events.js+animate.js+stats.js+endWrap.js firmament-wars.js
+copy /b beginWrap.js+stats.js+animate.js+core.js+title.js+lobby.js+ws.js+audio.js+map.js+game.js+actions.js+events.js+endWrap.js firmament-wars.js

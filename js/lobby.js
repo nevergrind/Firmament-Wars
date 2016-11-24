@@ -397,7 +397,7 @@ function setProduction(d){
 	});
 }
 function setResources(d){
-	console.info(d);
+	// console.info(d);
 	if (d.production !== undefined){
 		setProduction(d);
 	}
@@ -579,6 +579,7 @@ function loadGameState(){
 			my.production = data.production;
 			my.turnProduction = data.turnProduction;
 			my.cultureMax = data.cultureMax;
+			my.moves = data.moves;
 			my.government = data.government;
 			my.buildCost = data.buildCost;
 			lobby.updateGovernmentWindow(my.government);

@@ -12,7 +12,7 @@ var audio = {
 				// music
 				DOM.bgmusic.pause();
 				DOM.bgmusic.src = "music/" + foo + "." + audio.ext;
-				DOM.bgmusic.play();
+				//DOM.bgmusic.play();
 			} else {
 				// sfx
 				var sfx = new Audio("sound/" + foo + "." + audio.ext);
@@ -67,16 +67,13 @@ var audio = {
 			if (my.government){
 				// government specific tracks?
 			}
+			DOM.bgmusic.pause();
 			DOM.bgmusic.src = "music/" + tracks[audio.trackIndex % audio.totalTracks] +"." + audio.ext;
 			DOM.bgmusic.volume = g.config.audio.musicVolume / 100;
 			DOM.bgmusic.onended = function(){
 				audio.gameMusicPlayNext();
 			}
-			if (g.config.audio.musicVolume){
-				DOM.bgmusic.play();
-			} else {
-				DOM.bgmusic.pause();
-			}
+			//DOM.bgmusic.play();
 		}
 	},
 	fade: function(){

@@ -234,6 +234,7 @@ function gameVictory(){
 				'<div class="modalBtnChild">Victory</div>'+
 			'</div>';
 			audio.play('mine4');
+			g.victory = true;
 		}
 		triggerEndGame(msg);
 	}).fail(function(data){
@@ -249,6 +250,7 @@ function triggerEndGame(msg){
 		g.over = 1;
 	}, 1500);
 	setTimeout(function(){
+		new Image('images/FlatWorld60.jpg');
 		var e = document.getElementById('victoryScreen');
 		e.innerHTML = msg;
 		e.style.display = 'block';
@@ -256,7 +258,7 @@ function triggerEndGame(msg){
 			if (e.which === 1){
 				$("#endWar").off();
 				g.view = 'stats';
-				TweenMax.to('#gameWrap', .5, {
+				TweenMax.to('#gameWrap', .2, {
 					alpha: 0,
 					onComplete: function(){ 
 						$("#diplomacy-ui, #ui2, #resources-ui, #chat-ui, #chat-input, #hud, #worldWrap, #victoryScreen").remove();

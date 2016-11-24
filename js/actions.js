@@ -343,9 +343,7 @@ var action = {
 						Msg(e.statusText, 1.5);
 					}
 				});
-			}, 2000);
-			
-			
+			}, 1000);
 		}).fail(function(e){
 			console.info('error: ', e);
 			audio.play('error');
@@ -395,7 +393,6 @@ var action = {
 					data: {
 						defender: defender
 					}
-				}).done(function(data) {
 				});
 			}, 6000);
 			console.info('launchNuke', data);

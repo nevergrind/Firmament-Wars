@@ -40,32 +40,12 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
 	<script>
-		var version = "0-0-20";
+		var version = "0-0-21";
 	</script>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
-	<style>
-		html{
-			display: none;
-			background: #000;
-		}
-	</style>
-	<script>
-	(function(d){
-		var css = [
-			'fw1'
-		]
-		for (var i=0, len=css.length; i<len; i++){
-			var link = document.createElement('link');
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = 'css/' + css[i] + '.css?version=' + version;
-			d.head.appendChild(link);
-		}
-	})(document);
-	</script>
-	
+	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-21">
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
 
