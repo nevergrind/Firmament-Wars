@@ -474,7 +474,7 @@ var game = {
 				type: "GET",
 				url: "php/updateResources.php"
 			}).done(function(data){
-				// console.info('resource: ', data);
+				console.info('resource: ', data);
 				setResources(data);
 				game.reportMilestones(data);
 			}).fail(function(data){
@@ -537,10 +537,10 @@ var my = {
 	motionPath: [0,0,0,0,0,0],
 	attackOn: false,
 	splitAttack: false,
-	splitAttackCost: 5,
-	attackCost: 10,
-	deployCost: 10,
-	recruitCost: 30,
+	splitAttackCost: 1,
+	attackCost: 2,
+	deployCost: 20,
+	recruitCost: 4,
 	weaponCost: 1,
 	maxDeployment: 24,
 	buildCost: 1,
@@ -666,6 +666,7 @@ var DOM;
 function initDom(){
 	var d = document;
 	DOM = {
+		moves: d.getElementById('moves'),
 		gameWrap: d.getElementById('gameWrap'),
 		gameTableBody: d.getElementById('gameTableBody'),
 		food: d.getElementById('food'),
@@ -921,39 +922,3 @@ function serverError(data){
 	// Msg('The server reported an error.');
 	console.error('The server reported an error.');
 }
-
-(function(){
-	var isLoggedIn = $("#titleMenu").length;
-	if (!isLoggedIn){
-		var email = localStorage.getItem('email');
-		var token = localStorage.getItem('token');
-		console.info(isLoggedIn, email, token);
-		if (email){
-			// attempt persistent login
-			if (token){
-				$.ajax({
-					type: 'POST',
-					url: '/php/master1.php',
-					data: {
-						run: "authenticate",
-						email: email,
-						token: token
-					}
-				}).done(function(data){
-					location.reload();
-				});
-			} else {
-				$.ajax({
-					type: 'POST',
-					url: '/php/master1.php',
-					data: {
-						run: "getToken",
-						email: email
-					}
-				}).done(function(data){
-					token = data;
-				});
-			}
-		}
-	}
-})();

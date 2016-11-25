@@ -197,7 +197,7 @@ var animate = {
 		}
 		var x = 0,
 			y = 0;
-		for (var i=0; i<50; i++){
+		for (var i=0; i<33; i++){
 			(function(Math){
 				var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
 				x = box.x + (Math.random() * (box.width * .8)) + box.width * .1;

@@ -249,6 +249,7 @@ function triggerEndGame(msg){
 		// allow for last update to occur for spectators
 		g.over = 1;
 	}, 1500);
+	stats.get();
 	setTimeout(function(){
 		new Image('images/FlatWorld60.jpg');
 		var e = document.getElementById('victoryScreen');
@@ -262,7 +263,7 @@ function triggerEndGame(msg){
 					alpha: 0,
 					onComplete: function(){ 
 						$("#diplomacy-ui, #ui2, #resources-ui, #chat-ui, #chat-input, #hud, #worldWrap, #victoryScreen").remove();
-						stats.get();
+						stats.show();
 					}
 				});
 			}

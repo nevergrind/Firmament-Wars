@@ -592,7 +592,7 @@ tbody{
 	margin: 0 !important;
 	padding: 0 !important;
 }
-.energyCost{
+.crystalCost{
 	padding-left: 5px;
 }
 #target-ui{
@@ -688,6 +688,9 @@ tbody{
 }
 .manpower{
 	color: #ffff00;;
+}
+.moves{
+	color: #aa8b4a;
 }
 .food{
 	color: #8d0;

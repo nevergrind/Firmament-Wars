@@ -312,7 +312,7 @@
 				<div id="lobbyGovernmentDescription" class="fw-primary text-center lobbyRelWrap">
 					<div id="lobbyGovName" class='text-primary'>Despotism</div>
 					<div id="lobbyGovPerks">
-						<div>3x starting energy</div>
+						<div>3x starting crystals</div>
 						<div>+50% starting armies</div>
 						<div>Start With a Bunker</div>
 						<div>Free Split Attack</div>
@@ -536,9 +536,9 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>A</span>ttack
 					</div>
-					<div class="col-xs-4 text-right energyCost">
-						<i class="fa fa-bolt production pointer actionBolt"></i>
-						<span id='attackCost'>10</span>
+					<div class="col-xs-4 text-center crystalCost">
+						<i class="glyphicon glyphicon-oil moves pointer actionBolt"></i>
+						<span id='attackCost'>2</span>
 					</div>
 				</div>
 				
@@ -549,22 +549,9 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>S</span>plit Attack
 					</div>
-					<div class="col-xs-4 text-right energyCost">
-						<i class="fa fa-bolt production pointer actionBolt"></i>
-						<span id="splitAttackCost">5</span>
-					</div>
-				</div>
-				
-				<div id="deploy" class="actionButtons row" 
-					data-placement="left" 
-					data-toggle="tooltip" 
-					title="Deploy up to 12 armies">
-					<div class="col-xs-8">
-						<span class='text-hotkey'>D</span>eploy
-					</div>
-					<div class="col-xs-4 text-right energyCost">
-						<i class="fa fa-bolt production pointer actionBolt"></i>
-						<span id='deployCost'>10</cost>
+					<div class="col-xs-4 text-center crystalCost">
+						<i class="glyphicon glyphicon-oil moves pointer actionBolt"></i>
+						<span id="splitAttackCost">1</span>
 					</div>
 				</div>
 				
@@ -575,9 +562,22 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>R</span>ecruit
 					</div>
-					<div class="col-xs-4 text-right energyCost">
-						<i class="fa fa-bolt production pointer actionBolt"></i>
-						<span id="recruitCost">30</span>
+					<div class="col-xs-4 text-center crystalCost">
+						<i class="glyphicon glyphicon-oil moves pointer actionBolt"></i>
+						<span id="recruitCost">4</span>
+					</div>
+				</div>
+				
+				<div id="deploy" class="actionButtons row" 
+					data-placement="left" 
+					data-toggle="tooltip" 
+					title="Deploy up to 12 armies">
+					<div class="col-xs-8">
+						<span class='text-hotkey'>D</span>eploy
+					</div>
+					<div class="col-xs-4 text-center crystalCost">
+						<i class="fa fa-diamond production pointer actionBolt"></i>
+						<span id='deployCost'>20</cost>
 					</div>
 				</div>
 				
@@ -588,8 +588,8 @@
 					<div class="col-xs-8">
 						Fire <span class='text-hotkey'>C</span>annons
 					</div>
-					<div class="col-xs-4 text-right energyCost">
-						<i class="fa fa-bolt production pointer actionBolt"></i>
+					<div class="col-xs-4 text-center crystalCost">
+						<i class="fa fa-diamond production pointer actionBolt"></i>
 						<span id='cannonsCost'>40</span>
 					</div>
 				</div>
@@ -601,8 +601,8 @@
 					<div class="col-xs-8">
 					<span class='text-hotkey'>B</span>uild <span id="buildWord">Bunker</span>
 					</div>
-					<div class="col-xs-4 text-right energyCost">
-						<i class="fa fa-bolt production pointer actionBolt"></i>
+					<div class="col-xs-4 text-center crystalCost">
+						<i class="fa fa-diamond production pointer actionBolt"></i>
 						<span id="buildCost">80</span>
 					</div>
 				</div>
@@ -614,8 +614,8 @@
 					<div class="col-xs-8">
 						Launch <span class='text-hotkey'>M</span>issile
 					</div>
-					<div class="col-xs-4 text-right energyCost">
-						<i class="fa fa-bolt production pointer actionBolt"></i>
+					<div class="col-xs-4 text-center crystalCost">
+						<i class="fa fa-diamond production pointer actionBolt"></i>
 						<span id='missileCost'>60</span>
 					</div>
 				</div>
@@ -625,8 +625,8 @@
 					data-toggle="tooltip" 
 					title="Launch a nuclear weapon at any enemy territory. Kills 80-99% of armies and destroys all structures.">
 					<div class="col-xs-8">Launch <span class='text-hotkey'>N</span>uke</div>
-					<div class="col-xs-4 text-right energyCost">
-						<i class="fa fa-bolt production pointer actionBolt"></i>
+					<div class="col-xs-4 text-center crystalCost">
+						<i class="fa fa-diamond production pointer actionBolt"></i>
 						<span id='nukeCost'>400</span>
 					</div>
 				</div>
@@ -643,8 +643,8 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>G</span>unpowder
 					</div>
-					<div class="col-xs-4 text-right energyCost">
-						<i class="fa fa-bolt production pointer actionBolt"></i>
+					<div class="col-xs-4 text-center crystalCost">
+						<i class="fa fa-diamond production pointer actionBolt"></i>
 						<span id='gunpowderCost'>80</span>
 					</div>
 				</div>
@@ -656,8 +656,8 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>E</span>ngineering
 					</div>
-					<div class="col-xs-4 text-right energyCost">
-						<i class="fa fa-bolt production pointer actionBolt"></i>
+					<div class="col-xs-4 text-center crystalCost">
+						<i class="fa fa-diamond production pointer actionBolt"></i>
 						<span id='engineeringCost'>120</span>
 					</div>
 				</div>
@@ -669,8 +669,8 @@
 					<div class="col-xs-8">
 						Roc<span class='text-hotkey'>k</span>etry
 					</div>
-					<div class="col-xs-4 text-right energyCost">
-						<i class="fa fa-bolt production pointer actionBolt"></i>
+					<div class="col-xs-4 text-center crystalCost">
+						<i class="fa fa-diamond production pointer actionBolt"></i>
 						<span id='rocketryCost'>200</span>
 					</div>
 				</div>
@@ -682,8 +682,8 @@
 					<div class="col-xs-8">
 						A<span class='text-hotkey'>t</span>omic Theory
 					</div>
-					<div class="col-xs-4 text-right energyCost">
-						<i class="fa fa-bolt production pointer actionBolt"></i>
+					<div class="col-xs-4 text-center crystalCost">
+						<i class="fa fa-diamond production pointer actionBolt"></i>
 						<span id='atomicTheoryCost'>250</span>
 					</div>
 				</div>
@@ -695,8 +695,8 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>F</span>uture Tech
 					</div>
-					<div class="col-xs-4 text-right energyCost">
-						<i class="fa fa-bolt production pointer actionBolt"></i>
+					<div class="col-xs-4 text-center crystalCost">
+						<i class="fa fa-diamond production pointer actionBolt"></i>
 						<span id='futureTechCost'>1000</span>
 					</div>
 				</div>
@@ -708,12 +708,27 @@
 		<div id="resources-ui" class="container no-select shadow4 stagBlue">
 			
 			<div class="row">
-				<div class="col-xs-12 no-padding production">
-					<span data-toggle="tooltip" title="Energy is required to perform actions">
-						<i class="fa fa-bolt"></i> Energy 
+				<div class="col-xs-12 no-padding moves">
+					<span data-toggle="tooltip" title="Oil is used to move and recruit armies.">
+						Oil <i class="glyphicon glyphicon-oil"></i>
 					</span>
-					<span data-toggle="tooltip" title="Energy Bonus">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 no-padding">
+					<div class="resourceIndicator">
+						<span id="moves">2</span> 
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-xs-12 no-padding production">
+					<span data-toggle="tooltip" title="Crystals Bonus">
 						+<span id="turnBonus">0</span>%
+					</span>
+					<span data-toggle="tooltip" title="Crystals are used to deploy troops, build structures, and research technology.">
+						Crystals <i class="fa fa-diamond"></i>
 					</span>
 				</div>
 			</div>
@@ -721,7 +736,7 @@
 				<div class="col-xs-12 no-padding">
 					<div class="resourceIndicator">
 						<span id="production">0</span> 
-						<span data-toggle="tooltip" title="Energy per turn">
+						<span data-toggle="tooltip" title="Crystals per turn">
 							(+<span id="sumProduction">0</span>)
 						</span>
 					</div>
@@ -730,11 +745,11 @@
 			
 			<div class="row">
 				<div class="col-xs-12 no-padding food">
-					<span data-toggle="tooltip" title="Food milestones produce armies">
-						<i class="glyphicon glyphicon-apple"></i> Food 
-					</span>
 					<span data-toggle="tooltip" title="Food Bonus">
 						+<span id="foodBonus">0</span>%
+					</span>
+					<span data-toggle="tooltip" title="Food milestones produce armies">
+						Food <i class="glyphicon glyphicon-apple"></i> 
 					</span>
 				</div>
 			</div>
@@ -760,9 +775,11 @@
 			
 			<div class="row">
 				<div class="col-xs-12 no-padding culture">
-					<span data-toggle="tooltip" title="Culture milestones produce special rewards"><i class="fa fa-flag"></i> Culture</span>
 					<span data-toggle="tooltip" title="Culture Bonus">
 						+<span id="cultureBonus">0</span>%
+					</span>
+					<span data-toggle="tooltip" title="Culture milestones produce special rewards">
+						Culture <i class="fa fa-flag"></i>
 					</span>
 				</div>
 			</div>

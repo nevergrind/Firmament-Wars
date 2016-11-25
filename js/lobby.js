@@ -28,7 +28,7 @@ var lobby = {
 		if (government === "Despotism"){
 			str = '<div id="lobbyGovName" class="text-primary">Despotism</div>\
 				<div id="lobbyGovPerks">\
-					<div>3x starting energy</div>\
+					<div>3x starting crystals</div>\
 					<div>+50% starting armies</div>\
 					<div>Start With a Bunker</div>\
 					<div>Free Split Attack</div>\
@@ -45,7 +45,7 @@ var lobby = {
 			str = '<div id="lobbyGovName" class="text-primary">Democracy</div>\
 				<div id="lobbyGovPerks">\
 					<div>Unlimited Army Deployment</div>\
-					<div>+50% energy bonus</div>\
+					<div>+50% crystal bonus</div>\
 					<div>More great people</div>\
 					<div>Start with a wall</div>\
 				</div>';
@@ -61,7 +61,7 @@ var lobby = {
 			str = '<div id="lobbyGovName" class="text-primary">Fascism</div>\
 				<div id="lobbyGovPerks">\
 					<div>Fervor doubles bonus troops</div>\
-					<div>Attack cost reduced 20%</div>\
+					<div>3x Starting Oil</div>\
 					<div>Start with Great General</div>\
 					<div>1/2 cost Deploy</div>\
 				</div>';
@@ -366,6 +366,7 @@ function initResources(d){
 	my.production = d.production;
 	my.culture = d.culture;
 	// current
+	DOM.moves.textContent = d.moves;
 	DOM.production.textContent = d.production;
 	DOM.food.textContent = d.food;
 	DOM.culture.textContent = d.culture;
@@ -387,6 +388,12 @@ function initResources(d){
 	DOM.cultureBonus.textContent = d.cultureBonus;
 	setBars(d);
 }
+function setMoves(d){
+	if (d.moves !== undefined){
+		my.moves = d.moves;
+		document.getElementById('moves').textContent = d.moves;
+	}
+}
 function setProduction(d){
 	TweenMax.to(my, .3, {
 		production: d.production,
@@ -398,6 +405,9 @@ function setProduction(d){
 }
 function setResources(d){
 	// console.info(d);
+	if (d.moves !== undefined){
+		setMoves(d);
+	}
 	if (d.production !== undefined){
 		setProduction(d);
 	}
@@ -592,13 +602,12 @@ function loadGameState(){
 			} else if (my.government === 'Democracy'){
 				my.maxDeployment = 254;
 			} else if (my.government === 'Fundamentalism'){
-				document.getElementById('recruitCost').textContent = 15;
-				my.recruitCost = 15;
+				my.recruitCost = 2;
+				document.getElementById('recruitCost').textContent = my.recruitCost;
 			} else if (my.government === 'Fascism'){
-				document.getElementById('attackCost').textContent = 8;
-				my.attackCost = 8;
-				document.getElementById('deployCost').textContent = 5;
-				my.deployCost = 5;
+				document.getElementById('moves').textContent = 12;
+				my.deployCost = 10;
+				document.getElementById('deployCost').textContent = my.deployCost;
 			} else if (my.government === 'Communism'){
 				// research
 				DOM.gunpowderCost.textContent = 40;

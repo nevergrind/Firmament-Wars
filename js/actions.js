@@ -3,8 +3,8 @@ function Target(o){
 	if (o === undefined){
 		o = {};
 	}
-	this.cost = o.cost ? o.cost : 
-		my.government === "Fascism" ? 8 : 10;
+	this.cost = 2;
+	this.resource = 'oil';
 	this.minimum = o.minimum !== undefined ? o.minimum : 2;
 	this.attackName = o.attackName ? o.attackName : 'attack';
 	this.splitAttack = o.splitAttack ? o.splitAttack : false;
@@ -14,7 +14,7 @@ function Target(o){
 var action = {
 	error: function(msg){
 		if (msg === undefined){
-			msg = "Not enough energy!";
+			msg = "Not enough crystals!";
 		}
 		Msg(msg, 1.5);
 		my.clearHud();
@@ -33,8 +33,8 @@ var action = {
 			showTarget(document.getElementById('land' + my.tgt));
 			return;
 		}
-		if (my.production < o.cost){
-			action.error();
+		if (my.moves < o.cost){
+			action.error('Not enough oil!');
 			return;
 		}
 		if (game.tiles[my.tgt].units < o.minimum){
@@ -77,10 +77,9 @@ var action = {
 			my.clearHud();
 			return;
 		}
-		if ((my.production < my.attackCost && !my.splitAttack) ||
-			(my.production < my.splitAttackCost && my.splitAttack)
-		){
-			action.error();
+		if ((my.moves < 2 && !my.splitAttack) ||
+			(my.moves < 1 && my.splitAttack) ){
+			action.error('Not enough oil!');
 			return;
 		}
 		g.lock(true);
@@ -110,8 +109,8 @@ var action = {
 				game.chat(data.rewardMsg);
 				setResources(data);
 			}
-			if (data.production !== undefined){
-				setProduction(data);
+			if (data.moves !== undefined){
+				setMoves(data); 
 			}
 			// reset target if lost
 			if (!data.victory){
@@ -119,9 +118,10 @@ var action = {
 			}
 			// process barbarian reward messages
 			game.reportMilestones(data);
-		}).fail(function(e){
+		}).fail(function(data){
+			console.info('attackTile', data);
 			audio.play('error');
-			Msg('You can only attack adjacent territories.', 1.5);
+			Msg(data.statusText, 1.5);
 			// set target attacker
 			showTarget(e1);
 		}).always(function(){
@@ -183,8 +183,8 @@ var action = {
 		if (t.player !== my.player){
 			return;
 		}
-		if (my.production < my.recruitCost){
-			action.error();
+		if (my.moves < my.recruitCost){
+			action.error('Not enough oil!');
 			return;
 		}
 		if (t.units <= 254){
@@ -194,9 +194,9 @@ var action = {
 					target: my.tgt
 				}
 			}).done(function(data) {
-				console.info("recruit: ", data.production, data);
-				if (data.production !== undefined){
-					setProduction(data);
+				console.info("recruit: ", data.moves, data);
+				if (data.moves !== undefined){
+					setMoves(data);
 				}
 			
 				var deployedUnits = 3 + ~~(my.cultureBonus / 30);
@@ -492,7 +492,8 @@ $("#gameWrap").on("mousedown", '#attack', function(e){
 }).on('mousedown', '#splitAttack', function(e){
 	if (e.which === 1){
 		var o = new Target({
-			cost: 3,
+			cost: 1,
+			resource: 'oil',
 			splitAttack: true
 		});
 		action.target(o);

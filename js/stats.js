@@ -1,5 +1,42 @@
 // stats.js 
 // scoreboard data values
+
+(function(){
+	// attempt auto login
+	var isLoggedIn = $("#titleMenu").length;
+	if (!isLoggedIn){
+		var email = localStorage.getItem('email');
+		var token = localStorage.getItem('token');
+		if (email){
+			// attempt persistent login
+			if (token){
+				$.ajax({
+					type: 'POST',
+					url: '/php/master1.php',
+					data: {
+						run: "authenticate",
+						email: email,
+						token: token
+					}
+				}).done(function(data){
+					location.reload();
+				});
+			} else {
+				$.ajax({
+					type: 'POST',
+					url: '/php/master1.php',
+					data: {
+						run: "getToken",
+						email: email
+					}
+				}).done(function(data){
+					token = data;
+				});
+			}
+		}
+	}
+})();
+
 var stats = {
 	init: function(data){
 		var flag = my.flag === 'Default.jpg' ? 'Player'+ my.player +'.jpg' : my.flag;
@@ -35,7 +72,6 @@ var stats = {
 				</div>\
 			</div>\
 		</div>';
-		document.getElementById('statWrap').style.display = 'block';
 		document.getElementById('statWrap').innerHTML = str;
 		stats.events();
 		TweenMax.to("#statWorld", 300, {
@@ -49,13 +85,15 @@ var stats = {
 			ease: Linear.easeNone
 		});
 		stats.setLeaderValues();
+	},
+	show: function(){
 		stats.setView('statOverview');
 		if (g.victory){
 			audio.play('victory');
 		} else {
 			audio.play('defeat');
 		}
-			
+		document.getElementById('statWrap').style.display = 'block';
 		TweenMax.to('#gameWrap', .5, {
 			startAt: {
 				alpha: 0
@@ -418,7 +456,7 @@ var stats = {
 	},
 	statResources: function(){
 		// head
-		var str = stats.playerHead(['Energy', 'Food', 'Culture']);
+		var str = stats.playerHead(['Oil', 'Crystals', 'Food', 'Culture']);
 		// player rows
 		for (var i=1; i<=8; i++){
 			var d = stats.data[i];
@@ -427,9 +465,14 @@ var stats = {
 				// player data exists
 				var a = [{},
 					{
-						id: 'p'+ i +'-energy',
-						max: d.energy,
-						key: 'energy'
+						id: 'p'+ i +'-moves',
+						max: d.moves,
+						key: 'moves'
+					},
+					{
+						id: 'p'+ i +'-crystals',
+						max: d.crystals,
+						key: 'crystals'
 					},
 					{
 						id: 'p'+ i +'-food',
@@ -447,8 +490,14 @@ var stats = {
 					stats.playerCell(p, i) +
 					'<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
-							<div id="p'+ i +'-energy-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
-							<div id="p'+ i +'-energy" class="statVal">0</div>\
+							<div id="p'+ i +'-moves-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+							<div id="p'+ i +'-moves" class="statVal">0</div>\
+						</div>\
+					</td>\
+					<td class="statTD">\
+						<div class="statBar pb'+ i +'">\
+							<div id="p'+ i +'-crystals-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+							<div id="p'+ i +'-crystals" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
@@ -551,6 +600,6 @@ var stats = {
 	},
 	resourcesTotal: function(i){
 		var x = stats.data[i];
-		return ~~( (x.food / 100) + (x.culture / 250) + (x.energy / 100) );
+		return ~~( (x.moves / 50) + (x.food / 100) + (x.culture / 250) + (x.crystals / 100) );
 	}
 }
