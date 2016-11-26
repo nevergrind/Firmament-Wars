@@ -727,8 +727,7 @@ function loadGameState(){
 				animate.initMapBars(i);
 			}
 			var str = '<div id="diploHead">\
-				<span id="options" class="pointer options">Options</span> |\
-				<span id="surrender" class="pointer">Surrender</span>\
+				<span id="options" class="pointer options">Options</span>&nbsp;|&nbsp;\<span id="surrender" class="pointer">Surrender</span><span id="exitSpectate" class="pointer">Exit Game</span>\
 			</div><hr class="fancyhr">';
 			// init diplomacyPlayers
 			for (var i=0, len=game.player.length; i<len; i++){

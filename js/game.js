@@ -190,7 +190,6 @@ function gameDefeat(){
 		type: "GET",
 		url: "php/gameDefeat.php" 
 	}).done(function(data){
-		console.info('defeat: ', data);
 		if (data.ceaseFire){
 			var msg = 
 			'<p>Armistice!</p>\
@@ -205,11 +204,11 @@ function gameDefeat(){
 			<div id="endWar" class="endBtn">\
 				<div class="modalBtnChild">Concede Defeat</div>\
 			</div>';
-			if (!g.done){
-				msg += '<div id="spectate" class="endBtn">\
-					<div class="modalBtnChild">Spectate</div>\
-				</div>';
-			}
+		}
+		if (!g.done){
+			msg += '<div id="spectate" class="endBtn">\
+				<div class="modalBtnChild">Spectate</div>\
+			</div>';
 		}
 		audio.play('shotgun2');
 		triggerEndGame(msg);
@@ -280,10 +279,19 @@ function triggerEndGame(msg){
 		$("#ceaseFire").on('click', function(){
 			location.reload();
 		});
-		$("#spectate").on('mousedown', function(e){
-			if (e.which === 1){
-				$("#victoryScreen, #ui2, #resources-ui").remove();
-			}
+		$("#spectate").on('click', function(e){
+			$("#victoryScreen, #ui2, #resources-ui").remove();
+			document.getElementById('surrender').style.display = "none";
+			document.getElementById('exitSpectate').style.display = "inline";
+		});
+		$("#exitSpectate").on('click', function(){
+			stats.get();
+			TweenMax.to('#diplomacy-ui', 1, {
+				alpha: 0,
+				onComplete: function(){
+					stats.show();
+				}
+			});
 		});
 	}, 2500);
 }

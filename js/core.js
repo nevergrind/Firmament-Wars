@@ -3,6 +3,10 @@ $.ajaxSetup({
 	type: 'POST',
 	timeout: 5000
 });
+if (location.host !== 'localhost'){
+	console.log = function(){};
+	console.info = function(){};
+}
 TweenMax.defaultEase = Quad.easeOut;
 var g = {
 	defaultTitle: 'Firmament Wars | Multiplayer Grand Strategy Warfare',
@@ -315,7 +319,7 @@ var game = {
 			$("#diplomacyPlayer" + i).removeClass('alive');
 			var playerLen = $(".alive").length;
 			if (playerLen < 2){
-				// game done
+				// game done - used for spectate option
 				g.done = 1;
 			}
 			// game over?
@@ -956,7 +960,6 @@ function surrenderMenu(){
 function surrender(){
 	audio.play('click');
 	document.getElementById('surrenderScreen').style.display = 'none';
-	g.done = 1;
 	$.ajax({
 		url: 'php/surrender.php',
 	});
