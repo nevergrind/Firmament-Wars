@@ -188,23 +188,31 @@ function gameDefeat(){
 	new Audio('sound/shotgun2.mp3');
 	$.ajax({
 		type: "GET",
-		url: "php/gameDefeat.php"
+		url: "php/gameDefeat.php" 
 	}).done(function(data){
-		if (data.gameDone){
+		console.info('defeat: ', data);
+		if (data.ceaseFire){
 			var msg = 
-			'<p>Defeat!</p>'+
-			'<div>Your campaign for world domination has failed!</div>'+
-			'<div id="endWar" class="endBtn">'+
-				'<div class="modalBtnChild">Concede Defeat</div>'+
-			'</div>';
+			'<p>Armistice!</p>\
+			<div>The campaign has been suspended!</div>\
+			<div id="ceaseFire" class="endBtn">\
+				<div class="modalBtnChild">Cease Fire</div>\
+			</div>';
+		} else if (data.gameDone){
+			var msg = 
+			'<p>Defeat!</p>\
+			<div>Your campaign for world domination has failed!</div>\
+			<div id="endWar" class="endBtn">\
+				<div class="modalBtnChild">Concede Defeat</div>\
+			</div>';
 			if (!g.done){
-				msg += '<div id="spectate" class="endBtn">'+
-					'<div class="modalBtnChild">Spectate</div>'+
-				'</div>';
+				msg += '<div id="spectate" class="endBtn">\
+					<div class="modalBtnChild">Spectate</div>\
+				</div>';
 			}
-			triggerEndGame(msg);
-			audio.play('shotgun2');
 		}
+		audio.play('shotgun2');
+		triggerEndGame(msg);
 	}).fail(function(data){
 		serverError(data);
 	});
@@ -218,21 +226,22 @@ function gameVictory(){
 		type: "GET",
 		url: "php/gameVictory.php"
 	}).done(function(data){
+		console.info('defeat: ', data);
 		if (data.ceaseFire){
 			var msg = 
-			'<p>Armistice!</p>'+
-			'<div>The campaign has been suspended!</div>'+
-			'<div id="endWar" class="endBtn">'+
-				'<div class="modalBtnChild">Cease Fire</div>'+
-			'</div>';
+			'<p>Armistice!</p>\
+			<div>The campaign has been suspended!</div>\
+			<div id="ceaseFire" class="endBtn">\
+				<div class="modalBtnChild">Cease Fire</div>\
+			</div>';
 			audio.play('shotgun2');
 		} else if (data.gameDone){
 			var msg = 
-			'<p>Congratulations!</p>'+
-			'<div>Your campaign for global domination has succeeded!</div>'+
-			'<div id="endWar" class="endBtn">'+
-				'<div class="modalBtnChild">Victory</div>'+
-			'</div>';
+			'<p>Congratulations!</p>\
+			<div>Your campaign for global domination has succeeded!</div>\
+			<div id="endWar" class="endBtn">\
+				<div class="modalBtnChild">Victory</div>\
+			</div>';
 			audio.play('mine4');
 			g.victory = true;
 		}
@@ -250,8 +259,8 @@ function triggerEndGame(msg){
 		g.over = 1;
 	}, 1500);
 	stats.get();
+	new Image('images/FlatWorld60.jpg');
 	setTimeout(function(){
-		new Image('images/FlatWorld60.jpg');
 		var e = document.getElementById('victoryScreen');
 		e.innerHTML = msg;
 		e.style.display = 'block';
@@ -267,6 +276,9 @@ function triggerEndGame(msg){
 					}
 				});
 			}
+		});
+		$("#ceaseFire").on('click', function(){
+			location.reload();
 		});
 		$("#spectate").on('mousedown', function(e){
 			if (e.which === 1){

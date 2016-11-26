@@ -284,7 +284,7 @@ var events = {
 			}
 		});
 		$("#diplomacy-ui").on('click', '#surrender', function(e){
-			exitGame();
+			surrenderMenu(); 
 		});
 		$("#createGameWrap").on('click', '.mapSelect', function(e){
 			var x = $(this).text();
@@ -312,6 +312,15 @@ var events = {
 			var x = document.getElementById('bgamb2');
 			x.currentTime = 0;
 			x.play();
+		});
+	})(),
+	game: (function(){
+		$("#cancelSurrenderButton").on('click', function(){
+			audio.play('click');
+			document.getElementById('surrenderScreen').style.display = 'none';
+		});
+		$("#surrenderButton").on('click', function(){
+			surrender();
 		});
 	})()
 }

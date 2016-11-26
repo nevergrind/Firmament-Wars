@@ -551,7 +551,7 @@ var title = {
 					max: max
 				}
 			}).done(function(data) {
-				console.info(data);
+				// console.info(data);
 				socket.removePlayer(my.account);
 				my.player = data.player;
 				game.id = data.gameId;

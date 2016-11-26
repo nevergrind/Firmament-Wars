@@ -40,7 +40,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
 	<script>
-		var version = "0-0-21";
+		var version = "0-0-23";
 	</script>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -571,7 +571,7 @@
 				<div id="deploy" class="actionButtons row" 
 					data-placement="left" 
 					data-toggle="tooltip" 
-					title="Deploy up to 12 armies">
+					title="Deploy up to 24 armies">
 					<div class="col-xs-8">
 						<span class='text-hotkey'>D</span>eploy
 					</div>
@@ -599,7 +599,7 @@
 					data-toggle="tooltip" 
 					title="Bunkers upgrade the structural defense of a territory">
 					<div class="col-xs-8">
-					<span class='text-hotkey'>B</span>uild <span id="buildWord">Bunker</span>
+						<span class='text-hotkey'>B</span>uild <span id="buildWord">Bunker</span>
 					</div>
 					<div class="col-xs-4 text-center crystalCost">
 						<i class="fa fa-diamond production pointer actionBolt"></i>
@@ -718,6 +718,9 @@
 				<div class="col-xs-12 no-padding">
 					<div class="resourceIndicator">
 						<span id="moves">2</span> 
+						<span data-toggle="tooltip" title="Oil per turn">
+							(+<span id="sumMoves">4</span>)
+						</span>
 					</div>
 				</div>
 			</div>
@@ -748,7 +751,7 @@
 					<span data-toggle="tooltip" title="Food Bonus">
 						+<span id="foodBonus">0</span>%
 					</span>
-					<span data-toggle="tooltip" title="Food milestones produce armies">
+					<span data-toggle="tooltip" title="Food milestones produce armies and increase crystal production">
 						Food <i class="glyphicon glyphicon-apple"></i> 
 					</span>
 				</div>
@@ -818,6 +821,17 @@
 		<div id="worldWrap"></div>
 		
 		<div id="hud" class="shadow4">Select Target</div>
+		
+		<div id="surrenderScreen" class="fw-primary fw-text no-select">
+			<p>Surrender? Are You Sure?</p>
+			<div id="cancelSurrenderButton" class="endBtn">
+				<div class="modalBtnChild">Cancel</div>
+			</div>
+			<div id="surrenderButton" class="endBtn">
+				<div class="modalBtnChild">Surrender</div>
+			</div>
+		</div>
+		
 		<div id="victoryScreen" class="fw-primary fw-text no-select"></div>
 		
 		<div id="statWrap" class="fw-text"></div>

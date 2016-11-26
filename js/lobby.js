@@ -256,7 +256,6 @@ var lobby = {
 	},
 	hostLeft: function(){
 		Msg("The host has left the lobby.");
-		console.info("HOST LEFT");
 		setTimeout(function(){
 			exitGame(true);
 		}, 1000);
@@ -265,7 +264,7 @@ var lobby = {
 		var i = data.player;
 		if (data.account !== undefined){
 			// add
-			console.info("ADD PLAYER: ", data);
+			// console.info("ADD PLAYER: ", data);
 			document.getElementById("lobbyRow" + i).style.display = 'block';
 			// different player account
 			document.getElementById("lobbyAccount" + i).innerHTML = data.account;
@@ -391,26 +390,27 @@ function initResources(d){
 function setMoves(d){
 	if (d.moves !== undefined){
 		my.moves = d.moves;
-		document.getElementById('moves').textContent = d.moves;
+		DOM.moves.textContent = d.moves;
+		if (d.sumMoves){
+			DOM.sumMoves.textContent = d.sumMoves;
+		}
 	}
 }
 function setProduction(d){
-	TweenMax.to(my, .3, {
-		production: d.production,
-		ease: Quad.easeIn,
-		onUpdate: function(){
-			DOM.production.textContent = ~~my.production;
-		}
-	});
+	if (d.production !== undefined){
+		TweenMax.to(my, .3, {
+			production: d.production,
+			ease: Quad.easeIn,
+			onUpdate: function(){
+				DOM.production.textContent = ~~my.production;
+			}
+		});
+	}
 }
 function setResources(d){
-	// console.info(d);
-	if (d.moves !== undefined){
-		setMoves(d);
-	}
-	if (d.production !== undefined){
-		setProduction(d);
-	}
+	//console.info(d);
+	setMoves(d);
+	setProduction(d);
 	TweenMax.to(my, .3, {
 		food: d.food === undefined ? my.food : d.food,
 		culture: d.culture === undefined ? my.culture : d.culture,
@@ -709,6 +709,7 @@ function loadGameState(){
 				// add star for capital to map
 				if (game.tiles[i].capital){
 					var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+					svg.id = 'mapCapital' + i;
 					svg.setAttributeNS(null, 'height', 30);
 					svg.setAttributeNS(null, 'width', 30);
 					svg.setAttributeNS(null,"x",x - 15);
@@ -866,7 +867,6 @@ function startGame(){
 			type: "GET",
 			url: "php/startGame.php"
 		}).done(function(data){
-			console.info('startGame: ', data);
 			g.unlock();
 		}).fail(function(data){
 			serverError(data);

@@ -42,7 +42,7 @@ var stats = {
 		var flag = my.flag === 'Default.jpg' ? 'Player'+ my.player +'.jpg' : my.flag;
 		var str = '<img id="statWorld" src="images/FlatWorld60.jpg">\
 		<div id="statResult" class="no-select">\
-			Victory!\
+			<span id="statGameResult">Defeat</span>!\
 			<img class="statResultFlag pull-left" src="images/flags/'+ flag +'">\
 			<img class="statResultFlag pull-right" src="images/flags/'+ flag +'">\
 		</div>\
@@ -90,6 +90,7 @@ var stats = {
 		stats.setView('statOverview');
 		if (g.victory){
 			audio.play('victory');
+			document.getElementById('statGameResult').textContent = "Victory";
 		} else {
 			audio.play('defeat');
 		}
@@ -215,31 +216,26 @@ var stats = {
 		// player rows
 		var animate = [];
 		for (var i=1; i<=8; i++){
-			var p = game.player[i];
+			var d = stats.data[i];
 			if (stats.data[i] !== undefined){
 				// player data exists
-				var a = [{},
-					{
+				var a = [{}, {
 						id: 'p'+ i +'-units',
 						max: stats.unitsTotal(i),
 						key: 'unitsTotal'
-					},
-					{
+					}, {
 						id: 'p'+ i +'-structures',
 						max: stats.structuresTotal(i),
 						key: 'structuresTotal'
-					},
-					{
+					}, {
 						id: 'p'+ i +'-weapons',
 						max: stats.weaponsTotal(i),
 						key: 'weaponsTotal'
-					},
-					{
+					}, {
 						id: 'p'+ i +'-resources',
 						max: stats.resourcesTotal(i),
 						key: 'resourcesTotal'
-					},
-					{
+					}, {
 						id: 'p'+ i +'-total',
 						max: stats.overviewTotal(i),
 						key: 'overviewTotal'
@@ -247,7 +243,7 @@ var stats = {
 				]
 				stats.animate(a, 1.5);
 				str += '<tr class="stagBlue statRow">' +
-					stats.playerCell(p, i) +
+					stats.playerCell(d, i) +
 					'<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
 							<div id="p'+ i +'-units-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
@@ -290,26 +286,21 @@ var stats = {
 		// player rows
 		for (var i=1; i<=8; i++){
 			var d = stats.data[i];
-			var p = game.player[i];
 			if (d !== undefined){
 				// player data exists
-				var a = [{},
-					{
+				var a = [{}, {
 						id: 'p'+ i +'-earned',
 						max: d.earned,
 						key: 'earned'
-					},
-					{
+					}, {
 						id: 'p'+ i +'-deployed',
 						max: d.deployed,
 						key: 'deployed'
-					},
-					{
+					}, {
 						id: 'p'+ i +'-killed',
 						max: d.killed,
 						key: 'killed'
-					},
-					{
+					}, {
 						id: 'p'+ i +'-lost',
 						max: d.lost,
 						key: 'lost'
@@ -317,7 +308,7 @@ var stats = {
 				]
 				stats.animate(a, 1.5);
 				str += '<tr class="stagBlue statRow">' +
-					stats.playerCell(p, i) +
+					stats.playerCell(d, i) +
 					'<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
 							<div id="p'+ i +'-earned-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
@@ -354,21 +345,17 @@ var stats = {
 		// player rows
 		for (var i=1; i<=8; i++){
 			var d = stats.data[i];
-			var p = game.player[i];
 			if (d !== undefined){
 				// player data exists
-				var a = [{},
-					{
+				var a = [{}, {
 						id: 'p'+ i +'-bunkers',
 						max: d.bunkers,
 						key: 'bunkers'
-					},
-					{
+					}, {
 						id: 'p'+ i +'-walls',
 						max: d.walls,
 						key: 'walls'
-					},
-					{
+					}, {
 						id: 'p'+ i +'-fortresses',
 						max: d.fortresses,
 						key: 'fortresses'
@@ -376,7 +363,7 @@ var stats = {
 				]
 				stats.animate(a, 1);
 				str += '<tr class="stagBlue statRow">' +
-					stats.playerCell(p, i) +
+					stats.playerCell(d, i) +
 					'<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
 							<div id="p'+ i +'-bunkers-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
@@ -407,21 +394,17 @@ var stats = {
 		// player rows
 		for (var i=1; i<=8; i++){
 			var d = stats.data[i];
-			var p = game.player[i];
 			if (d !== undefined){
 				// player data exists
-				var a = [{},
-					{
+				var a = [{}, {
 						id: 'p'+ i +'-cannons',
 						max: d.cannons,
 						key: 'cannons'
-					},
-					{
+					}, {
 						id: 'p'+ i +'-missiles',
 						max: d.missiles,
 						key: 'missiles'
-					},
-					{
+					}, {
 						id: 'p'+ i +'-nukes',
 						max: d.nukes,
 						key: 'nukes'
@@ -429,7 +412,7 @@ var stats = {
 				]
 				stats.animate(a, 1);
 				str += '<tr class="stagBlue statRow">'+
-					stats.playerCell(p, i) +
+					stats.playerCell(d, i) +
 					'<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
 							<div id="p'+ i +'-cannons-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
@@ -460,26 +443,21 @@ var stats = {
 		// player rows
 		for (var i=1; i<=8; i++){
 			var d = stats.data[i];
-			var p = game.player[i];
 			if (d !== undefined){
 				// player data exists
-				var a = [{},
-					{
+				var a = [{}, {
 						id: 'p'+ i +'-moves',
 						max: d.moves,
 						key: 'moves'
-					},
-					{
+					}, {
 						id: 'p'+ i +'-crystals',
 						max: d.crystals,
 						key: 'crystals'
-					},
-					{
+					}, {
 						id: 'p'+ i +'-food',
 						max: d.food,
 						key: 'food'
-					},
-					{
+					}, {
 						id: 'p'+ i +'-culture',
 						max: d.culture,
 						key: 'culture'
@@ -487,7 +465,7 @@ var stats = {
 				]
 				stats.animate(a, 1.5);
 				str += '<tr class="stagBlue statRow">' +
-					stats.playerCell(p, i) +
+					stats.playerCell(d, i) +
 					'<td class="statTD">\
 						<div class="statBar pb'+ i +'">\
 							<div id="p'+ i +'-moves-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
@@ -600,6 +578,6 @@ var stats = {
 	},
 	resourcesTotal: function(i){
 		var x = stats.data[i];
-		return ~~( (x.moves / 50) + (x.food / 100) + (x.culture / 250) + (x.crystals / 100) );
+		return ~~( (x.food / 20) + (x.culture / 60) + (x.crystals / 20) );
 	}
 }

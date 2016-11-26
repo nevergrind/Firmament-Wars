@@ -4,7 +4,6 @@ function Target(o){
 		o = {};
 	}
 	this.cost = 2;
-	this.resource = 'oil';
 	this.minimum = o.minimum !== undefined ? o.minimum : 2;
 	this.attackName = o.attackName ? o.attackName : 'attack';
 	this.splitAttack = o.splitAttack ? o.splitAttack : false;
@@ -22,7 +21,7 @@ var action = {
 	},
 	target: function(o){
 		my.targetData = o;
-		console.info(my.attackOn, my.tgt, game.tiles[my.tgt].player, my.player);
+		// console.info(my.attackOn, my.tgt, game.tiles[my.tgt].player, my.player);
 		if (game.tiles[my.tgt].player !== my.player){
 			return;
 		}
@@ -95,7 +94,7 @@ var action = {
 				split: my.splitAttack ? 1 : 0
 			}
 		}).done(function(data){
-			console.info('attackTile', data);
+			// console.info('attackTile', data);
 			// animate attack
 			if (game.tiles[defender].player !== my.player){
 				if (!game.tiles[defender].units){
@@ -109,9 +108,7 @@ var action = {
 				game.chat(data.rewardMsg);
 				setResources(data);
 			}
-			if (data.moves !== undefined){
-				setMoves(data); 
-			}
+			setMoves(data); 
 			// reset target if lost
 			if (!data.victory){
 				showTarget(e1);
@@ -195,9 +192,7 @@ var action = {
 				}
 			}).done(function(data) {
 				console.info("recruit: ", data.moves, data);
-				if (data.moves !== undefined){
-					setMoves(data);
-				}
+				setMoves(data);
 			
 				var deployedUnits = 3 + ~~(my.cultureBonus / 30);
 				
@@ -236,10 +231,7 @@ var action = {
 				target: my.tgt
 			}
 		}).done(function(data) {
-			console.info("upgradeTileDefense: ", data);
-			if (data.production !== undefined){
-				setProduction(data);
-			}
+			setProduction(data);
 			if (oldTgt === my.tgt){
 				game.tiles[my.tgt].defense++;
 				showTarget(document.getElementById('land' + my.tgt));
@@ -282,9 +274,7 @@ var action = {
 		}).done(function(data) {
 			console.info('fireCannons', data);
 			animate.cannons(defender, true);
-			if (data.production !== undefined){
-				setProduction(data);
-			}
+			setProduction(data);
 		}).fail(function(e){
 			console.info('error: ', e);
 			audio.play('error');
@@ -396,9 +386,7 @@ var action = {
 				});
 			}, 6000);
 			console.info('launchNuke', data);
-			if (data.production !== undefined){
-				setProduction(data);
-			}
+			setProduction(data);
 		}).fail(function(e){
 			console.info('error: ', e);
 			audio.play('error');
@@ -493,7 +481,6 @@ $("#gameWrap").on("mousedown", '#attack', function(e){
 	if (e.which === 1){
 		var o = new Target({
 			cost: 1,
-			resource: 'oil',
 			splitAttack: true
 		});
 		action.target(o);

@@ -317,13 +317,14 @@ var game = {
 			if (playerLen < 2){
 				// game done
 				g.done = 1;
-				// game over?
-				if (!g.over){
-					if (i === my.player){
-						gameDefeat();
-					} else if (game.alivePlayers() === 1){
-						gameVictory();
-					}
+			}
+			// game over?
+			console.info('eliminate: ', my.player, i);
+			if (!g.over){
+				if (i === my.player){
+					gameDefeat();
+				} else if (game.alivePlayers() === 1){
+					gameVictory();
 				}
 			}
 			// remove
@@ -333,6 +334,31 @@ var game = {
 					$("#diplomacyPlayer" + i).css('display', 'none');
 				}
 			});
+		}
+		game.removePlayer(i);
+	},
+	removePlayer: function(p){
+		game.tiles[p].account = '';
+		game.tiles[p].nation = '';
+		game.tiles[p].flag = '';
+		for (var i=0, len=game.tiles.length; i<len; i++){
+			if (game.tiles[i].player === p){
+				if (game.tiles[i].capital){
+					var e1 = document.getElementById('mapCapital' + i);
+					if (e1 !== null){
+						e1.remove();
+					}
+				}
+				game.tiles[i].capital = false;
+				game.tiles[i].account = '';
+				game.tiles[i].defense = '';
+				game.tiles[i].flag = '';
+				game.tiles[i].nation = '';
+				game.tiles[i].player = 0;
+				game.tiles[i].units = 0;
+				game.tiles[i].tile = i;
+				game.updateTile(game.tiles[i]);
+			}
 		}
 	},
 	startGameState: function(){
@@ -420,14 +446,6 @@ var game = {
 	updateTile: function(d){
 		var i = d.tile,
 			p = d.player;
-		// check player value
-		if (!game.tiles[i].units){
-			// set text visible if uninhabited
-			// this confuses me still...
-			TweenMax.set(document.getElementById('unit' + i), {
-				visibility: 'visible'
-			});
-		}
 		// only update client data
 		game.tiles[i].player = p;
 		game.tiles[i].account = game.player[p].account;
@@ -454,12 +472,25 @@ var game = {
 				game.tiles[i].units = d.units;
 				setTileUnits(i, unitColor);
 				if (p){
-					TweenMax.to(".mapBars" + i, 1, {
+					TweenMax.to(".mapBars" + i, .5, {
 						opacity: 1,
 						ease: Linear.easeNone
 					});
 				}
 			}
+			// set text visible
+			TweenMax.set(document.getElementById('unit' + i), {
+				visibility: 'visible'
+			});
+		} else {
+			game.tiles[i].units = 0;
+			TweenMax.to(".mapBars" + i, .5, {
+				opacity: 0,
+				ease: Quad.easeIn
+			});
+			TweenMax.set(document.getElementById('unit' + i), {
+				visibility: 'hidden'
+			});
 		}
 		
 		if (my.tgt === i){
@@ -474,7 +505,7 @@ var game = {
 				type: "GET",
 				url: "php/updateResources.php"
 			}).done(function(data){
-				console.info('resource: ', data);
+				// console.info('resource: ', data);
 				setResources(data);
 				game.reportMilestones(data);
 			}).fail(function(data){
@@ -666,6 +697,7 @@ var DOM;
 function initDom(){
 	var d = document;
 	DOM = {
+		sumMoves: d.getElementById('sumMoves'),
 		moves: d.getElementById('moves'),
 		gameWrap: d.getElementById('gameWrap'),
 		gameTableBody: d.getElementById('gameTableBody'),
@@ -745,7 +777,7 @@ var color = [
 	"#02063a",
 	"#bb0000",
 	"#0077ff",
-	"#b0b000",
+	"#a5a500",
 	"#006000",
 	"#b06000",
 	"#33ddff",
@@ -916,6 +948,19 @@ function exitGame(bypass){
 			location.reload();
 		});
 	}
+}
+function surrenderMenu(){
+	audio.play('click');
+	document.getElementById('surrenderScreen').style.display = 'block';
+}
+function surrender(){
+	audio.play('click');
+	document.getElementById('surrenderScreen').style.display = 'none';
+	g.done = 1;
+	$.ajax({
+		url: 'php/surrender.php',
+	});
+	
 }
 
 function serverError(data){
