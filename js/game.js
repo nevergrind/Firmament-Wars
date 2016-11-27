@@ -258,7 +258,7 @@ function triggerEndGame(msg){
 		g.over = 1;
 	}, 1500);
 	stats.get();
-	new Image('images/FlatWorld60.jpg');
+	new Image('images/FlatWorld90.jpg');
 	setTimeout(function(){
 		var e = document.getElementById('victoryScreen');
 		e.innerHTML = msg;

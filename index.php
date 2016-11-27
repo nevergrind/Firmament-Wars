@@ -44,6 +44,7 @@
 	</script>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-21">
 	<link rel="shortcut icon" href="/images1/favicon.png">
@@ -280,7 +281,7 @@
 	
 		<div id="joinGameLobby" class="shadow4">
 		
-			<img id="worldTitle" src="images/FlatWorld60.jpg">
+			<img id="worldTitle" src="images/FlatWorld90.jpg">
 		
 			<div id="lobbyLeftCol">
 			

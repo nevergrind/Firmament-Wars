@@ -7,7 +7,7 @@
 ::-moz-focus-inner{border:0;}
 :focus{outline:none;}
 html{
-	font-family: Arial, sans-serif;
+	font-family: Verdana, Arial, sans-serif;
 	-ms-touch-action: manipulation;
 	touch-action: manipulation;
 	overflow: hidden;
@@ -19,6 +19,7 @@ input{
 	background: #059;
 }
 body{
+	font-family: Verdana, Arial, sans-serif;
 	font-size: 1.5em;
 	position: absolute;
 	opacity: 0;
@@ -57,8 +58,7 @@ h1,h2{
 	padding:0;
 }
 .header{
-	font-family: Times New Roman, serif;
-	font-variant: small-caps;
+	font-family: Cinzel, Palatino Linotype, serif;
 	letter-spacing: .2em;
 	color: #aef;
     background: -webkit-radial-gradient(center center, farthest-side, rgba(32,64,124,.5) 0%, rgba(0,0,0,.1) 100%);
@@ -248,7 +248,7 @@ a:hover{
 	padding: 2%;
 }
 #chat-ui{
-	font-family: Arial, sans-serif;
+	font-family: Verdana, Arial, sans-serif;
 	display: table;
 	table-layout:fixed;
 	position: absolute;
@@ -388,7 +388,7 @@ tbody{
 	bottom: 3%;
 	width: 53.8%;
 	left: .5%;
-	font-family: Arial, sans-serif;
+	font-family: Verdana, Arial, sans-serif;
 	color: #bef;
 	text-shadow: 2px 2px 0 #357;
 	border-radius: 0;
@@ -403,7 +403,7 @@ tbody{
 	color: #fff;
 }
 .small-caps{
-	font-variant: small-caps;
+	font-family: Cinzel, Palatino Linotype, serif;
 }
 #title-chat-input{
 	padding: 0 2%;
@@ -423,14 +423,14 @@ tbody{
 #titlePlayerCountWrap{
 	float: right;
 	color: #aef;
-	font-family: Arial, sans-serif;
+	font-family: Verdana, Arial, sans-serif;
 	padding: .25em .5em;
 	border-radius: 4px;
 	background: rgba(255,255,255,.1);
 }
 .titlePanelLeft{
 	position: absolute;
-	font-family: Arial, sans-serif;
+	font-family: Verdana, Arial, sans-serif;
 	top: 8%;
 	bottom: 7%;
 	text-shadow: .5px .5px #357, 1px 1px #357, 1.5px 1.5px #357, 2px 2px #357;
@@ -512,7 +512,7 @@ tbody{
 	padding: .5% 1%;
 	z-index: 9999;
 	font-size: 1em;
-	font-family: Arial, sans-serif;
+	font-family: Verdana, Arial, sans-serif;
 	border-radius: 4px;
 	pointer-events: none;
 }
@@ -574,12 +574,11 @@ tbody{
 	padding: 0 .5em;
 }
 #diploHead{
-	font-family: Times New Roman, serif;
-	font-size: 1em;
+	font-family: Cinzel, Palatino Linotype, serif;
+	font-size: .875em;
 	color: #8df;
 	margin-bottom: .25em;
 	letter-spacing: .25em;
-	font-variant: small-caps;
 }
 #diplomacy-ui{
 	font-size: 1.125em;
@@ -721,9 +720,8 @@ tbody{
 	margin: 2% 0;
 }
 #researchHead{
-	font-family: Times New Roman, serif;
-	font-size: 1.625em;
-	font-variant: small-caps;
+	font-family: Cinzel, Palatino Linotype, serif;
+	font-size: 1.5em;
 	letter-spacing: .25em;
 }
 #tileActions, #tileResearch{
@@ -807,7 +805,7 @@ table td, .table th, .table td {
 #surrenderScreen, #victoryScreen{
 	position: absolute;
 	display: none;
-	font-family: Consolas, monospace;
+	font-family: Cinzel, Consolas, monospace;
 	top: 28%;
 	margin: 0 auto;
 	left: 0;
@@ -1118,13 +1116,12 @@ circle{
 	line-height: 1em;
 }
 .lobbyNames{
-	font-family: Times New Roman, serif;
-	font-size: 1.25em;
+	font-family: Cinzel, Palatino Linotype, serif;
+	font-size: 1.125em;
 	line-height: 1.5em;
 	color: #8df;
 	text-shadow: .5px .5px #145, 1px 1px #145, 1.5px 1.5px #145, 2px 2px #145;
 	letter-spacing: .125em;
-	font-variant: small-caps;
 }
 .govDropdown{
 	margin-top: .125em;
@@ -1141,7 +1138,7 @@ circle{
 	right: 1%;
 	width: 98%;
 	height: 83%;
-	font-family: Arial, sans-serif;
+	font-family: Verdana, Arial, sans-serif;
 	color: #bef;
 	text-shadow: 2px 2px 0 #357;
 	border-radius: 4px;
@@ -1154,7 +1151,7 @@ circle{
 	right: 1%;
 	margin: 0;
 	width: 98%;
-	font-family: Arial, sans-serif;
+	font-family: Verdana, Arial, sans-serif;
 	color: #bef;
 	text-shadow: 2px 2px 0 #357;
 	border-radius: 0;
@@ -1233,15 +1230,14 @@ circle{
 	pointer-events: none;
 }
 #hud{
-	font-family: Times New Roman, serif;
-	font-variant: small-caps;
+	font-family: Cinzel, Palatino Linotype, serif;
 	letter-spacing: .1em;
 	position: absolute;
 	top: 5%;
 	left: 0%;
 	width: 100%;
 	text-align: center;
-	font-size: 2em;
+	font-size: 1.75em;
 	color: #bef;
 	z-index:999999;
 	pointer-events: none;
@@ -1324,6 +1320,7 @@ table {
 	width: 100%;
 }
 #flagDropdown{
+	font-family: Cinzel, Palatino Linotype, serif;
 	width: 100%;
 	max-height: 300px;
 	overflow: auto;
@@ -1337,14 +1334,13 @@ table {
 }
 .dropdown-header{
 	font-weight: bold;
-	font-size: 1.25em;
+	font-size: 1.125em;
 	background: #357;
 	border-top: 1px solid #016;
 	border-bottom: 1px solid #016;
 	color: #fff;
 	letter-spacing: .125em;
-	font-family: Times New Roman, serif;
-	font-variant: small-caps;
+	font-family: Cinzel, Palatino Linotype, serif;
 	padding-left: 1em;
 }
 #updateNationFlag{
@@ -1404,6 +1400,7 @@ table {
 	color: #aef;
 }
 #governmentDropdown{
+	font-family: Cinzel, Palatino Linotype, serif;
 	text-shadow: none;
 	background: #00061a;
 	border: 2px groove #204d74;
@@ -1624,7 +1621,7 @@ table {
 #countdown{
 	display: none;
 	margin: 1em 0 0;
-	font-variant: small-caps;
+	font-family: Cinzel, Palatino Linotype, serif;
 	letter-spacing: .1em;
 }
 #optionsFormWrap{
@@ -1665,7 +1662,7 @@ table {
 	z-index: -1;
 }
 #statResult{
-	font-family: Times New Roman, serif;
+	font-family: Cinzel, Palatino Linotype, serif;
 	font-size: 3.5em;
 	line-height: 1.7em;
 	color: #fff;
@@ -1687,8 +1684,7 @@ table {
 	margin-bottom: 1em;
 }
 .statTabs{
-	font-family: Times New Roman, serif;
-	font-variant: small-caps;
+	font-family: Cinzel, Palatino Linotype, serif;
 	letter-spacing: 2px;
 	position: relative;
 	display: inline-block;
@@ -1696,7 +1692,7 @@ table {
 	padding: 0;
 	color: #bef;
 	width: 20%;
-	font-size: 1.75em;
+	font-size: 1.625em;
 	cursor: pointer;
 	text-align: center;
 	background: rgba(0, 0, 0, .8);
@@ -1759,12 +1755,11 @@ table {
 	font-size: .875em;
 }
 .statsNation{
-	font-family: Times New Roman, serif;
-	font-size: 1.375em;
+	font-family: Cinzel, Palatino Linotype, serif;
+	font-size: 1.25em;
 	color: #8df;
 	text-shadow: .5px .5px #145, 1px 1px #145, 1.5px 1.5px #145, 2px 2px #145;
 	letter-spacing: .05em;
-	font-variant: small-caps;
 }
 .statsGov{
 	font-size: .875em;
@@ -1784,17 +1779,18 @@ table {
 	margin: 0 2em 0 .5em;
 }
 #statVerse{
+	font-family: Cinzel, Palatino Linotype, serif;
 	margin-top: .5em;
 }
 #statDuration{
 	padding: .25em 1em;
 }
 #gameDuration{
+	font-family: Cinzel, Palatino Linotype, serif;
 	letter-spacing: 2px;
-	font-variant: small-caps;
 }
 #statsEndGame{
-	font-family: Consolas, monospace;
+	font-family: Cinzel, Consolas, monospace;
 	font-size: .875em;
 	padding: .125em 1em;
 	margin: .5em;
@@ -1880,6 +1876,9 @@ table {
 }
 #createGameMapWrap{
 }
+#mapDropdown{
+	font-family: Cinzel, Palatino Linotype, serif;
+}
 #mapDropdownWrap{
 	height: 1em;
 }
@@ -1901,7 +1900,7 @@ input[type=number]::-webkit-outer-spin-button {
 	text-overflow: ellipsis;
 }
 .btn{
-	font-family: Consolas, monospace;
+	font-family: Cinzel, Consolas, monospace;
 }
 .btn:active,
 .btn:focus{
