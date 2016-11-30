@@ -130,9 +130,12 @@ var lobby = {
 	},
 	init: function(x){
 		// build the lobby DOM
-		// console.info("Initializing lobby...");
+		console.info("Initializing lobby...", x.rating);
 		var e1 = document.getElementById("lobbyGameName");
 		if (e1 !== null){
+			if (x.rating){
+				document.getElementById('lobbyRankedMatch').style.display = 'block';
+			}
 			e1.innerHTML = x.name;
 			document.getElementById("lobbyGameMax").innerHTML = x.max;
 			document.getElementById("lobbyGameMap").innerHTML = x.map;
@@ -602,7 +605,7 @@ function loadGameState(){
 			} else if (my.government === 'Democracy'){
 				my.maxDeployment = 254;
 			} else if (my.government === 'Fundamentalism'){
-				my.recruitCost = 2;
+				my.recruitCost = 3;
 				document.getElementById('recruitCost').textContent = my.recruitCost;
 			} else if (my.government === 'Fascism'){
 				document.getElementById('moves').textContent = 12;

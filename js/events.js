@@ -222,6 +222,44 @@ var events = {
 			audio.play('click');
 			title.hideBackdrop();
 		});
+		$("#rankedMatch").on('click', function(){
+			var max = $("#createGameMaxPlayerWrap");
+			var pw = $("#createGamePasswordWrap");
+			var css = max.css('display') === 'block' ?
+				'none' : 'block';
+			max.css('display', css);
+			var css = pw.css('display') === 'block' ?
+				'none' : 'block';
+			pw.css('display', css);
+		});
+		$("#joinRankedGame").on('click', function(){
+			audio.play('click');
+			g.lock();
+			(function repeat(count){
+				if (count < 6 && !g.joinedGame){
+					Msg("Searching for ranked games...", 0);
+					setTimeout(repeat, 5000, ++count);
+					// ajax call to join ranked game
+					$.ajax({
+						url: 'php/joinRankedGame.php'
+					}).done(function(data){
+						TweenMax.set(DOM.Msg, {
+							opacity: 0
+						});
+						g.joinedGame = 1;
+						g.unlock();
+						title.joinGameCallback(data);
+					}).fail(function(data){
+						console.info(data);
+					});
+				} else {
+					if (!g.joinedGame){
+						Msg("No ranked games found! Try creating a ranked game instead.", 5);
+						g.unlock();
+					}
+				}
+			})(0);
+		});
 	})(),
 	lobby: (function(){
 		$("#lobby-chat-input").on('focus', function(){
@@ -297,7 +335,7 @@ var events = {
 			e.preventDefault();
 		});
 	})(),
-	map: (function(){
+	audio: (function(){
 		$("#bgmusic").on('ended', function() {
 			var x = document.getElementById('bgmusic');
 			x.currentTime = 0;

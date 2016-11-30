@@ -536,6 +536,9 @@ tbody{
 .marginLeft{
 	margin-left: .5em;
 }
+.titleHeader{
+	line-height: 1.625em;
+}
 #ui2-head{
 	position: relative;
 	color: #fff;
@@ -840,10 +843,14 @@ table td, .table th, .table td {
 	width: 100%;
 	height: 100%;
 }
+#rankedMatch{
+	position: relative;
+	top: 2px;
+}
 #overlay{
 	display: none;
 	background: rgba(0,0,0,.5);
-	z-index:9999999;
+	z-index:999999;
 	cursor: wait;
 }
 #worldTitle{
@@ -1093,6 +1100,13 @@ circle{
 	position: relative;
 	top: 0%;
 	padding: 1em;
+	text-align: center;
+}
+#lobbyRankedMatch{
+	display: none;
+	font-family: Cinzel, Palatino Linotype, serif;
+	font-size: 1.125em;
+	color: #ffff1a;
 }
 #lobbyGameName{
 	overflow: hidden;
@@ -1245,9 +1259,6 @@ circle{
 }
 #createGameFormWrap{
 	padding: 0 .5em;
-}
-#gamePlayers{
-	width: 33%;
 }
 #titleViewBackdrop{
 	position: absolute;

@@ -548,7 +548,8 @@ var title = {
 					name: name,
 					pw: pw,
 					map: title.mapData[g.map.key].name,
-					max: max
+					max: max,
+					rating: $("#rankedMatch").prop('checked') ? 1 : 0
 				}
 			}).done(function(data) {
 				// console.info(data);
@@ -584,21 +585,24 @@ var title = {
 				password: g.password
 			}
 		}).done(function(data){
-			socket.removePlayer(my.account);
-			// console.info(data);
-			my.player = data.player;
-			game.id = data.id;
-			game.name = data.gameName;
-			g.map = data.mapData;
-			lobby.init(data);
-			lobby.join(); // normal join
-			socket.joinGame();
+			title.joinGameCallback(data);
 		}).fail(function(data){
 			console.info(data);
 			Msg(data.statusText, 1.5);
 		}).always(function(){
 			g.unlock();
 		});
+	},
+	joinGameCallback: function(data){
+		socket.removePlayer(my.account);
+		// console.info(data);
+		my.player = data.player;
+		game.id = data.id;
+		game.name = data.gameName;
+		g.map = data.mapData;
+		lobby.init(data);
+		lobby.join(); // normal join
+		socket.joinGame();
 	},
 	submitNationName: function(){
 		var x = $("#updateNationName").val();

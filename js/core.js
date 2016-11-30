@@ -9,6 +9,7 @@ if (location.host !== 'localhost'){
 }
 TweenMax.defaultEase = Quad.easeOut;
 var g = {
+	joinedGame: false,
 	defaultTitle: 'Firmament Wars | Multiplayer Grand Strategy Warfare',
 	titleFlashing: false,
 	name: "",
@@ -575,7 +576,7 @@ var my = {
 	splitAttackCost: 1,
 	attackCost: 2,
 	deployCost: 20,
-	recruitCost: 4,
+	recruitCost: 6,
 	weaponCost: 1,
 	maxDeployment: 24,
 	buildCost: 1,
@@ -889,22 +890,31 @@ var video = {
 	}
 }
 
-function Msg(msg, d) {
+function Msg(msg, d) { 
 	DOM.Msg.innerHTML = msg;
-	if (!d || d < .5){
-		d = 2;
-	}
-    TweenMax.to(DOM.Msg, d, {
-		overwrite: 1,
-		startAt: {
-			opacity: 1
-		},
-		onComplete: function(){
-			TweenMax.to(this.target, .5, {
-				opacity: 0
-			});
+	if (d === 0){
+		TweenMax.set(DOM.Msg, {
+			overwrite: 1,
+			startAt: {
+				opacity: 1
+			}
+		});
+	} else {
+		if (!d || d < .5){
+			d = 2;
 		}
-    });
+		TweenMax.to(DOM.Msg, d, {
+			overwrite: 1,
+			startAt: {
+				opacity: 1
+			},
+			onComplete: function(){
+				TweenMax.to(this.target, .5, {
+					opacity: 0
+				});
+			}
+		});
+	}
 	// split text animation
 	var tl = new TimelineMax();
 	var split = new SplitText(DOM.Msg, {

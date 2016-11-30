@@ -28,10 +28,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head id='head'>
-	<title>Firmament Wars | Multiplayer Grand Strategy Warfare</title>
+	<title>Firmament Wars | Multiplayer Grand Strategy | Realtime Risk Warfare</title>
 	<meta charset="utf-8">
-	<meta name="keywords" content="risk, civilization, realtime, multiplayer, pol, strategy">
-	<meta name="description" content="Firmament Wars is a Risk-like HTML5 grand strategy browser game featuring realtime combat in FFA, head-to-head, and team modes with up to eight players!">
+	<meta name="keywords" content="risk, civilization, starcraft, multiplayer, pol, strategy, gaming">
+	<meta name="description" content="Firmament Wars is a Risk-like grand strategy browser game featuring realtime combat in FFA, head-to-head, and team modes with up to eight players!">
 	<meta name="author" content="Joe Leonard">
 	<meta name="referrer" content="always">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -40,7 +40,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
 	<script>
-		var version = "0-0-23";
+		var version = "0-0-24";
 	</script>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -91,15 +91,14 @@
 					<a href="/account">Account</a>&ensp;
 					<a href="/store">Store</a>&ensp;';
 				}
-				echo
-					'<a href="/forums" title="Nevergrind Browser Game Forums">Forums</a>&ensp; 
-					<a href="/blog" title="Nevergrind Browser Game Development News and Articles">Blog</a>&ensp;';
-					
+				?>
+					<a href="/forums" title="Nevergrind Browser Game Forums">Forums</a>&ensp; 
+					<a href="/blog" title="Nevergrind Browser Game Development News and Articles">Blog</a>&ensp;
+				<?php
 				if (isset($_SESSION['email'])){
 					echo '<a id="options" class="pointer options">Options</a>';
 				}
-				
-				echo '
+				?>
 				<div class="pull-right text-primary">
 					<a href="//www.youtube.com/user/Maelfyn">
 						<i class="fa fa-youtube text-primary pointer"></i>
@@ -124,15 +123,16 @@
 					</a>
 					<a href="http://www.indiedb.com/games/firmament-wars">
 						<i class="fa fa-gamepad text-primary pointer"></i>
-					</a>';
+					</a>
+				<?php
 				if (isset($_SESSION['email'])){
 					echo '&ensp;<a id="logout" class="btn fwBlue btn-responsive shadow4">Logout</a>';
 				} else {
 					echo '&ensp;<a id="login" class="btn btn-responsive fwBlue shadow4" href="/login.php?back=/games/firmament-wars">Login</a>';
 				}
-				echo '</div>';
-				
 				?>
+				</div>
+				
 			</header>
 			
 			<?php
@@ -152,22 +152,25 @@
 						while($stmt->fetch()){
 							$count = $dbcount;
 						}
-						$nation = 'Kingdom of '.ucfirst($_SESSION['account']);
+						$_SESSION['rating'] = 1500;
+						$nation = 'Kingdom of '. ucfirst($_SESSION['account']);
 						$flag = 'Default.jpg';
 						if($count > 0){
-							$query = "select nation, flag, wins, losses, disconnects from fwnations where account=?";
+							$query = "select nation, flag, rating, wins, losses, disconnects from fwnations where account=?";
 							$stmt = $link->prepare($query);
 							$stmt->bind_param('s', $_SESSION['account']);
 							$stmt->execute();
-							$stmt->bind_result($dName, $dFlag, $wins, $losses, $disconnects);
+							$stmt->bind_result($dName, $dFlag, $rating, $wins, $losses, $disconnects);
 							while($stmt->fetch()){
 								$nation = $dName;
 								$flag = $dFlag;
+								$rating = $rating;
 								$wins = $wins;
 								$losses = $losses;
 								$disconnects = $disconnects;
 							}
 							// init nation values
+							$_SESSION['rating'] = $rating;
 							$_SESSION['nation'] = $nation;
 							$_SESSION['flag'] = $flag;
 						} else {
@@ -188,6 +191,7 @@
 							</div>
 						</div>
 						<div id="menuHead">
+						<h2 class="header pull-right titleHeader">'. $_SESSION['account'] .'</h2>
 						<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>
 				</div>
 						
@@ -201,12 +205,13 @@
 				
 					<div>
 						<button id="create" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Create Game</button>
+						<button id="joinRankedGame" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Join Ranked Game</button>
 					</div>
 					
 					<hr class="fancyhr">
-					<input type="text" class="joinGameInputs fwBlueInput" id="joinGameName" placeholder="Game Name">
+					<input type="text" class="joinGameInputs fwBlueInput" id="joinGameName" maxlength="16" placeholder="Game Name">
 			
-					<input type="text" class="joinGameInputs fwBlueInput" id="joinGamePassword" placeholder="Password (Optional)">
+					<input type="text" class="joinGameInputs fwBlueInput" id="joinGamePassword" maxlength="16" placeholder="Password (Optional)">
 					
 					<button id="joinGame" type="button" class="btn btn-md fwBlue btn-responsive shadow4">Join Game</button>
 				</div>
@@ -256,7 +261,7 @@
 					// Associative array
 					while ($row = mysqli_fetch_assoc($result)){
 						$total += $row['count'];
-						echo '<div>There '. ($total === 1 ? 'is' : 'are') .' '. $total . ' '. ($total === 1 ? 'person' : 'people') .' playing Firmament Wars on Broken.Net</div>';
+						echo '<div>There '. ($total === 1 ? 'is' : 'are') .' '. $total . ' '. ($total === 1 ? 'person' : 'people') .' playing Firmament Wars</div>';
 					}
 				}
 			?>
@@ -281,7 +286,7 @@
 	
 		<div id="joinGameLobby" class="shadow4">
 		
-			<img id="worldTitle" src="images/FlatWorld90.jpg">
+			<img id="worldTitle" src="images/FlatWorld60.jpg">
 		
 			<div id="lobbyLeftCol">
 			
@@ -302,12 +307,13 @@
 			
 				<div id="lobbyGame" class="fw-primary">
 					<img src="images/title/firmamentWarsTitle_logo_cropped_640x206.png" id="lobbyFirmamentWarsLogo">
-					<div class='text-primary text-center margin-top'>Game Name:</div> 
-					<div id='lobbyGameName' class='text-center'></div>
-					<div class='text-primary text-center margin-top'>Max Players:</div>
-					<div id='lobbyGameMax' class='text-center'></div>
-					<div class='text-primary text-center margin-top'>Map:</div>
-					<div id='lobbyGameMap' class='text-center'></div>
+					<div id="lobbyRankedMatch" class="shadow4">Ranked Match</div> 
+					<div class='text-primary margin-top'>Game Name:</div> 
+					<div id='lobbyGameName'></div>
+					<div class='text-primary margin-top'>Max Players:</div>
+					<div id='lobbyGameMax'></div>
+					<div class='text-primary margin-top'>Map:</div>
+					<div id='lobbyGameMap'></div>
 				</div>
 				
 				<div id="lobbyGovernmentDescription" class="fw-primary text-center lobbyRelWrap">
@@ -333,69 +339,85 @@
 			<h2 class='header text-center'>Create Game</h2>
 			<hr class="fancyhr">
 			<div id="createGameFormWrap">
+				
+				<div class="pull-right no-select">
+					<label for="rankedMatch" class="chat-warning">
+						<input type="checkbox" id="rankedMatch"> Ranked Match
+					</label>
+				</div>
+				
 				<div class='buffer2'>
 					<label>Game Name</label>
 				</div>
-				<div class='buffer'>
-					<input id='gameName' class='form-control createGameInput' type='text' maxlength='32' autocomplete='off'>
-				</div>
-				<div class='buffer2'>
-					<label>Password (Optional)</label>
-				</div>
-				<div class='buffer'>
-					<input id='gamePassword' class='form-control createGameInput' type='text' maxlength='32' autocomplete='off'>
-				</div>
-				
-				<div class='buffer2'>
-					<label class='control-label'>Maximum Number of Players</label>
-				</div>
 				
 				<div class='buffer'>
-					<input id='gamePlayers' type='number' class='form-control createGameInput' id='gamePlayers' value='8' min='2' max='8'>
+					<input id='gameName' class='form-control createGameInput' type='text' maxlength='16' autocomplete='off'>
 				</div>
 				
-				<div class='buffer2'>
-					<label class='control-label'>Map</label>
-				</div>
-				
-				<div id="offerMap" class="pull-right text-center">
-					<h5>Buy map?</h5>
-					<div class="center block">
-						<button id="buyMap" type="button" class="btn fwBlue shadow4 text-primary">
-							<i class="fa fa-diamond"></i> 150
-						</button>
+				<div id="createGamePasswordWrap">
+					<div class='buffer2'>
+						<label>Password (Optional)</label>
 					</div>
-					<h4>
-						<a class="fwFont" target="_blank" href="/store">Buy Crystals</a>
-					</h4>
-				</div>
-				
-				<div class='buffer w33'>
-					<div class='dropdown'>
-						<button class='btn btn-primary dropdown-toggle shadow4 fwDropdownButton' type='button' data-toggle='dropdown'>
-							<span id='createGameMap'>Earth Alpha</span>
-							<i class="fa fa-caret-down text-warning lobbyCaret"></i>
-						</button>
-						<ul id='mapDropdown' class='dropdown-menu fwDropdown createGameInput'>
-						</ul>
+					
+					<div class='buffer'>
+						<input id='gamePassword' class='form-control createGameInput' type='text' maxlength='16' autocomplete='off'>
 					</div>
 				</div>
 				
-				<div class='buffer2'>
-					<label class='control-label'>Map Details</label>
+				<div id="createGameMaxPlayerWrap" class="pull-right">
+					<div class='buffer2'>
+						<label class='control-label'>Maximum Number of Players</label>
+					</div>
+					
+					<div class='buffer'>
+						<input id='gamePlayers' type='number' class='form-control createGameInput' id='gamePlayers' value='8' min='2' max='8'>
+					</div>
 				</div>
-				<div class='buffer'>
-					<span data-toggle='tooltip' title='Max players on this map'>
-						<i class='fa fa-users'></i>
-						<span id='createGamePlayers'>8</span>
-					</span>&ensp;
-					<span data-toggle='tooltip' title='Number of territories on this map'>
-						<i class='fa fa-globe'></i> 
-						<span id='createGameTiles'>83</span>
-					</span>
-					<span id="mapStatus" class="text-success">
-						<i class="fa fa-check"></i> Free Map
-					</span>
+				
+				<div>
+					<div class='buffer2'>
+						<label class='control-label'>Map</label>
+					</div>
+					
+					<div id="offerMap" class="pull-right text-center">
+						<h5>Buy map?</h5>
+						<div class="center block">
+							<button id="buyMap" type="button" class="btn fwBlue shadow4 text-primary">
+								<i class="fa fa-diamond"></i> 150
+							</button>
+						</div>
+						<h4>
+							<a class="fwFont" target="_blank" href="/store">Buy Crystals</a>
+						</h4>
+					</div>
+					
+					<div class='buffer w33'>
+						<div class='dropdown'>
+							<button class='btn btn-primary dropdown-toggle shadow4 fwDropdownButton' type='button' data-toggle='dropdown'>
+								<span id='createGameMap'>Earth Alpha</span>
+								<i class="fa fa-caret-down text-warning lobbyCaret"></i>
+							</button>
+							<ul id='mapDropdown' class='dropdown-menu fwDropdown createGameInput'>
+							</ul>
+						</div>
+					</div>
+				
+					<div class='buffer2'>
+						<label class='control-label'>Map Details</label>
+					</div>
+					<div class='buffer'>
+						<span data-toggle='tooltip' title='Max players on this map'>
+							<i class='fa fa-users'></i>
+							<span id='createGamePlayers'>8</span>
+						</span>&ensp;
+						<span data-toggle='tooltip' title='Number of territories on this map'>
+							<i class='fa fa-globe'></i> 
+							<span id='createGameTiles'>83</span>
+						</span>
+						<span id="mapStatus" class="text-success">
+							<i class="fa fa-check"></i> Free Map
+						</span>
+					</div>
 				</div>
 			</div>
 			<div>
@@ -565,7 +587,7 @@
 					</div>
 					<div class="col-xs-4 text-center crystalCost">
 						<i class="glyphicon glyphicon-oil moves pointer actionBolt"></i>
-						<span id="recruitCost">4</span>
+						<span id="recruitCost">6</span>
 					</div>
 				</div>
 				
@@ -874,9 +896,9 @@
 		</div>
 	</div>
 	
-	<div id="Msg" class="shadow4"></div>
 	<div id="screenFlash"></div>
 	<div id="overlay" class="portal"></div>
+	<div id="Msg" class="shadow4"></div>
 </body>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
