@@ -298,6 +298,10 @@ a:hover{
 	color: #ff1a1a;
 	text-shadow: .5px .5px #500, 1px 1px #500, 1.5px 1.5px #500, 2px 2px #500;
 }
+.chat-news{
+	color: #fff;
+	text-shadow: .5px .5px #222, 1px 1px #222, 1.5px 1.5px #222, 2px 2px #222;
+}
 .chat-moves{
 	color: #dd6600;
 	text-shadow: .5px .5px #420, 1px 1px #420, 1.5px 1.5px #420, 2px 2px #420;
@@ -1259,6 +1263,9 @@ circle{
 }
 #createGameFormWrap{
 	padding: 0 .5em;
+}
+.pad2{
+	padding: .25em .5em;
 }
 #titleViewBackdrop{
 	position: absolute;

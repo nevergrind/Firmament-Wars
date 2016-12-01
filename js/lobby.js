@@ -135,6 +135,7 @@ var lobby = {
 		if (e1 !== null){
 			if (x.rating){
 				document.getElementById('lobbyRankedMatch').style.display = 'block';
+				document.getElementById('lobbyGameNameWrap').style.display = 'none';
 			}
 			e1.innerHTML = x.name;
 			document.getElementById("lobbyGameMax").innerHTML = x.max;

@@ -39,14 +39,14 @@
 	<meta name="twitter:widgets:csp" content="on">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
-	<script>
-		var version = "0-0-24";
-	</script>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-21">
+	<script>
+		var version = "0-0-25";
+	</script>
+	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-25">
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
 
@@ -205,11 +205,12 @@
 				
 					<div>
 						<button id="create" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Create Game</button>
+						<button id="autoJoinGame" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Auto Join</button>
 						<button id="joinRankedGame" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Join Ranked Game</button>
 					</div>
 					
 					<hr class="fancyhr">
-					<input type="text" class="joinGameInputs fwBlueInput" id="joinGameName" maxlength="16" placeholder="Game Name">
+					<input type="text" class="joinGameInputs fwBlueInput" id="joinGameName" maxlength="32" placeholder="Game Name">
 			
 					<input type="text" class="joinGameInputs fwBlueInput" id="joinGamePassword" maxlength="16" placeholder="Password (Optional)">
 					
@@ -308,8 +309,10 @@
 				<div id="lobbyGame" class="fw-primary">
 					<img src="images/title/firmamentWarsTitle_logo_cropped_640x206.png" id="lobbyFirmamentWarsLogo">
 					<div id="lobbyRankedMatch" class="shadow4">Ranked Match</div> 
-					<div class='text-primary margin-top'>Game Name:</div> 
-					<div id='lobbyGameName'></div>
+					<div id="lobbyGameNameWrap">
+						<div class='text-primary margin-top'>Game Name:</div> 
+						<div id='lobbyGameName'></div>
+					</div>
 					<div class='text-primary margin-top'>Max Players:</div>
 					<div id='lobbyGameMax'></div>
 					<div class='text-primary margin-top'>Map:</div>
@@ -340,18 +343,19 @@
 			<hr class="fancyhr">
 			<div id="createGameFormWrap">
 				
-				<div class="pull-right no-select">
-					<label for="rankedMatch" class="chat-warning">
-						<input type="checkbox" id="rankedMatch"> Ranked Match
+				<div class="pad2 pull-right no-select pointer">
+					<label for="rankedMatch" class="chat-warning pointer">
+						<input type="checkbox" id="rankedMatch" class="pointer"> Ranked Match
 					</label>
 				</div>
 				
-				<div class='buffer2'>
-					<label>Game Name</label>
-				</div>
-				
-				<div class='buffer'>
-					<input id='gameName' class='form-control createGameInput' type='text' maxlength='16' autocomplete='off'>
+				<div id="createGameNameWrap">
+					<div class='buffer2'>
+						<label>Game Name</label>
+					</div>
+					<div class='buffer'>
+						<input id='gameName' class='form-control createGameInput' type='text' maxlength='32' autocomplete='off'>
+					</div>
 				</div>
 				
 				<div id="createGamePasswordWrap">

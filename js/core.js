@@ -10,6 +10,7 @@ if (location.host !== 'localhost'){
 TweenMax.defaultEase = Quad.easeOut;
 var g = {
 	joinedGame: false,
+	searchingGame: false,
 	defaultTitle: 'Firmament Wars | Multiplayer Grand Strategy Warfare',
 	titleFlashing: false,
 	name: "",
@@ -533,7 +534,7 @@ var game = {
 			// was it special?
 			if (!data.getBonus){
 				// no bonus troops; only broadcast to self
-				game.chat(data.get + ': ' + my.nation + ' receives <span class="chat-manpower">' + data.manpowerBonus + '</span> armies!');
+				game.chat('<span class="chat-news">'+ data.get + ': ' + my.nation + ' receives <span class="chat-manpower">' + data.manpowerBonus + '</span> armies!</span>');
 				audio.play('food');
 			}
 		}

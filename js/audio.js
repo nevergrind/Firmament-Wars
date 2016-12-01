@@ -60,8 +60,18 @@ var audio = {
 		// FIX IT SO IT USES BGAUDIO
 		if (audio.ext === 'mp3'){
 			var tracks = [
-				'WaitingBetweenWorlds'
+				//'WaitingBetweenWorlds'
+				'ambient0',
+				'ambient1',
+				'ambient2',
+				'ambient3',
+				'ambient4',
+				'ambient5',
+				'ambient6',
+				'ambient7',
+				'ambient8'
 			]
+			audio.totalTracks = tracks.length;
 			audio.trackIndex++;
 			// future various tracks
 			if (my.government){

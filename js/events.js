@@ -225,37 +225,66 @@ var events = {
 		$("#rankedMatch").on('click', function(){
 			var max = $("#createGameMaxPlayerWrap");
 			var pw = $("#createGamePasswordWrap");
+			var name = $("#createGameNameWrap");
+			// max
 			var css = max.css('display') === 'block' ?
 				'none' : 'block';
 			max.css('display', css);
+			// pw
 			var css = pw.css('display') === 'block' ?
 				'none' : 'block';
 			pw.css('display', css);
+			// name
+			var css = name.css('display') === 'block' ?
+				'none' : 'block';
+			name.css('display', css);
+		});
+		$("#autoJoinGame").on('click', function(){
+			audio.play('click');
+			$("#joinGamePassword").val();
+			$(".wars").filter(":first").trigger("click");
+			title.joinGame();
+		});
+		$("#overlay").on('click', function(){
+			g.searchingGame = false;
+			TweenMax.set(DOM.Msg, {
+				opacity: 0
+			});
+			g.unlock();
 		});
 		$("#joinRankedGame").on('click', function(){
 			audio.play('click');
 			g.lock();
+			g.searchingGame = true;
 			(function repeat(count){
 				if (count < 6 && !g.joinedGame){
 					Msg("Searching for ranked games...", 0);
-					setTimeout(repeat, 5000, ++count);
+					setTimeout(function(){
+						if (g.searchingGame){
+							repeat(++count);
+						}
+					}, 5000);
 					// ajax call to join ranked game
 					$.ajax({
 						url: 'php/joinRankedGame.php'
 					}).done(function(data){
-						TweenMax.set(DOM.Msg, {
-							opacity: 0
-						});
-						g.joinedGame = 1;
-						g.unlock();
-						title.joinGameCallback(data);
+						if (g.searchingGame){
+							TweenMax.set(DOM.Msg, {
+								opacity: 0
+							});
+							g.joinedGame = 1;
+							g.unlock();
+							g.searchingGame = false;
+							title.joinGameCallback(data);
+						}
 					}).fail(function(data){
 						console.info(data);
 					});
 				} else {
-					if (!g.joinedGame){
+					if (!g.joinedGame && g.searchingGame){
 						Msg("No ranked games found! Try creating a ranked game instead.", 5);
 						g.unlock();
+						g.searchingGame = false;
 					}
 				}
 			})(0);

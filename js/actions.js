@@ -105,7 +105,7 @@ var action = {
 			}
 			// barbarian message
 			if (data.rewardMsg !== undefined){
-				game.chat(data.rewardMsg);
+				game.chat('<span class="chat-news">' + data.rewardMsg + '</span>');
 				setResources(data);
 			}
 			setMoves(data); 
