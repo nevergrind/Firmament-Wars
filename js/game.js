@@ -39,22 +39,22 @@ function updateTileInfo(tileId){
 		var cultureWidth = 0;
 		var defWidth = 0;
 	} else {
-		var foodWidth = ((t.food > 8 ? 8 : t.food) / 8) * 100;
-		var cultureWidth = ((t.culture > 8 ? 8 : t.culture) / 8) * 100;
-		var defWidth = (t.defense / 4) * 100;
+		var foodWidth = ~~(((t.food > 8 ? 8 : t.food) / 8) * 100);
+		var cultureWidth = ~~(((t.culture > 8 ? 8 : t.culture) / 8) * 100);
+		var defWidth = ~~((t.defense / 4) * 100);
 	}
 	str += name + '</div>\
 		<div class="targetBarsWrap">\
-			<hr class="targetBarsFood" style="width: ' + foodWidth + '%"/>\
-			<hr class="targetBarsFood" style="width: ' + foodWidth + '%"/>\
+			<div class="targetBars targetBarsFood" style="width: ' + foodWidth + '%"></div>\
+			<div class="targetBars targetBarsFood" style="width: ' + foodWidth + '%"></div>\
 		</div>\
-		<div class="targetBarsWrap"">\
-			<hr class="targetBarsCulture" style="width: ' + cultureWidth + '%"/>\
-			<hr class="targetBarsCulture" style="width: ' + cultureWidth + '%"/>\
+		<div class="targetBarsWrap">\
+			<div class="targetBars targetBarsCulture" style="width: ' + cultureWidth + '%"></div>\
+			<div class="targetBars targetBarsCulture" style="width: ' + cultureWidth + '%"></div>\
 		</div>\
-		<div class="targetBarsWrap"">\
-			<hr class="targetBarsDefense" style="width: ' + defWidth + '%"/>\
-			<hr class="targetBarsDefense" style="width: ' + defWidth + '%"/>\
+		<div class="targetBarsWrap">\
+			<div class="targetBars targetBarsDefense" style="width: ' + defWidth + '%"></div>\
+			<div class="targetBars targetBarsDefense" style="width: ' + defWidth + '%"></div>\
 		</div>';
 		
 	DOM.targetName.innerHTML = str;
@@ -104,9 +104,8 @@ function showTarget(e, hover, skipOldTgtUpdate){
 		}
 		// animate targetLine on hover
 		if (hover && tileId !== my.tgt){
-			var e = document.getElementById('unit' + tileId);
-			my.targetLine[4] = e.getAttribute('x')*1 - 10;
-			my.targetLine[5] = e.getAttribute('y')*1 - 10;
+			my.targetLine[4] = DOM['unit' + tileId].getAttribute('x')*1 - 10;
+			my.targetLine[5] = DOM['unit' + tileId].getAttribute('y')*1 - 10;
 			my.targetLine[2] = (my.targetLine[0] + my.targetLine[4]) / 2;
 			my.targetLine[3] = ((my.targetLine[1] + my.targetLine[5]) / 2) - 100;
 			TweenMax.set(DOM.targetLineShadow, {
@@ -160,10 +159,9 @@ function showTarget(e, hover, skipOldTgtUpdate){
 	}
 }
 function setTileUnits(i, unitColor){
-	var e = document.getElementById('unit' + i);
-	e.textContent = game.tiles[i].units === 0 ? "" : ~~game.tiles[i].units;
+	DOM['unit' + i].textContent = game.tiles[i].units === 0 ? "" : ~~game.tiles[i].units;
 	if (unitColor === '#00ff00'){
-		TweenMax.to(e, .05, {
+		TweenMax.to(DOM['unit' + i], .05, {
 			startAt: {
 				transformOrigin: (game.tiles[i].units.length * 3) + ' 12',
 				fill: unitColor
@@ -174,7 +172,7 @@ function setTileUnits(i, unitColor){
 			yoyo: true
 		});
 	} else {
-		TweenMax.to(e, .5, {
+		TweenMax.to(DOM['unit' + i], .5, {
 			startAt: {
 				fill: '#ff0000'
 			},

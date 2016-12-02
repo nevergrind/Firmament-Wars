@@ -31,8 +31,7 @@ var animate = {
 		return c;
 	},
 	getXY: function(tile){
-		var e2 = document.getElementById('unit' + tile),
-			box = e2.getBBox(),
+		var box = DOM['unit' + tile].getBBox(),
 			o = {
 				x: box.x,
 				y: box.y
@@ -41,8 +40,7 @@ var animate = {
 	},
 	upgrade: function(tile){
 		audio.play('build');
-		var e1 = document.getElementById('unit' + tile),
-			box = e1.getBBox();
+		var box = DOM['unit' + tile].getBBox();
 		var x = box.x + box.width/2 - 10;
 		var y = box.y + box.height/2 + 10;
 		// smoke
@@ -103,8 +101,7 @@ var animate = {
 		this.updateMapBars(tile);
 	},
 	updateMapBars: function(tile){
-		var e1 = document.getElementById('unit' + tile),
-			box = e1.getBBox(),
+		var box = DOM['unit' + tile].getBBox(),
 			x = box.x + box.width/2 - 10,
 			y = box.y + box.height/2 + 10;
 		$(".mapBars" + tile).remove();
@@ -112,7 +109,7 @@ var animate = {
 		// console.info("UPDATING MAP BARS");
 	},
 	initMapBars: function(i, x, y){
-		var e = document.getElementById('unit' + i);
+		var e = DOM['unit' + i];
 		var x = e.getAttribute('x') - 24;
 		var y = e.getAttribute('y') - 24;
 		
@@ -197,7 +194,7 @@ var animate = {
 		}
 		var x = 0,
 			y = 0;
-		for (var i=0; i<33; i++){
+		for (var i=0; i<30; i++){
 			(function(Math){
 				var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
 				x = box.x + (Math.random() * (box.width * .8)) + box.width * .1;
@@ -205,17 +202,17 @@ var animate = {
 				circ.setAttributeNS(null,"cx",x);
 				circ.setAttributeNS(null,"cy",y);
 				circ.setAttributeNS(null,"r",6);
-				circ.setAttributeNS(null,"fill",animate.randomColor());
+				circ.setAttributeNS(null,"fill",'#ffddaa');
 				circ.setAttributeNS(null,"stroke",'#000');
 				DOM.world.appendChild(circ);
 				
-				TweenMax.to(circ, .2, {
+				TweenMax.to(circ, .1, {
 					delay: Math.random() * delay[sfx],
 					startAt:{
 						opacity: 1
 					},
 					attr: {
-						r: 0,
+						r: 2,
 					},
 					onComplete: function(){
 						this.target.parentNode.removeChild(this.target);
@@ -277,11 +274,11 @@ var animate = {
 		if (playSound){
 			audio.play('missile7');
 		}
-		var e2 = document.getElementById('unit' + attacker),
+		var e2 = DOM['unit' + attacker],
 			boxA = e2.getBBox(),
 			x1 = boxA.x + boxA.width/2,
 			y1 = boxA.y + boxA.height/2,
-			e3 = document.getElementById('unit' + defender),
+			e3 = DOM['unit' + defender],
 			boxB = e3.getBBox(),
 			x2 = boxB.x + boxB.width/2,
 			y2 = boxB.y + boxB.height/2;
@@ -371,8 +368,7 @@ var animate = {
 		});
 	},
 	missileExplosion: function(tile){
-		var e1 = document.getElementById('unit' + tile),
-			box = e1.getBBox(),
+		var box = DOM['unit' + tile].getBBox(),
 			a = [5, 6, 8],
 			sfx = ~~(Math.random() * 3);
 		audio.play('grenade' + a[sfx]);
@@ -426,8 +422,7 @@ var animate = {
 		animate.smoke(tile, x, y, 1);
 	},
 	nuke: function(tile){
-		var e2 = document.getElementById('unit' + tile),
-			box = e2.getBBox();
+		var box = DOM['unit' + tile].getBBox();
 		var x = box.x;
 		var y = box.y;
 		// bomb shadow

@@ -137,6 +137,9 @@ var socket = {
 				title.updateGame(data);
 			});
 		}
+		if (g.view === 'game'){
+			game.getGameState();
+		}
 		socket.zmq.subscribe('admin:broadcast', function(topic, data) {
 			g.chat(data.msg, data.type);
 		});

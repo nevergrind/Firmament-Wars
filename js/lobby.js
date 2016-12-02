@@ -683,7 +683,7 @@ function loadGameState(){
 				game.player[d.player].player = d.player;
 				game.player[d.player].government = d.government;
 			}
-			// init mapFlagWrap
+			// init map flags
 			var a = document.getElementsByClassName('unit'),
 				mapBars = document.getElementById('mapBars'),
 				mapFlagWrap = document.getElementById('mapFlagWrap');
@@ -727,7 +727,11 @@ function loadGameState(){
 						ease: Linear.easeNone
 					});
 				}
+			}
+			// init map DOM elements
+			game.initMap();
 				// food, culture, def bars
+			for (var i=0; i<len; i++){
 				animate.initMapBars(i);
 			}
 			var str = '<div id="diploHead">\
@@ -803,7 +807,7 @@ function loadGameState(){
 				if (isMSIE || isMSIE11){
 					zug.on("click", function(){
 						triggerAction(this);
-						TweenMax.to(this, .15, {
+						TweenMax.set(this, {
 							fill: "hsl(+=0%, +=30%, +=15%)"
 						});
 					});
@@ -821,7 +825,7 @@ function loadGameState(){
 					if (my.attackOn){
 						showTarget(this, true);
 					}
-					TweenMax.to(this, .15, {
+					TweenMax.set(this, {
 						fill: "hsl(+=0%, +=30%, +=15%)"
 					});
 				}).on("mouseleave", function(){
@@ -829,14 +833,8 @@ function loadGameState(){
 					// console.info('land: ', land);
 					if (game.tiles.length > 0){
 						var player = game.tiles[land] !== undefined ? game.tiles[land].player : 0;
-						TweenMax.to(this, .25, {
-							fill: color[player],
-							onComplete: function(){
-								// insurance
-								TweenMax.to(this, .25, {
-									fill: color[player]
-								});
-							}
+						TweenMax.set(this, {
+							fill: color[player]
 						});
 					}
 				});

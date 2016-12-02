@@ -279,6 +279,16 @@ var game = {
 	tiles: [],
 	initialized: false,
 	player: [0,0,0,0,0,0,0,0,0], // cached values on client to reduce DB load
+	initMap: function(){
+		(function(d, len){
+			console.info(d, len);
+			for (var i=0; i<len; i++){
+				DOM['land' + i] = d.getElementById('land' + i);
+				DOM['flag' + i] = d.getElementById('flag' + i);
+				DOM['unit' + i] = d.getElementById('unit' + i);
+			}
+		})(document, game.tiles.length);
+	},
 	updateTopTile: function(i){
 		document.getElementById('topTile')
 			.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#land' + i);
@@ -390,7 +400,7 @@ var game = {
 					if (!game.tiles[i].units){
 						// set text visible if uninhabited
 						// this confuses me still...
-						TweenMax.set(document.getElementById('unit' + i), {
+						TweenMax.set(DOM['unit' + i], {
 							visibility: 'visible'
 						});
 					}
@@ -407,9 +417,8 @@ var game = {
 					var newFlag = !game.player[d.player].flag ? 
 						'blank.png' : 
 						game.player[d.player].flag;
-					var e5 = document.getElementById('flag' + i);
-					if (e5 !== null){
-						e5.href.baseVal = "images/flags/" + newFlag;
+					if (DOM['flag' + i] !== null){
+						DOM['flag' + i].href.baseVal = "images/flags/" + newFlag;
 					}
 					TweenMax.set(document.getElementById('land' + i), {
 						fill: color[d.player]
@@ -425,9 +434,8 @@ var game = {
 					}
 					setTileUnits(i, unitColor);
 					if (d.player){
-						TweenMax.to(".mapBars" + i, 1, {
-							opacity: 1,
-							ease: Linear.easeNone
+						TweenMax.set(".mapBars" + i, {
+							opacity: 1
 						});
 					}
 				}
@@ -461,9 +469,8 @@ var game = {
 			game.tiles[i].units ? 'Player0.jpg' : 'blank.png' 
 			: game.player[p].flag;
 		// change flag
-		var flag = document.getElementById('flag' + i);
-		if (flag !== null){
-			flag.href.baseVal = "images/flags/" + newFlag;
+		if (DOM['flag' + i] !== null){
+			DOM['flag' + i].href.baseVal = "images/flags/" + newFlag;
 		}
 		var land = document.getElementById('land' + i);
 		// land color
@@ -478,23 +485,22 @@ var game = {
 				game.tiles[i].units = d.units;
 				setTileUnits(i, unitColor);
 				if (p){
-					TweenMax.to(".mapBars" + i, .5, {
-						opacity: 1,
-						ease: Linear.easeNone
+					TweenMax.set(".mapBars" + i, {
+						opacity: 1
 					});
 				}
 			}
 			// set text visible
-			TweenMax.set(document.getElementById('unit' + i), {
+			TweenMax.set(DOM['unit' + i], {
 				visibility: 'visible'
 			});
 		} else {
+			// dead/surrender
 			game.tiles[i].units = 0;
-			TweenMax.to(".mapBars" + i, .5, {
-				opacity: 0,
-				ease: Quad.easeIn
+			TweenMax.set(".mapBars" + i, {
+				opacity: 0
 			});
-			TweenMax.set(document.getElementById('unit' + i), {
+			TweenMax.set(DOM['unit' + i], {
 				visibility: 'hidden'
 			});
 		}
@@ -637,8 +643,7 @@ var my = {
 	},
 	// shift camera to tile
 	focusTile: function(tile, d){
-		var e = document.getElementById("land" + tile),
-			box = e.getBBox();
+		var box = DOM['land' + tile].getBBox();
 		if (d === undefined){
 			d = .5;
 		}
@@ -673,8 +678,7 @@ var my = {
 		if (!my.attackOn){
 			// flag unit text
 			if (game.tiles[tile].units){
-				var e2 = document.getElementById('unit' + tile);
-				TweenMax.to(e2, .05, {
+				TweenMax.to(DOM['unit' + tile], .05, {
 					startAt: {
 						transformOrigin: '50% 50%',
 						fill: '#0ff'
@@ -684,7 +688,7 @@ var my = {
 					repeat: 6,
 					yoyo: true
 				});
-				TweenMax.set(e2, {
+				TweenMax.set(DOM['unit' + tile], {
 					visibility: 'visible'
 				});
 			}

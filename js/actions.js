@@ -49,9 +49,8 @@ var action = {
 			// set cursor
 			$DOM.head.append('<style>.land{ cursor: crosshair; }</style>');
 			// set target line
-			var e = document.getElementById('unit' + my.tgt);
-			my.targetLine[0] = e.getAttribute('x')*1 - 10;
-			my.targetLine[1] = e.getAttribute('y')*1 - 10;
+			my.targetLine[0] = DOM['unit' + my.tgt].getAttribute('x')*1 - 10;
+			my.targetLine[1] = DOM['unit' + my.tgt].getAttribute('y')*1 - 10;
 			showTarget(my.lastTarget, true);
 		}
 	},
