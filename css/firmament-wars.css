@@ -286,6 +286,23 @@ a:hover{
 	color: #fff;
 	pointer-events: auto;
 }
+.fwYellow{
+	background: rgba(33,33,4,1);
+	color: #faf57a !important;
+	cursor: pointer;
+	border: 1px solid #8a7a04;
+	border-radius: 4px;
+}
+.fwYellow:hover{
+	background: rgba(44,44,6,1);
+}
+.fwYellow:active{
+	background: rgba(22,22,3,1);
+}
+.ranked{
+	color: #faf57a;
+	text-shadow: .5px .5px #4a4406, 1px 1px #4a4406, 1.5px 1.5px #4a4406, 2px 2px #4a4406;
+}
 .chat-alert{
 	color: #ff0000;
 	text-shadow: .5px .5px #500, 1px 1px #500, 1.5px 1.5px #500, 2px 2px #500;
@@ -1103,7 +1120,6 @@ circle{
 	display: none;
 	font-family: Cinzel, Palatino Linotype, serif;
 	font-size: 1.125em;
-	color: #ffff1a;
 }
 #lobbyGameName{
 	overflow: hidden;

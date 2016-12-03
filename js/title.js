@@ -533,11 +533,10 @@ var title = {
 	createGame: function(){
 		var name = $("#gameName").val(),
 			pw = $("#gamePassword").val(),
-			max = $("#gamePlayers").val() * 1,
-			isRanked = $("#rankedMatch").prop('checked');
-		if (!isRanked && (name.length < 4 || name.length > 32)){
+			max = $("#gamePlayers").val() * 1;
+		if (!g.rankedGame && (name.length < 4 || name.length > 32)){
 			Msg("Game name must be at least 4-32 characters.");
-		} else if (!isRanked && (max < 2 || max > 8 || max % 1 !== 0)){
+		} else if (!g.rankedGame && (max < 2 || max > 8 || max % 1 !== 0)){
 			Msg("Game must have 2-8 players.");
 		} else {
 			title.hideBackdrop();
@@ -550,7 +549,7 @@ var title = {
 					pw: pw,
 					map: title.mapData[g.map.key].name,
 					max: max,
-					rating: $("#rankedMatch").prop('checked') ? 1 : 0
+					rating: g.rankedGame
 				}
 			}).done(function(data) {
 				// console.info(data);

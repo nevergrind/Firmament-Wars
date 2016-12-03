@@ -153,21 +153,30 @@
 							$count = $dbcount;
 						}
 						$_SESSION['rating'] = 1500;
+						$_SESSION['totalGames'] = 0;
+						$_SESSION['wins'] = 0;
+						$_SESSION['losses'] = 0;
+						$_SESSION['disconnects'] = 0;
+						$_SESSION['disconnectRate'] = 0;
 						$nation = 'Kingdom of '. ucfirst($_SESSION['account']);
 						$flag = 'Default.jpg';
 						if($count > 0){
-							$query = "select nation, flag, rating, wins, losses, disconnects from fwnations where account=?";
+							$query = "select nation, flag, rating, wins, losses, rankedWins, rankedLosses, disconnects from fwnations where account=?";
 							$stmt = $link->prepare($query);
 							$stmt->bind_param('s', $_SESSION['account']);
 							$stmt->execute();
-							$stmt->bind_result($dName, $dFlag, $rating, $wins, $losses, $disconnects);
+							$stmt->bind_result($dName, $dFlag, $rating, $wins, $losses, $rankedWins, $rankedLosses, $disconnects);
 							while($stmt->fetch()){
 								$nation = $dName;
 								$flag = $dFlag;
-								$rating = $rating;
-								$wins = $wins;
-								$losses = $losses;
-								$disconnects = $disconnects;
+								$_SESSION['rating'] = $rating;
+								$_SESSION['totalGames'] = $wins + $losses + $rankedWins + $rankedLosses + $disconnects;
+								$_SESSION['wins'] = $wins;
+								$_SESSION['losses'] = $losses;
+								$_SESSION['rankedWins'] = $rankedWins;
+								$_SESSION['rankedLosses'] = $rankedLosses;
+								$_SESSION['disconnects'] = $disconnects;
+								$_SESSION['disconnectRate'] = $_SESSION['totalGames'] === 0 ? 0 : round(($_SESSION['disconnects'] / $_SESSION['totalGames']) * 100) ;
 							}
 							// init nation values
 							$_SESSION['rating'] = $rating;
@@ -178,10 +187,6 @@
 							$stmt = $link->prepare($query);
 							$stmt->bind_param('s', $_SESSION['account']);
 							$stmt->execute();
-							// show record; new nation
-							$wins = 0;
-							$losses = 0;
-							$disconnects = 0;
 							// init nation values
 							$_SESSION['nation'] = $nation;
 							$_SESSION['flag'] = $flag;
@@ -190,10 +195,10 @@
 						'
 							</div>
 						</div>
-						<div id="menuHead">
-						<h2 class="header pull-right titleHeader">'. $_SESSION['account'] .'</h2>
+					<div id="menuHead">
 						<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>
-				</div>
+						<button id="leaderboardBtn" type="button" class="btn fwBlue btn-responsive shadow4">Leaderboard</button>
+					</div>
 						
 				<hr class="fancyhr">
 			
@@ -204,17 +209,22 @@
 					<hr class="fancyhr">
 				
 					<div>
-						<button id="create" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Create Game</button>
-						<button id="autoJoinGame" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Auto Join</button>
-						<button id="joinRankedGame" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Join Ranked Game</button>
+						<div class="btn-group">
+							<button id="create" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Create FFA Game</button>
+							<button id="autoJoinGame" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Join</button>
+						</div>
+							<div class="btn-group">
+							<button id="createRankedBtn" type="button" class="titleButtons btn fwYellow btn-responsive shadow4">Create Ranked Game</button>
+							<button id="joinRankedGame" type="button" class="titleButtons btn fwYellow btn-responsive shadow4">Join</button>
+						</div>
 					</div>
 					
 					<hr class="fancyhr">
-					<input type="text" class="joinGameInputs fwBlueInput" id="joinGameName" maxlength="32" placeholder="Game Name">
-			
-					<input type="text" class="joinGameInputs fwBlueInput" id="joinGamePassword" maxlength="16" placeholder="Password (Optional)">
-					
-					<button id="joinGame" type="button" class="btn btn-md fwBlue btn-responsive shadow4">Join Game</button>
+					<div>
+						<input type="text" class="joinGameInputs fwBlueInput" id="joinGameName" maxlength="32" placeholder="Game Name">
+						<input type="text" class="joinGameInputs fwBlueInput" id="joinGamePassword" maxlength="16" placeholder="Password (Optional)">
+						<button id="joinGame" type="button" class="btn btn-md fwBlue btn-responsive shadow4">Join Game</button>
+					</div>
 				</div>
 
 				<div id="refreshGameWrap" class="buffer2">
@@ -308,7 +318,7 @@
 			
 				<div id="lobbyGame" class="fw-primary">
 					<img src="images/title/firmamentWarsTitle_logo_cropped_640x206.png" id="lobbyFirmamentWarsLogo">
-					<div id="lobbyRankedMatch" class="shadow4">Ranked Match</div> 
+					<div id="lobbyRankedMatch" class="shadow4 ranked">Ranked Match</div> 
 					<div id="lobbyGameNameWrap">
 						<div class='text-primary margin-top'>Game Name:</div> 
 						<div id='lobbyGameName'></div>
@@ -339,15 +349,12 @@
 		</div>
 		
 		<div id='createGameWrap' class='fw-primary titleModal'>
-			<h2 class='header text-center'>Create Game</h2>
+			<div class='header text-center'>
+				<h2 id="createGameHead" class="header">Create Game</h2>
+				<h2 id="createRankedGameHead" class='header ranked'>Create Ranked Game</h2>
+			</div>
 			<hr class="fancyhr">
 			<div id="createGameFormWrap">
-				
-				<div class="pad2 pull-right no-select pointer">
-					<label for="rankedMatch" class="chat-warning pointer">
-						<input type="checkbox" id="rankedMatch" class="pointer"> Ranked Match
-					</label>
-				</div>
 				
 				<div id="createGameNameWrap">
 					<div class='buffer2'>

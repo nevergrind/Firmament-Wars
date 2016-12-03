@@ -47,9 +47,30 @@ var events = {
 			$("#joinGamePassword").val('');
 			title.joinGame();
 		});
-
-		$("#create").on("click", function(){
-			$("#gameName").val('');
+		
+		function openCreateGameModal(isRanked){
+			var e1 = document.getElementById('createGameHead'),
+				e2 = document.getElementById('createRankedGameHead'),
+				e3 = $("#gameName"),
+				e4 = document.getElementById('createGameNameWrap'),
+				e5 = document.getElementById('createGamePasswordWrap'),
+				e6 = document.getElementById('createGameMaxPlayerWrap');
+				
+			g.rankedGame = isRanked ? 1 : 0;
+			if (isRanked){
+				e1.style.display = 'none';
+				e2.style.display = 'block';
+				e4.style.display = 'none';
+				e5.style.display = 'none';
+				e6.style.display = 'none';
+			} else {
+				e1.style.display = 'block';
+				e2.style.display = 'none';
+				e4.style.display = 'block';
+				e5.style.display = 'block';
+				e6.style.display = 'block';
+			}
+			e3.val('');
 			TweenMax.to(document.getElementById("createGameWrap"), .5, {
 				startAt: {
 					visibility: 'visible',
@@ -67,10 +88,17 @@ var events = {
 				opacity: 1,
 				ease: Linear.easeNone,
 				onComplete: function(){
-					$("#gameName").focus();
+					e3.focus();
 				}
 			});
 			g.isModalOpen = true;
+		}
+
+		$("#create").on("click", function(){
+			openCreateGameModal(false);
+		});
+		$("#createRankedBtn").on("click", function(){
+			openCreateGameModal(true);
 		});
 
 		$("#createGame").on("mousedown", function(e){
@@ -176,8 +204,6 @@ var events = {
 		$("#submitNationName").on("mousedown", function(){
 			title.submitNationName();
 		});
-
-
 		$("#updateNationName").on("focus", function(){
 			g.focusUpdateNationName = true;
 		}).on("blur", function(){
@@ -221,23 +247,6 @@ var events = {
 		$("#configureNationDone").on('click', function(){
 			audio.play('click');
 			title.hideBackdrop();
-		});
-		$("#rankedMatch").on('click', function(){
-			var max = $("#createGameMaxPlayerWrap");
-			var pw = $("#createGamePasswordWrap");
-			var name = $("#createGameNameWrap");
-			// max
-			var css = max.css('display') === 'block' ?
-				'none' : 'block';
-			max.css('display', css);
-			// pw
-			var css = pw.css('display') === 'block' ?
-				'none' : 'block';
-			pw.css('display', css);
-			// name
-			var css = name.css('display') === 'block' ?
-				'none' : 'block';
-			name.css('display', css);
 		});
 		$("#autoJoinGame").on('click', function(){
 			audio.play('click');

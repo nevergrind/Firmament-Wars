@@ -9,6 +9,7 @@ if (location.host !== 'localhost'){
 }
 TweenMax.defaultEase = Quad.easeOut;
 var g = {
+	rankedGame: 0,
 	joinedGame: false,
 	searchingGame: false,
 	defaultTitle: 'Firmament Wars | Multiplayer Grand Strategy Warfare',
