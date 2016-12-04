@@ -44,9 +44,9 @@
 	<link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
 	<script>
-		var version = "0-0-25";
+		var version = "0-0-26";
 	</script>
-	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-25">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-26">
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
 
@@ -210,10 +210,10 @@
 				
 					<div>
 						<div class="btn-group">
-							<button id="create" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Create FFA Game</button>
+							<button id="create" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Create Game</button>
 							<button id="autoJoinGame" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Join</button>
 						</div>
-							<div class="btn-group">
+						<div class="btn-group">
 							<button id="createRankedBtn" type="button" class="titleButtons btn fwYellow btn-responsive shadow4">Create Ranked Game</button>
 							<button id="joinRankedGame" type="button" class="titleButtons btn fwYellow btn-responsive shadow4">Join</button>
 						</div>
@@ -518,6 +518,25 @@
 				<div class='col-xs-12'>
 					<hr class="fancyhr">
 					<button id="configureNationDone" type="button" class="btn btn-md fwGreen btn-responsive shadow4">Done</button>
+				</div>
+			</div>
+		</div>
+		
+		<div id="leaderboard" class="fw-primary container titleModal">
+			<div class="row text-center">
+				<div class='col-xs-12'>
+					<h2 class='header'>Leaderboard</h2>
+					<hr class="fancyhr">
+				</div>
+			</div>
+			<div id="leaderboardBody" class="row">
+				<div class="text-center">Loading...</div>
+			</div>
+			
+			<div id="leaderboardFoot" class='row buffer text-center'>
+				<div class='col-xs-12'>
+					<hr class="fancyhr">
+					<button id="leaderboardDone" type="button" class="btn btn-md fwGreen btn-responsive shadow4">Done</button>
 				</div>
 			</div>
 		</div>

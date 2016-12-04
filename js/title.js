@@ -516,8 +516,9 @@ var title = {
 		var e = document.getElementById("configureNation"),
 			e2 = document.getElementById("titleViewBackdrop"),
 			e3 = document.getElementById('createGameWrap')
-			e4 = document.getElementById('optionsModal');
-		TweenMax.to([e,e2,e3,e4], .2, {
+			e4 = document.getElementById('optionsModal'),
+			e5 = document.getElementById('leaderboard');
+		TweenMax.to([e,e2,e3,e4,e5], .2, {
 			alpha: 0,
 			ease: Linear.easeNone,
 			onComplete: function(){

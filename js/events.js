@@ -161,6 +161,34 @@ var events = {
 			});
 			g.isModalOpen = true;
 		});
+		$("#leaderboardBtn").on('click', function(){
+			var e = document.getElementById("leaderboard"),
+				e2 = document.getElementById("titleViewBackdrop");
+			TweenMax.to(e, .5, {
+				startAt: {
+					visibility: 'visible',
+					scale: .8,
+					alpha: 0
+				},
+				scale: 1,
+				alpha: 1
+			});
+			TweenMax.to(e2, .5, {
+				startAt: {
+					visibility: 'visible',
+					opacity: 0
+				},
+				opacity: 1
+			});
+			g.isModalOpen = true;
+			var e3 = document.getElementById('leaderboardBody');
+			$.ajax({
+				url: 'php/leaderboard.php',
+			}).done(function(data) {
+				console.info(data);
+				e3.innerHTML = data.str;
+			});
+		});
 
 		$("#flagDropdown").on('click', '.flagSelect', function(e){
 			my.selectedFlag = $(this).text();
@@ -244,15 +272,19 @@ var events = {
 		$("#titleViewBackdrop").on('click', function(){
 			title.hideBackdrop();
 		});
-		$("#configureNationDone").on('click', function(){
+		$("#configureNationDone, #leaderboardDone").on('click', function(){
 			audio.play('click');
 			title.hideBackdrop();
 		});
 		$("#autoJoinGame").on('click', function(){
 			audio.play('click');
 			$("#joinGamePassword").val();
-			$(".wars").filter(":first").trigger("click");
-			title.joinGame();
+			$(".wars").filter(":first").trigger("click"); 
+			if (!$("#joinGameName").val()){
+				Msg("No unranked games found!", 1.5);
+			} else {
+				title.joinGame();
+			}
 		});
 		$("#overlay").on('click', function(){
 			g.searchingGame = false;
@@ -272,7 +304,7 @@ var events = {
 						if (g.searchingGame){
 							repeat(++count);
 						}
-					}, 5000);
+					}, 3000);
 					// ajax call to join ranked game
 					$.ajax({
 						url: 'php/joinRankedGame.php'

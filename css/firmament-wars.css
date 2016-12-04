@@ -134,6 +134,9 @@ a:hover{
 		rgba(16,64,176,.4)
 	); 
 }
+.fancyhr2{
+	margin: .5% 0;
+}
 .shadow1{
 	text-shadow:
 		1px 1px #000,
@@ -285,19 +288,6 @@ a:hover{
 .chat-hidden:hover{
 	color: #fff;
 	pointer-events: auto;
-}
-.fwYellow{
-	background: rgba(33,33,4,1);
-	color: #faf57a !important;
-	cursor: pointer;
-	border: 1px solid #8a7a04;
-	border-radius: 4px;
-}
-.fwYellow:hover{
-	background: rgba(44,44,6,1);
-}
-.fwYellow:active{
-	background: rgba(22,22,3,1);
 }
 .ranked{
 	color: #faf57a;
@@ -462,7 +452,24 @@ tbody{
 	padding: .25em .5em .5em;
 	overflow: auto;
 }
-
+#leaderboard{
+	width: 85%;
+	max-width: 1024px;
+	height: 96%;
+	overflow: hidden;
+}
+#leaderboardBody{
+	overflow: hidden;
+	overflow-y: auto;
+	height: 89%;
+	width: 100%;
+	margin-left: 0;
+}
+#leaderboardFoot{
+	position: relative;
+	width: 100%;
+	
+}
 #titleChatPlayers{
 	left: .5%;
 	width: 19%;
@@ -493,6 +500,19 @@ tbody{
 }
 .fwBlue:active{
 	background: rgba(6,46,86,1);
+}
+.fwYellow{
+	background: rgba(33,33,4,1);
+	color: #faf57a !important;
+	cursor: pointer;
+	border: 1px solid #8a7a04;
+}
+.fwYellow:hover{
+	background: rgba(44,44,6,1);
+}
+.fwYellow:active{
+	background: rgba(22,22,3,1);
+	box-shadow: none;
 }
 .fwGreen{
 	background: rgba(11,76,11,1);
