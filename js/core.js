@@ -869,6 +869,10 @@ function resizeWindow() {
 		xPercent: -50,
 		yPercent: -50
 	});
+	TweenMax.set('#firmamentWarsLogo', {
+		top: '50%',
+		yPercent: -50
+	});
 }
 
 

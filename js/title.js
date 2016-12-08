@@ -316,17 +316,17 @@ var title = {
 		TweenMax.to(fwLogo, globeDelay, {
 			startAt: {
 				visibility: 'visible',
-				alpha: 0
+				alpha: 0,
+				yPercent: -50
 			},
 			alpha: 1,
 			ease: Quad.easeIn
 		});
 		TweenMax.to(fwLogo, globeDelay, {
 			startAt: {
-				yPercent: -50,
-				y: '-15%'
+				y: '-65%'
 			},
-			y: '0%',
+			y: '-50%',
 			onComplete: function(){
 				TweenMax.to('#titleMain', .5, {
 					startAt: {

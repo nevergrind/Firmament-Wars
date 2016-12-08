@@ -55,7 +55,7 @@
 	<div id="titleViewBackdrop"></div>
 
 	<div id="firmamentWarsLogoWrap" class="titleBG">
-		<img src="images/firmamentWarsTitle90.jpg" title="Firmament Wars Official Logo" class="titleBG fwHidden">
+		<img id="firmamentWars" src="images/firmamentWarsTitle90.jpg" title="Firmament Wars Official Logo" class="titleBG fwHidden">
 		
 		<div id="firmamentWarsStars1" class="titleBG titleStars"></div>
 		<div id="firmamentWarsStars2" class="titleBG titleStars"></div>
@@ -235,7 +235,7 @@
 							<tr>
 								<th class="gameTableCol1 warCells">Game Name</th>
 								<th class="gameTableCol2 warCells">Map</th>
-								<th class="gameTableCol3 warCells">Players</th>
+								<th class="gameTableCol3 warCells">&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody id="gameTableBody">
@@ -525,8 +525,8 @@
 		</div>
 		
 		<div id="leaderboard" class="fw-primary container titleModal">
-			<div class="row text-center">
-				<div class='col-xs-12'>
+			<div class="row">
+				<div class='col-xs-12 text-center'>
 					<h2 class='header'>Leaderboard</h2>
 					<hr class="fancyhr">
 				</div>
@@ -535,8 +535,8 @@
 				<div class="text-center">Loading...</div>
 			</div>
 			
-			<div id="leaderboardFoot" class='row buffer text-center'>
-				<div class='col-xs-12'>
+			<div id="leaderboardFoot" class='row'>
+				<div class='col-xs-12 text-center'>
 					<hr class="fancyhr">
 					<button id="leaderboardDone" type="button" class="btn btn-md fwGreen btn-responsive shadow4">Done</button>
 				</div>

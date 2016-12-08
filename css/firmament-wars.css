@@ -20,7 +20,7 @@ input{
 }
 body{
 	font-family: Verdana, Arial, sans-serif;
-	font-size: 1.5em;
+	font-size: 1em;
 	position: absolute;
 	opacity: 0;
 	background: #000;
@@ -222,7 +222,7 @@ a:hover{
 	left: 0;
 	right: 0;
 	margin: 0 auto;
-	top: 0%;
+	top: 50%;
 	width: 100%;
 	max-width: 1400px;
 }
@@ -260,7 +260,6 @@ a:hover{
 	width: 50%;
 	padding: 1%;
 	z-index: 9999;
-	font-size: 1em;
 	vertical-align: bottom;
 	pointer-events: none;
 }
@@ -552,7 +551,6 @@ tbody{
 	width: 40%;
 	padding: .5% 1%;
 	z-index: 9999;
-	font-size: 1em;
 	font-family: Verdana, Arial, sans-serif;
 	border-radius: 4px;
 	pointer-events: none;
@@ -583,7 +581,6 @@ tbody{
 #ui2-head{
 	position: relative;
 	color: #fff;
-	font-size: 1em;
 	z-index: 9999;
 	padding: .25em .5em;
 	text-align: right;
@@ -959,7 +956,7 @@ table td, .table th, .table td {
 	visibility: hidden;
 	margin-left: 1em;
 	white-space: nowrap;
-	font-size: 22px;
+	font-size: 1.5em;
 	font-family: Times New Roman, Serif;
 	pointer-events: none;
 	text-anchor: middle;
@@ -1060,7 +1057,6 @@ circle{
 }
 #nation-ui{
 	margin-top: 3%;
-	font-size: 1em;
 	font-family: Times New Roman, serif;
 	text-overflow: ellipsis;
 	text-align: center;
@@ -1068,7 +1064,6 @@ circle{
 }
 #tileName{
 	font-family: Times New Roman, serif;
-	font-size: 1em;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	text-align: center;
@@ -1153,7 +1148,6 @@ circle{
 }
 .lobbyAccounts{
 	margin-top: .25em;
-	font-size: 1em;
 	line-height: 1em;
 }
 .lobbyNames{
@@ -1479,7 +1473,6 @@ table {
 	text-overflow: ellipsis;
 	text-align: left;
 	font-family: Times New Roman, serif;
-	font-size: 1em;
 	overflow: hidden;
 }
 #buyFlag{
@@ -1526,7 +1519,7 @@ table {
 /* gov icon */
 .player1{
 	color: #bb0000;
-	background-position: -15px -15px;
+	background-position: -15px -100%;
 }
 /* stat border */
 .pb1{
@@ -1538,7 +1531,7 @@ table {
 }
 .player2{
 	color: #0077ff;
-	background-position: -15px -15px;
+	background-position: -15px -100%;
 }
 .pb2{
 	border: 1px solid #0077ff;
@@ -1548,7 +1541,7 @@ table {
 }
 .player3{
 	color: #a5a500;
-	background-position: -15px -15px;
+	background-position: -15px -100%;
 }
 .pb3{
 	border: 1px solid #a5a500;
@@ -1558,7 +1551,7 @@ table {
 }
 .player4{
 	color: #006000;
-	background-position: -15px -15px;
+	background-position: -15px -100%;
 }
 .pb4{
 	border: 1px solid #006000;
@@ -1568,7 +1561,7 @@ table {
 }
 .player5{
 	color: #b06000;
-	background-position: -15px -15px;
+	background-position: -15px -100%;
 }
 .pb5{
 	border: 1px solid #b06000;
@@ -1578,7 +1571,7 @@ table {
 }
 .player6{
 	color: #33ddff;
-	background-position: -15px -15px;
+	background-position: -15px -100%;
 }
 .pb6{
 	border: 1px solid #33ddff;
@@ -1588,7 +1581,7 @@ table {
 }
 .player7{
 	color: #b050b0;
-	background-position: -15px -15px;
+	background-position: -15px -100%;
 }
 .pb7{
 	border: 1px solid #b050b0;
@@ -1598,7 +1591,7 @@ table {
 }
 .player8{
 	color: #5500aa;
-	background-position: -15px -15px;
+	background-position: -15px -100%;
 }
 .pb8{
 	border: 1px solid #5500aa;
@@ -1995,28 +1988,483 @@ input[type=number]::-webkit-outer-spin-button {
 .crosshair{
 	cursor: crosshair;
 }
+/* flag map */
+.flag{
+	position: relative;
+	display: inline-block;
+	top: .1825em;
+	background-image: url('../images/flags/flagMap.png');
+	background-size: 2000% 800%;
+	margin: .125em .5em 0 0;
+	height: 15px;
+	width: 24px;
+	overflow: hidden;
+}
+.Albania{
+	background-position: 0 0;
+}
+.Algeria{
+	background-position: -100% 0;
+}
+.Anarcho-Capitalist{
+	background-position: -200% 0;
+}
+.Argentina{
+	background-position: -300% 0;
+}
+.Armenia{
+	background-position: -400% 0;
+}
+.Australia{
+	background-position: -500% 0;
+}
+.Austria{
+	background-position: -600% 0;
+}
+.Azerbaijan{
+	background-position: -700% 0;
+}
+.Bahamas{
+	background-position: -800% 0;
+}
+.Bangladesh{
+	background-position: -900% 0;
+}
+.Barbados{
+	background-position: -1000% 0;
+}
+.Belgium{
+	background-position: -1100% 0;
+}
+.Bolivia{
+	background-position: -1200% 0;
+}
+.Bosnia-and-Herzegovina{
+	background-position: -1300% 0;
+}
+.Botswana{
+	background-position: -1400% 0;
+}
+.Brazil{
+	background-position: -1500% 0;
+}
+.Bulgaria{
+	background-position: -1600% 0;
+}
+.Cambodia{
+	background-position: -1700% 0;
+}
+.Cameroon{
+	background-position: -1800% 0;
+}
+.Canada{
+	background-position: -1900% 0;
+}
+
+.Cape-Verde{
+	background-position: 0 -100%;
+}
+.Chile{
+	background-position: -100% -100%;
+}
+.China{
+	background-position: -200% -100%;
+}
+.Christian{
+	background-position: -300% -100%;
+}
+.Colombia{
+	background-position: -400% -100%;
+}
+.Confederate-Flag{
+	background-position: -500% -100%;
+}
+.Costa-Rica{
+	background-position: -600% -100%;
+}
+.Croatia{
+	background-position: -700% -100%;
+}
+.Cuba{
+	background-position: -800% -100%;
+}
+.Czech-Republic{
+	background-position: -900% -100%;
+}
+.player0, .Default{
+	background-position: -1000% -100%;
+}
+.Denmark{
+	background-position: -1100% -100%;
+}
+.Ecuador{
+	background-position: -1200% -100%;
+}
+.Edgemaster{
+	background-position: -1300% -100%;
+}
+.Egypt{
+	background-position: -1400% -100%;
+}
+.England{
+	background-position: -1500% -100%;
+}
+.Estonia{
+	background-position: -1600% -100%;
+}
+.European-Union{
+	background-position: -1700% -100%;
+}
+.Finland{
+	background-position: -1800% -100%;
+}
+.Flanders{
+	background-position: -1900% -100%;
+}
+
+.France{
+	background-position: 0 -200%;
+}
+.Gadsden-Flag{
+	background-position: -100% -200%;
+}
+.Georgia{
+	background-position: -200% -200%;
+}
+.Germany{
+	background-position: -300% -200%;
+}
+.Ghana{
+	background-position: -400% -200%;
+}
+.Greece{
+	background-position: -500% -200%;
+}
+.Haiti{
+	background-position: -600% -200%;
+}
+.High-Energy{
+	background-position: -700% -200%;
+}
+.Honduras{
+	background-position: -800% -200%;
+}
+.Hong-Kong{
+	background-position: -900% -200%;
+}
+.Hungary{
+	background-position: -1000% -200%;
+}
+.Iceland{
+	background-position: -1100% -200%;
+}
+.India{
+	background-position: -1200% -200%;
+}
+.Indonesia{
+	background-position: -1300% -200%;
+}
+.Iran{
+	background-position: -1400% -200%;
+}
+.Ireland{
+	background-position: -1500% -200%;
+}
+.ISIS{
+	background-position: -1600% -200%;
+}
+.Isle-of-Man{
+	background-position: -1700% -200%;
+}
+.Israel{
+	background-position: -1800% -200%;
+}
+.Italy{
+	background-position: -1900% -200%;
+}
+
+.Ivory-Coast{
+	background-position: 0 -300%;
+}
+.Japan{
+	background-position: -100% -300%;
+}
+.Jordan{
+	background-position: -200% -300%;
+}
+.Kazakhstan{
+	background-position: -300% -300%;
+}
+.Kenya{
+	background-position: -400% -300%;
+}
+.Kosovo{
+	background-position: -500% -300%;
+}
+.Kurdistan{
+	background-position: -600% -300%;
+}
+.Latvia{
+	background-position: -700% -300%;
+}
+.Lebanon{
+	background-position: -800% -300%;
+}
+.Liberia{
+	background-position: -900% -300%;
+}
+.Lithuania{
+	background-position: -1000% -300%;
+}
+.Macedonia{
+	background-position: -1100% -300%;
+}
+.MAGA{
+	background-position: -1200% -300%;
+}
+.Malaysia{
+	background-position: -1300% -300%;
+}
+.Mexico{
+	background-position: -1400% -300%;
+}
+.Mongolia{
+	background-position: -1500% -300%;
+}
+.Montenegro{
+	background-position: -1600% -300%;
+}
+.Morocco{
+	background-position: -1700% -300%;
+}
+.Mozambique{
+	background-position: -1800% -300%;
+}
+.Myanmar{
+	background-position: -1900% -300%;
+}
+
+.Namibia{
+	background-position: 0 -400%;
+}
+.Nepal{
+	background-position: -100% -400%;
+}
+.Netherlands{
+	background-position: -200% -400%;
+}
+.New-Zealand{
+	background-position: -300% -400%;
+}
+.Nigeria{
+	background-position: -400% -400%;
+}
+.North-Korea{
+	background-position: -500% -400%;
+}
+.Northwest-Front{
+	background-position: -600% -400%;
+}
+.Norway{
+	background-position: -700% -400%;
+}
+.NSDAP-Flag{
+	background-position: -800% -400%;
+}
+.NSDAP-War-Ensign{
+	background-position: -900% -400%;
+}
+.Pakistan{
+	background-position: -1000% -400%;
+}
+.Palestine{
+	background-position: -1100% -400%;
+}
+.Pan-African-Flag{
+	background-position: -1200% -400%;
+}
+.Paraguay{
+	background-position: -1300% -400%;
+}
+.Peru{
+	background-position: -1400% -400%;
+}
+.Philippines{
+	background-position: -1500% -400%;
+}
+.player1{
+	background-position: -1600% -400%;
+}
+.player2{
+	background-position: -1700% -400%;
+}
+.player3{
+	background-position: -1800% -400%;
+}
+.player4{
+	background-position: -1900% -400%;
+}
+.player5{
+	background-position: 0 -500%;
+}
+.player6{
+	background-position: -100% -500%;
+}
+.player7{
+	background-position: -200% -500%;
+}
+.player8{
+	background-position: -300% -500%;
+}
+.pol{
+	background-position: -400% -500%;
+}
+.Poland{
+	background-position: -500% -500%;
+}
+.Portugal{
+	background-position: -600% -500%;
+}
+.Qatar{
+	background-position: -700% -500%;
+}
+.Rainbow-Flag{
+	background-position: -800% -500%;
+}
+.Rising-Sun-Flag{
+	background-position: -900% -500%;
+}
+.Romania{
+	background-position: -1000% -500%;
+}
+.Russia{
+	background-position: -1100% -500%;
+}
+.Saint-Lucia{
+	background-position: -1200% -500%;
+}
+.Saudi-Arabia{
+	background-position: -1300% -500%;
+}
+.Scotland{
+	background-position: -1400% -500%;
+}
+.Serbia{
+	background-position: -1500% -500%;
+}
+.Shahanshahi{
+	background-position: -1600% -500%;
+}
+.Singapore{
+	background-position: -1700% -500%;
+}
+.Slovakia{
+	background-position: -1800% -500%;
+}
+.Slovenia{
+	background-position: -1900% -500%;
+}
+.South-Africa{
+	background-position: 0 -600%;
+}
+.South-Korea{
+	background-position: -100% -600%;
+}
+.Spain{
+	background-position: -200% -600%;
+}
+.Sri-Lanka{
+	background-position: -300% -600%;
+}
+.Suriname{
+	background-position: -400% -600%;
+}
+.Sweden{
+	background-position: -500% -600%;
+}
+.Switzerland{
+	background-position: -600% -600%;
+}
+.Syria{
+	background-position: -700% -600%;
+}
+.Taiwan{
+	background-position: -800% -600%;
+}
+.Thailand{
+	background-position: -900% -600%;
+}
+.Trinidad-and-Tobago{
+	background-position: -1000% -600%;
+}
+.Turkey{
+	background-position: -1100% -600%;
+}
+.Uganda{
+	background-position: -1200% -600%;
+}
+.Ukraine{
+	background-position: -1300% -600%;
+}
+.United-Kingdom{
+	background-position: -1400% -600%;
+}
+.United-Nations{
+	background-position: -1500% -600%;
+}
+.United-States{
+	background-position: -1600% -600%;
+}
+.Uruguay{
+	background-position: -1700% -600%;
+}
+.USSR{
+	background-position: -1800% -600%;
+}
+.Uzbekistan{
+	background-position: -1900% -600%;
+}
+.Venezuela{
+	background-position: 0 -700%;
+}
+.Vietnam{
+	background-position: -100% -700%;
+}
+.Welsh{
+	background-position: -200% -700%;
+}
+
 /* responsive height */
-@media all and (max-height: 1080px) and (min-height: 1040px){
+@media all and (min-height: 1040px){
 	#refreshGameWrap{
 		height: 72%;
 	}
 }
-@media all and (max-height: 1040px) and (min-height: 980px){
+@media all and (max-height: 1039px) and (min-height: 980px){
 	#refreshGameWrap{
 		height: 70.5%;
 	}
+	#leaderboardBody{
+		height: 88.5%;
+	}
 }
-@media all and (max-height: 980px) and (min-height: 940px){
+@media all and (max-height: 979px) and (min-height: 940px){
 	#refreshGameWrap{
 		height: 69%;
 	}
+	#leaderboardBody{
+		height: 88%;
+	}
 }
-@media all and (max-height: 940px) and (min-height: 900px){
+@media all and (max-height: 939px) and (min-height: 899px){
 	#refreshGameWrap{
 		height: 67.5%;
 	}
 	#lobbyChatLog{
 		height: 82%;
+	}
+	#leaderboardBody{
+		height: 87.5%;
 	}
 }
 @media all and (max-height: 900px) and (min-height: 870px){
@@ -2029,8 +2477,11 @@ input[type=number]::-webkit-outer-spin-button {
 	#lobbyChatLog{
 		height: 82%;
 	}
+	#leaderboardBody{
+		height: 87%;
+	}
 }
-@media all and (max-height: 870px) and (min-height: 840px){
+@media all and (max-height: 869px) and (min-height: 840px){
 	.titlePanelLeft{
 		bottom: 7.6%;
 	}
@@ -2038,10 +2489,13 @@ input[type=number]::-webkit-outer-spin-button {
 		height: 64.5%;
 	}
 	#lobbyChatLog{
-		height: 80%;
+		height: 83%;
+	}
+	#leaderboardBody{
+		height: 86.5%;
 	}
 }
-@media all and (max-height: 840px) and (min-height: 780px){
+@media all and (max-height: 839px) and (min-height: 780px){
 	.titlePanelLeft{
 		bottom: 8%;
 	}
@@ -2051,8 +2505,11 @@ input[type=number]::-webkit-outer-spin-button {
 	#lobbyChatLog{
 		height: 78%;
 	}
+	#leaderboardBody{
+		height: 86%;
+	}
 }
-@media all and (max-height: 780px) and (min-height: 740px){
+@media all and (max-height: 779px) and (min-height: 740px){
 	.titlePanelLeft{
 		bottom: 8%;
 	}
@@ -2062,8 +2519,11 @@ input[type=number]::-webkit-outer-spin-button {
 	#lobbyChatLog{
 		height: 78%;
 	}
+	#leaderboardBody{
+		height: 85.5%;
+	}
 }
-@media all and (max-height: 740px) and (min-height: 700px){
+@media all and (max-height: 739px) and (min-height: 700px){
 	.titlePanelLeft{
 		bottom: 8.5%;
 	}
@@ -2073,8 +2533,11 @@ input[type=number]::-webkit-outer-spin-button {
 	#lobbyChatLog{
 		height: 76%;
 	}
+	#leaderboardBody{
+		height: 85%;
+	}
 }
-@media all and (max-height: 700px) and (min-height: 660px){
+@media all and (max-height: 699px) and (min-height: 660px){
 	.titlePanelLeft{
 		bottom: 8.5%;
 	}
@@ -2084,8 +2547,11 @@ input[type=number]::-webkit-outer-spin-button {
 	#lobbyChatLog{
 		height: 76%;
 	}
+	#leaderboardBody{
+		height: 84.5%;
+	}
 }
-@media all and (max-height: 660px) and (min-height: 620px){
+@media all and (max-height: 659px) and (min-height: 620px){
 	.titlePanelLeft{
 		bottom: 9%;
 	}
@@ -2095,8 +2561,11 @@ input[type=number]::-webkit-outer-spin-button {
 	#lobbyChatLog{
 		height: 74%;
 	}
+	#leaderboardBody{
+		height: 84%;
+	}
 }
-@media all and (max-height: 620px) and (min-height: 580px){
+@media all and (max-height: 619px) and (min-height: 580px){
 	.titlePanelLeft{
 		bottom: 9.5%;
 	}
@@ -2106,8 +2575,11 @@ input[type=number]::-webkit-outer-spin-button {
 	#lobbyChatLog{
 		height: 72%;
 	}
+	#leaderboardBody{
+		height: 83.5%;
+	}
 }
-@media all and (max-height: 580px) and (min-height: 540px){
+@media all and (max-height: 579px) and (min-height: 540px){
 	.titlePanelLeft{
 		bottom: 9.5%;
 	}
@@ -2117,8 +2589,11 @@ input[type=number]::-webkit-outer-spin-button {
 	#lobbyChatLog{
 		height: 72%;
 	}
+	#leaderboardBody{
+		height: 83%;
+	}
 }
-@media all and (max-height: 540px) and (min-height: 500px){
+@media all and (max-height: 539px) and (min-height: 500px){
 	.titlePanelLeft{
 		bottom: 10%;
 	}
@@ -2128,8 +2603,11 @@ input[type=number]::-webkit-outer-spin-button {
 	#lobbyChatLog{
 		height: 70%;
 	}
+	#leaderboardBody{
+		height: 82.5%;
+	}
 }
-@media all and (max-height: 500px) and (min-height: 450px){
+@media all and (max-height: 499px) and (min-height: 450px){
 	.titlePanelLeft{
 		bottom: 11%;
 	}
@@ -2140,7 +2618,7 @@ input[type=number]::-webkit-outer-spin-button {
 		height: 68%;
 	}
 }
-@media all and (max-height: 450px) and (min-height: 350px){
+@media all and (max-height: 449px) and (min-height: 350px){
 	.titlePanelLeft{
 		bottom: 13%;
 	}
@@ -2151,7 +2629,7 @@ input[type=number]::-webkit-outer-spin-button {
 		height: 66%;
 	}
 }
-@media all and (max-height: 350px) and (min-height: 250px){
+@media all and (max-height: 349px) and (min-height: 250px){
 	.titlePanelLeft{
 		bottom: 16%;
 	}
@@ -2162,7 +2640,7 @@ input[type=number]::-webkit-outer-spin-button {
 		height: 64%;
 	}
 }
-@media all and (max-height: 250px) and (min-height: 0px){
+@media all and (max-height: 249px) and (min-height: 0px){
 	.titlePanelLeft{
 		bottom: 21%;
 	}
@@ -2174,7 +2652,7 @@ input[type=number]::-webkit-outer-spin-button {
 	}
 }
 /* responsive width */
-@media all and (min-width: 1024px){
+@media all and (min-width: 1023px){
 	body { 
 		font-size: 1.5em; 
 	}
@@ -2182,471 +2660,39 @@ input[type=number]::-webkit-outer-spin-button {
 		padding: 4px 8px;
 	}
 }
-@media all and (max-width: 1023px) and (min-width: 640px){
+@media all and (min-width: 800px) and (max-width: 1023px){
 	body { 
-		font-size: 1.325em; 
+		font-size: 1.25em; 
 	}
 	.btn-responsive{
-		font-size: 1em; 
+		font-size: .925em; 
 		padding: 3px 6px;
 	}
-	.flag{
-		background-size: 420px 105px;
-		height: .875em;
-	}
 }
-@media all and (max-width: 639px){
+@media all and (min-width: 640px) and (max-width: 799px){
 	body { 
 		font-size: 1em; 
 	}
 	.btn-responsive{
-		font-size: 1.125em; 
+		font-size: .875em; 
 		padding: 2px 4px;
 	}
-	.flag{
-		background-size: 300px 75px;
-		height: .625em;
+}
+@media all and (min-width: 500px) and (max-width: 639px){
+	body { 
+		font-size: .875em; 
+	}
+	.btn-responsive{
+		font-size: .825em; 
+		padding: 2px 4px;
 	}
 }
-/* flag map */
-.flag{
-	background-image: url('../images/flags/flagMap.png');
-	background-size: 480px 120px;
-	float: left;
-	margin: .25em .5em 0 0;
-	height: 1em;
-	width: 1.6em;
-}
-.Albania{
-	background-position: 0 0;
-}
-.Algeria{
-	background-position: -24px 0;
-}
-.Anarcho-Capitalist{
-	background-position: -48px 0;
-}
-.Argentina{
-	background-position: -72px 0;
-}
-.Armenia{
-	background-position: -96px 0;
-}
-.Australia{
-	background-position: -120px 0;
-}
-.Austria{
-	background-position: -144px 0;
-}
-.Azerbaijan{
-	background-position: -168px 0;
-}
-.Bahamas{
-	background-position: -192px 0;
-}
-.Bangladesh{
-	background-position: -216px 0;
-}
-.Barbados{
-	background-position: -240px 0;
-}
-.Belgium{
-	background-position: -264px 0;
-}
-.Bolivia{
-	background-position: -288px 0;
-}
-.Bosnia-and-Herzegovina{
-	background-position: -312px 0;
-}
-.Botswana{
-	background-position: -336px 0;
-}
-.Brazil{
-	background-position: -360px 0;
-}
-.Bulgaria{
-	background-position: -384px 0;
-}
-.Cambodia{
-	background-position: -408px 0;
-}
-.Cameroon{
-	background-position: -432px 0;
-}
-.Canada{
-	background-position: -456px 0;
-}
-
-.Cape-Verde{
-	background-position: 0 -15px;
-}
-.Chile{
-	background-position: -24px -15px;
-}
-.China{
-	background-position: -48px -15px;
-}
-.Christian{
-	background-position: -72px -15px;
-}
-.Colombia{
-	background-position: -96px -15px;
-}
-.Confederate-Flag{
-	background-position: -120px -15px;
-}
-.Costa-Rica{
-	background-position: -144px -15px;
-}
-.Croatia{
-	background-position: -168px -15px;
-}
-.Cuba{
-	background-position: -192px -15px;
-}
-.Czech-Republic{
-	background-position: -216px -15px;
-}
-.player0, .Default{
-	background-position: -240px -15px;
-}
-.Denmark{
-	background-position: -264px -15px;
-}
-.Ecuador{
-	background-position: -288px -15px;
-}
-.Edgemaster{
-	background-position: -312px -15px;
-}
-.Egypt{
-	background-position: -336px -15px;
-}
-.England{
-	background-position: -360px -15px;
-}
-.Estonia{
-	background-position: -384px -15px;
-}
-.European-Union{
-	background-position: -408px -15px;
-}
-.Finland{
-	background-position: -432px -15px;
-}
-.Flanders{
-	background-position: -456px -15px;
-}
-
-.France{
-	background-position: 0 -30px;
-}
-.Gadsden-Flag{
-	background-position: -24px -30px;
-}
-.Georgia{
-	background-position: -48px -30px;
-}
-.Germany{
-	background-position: -72px -30px;
-}
-.Ghana{
-	background-position: -96px -30px;
-}
-.Greece{
-	background-position: -120px -30px;
-}
-.Haiti{
-	background-position: -144px -30px;
-}
-.High-Energy{
-	background-position: -168px -30px;
-}
-.Honduras{
-	background-position: -192px -30px;
-}
-.Hong-Kong{
-	background-position: -216px -30px;
-}
-.Hungary{
-	background-position: -240px -30px;
-}
-.Iceland{
-	background-position: -264px -30px;
-}
-.India{
-	background-position: -288px -30px;
-}
-.Indonesia{
-	background-position: -312px -30px;
-}
-.Iran{
-	background-position: -336px -30px;
-}
-.Ireland{
-	background-position: -360px -30px;
-}
-.ISIS{
-	background-position: -384px -30px;
-}
-.Isle-of-Man{
-	background-position: -408px -30px;
-}
-.Israel{
-	background-position: -432px -30px;
-}
-.Italy{
-	background-position: -456px -30px;
-}
-
-.Ivory-Coast{
-	background-position: 0 -45px;
-}
-.Japan{
-	background-position: -24px -45px;
-}
-.Jordan{
-	background-position: -48px -45px;
-}
-.Kazakhstan{
-	background-position: -72px -45px;
-}
-.Kenya{
-	background-position: -96px -45px;
-}
-.Kosovo{
-	background-position: -120px -45px;
-}
-.Kurdistan{
-	background-position: -144px -45px;
-}
-.Latvia{
-	background-position: -168px -45px;
-}
-.Lebanon{
-	background-position: -192px -45px;
-}
-.Liberia{
-	background-position: -216px -45px;
-}
-.Lithuania{
-	background-position: -240px -45px;
-}
-.Macedonia{
-	background-position: -264px -45px;
-}
-.MAGA{
-	background-position: -288px -45px;
-}
-.Malaysia{
-	background-position: -312px -45px;
-}
-.Mexico{
-	background-position: -336px -45px;
-}
-.Mongolia{
-	background-position: -360px -45px;
-}
-.Montenegro{
-	background-position: -384px -45px;
-}
-.Morocco{
-	background-position: -408px -45px;
-}
-.Mozambique{
-	background-position: -432px -45px;
-}
-.Myanmar{
-	background-position: -456px -45px;
-}
-
-.Namibia{
-	background-position: 0 -60px;
-}
-.Nepal{
-	background-position: -24px -60px;
-}
-.Netherlands{
-	background-position: -48px -60px;
-}
-.New-Zealand{
-	background-position: -72px -60px;
-}
-.Nigeria{
-	background-position: -96px -60px;
-}
-.North-Korea{
-	background-position: -120px -60px;
-}
-.Northwest-Front{
-	background-position: -144px -60px;
-}
-.Norway{
-	background-position: -168px -60px;
-}
-.NSDAP-Flag{
-	background-position: -192px -60px;
-}
-.NSDAP-War-Ensign{
-	background-position: -216px -60px;
-}
-.Pakistan{
-	background-position: -240px -60px;
-}
-.Palestine{
-	background-position: -264px -60px;
-}
-.Pan-African-Flag{
-	background-position: -288px -60px;
-}
-.Paraguay{
-	background-position: -312px -60px;
-}
-.Peru{
-	background-position: -336px -60px;
-}
-.Philippines{
-	background-position: -360px -60px;
-}
-.player1{
-	background-position: -384px -60px;
-}
-.player2{
-	background-position: -408px -60px;
-}
-.player3{
-	background-position: -432px -60px;
-}
-.player4{
-	background-position: -456px -60px;
-}
-.player5{
-	background-position: 0 -75px;
-}
-.player6{
-	background-position: -24px -75px;
-}
-.player7{
-	background-position: -48px -75px;
-}
-.player8{
-	background-position: -72px -75px;
-}
-.pol{
-	background-position: -96px -75px;
-}
-.Poland{
-	background-position: -120px -75px;
-}
-.Portugal{
-	background-position: -144px -75px;
-}
-.Qatar{
-	background-position: -168px -75px;
-}
-.Rainbow-Flag{
-	background-position: -192px -75px;
-}
-.Rising-Sun-Flag{
-	background-position: -216px -75px;
-}
-.Romania{
-	background-position: -240px -75px;
-}
-.Russia{
-	background-position: -264px -75px;
-}
-.Saint-Lucia{
-	background-position: -288px -75px;
-}
-.Saudi-Arabia{
-	background-position: -312px -75px;
-}
-.Scotland{
-	background-position: -336px -75px;
-}
-.Serbia{
-	background-position: -360px -75px;
-}
-.Shahanshahi{
-	background-position: -384px -75px;
-}
-.Singapore{
-	background-position: -408px -75px;
-}
-.Slovakia{
-	background-position: -432px -75px;
-}
-.Slovenia{
-	background-position: -456px -75px;
-}
-.South-Africa{
-	background-position: 0 -90px;
-}
-.South-Korea{
-	background-position: -24px -90px;
-}
-.Spain{
-	background-position: -48px -90px;
-}
-.Sri-Lanka{
-	background-position: -72px -90px;
-}
-.Suriname{
-	background-position: -96px -90px;
-}
-.Sweden{
-	background-position: -120px -90px;
-}
-.Switzerland{
-	background-position: -144px -90px;
-}
-.Syria{
-	background-position: -168px -90px;
-}
-.Taiwan{
-	background-position: -192px -90px;
-}
-.Thailand{
-	background-position: -216px -90px;
-}
-.Trinidad-and-Tobago{
-	background-position: -240px -90px;
-}
-.Turkey{
-	background-position: -264px -90px;
-}
-.Uganda{
-	background-position: -288px -90px;
-}
-.Ukraine{
-	background-position: -312px -90px;
-}
-.United-Kingdom{
-	background-position: -336px -90px;
-}
-.United-Nations{
-	background-position: -360px -90px;
-}
-.United-States{
-	background-position: -384px -90px;
-}
-.Uruguay{
-	background-position: -408px -90px;
-}
-.USSR{
-	background-position: -432px -90px;
-}
-.Uzbekistan{
-	background-position: -456px -90px;
-}
-.Venezuela{
-	background-position: 0 -105px;
-}
-.Vietnam{
-	background-position: -24px -105px;
-}
-.Welsh{
-	background-position: -48px -105px;
+@media all and (max-width: 499px){
+	body { 
+		font-size: .75em; 
+	}
+	.btn-responsive{
+		font-size: .75em; 
+		padding: 1px 2px;
+	}
 }
