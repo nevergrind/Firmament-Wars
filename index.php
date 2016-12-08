@@ -191,6 +191,8 @@
 							$_SESSION['nation'] = $nation;
 							$_SESSION['flag'] = $flag;
 						}
+						$arr = explode(".", $_SESSION['flag']);
+						$_SESSION['flagShort'] = $arr[0];
 						echo
 						'
 							</div>

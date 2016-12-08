@@ -273,7 +273,8 @@ var lobby = {
 			// different player account
 			document.getElementById("lobbyAccount" + i).innerHTML = data.account;
 			document.getElementById("lobbyName" + i).innerHTML = data.nation;
-			document.getElementById("lobbyFlag" + i).src = 'images/flags/' + data.flag;
+			var flag = data.flag === 'Default.jpg' ? 'Player'+ i +'.jpg' : data.flag;
+			document.getElementById("lobbyFlag" + i).src = 'images/flags/'+ flag;
 			$('#lobbyFlag' + i)
 				.attr('title', data.flag.split(".").shift())
 				.tooltip({
@@ -741,24 +742,24 @@ function loadGameState(){
 			for (var i=0, len=game.player.length; i<len; i++){
 				var p = game.player[i],
 					_flagArr = p.flag.split("."),
-					_flag = _flagArr[0];
+					_flag = _flagArr[0],
+					_flagClass = _flagArr[0].replace(/ /g, "-");
 				if (p.flag){
 					var flag
 					// console.info(game.player[i]);
 					if (p.flag === 'Default.jpg'){
 						str += 
-						'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">';
-								str += '<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ p.player +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>' +
-								'<img src="images/flags/Player' + p.player + '.jpg" class="player' + p.player + ' inlineFlag diploFlag" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag + '">' +
-								'<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + p.nation + '</span>';
+						'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">\
+							<div class="flag player' + p.player + '" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag +'"></div>\
+							<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ p.player +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>\
+							<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + p.nation + '</span></div>';
 					} else {
 						str += 
-						'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">';
-								str += '<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ p.player +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>' +
-								'<img src="images/flags/' + p.flag + '" class="inlineFlag diploFlag" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag + '">' +
-								'<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + p.nation + '</span>';
+						'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">\
+							<div class="flag '+ _flagClass +'" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag + '"></div>\
+							<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ p.player +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>\
+							<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + p.nation + '</span></div>';
 					}
-					str += '</div>';
 				}
 			}
 			

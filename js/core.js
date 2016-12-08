@@ -282,7 +282,6 @@ var game = {
 	player: [0,0,0,0,0,0,0,0,0], // cached values on client to reduce DB load
 	initMap: function(){
 		(function(d, len){
-			console.info(d, len);
 			for (var i=0; i<len; i++){
 				DOM['land' + i] = d.getElementById('land' + i);
 				DOM['flag' + i] = d.getElementById('flag' + i);
@@ -694,10 +693,6 @@ var my = {
 				});
 			}
 		}
-	},
-	// return client-side inline chat flag
-	inlineFlag: function(){
-		return '<img src="images/flags/' + my.flag + '" class="inlineFlag">';
 	}
 }
 var timer = {

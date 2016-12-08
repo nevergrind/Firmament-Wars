@@ -108,7 +108,9 @@ var title = {
 									// replace player flag
 									var flagElement = document.getElementById("titlePlayerFlag_" + account);
 									if (flagElement !== null){
-										flagElement.src = 'images/flags/' + flag;
+										console.info(flag);
+										var flagClass = flag.split(".");
+										flagElement.className = 'flag ' + flagClass[0].replace(/ /g, "-");
 									}
 								}
 								foundPlayers.push(account);
@@ -178,8 +180,9 @@ var title = {
 		var e = document.createElement('div');
 		e.className = "titlePlayer";
 		e.id = "titlePlayer" + account;
-		var flagName = flag.split(".");
-		e.innerHTML = '<img id="titlePlayerFlag_' + account + '" class="inlineFlag" src="images/flags/' + flag +'"> ' + account;
+		var flagClass = flag.split(".");
+		flagClass = flagClass[0].replace(/ /g, "-");
+		e.innerHTML = '<div id="titlePlayerFlag_' + account + '" class="flag ' + flagClass +'"></div>' + account;
 		if (title.titleUpdate){
 			DOM.titleChatBody.appendChild(e);
 		}
