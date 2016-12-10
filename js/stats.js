@@ -19,7 +19,34 @@
 						token: token
 					}
 				}).done(function(data){
-					location.reload();
+					if (data !== 'Persistent login failed'){
+						location.reload();
+					} else {
+						$.ajax({
+							type: 'POST',
+							url: '/php/master1.php',
+							data: {
+								run: "getToken",
+								email: email
+							}
+						}).done(function(data){
+							token = data;
+							$.ajax({
+								type: 'POST',
+								url: '/php/master1.php',
+								data: {
+									run: "authenticate",
+									email: email,
+									token: token
+								}
+							}).done(function(data){
+								if (data !== 'Persistent login failed'){
+									localStorage.setItem('token', token);
+									location.reload();
+								}
+							});
+						});
+					}
 				});
 			} else {
 				$.ajax({

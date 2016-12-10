@@ -182,7 +182,7 @@ var title = {
 		e.id = "titlePlayer" + account;
 		var flagClass = flag.split(".");
 		flagClass = flagClass[0].replace(/ /g, "-");
-		e.innerHTML = '<div id="titlePlayerFlag_' + account + '" class="flag ' + flagClass +'"></div>' + account;
+		e.innerHTML = '<div id="titlePlayerFlag_'+ account +'" class="flag ' + flagClass +'"></div><span class="titlePlayerAccount">'+ account +'</span>';
 		if (title.titleUpdate){
 			DOM.titleChatBody.appendChild(e);
 		}
@@ -493,6 +493,17 @@ var title = {
 		var arr = msg.split(splitter);
 		socket.setChannel(arr[1]);
 	},
+	who: function(msg){
+		var a = msg.split("/who ");
+		$.ajax({
+			url: 'php/whoUser.php',
+			data: {
+				account: a[1]
+			}
+		}).done(function(data){
+			g.chat(data);
+		});
+	},
 	sendMsg: function(bypass){
 		var msg = $DOM.titleChatInput.val().trim();
 		// bypass via ENTER or chat has focus
@@ -509,6 +520,8 @@ var title = {
 					title.sendWhisper(msg , '/w ');
 				} else if (msg.indexOf('@') === 0){
 					title.sendWhisper(msg , '@');
+				} else if (msg.indexOf('/who ') === 0){
+					title.who(msg);
 				} else {
 					$.ajax({
 						url: 'php/insertTitleChat.php',

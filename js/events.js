@@ -25,6 +25,9 @@ var events = {
 		});
 	})(),
 	title: (function(){
+		$("#mainWrap").on('click', '.titlePlayerAccount, .lobbyAccountName', function(){
+			title.who('/who '+ $(this).text());
+		});
 		$("#gameView").on('dragstart', 'img', function(e) {
 			e.preventDefault();
 		});

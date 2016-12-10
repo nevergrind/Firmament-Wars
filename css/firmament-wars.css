@@ -392,6 +392,9 @@ tbody{
 .titlePlayer{
 	padding: 0 .5em;
 }
+.titlePlayerAccount{
+	cursor: pointer;
+}
 #titleChatWrap{
 	position: absolute;
 	padding: 0%;
@@ -1149,6 +1152,9 @@ circle{
 .lobbyAccounts{
 	margin-top: .25em;
 	line-height: 1em;
+}
+.lobbyAccountName{
+	cursor: pointer;
 }
 .lobbyNames{
 	font-family: Cinzel, Palatino Linotype, serif;
@@ -2001,7 +2007,7 @@ input[type=number]::-webkit-outer-spin-button {
 	overflow: hidden;
 }
 .Albania{
-	background-position: 0 0;
+	background-position: -1000% -100%;;
 }
 .Algeria{
 	background-position: -100% 0;
@@ -2092,7 +2098,7 @@ input[type=number]::-webkit-outer-spin-button {
 	background-position: -900% -100%;
 }
 .player0, .Default{
-	background-position: -1000% -100%;
+	background-position: 0 0;
 }
 .Denmark{
 	background-position: -1100% -100%;

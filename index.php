@@ -192,7 +192,8 @@
 							$_SESSION['flag'] = $flag;
 						}
 						$arr = explode(".", $_SESSION['flag']);
-						$_SESSION['flagShort'] = str_replace(" ", "-", $arr[0]);
+						$_SESSION['flagShort'] = $arr[0];
+						$_SESSION['flagClass'] = str_replace(" ", "-", $arr[0]);
 						echo
 						'
 							</div>

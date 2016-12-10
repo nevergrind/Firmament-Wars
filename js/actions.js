@@ -455,6 +455,8 @@ function toggleChatMode(bypass){
 				title.sendWhisper(msg, '/w ');
 			} else if (msg.indexOf('@') === 0){
 				title.sendWhisper(msg , '@');
+			} else if (msg.indexOf('/who ') === 0){
+				title.who(msg);
 			} else {
 				$.ajax({
 					url: 'php/insertChat.php',

@@ -117,6 +117,8 @@ var lobby = {
 					title.sendWhisper(msg, '/w ');
 				} else if (msg.indexOf('@') === 0){
 					title.sendWhisper(msg , '@');
+				} else if (msg.indexOf('/who ') === 0){
+					title.who(msg);
 				} else {
 					// send ajax chat msg
 					$.ajax({
@@ -155,7 +157,7 @@ var lobby = {
 						<img id="lobbyFlag' +i+ '" data-placement="right" class="lobbyFlags block center" src="images/flags/blank.png">\
 					</div>\
 					<div class="col-xs-6 lobbyDetails">\
-						<div id="lobbyAccount' +i+ '" class="lobbyAccounts  chat-warning"></div>\
+						<div class="lobbyAccounts chat-warning"><span id="lobbyAccountName'+ i +'" class="lobbyAccountName"></span></div>\
 						<div id="lobbyName' +i+ '" class="lobbyNames nowrap"></div>\
 					</div>\
 					<div class="col-xs-4">';
@@ -273,7 +275,7 @@ var lobby = {
 			// console.info("ADD PLAYER: ", data);
 			document.getElementById("lobbyRow" + i).style.display = 'block';
 			// different player account
-			document.getElementById("lobbyAccount" + i).innerHTML = data.account;
+			document.getElementById("lobbyAccountName" + i).innerHTML = data.account;
 			document.getElementById("lobbyName" + i).innerHTML = data.nation;
 			var flag = data.flag === 'Default.jpg' ? 'Player'+ i +'.jpg' : data.flag;
 			document.getElementById("lobbyFlag" + i).src = 'images/flags/'+ flag;
@@ -543,7 +545,7 @@ function loadGameState(){
 		type: 'GET',
 		url: 'maps/' + g.map.key + '.php'
 	}).done(function(data){
-		document.getElementById('worldWrap').innerHTML = data;
+		DOM.worldWrap.innerHTML = data;
 		
 		var loadGameDelay = location.host === 'localhost' ? 0 : 1000;
 		setTimeout(function(){
