@@ -236,7 +236,7 @@
 							<tr>
 								<th class="gameTableCol1 warCells">Game Name</th>
 								<th class="gameTableCol2 warCells">Map</th>
-								<th class="gameTableCol3 warCells">&nbsp;</th>
+								<th class="gameTableCol3 warCells">Players</th>
 							</tr>
 						</thead>
 						<tbody id="gameTableBody">
@@ -245,14 +245,8 @@
 				</div>
 			</div>
 			
-			<div id="titleChat" class="fw-primary text-center">
-			</div>';
-			}
-			?>
-			
-			
-			
-			<?php
+			<div id="titleChat" class="fw-primary text-center">';
+				/* left flag window */
 				if (isset($_SESSION['email'])){
 					echo '
 					<div id="titleChatPlayers" class="titlePanelLeft">
@@ -262,40 +256,50 @@
 						</div>
 						<div id="titleChatBody"></div>
 					</div>
+					
 					<div id="titleChatLog" class="titlePanelLeft">';
+					/* right chat window */
 					if (!$whitelisted){
 						echo '<div class="chat-alert">You currently do not have access to play Firmament Wars. You must get beta access from the administrator.</div>';
 					}
 					$total = 0;
+					/* count from title screen */
 					$result = mysqli_query($link, 'select count(row) count from `fwtitle` where timestamp > date_sub(now(), interval 20 second)');
 					while ($row = mysqli_fetch_assoc($result)){
 						$total += $row['count'];
 					}
+					/* count playing game */
 					$result = mysqli_query($link, 'select count(row) count from `fwplayers` where timestamp > date_sub(now(), interval 20 second)');
 					// Associative array
 					while ($row = mysqli_fetch_assoc($result)){
 						$total += $row['count'];
 						echo '<div>There '. ($total === 1 ? 'is' : 'are') .' '. $total . ' '. ($total === 1 ? 'person' : 'people') .' playing Firmament Wars</div>';
 					}
-				}
-			?>
-			</div>
-			
-				
-			<div id="titleChatWrap">
-					
-				<?php
-				if (isset($_SESSION['email']) && $whitelisted){
-					echo '
-					<div class="input-group">
-						<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" autocomplete="off" spellcheck="false" />
-						<div id="titleChatSend" class="input-group-btn">
-							<button class="btn shadow4 fwBlue">Send</button>
-						</div>
-					</div>';
+					echo 
+					'</div>';
 				}
 				?>
-			</div>
+				<div id="titleChatWrap">
+						
+					<?php
+					if (isset($_SESSION['email']) && $whitelisted){
+						echo '
+						<div class="input-group">
+							<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" autocomplete="off" spellcheck="false" />
+							<div id="titleChatSend" class="input-group-btn">
+								<button class="btn shadow4 fwBlue">Send</button>
+							</div>
+						</div>';
+					}
+					?>
+				</div>
+			<?php
+			
+			echo '</div>';
+			}
+			?>
+			
+				
 		</div>
 	
 		<div id="joinGameLobby" class="shadow4">
@@ -538,7 +542,7 @@
 			
 			<div id="leaderboardFoot" class='row'>
 				<div class='col-xs-12 text-center'>
-					<hr class="fancyhr">
+					<hr class="fancyhr fancyhrNoTop">
 					<button id="leaderboardDone" type="button" class="btn btn-md fwGreen btn-responsive shadow4">Done</button>
 				</div>
 			</div>
