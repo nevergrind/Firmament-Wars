@@ -1,6 +1,7 @@
 // ws.js 
 // client-side web sockets
 var socket = {
+	initialConnection: true,
 	removePlayer: function(account){
 		var o = {
 			type: 'remove',
@@ -68,19 +69,25 @@ var socket = {
 		socket.zmq.subscribe(channel, function(topic, data) {
 			if (data.message){
 				if (data.action === 'send'){
+					console.info(data);
 					// message sent to user
 					var msg = data.flag + data.account + ' whispers: ' + data.message;
 					title.receiveWhisper(msg, 'chat-whisper');
+					var flag = my.flag.split(".");
+					flag = flag[0].replace(/ /g, "-");
 					$.ajax({
 						url: 'php/insertWhisper.php',
 						data: {
-							action: "",
+							action: "receive",
+							flag: flag,
+							player: my.player,
 							account: data.account,
 							message: data.message
 						}
 					});
 				} else {
 					// message receive confirmation to original sender
+					console.info(data);
 					var msg = data.flag + 'To ' + data.account + ': ' + data.message;
 					title.receiveWhisper(msg, 'chat-whisper');
 				}
@@ -128,7 +135,8 @@ var socket = {
 		socket.enabled = true;
 		console.info("Socket connection established with server");
 		// chat updates
-		if (g.view === 'title'){
+		if (g.view === 'title' && socket.initialConnection){
+			socket.initialConnection = false;
 			title.chat("You have joined channel: " + my.channel + ".", "chat-warning", true);
 			socket.zmq.subscribe('title:' + my.channel, function(topic, data) {
 				title.chatReceive(data);

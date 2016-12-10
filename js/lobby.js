@@ -115,6 +115,8 @@ var lobby = {
 					title.sendWhisper(msg, '/whisper ');
 				} else if (msg.indexOf('/w ') === 0){
 					title.sendWhisper(msg, '/w ');
+				} else if (msg.indexOf('@') === 0){
+					title.sendWhisper(msg , '@');
 				} else {
 					// send ajax chat msg
 					$.ajax({

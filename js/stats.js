@@ -114,7 +114,13 @@ var stats = {
 			location.reload();
 		});
 	},
-	maxValue: {},
+	maxValue: {
+		unitsTotal: 0,
+		structuresTotal: 0,
+		weaponsTotal: 0,
+		resourcesTotal: 0,
+		overviewTotal: 0
+	},
 	setLeaderValues: function(){
 		for (var i=1; i<=8; i++){
 			var d = stats.data[i];
@@ -128,28 +134,26 @@ var stats = {
 						}
 					}
 				}
-				if (i === 1){
+				var units = stats.unitsTotal(i),
+					structures = stats.structuresTotal(i),
+					weapons = stats.weaponsTotal(i),
+					resources = stats.resourcesTotal(i),
+					overview = stats.overviewTotal(i);
+				
+				if (units > stats.maxValue.unitsTotal){
 					stats.maxValue.unitsTotal = stats.unitsTotal(i);
-					stats.maxValue.structuresTotal = stats.structuresTotal(i);
-					stats.maxValue.weaponsTotal = stats.weaponsTotal(i);
-					stats.maxValue.resourcesTotal = stats.resourcesTotal(i);
-					stats.maxValue.overviewTotal = stats.overviewTotal(i);
-				} else {
-					if (stats.unitsTotal(i) > stats.maxValue.unitsTotal){
-						stats.maxValue.unitsTotal = stats.unitsTotal(i);
-					}
-					if (stats.structuresTotal(i) > stats.maxValue.structuresTotal){
-						stats.maxValue.structuresTotal = stats.structuresTotal(i);
-					}
-					if (stats.weaponsTotal(i) > stats.maxValue.weaponsTotal){
-						stats.maxValue.weaponsTotal = stats.weaponsTotal(i);
-					}
-					if (stats.resourcesTotal(i) > stats.maxValue.resourcesTotal){
-						stats.maxValue.resourcesTotal = stats.resourcesTotal(i);
-					}
-					if (stats.overviewTotal(i) > stats.maxValue.overviewTotal){
-						stats.maxValue.overviewTotal = stats.overviewTotal(i);
-					}
+				}
+				if (structures > stats.maxValue.structuresTotal){
+					stats.maxValue.structuresTotal = structures;
+				}
+				if (weapons > stats.maxValue.weaponsTotal){
+					stats.maxValue.weaponsTotal = weapons;
+				}
+				if (resources > stats.maxValue.resourcesTotal){
+					stats.maxValue.resourcesTotal = resources;
+				}
+				if (overview > stats.maxValue.overviewTotal){
+					stats.maxValue.overviewTotal = overview;
 				}
 			}
 		}

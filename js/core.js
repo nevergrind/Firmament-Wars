@@ -305,8 +305,13 @@ var game = {
 		DOM.chatContent.appendChild(z);
 		setTimeout(function(){
 			if (z !== undefined){
-				if (z.parentNode !== null){ 
-					z.parentNode.removeChild(z);
+				if (z.parentNode !== null){
+					TweenMax.to(z, .125, {
+						alpha: 0,
+						onComplete: function(){
+							z.parentNode.removeChild(z);
+						}
+					});
 				}
 			}
 		}, 12000);
@@ -551,7 +556,7 @@ var my = {
 	lastReceivedWhisper: '',
 	account: '',
 	channel: 'global',
-	player: 1,
+	player: 0,
 	gameName: 'Earth Alpha',
 	max: 8,
 	tgt: 1,

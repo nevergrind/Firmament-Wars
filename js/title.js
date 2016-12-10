@@ -466,10 +466,14 @@ var title = {
 		var splitLen = splitter.length;
 		var accountLen = account.length;
 		var msg = msg.substr(splitLen + accountLen + 1);
+		var flag = my.flag.split(".");
+		flag = flag[0].replace(/ /g, "-");
 		$.ajax({
 			url: 'php/insertWhisper.php',
 			data: {
 				account: account,
+				flag: flag,
+				player: my.player,
 				message: msg,
 				action: 'send'
 			}
@@ -503,6 +507,8 @@ var title = {
 					title.sendWhisper(msg , '/whisper ');
 				} else if (msg.indexOf('/w ') === 0){
 					title.sendWhisper(msg , '/w ');
+				} else if (msg.indexOf('@') === 0){
+					title.sendWhisper(msg , '@');
 				} else {
 					$.ajax({
 						url: 'php/insertTitleChat.php',
