@@ -16,6 +16,15 @@ var g = {
 	titleFlashing: false,
 	name: "",
 	password: "",
+	speed: 10,
+	speeds: {
+		Slower: 15000,
+		Slow: 12000,
+		Normal: 10000,
+		Fast: 8000,
+		Faster: 6000,
+		Fastest: 5000
+	},
 	focusUpdateNationName: false,
 	focusGameName: false,
 	view: "title",
@@ -252,12 +261,13 @@ g.init = (function(){
 			type: "GET",
 			url: 'php/rejoinGame.php' // check if already in a game
 		}).done(function(data) {
-			// console.info('rejoin ', data);
+			console.info('rejoin ', data.gameId);
 			if (data.gameId > 0){
 				// console.info("Auto joined game:" + (data.gameId));
 				my.player = data.player;
 				game.id = data.gameId;
 				g.map = data.mapData;
+				g.speed = g.speeds[data.speed];
 				// join lobby in progress
 				setTimeout(function(){
 					lobby.init(data);
@@ -385,7 +395,7 @@ var game = {
 	startGameState: function(){
 		// add function to get player data list?
 		game.getGameState();
-		setInterval(game.updateResources, 5000);
+		setInterval(game.updateResources, g.speed);
 		delete game.startGameState;
 	},
 	getGameState: function(){
@@ -648,35 +658,38 @@ var my = {
 	},
 	// shift camera to tile
 	focusTile: function(tile, d){
-		var box = DOM['land' + tile].getBBox();
-		if (d === undefined){
-			d = .5;
+		var e = DOM['land' + tile];
+		if (e !== null){
+			var box = e.getBBox();
+			if (d === undefined){
+				d = .5;
+			}
+			// init map position & check max/min values
+			var x = -box.x + 512;
+			if (x > 0){ 
+				x = 0;
+			}
+			var xMin = (g.map.sizeX - g.screen.width) * -1;
+			if (x < xMin){ 
+				x = xMin;
+			}
+			
+			var y = -box.y + 234; // 384 is dead center
+			if (y > 0){ 
+				y = 0;
+			}
+			var yMin = (g.map.sizeY - g.screen.height) * -1;
+			if (y < yMin){ 
+				y = yMin;
+			}
+			TweenMax.to(DOM.worldWrap, d, {
+				force3D: false,
+				x: x * g.resizeX,
+				y: y * g.resizeY
+			});
+			showTarget(document.getElementById('land' + tile), false, 1);
+			my.flashTile(tile);
 		}
-		// init map position & check max/min values
-		var x = -box.x + 512;
-		if (x > 0){ 
-			x = 0;
-		}
-		var xMin = (g.map.sizeX - g.screen.width) * -1;
-		if (x < xMin){ 
-			x = xMin;
-		}
-		
-		var y = -box.y + 234; // 384 is dead center
-		if (y > 0){ 
-			y = 0;
-		}
-		var yMin = (g.map.sizeY - g.screen.height) * -1;
-		if (y < yMin){ 
-			y = yMin;
-		}
-		TweenMax.to(DOM.worldWrap, d, {
-			force3D: false,
-			x: x * g.resizeX,
-			y: y * g.resizeY
-		});
-		showTarget(document.getElementById('land' + tile), false, 1);
-		my.flashTile(tile);
 	},
 	// flash text in land
 	flashTile: function(tile){
@@ -919,7 +932,7 @@ function Msg(msg, d) {
 				opacity: 1
 			},
 			onComplete: function(){
-				TweenMax.to(this.target, .5, {
+				TweenMax.to(this.target, .2, {
 					opacity: 0
 				});
 			}

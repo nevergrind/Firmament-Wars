@@ -64,6 +64,7 @@ var title = {
 				"<tr id='game_"+ d.id +"' class='wars no-select' data-name='" + d.name + "'>\
 					<td class='warCells'>"+ d.name + "</td>\
 					<td class='warCells'>" + d.map + "</td>\
+					<td class='warCells'>" + d.speed + "</td>\
 					<td class='warCells'><span id='game_players_"+ d.id +"'>" + d.players + "</span>/" + d.max + "</td>\
 				</tr>";
 			}
@@ -260,6 +261,7 @@ var title = {
 		e.innerHTML = 
 			"<td class='warCells'>"+ data.name + "</td>\
 			<td class='warCells'>" + data.map + "</td>\
+			<td class='warCells'>" + data.speed + "</td>\
 			<td class='warCells'><span id='game_players_" + data.id + "'>1</span>/" + data.max + "</td>";
 		DOM.gameTableBody.insertBefore(e, DOM.gameTableBody.childNodes[0]);
 	},
@@ -556,11 +558,15 @@ var title = {
 	createGame: function(){
 		var name = $("#gameName").val(),
 			pw = $("#gamePassword").val(),
-			max = $("#gamePlayers").val() * 1;
+			max = $("#gamePlayers").val() * 1,
+			speed = $("#createGameSpeed").text();
 		if (!g.rankedGame && (name.length < 4 || name.length > 32)){
-			Msg("Game name must be at least 4-32 characters.");
+			Msg("Game name must be at least 4-32 characters.", 1);
+			setTimeout(function(){
+				$("#gameName").focus().select();
+			}, 100);
 		} else if (!g.rankedGame && (max < 2 || max > 8 || max % 1 !== 0)){
-			Msg("Game must have 2-8 players.");
+			Msg("Game must have 2-8 players.", 1);
 		} else {
 			title.hideBackdrop();
 			g.lock(1);
@@ -572,7 +578,8 @@ var title = {
 					pw: pw,
 					map: title.mapData[g.map.key].name,
 					max: max,
-					rating: g.rankedGame
+					rating: g.rankedGame,
+					speed: speed
 				}
 			}).done(function(data) {
 				// console.info(data);
@@ -623,6 +630,7 @@ var title = {
 		game.id = data.id;
 		game.name = data.gameName;
 		g.map = data.mapData;
+		g.speed = g.speeds[data.speed];
 		lobby.init(data);
 		lobby.join(); // normal join
 		socket.joinGame();

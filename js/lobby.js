@@ -142,8 +142,10 @@ var lobby = {
 				document.getElementById('lobbyGameNameWrap').style.display = 'none';
 			}
 			e1.innerHTML = x.name;
-			document.getElementById("lobbyGameMax").innerHTML = x.max;
+			g.speed = g.speeds[x.speed];
+			document.getElementById("lobbyGameSpeed").innerHTML = x.speed;
 			document.getElementById("lobbyGameMap").innerHTML = x.map;
+			document.getElementById("lobbyGameMax").innerHTML = x.max;
 			var z = x.player === 1 ? "block" : "none";
 			document.getElementById("startGame").style.display = z;
 			if (!x.startGame){
@@ -853,7 +855,7 @@ function loadGameState(){
 					}
 				}
 				game.startGameState();
-			}, 100);
+			}, 250);
 			animate.water();
 		}).fail(function(data){
 			serverError(data);

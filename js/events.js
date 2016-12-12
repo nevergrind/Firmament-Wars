@@ -188,7 +188,6 @@ var events = {
 			$.ajax({
 				url: 'php/leaderboard.php',
 			}).done(function(data) {
-				console.info(data);
 				e3.innerHTML = data.str;
 			});
 		});
@@ -300,14 +299,14 @@ var events = {
 			audio.play('click');
 			g.lock();
 			g.searchingGame = true;
+			Msg("Searching for ranked games...", 0);
 			(function repeat(count){
-				if (count < 6 && !g.joinedGame){
-					Msg("Searching for ranked games...", 0);
+				if (count < 4 && !g.joinedGame){
 					setTimeout(function(){
 						if (g.searchingGame){
 							repeat(++count);
 						}
-					}, 3000);
+					}, 1000);
 					// ajax call to join ranked game
 					$.ajax({
 						url: 'php/joinRankedGame.php'
@@ -405,6 +404,16 @@ var events = {
 			document.getElementById('createGameMap').innerHTML = x;
 			document.getElementById('createGameTiles').innerHTML = title.mapData[key].tiles;
 			document.getElementById('createGamePlayers').innerHTML = title.mapData[key].players;
+			e.preventDefault();
+		});
+		$("#mainWrap").on('click', '.gameSelect', function(e){
+			e.preventDefault();
+		});
+		$("#mainWrap").on('click', '.speedSelect', function(e){
+			var x = $(this).text();
+			g.speed = g.speeds[x];
+			console.info(x, g.speed);
+			$("#createGameSpeed").text(x);
 			e.preventDefault();
 		});
 	})(),

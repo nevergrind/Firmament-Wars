@@ -343,7 +343,7 @@ a:hover{
 	position: absolute;
 	top: 7%;
 	right: 0%;
-	width: 45%;
+	width: 51%;
 	bottom: -2%;
 	overflow: hidden;
 	padding: .5% .75%;
@@ -397,7 +397,7 @@ tbody{
 	padding: 0;
 	top: 7%;
 	left: 0%;
-	width: 54.8%;
+	width: 48.8%;
 	bottom: -2%;
 }
 #titleChatWrap{
@@ -470,6 +470,7 @@ tbody{
 	width: 85%;
 	max-width: 1024px;
 	height: 96%;
+	background: #000;
 	overflow: hidden;
 }
 #leaderboardBody{
@@ -508,19 +509,6 @@ tbody{
 }
 .fwBlue:active{
 	background: rgba(6,46,86,1);
-}
-.fwYellow{
-	background: rgba(33,33,4,1);
-	color: #faf57a !important;
-	cursor: pointer;
-	border: 1px solid #8a7a04;
-}
-.fwYellow:hover{
-	background: rgba(44,44,6,1);
-}
-.fwYellow:active{
-	background: rgba(22,22,3,1);
-	box-shadow: none;
 }
 .fwGreen{
 	background: rgba(11,76,11,1);
@@ -1033,7 +1021,15 @@ text{
 	pointer-events: none;
 	fill: none;
 }
-.mapSelect{
+.titleCaret{
+	position: relative;
+	left: 2px;
+}
+.titleButtons{
+	background: rgba(16,56,96,1);
+}
+.gameSelect, .mapSelect{
+	font-family: Cinzel, Palatino Linotype, serif;
 	text-shadow: none;
 }
 circle{
@@ -1232,12 +1228,15 @@ circle{
 	border: 1px solid #2e6da4;
 }
 .gameTableCol1{
-	width: 50%;
+	width: 40%;
 }
 .gameTableCol2{
-	width: 35%;
+	width: 30%;
 }
 .gameTableCol3{
+	width: 15%;
+}
+.gameTableCol4{
 	width: 15%;
 }
 .soundSlider{
@@ -1921,7 +1920,7 @@ table {
 }
 #createGameMapWrap{
 }
-#mapDropdown{
+#mapDropdown, #speedDropdown{
 	font-family: Cinzel, Palatino Linotype, serif;
 }
 #mapDropdownWrap{

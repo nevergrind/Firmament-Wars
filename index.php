@@ -212,13 +212,32 @@
 					<hr class="fancyhr">
 				
 					<div>
-						<div class="btn-group">
-							<button id="create" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Create Game</button>
-							<button id="autoJoinGame" type="button" class="titleButtons btn fwBlue btn-responsive shadow4">Join</button>
+						<div class="btn-group" class="fwBlue">
+							<button type="button" class="titleButtons btn  shadow4 dropdown-toggle fwDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Create Game <span class="titleCaret caret chat-warning"></span>
+							</button>
+							<ul class="dropdown-menu fwDropdown">
+								<li id="create" class="gameSelect">
+									<a href="#">Free For All</a>
+								</li>
+								<li id="createRankedBtn" class="gameSelect">
+									<a href="#">Ranked Head-to-Head</a>
+								</li>
+							</ul>
 						</div>
-						<div class="btn-group">
-							<button id="createRankedBtn" type="button" class="titleButtons btn fwYellow btn-responsive shadow4">Create Ranked Game</button>
-							<button id="joinRankedGame" type="button" class="titleButtons btn fwYellow btn-responsive shadow4">Join</button>
+						
+						<div class="btn-group" class="fwBlue">
+							<button type="button" class="titleButtons btn shadow4 dropdown-toggle fwDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Auto Join Game <span class="titleCaret caret chat-warning"></span>
+							</button>
+							<ul class="dropdown-menu fwDropdown">
+								<li id="autoJoinGame" class="gameSelect">
+									<a href="#">Free For All</a>
+								</li>
+								<li id="joinRankedGame" class="gameSelect">
+									<a href="#">Ranked Head-to-Head</a>
+								</li>
+							</ul>
 						</div>
 					</div>
 					
@@ -236,7 +255,8 @@
 							<tr>
 								<th class="gameTableCol1 warCells">Game Name</th>
 								<th class="gameTableCol2 warCells">Map</th>
-								<th class="gameTableCol3 warCells">Players</th>
+								<th class="gameTableCol3 warCells">Speed</th>
+								<th class="gameTableCol4 warCells">Players</th>
 							</tr>
 						</thead>
 						<tbody id="gameTableBody">
@@ -330,10 +350,12 @@
 						<div class='text-primary margin-top'>Game Name:</div> 
 						<div id='lobbyGameName'></div>
 					</div>
-					<div class='text-primary margin-top'>Max Players:</div>
-					<div id='lobbyGameMax'></div>
 					<div class='text-primary margin-top'>Map:</div>
 					<div id='lobbyGameMap'></div>
+					<div class='text-primary margin-top'>Speed:</div>
+					<div id='lobbyGameSpeed'></div>
+					<div class='text-primary margin-top'>Max Players:</div>
+					<div id='lobbyGameMax'></div>
 				</div>
 				
 				<div id="lobbyGovernmentDescription" class="fw-primary text-center lobbyRelWrap">
@@ -392,6 +414,29 @@
 					</div>
 				</div>
 				
+				<div id="createGameSpeedWrap">
+					<div class='buffer2'>
+						<label class='control-label'>Game Speed</label>
+					</div>
+					
+					<div class='buffer w33'>
+						<div class='dropdown'>
+							<button class='btn btn-primary dropdown-toggle shadow4 fwDropdownButton' type='button' data-toggle='dropdown'>
+								<span id='createGameSpeed'>Normal</span>
+								<i class="fa fa-caret-down text-warning lobbyCaret"></i>
+							</button>
+							<ul id='speedDropdown' class='dropdown-menu fwDropdown createGameInput' value="Normal">
+								<li><a class='speedSelect' href='#'>Slower</a></li>
+								<li><a class='speedSelect' href='#'>Slow</a></li>
+								<li><a class='speedSelect' href='#'>Normal</a></li>
+								<li><a class='speedSelect' href='#'>Fast</a></li>
+								<li><a class='speedSelect' href='#'>Faster</a></li>
+								<li><a class='speedSelect' href='#'>Fastest</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				
 				<div>
 					<div class='buffer2'>
 						<label class='control-label'>Map</label>
@@ -419,7 +464,7 @@
 							</ul>
 						</div>
 					</div>
-				
+					
 					<div class='buffer2'>
 						<label class='control-label'>Map Details</label>
 					</div>
