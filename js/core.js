@@ -341,6 +341,7 @@ var game = {
 		// player eliminated
 		var i = data.player;
 		game.player[i].alive = false;
+		console.info('eliminatePlayer: ', data);
 		if ($(".alive").length > 1){
 			// found a player on diplomacy panel
 			$("#diplomacyPlayer" + i).removeClass('alive');

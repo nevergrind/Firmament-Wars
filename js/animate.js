@@ -238,35 +238,34 @@ var animate = {
 		for (var i=0; i<15; i++){
 			(function(Math){
 				var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
-				x2 = box2.x + (Math.random() * (box2.width * .4)) + box2.width * .3;
-				y2 = box2.y + (Math.random() * (box2.height * .4)) + box2.height * .3;
+				x2 = box2.x + (Math.random() * (box2.width * .6)) + box2.width * .2;
+				y2 = box2.y + (Math.random() * (box2.height * .6)) + box2.height * .2;
 				circ.setAttributeNS(null,"cx",x1);
 				circ.setAttributeNS(null,"cy",y1);
 				circ.setAttributeNS(null,"r",4);
 				circ.setAttributeNS(null,"fill",'#2a003a');
-				circ.setAttributeNS(null,"stroke",'#1a003a');
+				circ.setAttributeNS(null,"stroke",'#fff2d5');
 				DOM.mapAnimations.appendChild(circ);
 				
-				TweenMax.to(circ, .033, {
+				TweenMax.to(circ, .1, {
 					startAt: {
 						alpha: 1
 					},
-					delay: Math.random() * .15,
 					attr: {
 						cx: x2,
 						cy: y2
 					},
 					ease: Linear.easeOut,
 					onComplete: function(){
-						TweenMax.to(circ, .1, {
+						TweenMax.to(circ, .2, {
 							startAt: {
 								fill: 'none'
 							},
 							attr: {
-								r: 15
+								r: 20
 							}
 						});
-						TweenMax.to(circ, .1, {
+						TweenMax.to(circ, .2, {
 							alpha: .2,
 							ease: Linear.easeIn,
 							onComplete: function(){
@@ -309,8 +308,9 @@ var animate = {
 		mis.setAttributeNS(null, "cx", x1);
 		mis.setAttributeNS(null, "cy", y1);
 		mis.setAttributeNS(null, "r", 12);
-		mis.setAttributeNS(null,"fill",'#bbe5fd');
-		mis.setAttributeNS(null,"stroke","#88ddff");
+		mis.setAttributeNS(null,"fill",'#2288ff');
+		mis.setAttributeNS(null,"stroke","#ffddaa");
+		mis.setAttributeNS(null,"stroke-width",2);
 		DOM.mapAnimations.appendChild(mis);
 		var count = 0;
 		TweenMax.to(mis, .1, {
@@ -329,7 +329,7 @@ var animate = {
 				cx: x2,
 				cy: y2
 			},
-			ease: Power1.easeIn,
+			ease: Power2.easeIn,
 			onUpdate: function(){
 				count++;
 				if (count % 4 === 0){
@@ -614,7 +614,8 @@ var animate = {
 		})(count, d, interval, DOM.gameWrap, Math);
 	},
 	water: function(){
-		var delay = 130,
+		/*
+		var delay = 100,
 			e1 = document.getElementById('worldWater1'),
 			e2 = document.getElementById('worldWater2'),
 			e3 = document.getElementById('worldWater3'),
@@ -655,6 +656,7 @@ var animate = {
 			yoyo: true,
 			ease: Linear.easeNone
 		});
+		*/
 	},
 	glowTile: function(oldTgt, newTgt){
 		var e1 = document.getElementById('land' + oldTgt),

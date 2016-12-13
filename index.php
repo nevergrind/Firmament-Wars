@@ -213,7 +213,7 @@
 				
 					<div>
 						<div class="btn-group" class="fwBlue">
-							<button type="button" class="titleButtons btn  shadow4 dropdown-toggle fwDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<button id="createGameBtn" type="button" class="titleButtons btn btn-responsive shadow4 dropdown-toggle fwDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Create Game <span class="titleCaret caret chat-warning"></span>
 							</button>
 							<ul class="dropdown-menu fwDropdown">
@@ -227,7 +227,7 @@
 						</div>
 						
 						<div class="btn-group" class="fwBlue">
-							<button type="button" class="titleButtons btn shadow4 dropdown-toggle fwDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<button id="autoJoinBtn" type="button" class="titleButtons btn btn-responsive shadow4 dropdown-toggle fwDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Auto Join Game <span class="titleCaret caret chat-warning"></span>
 							</button>
 							<ul class="dropdown-menu fwDropdown">

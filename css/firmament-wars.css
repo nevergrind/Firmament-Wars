@@ -907,7 +907,8 @@ table td, .table th, .table td {
 	left: 0%;
 	width: 195.31%;
 	height: 143.22%;
-	background: #00061a;
+	background: #03080e;
+	background-image: url('../images/fw_grid_clear.png');
 }
 .worldWater{
 	position: absolute;
@@ -1232,6 +1233,9 @@ circle{
 	padding: .25em .5em;
 	border-radius: 4px;
 	width: 33%;
+}
+#createGameBtn, #autoJoinBtn{
+	background: rgba(16,56,96,1) !important;
 }
 .fwBlueInput{
 	background: rgba(0,12,32,1);
