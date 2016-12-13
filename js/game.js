@@ -83,8 +83,8 @@ function updateTileInfo(tileId){
 	}
 	// actions panel
 	my.player === t.player ? 
-		DOM.tileActions.style.display = 'block' : 
-		DOM.tileActions.style.display = 'none';
+		DOM.tileActionsOverlay.style.display = 'none' : 
+		DOM.tileActionsOverlay.style.display = 'block';
 	action.setMenu();
 }
 function showTarget(e, hover, skipOldTgtUpdate){

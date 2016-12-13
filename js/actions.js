@@ -271,8 +271,6 @@ var action = {
 				defender: defender
 			}
 		}).done(function(data) {
-			console.info('fireCannons', data);
-			animate.cannons(defender, true);
 			setProduction(data);
 		}).fail(function(e){
 			console.info('error: ', e);

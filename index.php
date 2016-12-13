@@ -735,6 +735,8 @@
 						<span id='nukeCost'>400</span>
 					</div>
 				</div>
+				
+				<div id="tileActionsOverlay"></div>
 			
 			</div>
 			

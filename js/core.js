@@ -759,6 +759,7 @@ function initDom(){
 		bgmusic: d.getElementById('bgmusic'),
 		tileName: d.getElementById('tileName'),
 		tileActions: d.getElementById('tileActions'),
+		tileActionsOverlay: d.getElementById('tileActionsOverlay'),
 		buildWord: d.getElementById('buildWord'),
 		buildCost: d.getElementById('buildCost'),
 		cannonsCost: d.getElementById('cannonsCost'),

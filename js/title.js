@@ -413,7 +413,7 @@ var title = {
 			// game
 			// console.info('game receive: ', data);
 			if (data.type === 'cannons'){
-				animate.cannons(data.tile, false);
+				animate.cannons(data.attackerTile, data.tile, false);
 				game.updateTile(data);
 			} else if (data.type === 'missile'){
 				animate.missile(data.attacker, data.defender, true);
@@ -426,7 +426,7 @@ var title = {
 				game.updateDefense(data);
 			} else if (data.type === 'gunfire'){
 				// defender tile update
-				animate.gunfire(data.tile, data.player === my.player);
+				animate.gunfire(data.attackerTile, data.tile, data.player === my.player);
 				game.updateTile(data);
 			} else if (data.type === 'updateTile'){
 				// attacker tile update
