@@ -575,6 +575,140 @@ tbody{
 .titleHeader{
 	line-height: 1.625em;
 }
+#targetWrap{
+	position: absolute;
+	top: .25em;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	width: 24%;
+	min-width: 233px;
+	max-width: 250px;
+	padding: .25em .5em;
+	z-index: 9999;
+}
+#ribbonWrap{
+	margin-top: .25em;
+	line-height: 13px;
+	text-align: center;
+}
+.ribbon{
+	position: relative;
+	display: inline-block;
+	background-image: url('../images/ribbons/ribbonMap.png');
+	background-size: 600% 600%;
+	height: 12px;
+	width: 45px;
+	background-position: 0 0;
+}
+.ribbon1{
+	background-position: 0 0;
+}
+.ribbon2{
+	background-position: -100% 0;
+}
+.ribbon3{
+	background-position: -200% 0;
+}
+.ribbon4{
+	background-position: -300% 0;
+}
+.ribbon5{
+	background-position: -400% 0;
+}
+.ribbon6{
+	background-position: -500% 0;
+}
+.ribbon7{
+	background-position: 0 -100%;
+}
+.ribbon8{
+	background-position: -100% -100%;
+}
+.ribbon9{
+	background-position: -200% -100%;
+}
+.ribbon10{
+	background-position: -300% -100%;
+}
+.ribbon11{
+	background-position: -400% -100%;
+}
+.ribbon12{
+	background-position: -500% -100%;
+}
+.ribbon13{
+	background-position: 0 -200%;
+}
+.ribbon14{
+	background-position: -100% -200%;
+}
+.ribbon15{
+	background-position: -200% -200%;
+}
+.ribbon16{
+	background-position: -300% -200%;
+}
+.ribbon17{
+	background-position: -400% -200%;
+}
+.ribbon18{
+	background-position: -500% -200%;
+}
+.ribbon19{
+	background-position: 0 -300%;
+}
+.ribbon20{
+	background-position: -100% -300%;
+}
+.ribbon21{
+	background-position: -200% -300%;
+}
+.ribbon22{
+	background-position: -300% -300%;
+}
+.ribbon23{
+	background-position: -400% -300%;
+}
+.ribbon24{
+	background-position: -500% -300%;
+}
+.ribbon25{
+	background-position: 0% -400%;
+}
+.ribbon26{
+	background-position: -100% -400%;
+}
+.ribbon27{
+	background-position: -200% -400%;
+}
+.ribbon28{
+	background-position: -300% -400%;
+}
+.ribbon29{
+	background-position: -400% -400%;
+}
+.ribbon30{
+	background-position: -500% -400%;
+}
+.ribbon31{
+	background-position: 0% -500%;
+}
+.ribbon32{
+	background-position: -100% -500%;
+}
+.ribbon33{
+	background-position: -200% -500%;
+}
+.ribbon34{
+	background-position: -300% -500%;
+}
+.ribbon35{
+	background-position: -400% -500%;
+}
+.ribbon36{
+	background-position: -500% -500%;
+}
 #ui2-head{
 	position: relative;
 	color: #fff;
@@ -591,6 +725,7 @@ tbody{
 	right: .25em;
 	padding: .5em;
 	width: 24%;
+	min-width: 150px;
 	max-width: 250px;
 	z-index: 9999;
 	border-radius: 4px;
@@ -907,7 +1042,7 @@ table td, .table th, .table td {
 	left: 0%;
 	width: 195.31%;
 	height: 143.22%;
-	background: #020415;
+	background: rgba(2,4,21,1);
 	background-image: url('../images/fw_grid_clear.png');
 }
 .worldWater{

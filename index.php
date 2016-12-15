@@ -594,11 +594,60 @@
 		</div>
 		
 	</div>
-	
+
 	<div id="gameWrap">
+	
+		<div id="targetWrap" class="stagBlue">
+			<div id="target-ui" class="container w100">
+				<div class="row tight">
+					<div id="targetFlag" class="col-xs-4 text-center no-select tight">
+					</div>
+					<div id="targetName" class="col-xs-8 text-center no-select shadow4 tight">
+					</div>
+				</div>
+			</div>
+			<div id="ribbonWrap">
+				<div class="ribbon ribbon1">
+				</div><div class="ribbon ribbon2">
+				</div><div class="ribbon ribbon3">
+				</div><div class="ribbon ribbon4">
+				</div><div class="ribbon ribbon5">
+				</div><div class="ribbon ribbon6">
+				</div><div class="ribbon ribbon7">
+				</div><div class="ribbon ribbon8">
+				</div><div class="ribbon ribbon9">
+				</div><div class="ribbon ribbon10">
+				</div><div class="ribbon ribbon11">
+				</div><div class="ribbon ribbon12">
+				</div><div class="ribbon ribbon13">
+				</div><div class="ribbon ribbon14">
+				</div><div class="ribbon ribbon15">
+				</div><div class="ribbon ribbon16">
+				</div><div class="ribbon ribbon17">
+				</div><div class="ribbon ribbon18">
+				</div><div class="ribbon ribbon19">
+				</div><div class="ribbon ribbon20">
+				</div><div class="ribbon ribbon21">
+				</div><div class="ribbon ribbon22">
+				</div><div class="ribbon ribbon23">
+				</div><div class="ribbon ribbon24">
+				</div><div class="ribbon ribbon25">
+				</div><div class="ribbon ribbon26">
+				</div><div class="ribbon ribbon27">
+				</div><div class="ribbon ribbon28">
+				</div><div class="ribbon ribbon29">
+				</div><div class="ribbon ribbon30">
+				</div><div class="ribbon ribbon31">
+				</div><div class="ribbon ribbon32">
+				</div><div class="ribbon ribbon33">
+				</div><div class="ribbon ribbon34">
+				</div><div class="ribbon ribbon35">
+				</div><div class="ribbon ribbon36">
+				</div>
+			</div>
+		</div>
 		
 		<div id="ui2" class="stagBlue">
-		
 			<div id="ui2-head" class="stagBlue">
 				<span id='manpowerWrap' class="manpower pull-left">
 					<span data-toggle="tooltip" 
@@ -621,15 +670,6 @@
 						<i class="fa fa-angle-double-up manpower"></i> Armies <span id="manpower">0</span>
 					</span>
 				</span>
-			</div>
-			
-			<div id="target-ui" class="container w100">
-				<div class="row tight">
-					<div id="targetFlag" class="col-xs-4 text-center no-select tight">
-					</div>
-					<div id="targetName" class="col-xs-8 text-center no-select shadow4 tight">
-					</div>
-				</div>
 			</div>
 						
 			<div id="tileActions" class="container w100">

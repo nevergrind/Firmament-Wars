@@ -257,15 +257,18 @@ var animate = {
 					},
 					ease: Linear.easeOut,
 					onComplete: function(){
-						TweenMax.to(circ, .2, {
+						TweenMax.to(circ, .3, {
 							startAt: {
-								fill: 'none'
+								fill: 'none',
+								attr: {
+									r: 0
+								}
 							},
 							attr: {
 								r: 20
 							}
 						});
-						TweenMax.to(circ, .2, {
+						TweenMax.to(circ, .3, {
 							alpha: .2,
 							ease: Linear.easeIn,
 							onComplete: function(){

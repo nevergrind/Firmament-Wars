@@ -7,7 +7,7 @@ var events = {
 				g.notification.close();
 			}
 		});
-		$(window).on('resize orientationchange', function() {
+		$(window).on('resize orientationchange focus', function() {
 			resizeWindow();
 		}).on('load', function(){
 			resizeWindow();
