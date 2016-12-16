@@ -747,6 +747,7 @@ function initDom(){
 		targetLineShadow: d.getElementById('targetLineShadow'),
 		targetCrosshair: d.getElementById('targetCrosshair'),
 		target: d.getElementById('target'),
+		ribbonWrap: d.getElementById('ribbonWrap'),
 		targetFlag: d.getElementById('targetFlag'),
 		targetName: d.getElementById('targetName'),
 		oBonus: d.getElementById('oBonus'),

@@ -25,4 +25,3 @@ echo '
 	   d="M 0,0 Q 0 0 0 0"
 	   class="paths"></path>
   </g>';
-?>

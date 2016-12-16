@@ -357,6 +357,15 @@ var lobby = {
 			Communism: 'fa fa-flask'
 		};
 		return icon[government];
+	},
+	initRibbons: function(data){
+		for (var key in data){
+			var str = '';
+			for (var i=0, len=data[key].length; i<len; i++){
+				str += '<div class="ribbon ribbon'+ data[key][i] +'"></div>';
+			}
+			game.player[key].ribbons = str;
+		}
 	}
 };
 
@@ -778,6 +787,7 @@ function loadGameState(){
 				}
 			});
 			initResources(data);
+			lobby.initRibbons(data.ribbons);
 			setTimeout(function(){
 				// init draggable map
 				worldMap = Draggable.create(DOM.worldWrap, {
@@ -819,11 +829,13 @@ function loadGameState(){
 						});
 					});
 				} else {
-					zug.on("mousedown", function(e){
+					zug.on("click", function(e){
+						/*
 						var box = this.getBBox();
 						var x = Math.round(box.x + (box.width/2));
 						var y = Math.round(box.y + (box.height/2));
-						// console.warn(this.id, x, y, e.which);
+						console.warn(this.id, x, y, e.which);
+						*/
 						triggerAction(this);
 					});
 				}

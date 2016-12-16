@@ -6,4 +6,3 @@
 			<feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
 		</filter>
 	</defs>';
-?>

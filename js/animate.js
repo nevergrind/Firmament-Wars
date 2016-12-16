@@ -18,7 +18,7 @@ var animate = {
 		var x = ~~(Math.random()*6),
 			c = '#ffffff';
 		if (x === 0){
-			c = '#ffffaa';
+			c = '#88aaff';
 		} else if (x === 1){
 			c = '#ffddaa';
 		} else if (x === 2){
@@ -185,32 +185,31 @@ var animate = {
 		}
 	},
 	gunfire: function(atkTile, defTile, playSound){
-		var e1 = document.getElementById('land' + atkTile),
-			e2 = document.getElementById('land' + defTile),
-			box1 = e1.getBBox(),
-			box2 = e2.getBBox();
+		var box1 = DOM['unit' + atkTile].getBBox(),
+			box2 = DOM['unit' + defTile].getBBox();
 		var sfx = ~~(Math.random()*9);
 		var delay = [.5, .5, .33, .33, .33, .33, .8, .33, .66, .4];
 		if (playSound){
 			audio.play('machine' + sfx);
 		}
-		var x1 = box1.x + box1.width * .5;
-			y1 = box1.y + box1.height * .5,
-			shots = 30;
+		var shots = 30,
+			w1 = 50,
+			h1 = 50,
+			w2 = w1/2,
+			h2 = h1/2 - 10;
 		for (var i=0; i<shots; i++){
 			(function(Math){
-				var path = document.createElementNS("http://www.w3.org/2000/svg","path");
-				x2 = box2.x + (Math.random() * (box2.width * .8)) + box2.width * .1;
-				y2 = box2.y + (Math.random() * (box2.height * .8)) + box2.height * .1;
-				path.setAttributeNS(null,"fill",'#ffddaa');
-				path.setAttributeNS(null,"stroke",'#ffddaa');
+				var path = document.createElementNS("http://www.w3.org/2000/svg","path"),
+					x2 = box2.x + (Math.random() * w1) - w2;
+					y2 = box2.y + (Math.random() * h1) - h2;
+				path.setAttributeNS(null,"stroke",animate.randomColor());
 				path.setAttributeNS(null,"stroke-width",2);
 				DOM.world.appendChild(path);
 				TweenMax.to(path, .07, {
 					delay: (i / shots) * delay[sfx],
 					startAt: {
 						attr: {
-							d: "M " + x1 +","+ y1 + ' ' + x2 +","+ y2
+							d: "M " + box1.x +","+ box1.y + ' ' + x2 +","+ y2
 						},
 						drawSVG: '0'
 					},
@@ -224,30 +223,35 @@ var animate = {
 		}
 	},
 	cannons: function(atkTile, defTile, playSound){
-		var e1 = document.getElementById('land' + atkTile),
-			e2 = document.getElementById('land' + defTile),
-			box1 = e1.getBBox(),
-			box2 = e2.getBBox();
+		var box1 = DOM['land' + atkTile].getBBox(),
+			box2 = DOM['land' + defTile].getBBox(),
+			box3 = DOM['unit' + defTile].getBBox();
 		if (game.tiles[atkTile].player === my.player){
 			var a = [5, 6, 8];
 			var sfx = ~~(Math.random() * 3);
 			audio.play('grenade' + a[sfx]);
 		}
 		var x1 = box1.x + box1.width * .5;
-			y1 = box1.y + box1.height * .5;
-		for (var i=0; i<15; i++){
+			y1 = box1.y + box1.height * .5,
+			w1 = box2.width * .5,
+			w2 = w1/2,
+			h1 = box2.height * .5,
+			h2 = h1/2 - 10;
+		for (var i=0; i<20; i++){
 			(function(Math){
-				var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
-				x2 = box2.x + (Math.random() * (box2.width * .6)) + box2.width * .2;
-				y2 = box2.y + (Math.random() * (box2.height * .6)) + box2.height * .2;
+				var circ = document.createElementNS("http://www.w3.org/2000/svg","circle"),
+					x2 = box3.x + (Math.random() * w1) - w2,
+					y2 = box3.y + (Math.random() * h1) - h2;
 				circ.setAttributeNS(null,"cx",x1);
 				circ.setAttributeNS(null,"cy",y1);
 				circ.setAttributeNS(null,"r",4);
-				circ.setAttributeNS(null,"fill",'#2a003a');
-				circ.setAttributeNS(null,"stroke",'#fff2d5');
+				circ.setAttributeNS(null,"fill",'#3a005a');
+				circ.setAttributeNS(null,"stroke",'#ffddaa');
+				circ.setAttributeNS(null,"strokeWidth",1);
 				DOM.mapAnimations.appendChild(circ);
 				
-				TweenMax.to(circ, .1, {
+				TweenMax.to(circ, .08, {
+					delay: i * .007,
 					startAt: {
 						alpha: 1
 					},
@@ -255,31 +259,48 @@ var animate = {
 						cx: x2,
 						cy: y2
 					},
-					ease: Linear.easeOut,
+					ease: Linear.easeNone,
 					onComplete: function(){
-						TweenMax.to(circ, .3, {
+						// explode outward
+						var d1 = Math.random()*.3 + .3,
+							d2 = d1/2,
+							s1 = (d1 * 10) + 3;
+						TweenMax.to(circ, d2, {
 							startAt: {
 								fill: 'none',
+								strokeWidth: 0,
 								attr: {
 									r: 0
 								}
 							},
+							strokeWidth: s1,
 							attr: {
-								r: 20
-							}
-						});
-						TweenMax.to(circ, .3, {
-							alpha: .2,
-							ease: Linear.easeIn,
+								r: s1/2
+							},
+							ease: Linear.easeNone,
 							onComplete: function(){
-								this.target.parentNode.removeChild(this.target);
+							// explode fades from inner
+								TweenMax.to(circ, d2, {
+									attr: {
+										r: s1
+									},
+									strokeWidth: 0,
+									ease: Sine.easeOut
+								});
+								TweenMax.to(circ, d2, {
+									alpha: 0,
+									onComplete: function(){
+										this.target.parentNode.removeChild(this.target);
+									},
+									ease: Sine.easeOut
+								});
 							}
 						});
 					}
 				});
 			})(Math);
 		}
-		animate.smoke(defTile, x2, y2, .8);
+		animate.smoke(defTile, box3.x, box3.y, .8);
 	},
 	missile: function(attacker, defender, playSound){
 		if (playSound){
