@@ -298,6 +298,9 @@
 					echo 
 					'</div>';
 				}
+				// add ribbon
+				require 'php/addRibbon.php';
+				addRibbon(1);
 				?>
 				<div id="titleChatWrap">
 						
@@ -600,7 +603,26 @@
 		<div id="targetWrap" class="stagBlue">
 			<table id="target-ui" class="table table-condensed">
 				<tr>
-					<td id="ribbonWrap" class="tight"></td>
+					<td id="ribbonWrap" class="tight">
+				<div class="ribbon ribbon1">
+				</div><div class="ribbon ribbon2">
+				</div><div class="ribbon ribbon3">
+				</div><div class="ribbon ribbon4">
+				</div><div class="ribbon ribbon5">
+				</div><div class="ribbon ribbon6">
+				</div><div class="ribbon ribbon7">
+				</div><div class="ribbon ribbon8">
+				</div><div class="ribbon ribbon9">
+				</div><div class="ribbon ribbon10">
+				</div><div class="ribbon ribbon11">
+				</div><div class="ribbon ribbon12">
+				</div><div class="ribbon ribbon13">
+				</div><div class="ribbon ribbon14">
+				</div><div class="ribbon ribbon15">
+				</div><div class="ribbon ribbon16">
+				</div><div class="ribbon ribbon17">
+				</div><div class="ribbon ribbon18">
+					</td>
 					<td id="targetFlag" class="text-center no-select tight">
 						<img src="images/flags/Default.jpg" class="w100 block center">
 					</td>
@@ -643,7 +665,7 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>A</span>ttack
 					</div>
-					<div class="col-xs-4 text-center crystalCost">
+					<div class="col-xs-4 tight2 text-right crystalCost">
 						<i class="glyphicon glyphicon-oil moves pointer actionBolt"></i>
 						<span id='attackCost'>2</span>
 					</div>
@@ -656,7 +678,7 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>S</span>plit Attack
 					</div>
-					<div class="col-xs-4 text-center crystalCost">
+					<div class="col-xs-4 tight2 text-right crystalCost">
 						<i class="glyphicon glyphicon-oil moves pointer actionBolt"></i>
 						<span id="splitAttackCost">1</span>
 					</div>
@@ -669,7 +691,7 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>R</span>ecruit
 					</div>
-					<div class="col-xs-4 text-center crystalCost">
+					<div class="col-xs-4 tight2 text-right crystalCost">
 						<i class="glyphicon glyphicon-oil moves pointer actionBolt"></i>
 						<span id="recruitCost">6</span>
 					</div>
@@ -682,7 +704,7 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>D</span>eploy
 					</div>
-					<div class="col-xs-4 text-center crystalCost">
+					<div class="col-xs-4 tight2 text-right crystalCost">
 						<i class="fa fa-diamond production pointer actionBolt"></i>
 						<span id='deployCost'>20</cost>
 					</div>
@@ -695,7 +717,7 @@
 					<div class="col-xs-8">
 						Fire <span class='text-hotkey'>C</span>annons
 					</div>
-					<div class="col-xs-4 text-center crystalCost">
+					<div class="col-xs-4 tight2 text-right crystalCost">
 						<i class="fa fa-diamond production pointer actionBolt"></i>
 						<span id='cannonsCost'>40</span>
 					</div>
@@ -708,7 +730,7 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>B</span>uild <span id="buildWord">Bunker</span>
 					</div>
-					<div class="col-xs-4 text-center crystalCost">
+					<div class="col-xs-4 tight2 text-right crystalCost">
 						<i class="fa fa-diamond production pointer actionBolt"></i>
 						<span id="buildCost">80</span>
 					</div>
@@ -721,7 +743,7 @@
 					<div class="col-xs-8">
 						Launch <span class='text-hotkey'>M</span>issile
 					</div>
-					<div class="col-xs-4 text-center crystalCost">
+					<div class="col-xs-4 tight2 text-right crystalCost">
 						<i class="fa fa-diamond production pointer actionBolt"></i>
 						<span id='missileCost'>60</span>
 					</div>
@@ -732,7 +754,7 @@
 					data-toggle="tooltip" 
 					title="Launch a nuclear weapon at any enemy territory. Kills 80-99% of armies and destroys all structures.">
 					<div class="col-xs-8">Launch <span class='text-hotkey'>N</span>uke</div>
-					<div class="col-xs-4 text-center crystalCost">
+					<div class="col-xs-4 tight2 text-right crystalCost">
 						<i class="fa fa-diamond production pointer actionBolt"></i>
 						<span id='nukeCost'>400</span>
 					</div>
@@ -743,7 +765,7 @@
 			</div>
 			
 			<div id="tileResearch" class="container w100">
-				<div id="researchHead" class="text-center shadow4">Research</div>
+				<div id="researchHead" class="text-right shadow4">Research</div>
 				
 				<div id="researchGunpowder" class="actionButtons row" 
 					data-placement="left" 
@@ -752,7 +774,7 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>G</span>unpowder
 					</div>
-					<div class="col-xs-4 text-center crystalCost">
+					<div class="col-xs-4 tight2 text-right crystalCost">
 						<i class="fa fa-diamond production pointer actionBolt"></i>
 						<span id='gunpowderCost'>80</span>
 					</div>
@@ -765,7 +787,7 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>E</span>ngineering
 					</div>
-					<div class="col-xs-4 text-center crystalCost">
+					<div class="col-xs-4 tight2 text-right crystalCost">
 						<i class="fa fa-diamond production pointer actionBolt"></i>
 						<span id='engineeringCost'>120</span>
 					</div>
@@ -778,7 +800,7 @@
 					<div class="col-xs-8">
 						Roc<span class='text-hotkey'>k</span>etry
 					</div>
-					<div class="col-xs-4 text-center crystalCost">
+					<div class="col-xs-4 tight2 text-right crystalCost">
 						<i class="fa fa-diamond production pointer actionBolt"></i>
 						<span id='rocketryCost'>200</span>
 					</div>
@@ -791,7 +813,7 @@
 					<div class="col-xs-8">
 						A<span class='text-hotkey'>t</span>omic Theory
 					</div>
-					<div class="col-xs-4 text-center crystalCost">
+					<div class="col-xs-4 tight2 text-right crystalCost">
 						<i class="fa fa-diamond production pointer actionBolt"></i>
 						<span id='atomicTheoryCost'>250</span>
 					</div>
@@ -804,7 +826,7 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>F</span>uture Tech
 					</div>
-					<div class="col-xs-4 text-center crystalCost">
+					<div class="col-xs-4 tight2 text-right crystalCost">
 						<i class="fa fa-diamond production pointer actionBolt"></i>
 						<span id='futureTechCost'>1000</span>
 					</div>
