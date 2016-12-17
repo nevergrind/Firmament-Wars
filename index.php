@@ -604,24 +604,6 @@
 			<table id="target-ui" class="table table-condensed">
 				<tr>
 					<td id="ribbonWrap" class="tight">
-				<div class="ribbon ribbon1">
-				</div><div class="ribbon ribbon2">
-				</div><div class="ribbon ribbon3">
-				</div><div class="ribbon ribbon4">
-				</div><div class="ribbon ribbon5">
-				</div><div class="ribbon ribbon6">
-				</div><div class="ribbon ribbon7">
-				</div><div class="ribbon ribbon8">
-				</div><div class="ribbon ribbon9">
-				</div><div class="ribbon ribbon10">
-				</div><div class="ribbon ribbon11">
-				</div><div class="ribbon ribbon12">
-				</div><div class="ribbon ribbon13">
-				</div><div class="ribbon ribbon14">
-				</div><div class="ribbon ribbon15">
-				</div><div class="ribbon ribbon16">
-				</div><div class="ribbon ribbon17">
-				</div><div class="ribbon ribbon18">
 					</td>
 					<td id="targetFlag" class="text-center no-select tight">
 						<img src="images/flags/Default.jpg" class="w100 block center">
@@ -765,7 +747,7 @@
 			</div>
 			
 			<div id="tileResearch" class="container w100">
-				<div id="researchHead" class="text-right shadow4">Research</div>
+				<div id="researchHead" class="text-center shadow4">Research</div>
 				
 				<div id="researchGunpowder" class="actionButtons row" 
 					data-placement="left" 

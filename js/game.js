@@ -22,8 +22,8 @@ function updateTileInfo(tileId){
 		name = t.name;
 		account = t.account;
 	}
-	//DOM.ribbonWrap.innerHTML = game.player[t.player].ribbons === undefined ? 
-		// '' : game.player[t.player].ribbons;
+	DOM.ribbonWrap.innerHTML = game.player[t.player].ribbons === undefined ? 
+		'' : game.player[t.player].ribbons;
 	var str = ''
 	DOM.targetFlag.innerHTML = 
 		'<img src="images/flags/' + flag + '" class="w100 block center">';
