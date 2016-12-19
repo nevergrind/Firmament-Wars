@@ -560,6 +560,9 @@ tbody{
 	background: rgba(0,0,0,.3);
 	border: 1px solid rgba(192,240,255,.2);
 }
+#configureNation, #createGameWrap{
+	background: #000;
+}
 #screenFlash{
 	position: absolute;
 	background: '#ffffff';
@@ -1847,7 +1850,7 @@ table {
 }
 /* stat */
 #statWrap{
-	display: none;
+	visibility: hidden;
 	position: absolute;
 	top: 0%;
 	bottom: 0%;

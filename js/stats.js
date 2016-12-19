@@ -121,7 +121,7 @@ var stats = {
 		} else {
 			audio.play('defeat');
 		}
-		document.getElementById('statWrap').style.display = 'block';
+		document.getElementById('statWrap').style.visibility = 'visible';
 		TweenMax.to('#gameWrap', .5, {
 			startAt: {
 				alpha: 0
