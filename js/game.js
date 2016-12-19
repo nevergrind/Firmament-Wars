@@ -22,6 +22,11 @@ function updateTileInfo(tileId){
 		name = t.name;
 		account = t.account;
 	}
+	if (game.player[t.player].ribbons === undefined){
+		DOM.ribbonWrap.style.display = 'none';
+	} else {
+		DOM.ribbonWrap.style.display = 'block';
+	}
 	DOM.ribbonWrap.innerHTML = game.player[t.player].ribbons === undefined ? 
 		'' : game.player[t.player].ribbons;
 	var str = ''

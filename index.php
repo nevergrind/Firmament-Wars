@@ -76,11 +76,12 @@
 				require('php/connect1.php');
 				if (isset($_SESSION['email'])){
 					// crystals
-					$query = "select crystals from accounts where email='". $_SESSION['email'] ."' limit 1";
+					$query = "select crystals, referral from accounts where email='". $_SESSION['email'] ."' limit 1";
 					$result = $link->query($query);
 					$crystals = '';
 					while($row = $result->fetch_assoc()){
 						$crystals .= $row['crystals'];
+						$_SESSION['referral'] = $row['referral'];
 					}
 					
 					echo 
@@ -190,6 +191,9 @@
 							// init nation values
 							$_SESSION['nation'] = $nation;
 							$_SESSION['flag'] = $flag;
+							// add ribbon
+							require $_SERVER['DOCUMENT_ROOT']. '/games/firmament-wars/php/addRibbon.php';
+							addRibbon(1);
 						}
 						$arr = explode(".", $_SESSION['flag']);
 						$_SESSION['flagShort'] = $arr[0];
@@ -298,9 +302,6 @@
 					echo 
 					'</div>';
 				}
-				// add ribbon
-				require 'php/addRibbon.php';
-				addRibbon(1);
 				?>
 				<div id="titleChatWrap">
 						
