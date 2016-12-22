@@ -601,7 +601,7 @@
 
 	<div id="gameWrap">
 	
-		<div id="targetWrap" class="stagBlue">
+		<div id="targetWrap" class="blueBg">
 			<table id="target-ui" class="table table-condensed">
 				<tr>
 					<td id="ribbonWrap" class="tight">
@@ -614,7 +614,7 @@
 			</table>
 		</div>
 		
-		<div id="ui2" class="stagBlue">
+		<div id="ui2" class="blueBg">
 			<div id="ui2-head" class="stagBlue">
 				<span id='manpowerWrap' class="manpower pull-left">
 					<span data-toggle="tooltip" 
@@ -676,7 +676,7 @@
 					</div>
 					<div class="col-xs-4 tight2 text-right crystalCost">
 						<i class="glyphicon glyphicon-oil moves pointer actionBolt"></i>
-						<span id="recruitCost">6</span>
+						<span id="recruitCost">4</span>
 					</div>
 				</div>
 				
@@ -819,7 +819,7 @@
 		</div>
 		
 			
-		<div id="resources-ui" class="container no-select shadow4 stagBlue">
+		<div id="resources-ui" class="container no-select shadow4 blueBg">
 			
 			<div class="row">
 				<div class="col-xs-12 no-padding moves">
@@ -921,7 +921,7 @@
 			</div>
 		</div>
 		
-		<div id="diplomacy-ui" class="shadow4 stagBlue"></div>
+		<div id="diplomacy-ui" class="shadow4 blueBg"></div>
 		
 		<table id="chat-ui" class="fw-text">
 			<tr>

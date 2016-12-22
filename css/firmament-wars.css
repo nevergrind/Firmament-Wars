@@ -602,6 +602,15 @@ tbody{
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+.ribbonName{
+	font-family: Cinzel, Palatino Linotype, serif;
+	font-size: 1.5em;
+	margin: .5em 0 .25em;
+}
+.giantRibbon{
+	margin: 0 auto .5em;
+	width: 184px;
+}
 .ribbon{
 	position: relative;
 	display: inline-block;
@@ -789,10 +798,16 @@ tbody{
 	margin: 0;
 	color: #fff;
 }
+.blueBg{
+	border: 1px solid rgba(176,240,255,1);
+	border-radius: 4px;
+	background: rgba(0, 8, 33, 1);
+	box-shadow: 0 0 10px #05b inset;
+}
 .stagBlue{
 	border: 1px solid rgba(176,240,255,1);
 	border-radius: 4px;
-	background: rgba(0, 16, 60, .8);
+	background: rgba(0, 16, 60, 1);
 	background: linear-gradient(top, 
 		rgba(0, 24, 100, 1) 0%, rgba(0, 24, 100, 1) 10%, 
 		rgba(0, 22, 90, 1) 10%, rgba(0, 22, 90, 1) 20%, 
@@ -1460,7 +1475,7 @@ circle{
 .pad2{
 	padding: .25em .5em;
 }
-#titleViewBackdrop{
+#titleViewBackdrop, #ribbonBackdrop{
 	position: absolute;
 	visibility: hidden;
 	top: 0;
@@ -1473,6 +1488,17 @@ circle{
     background: -ms-radial-gradient(center center, farthest-corner, rgba(0,0,0,1) 0%, rgba(0,0,0,.7) 100%);
     background: -o-radial-gradient(center center, farthest-corner, rgba(0,0,0,1) 0%, rgba(0,0,0,.7) 100%);
 	z-index: 999999;
+}
+#ribbonBackdrop{
+	visibility: hidden;
+}
+#ribbonReward{
+	visibility: hidden;
+	width: 80%;
+	background: #000;
+}
+#ribbonBody{
+	text-align: center;
 }
 .capitalColor{
 	color: #ffc500;
@@ -1965,7 +1991,7 @@ table {
 }
 .statsNation{
 	font-family: Cinzel, Palatino Linotype, serif;
-	font-size: 1.25em;
+	font-size: 1em;
 	color: #8df;
 	text-shadow: .5px .5px #145, 1px 1px #145, 1.5px 1.5px #145, 2px 2px #145;
 	letter-spacing: .05em;
@@ -2139,11 +2165,14 @@ input[type=number]::-webkit-outer-spin-button {
 	background: #333;
 	border-color: #111;
 }
+.tooltip.in{
+	opacity:1 !important;
+}
 .tooltip-inner {
-	background: rgba(16, 56, 96, 1);
 	color: #aef;
 	text-shadow: 1px 1px #000;
 	border: 2px ridge #357;
+	background: rgba(16, 56, 96, 1);
 }
 .text-crystal{
 	color: #8bf;

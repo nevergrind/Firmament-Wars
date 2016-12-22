@@ -283,69 +283,76 @@ var title = {
 			document.getElementById('firmamentWarsStars2'),
 			document.getElementById('firmamentWarsStars3'),
 			document.getElementById('firmamentWarsStars4')
-		]
-		TweenMax.to(stars[0], 240, {
-			backgroundPosition: '-800px 0px', 
-			repeat: -1,
-			ease: Linear.easeNone
-		});
-		TweenMax.to(stars[1], 150, {
-			startAt: {
-				backgroundPosition: '250px 250px', 
-			},
-			backgroundPosition: '-1050px 250px', 
-			repeat: -1,
-			ease: Linear.easeNone
-		});
-		TweenMax.to(stars[2], 70, {
-			startAt: {
-				backgroundPosition: '600px 500px', 
-			},
-			backgroundPosition: '-200px 500px', 
-			repeat: -1,
-			ease: Linear.easeNone
-		});
-		TweenMax.to(stars[3], 30, {
-			startAt: {
-				backgroundPosition: '400px 600px', 
-			},
-			backgroundPosition: '-400px 600px', 
-			repeat: -1,
-			ease: Linear.easeNone
-		});
+		];
+		
+		if (stars[0] !== null){
+			TweenMax.to(stars[0], 240, {
+				backgroundPosition: '-800px 0px', 
+				repeat: -1,
+				ease: Linear.easeNone
+			});
+			TweenMax.to(stars[1], 150, {
+				startAt: {
+					backgroundPosition: '250px 250px', 
+				},
+				backgroundPosition: '-1050px 250px', 
+				repeat: -1,
+				ease: Linear.easeNone
+			});
+			TweenMax.to(stars[2], 70, {
+				startAt: {
+					backgroundPosition: '600px 500px', 
+				},
+				backgroundPosition: '-200px 500px', 
+				repeat: -1,
+				ease: Linear.easeNone
+			});
+			TweenMax.to(stars[3], 30, {
+				startAt: {
+					backgroundPosition: '400px 600px', 
+				},
+				backgroundPosition: '-400px 600px', 
+				repeat: -1,
+				ease: Linear.easeNone
+			});
+		}
 		// logo
 		var fwLogo = document.getElementById('firmamentWarsLogo');
-		TweenMax.to(fwLogo, globeDelay, {
-			startAt: {
-				visibility: 'visible',
-				alpha: 0,
-				yPercent: -50
-			},
-			alpha: 1,
-			ease: Quad.easeIn
-		});
-		TweenMax.to(fwLogo, globeDelay, {
-			startAt: {
-				y: '-65%'
-			},
-			y: '-50%',
-			onComplete: function(){
-				TweenMax.to('#titleMain', .5, {
-					startAt: {
-						visibility: 'visible'
-					},
-					opacity: 1
-				});
-			}
-		});
+		if (fwLogo !== null){
+			TweenMax.to(fwLogo, globeDelay, {
+				startAt: {
+					visibility: 'visible',
+					alpha: 0,
+					yPercent: -50
+				},
+				alpha: 1,
+				ease: Quad.easeIn
+			});
+			TweenMax.to(fwLogo, globeDelay, {
+				startAt: {
+					y: '-65%'
+				},
+				y: '-50%',
+				onComplete: function(){
+					TweenMax.to('#titleMain', .5, {
+						startAt: {
+							visibility: 'visible'
+						},
+						opacity: 1
+					});
+				}
+			});
+		}
 		// globe
 		var globe = document.getElementById('titleGlobe');
-		TweenMax.to(globe, globeDelay, {
-			startAt: {
-				y: '15%'
-			},
-			y: '0%'
-		});
+		if (globe !== null){
+			TweenMax.to(globe, globeDelay, {
+				startAt: {
+					y: '15%'
+				},
+				y: '0%'
+			});
+		}
 	},
 	mapData: {
 		EarthAlpha: {

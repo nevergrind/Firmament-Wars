@@ -362,7 +362,7 @@ var lobby = {
 		for (var key in data){
 			var str = '';
 			for (var i=0, len=data[key].length; i<len; i++){
-				str += '<div class="ribbon ribbon'+ data[key][i] +'"></div>';
+				str += '<div class="ribbon ribbon'+ data[key][i] +'" title="'+ game.ribbonTitle[i] +'"></div>';
 			}
 			game.player[key].ribbons = str;
 		}
@@ -622,7 +622,7 @@ function loadGameState(){
 			} else if (my.government === 'Democracy'){
 				my.maxDeployment = 254;
 			} else if (my.government === 'Fundamentalism'){
-				my.recruitCost = 3;
+				my.recruitCost = 2;
 				document.getElementById('recruitCost').textContent = my.recruitCost;
 			} else if (my.government === 'Fascism'){
 				document.getElementById('moves').textContent = 12;

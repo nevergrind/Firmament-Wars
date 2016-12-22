@@ -98,6 +98,14 @@ var stats = {
 					<button id="statsEndGame" class="btn btn-responsive fwBlue shadow4">End Game</button>\
 				</div>\
 			</div>\
+		</div>\
+		<div id="ribbonBackdrop"></div>\
+		<div id="ribbonReward" class="fw-primary titleModal">\
+			<div class="header text-center">\
+				<h2 class="header">Achievement Unlocked!</h2>\
+			</div>\
+			<hr class="fancyhr">\
+			<div id="ribbonBody"></div>\
 		</div>';
 		document.getElementById('statWrap').innerHTML = str;
 		stats.events();
@@ -128,6 +136,17 @@ var stats = {
 			},
 			alpha: 1
 		});
+		if (stats.achievements.length){
+			// play some audio sound
+			TweenMax.to('#ribbonBackdrop, #ribbonReward', .25, {
+				startAt: {
+					visibility: 'visible',
+					alpha: 0
+				},
+				alpha: 1
+			});
+		}
+		$("#worldWrap, #targetWrap, #ui2, #resources-ui, #diplomacy-ui, #chat-ui, #chat-input, #surrenderScreen").remove();
 	},
 	events: function(){
 		$("#statWrap").on('click', '.statTabs', function(){
@@ -139,7 +158,17 @@ var stats = {
 			stats.setView(id);
 		}).on('click', '#statsEndGame', function(){
 			location.reload();
+		}).on('click', '#ribbonBackdrop', function(){
+			TweenMax.to('#ribbonBackdrop, #ribbonReward', .25, {
+				alpha: 0,
+				onComplete: function(){
+					TweenMax.set('#ribbonBackdrop, #ribbonReward', {
+						visibility: 'hidden'
+					});
+				}
+			});
 		});
+		
 	},
 	maxValue: {
 		unitsTotal: 0,
@@ -589,7 +618,19 @@ var stats = {
 		}).done(function(data){
 			stats.data = data;
 			stats.init(data);
+			stats.notifyRibbons(data.ribbons);
 		});
+	},
+	achievements: [],
+	notifyRibbons: function(data){
+		var str = '';
+		data.forEach(function(e){
+			str += 
+			'<div class="ribbonName ranked">'+ game.ribbonTitle[e] +'</div>\
+			<img class="giantRibbon block" src="images/ribbons/ribbon'+ e +'.jpg">';
+		});
+		document.getElementById('ribbonBody').innerHTML = str;
+		stats.achievements = data;
 	},
 	overviewTotal: function(i){
 		var x = stats.data[i];

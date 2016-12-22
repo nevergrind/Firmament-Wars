@@ -412,7 +412,6 @@ var events = {
 		$("#mainWrap").on('click', '.speedSelect', function(e){
 			var x = $(this).text();
 			g.speed = g.speeds[x];
-			console.info(x, g.speed);
 			$("#createGameSpeed").text(x);
 			e.preventDefault();
 		});

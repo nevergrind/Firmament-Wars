@@ -25,7 +25,7 @@ function updateTileInfo(tileId){
 	if (game.player[t.player].ribbons === undefined){
 		DOM.ribbonWrap.style.display = 'none';
 	} else {
-		DOM.ribbonWrap.style.display = 'block';
+		DOM.ribbonWrap.style.display = 'table-cell';
 	}
 	DOM.ribbonWrap.innerHTML = game.player[t.player].ribbons === undefined ? 
 		'' : game.player[t.player].ribbons;
@@ -271,7 +271,7 @@ function triggerEndGame(msg){
 			if (e.which === 1){
 				$("#endWar").off();
 				g.view = 'stats';
-				TweenMax.to('#gameWrap', .2, {
+				TweenMax.to('#gameWrap', .05, {
 					alpha: 0,
 					onComplete: function(){ 
 						$("#diplomacy-ui, #ui2, #resources-ui, #chat-ui, #chat-input, #hud, #worldWrap, #victoryScreen").remove();
