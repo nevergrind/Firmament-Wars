@@ -589,10 +589,27 @@ tbody{
 	padding: .25em 0 0 .4em;
 	z-index: 9999;
 }
+#ribbonBackdrop{
+	visibility: hidden;
+}
+#ribbonReward{
+	visibility: hidden;
+	width: 80%;
+	background: #000;
+}
+#ribbonBody{
+	font-family: Cinzel, Palatino Linotype, serif;
+	text-align: center;
+}
 #ribbonWrap{
 	line-height: 5px;
-	width: 100px;
 	text-align: center;
+}
+.narrowRack{
+	width: 75px;
+}
+.wideRack{
+	width: 100px;
 }
 #targetFlag{
 	width: 80px;
@@ -603,9 +620,15 @@ tbody{
 	text-overflow: ellipsis;
 }
 .ribbonName{
-	font-family: Cinzel, Palatino Linotype, serif;
 	font-size: 1.5em;
-	margin: .5em 0 .25em;
+	margin-top: .5em;
+}
+.ribbonDescription{
+	position: relative;
+	top: -.5em;
+	font-family: Palatino Linotype, Times New Roman, serif;
+	font-size: 1em;
+	margin-bottom: .25em;
 }
 .giantRibbon{
 	margin: 0 auto .5em;
@@ -1489,17 +1512,6 @@ circle{
     background: -o-radial-gradient(center center, farthest-corner, rgba(0,0,0,1) 0%, rgba(0,0,0,.7) 100%);
 	z-index: 999999;
 }
-#ribbonBackdrop{
-	visibility: hidden;
-}
-#ribbonReward{
-	visibility: hidden;
-	width: 80%;
-	background: #000;
-}
-#ribbonBody{
-	text-align: center;
-}
 .capitalColor{
 	color: #ffc500;
 }
@@ -1906,10 +1918,10 @@ table {
 	text-indent: .5em;
 	text-align: center;
 	letter-spacing: .025em;
-    background: -webkit-radial-gradient(center center, farthest-side, rgba(32,64,124,.5) 0%, rgba(0,0,0,.1) 100%);
-    background: -moz-radial-gradient(center center, farthest-side, rgba(32,64,124,.5) 0%, rgba(0,0,0,.1) 100%);
-    background: -ms-radial-gradient(center center, farthest-side, rgba(32,64,124,.5) 0%, rgba(0,0,0,.1) 100%);
-    background: -o-radial-gradient(center center, farthest-side, rgba(32,64,124,.5) 0%, rgba(0,0,0,.1) 100%);
+    background: -webkit-linear-gradient(bottom, rgba(0,8,38,1) 0%, rgba(0,0,0,1) 100%);
+    background: -moz-linear-gradient(bottom, rgba(0,8,38,1) 0%, rgba(0,0,0,1) 100%);
+    background: -ms-linear-gradient(bottom, rgba(0,8,38,1) 0%, rgba(0,0,0,1) 100%);
+    background: -o-linear-gradient(bottom, rgba(0,8,38,1) 0%, rgba(0,0,0,1) 100%);
 }
 .statResultFlag{
 	height: 1.675em;
@@ -2727,7 +2739,7 @@ input[type=number]::-webkit-outer-spin-button {
 	#targetFlag{
 		width: 76px;
 	}
-	#ribbonWrap{
+	.wideRack{
 		width: 100px;
 	}
 }
@@ -2742,7 +2754,7 @@ input[type=number]::-webkit-outer-spin-button {
 	#targetFlag{
 		width: 72px;
 	}
-	#ribbonWrap{
+	.wideRack{
 		width: 75px;
 	}
 }
@@ -2757,7 +2769,7 @@ input[type=number]::-webkit-outer-spin-button {
 	#targetFlag{
 		width: 68px;
 	}
-	#ribbonWrap{
+	.wideRack{
 		width: 75px;
 	}
 }
@@ -2772,7 +2784,7 @@ input[type=number]::-webkit-outer-spin-button {
 	#targetFlag{
 		width: 64px;
 	}
-	#ribbonWrap{
+	.wideRack{
 		width: 75px;
 	}
 }

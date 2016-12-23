@@ -26,6 +26,11 @@ function updateTileInfo(tileId){
 		DOM.ribbonWrap.style.display = 'none';
 	} else {
 		DOM.ribbonWrap.style.display = 'table-cell';
+		if (game.player[t.player].ribbonArray.length >= 24){
+			DOM.ribbonWrap.className = 'tight wideRack';
+		} else {
+			DOM.ribbonWrap.className = 'tight narrowRack';
+		}
 	}
 	DOM.ribbonWrap.innerHTML = game.player[t.player].ribbons === undefined ? 
 		'' : game.player[t.player].ribbons;

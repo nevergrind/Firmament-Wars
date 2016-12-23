@@ -604,7 +604,7 @@
 		<div id="targetWrap" class="blueBg">
 			<table id="target-ui" class="table table-condensed">
 				<tr>
-					<td id="ribbonWrap" class="tight">
+					<td id="ribbonWrap" class="tight wideRack">
 					</td>
 					<td id="targetFlag" class="text-center no-select tight">
 						<img src="images/flags/Default.jpg" class="w100 block center">

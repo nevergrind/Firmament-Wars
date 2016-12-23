@@ -137,13 +137,22 @@ var stats = {
 			alpha: 1
 		});
 		if (stats.achievements.length){
-			// play some audio sound
-			TweenMax.to('#ribbonBackdrop, #ribbonReward', .25, {
+			audio.play('ding3');
+			TweenMax.to('#ribbonBackdrop', .5, {
 				startAt: {
 					visibility: 'visible',
 					alpha: 0
 				},
 				alpha: 1
+			});
+			TweenMax.to('#ribbonReward', 1, {
+				startAt: {
+					visibility: 'visible',
+					alpha: 0,
+					y: -30
+				},
+				alpha: 1,
+				y: 0
 			});
 		}
 		$("#worldWrap, #targetWrap, #ui2, #resources-ui, #diplomacy-ui, #chat-ui, #chat-input, #surrenderScreen").remove();
@@ -627,10 +636,14 @@ var stats = {
 		data.forEach(function(e){
 			str += 
 			'<div class="ribbonName ranked">'+ game.ribbonTitle[e] +'</div>\
-			<img class="giantRibbon block" src="images/ribbons/ribbon'+ e +'.jpg">';
+			<div class="ribbonDescription ranked">'+ game.ribbonDescription[e] +'</div>\
+			<img class="giantRibbon block" src="images/ribbons/ribbon'+ e +'.jpg">';  
 		});
 		document.getElementById('ribbonBody').innerHTML = str;
 		stats.achievements = data;
+		if (stats.achievements.length){
+			new Audio('sound/ding3.mp3');
+		}
 	},
 	overviewTotal: function(i){
 		var x = stats.data[i];

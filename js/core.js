@@ -256,7 +256,7 @@ g.init = (function(){
 		});
 	}
 	document.getElementById("flagDropdown").innerHTML = s;
-	if (location.hostname === 'localhost'){
+	if (location.hostname === 'localhost' && location.hash === ''){
 		$.ajax({
 			type: "GET",
 			url: 'php/rejoinGame.php' // check if already in a game
@@ -299,7 +299,7 @@ var game = {
 		'Bronze Service Medal',
 		'Bronze Expeditionary Medal',
 		'Bronze Cross',
-		'Silver Cross',
+		'Silver Cross',//10
 		'Golden Cross',
 		'Platinum Cross',
 		'Outstanding Volunteer Ribbon',
@@ -309,7 +309,7 @@ var game = {
 		'Vandamor Campaign Medal',
 		"Global Commendation Ribbon",
 		'Holy Trips Ribbon',
-		'Sweet Quads Ribbon',
+		'Sweet Quads Ribbon',//20
 		'Double Dubs Ribbon',
 		'Glorious Pents Ribbon',
 		'Wicked Sexts Ribbon',
@@ -319,13 +319,51 @@ var game = {
 		'Quad Dubs Ribbon',
 		"Champion's Medal",
 		"Conqueror's Medal",
-		"Commander's Medal",
+		"Commander's Medal",//30
 		"Meritorious Service Medal",
 		'Global War Expeditionary Medal',
 		'Silver Expeditionary Medal',
 		'Silver Campaign Medal',
 		'Silver Service Medal',
 		'Good Conduct Medal',
+	],
+	ribbonDescription: [
+		'Established a new nation',
+		'Confirmed your email address',
+		'Backed a Kickstarter campaign',
+		'Selected a national flag',
+		'Named your nation',
+		'Won 10 ranked games',
+		'Won 10 team games',
+		'Won 10 FFA games',
+		'Achieved 1800+ rating',
+		'Achieved 2100+ rating',//10
+		'Achieved 2400+ rating',
+		'Achieved 2700+ rating',
+		'Reporting a significant bug, exploit, or suggested an improvement',
+		'Acquired a custom flag',
+		'Won 10+ games in a row', // 15
+		'Won 25+ games in a row',
+		'Beat Nevergrind on normal',
+		'Provided your real country code',
+		'Scored a 777 GET',
+		'Scored a quad GET',//20
+		'Scored a double dubs GET',
+		'Scored a pents GET',
+		'Scored a sexts GET',
+		'Scored a triple dubs GET',
+		'Scored a septs GET',
+		'Scored an octs GET',
+		'Scored a quad dubs GET',
+		"Hit #1 on the leaderboard",
+		"Hit top #100 on the leaderboard",
+		"Hit top #1000 on the leaderboard",//30
+		"Refer a friend that plays 25 games",
+		'Win an 8-player FFA game',
+		'Won 100 FFA games',
+		'Won 100 ranked games',
+		'Won 100 team games',
+		'Played 200 games and maintained a disconnect rate below 5%',
 	],
 	player: [0,0,0,0,0,0,0,0,0], // cached values on client to reduce DB load
 	initMap: function(){

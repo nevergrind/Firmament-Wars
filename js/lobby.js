@@ -360,11 +360,15 @@ var lobby = {
 	},
 	initRibbons: function(data){
 		for (var key in data){
-			var str = '';
+			var str = '',
+				arr = [];
 			for (var i=0, len=data[key].length; i<len; i++){
-				str += '<div class="ribbon ribbon'+ data[key][i] +'" title="'+ game.ribbonTitle[i] +'"></div>';
+				var ribbonNum = data[key][i];
+				str += '<div class="ribbon ribbon'+ ribbonNum +'" title="'+ game.ribbonTitle[ribbonNum] +'"></div>';
+				arr.push(ribbonNum);
 			}
 			game.player[key].ribbons = str;
+			game.player[key].ribbonArray = arr;
 		}
 	}
 };
