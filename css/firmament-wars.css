@@ -1096,7 +1096,7 @@ table td, .table th, .table td {
 	width: 195.31%;
 	height: 143.22%;
 	background: rgba(2,4,21,1);
-	background-image: url('../images/fw_grid_clear.png');
+	background-image: url('../images/fw_grid3.png');
 }
 .worldWater{
 	position: absolute;
@@ -1164,17 +1164,17 @@ table td, .table th, .table td {
 	overflow: hidden;
 }
 .targetBarsWrap{
-	margin: 2px 4px;
-	padding: 1px 0;
-	background: #2a2a2a;
-	height: 8px;
-	border: 1px solid #000;
+	margin: 3px 4px 3px;
+	background: #1a1a1a;
+	height: 7px;
+	border: 1px solid #1a1a1a;
 	overflow: hidden;
 }
 .targetBars{
 	padding: 0;
 	margin: 0;
 	width: 100%;
+	height: 2px;
 }
 .targetBarsFood{
 	border-top: 2px dotted #8d0;

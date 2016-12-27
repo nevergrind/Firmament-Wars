@@ -2,7 +2,7 @@
 var animate = {
 	nationName: function(){
 		var tl = new TimelineMax();
-		var split = new SplitText("#nationName", {
+		var split = new SplitText("#configureNationName", {
 			type: "words,chars"
 		});
 		var chars = split.chars;

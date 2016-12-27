@@ -227,6 +227,9 @@
 								<li id="createRankedBtn" class="gameSelect">
 									<a href="#">Ranked Head-to-Head</a>
 								</li>
+								<li id="createTeamBtn" class="gameSelect">
+									<a href="#">Team Game</a>
+								</li>
 							</ul>
 						</div>
 						
@@ -240,6 +243,9 @@
 								</li>
 								<li id="joinRankedGame" class="gameSelect">
 									<a href="#">Ranked Head-to-Head</a>
+								</li>
+								<li id="joinTeamGame" class="gameSelect">
+									<a href="#">Team Game</a>
 								</li>
 							</ul>
 						</div>

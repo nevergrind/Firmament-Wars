@@ -167,7 +167,7 @@ var lobby = {
 						// me
 						str += 
 						'<div class="dropdown govDropdown">\
-							<button class="btn btn-primary dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">\
+							<button class="btn btn-primary btn-responsive dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">\
 								<span id="lobbyGovernment' +i+ '">Despotism</span>\
 								<i class="fa fa-caret-down text-warning lobbyCaret"></i>\
 							</button>\
