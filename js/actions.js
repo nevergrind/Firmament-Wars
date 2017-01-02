@@ -643,6 +643,7 @@ $(document).on('keyup', function(e) {
 				title.createGame();
 			}
 		} else if (x === 27){
+			// esc
 			title.hideBackdrop();
 		}
 	} else if (g.view === 'lobby'){

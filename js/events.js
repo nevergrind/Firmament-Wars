@@ -74,27 +74,16 @@ var events = {
 				e6.style.display = 'block';
 			}
 			e3.val('');
-			TweenMax.to(document.getElementById("createGameWrap"), .5, {
+			TweenMax.to(document.getElementById("createGameWrap"), .3, {
 				startAt: {
 					visibility: 'visible',
-					scale: .8,
+					y: 0,
 					alpha: 0
 				},
-				scale: 1,
+				y: 30,
 				alpha: 1
 			});
-			TweenMax.to(document.getElementById("titleViewBackdrop"), .25, {
-				startAt: {
-					visibility: 'visible',
-					opacity: 0
-				},
-				opacity: 1,
-				ease: Linear.easeNone,
-				onComplete: function(){
-					e3.focus();
-				}
-			});
-			g.isModalOpen = true;
+			title.showBackdrop(e3);
 		}
 
 		$("#create").on("click", function(){
@@ -108,24 +97,16 @@ var events = {
 			title.createGame();
 		});
 		$("body").on("click", '#options', function(){
-			TweenMax.to(document.getElementById("optionsModal"), .5, {
+			TweenMax.to(document.getElementById("optionsModal"), .3, {
 				startAt: {
 					visibility: 'visible',
-					scale: .8,
+					y: 0,
 					alpha: 0
 				},
-				scale: 1,
+				y: 30,
 				alpha: 1
 			});
-			TweenMax.to(document.getElementById("titleViewBackdrop"), .25, {
-				startAt: {
-					visibility: 'visible',
-					opacity: 0
-				},
-				opacity: 1,
-				ease: Linear.easeNone
-			});
-			g.isModalOpen = true;
+			title.showBackdrop();
 		});
 		$("#optionsDone, #cancelCreateGame").on("click", function(){
 			title.hideBackdrop();
@@ -144,46 +125,30 @@ var events = {
 			startGame();
 		});
 		$("#toggleNation").on("click", function(){
-			var e = document.getElementById("configureNation"),
-				e2 = document.getElementById("titleViewBackdrop");
-			TweenMax.to(e, .5, {
+			var e = document.getElementById("configureNation");
+			TweenMax.to(e, .3, {
 				startAt: {
 					visibility: 'visible',
-					scale: .8,
+					y: 0,
 					alpha: 0
 				},
-				scale: 1,
+				y: 30,
 				alpha: 1
 			});
-			TweenMax.to(e2, .5, {
-				startAt: {
-					visibility: 'visible',
-					opacity: 0
-				},
-				opacity: 1
-			});
-			g.isModalOpen = true;
+			title.showBackdrop();
 		});
 		$("#leaderboardBtn").on('click', function(){
-			var e = document.getElementById("leaderboard"),
-				e2 = document.getElementById("titleViewBackdrop");
-			TweenMax.to(e, .5, {
+			var e = document.getElementById("leaderboard");
+			TweenMax.to(e, .3, {
 				startAt: {
 					visibility: 'visible',
-					scale: .8,
+					top: 0,
 					alpha: 0
 				},
-				scale: 1,
+				top: 30,
 				alpha: 1
 			});
-			TweenMax.to(e2, .5, {
-				startAt: {
-					visibility: 'visible',
-					opacity: 0
-				},
-				opacity: 1
-			});
-			g.isModalOpen = true;
+			title.showBackdrop();
 			var e3 = document.getElementById('leaderboardBody');
 			$.ajax({
 				url: 'php/leaderboard.php',

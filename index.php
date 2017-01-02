@@ -31,7 +31,7 @@
 	<title>Firmament Wars | Multiplayer Grand Strategy | Realtime Risk Warfare</title>
 	<meta charset="utf-8">
 	<meta name="keywords" content="risk, civilization, starcraft, multiplayer, pol, strategy, gaming">
-	<meta name="description" content="Firmament Wars is a Risk-like grand strategy browser game featuring realtime combat in FFA, head-to-head, and team modes with up to eight players!">
+	<meta name="description" content="Firmament Wars is a politically incorrect Risk-like strategy game featuring realtime combat in FFA, ranked, and team modes with up to eight players!">
 	<meta name="author" content="Joe Leonard">
 	<meta name="referrer" content="always">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -44,9 +44,9 @@
 	<link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
 	<script>
-		var version = "0-0-26";
+		var version = "0-0-27";
 	</script>
-	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-26">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-27">
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
 
@@ -225,7 +225,7 @@
 									<a href="#">Free For All</a>
 								</li>
 								<li id="createRankedBtn" class="gameSelect">
-									<a href="#">Ranked Head-to-Head</a>
+									<a href="#">Ranked Match</a>
 								</li>
 								<li id="createTeamBtn" class="gameSelect">
 									<a href="#">Team Game</a>
@@ -242,7 +242,7 @@
 									<a href="#">Free For All</a>
 								</li>
 								<li id="joinRankedGame" class="gameSelect">
-									<a href="#">Ranked Head-to-Head</a>
+									<a href="#">Ranked Match</a>
 								</li>
 								<li id="joinTeamGame" class="gameSelect">
 									<a href="#">Team Game</a>
@@ -317,7 +317,7 @@
 						<div class="input-group">
 							<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" autocomplete="off" spellcheck="false" />
 							<div id="titleChatSend" class="input-group-btn">
-								<button class="btn shadow4 fwBlue">Send</button>
+								<button id="titleChatSendBtn" class="btn shadow4 fwBlue">Send</button>
 							</div>
 						</div>';
 					}

@@ -342,7 +342,7 @@ a:hover{
 #titleMenu{
 	position: absolute;
 	top: 7%;
-	right: 0%;
+	left: 0;
 	width: 51%;
 	bottom: -2%;
 	overflow: hidden;
@@ -396,14 +396,14 @@ tbody{
 	position: absolute;
 	padding: 0;
 	top: 7%;
-	left: 0%;
+	right: 0;
 	width: 48.8%;
 	bottom: -2%;
 }
 #titleChatWrap{
-	position: absolute;
+	position: relative;
 	padding: 0;
-	bottom: 2.5vh;
+	top: 1vh;
 	left: 3px;
 	right: 3px;
 	font-family: Verdana, Arial, sans-serif;
@@ -412,6 +412,7 @@ tbody{
 	border-radius: 0;
 }
 #titleChatPlayers{
+	position: relative;
 	top: 3px;
 	left: 3px;
 	width: 40%;
@@ -530,8 +531,11 @@ tbody{
 .fwGreen:active{
 	background: rgba(1,66,1,1);
 }
-#lobbyChatSend, #titleChatSend{
-	border-radius: 0 4px 4px 0;
+#lobbyChatSend, #titleChatSendBtn{
+	border-radius: 0 6px 6px 0;
+}
+#titleChatSendBtn{
+	margin-right: .4vw;
 }
 
 /* lobby chat */
@@ -825,7 +829,6 @@ tbody{
 	border: 1px solid rgba(176,240,255,1);
 	border-radius: 4px;
 	background: rgba(0, 8, 33, 1);
-	box-shadow: 0 0 10px #05b inset;
 }
 .stagBlue{
 	border: 1px solid rgba(176,240,255,1);
@@ -979,8 +982,8 @@ table td, .table th, .table td {
 	border: 2px solid #000;
 	border-radius: 8px 0 8px 0;
 	box-shadow:
-		0 .1em .3em rgba(128, 192, 255, .5) inset,
-		0 -.1em .1em rgba(16, 92, 192, .7) inset;
+		1px 1px rgba(128, 192, 255, 1) inset, 
+		-1px -1px rgba(16, 92, 162, 1) inset;
 	background: rgba(23,42,84,1); /* 23 42 84 */
 	background: linear-gradient(top, 
 		rgba(23, 42, 84, 1) 0%, rgba(23, 42, 84, 1) 50%, 
@@ -1018,7 +1021,7 @@ table td, .table th, .table td {
 }
 .actionButtons:active{
 	box-shadow:
-		0 5em 5em rgba(0,0,0,.3) inset;
+		0 0 0 5em rgba(0,0,0,.3) inset;
 }
 .actionButtons > div{
 	padding: 0 1em;
@@ -1051,18 +1054,18 @@ table td, .table th, .table td {
 .endBtn{
 	border: 1px solid #3377dd;
 	box-shadow: 0 0 20px rgba(0,40,148,1) inset;
-	border-radius: 5%;
+	border-radius: 4%;
 	color: #ff0;
 	cursor: pointer;
-	padding: 1%;
+	padding: 2px;
 	margin-top: 4%;
 }
 .endBtn:hover{
 	background: rgba(0, 48, 112, .5);
 }
 .modalBtnChild{
-	border: 1px solid #335577;
-	border-radius: 10%;
+	border: 1px solid #114499;
+	border-radius: 4%;
 }
 .portal{
 	position: absolute;
@@ -1275,11 +1278,12 @@ circle{
 	overflow: hidden;
 }
 .fw-primary{
-	border: 1px solid #01a;
 	background: rgba(0,0,0,.7);
 	border-radius: 6px;
 	color: #fff;
-	box-shadow: 0 0 5px #3377dd, 0 0 5px #3377dd inset;
+	box-shadow: 
+		0 0 0 1px #3377dd inset, 
+		0 0 0 1px #02c;
 }
 #lobby{
 	padding: 8px;
@@ -1531,7 +1535,6 @@ circle{
 	visibility: hidden;
 	position: absolute;
 	padding: 8px;
-	top: 2%;
 	left: 0;
 	right: 0;
 	margin: 0 auto;
@@ -1847,9 +1850,9 @@ table {
 	width: 0;
 	border-radius: 0;
 	box-shadow: 
-		-2px 0 2px #040 inset,
-		0 -2px 2px #480 inset,
-		0 2px 2px #480 inset;
+		-2px 0 0 #040 inset,
+		0 -2px 0 #480 inset,
+		0 2px 0 #480 inset;
 }
 #cultureBar{
 	margin: 0;
@@ -1858,9 +1861,9 @@ table {
 	width: 0;
 	border-radius: 0;
 	box-shadow: 
-		-2px 0 2px #505 inset,
-		0 2px 2px #a4a inset,
-		0 -2px 2px #a1a inset;
+		-2px 0 0 #505 inset,
+		0 2px 0 #a4a inset,
+		0 -2px 0 #a1a inset;
 }
 #startGame{
 	display: none;

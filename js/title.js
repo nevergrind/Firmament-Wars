@@ -543,17 +543,30 @@ var title = {
 			$DOM.titleChatInput.val('');
 		}
 	},
+	showBackdrop: function(e){
+		TweenMax.to(document.getElementById("titleViewBackdrop"), .3, {
+			startAt: {
+				visibility: 'visible',
+				alpha: 0
+			},
+			alpha: 1,
+			onComplete: function(){
+				if (e !== undefined){
+					e.focus();
+				}
+			}
+		});
+		g.isModalOpen = true;
+	},
 	hideBackdrop: function(){
-		var e = document.getElementById("configureNation"),
+		var e1 = document.getElementById("configureNation"),
 			e2 = document.getElementById("titleViewBackdrop"),
-			e3 = document.getElementById('createGameWrap')
+			e3 = document.getElementById('createGameWrap'),
 			e4 = document.getElementById('optionsModal'),
 			e5 = document.getElementById('leaderboard');
-		TweenMax.to([e,e2,e3,e4,e5], .2, {
+		TweenMax.to([e1,e2,e3,e4,e5], .2, {
 			alpha: 0,
-			ease: Linear.easeNone,
 			onComplete: function(){
-				// console.info(this.target.id);
 				TweenMax.set(this.target, {
 					visibility: 'hidden'
 				});
@@ -652,8 +665,8 @@ var title = {
 				name: x
 			}
 		}).done(function(data) {
-			$("#nationName").text(data);
-			animate.nationName();
+			$(".configureNationName").text(data);
+			// animate.nationName();
 		}).fail(function(e){
 			Msg(e.statusText);
 		}).always(function(){
