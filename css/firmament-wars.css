@@ -1729,6 +1729,37 @@ table {
 #researchFutureTech{
 	display: none;
 }
+#teamColorDropdown{
+	border: 2px groove #204d74;
+	background: #00061a;
+	width: 12em !important;
+	padding: 5px;
+}
+.selectTeamHeader{
+	border-bottom: 1px solid #204d74;
+	padding-bottom: .25em;
+}
+.teamChoice{
+	cursor: pointer !important;
+	font-size: 2em;
+	margin: .25em;
+	text-shadow: 
+		1px 1px #aaa,
+		-1px -1px #aaa,
+		1px -1px #aaa,
+		-1px 1px #aaa;
+}
+.lobbyTeam{
+	margin-right: .5em;
+	text-shadow: 
+		1px 1px #aaa,
+		-1px -1px #aaa,
+		1px -1px #aaa,
+		-1px 1px #aaa;
+}
+.pointer2{
+	cursor: pointer !important;
+}
 .player0{
 	color: #02063a;
 	background: #02063a;

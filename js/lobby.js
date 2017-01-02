@@ -159,7 +159,22 @@ var lobby = {
 						<img id="lobbyFlag' +i+ '" data-placement="right" class="lobbyFlags block center" src="images/flags/blank.png">\
 					</div>\
 					<div class="col-xs-6 lobbyDetails">\
-						<div class="lobbyAccounts chat-warning"><span id="lobbyAccountName'+ i +'" class="lobbyAccountName"></span></div>\
+						<div class="lobbyAccounts chat-warning">\
+							<i id="lobbyTeamColor'+ i +'" class="fa fa-square player'+ i +' lobbyTeam dropdown-toggle';
+							if (i === my.player){
+								str += ' pointer2';
+							}
+							str += '" title="Team color" data-placement="right" data-toggle="dropdown"></i>';
+							if (i === my.player){
+								str += '<ul id="teamColorDropdown" class="dropdown-menu">\
+									<div class="header text-center selectTeamHeader">Team Color</div>';
+								for (var j=1; j<=8; j++){
+									str += '<i class="fa fa-square player'+ j +' teamChoice" data-team="'+ j +'"></i>';
+								}
+								str += '</ul>';
+							}
+							str += '<span id="lobbyAccountName'+ i +'" class="lobbyAccountName"></span>\
+						</div>\
 						<div id="lobbyName' +i+ '" class="lobbyNames nowrap"></div>\
 					</div>\
 					<div class="col-xs-4">';
@@ -265,16 +280,18 @@ var lobby = {
 		}
 	},
 	hostLeft: function(){
-		Msg("The host has left the lobby.");
 		setTimeout(function(){
-			exitGame(true);
-		}, 1000);
+			Msg("The host has left the lobby.");
+			setTimeout(function(){
+				exitGame(true);
+			}, 1000);
+		}, 500);
 	},
 	updatePlayer: function(data, i){
 		var i = data.player;
 		if (data.account !== undefined){
 			// add
-			// console.info("ADD PLAYER: ", data);
+			console.info("ADD PLAYER: ", data);
 			document.getElementById("lobbyRow" + i).style.display = 'block';
 			// different player account
 			document.getElementById("lobbyAccountName" + i).innerHTML = data.account;
@@ -286,8 +303,14 @@ var lobby = {
 				.tooltip({
 					container: 'body'
 				});
+			$("#lobbyTeamColor" + i)
+				.attr('title', 'Select Team Color')
+				.tooltip({
+					container: 'body'
+				});
 			lobby.updateGovernment(data);
 			lobby.data[i] = data;
+			lobby.updateTeam(data);
 		} else {
 			// remove
 			console.info("REMOVE PLAYER: ", data);
@@ -305,6 +328,16 @@ var lobby = {
 			} else {
 				e.className = lobby.startClassOn;
 			}
+		}
+	},
+	updateTeam: function(data){
+		console.info("UPDATE TEAM ", data);
+		var i = data.player;
+		if (data.team){
+			$("#lobbyTeamColor" + i).removeClass()
+				.addClass('fa fa-square lobbyTeam dropdown-toggle pointer2 player' + data.team)
+				.data('team', data.team);
+			lobby.data[i].team = data.team;
 		}
 	},
 	updateGovernment: function(data){
@@ -601,6 +634,7 @@ function loadGameState(){
 			video.load.game();
 			// done
 			my.player = data.player;
+			my.team = data.team;
 			my.account = data.account;
 			my.oBonus = data.oBonus;
 			my.dBonus = data.dBonus;

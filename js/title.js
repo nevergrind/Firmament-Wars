@@ -407,6 +407,8 @@ var title = {
 				lobby.hostLeft();
 			} else if (data.type === 'government'){
 				lobby.updateGovernment(data);
+			} else if (data.type === 'updateTeam'){
+				lobby.updateTeam(data);
 			} else if (data.type === 'countdown'){
 				lobby.countdown(data);
 			} else if (data.type === 'update'){
@@ -605,6 +607,7 @@ var title = {
 				// console.info(data);
 				socket.removePlayer(my.account);
 				my.player = data.player;
+				my.team = data.team;
 				game.id = data.gameId;
 				game.name = data.gameName;
 				// console.info("Creating: ", data);
@@ -647,6 +650,7 @@ var title = {
 		socket.removePlayer(my.account);
 		// console.info(data);
 		my.player = data.player;
+		my.team = data.team;
 		game.id = data.id;
 		game.name = data.gameName;
 		g.map = data.mapData;

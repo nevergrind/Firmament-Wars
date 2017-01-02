@@ -151,7 +151,7 @@ var events = {
 			title.showBackdrop();
 			var e3 = document.getElementById('leaderboardBody');
 			$.ajax({
-				url: 'php/leaderboard.php',
+				url: 'php/leaderboard.php'
 			}).done(function(data) {
 				e3.innerHTML = data.str;
 			});
@@ -324,6 +324,25 @@ var events = {
 				}
 			});
 			e.preventDefault();
+		}).on('click', '.lobbyTeam', function(e){
+			console.info("CLICK");
+		}).on('click', '.teamChoice', function(e){
+			var team = $(this).data('team');
+			console.info("CLICK ", team);
+			// add ajax call to change team color
+			// add color to $_SESSION['colors'] upon start
+				// overwrite colors[]
+			// verify valid ffa/ranked changes
+			$.ajax({
+				url: 'php/changeTeam.php',
+				data: {
+					team: team
+				}
+			}).done(function(data) {
+				my.team = data.team;
+			}).fail(function(data){
+				Msg(data.statusText, 1.5);
+			});
 		});
 	})(),
 	map: (function(){

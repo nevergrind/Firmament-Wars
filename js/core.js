@@ -265,6 +265,7 @@ g.init = (function(){
 			if (data.gameId > 0){
 				// console.info("Auto joined game:" + (data.gameId));
 				my.player = data.player;
+				my.team = data.team;
 				game.id = data.gameId;
 				g.map = data.mapData;
 				g.speed = g.speeds[data.speed];
@@ -644,6 +645,7 @@ var my = {
 	account: '',
 	channel: 'global',
 	player: 0,
+	team: 0,
 	gameName: 'Earth Alpha',
 	max: 8,
 	tgt: 1,
