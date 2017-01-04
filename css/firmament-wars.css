@@ -1089,7 +1089,7 @@ table td, .table th, .table td {
 	top: 50%;
 	left: 50%;
 	width: 200%;
-	max-width: 4400px;
+	max-width: 3840px;
 	height: auto;
 }
 #worldWrap{
@@ -1749,7 +1749,7 @@ table {
 		1px -1px #aaa,
 		-1px 1px #aaa;
 }
-.lobbyTeam{
+.lobbyPlayer{
 	margin-right: .5em;
 	text-shadow: 
 		1px 1px #aaa,

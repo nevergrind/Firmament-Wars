@@ -407,8 +407,8 @@ var title = {
 				lobby.hostLeft();
 			} else if (data.type === 'government'){
 				lobby.updateGovernment(data);
-			} else if (data.type === 'updateTeam'){
-				lobby.updateTeam(data);
+			} else if (data.type === 'updatePlayerColor'){
+				lobby.updatePlayerColor(data);
 			} else if (data.type === 'countdown'){
 				lobby.countdown(data);
 			} else if (data.type === 'update'){

@@ -66,8 +66,8 @@
 
 var stats = {
 	init: function(data){
-		var flag = my.flag === 'Default.jpg' ? 'Player'+ my.player +'.jpg' : my.flag;
-		var str = '<img id="statWorld" src="images/FlatWorld90.jpg">\
+		var flag = my.flag === 'Default.jpg' ? 'Player'+ game.player[my.player].playerColor +'.jpg' : my.flag;
+		var str = '<img id="statWorld" src="images/FlatWorld75-2.jpg">\
 		<div id="statResult" class="no-select">\
 			<span id="statGameResult">Defeat</span>!\
 			<img class="statResultFlag pull-left" src="images/flags/'+ flag +'">\
@@ -149,10 +149,11 @@ var stats = {
 				startAt: {
 					visibility: 'visible',
 					alpha: 0,
-					y: -30
+					top: 0,
+					y: 0
 				},
 				alpha: 1,
-				y: 0
+				y: 30
 			});
 		}
 		$("#worldWrap, #targetWrap, #ui2, #resources-ui, #diplomacy-ui, #chat-ui, #chat-input, #surrenderScreen").remove();
@@ -312,34 +313,35 @@ var stats = {
 				]
 				stats.animate(a, 1.5);
 				str += '<tr class="stagBlue statRow">' +
-					stats.playerCell(d, i) +
-					'<td class="statTD">\
-						<div class="statBar pb'+ i +'">\
-							<div id="p'+ i +'-units-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+					stats.playerCell(d, i);
+					var color = game.player[i].playerColor;
+					str += '<td class="statTD">\
+						<div class="statBar pb'+ color +'">\
+							<div id="p'+ i +'-units-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-units" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
-						<div class="statBar pb'+ i +'">\
-							<div id="p'+ i +'-structures-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+						<div class="statBar pb'+ color +'">\
+							<div id="p'+ i +'-structures-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-structures" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
-						<div class="statBar pb'+ i +'">\
-							<div id="p'+ i +'-weapons-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+						<div class="statBar pb'+ color +'">\
+							<div id="p'+ i +'-weapons-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-weapons" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
-						<div class="statBar pb'+ i +'">\
-							<div id="p'+ i +'-resources-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+						<div class="statBar pb'+ color +'">\
+							<div id="p'+ i +'-resources-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-resources" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
-						<div class="statBar pb'+ i +'">\
-							<div id="p'+ i +'-total-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+						<div class="statBar pb'+ color +'">\
+							<div id="p'+ i +'-total-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-total" class="statVal chat-warning">0</div>\
 						</div>\
 					</td>\
@@ -377,28 +379,29 @@ var stats = {
 				]
 				stats.animate(a, 1.5);
 				str += '<tr class="stagBlue statRow">' +
-					stats.playerCell(d, i) +
-					'<td class="statTD">\
-						<div class="statBar pb'+ i +'">\
-							<div id="p'+ i +'-earned-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+					stats.playerCell(d, i);
+					var color = game.player[i].playerColor;
+					str += '<td class="statTD">\
+						<div class="statBar pb'+ color +'">\
+							<div id="p'+ i +'-earned-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-earned" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
-						<div class="statBar pb'+ i +'">\
-							<div id="p'+ i +'-deployed-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+						<div class="statBar pb'+ color +'">\
+							<div id="p'+ i +'-deployed-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-deployed" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
-						<div class="statBar pb'+ i +'">\
-							<div id="p'+ i +'-killed-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+						<div class="statBar pb'+ color +'">\
+							<div id="p'+ i +'-killed-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-killed" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
-						<div class="statBar pb'+ i +'">\
-							<div id="p'+ i +'-lost-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+						<div class="statBar pb'+ color +'">\
+							<div id="p'+ i +'-lost-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-lost" class="statVal">0</div>\
 						</div>\
 					</td>\
@@ -432,22 +435,23 @@ var stats = {
 				]
 				stats.animate(a, 1);
 				str += '<tr class="stagBlue statRow">' +
-					stats.playerCell(d, i) +
-					'<td class="statTD">\
-						<div class="statBar pb'+ i +'">\
-							<div id="p'+ i +'-bunkers-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+					stats.playerCell(d, i);
+					var color = game.player[i].playerColor;
+					str += '<td class="statTD">\
+						<div class="statBar pb'+ color +'">\
+							<div id="p'+ i +'-bunkers-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-bunkers" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
-						<div class="statBar pb'+ i +'">\
-							<div id="p'+ i +'-walls-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+						<div class="statBar pb'+ color +'">\
+							<div id="p'+ i +'-walls-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-walls" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
-						<div class="statBar pb'+ i +'">\
-							<div id="p'+ i +'-fortresses-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+						<div class="statBar pb'+ color +'">\
+							<div id="p'+ i +'-fortresses-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-fortresses" class="statVal">0</div>\
 						</div>\
 					</td>\
@@ -481,22 +485,23 @@ var stats = {
 				]
 				stats.animate(a, 1);
 				str += '<tr class="stagBlue statRow">'+
-					stats.playerCell(d, i) +
-					'<td class="statTD">\
-						<div class="statBar pb'+ i +'">\
-							<div id="p'+ i +'-cannons-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+					stats.playerCell(d, i);
+					var color = game.player[i].playerColor;
+					str += '<td class="statTD">\
+						<div class="statBar pb'+ color +'">\
+							<div id="p'+ i +'-cannons-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-cannons" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
-						<div class="statBar pb'+ i +'">\
-							<div id="p'+ i +'-missiles-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+						<div class="statBar pb'+ color +'">\
+							<div id="p'+ i +'-missiles-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-missiles" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
-						<div class="statBar pb'+ i +'">\
-							<div id="p'+ i +'-nukes-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+						<div class="statBar pb'+ color +'">\
+							<div id="p'+ i +'-nukes-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-nukes" class="statVal">0</div>\
 						</div>\
 					</td>\
@@ -534,28 +539,29 @@ var stats = {
 				]
 				stats.animate(a, 1.5);
 				str += '<tr class="stagBlue statRow">' +
-					stats.playerCell(d, i) +
-					'<td class="statTD">\
-						<div class="statBar pb'+ i +'">\
-							<div id="p'+ i +'-moves-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+					stats.playerCell(d, i);
+					var color = game.player[i].playerColor;
+					str += '<td class="statTD">\
+						<div class="statBar pb'+ color +'">\
+							<div id="p'+ i +'-moves-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-moves" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
-						<div class="statBar pb'+ i +'">\
-							<div id="p'+ i +'-crystals-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+						<div class="statBar pb'+ color +'">\
+							<div id="p'+ i +'-crystals-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-crystals" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
-						<div class="statBar pb'+ i +'">\
-							<div id="p'+ i +'-food-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+						<div class="statBar pb'+ color +'">\
+							<div id="p'+ i +'-food-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-food" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
-						<div class="statBar pb'+ i +'">\
-							<div id="p'+ i +'-culture-bar" class="statBarBg pbar'+ i +'">&nbsp</div>\
+						<div class="statBar pb'+ color +'">\
+							<div id="p'+ i +'-culture-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-culture" class="statVal">0</div>\
 						</div>\
 					</td>\
@@ -578,6 +584,7 @@ var stats = {
 		return str;
 	},
 	playerCell: function(p, i){
+		i = game.player[i].playerColor;
 		var flag = p.flag === 'Default.jpg' ? 'Player'+ i +'.jpg' : p.flag;
 		var str = '<td>\
 			<img class="statsFlags" src="images/flags/'+ flag +'">\

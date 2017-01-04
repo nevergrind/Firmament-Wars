@@ -160,16 +160,16 @@ var lobby = {
 					</div>\
 					<div class="col-xs-6 lobbyDetails">\
 						<div class="lobbyAccounts chat-warning">\
-							<i id="lobbyTeamColor'+ i +'" class="fa fa-square player'+ i +' lobbyTeam dropdown-toggle';
+							<i id="lobbyPlayerColor'+ i +'" class="fa fa-square player'+ i +' lobbyPlayer dropdown-toggle';
 							if (i === my.player){
 								str += ' pointer2';
 							}
-							str += '" title="Team color" data-placement="right" data-toggle="dropdown"></i>';
+							str += '" data-placement="right" data-toggle="dropdown"></i>';
 							if (i === my.player){
 								str += '<ul id="teamColorDropdown" class="dropdown-menu">\
-									<div class="header text-center selectTeamHeader">Team Color</div>';
+									<div class="header text-center selectTeamHeader">Player Color</div>';
 								for (var j=1; j<=8; j++){
-									str += '<i class="fa fa-square player'+ j +' teamChoice" data-team="'+ j +'"></i>';
+									str += '<i class="fa fa-square player'+ j +' teamChoice" data-playercolor="'+ j +'"></i>';
 								}
 								str += '</ul>';
 							}
@@ -247,12 +247,17 @@ var lobby = {
 					}).done(function(x){
 						if (g.view === "lobby"){
 							// reality check of presence data every 5 seconds
+							var hostFound = false
 							for (var i=1; i<=8; i++){
 								var data = x.playerData[i];
 								if (data !== undefined){
 									// server defined
 									if (data.account !== lobby.data[i].account){
 										lobby.updatePlayer(data);
+									}
+									// check if host
+									if (data.gameHost === 1){
+										hostFound = true;
 									}
 								} else {
 									// not defined on server
@@ -266,7 +271,7 @@ var lobby = {
 								}
 							}
 							// make sure host didn't disconnect
-							if (x.playerData[1] === undefined){
+							if (!hostFound){
 								lobby.hostLeft();
 							}
 							setTimeout(repeat, 5000);
@@ -287,7 +292,8 @@ var lobby = {
 			}, 1000);
 		}, 500);
 	},
-	updatePlayer: function(data, i){
+	// add/remove players from lobby
+	updatePlayer: function(data){
 		var i = data.player;
 		if (data.account !== undefined){
 			// add
@@ -296,21 +302,25 @@ var lobby = {
 			// different player account
 			document.getElementById("lobbyAccountName" + i).innerHTML = data.account;
 			document.getElementById("lobbyName" + i).innerHTML = data.nation;
-			var flag = data.flag === 'Default.jpg' ? 'Player'+ i +'.jpg' : data.flag;
+			var flag = data.flag === 'Default.jpg' ? 
+				'Player'+ i +'.jpg' : 
+				data.flag;
 			document.getElementById("lobbyFlag" + i).src = 'images/flags/'+ flag;
 			$('#lobbyFlag' + i)
 				.attr('title', data.flag.split(".").shift())
 				.tooltip({
 					container: 'body'
 				});
-			$("#lobbyTeamColor" + i)
-				.attr('title', 'Select Team Color')
-				.tooltip({
-					container: 'body'
-				});
+			if (my.player === i){
+				$("#lobbyPlayerColor" + i)
+					.attr('title', 'Select Player Color')
+					.tooltip({
+						container: 'body'
+					});
+			}
 			lobby.updateGovernment(data);
 			lobby.data[i] = data;
-			lobby.updateTeam(data);
+			lobby.updatePlayerColor(data);
 		} else {
 			// remove
 			console.info("REMOVE PLAYER: ", data);
@@ -318,6 +328,28 @@ var lobby = {
 			lobby.data[i] = { account: '' };
 		}
 		lobby.styleStartGame();
+	},
+	// update player's color only
+	updatePlayerColor: function(data){
+		console.info("UPDATE PLAYER COLOR ", data);
+		var i = data.player;
+		var str = my.player === i ? 
+			'fa fa-square lobbyPlayer dropdown-toggle pointer2 player' + data.playerColor :
+			'fa fa-square lobbyPlayer dropdown-toggle player' + data.playerColor;
+		$("#lobbyPlayerColor" + i).removeClass()
+			.addClass(str)
+			.data('playerColor', data.playerColor);
+		lobby.data[i].playerColor = data.playerColor;
+		if (data.flag === 'Default.jpg'){
+			document.getElementById('lobbyFlag' + i).src = 'images/flags/Player' + data.playerColor + '.jpg';
+		}
+	},
+	// update player's government only
+	updateGovernment: function(data){
+		// update button & window
+		var i = data.player;
+		document.getElementById('lobbyGovernment' + i).innerHTML = data.government;
+		lobby.data[i].government = data.government;
 	},
 	styleStartGame: function(){
 		if (my.player === 1){
@@ -329,22 +361,6 @@ var lobby = {
 				e.className = lobby.startClassOn;
 			}
 		}
-	},
-	updateTeam: function(data){
-		console.info("UPDATE TEAM ", data);
-		var i = data.player;
-		if (data.team){
-			$("#lobbyTeamColor" + i).removeClass()
-				.addClass('fa fa-square lobbyTeam dropdown-toggle pointer2 player' + data.team)
-				.data('team', data.team);
-			lobby.data[i].team = data.team;
-		}
-	},
-	updateGovernment: function(data){
-		// update button & window
-		var i = data.player;
-		document.getElementById('lobbyGovernment' + i).innerHTML = data.government;
-		lobby.data[i].government = data.government;
 	},
 	countdown: function(data){
 		socket.unsubscribe('title:refreshGames');
@@ -575,6 +591,7 @@ function Nation(){
 	this.account = "";
 	this.nation = "";
 	this.flag = "";
+	this.playerColor = '#02063a';
 	this.alive = true;
 	return this;
 }
@@ -695,6 +712,16 @@ function loadGameState(){
 			}, {
 				autoAlpha: 1
 			});
+			// init game player data
+			for (var i=0, len=data.players.length; i<len; i++){
+				var d = data.players[i];
+				game.player[d.player].account = d.account;
+				game.player[d.player].flag = d.flag;
+				game.player[d.player].nation = d.nation;
+				game.player[d.player].player = d.player;
+				game.player[d.player].playerColor = d.playerColor;
+				game.player[d.player].government = d.government;
+			}
 			
 			// initialize client tile data
 			var mapCapitals = document.getElementById('mapCapitals'),
@@ -724,18 +751,9 @@ function loadGameState(){
 				}
 				if (d.player){
 					TweenMax.set(document.getElementById('land' + i), {
-						fill: color[d.player]
+						fill: color[game.player[d.player].playerColor]
 					});
 				}
-			}
-			// init game player data
-			for (var i=0, len=data.players.length; i<len; i++){
-				var d = data.players[i];
-				game.player[d.player].account = d.account;
-				game.player[d.player].flag = d.flag;
-				game.player[d.player].nation = d.nation;
-				game.player[d.player].player = d.player;
-				game.player[d.player].government = d.government;
 			}
 			// init map flags
 			var a = document.getElementsByClassName('unit'),
@@ -803,14 +821,14 @@ function loadGameState(){
 					if (p.flag === 'Default.jpg'){
 						str += 
 						'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">\
-							<div class="flag player' + p.player + '" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag +'"></div>\
-							<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ p.player +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>\
+							<div class="flag player' + game.player[p.player].playerColor + '" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag +'"></div>\
+							<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>\
 							<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + p.nation + '</span></div>';
 					} else {
 						str += 
 						'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">\
 							<div class="flag '+ _flagClass +'" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag + '"></div>\
-							<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ p.player +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>\
+							<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>\
 							<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + p.nation + '</span></div>';
 					}
 				}
@@ -835,7 +853,7 @@ function loadGameState(){
 				
 				initOffensiveTooltips();
 				TweenMax.set(DOM.targetLine, {
-					stroke: color[my.player]
+					stroke: color[game.player[my.player].playerColor]
 				});
 				TweenMax.set(DOM.targetLine, {
 					stroke: "hsl(+=0%, +=80%, +=25%)"
@@ -887,11 +905,11 @@ function loadGameState(){
 					});
 				}).on("mouseleave", function(){
 					var land = this.id.slice(4)*1;
-					// console.info('land: ', land);
 					if (game.tiles.length > 0){
-						var player = game.tiles[land] !== undefined ? game.tiles[land].player : 0;
+						var player = game.tiles[land] !== undefined ? game.tiles[land].player : 0,
+							fillNum = player ? game.player[player].playerColor : 0;
 						TweenMax.set(this, {
-							fill: color[player]
+							fill: color[fillNum]
 						});
 					}
 				});

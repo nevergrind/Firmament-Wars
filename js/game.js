@@ -15,7 +15,7 @@ function updateTileInfo(tileId){
 		}
 	} else {
 		if (t.flag === "Default.jpg"){
-			flag = "Player" + t.player + ".jpg";
+			flag = "Player" + game.player[t.player].playerColor + ".jpg";
 		} else {
 			flag = t.flag;
 		}
@@ -267,7 +267,7 @@ function triggerEndGame(msg){
 		g.over = 1;
 	}, 1500);
 	stats.get();
-	new Image('images/FlatWorld60.jpg');
+	new Image('images/FlatWorld75-2.jpg');
 	setTimeout(function(){
 		var e = document.getElementById('victoryScreen');
 		e.innerHTML = msg;

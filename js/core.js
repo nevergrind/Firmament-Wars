@@ -514,7 +514,7 @@ var game = {
 						DOM['flag' + i].href.baseVal = "images/flags/" + newFlag;
 					}
 					TweenMax.set(document.getElementById('land' + i), {
-						fill: color[d.player]
+						fill: color[game.player[d.player].playerColor]
 					});
 				}
 				// check unit value
@@ -568,7 +568,7 @@ var game = {
 		var land = document.getElementById('land' + i);
 		// land color
 		TweenMax.set(land, {
-			fill: color[p]
+			fill: color[game.player[p].playerColor]
 		});
 		
 		// check unit value
@@ -645,6 +645,7 @@ var my = {
 	account: '',
 	channel: 'global',
 	player: 0,
+	playerColor: 0,
 	team: 0,
 	gameName: 'Earth Alpha',
 	max: 8,

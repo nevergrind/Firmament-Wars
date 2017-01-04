@@ -324,22 +324,19 @@ var events = {
 				}
 			});
 			e.preventDefault();
-		}).on('click', '.lobbyTeam', function(e){
-			console.info("CLICK");
 		}).on('click', '.teamChoice', function(e){
-			var team = $(this).data('team');
-			console.info("CLICK ", team);
+			var playerColor = $(this).data('playercolor');
 			// add ajax call to change team color
 			// add color to $_SESSION['colors'] upon start
 				// overwrite colors[]
 			// verify valid ffa/ranked changes
 			$.ajax({
-				url: 'php/changeTeam.php',
+				url: 'php/changePlayerColor.php',
 				data: {
-					team: team
+					playerColor: playerColor*1
 				}
 			}).done(function(data) {
-				my.team = data.team;
+				my.playerColor = data.playerColor;
 			}).fail(function(data){
 				Msg(data.statusText, 1.5);
 			});
@@ -348,7 +345,7 @@ var events = {
 	map: (function(){
 		if (!isFirefox){
 			$("body").on("mousewheel", function(e){
-				if (g.view !== 'title'){
+				if (g.view === 'game'){
 					setMousePosition(e.offsetX, e.offsetY);
 					worldMap[0].applyBounds();
 				}
@@ -359,7 +356,7 @@ var events = {
 			});
 		} else {
 			$("body").on("DOMMouseScroll", function(e){
-				if (g.view !== 'title'){
+				if (g.view === 'game'){
 					setMousePosition(e.originalEvent.layerX, e.originalEvent.layerY);
 					worldMap[0].applyBounds();
 				}

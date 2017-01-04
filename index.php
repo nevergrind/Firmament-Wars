@@ -107,7 +107,7 @@
 					<a href="//www.facebook.com/neverworksgames">
 						<i class="fa fa-facebook text-primary pointer"></i>
 					</a>
-					<a href="//twitter.com/neverworksgames">
+					<a href="//twitter.com/maelfyn">
 						<i class="fa fa-twitter text-primary pointer"></i>
 					</a>
 					<a href="//plus.google.com/118162473590412052664">
@@ -334,7 +334,7 @@
 	
 		<div id="joinGameLobby" class="shadow4">
 		
-			<img id="worldTitle" src="images/FlatWorld60.jpg">
+			<img id="worldTitle" src="images/FlatWorld75-2.jpg">
 		
 			<div id="lobbyLeftCol">
 			
