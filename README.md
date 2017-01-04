@@ -20,7 +20,7 @@ All projects shown helped create Firmament Wars.
 * [Nevergrind Forums](https://nevergrind.com/forums)
 * [GitHub](https://github.com/Maelfyn)
 * [Facebook](https://www.facebook.com/neverworksgames)
-* [Twitter @NeverworksGames](https://twitter.com/neverworksgames)
+* [Twitter](https://twitter.com/maelfyn)
 * [YouTube](https://www.youtube.com/user/Maelfyn)
 * [LinkedIn](https://www.linkedin.com/company/neverworks-games-llc)
 * [IndieDB](http://www.indiedb.com/games/firmament-wars)
