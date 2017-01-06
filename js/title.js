@@ -338,7 +338,10 @@ var title = {
 						startAt: {
 							visibility: 'visible'
 						},
-						opacity: 1
+						opacity: 1,
+						onComplete: function(){
+							$("#title-chat-input").focus();
+						}
 					});
 				}
 			});
@@ -428,7 +431,7 @@ var title = {
 				animate.missile(data.attacker, data.defender, true);
 			} else if (data.type === 'nuke'){
 				setTimeout(function(){
-					animate.nuke(data.tile);
+					animate.nuke(data.tile, data.attacker);
 				}, 5000);
 			} else if (data.type === 'nukeHit'){
 				game.updateTile(data);
@@ -515,13 +518,26 @@ var title = {
 			g.chat(data);
 		});
 	},
+	help: function(){
+		var str = 
+			'<div class="chat-warning">Chat Commands:</div>\
+			<div>/j: change channel</div>\
+			<div>/join: change channel</div>\
+			<div>/w account: whisper user</div>\
+			<div>/whisper account: whisper user</div>\
+			<div>@account_name: whisper user</div>\
+			';
+		title.chat(str);
+	},
 	sendMsg: function(bypass){
 		var msg = $DOM.titleChatInput.val().trim();
 		// bypass via ENTER or chat has focus
 		if (bypass || title.chatOn){
 			if (msg){
 				// is it a command?
-				if (msg.indexOf('/join ') === 0){
+				if (msg.indexOf('/help') === 0){
+					title.help();
+				} else if (msg.indexOf('/join ') === 0){
 					title.changeChannel(msg, '/join ');
 				} else if (msg.indexOf('/j ') === 0){
 					title.changeChannel(msg, '/j ');

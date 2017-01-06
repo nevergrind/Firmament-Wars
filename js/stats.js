@@ -589,9 +589,10 @@ var stats = {
 		var str = '<td>\
 			<img class="statsFlags" src="images/flags/'+ flag +'">\
 			<div class="statsPlayerWrap">\
-				<div class="statsAccount chat-warning nowrap">'+ p.account +'</div>\
-				<div class="statsNation nowrap">\
-					<i class="fa fa-gavel diploSquare statsGov player'+ i +'"></i>'+ p.nation +'</div>\
+				<div class="statsAccount chat-warning nowrap">\
+					<i class="fa fa-gavel diploSquare statsGov player'+ i +'"></i>'+ p.account +
+				'</div>\
+				<div class="statsNation nowrap">'+ p.nation +'</div>\
 			</div>\
 		</td>'
 		return str;

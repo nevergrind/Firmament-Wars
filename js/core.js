@@ -9,6 +9,17 @@ if (location.host !== 'localhost'){
 }
 TweenMax.defaultEase = Quad.easeOut;
 var g = {
+	color: [
+		"#02063a",
+		"#bb0000",
+		"#0077ff",
+		"#a5a500",
+		"#006000",
+		"#b06000",
+		"#33ddff",
+		"#b050b0",
+		"#5500aa"
+	],
 	rankedGame: 0,
 	joinedGame: false,
 	searchingGame: false,
@@ -443,6 +454,16 @@ var game = {
 					$("#diplomacyPlayer" + i).css('display', 'none');
 				}
 			});
+			
+			TweenMax.to('#diplomacyPlayer' + 1, 1, {
+				startAt: { 
+					transformPerspective: 400,
+					transformOrigin: '50% 0',
+					rotationX: 0
+				},
+				height: 0,
+				rotationX: -90
+			});
 		}
 		game.removePlayer(i);
 	},
@@ -514,7 +535,7 @@ var game = {
 						DOM['flag' + i].href.baseVal = "images/flags/" + newFlag;
 					}
 					TweenMax.set(document.getElementById('land' + i), {
-						fill: color[game.player[d.player].playerColor]
+						fill: g.color[game.player[d.player].playerColor]
 					});
 				}
 				// check unit value
@@ -568,7 +589,7 @@ var game = {
 		var land = document.getElementById('land' + i);
 		// land color
 		TweenMax.set(land, {
-			fill: color[game.player[p].playerColor]
+			fill: g.color[game.player[p].playerColor]
 		});
 		
 		// check unit value
@@ -626,15 +647,6 @@ var game = {
 				audio.play('culture');
 				// recruit bonus changes
 				initOffensiveTooltips();
-			}
-		}
-		// filled food bar
-		if (data.get !== undefined){
-			// was it special?
-			if (!data.getBonus){
-				// no bonus troops; only broadcast to self
-				game.chat('<span class="chat-news">'+ data.get + ': ' + my.nation + ' receives <span class="chat-manpower">' + data.manpowerBonus + '</span> armies!</span>');
-				audio.play('food');
 			}
 		}
 	}

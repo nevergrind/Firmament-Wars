@@ -751,7 +751,7 @@ function loadGameState(){
 				}
 				if (d.player){
 					TweenMax.set(document.getElementById('land' + i), {
-						fill: color[game.player[d.player].playerColor]
+						fill: g.color[game.player[d.player].playerColor]
 					});
 				}
 			}
@@ -853,7 +853,7 @@ function loadGameState(){
 				
 				initOffensiveTooltips();
 				TweenMax.set(DOM.targetLine, {
-					stroke: color[game.player[my.player].playerColor]
+					stroke: g.color[game.player[my.player].playerColor]
 				});
 				TweenMax.set(DOM.targetLine, {
 					stroke: "hsl(+=0%, +=80%, +=25%)"
@@ -909,7 +909,7 @@ function loadGameState(){
 						var player = game.tiles[land] !== undefined ? game.tiles[land].player : 0,
 							fillNum = player ? game.player[player].playerColor : 0;
 						TweenMax.set(this, {
-							fill: color[fillNum]
+							fill: g.color[fillNum]
 						});
 					}
 				});

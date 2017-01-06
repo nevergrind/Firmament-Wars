@@ -276,6 +276,10 @@ a:hover{
 	max-width: 40%;
 	display: block;
 }
+.chat-subdued{
+	color: #888888;
+	text-shadow: .5px .5px #111, 1px 1px #111, 1.5px 1.5px #111, 2px 2px #111;
+}
 .chat-manpower{
 	color: #ffff00;
 	text-shadow: .5px .5px #520, 1px 1px #520, 1.5px 1.5px #520, 2px 2px #520;
@@ -2039,8 +2043,9 @@ table {
 	font-family: Cinzel, Palatino Linotype, serif;
 	font-size: 1em;
 	color: #8df;
-	text-shadow: .5px .5px #145, 1px 1px #145, 1.5px 1.5px #145, 2px 2px #145;
-	letter-spacing: .05em;
+	text-shadow: 
+		.5px .5px #145, 1px 1px #145, 
+		1.5px 1.5px #145, 2px 2px #145;
 }
 .statsGov{
 	font-size: .875em;

@@ -84,6 +84,14 @@ var events = {
 				alpha: 1
 			});
 			title.showBackdrop(e3);
+			
+			var speed = localStorage.getItem('gameSpeed');
+			newSpeed = g.speeds[speed];
+			if (newSpeed >= 5000){
+				g.speed = newSpeed;
+				$("#createGameSpeed").text(speed);
+			}
+			
 		}
 
 		$("#create").on("click", function(){
@@ -394,6 +402,7 @@ var events = {
 			var x = $(this).text();
 			g.speed = g.speeds[x];
 			$("#createGameSpeed").text(x);
+			localStorage.setItem('gameSpeed', x);
 			e.preventDefault();
 		});
 	})(),

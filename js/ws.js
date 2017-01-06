@@ -137,10 +137,11 @@ var socket = {
 		// chat updates
 		if (g.view === 'title' && socket.initialConnection){
 			socket.initialConnection = false;
-			title.chat("You have joined channel: " + my.channel + ".", "chat-warning", true);
-			socket.zmq.subscribe('title:' + my.channel, function(topic, data) {
-				title.chatReceive(data);
-			});
+			if (location.hash.length > 1){
+				my.channel = location.hash.slice(1)
+				document.getElementById('titleChatHeaderChannel').innerHTML = my.channel;
+			}
+			socket.setChannel(my.channel);
 			socket.zmq.subscribe('title:refreshGames', function(topic, data) {
 				title.updateGame(data);
 			});

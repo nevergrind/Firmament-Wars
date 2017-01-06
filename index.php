@@ -303,7 +303,7 @@
 					// Associative array
 					while ($row = mysqli_fetch_assoc($result)){
 						$total += $row['count'];
-						echo '<div>There '. ($total === 1 ? 'is' : 'are') .' '. $total . ' '. ($total === 1 ? 'person' : 'people') .' playing Firmament Wars</div>';
+						echo '<div>There '. ($total === 1 ? 'is' : 'are') .' '. $total . ' '. ($total === 1 ? 'person' : 'people') .' playing Firmament Wars</div><div class="chat-subdued">Type /help for chat commands</div>';
 					}
 					echo 
 					'</div>';
@@ -431,7 +431,7 @@
 					
 					<div class='buffer w33'>
 						<div class='dropdown'>
-							<button class='btn btn-primary dropdown-toggle shadow4 fwDropdownButton' type='button' data-toggle='dropdown'>
+							<button id="speedDropdownBtn" class='btn btn-primary dropdown-toggle shadow4 fwDropdownButton' type='button' data-toggle='dropdown'>
 								<span id='createGameSpeed'>Normal</span>
 								<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 							</button>

@@ -58,11 +58,11 @@ var animate = {
 					xPercent: -50,
 					yPercent: -50,
 					transformOrigin: '50% 50%',
-					opacity: 1,
+					alpha: 1,
 					scale: 0
 				},
 				scale: i*.1,
-				opacity: 0,
+				alpha: 0,
 				onComplete: function(){
 					this.target.parentNode.removeChild(this.target);
 				}
@@ -81,7 +81,7 @@ var animate = {
 				xPercent: -50,
 				yPercent: -50,
 				transformOrigin: '50% 50%',
-				opacity: 1,
+				alpha: 1,
 				scale: .1
 			},
 			scale: 1,
@@ -92,7 +92,7 @@ var animate = {
 		});
 		TweenMax.to(shield, .5, {
 			delay: 1.5,
-			opacity: 0,
+			alpha: 0,
 			onComplete: function(){
 				this.target.parentNode.removeChild(this.target);
 			}
@@ -245,7 +245,7 @@ var animate = {
 				circ.setAttributeNS(null,"cx",x1);
 				circ.setAttributeNS(null,"cy",y1);
 				circ.setAttributeNS(null,"r",4);
-				circ.setAttributeNS(null,"fill",'#3a005a');
+				circ.setAttributeNS(null,"fill",g.color[game.player[game.tiles[atkTile].player].playerColor]);
 				circ.setAttributeNS(null,"stroke",'#ffddaa');
 				circ.setAttributeNS(null,"strokeWidth",1);
 				DOM.mapAnimations.appendChild(circ);
@@ -332,7 +332,7 @@ var animate = {
 		mis.setAttributeNS(null, "cx", x1);
 		mis.setAttributeNS(null, "cy", y1);
 		mis.setAttributeNS(null, "r", 12);
-		mis.setAttributeNS(null,"fill",'#2288ff');
+		mis.setAttributeNS(null,"fill",g.color[game.player[game.tiles[attacker].player].playerColor]);
 		mis.setAttributeNS(null,"stroke","#ffddaa");
 		mis.setAttributeNS(null,"stroke-width",2);
 		DOM.mapAnimations.appendChild(mis);
@@ -345,7 +345,7 @@ var animate = {
 		});
 		TweenMax.to(mis, 1, {
 			startAt: {
-				opacity: 1,
+				alpha: 1,
 				xPercent: -50,
 				yPercent: -50
 			},
@@ -357,6 +357,7 @@ var animate = {
 			onUpdate: function(){
 				count++;
 				if (count % 4 === 0){
+					// smoke trail
 					var x = x1 + mis._gsTransform.x;
 					var y = y1 + mis._gsTransform.y;
 					var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
@@ -440,9 +441,9 @@ var animate = {
 				});
 				TweenMax.to(circ, 1.25, {
 					startAt:{
-						opacity: 1
+						alpha: 1
 					},
-					opacity: 0,
+					alpha: 0,
 					onUpdate: function(){
 						TweenMax.set(circ, {
 							fill: animate.randomColor()
@@ -454,7 +455,7 @@ var animate = {
 		}
 		animate.smoke(tile, x, y, 1);
 	},
-	nuke: function(tile){
+	nuke: function(tile, attacker){
 		var box = DOM['unit' + tile].getBBox();
 		var x = box.x;
 		var y = box.y;
@@ -517,12 +518,13 @@ var animate = {
 				circ.setAttributeNS(null,"cx",x);
 				circ.setAttributeNS(null,"cy",y);
 				circ.setAttributeNS(null,"r",1);
-				circ.setAttributeNS(null,"fill",'#ffaa00');
-				circ.setAttributeNS(null,"stroke",'#ffffaa');
+				circ.setAttributeNS(null,"fill",color[game.player[game.tiles[attacker].player].playerColor]);
+				circ.setAttributeNS(null,"stroke",'#ffdd88');
 				DOM.mapAnimations.appendChild(circ);
+				
 				TweenMax.to(circ, 1.5, {
 					startAt: {
-						opacity: 1
+						alpha: 1
 					},
 					attr: {
 						r: 80
@@ -537,20 +539,20 @@ var animate = {
 					},
 					ease: Power3.easeOut
 				});
-				TweenMax.to(circ, 2.5, {
-					onUpdate: function(){
-						TweenMax.set(circ, {
-							fill: animate.randomColor()
-						});
-					}
+				TweenMax.to(circ, .05, {
+					fill: "hsl(+=20%, +=100%, +=30%)",
+					repeat: -1,
+					yoyo: true,
+					ease: SteppedEase.config(6)
 				});
 				TweenMax.to(circ, 2.5, {
-					opacity: 0,
+					alpha: 0,
 					ease: Power4.easeIn,
 					onComplete: function(){
 						this.target.parentNode.removeChild(this.target);
 					}
 				});
+				
 				animate.smoke(tile, x, y);
 				animate.smoke(tile, x, y);
 				animate.smoke(tile, x, y);
@@ -577,7 +579,7 @@ var animate = {
 		DOM.mapUpgrades.appendChild(smoke);
 		TweenMax.to(smoke, 3, {
 			startAt: {
-				opacity: 1,
+				alpha: 1,
 				transformOrigin: '50% 50%',
 				xPercent: -50,
 				yPercent: -50,
@@ -587,7 +589,7 @@ var animate = {
 			scale: scale
 		});
 		TweenMax.to(smoke, 3, {
-			opacity: 0,
+			alpha: 0,
 			onComplete: function(){
 				this.target.parentNode.removeChild(this.target);
 			}
