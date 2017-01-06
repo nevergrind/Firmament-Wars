@@ -162,11 +162,11 @@
 						$nation = 'Kingdom of '. ucfirst($_SESSION['account']);
 						$flag = 'Default.jpg';
 						if($count > 0){
-							$query = "select nation, flag, rating, wins, losses, rankedWins, rankedLosses, disconnects from fwnations where account=?";
+							$query = "select nation, flag, rating, wins, losses, teamWins, teamLosses, rankedWins, rankedLosses, disconnects from fwnations where account=?";
 							$stmt = $link->prepare($query);
 							$stmt->bind_param('s', $_SESSION['account']);
 							$stmt->execute();
-							$stmt->bind_result($dName, $dFlag, $rating, $wins, $losses, $rankedWins, $rankedLosses, $disconnects);
+							$stmt->bind_result($dName, $dFlag, $rating, $wins, $losses, $teamWins, $teamLosses, $rankedWins, $rankedLosses, $disconnects);
 							while($stmt->fetch()){
 								$nation = $dName;
 								$flag = $dFlag;
@@ -174,6 +174,8 @@
 								$_SESSION['totalGames'] = $wins + $losses + $rankedWins + $rankedLosses + $disconnects;
 								$_SESSION['wins'] = $wins;
 								$_SESSION['losses'] = $losses;
+								$_SESSION['teamWins'] = $teamWins;
+								$_SESSION['teamLosses'] = $teamLosses;
 								$_SESSION['rankedWins'] = $rankedWins;
 								$_SESSION['rankedLosses'] = $rankedLosses;
 								$_SESSION['disconnects'] = $disconnects;
