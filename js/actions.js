@@ -447,9 +447,17 @@ function toggleChatMode(bypass){
 		var msg = $DOM.chatInput.val().trim();
 		if (bypass && msg){
 			// send ajax chat msg
-			if (msg.indexOf('/unignore ') === 0){
-					var account = msg.slice(10);
-					title.removeIgnore(account);
+			if (msg.indexOf('/unfriend ') === 0){
+				var account = msg.slice(10);
+				title.removeFriend(account);
+			} else if (msg === '/friend'){
+				title.listFriends();
+			} else if (msg.indexOf('/friend ') === 0){
+				var account = msg.slice(8);
+				title.addFriend(account);
+			} else if (msg.indexOf('/unignore ') === 0){
+				var account = msg.slice(10);
+				title.removeIgnore(account);
 			} else if (msg === '/ignore'){
 				title.listIgnore();
 			} else if (msg.indexOf('/ignore ') === 0){

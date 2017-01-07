@@ -111,7 +111,15 @@ var lobby = {
 			// bypass via ENTER or chat has focus
 			if (msg){
 				// is it a command?
-				if (msg.indexOf('/unignore ') === 0){
+				if (msg.indexOf('/unfriend ') === 0){
+					var account = msg.slice(10);
+					title.removeFriend(account);
+				} else if (msg === '/friend'){
+					title.listFriends();
+				} else if (msg.indexOf('/friend ') === 0){
+					var account = msg.slice(8);
+					title.addFriend(account);
+				} else if (msg.indexOf('/unignore ') === 0){
 					var account = msg.slice(10);
 					title.removeIgnore(account);
 				} else if (msg === '/ignore'){
@@ -231,12 +239,22 @@ var lobby = {
 			d = 0;
 		}
 		if (d === undefined){
-			d = .5;
+			d = 1;
 		}
 		g.view = "lobby";
-		TweenMax.to("#titleMain", d, {
-			autoAlpha: 0,
+		var titleMain = document.getElementById('titleMain'),
+			titleMenu = document.getElementById ('titleMenu'),
+			titleChat = document.getElementById ('titleChat');
+		title.hideBackdrop();
+		TweenMax.to(titleChat, d, {
+			x: '100%',
+			ease: Quad.easeIn
+		});
+		TweenMax.to(titleMenu, d, {
+			x: '-100%',
+			ease: Quad.easeIn,
 			onComplete: function(){
+				titleMain.parentNode.removeChild(titleMain);
 				g.unlock(1);
 				TweenMax.fromTo('#joinGameLobby', d, {
 					autoAlpha: 0

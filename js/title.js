@@ -297,28 +297,93 @@ var title = {
 			}
 		}
 	},
+	listFriends: function(){
+		var len = g.friends.length;
+		g.chat('<div>Checking friends list...</div>');
+		if (len){
+			$.ajax({
+				url: 'php/getFriends.php',
+				data: {
+					friends: g.friends
+				}
+			}).done(function(data){
+				var str = '<div>Friend List ('+ len +')</div>';
+				for (var i=0; i<len; i++){
+					if (data.players.indexOf(g.friends[i]) > -1){
+						// online
+						str += '<div><span class="chat-online titlePlayerAccount">' + g.friends[i] +'</span></div>';
+					} else {
+						str += '<div><span class="chat-muted titlePlayerAccount">' + g.friends[i] +'</span></div>';
+					}
+				}
+				g.chat(str);
+			});
+		} else {
+			g.chat("You don't have any friends!<img src='images/chat/random/feelsbad.png'>", 'chat-muted');
+		}
+	},
+	addFriend: function(account){
+		account = account.trim();
+		g.chat('<div>Adding friend: '+ account +'</div>');
+		if (g.friends.indexOf(account) === -1 && account){
+			if (g.friends.length < 20){
+				if (account !== my.account){
+					g.friends.push(account);
+					localStorage.setItem('friends', JSON.stringify(g.friends));
+					g.chat('Added friend: ' + account, 'chat-muted');
+				} else {
+					g.chat("You can't be friends with yourself!<img src='images/chat/random/hangfrog.jpg'>", 'chat-muted');
+				}
+			} else {
+				g.chat('You cannot have more than 20 friends!', 'chat-muted');
+			}
+		} else {
+			g.chat('You are already friends with ' + account +'!<img src="images/chat/random/forget.jpg">', 'chat-muted');
+		}
+	},
+	removeFriend: function(account){
+		account = account.trim();
+		g.chat('<div>Removing friend: '+ account +'</div>');
+		if (g.friends.indexOf(account) > -1 && account){
+			// found account
+			var index = g.friends.indexOf(account);
+			g.friends.splice(index, 1);
+			localStorage.setItem('friends', JSON.stringify(g.friends));
+			g.chat('Removed friend: ' + account, 'chat-muted');
+		} else {
+			g.chat('That account is not on your friend list.', 'chat-muted');
+		}
+	},
 	listIgnore: function(){
 		var len = g.ignore.length;
 		var str = '<div>Ignore List ('+ len +')</div>';
 		for (var i=0; i<len; i++){
-			str += '<div>' + g.ignore[i] +'</div>';
+			str += '<div><span class="chat-muted titlePlayerAccount">' + g.ignore[i] +'</span></div>';
 		}
-		g.chat(str, 'chat-muted');
+		g.chat(str);
 	},
 	addIgnore: function(account){
+		account = account.trim();
+		g.chat('<div>Ignoring '+ account +'</div>');
 		if (g.ignore.indexOf(account) === -1 && account){
 			if (g.ignore.length < 20){
-				g.ignore.push(account);
-				localStorage.setItem('ignore', JSON.stringify(g.ignore));
-				g.chat('Now ignoring account: ' + account, 'chat-muted');
+				if (account !== my.account){
+					g.ignore.push(account);
+					localStorage.setItem('ignore', JSON.stringify(g.ignore));
+					g.chat('Now ignoring account: ' + account, 'chat-muted');
+				} else {
+					g.chat("<div>You can't ignore yourself!</div><img src='images/chat/random/autism.jpg'>", 'chat-muted');
+				}
 			} else {
 				g.chat('You cannot ignore more than 20 accounts!', 'chat-muted');
 			}
 		} else {
-			g.chat('Already ignoring account: ' + account, 'chat-muted');
+			g.chat('Already ignoring ' + account +'!', 'chat-muted');
 		}
 	},
 	removeIgnore: function(account){
+		account = account.trim();
+		g.chat('<div>Unignoring '+ account +'</div>');
 		if (g.ignore.indexOf(account) > -1 && account){
 			// found account
 			var index = g.ignore.indexOf(account);
@@ -326,9 +391,8 @@ var title = {
 			localStorage.setItem('ignore', JSON.stringify(g.ignore));
 			g.chat('Stopped ignoring account: ' + account, 'chat-muted');
 		} else {
-			g.chat('That account is not on your ignore list.', 'chat-muted');
+			g.chat(account + ' is not on your ignore list.', 'chat-muted');
 		}
-		
 	},
 	chatReceive: function(data){
 		if (g.view === 'title'){
@@ -470,6 +534,9 @@ var title = {
 			<div>/ignore: show ignore list</div>\
 			<div>/ignore account: ignore account</div>\
 			<div>/unignore account: stop ignoring account</div>\
+			<div>/friend: show friend list</div>\
+			<div>/friend account: add friend</div>\
+			<div>/unfriend account: remove friend</div>\
 			';
 		title.chat(str, 'chat-muted');
 	},
@@ -487,7 +554,15 @@ var title = {
 		if (bypass || title.chatOn){
 			if (msg){
 				// is it a command?
-				if (msg.indexOf('/unignore ') === 0){
+				if (msg.indexOf('/unfriend ') === 0){
+					var account = msg.slice(10);
+					title.removeFriend(account);
+				} else if (msg === '/friend'){
+					title.listFriends();
+				} else if (msg.indexOf('/friend ') === 0){
+					var account = msg.slice(8);
+					title.addFriend(account);
+				} else if (msg.indexOf('/unignore ') === 0){
 					var account = msg.slice(10);
 					title.removeIgnore(account);
 				} else if (msg === '/ignore'){
@@ -568,7 +643,6 @@ var title = {
 		} else if (!g.rankedGame && (max < 2 || max > 8 || max % 1 !== 0)){
 			Msg("Game must have 2-8 players.", 1);
 		} else {
-			title.hideBackdrop();
 			g.lock(1);
 			audio.play('click');
 			$.ajax({

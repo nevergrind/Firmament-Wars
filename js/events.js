@@ -101,7 +101,7 @@ var events = {
 			openCreateGameModal(true);
 		});
 
-		$("#createGame").on("mousedown", function(e){
+		$("#createGame").on("click", function(e){
 			title.createGame();
 		});
 		$("body").on("click", '#options', function(){

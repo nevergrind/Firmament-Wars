@@ -561,7 +561,7 @@ var animate = {
 		});
 	},
 	logo: function(linear){
-		var globeDelay = 1.5;
+		var globeDelay = 1;
 		// animate stars
 		var stars = [
 			document.getElementById('firmamentWarsStars1'),
@@ -596,12 +596,14 @@ var animate = {
 			startAt: {
 				transformPerspective: 600,
 				transformOrigin: '50% 50% -600',
-				rotationX: 90,
+				rotationX: 135,
+				scale: .2,
 				visibility: 'visible',
 				alpha: 0,
 				yPercent: -50
 			},
 			rotationX: 0,
+			scale: 1,
 			alpha: 1,
 			ease: Quad.easeIn
 		});
@@ -610,19 +612,20 @@ var animate = {
 		});
 		
 		TweenMax.to('#titleMain', .5, {
-			delay: 1,
+			delay: globeDelay,
 			startAt: {
 				visibility: 'visible'
 			},
 			alpha: 1,
 			onComplete: function(){
 				$("#title-chat-input").focus();
-			}
+			},
+			ease: Quad.easeIn
 		});
 		// globe
 		var globe = document.getElementById('titleGlobe');
 		TweenMax.to(globe, globeDelay, {
-			y: '0%'
+			y: '10%'
 		});
 	},
 	smoke: function(tile, x, y, scale){
