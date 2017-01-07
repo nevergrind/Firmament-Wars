@@ -57,8 +57,6 @@
 	<div id="titleViewBackdrop"></div>
 
 	<div id="firmamentWarsLogoWrap" class="titleBG">
-		<img id="firmamentWars" src="//i.imgur.com/FrAjfJ4.jpg" title="Firmament Wars Title Screen" class="titleBG fwHidden">
-		
 		<div id="firmamentWarsStars1" class="titleBG titleStars"></div>
 		<div id="firmamentWarsStars2" class="titleBG titleStars"></div>
 		<div id="firmamentWarsStars3" class="titleBG titleStars"></div>

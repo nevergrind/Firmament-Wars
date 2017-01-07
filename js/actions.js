@@ -447,7 +447,15 @@ function toggleChatMode(bypass){
 		var msg = $DOM.chatInput.val().trim();
 		if (bypass && msg){
 			// send ajax chat msg
-			if (msg.indexOf('/whisper ') === 0){
+			if (msg.indexOf('/unignore ') === 0){
+					var account = msg.slice(10);
+					title.removeIgnore(account);
+			} else if (msg === '/ignore'){
+				title.listIgnore();
+			} else if (msg.indexOf('/ignore ') === 0){
+				var account = msg.slice(8);
+				title.addIgnore(account);
+			} else if (msg.indexOf('/whisper ') === 0){
 				title.sendWhisper(msg, '/whisper ');
 			} else if (msg.indexOf('/w ') === 0){
 				title.sendWhisper(msg, '/w ');

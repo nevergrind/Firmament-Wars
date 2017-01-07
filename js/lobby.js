@@ -111,7 +111,15 @@ var lobby = {
 			// bypass via ENTER or chat has focus
 			if (msg){
 				// is it a command?
-				if (msg.indexOf('/whisper ') === 0){
+				if (msg.indexOf('/unignore ') === 0){
+					var account = msg.slice(10);
+					title.removeIgnore(account);
+				} else if (msg === '/ignore'){
+					title.listIgnore();
+				} else if (msg.indexOf('/ignore ') === 0){
+					var account = msg.slice(8);
+					title.addIgnore(account);
+				} else if (msg.indexOf('/whisper ') === 0){
 					title.sendWhisper(msg, '/whisper ');
 				} else if (msg.indexOf('/w ') === 0){
 					title.sendWhisper(msg, '/w ');

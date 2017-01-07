@@ -52,7 +52,9 @@ var socket = {
 				}
 				title.chat("You have joined channel: " + data.channel + ".", "chat-warning", true);
 				socket.zmq.subscribe('title:' + data.channel, function(topic, data) {
-					title.chatReceive(data);
+					if (g.ignore.indexOf(data.account) === -1){
+						title.chatReceive(data);
+					}
 				});
 				// add id
 				socket.addPlayer(my.account, my.flag);
@@ -94,10 +96,8 @@ var socket = {
 				}
 			}
 		});
-		(function keepAliveWs(){ 
-			setTimeout(function(){
-				console.clear();
-			}, 900000);
+		setInterval(console.clear, 600000); // 10 min
+		(function keepAliveWs(){
 			socket.zmq.publish(channel, {type: "keepAlive"});
 			setTimeout(keepAliveWs, 180000);
 		})();
@@ -109,7 +109,9 @@ var socket = {
 				// game updates
 				// console.info("Subscribing to game:" + game.id);
 				socket.zmq.subscribe('game:' + game.id, function(topic, data) {
-					title.chatReceive(data);
+					if (g.ignore.indexOf(data.account) === -1){
+						title.chatReceive(data);
+					}
 				});
 			} else {
 				setTimeout(repeat, 100);

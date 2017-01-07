@@ -297,6 +297,39 @@ var title = {
 			}
 		}
 	},
+	listIgnore: function(){
+		var len = g.ignore.length;
+		var str = '<div>Ignore List ('+ len +')</div>';
+		for (var i=0; i<len; i++){
+			str += '<div>' + g.ignore[i] +'</div>';
+		}
+		g.chat(str, 'chat-muted');
+	},
+	addIgnore: function(account){
+		if (g.ignore.indexOf(account) === -1 && account){
+			if (g.ignore.length < 20){
+				g.ignore.push(account);
+				localStorage.setItem('ignore', JSON.stringify(g.ignore));
+				g.chat('Now ignoring account: ' + account, 'chat-muted');
+			} else {
+				g.chat('You cannot ignore more than 20 accounts!', 'chat-muted');
+			}
+		} else {
+			g.chat('Already ignoring account: ' + account, 'chat-muted');
+		}
+	},
+	removeIgnore: function(account){
+		if (g.ignore.indexOf(account) > -1 && account){
+			// found account
+			var index = g.ignore.indexOf(account);
+			g.ignore.splice(index, 1);
+			localStorage.setItem('ignore', JSON.stringify(g.ignore));
+			g.chat('Stopped ignoring account: ' + account, 'chat-muted');
+		} else {
+			g.chat('That account is not on your ignore list.', 'chat-muted');
+		}
+		
+	},
 	chatReceive: function(data){
 		if (g.view === 'title'){
 			// title
@@ -434,8 +467,11 @@ var title = {
 			<div>/w account: whisper user</div>\
 			<div>/whisper account: whisper user</div>\
 			<div>@account_name: whisper user</div>\
+			<div>/ignore: show ignore list</div>\
+			<div>/ignore account: ignore account</div>\
+			<div>/unignore account: stop ignoring account</div>\
 			';
-		title.chat(str);
+		title.chat(str, 'chat-muted');
 	},
 	broadcast: function(msg){
 					$.ajax({
@@ -451,7 +487,15 @@ var title = {
 		if (bypass || title.chatOn){
 			if (msg){
 				// is it a command?
-				if (msg.indexOf('/help') === 0){
+				if (msg.indexOf('/unignore ') === 0){
+					var account = msg.slice(10);
+					title.removeIgnore(account);
+				} else if (msg === '/ignore'){
+					title.listIgnore();
+				} else if (msg.indexOf('/ignore ') === 0){
+					var account = msg.slice(8);
+					title.addIgnore(account);
+				} else if (msg.indexOf('/help') === 0){
 					title.help();
 				} else if (msg.indexOf('/join ') === 0){
 					title.changeChannel(msg, '/join ');

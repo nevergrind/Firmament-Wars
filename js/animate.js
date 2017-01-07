@@ -561,7 +561,7 @@ var animate = {
 		});
 	},
 	logo: function(linear){
-		var globeDelay = 2;
+		var globeDelay = 1.5;
 		// animate stars
 		var stars = [
 			document.getElementById('firmamentWarsStars1'),
@@ -594,10 +594,14 @@ var animate = {
 		var fwLogo = document.getElementById('firmamentWarsLogo');
 		TweenMax.to(fwLogo, globeDelay, {
 			startAt: {
+				transformPerspective: 600,
+				transformOrigin: '50% 50% -600',
+				rotationX: 90,
 				visibility: 'visible',
 				alpha: 0,
 				yPercent: -50
 			},
+			rotationX: 0,
 			alpha: 1,
 			ease: Quad.easeIn
 		});

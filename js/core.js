@@ -9,6 +9,7 @@ if (location.host !== 'localhost'){
 }
 TweenMax.defaultEase = Quad.easeOut;
 var g = {
+	ignore: [],
 	color: [
 		"#02063a",
 		"#bb0000",
@@ -158,6 +159,14 @@ var g = {
 			}
 		} else if (geo === null){
 			g.updateUserInfo();
+		}
+		// ignore list
+		var ignore = localStorage.getItem('ignore');
+		if (ignore !== null){
+			g.ignore = JSON.parse(ignore);
+		} else {
+			var foo = [];
+			localStorage.setItem('ignore', JSON.stringify(foo));
 		}
 	},
 	config: {
