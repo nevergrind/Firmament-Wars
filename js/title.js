@@ -3,80 +3,70 @@ var title = {
 	players: [],
 	games: [],
 	init: (function(){
-		// console.info("Initializing title screen...");
-		// prevents auto scroll while scrolling
-		$("#titleChatLog").on('mousedown', function(){
-			title.chatDrag = true;
-		}).on('mouseup', function(){
-			title.chatDrag = false;
+		$(document).ready(function(){
+			// console.info("Initializing title screen...");
+			// prevents auto scroll while scrolling
+			$("#titleChatLog").on('mousedown', function(){
+				title.chatDrag = true;
+			}).on('mouseup', function(){
+				title.chatDrag = false;
+			});
+			$("#title-chat-input").on('focus', function(){
+				title.chatOn = true;
+			}).on('blur', function(){
+				title.chatOn = false;
+			});
+			$(".createGameInput").on('focus', function(){
+				title.createGameFocus = true;
+			}).on('blur', function(){
+				title.createGameFocus = false;
+			});
+			$("#titleChatSend").on('click', function(){
+				title.sendMsg(true);
+			});
+			$.ajax({
+				type: 'GET',
+				url: 'php/initChatId.php'
+			}).done(function(data){
+				my.account = data.account;
+				my.flag = data.flag;
+				title.updatePlayers();
+			});
+			// init game refresh
+			Notification.requestPermission();
+			// initial refresh of games
+			$.ajax({
+				type: 'GET',
+				url: 'php/refreshGames.php'
+			}).done(function(data) {
+				var e = document.getElementById('gameTableBody');
+				if (e === null){
+					return;
+				}
+				// head
+				var str = '';
+				// body
+				for (var i=0, len=data.length; i<len; i++){
+					var d = data[i];
+					title.games[d.id] = d.players * 1;
+					str += 
+					"<tr id='game_"+ d.id +"' class='wars no-select' data-name='" + d.name + "'>\
+						<td class='warCells'>"+ d.name + "</td>\
+						<td class='warCells'>" + d.map + "</td>\
+						<td class='warCells'>" + d.speed + "</td>\
+						<td class='warCells'><span id='game_players_"+ d.id +"'>" + d.players + "</span>/" + d.max + "</td>\
+					</tr>";
+				}
+				e.innerHTML = str;
+				$(".wars").filter(":first").trigger("click");
+			}).fail(function(e){
+				console.info(e.responseText);
+				Msg("Server error.");
+			});
+			setTimeout(function(){
+				g.keepAlive();
+			}, 300000);
 		});
-		$("#title-chat-input").on('focus', function(){
-			title.chatOn = true;
-		}).on('blur', function(){
-			title.chatOn = false;
-		});
-		$(".createGameInput").on('focus', function(){
-			title.createGameFocus = true;
-		}).on('blur', function(){
-			title.createGameFocus = false;
-		});
-		$("#titleChatSend").on('click', function(){
-			title.sendMsg(true);
-		});
-		$.ajax({
-			type: 'GET',
-			url: 'php/initChatId.php'
-		}).done(function(data){
-			my.account = data.account;
-			my.flag = data.flag;
-			title.updatePlayers();
-		});
-		setTimeout(function(){
-			var str = '';
-			for (var key in title.mapData){
-				str += "<li><a class='mapSelect' href='#'>" + title.mapData[key].name + "</a></li>";
-			}
-			var e1 = document.getElementById('mapDropdown');
-			if (e1 !== null){
-				e1.innerHTML = str;
-			}
-			$('[title]').tooltip();
-			title.animateLogo();
-		}, 200);
-		// init game refresh
-		Notification.requestPermission();
-		// initial refresh of games
-		$.ajax({
-			type: 'GET',
-			url: 'php/refreshGames.php'
-		}).done(function(data) {
-			var e = document.getElementById('gameTableBody');
-			if (e === null){
-				return;
-			}
-			// head
-			var str = '';
-			// body
-			for (var i=0, len=data.length; i<len; i++){
-				var d = data[i];
-				title.games[d.id] = d.players * 1;
-				str += 
-				"<tr id='game_"+ d.id +"' class='wars no-select' data-name='" + d.name + "'>\
-					<td class='warCells'>"+ d.name + "</td>\
-					<td class='warCells'>" + d.map + "</td>\
-					<td class='warCells'>" + d.speed + "</td>\
-					<td class='warCells'><span id='game_players_"+ d.id +"'>" + d.players + "</span>/" + d.max + "</td>\
-				</tr>";
-			}
-			e.innerHTML = str;
-			$(".wars").filter(":first").trigger("click");
-		}).fail(function(e){
-			console.info(e.responseText);
-			Msg("Server error.");
-		});
-		setTimeout(function(){
-			g.keepAlive();
-		}, 300000);
 	})(),
 	updatePlayers: function(data){
 		title.titleUpdate = $("#titleChatPlayers").length; // player is logged in
@@ -274,89 +264,6 @@ var title = {
 			e.parentNode.removeChild(e);
 		}
 	},
-	animateLogo: function(){
-		var globeDelay = 1,
-			globeYoyo = 6;
-		// animate stars
-		var stars = [
-			document.getElementById('firmamentWarsStars1'),
-			document.getElementById('firmamentWarsStars2'),
-			document.getElementById('firmamentWarsStars3'),
-			document.getElementById('firmamentWarsStars4')
-		];
-		
-		if (stars[0] !== null){
-			TweenMax.to(stars[0], 240, {
-				backgroundPosition: '-800px 0px', 
-				repeat: -1,
-				ease: Linear.easeNone
-			});
-			TweenMax.to(stars[1], 150, {
-				startAt: {
-					backgroundPosition: '250px 250px', 
-				},
-				backgroundPosition: '-1050px 250px', 
-				repeat: -1,
-				ease: Linear.easeNone
-			});
-			TweenMax.to(stars[2], 70, {
-				startAt: {
-					backgroundPosition: '600px 500px', 
-				},
-				backgroundPosition: '-200px 500px', 
-				repeat: -1,
-				ease: Linear.easeNone
-			});
-			TweenMax.to(stars[3], 30, {
-				startAt: {
-					backgroundPosition: '400px 600px', 
-				},
-				backgroundPosition: '-400px 600px', 
-				repeat: -1,
-				ease: Linear.easeNone
-			});
-		}
-		// logo
-		var fwLogo = document.getElementById('firmamentWarsLogo');
-		if (fwLogo !== null){
-			TweenMax.to(fwLogo, globeDelay, {
-				startAt: {
-					visibility: 'visible',
-					alpha: 0,
-					yPercent: -50
-				},
-				alpha: 1,
-				ease: Quad.easeIn
-			});
-			TweenMax.to(fwLogo, globeDelay, {
-				startAt: {
-					y: '-65%'
-				},
-				y: '-50%',
-				onComplete: function(){
-					TweenMax.to('#titleMain', .5, {
-						startAt: {
-							visibility: 'visible'
-						},
-						opacity: 1,
-						onComplete: function(){
-							$("#title-chat-input").focus();
-						}
-					});
-				}
-			});
-		}
-		// globe
-		var globe = document.getElementById('titleGlobe');
-		if (globe !== null){
-			TweenMax.to(globe, globeDelay, {
-				startAt: {
-					y: '15%'
-				},
-				y: '0%'
-			});
-		}
-	},
 	mapData: {
 		EarthAlpha: {
 			name: 'Earth Alpha',
@@ -463,6 +370,7 @@ var title = {
 					if (data.defender === my.account){
 						game.chat(data.message, data.type);
 					}
+					// lost attack
 				} else {
 					game.chat(data.message, data.type);
 				}
@@ -529,6 +437,14 @@ var title = {
 			';
 		title.chat(str);
 	},
+	broadcast: function(msg){
+					$.ajax({
+						url: 'php/insertBroadcast.php',
+						data: {
+							message: msg
+						}
+					});
+	},
 	sendMsg: function(bypass){
 		var msg = $DOM.titleChatInput.val().trim();
 		// bypass via ENTER or chat has focus
@@ -549,6 +465,8 @@ var title = {
 					title.sendWhisper(msg , '@');
 				} else if (msg.indexOf('/who ') === 0){
 					title.who(msg);
+				} else if (msg.indexOf('/broadcast ') === 0){
+					title.broadcast(msg);
 				} else {
 					$.ajax({
 						url: 'php/insertTitleChat.php',
@@ -693,4 +611,18 @@ var title = {
 			g.unlock();
 		});
 	}
-}
+};
+(function(){
+	var str = '';
+	for (var key in title.mapData){
+		str += "<li><a class='mapSelect' href='#'>" + title.mapData[key].name + "</a></li>";
+	}
+	var e1 = document.getElementById('mapDropdown');
+	if (e1 !== null){
+		e1.innerHTML = str;
+	}
+	$('[title]').tooltip();
+	setTimeout(function(){
+		animate.logo(Linear.easeNone);
+	}, 250);
+})();

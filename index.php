@@ -39,9 +39,11 @@
 	<meta name="twitter:widgets:csp" content="on">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
+	
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
 	<script>
 		var version = "0-0-27";
@@ -55,15 +57,14 @@
 	<div id="titleViewBackdrop"></div>
 
 	<div id="firmamentWarsLogoWrap" class="titleBG">
-		<img id="firmamentWars" src="images/firmamentWarsTitle90.jpg" title="Firmament Wars Official Logo" class="titleBG fwHidden">
+		<img id="firmamentWars" src="//i.imgur.com/FrAjfJ4.jpg" title="Firmament Wars Title Screen" class="titleBG fwHidden">
 		
 		<div id="firmamentWarsStars1" class="titleBG titleStars"></div>
 		<div id="firmamentWarsStars2" class="titleBG titleStars"></div>
 		<div id="firmamentWarsStars3" class="titleBG titleStars"></div>
-		<div id="firmamentWarsStars4" class="titleBG titleStars"></div>
 		
 		<img src="images/title/FirmamentWarsTitle_globe4.png" id="titleGlobe" class="titleBG">
-		<img src="images/title/firmamentWarsTitle_logo.png" id="firmamentWarsLogo" class="titleBG fwHidden">
+		<img src="images/title/firmamentWarsTitle_logo.png" id="firmamentWarsLogo" class="titleBG fwHidden" title="Firmament Wars Logo">
 	</div>
 	
 	<div id="mainWrap" class="portal">
@@ -76,6 +77,7 @@
 				require('php/connect1.php');
 				if (isset($_SESSION['email'])){
 					// crystals
+					$_SESSION['paid'] = 1;
 					$query = "select crystals, referral from accounts where email='". $_SESSION['email'] ."' limit 1";
 					$result = $link->query($query);
 					$crystals = '';
@@ -305,7 +307,7 @@
 					// Associative array
 					while ($row = mysqli_fetch_assoc($result)){
 						$total += $row['count'];
-						echo '<div>There '. ($total === 1 ? 'is' : 'are') .' '. $total . ' '. ($total === 1 ? 'person' : 'people') .' playing Firmament Wars</div><div class="chat-subdued">Type /help for chat commands</div>';
+						echo '<div>There '. ($total === 1 ? 'is' : 'are') .' '. $total . ' '. ($total === 1 ? 'person' : 'people') .' playing Firmament Wars</div><div class="chat-muted">Type /help for chat commands</div>';
 					}
 					echo 
 					'</div>';
@@ -609,7 +611,7 @@
 
 	<div id="gameWrap">
 	
-		<div id="targetWrap" class="blueBg">
+		<div id="targetWrap" class="blueBg gameWindow">
 			<table id="target-ui" class="table table-condensed">
 				<tr>
 					<td id="ribbonWrap" class="tight wideRack">
@@ -622,7 +624,7 @@
 			</table>
 		</div>
 		
-		<div id="ui2" class="blueBg">
+		<div id="ui2" class="blueBg gameWindow">
 			<div id="ui2-head" class="stagBlue">
 				<span id='manpowerWrap' class="manpower pull-left">
 					<span data-toggle="tooltip" 
@@ -827,7 +829,7 @@
 		</div>
 		
 			
-		<div id="resources-ui" class="container no-select shadow4 blueBg">
+		<div id="resources-ui" class="container no-select shadow4 blueBg gameWindow">
 			
 			<div class="row">
 				<div class="col-xs-12 no-padding moves">
@@ -929,7 +931,7 @@
 			</div>
 		</div>
 		
-		<div id="diplomacy-ui" class="shadow4 blueBg"></div>
+		<div id="diplomacy-ui" class="shadow4 blueBg gameWindow"></div>
 		
 		<table id="chat-ui" class="fw-text">
 			<tr>
@@ -1009,6 +1011,7 @@
 <script src="js/libs/ThrowPropsPlugin.min.js"></script> 
 <script src="js/libs/MorphSVGPlugin.min.js"></script> 
 <script src="js/libs/autobahn.js"></script>
+<script src="https://js.stripe.com/v2/"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/AttrPlugin.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/bootstrap-slider.min.js"></script>

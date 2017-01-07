@@ -168,7 +168,10 @@ var lobby = {
 							if (i === my.player){
 								str += '<ul id="teamColorDropdown" class="dropdown-menu">\
 									<div class="header text-center selectTeamHeader">Player Color</div>';
-								for (var j=1; j<=8; j++){
+								// set player boxes 1-8; 1-16 for paid
+								var paid = true;
+								var colorNum = paid ? 16 : 8;
+								for (var j=1; j<=colorNum; j++){
 									str += '<i class="fa fa-square player'+ j +' teamChoice" data-playercolor="'+ j +'"></i>';
 								}
 								str += '</ul>';
@@ -591,7 +594,7 @@ function Nation(){
 	this.account = "";
 	this.nation = "";
 	this.flag = "";
-	this.playerColor = '#02063a';
+	this.playerColor = 0;
 	this.alive = true;
 	return this;
 }
@@ -792,9 +795,9 @@ function loadGameState(){
 					svg.setAttributeNS(null,"y",y + 17);
 					svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/capital.png');
 					mapCapitals.appendChild(svg);
-					TweenMax.to(svg, 60, {
+					TweenMax.set(svg, {
 						transformOrigin: '50% 50%',
-						rotation: 360,
+						rotation: 45,
 						repeat: -1,
 						ease: Linear.easeNone
 					});
@@ -881,7 +884,7 @@ function loadGameState(){
 					zug.on("click", function(){
 						triggerAction(this);
 						TweenMax.set(this, {
-							fill: "hsl(+=0%, +=30%, +=15%)"
+							fill: "hsl(+=0%, +=0%, +=25%)"
 						});
 					});
 				} else {
@@ -901,7 +904,7 @@ function loadGameState(){
 						showTarget(this, true);
 					}
 					TweenMax.set(this, {
-						fill: "hsl(+=0%, +=30%, +=15%)"
+						fill: "hsl(+=0%, +=0%, +=25%)"
 					});
 				}).on("mouseleave", function(){
 					var land = this.id.slice(4)*1;

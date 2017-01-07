@@ -612,7 +612,6 @@ var research = {
 
 $(document).on('keydown', function(e){
 	var x = e.keyCode;
-	//console.info(x);
 	if (x === 9){
 		// tab
 		if (g.view === 'game'){
@@ -623,6 +622,8 @@ $(document).on('keydown', function(e){
 			}
 			e.preventDefault();
 		}
+	} else if (x === 16){
+		game.toggleGameWindows(1);
 	}
 });
 $(document).on('keyup', function(e) {
@@ -664,7 +665,9 @@ $(document).on('keyup', function(e) {
 			}
 		} else {
 			// game hotkeys
-			if (x === 13){
+			if (x === 16){
+				game.toggleGameWindows();
+			} else if (x === 13){
 				// enter
 				toggleChatMode();
 			}  else if (x === 27){

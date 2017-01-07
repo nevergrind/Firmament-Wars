@@ -60,6 +60,7 @@ var socket = {
 				document.getElementById('titleChatHeaderChannel').textContent = data.channel;
 				document.getElementById('titleChatBody').innerHTML = '';
 				title.updatePlayers();
+				location.hash = my.channel === 'global' ? '' : my.channel;
 			});
 		}
 	},
@@ -93,10 +94,10 @@ var socket = {
 				}
 			}
 		});
-		(function keepAliveWs(){
+		(function keepAliveWs(){ 
 			setTimeout(function(){
 				console.clear();
-			}, 60000);
+			}, 900000);
 			socket.zmq.publish(channel, {type: "keepAlive"});
 			setTimeout(keepAliveWs, 180000);
 		})();
@@ -150,6 +151,7 @@ var socket = {
 			game.getGameState();
 		}
 		socket.zmq.subscribe('admin:broadcast', function(topic, data) {
+			console.info('BROADCAST: ', data);
 			g.chat(data.msg, data.type);
 		});
 		(function repeat(){
