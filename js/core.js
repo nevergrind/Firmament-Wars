@@ -9,6 +9,7 @@ if (location.host !== 'localhost'){
 }
 TweenMax.defaultEase = Quad.easeOut;
 var g = {
+	modalSpeed: .5,
 	friends: [],
 	ignore: [],
 	color: [

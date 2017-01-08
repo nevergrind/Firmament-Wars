@@ -74,7 +74,7 @@ var events = {
 				e6.style.display = 'block';
 			}
 			e3.val('');
-			TweenMax.to(document.getElementById("createGameWrap"), .3, {
+			TweenMax.to(document.getElementById("createGameWrap"), g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
 					y: 0,
@@ -105,7 +105,7 @@ var events = {
 			title.createGame();
 		});
 		$("body").on("click", '#options', function(){
-			TweenMax.to(document.getElementById("optionsModal"), .3, {
+			TweenMax.to(document.getElementById("optionsModal"), g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
 					y: 0,
@@ -134,7 +134,7 @@ var events = {
 		});
 		$("#toggleNation").on("click", function(){
 			var e = document.getElementById("configureNation");
-			TweenMax.to(e, .3, {
+			TweenMax.to(e, g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
 					y: 0,
@@ -147,7 +147,7 @@ var events = {
 		});
 		$("#leaderboardBtn").on('click', function(){
 			var e = document.getElementById("leaderboard");
-			TweenMax.to(e, .3, {
+			TweenMax.to(e, g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
 					top: 0,

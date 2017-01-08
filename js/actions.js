@@ -103,7 +103,7 @@ var action = {
 				audio.move();
 			}
 			// barbarian message
-			if (data.rewardMsg !== undefined){
+			if (data.rewardMsg){
 				game.chat('<span class="chat-news">' + data.rewardMsg + '</span>');
 				setResources(data);
 			}
