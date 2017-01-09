@@ -701,7 +701,7 @@ var game = {
 var my = {
 	lastReceivedWhisper: '',
 	account: '',
-	channel: 'global',
+	channel: '',
 	player: 0,
 	playerColor: 0,
 	team: 0,

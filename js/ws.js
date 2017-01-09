@@ -144,11 +144,12 @@ var socket = {
 		// chat updates
 		if (g.view === 'title' && socket.initialConnection){
 			socket.initialConnection = false;
+			var initChannel = '';
 			if (location.hash.length > 1){
-				my.channel = location.hash.slice(1)
+				initChannel = location.hash.slice(1)
 				document.getElementById('titleChatHeaderChannel').innerHTML = my.channel;
 			}
-			socket.setChannel(my.channel);
+			socket.setChannel(initChannel);
 			socket.zmq.subscribe('title:refreshGames', function(topic, data) {
 				title.updateGame(data);
 			});
