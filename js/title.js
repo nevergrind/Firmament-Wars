@@ -68,7 +68,7 @@ var title = {
 			}, 300000);
 		});
 	})(),
-	updatePlayers: function(data){
+	updatePlayers: function(once){
 		title.titleUpdate = $("#titleChatPlayers").length; // player is logged in
 		if (title.titleUpdate){
 			// title chat loop
@@ -154,7 +154,9 @@ var title = {
 							}
 						});
 					}).always(function(){
-						setTimeout(repeat, 5000);
+						if (!once){
+							setTimeout(repeat, 5000);
+						}
 					});
 				}
 			})();
@@ -319,7 +321,11 @@ var title = {
 				g.chat(str);
 			});
 		} else {
-			g.chat("You don't have any friends!<img src='images/chat/random/feelsbad.png'>", 'chat-muted');
+			if (fwpaid){
+				g.chat("You don't have any friends!<img src='images/chat/random/feelsbad.png'>", 'chat-muted');
+			} else {
+				g.chat("This is a paid feature. Unlock the complete game to check your friend's status.", 'chat-muted');
+			}
 		}
 	},
 	addFriend: function(account){
@@ -332,9 +338,10 @@ var title = {
 					localStorage.setItem('friends', JSON.stringify(g.friends));
 					g.chat('Added friend: ' + account, 'chat-muted');
 				} else {
-					g.chat("You can't be friends with yourself!<img src='images/chat/random/hangfrog.jpg'>", 'chat-muted');
+					g.chat("<img src='images/chat/random/hangfrog.jpg'><div>You can't be friends with yourself!</div>", 'chat-muted');
 				}
 			} else {
+				// add image
 				g.chat('You cannot have more than 20 friends!', 'chat-muted');
 			}
 		} else {
@@ -537,6 +544,7 @@ var title = {
 			<div>/friend: show friend list</div>\
 			<div>/friend account: add friend</div>\
 			<div>/unfriend account: remove friend</div>\
+			<div>/who account: check account info</div>\
 			';
 		title.chat(str, 'chat-muted');
 	},
@@ -613,13 +621,14 @@ var title = {
 		});
 		g.isModalOpen = true;
 	},
-	hideBackdrop: function(){
+	closeModal: function(){
 		var e1 = document.getElementById("configureNation"),
 			e2 = document.getElementById("titleViewBackdrop"),
 			e3 = document.getElementById('createGameWrap'),
 			e4 = document.getElementById('optionsModal'),
-			e5 = document.getElementById('leaderboard');
-		TweenMax.to([e1,e2,e3,e4,e5], .2, {
+			e5 = document.getElementById('leaderboard'),
+			e6 = document.getElementById('unlockGame');
+		TweenMax.to([e1,e2,e3,e4,e5,e6], .2, {
 			alpha: 0,
 			onComplete: function(){
 				TweenMax.set(this.target, {

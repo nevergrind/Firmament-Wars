@@ -11,8 +11,9 @@ var audio = {
 			if (bg){
 				// music
 				DOM.bgmusic.pause();
-				DOM.bgmusic.src = "music/" + foo + "." + audio.ext;
-				//DOM.bgmusic.play();
+				if (fwpaid){
+					DOM.bgmusic.src = "music/" + foo + "." + audio.ext;
+				}
 			} else {
 				// sfx
 				var sfx = new Audio("sound/" + foo + "." + audio.ext);
@@ -78,12 +79,13 @@ var audio = {
 				// government specific tracks?
 			}
 			DOM.bgmusic.pause();
-			DOM.bgmusic.src = "music/" + tracks[audio.trackIndex % audio.totalTracks] +"." + audio.ext;
-			DOM.bgmusic.volume = g.config.audio.musicVolume / 100;
-			DOM.bgmusic.onended = function(){
-				audio.gameMusicPlayNext();
+			if (fwpaid){
+				DOM.bgmusic.src = "music/" + tracks[audio.trackIndex % audio.totalTracks] +"." + audio.ext;
+				DOM.bgmusic.volume = g.config.audio.musicVolume / 100;
+				DOM.bgmusic.onended = function(){
+					audio.gameMusicPlayNext();
+				}
 			}
-			//DOM.bgmusic.play();
 		}
 	},
 	fade: function(){
@@ -153,7 +155,8 @@ var audio = {
 	},
 	musicStart: function(){
 		if (g.view !== 'game'){
-			audio.play("ReturnOfTheFallen", 1);
+			// audio.play("ReturnOfTheFallen", 1);
+			audio.play("WaitingBetweenWorlds", 1);
 		} else {
 			audio.gameMusicPlayNext();
 		}

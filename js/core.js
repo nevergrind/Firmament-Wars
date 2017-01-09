@@ -243,7 +243,13 @@ var g = {
 		}
 	},
 	chat: function(msg, type){
-		window[g.view].chat(msg, type);
+		if (g.view === 'title'){
+			title.chat(msg, type);
+		} else if (g.view === 'lobby'){
+			lobby.chat(msg, type);
+		} else {
+			game.chat(msg, type);
+		}
 	}
 }
 g.init = (function(){

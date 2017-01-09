@@ -594,18 +594,17 @@ var animate = {
 		var fwLogo = document.getElementById('firmamentWarsLogo');
 		TweenMax.to(fwLogo, globeDelay, {
 			startAt: {
-				transformPerspective: 600,
-				transformOrigin: '50% 50% -600',
-				rotationX: 135,
+				transformPerspective: 1600,
+				transformOrigin: '50% 50% -1600',
+				rotationY: 180,
 				scale: .2,
 				visibility: 'visible',
 				alpha: 0,
 				yPercent: -50
 			},
-			rotationX: 0,
+			rotationY: 0,
 			scale: 1,
-			alpha: 1,
-			ease: Quad.easeIn
+			alpha: 1
 		});
 		TweenMax.to(fwLogo, globeDelay, {
 			y: '-50%'

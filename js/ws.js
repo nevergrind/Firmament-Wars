@@ -33,37 +33,41 @@ var socket = {
 		// change channel on title screen
 		if (g.view === 'title'){
 			// remove from channel
-			$.ajax({
-				type: "POST",
-				url: "php/titleChangeChannel.php",
-				data: {
-					channel: channel
-				}
-			}).done(function(data){
-				console.info("NEW CHANNEL: " + data);
-				// removes id
-				socket.removePlayer(my.account);
-				// unsubs
-				socket.unsubscribe('title:' + my.channel);
-				// set new channel data
-				my.channel = data.channel;
-				for (var key in title.players){
-					delete title.players[key];
-				}
-				title.chat("You have joined channel: " + data.channel + ".", "chat-warning", true);
-				socket.zmq.subscribe('title:' + data.channel, function(topic, data) {
-					if (g.ignore.indexOf(data.account) === -1){
-						title.chatReceive(data);
+			if (channel === my.channel){
+				title.chat("You're already in that channel.", 'chat-muted');
+			} else {
+				$.ajax({
+					type: "POST",
+					url: "php/titleChangeChannel.php",
+					data: {
+						channel: channel
 					}
+				}).done(function(data){
+					console.info("NEW CHANNEL: " + data);
+					// removes id
+					socket.removePlayer(my.account);
+					// unsubs
+					socket.unsubscribe('title:' + my.channel);
+					// set new channel data
+					my.channel = data.channel;
+					for (var key in title.players){
+						delete title.players[key];
+					}
+					title.chat("You have joined channel: " + data.channel + ".", "chat-warning", true);
+					socket.zmq.subscribe('title:' + data.channel, function(topic, data) {
+						if (g.ignore.indexOf(data.account) === -1){
+							title.chatReceive(data);
+						}
+					});
+					// add id
+					socket.addPlayer(my.account, my.flag);
+					// update display of channel
+					document.getElementById('titleChatHeaderChannel').textContent = data.channel;
+					document.getElementById('titleChatBody').innerHTML = '';
+					title.updatePlayers(true);
+					location.hash = my.channel === 'global' ? '' : my.channel;
 				});
-				// add id
-				socket.addPlayer(my.account, my.flag);
-				// update display of channel
-				document.getElementById('titleChatHeaderChannel').textContent = data.channel;
-				document.getElementById('titleChatBody').innerHTML = '';
-				title.updatePlayers();
-				location.hash = my.channel === 'global' ? '' : my.channel;
-			});
+			}
 		}
 	},
 	enableWhisper: function(){

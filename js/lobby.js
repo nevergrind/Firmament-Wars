@@ -185,8 +185,7 @@ var lobby = {
 								str += '<ul id="teamColorDropdown" class="dropdown-menu">\
 									<div class="header text-center selectTeamHeader">Player Color</div>';
 								// set player boxes 1-8; 1-16 for paid
-								var paid = true;
-								var colorNum = paid ? 16 : 8;
+								var colorNum = fwpaid ? 16 : 8;
 								for (var j=1; j<=colorNum; j++){
 									str += '<i class="fa fa-square player'+ j +' teamChoice" data-playercolor="'+ j +'"></i>';
 								}
@@ -245,7 +244,7 @@ var lobby = {
 		var titleMain = document.getElementById('titleMain'),
 			titleMenu = document.getElementById ('titleMenu'),
 			titleChat = document.getElementById ('titleChat');
-		title.hideBackdrop();
+		title.closeModal();
 		TweenMax.to(titleChat, d, {
 			x: '100%',
 			ease: Quad.easeIn

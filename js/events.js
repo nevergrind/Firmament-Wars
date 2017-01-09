@@ -117,7 +117,7 @@ var events = {
 			title.showBackdrop();
 		});
 		$("#optionsDone, #cancelCreateGame").on("click", function(){
-			title.hideBackdrop();
+			title.closeModal();
 		});
 
 
@@ -143,6 +143,22 @@ var events = {
 				y: 30,
 				alpha: 1
 			});
+			title.showBackdrop();
+		});
+		$("#unlockGameBtn").on("click", function(){
+			var e = document.getElementById("unlockGame");
+			TweenMax.to(e, g.modalSpeed, {
+				startAt: {
+					visibility: 'visible',
+					y: 0,
+					alpha: 0
+				},
+				y: 30,
+				alpha: 1
+			});
+			setTimeout(function(){
+				$("#card-number").focus();
+			}, 100);
 			title.showBackdrop();
 		});
 		$("#leaderboardBtn").on('click', function(){
@@ -193,12 +209,11 @@ var events = {
 				$("#offerFlag").css("display", "block");
 			}).always(function(){
 				g.unlock(1);
-				TweenMax.fromTo("#updateNationFlag", 1, {
-					alpha: .25,
-					scale: .9
-				}, {
-					alpha: 1,
-					scale: 1
+				TweenMax.to("#updateNationFlag", 1, {
+					startAt: {
+						alpha: 0
+					},
+					alpha: 1
 				});
 			});
 			e.preventDefault();
@@ -220,6 +235,7 @@ var events = {
 		});
 
 		$("#buyFlag").on("click", function(){
+			return;
 			g.lock();
 			$.ajax({
 				url: 'php/buyFlag.php',
@@ -245,11 +261,11 @@ var events = {
 			});
 		});
 		$("#titleViewBackdrop").on('click', function(){
-			title.hideBackdrop();
+			title.closeModal();
 		});
-		$("#configureNationDone, #leaderboardDone").on('click', function(){
+		$("#mainWrap").on('click', '#unlockGameDone, #configureNationDone, #leaderboardDone', function(){
 			audio.play('click');
-			title.hideBackdrop();
+			title.closeModal();
 		});
 		$("#autoJoinGame").on('click', function(){
 			audio.play('click');

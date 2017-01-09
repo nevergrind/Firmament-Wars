@@ -571,8 +571,18 @@ tbody{
 	background: rgba(0,0,0,.3);
 	border: 1px solid rgba(192,240,255,.2);
 }
-#configureNation, #createGameWrap{
+#unlockGame, #configureNation, #createGameWrap{
 	background: #000;
+}
+#card-number{
+	width: 50%;
+}
+#card-cvc{
+	width: 60px;
+}
+#card-month, #card-year{
+	display: inline;
+	width: 60px;
 }
 #screenFlash{
 	position: absolute;
@@ -1724,10 +1734,11 @@ table {
 	left: 0;
 	right: 0;
 	margin: 0 auto;
+	padding: 0 1em;
 	display: none;
 	text-align: center;
 	width: 55%;
-	background: rgba(0,0,0,.4);
+	background: rgba(0,0,0,.9);
 	border-radius: 6px;
 	border: 1px solid #3377dd;
 	

@@ -661,7 +661,7 @@ $(document).on('keyup', function(e) {
 			}
 		} else if (x === 27){
 			// esc
-			title.hideBackdrop();
+			title.closeModal();
 		}
 	} else if (g.view === 'lobby'){
 		if (lobby.chatOn){

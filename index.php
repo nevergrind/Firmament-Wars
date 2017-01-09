@@ -46,9 +46,9 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
 	<script>
-		var version = "0-0-27";
+		version = '0-0-28'; 
 	</script>
-	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-27">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-28">
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
 
@@ -71,26 +71,39 @@
 			
 			<header class="shadow4 text-primary">
 				<?php
-				
 				require('php/connect1.php');
 				if (isset($_SESSION['email'])){
-					// crystals
-					$_SESSION['paid'] = 1;
-					$query = "select crystals, referral from accounts where email='". $_SESSION['email'] ."' limit 1";
-					$result = $link->query($query);
-					$crystals = '';
-					while($row = $result->fetch_assoc()){
-						$crystals .= $row['crystals'];
-						$_SESSION['referral'] = $row['referral'];
+					$stmt = $link->prepare("select fwpaid, referral from accounts where account=? limit 1");
+					$stmt->bind_param('s', $_SESSION['account']);
+					$stmt->execute();
+					$stmt->bind_result($fwpaid, $dbreferral);
+					while ($stmt->fetch()){
+						$_SESSION['fwpaid'] = $fwpaid;
+						$_SESSION['referral'] = $dbreferral;
+					}
+					// fwnation data
+					$query = "select nation, flag, rating, wins, losses, teamWins, teamLosses, rankedWins, rankedLosses, disconnects from fwnations where account=?";
+					$stmt = $link->prepare($query);
+					$stmt->bind_param('s', $_SESSION['account']);
+					$stmt->execute();
+					$stmt->bind_result($dName, $dFlag, $rating, $wins, $losses, $teamWins, $teamLosses, $rankedWins, $rankedLosses, $disconnects);
+					while($stmt->fetch()){
+						$nation = $dName;
+						$flag = $dFlag;
+						$_SESSION['rating'] = $rating;
+						$_SESSION['totalGames'] = $wins + $losses + $rankedWins + $rankedLosses + $disconnects;
+						$_SESSION['wins'] = $wins;
+						$_SESSION['losses'] = $losses;
+						$_SESSION['teamWins'] = $teamWins;
+						$_SESSION['teamLosses'] = $teamLosses;
+						$_SESSION['rankedWins'] = $rankedWins;
+						$_SESSION['rankedLosses'] = $rankedLosses;
+						$_SESSION['disconnects'] = $disconnects;
+						$_SESSION['disconnectRate'] = $_SESSION['totalGames'] === 0 ? 0 : round(($_SESSION['disconnects'] / $_SESSION['totalGames']) * 100) ;
 					}
 					
 					echo 
-					'<span data-toggle="tooltip" data-placement="right" title="Crystals Remaining">
-						<i class="fa fa-diamond" title="Never Crystals"></i>
-						<span id="crystalCount" class="text-primary" >' .$crystals.'</span>
-					</span>&ensp;
-					<a href="/account">Account</a>&ensp;
-					<a href="/store">Store</a>&ensp;';
+					'<a href="/account">Account</a>&ensp;';
 				}
 				?>
 					<a href="/forums" title="Nevergrind Browser Game Forums">Forums</a>&ensp; 
@@ -206,8 +219,12 @@
 						</div>
 					<div id="menuHead">
 						<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>
-						<button id="leaderboardBtn" type="button" class="btn fwBlue btn-responsive shadow4">Leaderboard</button>
-					</div>
+						<button id="leaderboardBtn" type="button" class="btn fwBlue btn-responsive shadow4">Leaderboard</button>';
+						if (!$_SESSION['fwpaid']){
+							echo '
+							<button id="unlockGameBtn" type="button" class="btn fwGreen btn-responsive shadow4">Unlock Complete Game</button>';
+						}
+					echo '</div>
 						
 				<hr class="fancyhr">
 			
@@ -451,7 +468,7 @@
 				
 				<div>
 					<div class='buffer2'>
-						<label class='control-label'>Map</label>
+						<label class='control-label'>Map <?php if (!$_SESSION['fwpaid']){ echo '| <span class="text-warning">Unlock the complete game to select all maps</span>'; } ?></label>
 					</div>
 					
 					<div id="offerMap" class="pull-right text-center">
@@ -489,9 +506,6 @@
 							<i class='fa fa-globe'></i> 
 							<span id='createGameTiles'>83</span>
 						</span>
-						<span id="mapStatus" class="text-success">
-							<i class="fa fa-check"></i> Free Map
-						</span>
 					</div>
 				</div>
 			</div>
@@ -522,12 +536,20 @@
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="input-group">
-						<input id="updateNationName" class="form-control" type="text" maxlength="32" autocomplete="off" size="24" aria-describedby="updateNationNameStatus" placeholder="Enter New Nation Name">
-						<span class="input-group-btn">
+						
+						<?php
+						if ($_SESSION['fwpaid']){
+							echo '
+							<input id="updateNationName" class="form-control" type="text" maxlength="32" autocomplete="off" size="24" aria-describedby="updateNationNameStatus" placeholder="Enter New Nation Name">
+							<span class="input-group-btn">
 							<button id="submitNationName" class="btn fwBlue shadow4" type="button">
 								Update Nation Name
 							</button>
-						</span>
+						</span>';
+						} else {
+							echo "Unlock the complete game to update your nation's name";
+						}
+						?>
 					</div>
 				</div>
 			</div>
@@ -566,15 +588,7 @@
 						if (isset($_SESSION['flag'])){ echo $flag; }
 					?>">
 					<div id="offerFlag" class="flagPurchasedStatus shadow4">
-						<h5 class="text-center">Buy flag?</h5>
-						<div class="center block">
-							<button id="buyFlag" type="button" class="btn fwBlue shadow4 text-primary">
-								<i class="fa fa-diamond"></i> 100
-							</button>
-						</div>
-						<h4 class="text-center">
-							<a class='fwFont' target="_blank" href="/store">Buy Crystals</a>
-						</h4>
+						<h5 class="text-center">Unlock the complete game to change your flag</h5>
 					</div>
 				</div>
 			</div>
@@ -585,6 +599,58 @@
 				</div>
 			</div>
 		</div>
+		<?php
+		if (!$_SESSION['fwpaid']){
+			echo 
+			'<div id="unlockGame" class="fw-primary container titleModal">
+				<div class="row text-center">
+					<div class="col-xs-12">
+						<h2 class="header">Unlock Complete Game</h2>
+						<hr class="fancyhr">
+					</div>
+				</div>
+				<div class="row buffer">
+					<div class="col-xs-12">
+						<h4>Paid Features:</h4>
+						<ul>
+							<li>Unlock all flags</li>
+							<li>Unlock all maps</li>
+							<li>Rename your nation</li>
+							<li>Display your military ribbons in game</li>
+							<li>Unlock friend list and display their online status</li>
+							<li>Unlock 8 additional player colors</li>
+							<li>Enable the game\'s music</li>
+						</ul>
+					</div>
+				</div>
+				
+				<div>
+					<hr class="fancyhr">
+					<p>
+						<div>Card Number (no spaces or hyphens)</div>
+						<input id="card-number" class="form-control" type="text" maxlength="16" autocomplete="off">
+					</p>
+					<p>
+						<div>CVC (number on the back of your credit card)</div>
+						<input id="card-cvc" class="form-control" type="text" maxlength="4" autocomplete="off">
+					</p>
+					<p>
+						<div>Expiration Month/Year (MM/YY)</div>
+						<input id="card-month" class="form-control" type="text" maxlength="2"> / 
+						<input id="card-year" class="form-control" type="text" maxlength="2">
+					</p>
+				</div>
+				<hr class="fancyhr">
+				<div class="text-center">
+					<p class="text-success">Unlock the complete game for $9.99</p>
+					<p id="payment-errors" class="text-warning"></p>
+					<div class="text-center">
+						<button id="payment-confirm" class="btn fwGreen btn-lg shadow4 shadow4">Unlock Complete Game</button>
+					</div>
+				</div>
+			</div>';
+		};
+		?>
 		
 		<div id="leaderboard" class="fw-primary container titleModal">
 			<div class="row">
@@ -1016,6 +1082,9 @@
 
 <?php
 	require($_SERVER['DOCUMENT_ROOT'] . "/includes/ga.php");
+	echo '<script>
+		var fwpaid = '.$_SESSION['fwpaid'].';
+	</script>';
 ?>
 <script>
 	(function(d){
@@ -1025,6 +1094,7 @@
 			]
 		} else {
 			var scripts = [
+				'payment',
 				'stats',
 				'animate',
 				'core',
@@ -1044,6 +1114,13 @@
 			x.async = false;
 			d.head.appendChild(x);
 		}
+		// payments
+		if (location.host === "localhost"){
+			Stripe.setPublishableKey('pk_test_GtNfTRB1vYUiMv1GY2kSSRRh');
+		} else {
+			Stripe.setPublishableKey('pk_live_rPSfoOYjUrmJyQYLnYJw71Zm');
+		}
+		
 	})(document);
 </script>
 </html>
