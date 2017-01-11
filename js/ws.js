@@ -70,8 +70,10 @@ var socket = {
 					// add id
 					socket.addPlayer(my.account, my.flag);
 					// update display of channel
-					document.getElementById('titleChatHeaderChannel').textContent = data.channel;
-					document.getElementById('titleChatBody').innerHTML = '';
+					if (g.view === 'title'){
+						document.getElementById('titleChatHeaderChannel').textContent = data.channel;
+						document.getElementById('titleChatBody').innerHTML = '';
+					}
 					title.updatePlayers(true);
 					location.hash = my.channel === 'global' ? '' : my.channel;
 				});

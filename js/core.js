@@ -201,13 +201,13 @@ var g = {
 		if (!document.hasFocus() && g.view !== 'game'){
 			// it's a player message
 			var type = ' says: ';
-			if (data.flag && data.msg){
-				console.info("NOTIFY!", data, data.type);
+			if (data.flag && (data.msg || data.message)){
+				console.info(data);
 				// sent by a player
 				if (data.type === 'chat-whisper'){
-					type = 'whispers: ';
+					type = ' whispers: ';
 				}
-				var prefix = data.account + ' ' + type;
+				var prefix = data.account + type;
 				var flagFile = data.flag + (data.flag === 'Nepal' ? '.png' : '.jpg');
 				console.info(flagFile);
 				g.notification = new Notification(prefix, {
@@ -472,9 +472,9 @@ var game = {
 		// player eliminated
 		var i = data.player;
 		game.player[i].alive = false;
-		console.info('eliminatePlayer: ', data);
+		console.info('eliminatePlayer: ', data.player, data);
 		if ($(".alive").length > 1){
-			// found a player on diplomacy panel
+			// found 2 players on diplomacy panel
 			$("#diplomacyPlayer" + i).removeClass('alive');
 			var playerLen = $(".alive").length;
 			if (playerLen < 2){
@@ -498,7 +498,7 @@ var game = {
 				}
 			});
 			
-			TweenMax.to('#diplomacyPlayer' + 1, 1, {
+			TweenMax.to('#diplomacyPlayer' + i, 1, {
 				startAt: { 
 					transformPerspective: 400,
 					transformOrigin: '50% 0',

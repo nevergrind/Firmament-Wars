@@ -179,7 +179,7 @@ var lobby = {
 								str += ' pointer2';
 							}
 							str += '" data-placement="right" data-toggle="dropdown"></i>';
-							if (i === my.player){
+							if (i === my.player && fwpaid){
 								str += '<ul id="teamColorDropdown" class="dropdown-menu">\
 									<div class="header text-center selectTeamHeader">Player Color</div>';
 								// set player boxes 1-8; 1-16 for paid

@@ -6,30 +6,6 @@ var payment = {
 	},
 	init: (function(){
 		$("#payment-confirm").on('click', function(e) {
-			function stripeResponseHandler(status, response){
-				if (response.error) {
-					Msg(response.error.message);
-					g.unlock();
-				} else {
-					// No errors, submit the form.
-					Msg("Communicating with the server...");
-					$.ajax({
-						url: "php/purchaseFw.php",
-						data: {
-							stripeToken: response.id
-						}
-					}).done(function(data) {
-						Msg("Thank you for your purchase!<br>Firmament Wars - Complete Game Unlocked!", 8);
-						setTimeout(function(){
-							location.reload();
-						}, 3000);
-					}).fail(function(data) {
-						document.getElementById('payment-errors').textContent = data.error;
-					}).always(function(){
-						g.unlock();
-					});
-				}
-			}
 			
 			g.lock();
 			var response = {};
@@ -63,6 +39,32 @@ var payment = {
 				}, stripeResponseHandler);
 			} else {
 				g.unlock();
+			}
+			
+			function stripeResponseHandler(status, response){
+				if (response.error) {
+					console.info("ERROR!");
+					Msg(response.error.message);
+					g.unlock();
+				} else {
+					// No errors, submit the form.
+					Msg("Communicating with the server...");
+					$.ajax({
+						url: "php/purchaseFw.php",
+						data: {
+							stripeToken: response.id
+						}
+					}).done(function(data) {
+						Msg("Thank you for your purchase!<br>Firmament Wars - Complete Game Unlocked!", 8);
+						setTimeout(function(){
+							location.reload();
+						}, 3000);
+					}).fail(function(data) {
+						document.getElementById('payment-errors').textContent = data.error;
+					}).always(function(){
+						g.unlock();
+					});
+				}
 			}
 		});
 	})()

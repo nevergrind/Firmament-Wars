@@ -198,6 +198,7 @@ var events = {
 				}
 			}).done(function(data) {
 				$("#offerFlag").css("display", "none");
+				my.flag = my.selectedFlagFull;
 				$(".nationFlag").attr({
 					src: "images/flags/" + my.selectedFlagFull,
 					title: my.selectedFlag
@@ -408,9 +409,13 @@ var events = {
 			var key = x.replace(/ /g,'');
 			g.map.name = x;
 			g.map.key = key;
-			document.getElementById('createGameMap').innerHTML = x;
-			document.getElementById('createGameTiles').innerHTML = title.mapData[key].tiles;
-			document.getElementById('createGamePlayers').innerHTML = title.mapData[key].players;
+			if (fwpaid){
+				document.getElementById('createGameMap').innerHTML = x;
+				document.getElementById('createGameTiles').innerHTML = title.mapData[key].tiles;
+				document.getElementById('createGamePlayers').innerHTML = title.mapData[key].players;
+			} else {
+				Msg("Unlock the complete game for access to all maps.");
+			}
 			e.preventDefault();
 		});
 		$("#mainWrap").on('click', '.gameSelect', function(e){

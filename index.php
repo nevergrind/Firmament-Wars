@@ -31,7 +31,7 @@
 	<title>Firmament Wars | Multiplayer Grand Strategy | Realtime Risk Warfare</title>
 	<meta charset="utf-8">
 	<meta name="keywords" content="risk, civilization, starcraft, multiplayer, pol, strategy, gaming">
-	<meta name="description" content="Firmament Wars is a politically incorrect Risk-like strategy game featuring realtime combat in FFA, ranked, and team modes with up to eight players!">
+	<meta name="description" content="Firmament Wars is a browser-based politically incorrect Risk-like strategy game with realtime combat in FFA, ranked, and team modes!">
 	<meta name="author" content="Joe Leonard">
 	<meta name="referrer" content="always">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -72,15 +72,15 @@
 			<header class="shadow4 text-primary">
 				<?php
 				require('php/connect1.php');
+				$stmt = $link->prepare("select fwpaid, referral from accounts where account=? limit 1");
+				$stmt->bind_param('s', $_SESSION['account']);
+				$stmt->execute();
+				$stmt->bind_result($fwpaid, $dbreferral);
+				while ($stmt->fetch()){
+					$_SESSION['fwpaid'] = $fwpaid;
+					$_SESSION['referral'] = $dbreferral;
+				}
 				if (isset($_SESSION['email'])){
-					$stmt = $link->prepare("select fwpaid, referral from accounts where account=? limit 1");
-					$stmt->bind_param('s', $_SESSION['account']);
-					$stmt->execute();
-					$stmt->bind_result($fwpaid, $dbreferral);
-					while ($stmt->fetch()){
-						$_SESSION['fwpaid'] = $fwpaid;
-						$_SESSION['referral'] = $dbreferral;
-					}
 					// fwnation data
 					$query = "select nation, flag, rating, wins, losses, teamWins, teamLosses, rankedWins, rankedLosses, disconnects from fwnations where account=?";
 					$stmt = $link->prepare($query);
@@ -489,8 +489,7 @@
 								<span id='createGameMap'>Earth Alpha</span>
 								<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 							</button>
-							<ul id='mapDropdown' class='dropdown-menu fwDropdown createGameInput'>
-							</ul>
+							<ul id='mapDropdown' class='dropdown-menu fwDropdown createGameInput'></ul>
 						</div>
 					</div>
 					
@@ -618,7 +617,7 @@
 							<li>Rename your nation</li>
 							<li>Display your military ribbons in game</li>
 							<li>Unlock friend list and display their online status</li>
-							<li>Unlock 8 additional player colors</li>
+							<li>Unlock ability to select from 16 player colors</li>
 							<li>Enable the game\'s music</li>
 						</ul>
 					</div>

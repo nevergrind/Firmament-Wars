@@ -251,7 +251,7 @@ var animate = {
 				DOM.mapAnimations.appendChild(circ);
 				
 				TweenMax.to(circ, .08, {
-					delay: i * .007,
+					delay: i * .0125,
 					startAt: {
 						alpha: 1
 					},
@@ -518,7 +518,7 @@ var animate = {
 				circ.setAttributeNS(null,"cx",x);
 				circ.setAttributeNS(null,"cy",y);
 				circ.setAttributeNS(null,"r",1);
-				circ.setAttributeNS(null,"fill",color[game.player[game.tiles[attacker].player].playerColor]);
+				circ.setAttributeNS(null,"fill",g.color[game.player[game.tiles[attacker].player].playerColor]);
 				circ.setAttributeNS(null,"stroke",'#ffdd88');
 				DOM.mapAnimations.appendChild(circ);
 				
