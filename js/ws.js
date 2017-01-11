@@ -33,8 +33,13 @@ var socket = {
 		// change channel on title screen
 		if (g.view === 'title'){
 			// remove from channel
+			channel = channel.trim();
 			if (channel === my.channel){
-				title.chat("You're already in that channel.", 'chat-muted');
+				var o = {
+					message: "You're already in that channel.",
+					type: 'chat-muted'
+				};
+				title.chat(o);
 			} else {
 				$.ajax({
 					type: "POST",
@@ -53,7 +58,10 @@ var socket = {
 					for (var key in title.players){
 						delete title.players[key];
 					}
-					title.chat("You have joined channel: " + data.channel + ".", "chat-warning", true);
+					data.skip = true;
+					data.msg = "You have joined channel: " + data.channel + ".";
+					data.type = "chat-warning";
+					title.chat(data);
 					socket.zmq.subscribe('title:' + data.channel, function(topic, data) {
 						if (g.ignore.indexOf(data.account) === -1){
 							title.chatReceive(data);
@@ -72,31 +80,35 @@ var socket = {
 	},
 	enableWhisper: function(){
 		var channel = 'account:' + my.account;
-		// console.info("Subscribing to " + channel);
 		socket.zmq.subscribe(channel, function(topic, data) {
 			if (data.message){
 				if (data.action === 'send'){
-					console.info(data);
+					// console.info("RECEIVE: ", data.playerColor, data);
 					// message sent to user
-					var msg = data.flag + data.account + ' whispers: ' + data.message;
-					title.receiveWhisper(msg, 'chat-whisper');
 					var flag = my.flag.split(".");
 					flag = flag[0].replace(/ /g, "-");
+					my.lastReceivedWhisper = data.account;
 					$.ajax({
 						url: 'php/insertWhisper.php',
 						data: {
 							action: "receive",
-							flag: flag,
-							player: my.player,
+							flag: data.flag,
+							playerColor: data.playerColor,
 							account: data.account,
 							message: data.message
 						}
 					});
+					data.type = 'chat-whisper';
+					data.msg = data.message;
+					data.message = data.chatFlag + data.account + ' whispers: ' + data.message;
+					title.receiveWhisper(data);
 				} else {
 					// message receive confirmation to original sender
-					console.info(data);
-					var msg = data.flag + 'To ' + data.account + ': ' + data.message;
-					title.receiveWhisper(msg, 'chat-whisper');
+					// console.info("SEND: ", data.playerColor, data);
+					data.msg = data.message;
+					data.message = data.chatFlag + 'To ' + data.account + ': ' + data.message;
+					data.type = 'chat-whisper';
+					title.receiveWhisper(data);
 				}
 			}
 		});
@@ -144,11 +156,10 @@ var socket = {
 		// chat updates
 		if (g.view === 'title' && socket.initialConnection){
 			socket.initialConnection = false;
-			var initChannel = '';
-			if (location.hash.length > 1){
-				initChannel = location.hash.slice(1)
-				document.getElementById('titleChatHeaderChannel').innerHTML = my.channel;
-			}
+			var initChannel = location.hash.length > 1 ?
+				location.hash.slice(1) :
+				'global';
+			document.getElementById('titleChatHeaderChannel').innerHTML = my.channel;
 			socket.setChannel(initChannel);
 			socket.zmq.subscribe('title:refreshGames', function(topic, data) {
 				title.updateGame(data);

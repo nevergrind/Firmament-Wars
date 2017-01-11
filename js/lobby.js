@@ -85,22 +85,20 @@ var lobby = {
 		document.getElementById('lobbyGovernment' + my.player).innerHTML = government;
 		document.getElementById('lobbyGovernmentDescription').innerHTML = str;
 	},
-	chat: function (msg, type, skip){
+	chat: function (data){
 		while (DOM.lobbyChatLog.childNodes.length > 200) {
 			DOM.lobbyChatLog.removeChild(DOM.lobbyChatLog.firstChild);
 		}
 		var z = document.createElement('div');
-		if (type){
-			z.className = type;
+		if (data.type){
+			z.className = data.type;
 		}
-		z.innerHTML = msg;
+		z.innerHTML = data.message;
 		DOM.lobbyChatLog.appendChild(z);
 		if (!lobby.chatDrag){
 			DOM.lobbyChatLog.scrollTop = DOM.lobbyChatLog.scrollHeight;
 		}
-		if (!skip){
-			g.sendNotification(msg);
-		}
+		g.sendNotification(data.message);
 	},
 	chatDrag: false,
 	gameStarted: false,
@@ -290,7 +288,11 @@ var lobby = {
 								} else {
 									// not defined on server
 									if (lobby.data[i].account){
-										lobby.chat(lobby.data[i].account + " has disconnected", 'chat-warning')
+										var o = {
+											message: lobby.data[i].account + " has disconnected",
+											type: 'chat-warning'
+										};
+										lobby.chat(o)
 										var o = {
 											player: i
 										}
@@ -884,7 +886,7 @@ function loadGameState(){
 					stroke: g.color[game.player[my.player].playerColor]
 				});
 				TweenMax.set(DOM.targetLine, {
-					stroke: "hsl(+=0%, +=80%, +=25%)"
+					stroke: "hsl(+=0%, +=0%, +=15%)"
 				});
 				
 				function triggerAction(that){
@@ -909,17 +911,12 @@ function loadGameState(){
 					zug.on("click", function(){
 						triggerAction(this);
 						TweenMax.set(this, {
-							fill: "hsl(+=0%, +=0%, +=25%)"
+							fill: "hsl(+=0%, +=0%, +=15%)"
 						});
 					});
 				} else {
 					zug.on("click", function(e){
-						/*
-						var box = this.getBBox();
-						var x = Math.round(box.x + (box.width/2));
-						var y = Math.round(box.y + (box.height/2));
-						console.warn(this.id, x, y, e.which);
-						*/
+						console.info(this.id);
 						triggerAction(this);
 					});
 				}
@@ -929,7 +926,7 @@ function loadGameState(){
 						showTarget(this, true);
 					}
 					TweenMax.set(this, {
-						fill: "hsl(+=0%, +=0%, +=25%)"
+						fill: "hsl(+=0%, +=0%, +=15%)"
 					});
 				}).on("mouseleave", function(){
 					var land = this.id.slice(4)*1;

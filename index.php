@@ -300,7 +300,7 @@
 					echo '
 					<div id="titleChatPlayers" class="titlePanelLeft">
 						<div id="titleChatHeader" class="chat-warning nowrap">
-							<span id="titleChatHeaderChannel">global</span> 
+							<span id="titleChatHeaderChannel"></span> 
 							(<span id="titleChatHeaderCount">1</span>)
 						</div>
 						<div id="titleChatBody"></div>

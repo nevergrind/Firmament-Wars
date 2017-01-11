@@ -600,14 +600,13 @@ var animate = {
 				scale: .2,
 				visibility: 'visible',
 				alpha: 0,
-				yPercent: -50
+				yPercent: -50,
+				y: '-50%'
 			},
 			rotationY: 0,
 			scale: 1,
-			alpha: 1
-		});
-		TweenMax.to(fwLogo, globeDelay, {
-			y: '-50%'
+			alpha: 1,
+			ease: Quad.easeInOut
 		});
 		
 		TweenMax.to('#titleMain', .5, {

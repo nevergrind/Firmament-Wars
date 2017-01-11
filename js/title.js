@@ -117,7 +117,9 @@ var title = {
 								}
 							}
 						}
-						document.getElementById('titleChatHeaderCount').textContent = len;
+						if (g.view === 'title'){
+							document.getElementById('titleChatHeaderCount').textContent = len;
+						}
 						// game data sanity check
 						var serverGames = [];
 						if (data.gameData !== undefined){
@@ -169,6 +171,10 @@ var title = {
 	addPlayer: function(account, flag){
 		title.players[account] = {
 			flag: flag
+		}
+		var e = document.getElementById('titlePlayer' + account);
+		if (e !== null){
+			e.parentNode.removeChild(e);
 		}
 		var e = document.createElement('div');
 		e.className = "titlePlayer";
@@ -280,22 +286,22 @@ var title = {
 	},
 	chatDrag: false,
 	chatOn: false,
-	chat: function (msg, type, skip){
-		if (g.view === 'title' && msg){
+	chat: function (data){
+		if (g.view === 'title' && data.message){
 			while (DOM.titleChatLog.childNodes.length > 500) {
 				DOM.titleChatLog.removeChild(DOM.titleChatLog.firstChild);
 			}
 			var z = document.createElement('div');
-			if (type){
-				z.className = type;
+			if (data.type){
+				z.className = data.type;
 			}
-			z.innerHTML = msg;
+			z.innerHTML = data.message;
 			DOM.titleChatLog.appendChild(z);
 			if (!title.chatDrag){
 				DOM.titleChatLog.scrollTop = DOM.titleChatLog.scrollHeight;
 			}
-			if (!skip){
-				g.sendNotification(msg);
+			if (!data.skip){
+				g.sendNotification(data);
 			}
 		}
 	},
@@ -309,11 +315,27 @@ var title = {
 					friends: g.friends
 				}
 			}).done(function(data){
+				console.info(data);
 				var str = '<div>Friend List ('+ len +')</div>';
 				for (var i=0; i<len; i++){
-					if (data.players.indexOf(g.friends[i]) > -1){
+					if (g.friends.indexOf(data.players[i]) > -1){
 						// online
-						str += '<div><span class="chat-online titlePlayerAccount">' + g.friends[i] +'</span></div>';
+						str += '<div><span class="chat-online titlePlayerAccount">' + g.friends[i] + '</span>';
+						console.info(data.players[i], data.locations[i], typeof data.locations[i]);
+						if (typeof data.locations[i] === 'number'){
+							str += ' playing in game: ' + data.locations[i];
+						} else {
+							str += ' in chat channel: ';
+							if (g.view === 'title'){
+								// enable clicking to change channel
+								str += '<span class="chat-online chat-join">' + data.locations[i] + '</span>';
+							} else {
+								// not in a game
+								str += data.locations[i];
+							}
+						}
+						
+						str += '</div>';
 					} else {
 						str += '<div><span class="chat-muted titlePlayerAccount">' + g.friends[i] +'</span></div>';
 					}
@@ -411,7 +433,7 @@ var title = {
 				title.addPlayer(data.account, data.flag);
 			} else {
 				if (data.message !== undefined){
-					title.chat(data.message, data.type);
+					title.chat(data);
 				}
 			}
 		} else if (g.view === 'lobby'){
@@ -429,7 +451,7 @@ var title = {
 				lobby.updatePlayer(data);
 			} else {
 				if (data.message !== undefined){
-					lobby.chat(data.message, data.type);
+					lobby.chat(data);
 				}
 			}
 		} else {
@@ -472,11 +494,11 @@ var title = {
 				if (data.type === 'gunfire'){
 					// ? when I'm attacked?
 					if (data.defender === my.account){
-						game.chat(data.message, data.type);
+						game.chat(data);
 					}
 					// lost attack
 				} else {
-					game.chat(data.message, data.type);
+					game.chat(data);
 				}
 			}
 			if (data.sfx){
@@ -499,20 +521,19 @@ var title = {
 			data: {
 				account: account,
 				flag: flag,
-				player: my.player,
+				playerColor: my.playerColor,
 				message: msg,
 				action: 'send'
 			}
 		});
 	},
-	receiveWhisper: function(msg, type){
-		// console.info(msg, type);
+	receiveWhisper: function(data){
 		if (g.view === 'title'){
-			title.chat(msg, type);
+			title.chat(data);
 		} else if (g.view === 'lobby'){
-			lobby.chat(msg, type);
+			lobby.chat(data);
 		} else {
-			game.chat(msg, type);
+			game.chat(data);
 		}
 	},
 	changeChannel: function(msg, splitter){
@@ -546,7 +567,11 @@ var title = {
 			<div>/unfriend account: remove friend</div>\
 			<div>/who account: check account info</div>\
 			';
-		title.chat(str, 'chat-muted');
+		var o = {
+			msg: str,
+			type: 'chat-muted'
+		};
+		title.chat(o);
 	},
 	broadcast: function(msg){
 					$.ajax({
@@ -668,6 +693,7 @@ var title = {
 				// console.info(data);
 				socket.removePlayer(my.account);
 				my.player = data.player;
+				my.playerColor = data.playerColor;
 				my.team = data.team;
 				game.id = data.gameId;
 				game.name = data.gameName;
@@ -711,6 +737,7 @@ var title = {
 		socket.removePlayer(my.account);
 		// console.info(data);
 		my.player = data.player;
+		my.playerColor = data.player;
 		my.team = data.team;
 		game.id = data.id;
 		game.name = data.gameName;

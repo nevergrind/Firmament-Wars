@@ -197,58 +197,56 @@ var g = {
 		$("#firmamentWarsLogoWrap, #mainWrap").remove();
 	},
 	notification: {},
-	sendNotification: function(msg){
+	sendNotification: function(data){
 		if (!document.hasFocus() && g.view !== 'game'){
 			// it's a player message
-			var type = 'says';
-			if (msg.indexOf("images/flags") > -1){
-				var flagArr = msg.split('"'),
-					flagPath = flagArr[1],
-					bodyArr = msg.split(':'),
-					body = bodyArr[1],
-					msgArr = bodyArr[0].split('>');
-				my.lastReceivedWhisper = msgArr[1];
-				var msg = my.lastReceivedWhisper + ' says:';
-				if (my.lastReceivedWhisper.indexOf(' whispers') > -1){
-					msg = my.lastReceivedWhisper + ':';
-					my.lastReceivedWhisper = my.lastReceivedWhisper.split(" ").shift();
-					type = 'whispers';
+			var type = ' says: ';
+			if (data.flag && data.msg){
+				console.info("NOTIFY!", data, data.type);
+				// sent by a player
+				if (data.type === 'chat-whisper'){
+					type = 'whispers: ';
 				}
-				if (my.lastReceivedWhisper){
-					g.notification = new Notification(msg, {
-						icon: flagPath,
-						tag: "Nevergrind",
-						body: body
-					});
-					g.notification.onclick = function(){
-						window.focus();
-					}
+				var prefix = data.account + ' ' + type;
+				var flagFile = data.flag + (data.flag === 'Nepal' ? '.png' : '.jpg');
+				console.info(flagFile);
+				g.notification = new Notification(prefix, {
+					icon: 'images/flags/' + flagFile,
+					tag: "Firmament Wars",
+					body: data.msg
+				});
+				g.notification.onclick = function(){
+					window.focus();
 				}
-			}
-			// title flash
-			if (!g.titleFlashing && my.lastReceivedWhisper){
-				g.titleFlashing = true;
-				(function repeat(toggle){
-					if (!document.hasFocus()){
-						if (toggle % 2 === 0){
-							document.title = my.lastReceivedWhisper + ' ' + type + '...';
-						} else {
-							document.title = g.defaultTitle;
+				// title flash
+				if (!g.titleFlashing){
+					g.titleFlashing = true;
+					(function repeat(toggle){
+						if (!document.hasFocus()){
+							if (toggle % 2 === 0){
+								document.title = prefix;
+							} else {
+								document.title = g.defaultTitle;
+							}
+							setTimeout(repeat, 3000, ++toggle);
 						}
-						setTimeout(repeat, 3000, ++toggle);
-					}
-				})(0);
+					})(0);
+				}
+				audio.play('chat');
 			}
-			audio.play('chat');
 		}
 	},
 	chat: function(msg, type){
+		var o = {
+			message: msg,
+			type: type
+		};
 		if (g.view === 'title'){
-			title.chat(msg, type);
+			title.chat(o);
 		} else if (g.view === 'lobby'){
-			lobby.chat(msg, type);
+			lobby.chat(o);
 		} else {
-			game.chat(msg, type);
+			game.chat(o);
 		}
 	}
 }
@@ -315,6 +313,7 @@ g.init = (function(){
 			if (data.gameId > 0){
 				// console.info("Auto joined game:" + (data.gameId));
 				my.player = data.player;
+				my.playerColor = data.player;
 				my.team = data.team;
 				game.id = data.gameId;
 				g.map = data.mapData;
@@ -435,15 +434,15 @@ var game = {
 		document.getElementById('topTile')
 			.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#land' + i);
 	},
-	chat: function(msg, type){
+	chat: function(data){
 		while (DOM.chatContent.childNodes.length > 10) {
 			DOM.chatContent.removeChild(DOM.chatContent.firstChild);
 		}
 		var z = document.createElement('div');
-		if (type){
-			z.className = type;
+		if (data.type){
+			z.className = data.type;
 		}
-		z.innerHTML = msg;
+		z.innerHTML = data.message;
 		DOM.chatContent.appendChild(z);
 		setTimeout(function(){
 			if (z !== undefined){
@@ -689,7 +688,10 @@ var game = {
 	reportMilestones: function(data){
 		if (data.cultureMsg !== undefined){
 			if (data.cultureMsg){
-				game.chat(data.cultureMsg);
+				var o = {
+					message: data.cultureMsg
+				};
+				game.chat(o);
 				audio.play('culture');
 				// recruit bonus changes
 				initOffensiveTooltips();

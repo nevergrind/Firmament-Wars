@@ -310,6 +310,9 @@ a:hover{
 	color: #ffd700;
 	text-shadow: .5px .5px #550, 1px 1px #550, 1.5px 1.5px #550, 2px 2px #550;
 }
+.chat-join{
+	cursor: pointer;
+}
 .chat-danger{
 	color: #ff1a1a;
 	text-shadow: .5px .5px #500, 1px 1px #500, 1.5px 1.5px #500, 2px 2px #500;
@@ -1971,6 +1974,9 @@ table {
 	margin: 1em 0 0;
 	font-family: Cinzel, Palatino Linotype, serif;
 	letter-spacing: .1em;
+}
+#optionsModal{
+	background: #000;
 }
 #optionsFormWrap{
 	padding: 0 3em;
