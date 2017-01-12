@@ -49,14 +49,17 @@ var title = {
 				for (var i=0, len=data.length; i<len; i++){
 					var d = data[i];
 					title.games[d.id] = d.players * 1;
+					console.info(d);
 					str += 
 					"<tr id='game_"+ d.id +"' class='wars no-select' data-name='" + d.name + "'>\
 						<td class='warCells'>"+ d.name + "</td>\
 						<td class='warCells'>" + d.map + "</td>\
 						<td class='warCells'>" + d.speed + "</td>\
-						<td class='warCells'><span id='game_players_"+ d.id +"'>" + d.players + "</span>/" + d.max + "</td>\
+						<td class='warCells'>" + (d.teamMode ? 'Team' : 'FFA') + "</td>\
 					</tr>";
+					
 				}
+				// <td class='warCells'><span id='game_players_"+ d.id +"'>" + d.players + "</span>/" + d.max + "</td>\
 				e.innerHTML = str;
 				$(".wars").filter(":first").trigger("click");
 			}).fail(function(e){
@@ -216,7 +219,7 @@ var title = {
 		// console.info("setToGame", data);
 		var id = data.id;
 		title.games[id] = data.players;
-		title.updatePlayerText(id);
+		// title.updatePlayerText(id);
 	},
 	addToGame: function(data){
 		// player joined or left
@@ -231,7 +234,7 @@ var title = {
 		} else {
 			title.games[id] = 1;
 		}
-		title.updatePlayerText(id);
+		//title.updatePlayerText(id);
 	},
 	removeFromGame: function(data){
 		// player joined or left
@@ -246,7 +249,7 @@ var title = {
 		} else {
 			title.games[id] = 1;
 		}
-		title.updatePlayerText(id);
+		//title.updatePlayerText(id);
 	},
 	addGame: function(data){
 		// created game
@@ -260,7 +263,7 @@ var title = {
 			"<td class='warCells'>"+ data.name + "</td>\
 			<td class='warCells'>" + data.map + "</td>\
 			<td class='warCells'>" + data.speed + "</td>\
-			<td class='warCells'><span id='game_players_" + data.id + "'>1</span>/" + data.max + "</td>";
+			<td class='warCells'>" + (data.teamMode ? 'Team' : 'FFA') + "</td>";
 		DOM.gameTableBody.insertBefore(e, DOM.gameTableBody.childNodes[0]);
 	},
 	removeGame: function(data){
@@ -669,12 +672,12 @@ var title = {
 			pw = $("#gamePassword").val(),
 			max = $("#gamePlayers").val() * 1,
 			speed = $("#createGameSpeed").text();
-		if (!g.rankedGame && (name.length < 4 || name.length > 32)){
+		if (!g.rankedMode && (name.length < 4 || name.length > 32)){
 			Msg("Game name must be at least 4-32 characters.", 1);
 			setTimeout(function(){
 				$("#gameName").focus().select();
 			}, 100);
-		} else if (!g.rankedGame && (max < 2 || max > 8 || max % 1 !== 0)){
+		} else if (!g.rankedMode && (max < 2 || max > 8 || max % 1 !== 0)){
 			Msg("Game must have 2-8 players.", 1);
 		} else {
 			g.lock(1);
@@ -686,7 +689,8 @@ var title = {
 					pw: pw,
 					map: title.mapData[g.map.key].name,
 					max: max,
-					rating: g.rankedGame,
+					rating: g.rankedMode,
+					teamMode: g.teamMode,
 					speed: speed
 				}
 			}).done(function(data) {
@@ -738,6 +742,8 @@ var title = {
 		// console.info(data);
 		my.player = data.player;
 		my.playerColor = data.player;
+		g.teamMode = data.teamMode;
+		g.rankedMode = data.rankedMode;
 		my.team = data.team;
 		game.id = data.id;
 		game.name = data.gameName;

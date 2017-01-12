@@ -75,40 +75,6 @@ a:hover{
 	text-decoration: none;
 }
 /* common helpers */
-.crystalIcon{
-	background:url('/images1/currency.png') 100% 0 / 200% 100%;
-	width:30px;
-	height:30px;
-}
-.accountDetails{
-	height:30px;
-	float:left;
-	margin-right:12px;
-}
-.accountValues{
-	float:left;
-	height:30px;
-	line-height:30px;
-	text-indent:5px;
-}
-#crystals{
-	width:16px;
-	height:16px;
-	display: inline-block;
-}
-.accountValueText{
-	line-height:32px;
-	margin: 0 2px;
-}
-.accountValueText2{
-	float:left;
-	line-height:32px;
-}
-.modePanel{
-	float:right;
-	line-height:32px;
-	padding-right:16px;
-}
 .fancyhr{
 	border: 0; 
 	height: 1px; 
@@ -221,10 +187,10 @@ a:hover{
 	bottom: 5%;
 	left: .5%;
 	width: 50%;
-	padding: 1%;
+	max-width: 640px;
+	padding: 5px;
 	z-index: 9999;
 	vertical-align: bottom;
-	pointer-events: none;
 }
 #logout, #login{
 	font-size: .75em;
@@ -404,23 +370,12 @@ tbody{
 #login{
 	color: #fff;
 }
-.small-caps{
-	font-family: Cinzel, Palatino Linotype, serif;
-}
 #title-chat-input{
 	padding: 0 2%;
 	width: 100%;
 	border: 1px solid #2e6da4;
 	border-right: none;
 	background: rgba(0,12,32,1);
-}
-#chatAd{
-	position: relative;
-	left: 0;
-	right: 0;
-	margin: 0 auto;
-	width: 320px;
-	height: 50px;
 }
 #titlePlayerCountWrap{
 	float: right;
@@ -1692,10 +1647,6 @@ table {
 #flagPurchased{
 	display: none;
 }
-#offerMap{
-	display: none;
-	margin-right: 4em;
-}
 #offerFlag{
 	position: absolute;
 	top: 5%;
@@ -1862,13 +1813,13 @@ table {
 	background: #33dd33;
 }
 .player13{
-	color: #333333;
+	color: #222222;
 }
 .p13b{
-	outline: 1px solid #333333;
+	outline: 1px solid #222222;
 }
 .pbar13{
-	background: #333333;
+	background: #222222;
 }
 .player14{
 	color: #00ff99;
@@ -1896,6 +1847,42 @@ table {
 }
 .pbar16{
 	background: #dd00dd;
+}
+.player17{
+	color: #e4e4e4;
+}
+.p17b{
+	outline: 1px solid #e4e4e4;
+}
+.pbar17{
+	background: #e4e4e4;
+}
+.player18{
+	color: #220088;
+}
+.p18b{
+	outline: 1px solid #220088;
+}
+.pbar18{
+	background: #220088;
+}
+.player19{
+	color: #707000;
+}
+.p19b{
+	outline: 1px solid #707000;
+}
+.pbar19{
+	background: #707000;
+}
+.player20{
+	color: #888888;
+}
+.p20b{
+	outline: 1px solid #888888;
+}
+.pbar20{
+	background: #888888;
 }
 .diploSquare{
 	font-size: .875em;
@@ -2034,6 +2021,10 @@ table {
 	border-spacing: 0;
 	padding: 1em;
 	font-size: 1.125em;
+	text-shadow: 1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;
+}
+.statSum{
+	color: #ffff1a;
 }
 #gameStatsTable > tr > th{
 	font-size: 1.25em;
@@ -2134,6 +2125,7 @@ table {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	background: rgba(0,0,0,.4);
+	box-shadow: 0 0 0 1px #05b;
 }
 .statBarBg{
 	width: 0;

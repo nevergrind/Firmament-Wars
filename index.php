@@ -379,6 +379,8 @@
 						<div class='text-primary margin-top'>Game Name:</div> 
 						<div id='lobbyGameName'></div>
 					</div>
+					<div class='text-primary margin-top'>Game Mode:</div> 
+					<div id='lobbyGameMode'></div>
 					<div class='text-primary margin-top'>Map:</div>
 					<div id='lobbyGameMap'></div>
 					<div class='text-primary margin-top'>Speed:</div>
@@ -408,7 +410,7 @@
 		
 		<div id='createGameWrap' class='fw-primary titleModal'>
 			<div class='header text-center'>
-				<h2 id="createGameHead" class="header">Create Game</h2>
+				<h2 id="createGameHead" class="header">Create FFA Game</h2>
 				<h2 id="createRankedGameHead" class='header ranked'>Create Ranked Game</h2>
 			</div>
 			<hr class="fancyhr">
@@ -469,18 +471,6 @@
 				<div>
 					<div class='buffer2'>
 						<label class='control-label'>Map <?php if (!$_SESSION['fwpaid']){ echo '| <span class="text-warning">Unlock the complete game to select all maps</span>'; } ?></label>
-					</div>
-					
-					<div id="offerMap" class="pull-right text-center">
-						<h5>Buy map?</h5>
-						<div class="center block">
-							<button id="buyMap" type="button" class="btn fwBlue shadow4 text-primary">
-								<i class="fa fa-diamond"></i> 150
-							</button>
-						</div>
-						<h4>
-							<a class="fwFont" target="_blank" href="/store">Buy Crystals</a>
-						</h4>
 					</div>
 					
 					<div class='buffer w33'>

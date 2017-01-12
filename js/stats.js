@@ -314,38 +314,20 @@ var stats = {
 				stats.animate(a, 1.5);
 				str += '<tr class="stagBlue statRow">' +
 					stats.playerCell(d, i);
-					var color = game.player[i].playerColor;
-					str += '<td class="statTD">\
-						<div class="statBar pb'+ color +'">\
-							<div id="p'+ i +'-units-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
-							<div id="p'+ i +'-units" class="statVal">0</div>\
-						</div>\
-					</td>\
-					<td class="statTD">\
-						<div class="statBar pb'+ color +'">\
-							<div id="p'+ i +'-structures-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
-							<div id="p'+ i +'-structures" class="statVal">0</div>\
-						</div>\
-					</td>\
-					<td class="statTD">\
-						<div class="statBar pb'+ color +'">\
-							<div id="p'+ i +'-weapons-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
-							<div id="p'+ i +'-weapons" class="statVal">0</div>\
-						</div>\
-					</td>\
-					<td class="statTD">\
-						<div class="statBar pb'+ color +'">\
-							<div id="p'+ i +'-resources-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
-							<div id="p'+ i +'-resources" class="statVal">0</div>\
-						</div>\
-					</td>\
-					<td class="statTD">\
-						<div class="statBar pb'+ color +'">\
-							<div id="p'+ i +'-total-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
-							<div id="p'+ i +'-total" class="statVal chat-warning">0</div>\
-						</div>\
-					</td>\
-				</tr>\
+					var color = game.player[i].playerColor,
+						a = ['units', 'structures', 'weapons', 'resources', 'total'],
+						len = a.length;
+					for (var j=0; j<len; j++){
+						var sumRow = (j+1 === len) ? ' statSum' : '';
+						str += 
+						'<td class="statTD">\
+							<div class="statBar pb'+ color +'">\
+								<div id="p'+ i +'-'+ a[j] +'-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
+								<div id="p'+ i +'-'+ a[j] +'" class="statVal'+ sumRow +'">0</div>\
+							</div>\
+						</td>';
+					}
+				str += '</tr>\
 				<tr class="statSpacer"></tr>';
 			}
 		}
@@ -380,32 +362,19 @@ var stats = {
 				stats.animate(a, 1.5);
 				str += '<tr class="stagBlue statRow">' +
 					stats.playerCell(d, i);
-					var color = game.player[i].playerColor;
-					str += '<td class="statTD">\
-						<div class="statBar pb'+ color +'">\
-							<div id="p'+ i +'-earned-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
-							<div id="p'+ i +'-earned" class="statVal">0</div>\
-						</div>\
-					</td>\
-					<td class="statTD">\
-						<div class="statBar pb'+ color +'">\
-							<div id="p'+ i +'-deployed-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
-							<div id="p'+ i +'-deployed" class="statVal">0</div>\
-						</div>\
-					</td>\
-					<td class="statTD">\
-						<div class="statBar pb'+ color +'">\
-							<div id="p'+ i +'-killed-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
-							<div id="p'+ i +'-killed" class="statVal">0</div>\
-						</div>\
-					</td>\
-					<td class="statTD">\
-						<div class="statBar pb'+ color +'">\
-							<div id="p'+ i +'-lost-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
-							<div id="p'+ i +'-lost" class="statVal">0</div>\
-						</div>\
-					</td>\
-				</tr>\
+					var color = game.player[i].playerColor,
+						a = ['earned', 'deployed', 'killed', 'lost'],
+						len = a.length;
+					for (var j=0; j<len; j++){
+						str += 
+						'<td class="statTD">\
+							<div class="statBar pb'+ color +'">\
+								<div id="p'+ i +'-'+ a[j] +'-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
+								<div id="p'+ i +'-'+ a[j] +'" class="statVal">0</div>\
+							</div>\
+						</td>';
+					}
+				str += '</tr>\
 				<tr class="statSpacer"></tr>';
 			}
 		}
@@ -436,26 +405,19 @@ var stats = {
 				stats.animate(a, 1);
 				str += '<tr class="stagBlue statRow">' +
 					stats.playerCell(d, i);
-					var color = game.player[i].playerColor;
-					str += '<td class="statTD">\
-						<div class="statBar pb'+ color +'">\
-							<div id="p'+ i +'-bunkers-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
-							<div id="p'+ i +'-bunkers" class="statVal">0</div>\
-						</div>\
-					</td>\
-					<td class="statTD">\
-						<div class="statBar pb'+ color +'">\
-							<div id="p'+ i +'-walls-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
-							<div id="p'+ i +'-walls" class="statVal">0</div>\
-						</div>\
-					</td>\
-					<td class="statTD">\
-						<div class="statBar pb'+ color +'">\
-							<div id="p'+ i +'-fortresses-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
-							<div id="p'+ i +'-fortresses" class="statVal">0</div>\
-						</div>\
-					</td>\
-				</tr>\
+					var color = game.player[i].playerColor,
+						a = ['bunkers', 'walls', 'fortresses'],
+						len = a.length;
+					for (var j=0; j<len; j++){
+						str += 
+						'<td class="statTD">\
+							<div class="statBar pb'+ color +'">\
+								<div id="p'+ i +'-'+ a[j] +'-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
+								<div id="p'+ i +'-'+ a[j] +'" class="statVal">0</div>\
+							</div>\
+						</td>';
+					}
+					str += '</tr>\
 				<tr class="statSpacer"></tr>';
 			}
 		}
@@ -486,26 +448,19 @@ var stats = {
 				stats.animate(a, 1);
 				str += '<tr class="stagBlue statRow">'+
 					stats.playerCell(d, i);
-					var color = game.player[i].playerColor;
-					str += '<td class="statTD">\
-						<div class="statBar pb'+ color +'">\
-							<div id="p'+ i +'-cannons-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
-							<div id="p'+ i +'-cannons" class="statVal">0</div>\
-						</div>\
-					</td>\
-					<td class="statTD">\
-						<div class="statBar pb'+ color +'">\
-							<div id="p'+ i +'-missiles-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
-							<div id="p'+ i +'-missiles" class="statVal">0</div>\
-						</div>\
-					</td>\
-					<td class="statTD">\
-						<div class="statBar pb'+ color +'">\
-							<div id="p'+ i +'-nukes-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
-							<div id="p'+ i +'-nukes" class="statVal">0</div>\
-						</div>\
-					</td>\
-				</tr>\
+					var color = game.player[i].playerColor,
+						a = ['cannons', 'missiles', 'nukes'],
+						len = a.length;
+					for (var j=0; j<len; j++){
+						str += 
+						'<td class="statTD">\
+							<div class="statBar pb'+ color +'">\
+								<div id="p'+ i +'-'+ a[j] +'-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
+								<div id="p'+ i +'-'+ a[j] +'" class="statVal">0</div>\
+							</div>\
+						</td>';
+					}
+					str += '</tr>\
 				<tr class="statSpacer"></tr>';
 			}
 		}

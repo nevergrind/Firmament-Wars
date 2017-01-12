@@ -51,7 +51,7 @@ var events = {
 			title.joinGame();
 		});
 		
-		function openCreateGameModal(isRanked){
+		function openCreateGameModal(mode){
 			var e1 = document.getElementById('createGameHead'),
 				e2 = document.getElementById('createRankedGameHead'),
 				e3 = $("#gameName"),
@@ -59,8 +59,8 @@ var events = {
 				e5 = document.getElementById('createGamePasswordWrap'),
 				e6 = document.getElementById('createGameMaxPlayerWrap');
 				
-			g.rankedGame = isRanked ? 1 : 0;
-			if (isRanked){
+			if (mode === 'ranked'){
+				g.rankedMode = 1;
 				e1.style.display = 'none';
 				e2.style.display = 'block';
 				e4.style.display = 'none';
@@ -72,6 +72,10 @@ var events = {
 				e4.style.display = 'block';
 				e5.style.display = 'block';
 				e6.style.display = 'block';
+			}
+			if (mode === 'team'){
+				g.teamMode = 1;
+				e1.textContent = 'Create Team Game';
 			}
 			e3.val('');
 			TweenMax.to(document.getElementById("createGameWrap"), g.modalSpeed, {
@@ -97,10 +101,13 @@ var events = {
 			socket.setChannel($(this).text());
 		});
 		$("#create").on("click", function(){
-			openCreateGameModal(false);
+			openCreateGameModal('ffa');
 		});
 		$("#createRankedBtn").on("click", function(){
-			openCreateGameModal(true);
+			openCreateGameModal('ranked');
+		});
+		$("#createTeamBtn").on("click", function(){
+			openCreateGameModal('team');
 		});
 
 		$("#createGame").on("click", function(e){
@@ -398,6 +405,7 @@ var events = {
 			if (isFirefox){
 				setMousePosition(e.originalEvent.layerX, e.originalEvent.layerY);
 			} else {
+				// console.info(e.offsetX, e.offsetY);
 				setMousePosition(e.offsetX, e.offsetY);
 			}
 		});

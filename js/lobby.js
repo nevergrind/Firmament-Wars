@@ -156,6 +156,7 @@ var lobby = {
 				document.getElementById('lobbyGameNameWrap').style.display = 'none';
 			}
 			e1.innerHTML = x.name;
+			document.getElementById('lobbyGameMode').textContent = x.gameMode;
 			g.speed = g.speeds[x.speed];
 			document.getElementById("lobbyGameSpeed").innerHTML = x.speed;
 			document.getElementById("lobbyGameMap").innerHTML = x.map;
@@ -183,7 +184,7 @@ var lobby = {
 								str += '<ul id="teamColorDropdown" class="dropdown-menu">\
 									<div class="header text-center selectTeamHeader">Player Color</div>';
 								// set player boxes 1-8; 1-16 for paid
-								var colorNum = fwpaid ? 16 : 8;
+								var colorNum = fwpaid ? 20 : 8;
 								for (var j=1; j<=colorNum; j++){
 									str += '<i class="fa fa-square player'+ j +' teamChoice" data-playercolor="'+ j +'"></i>';
 								}
@@ -343,7 +344,7 @@ var lobby = {
 				});
 			if (my.player === i){
 				$("#lobbyPlayerColor" + i)
-					.attr('title', 'Select Player Color')
+					.attr('title', fwpaid ? 'Select Player Color' : 'Unlock the complete game to choose player color')
 					.tooltip({
 						container: 'body'
 					});

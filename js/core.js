@@ -26,12 +26,17 @@ var g = {
 		"#0000bb",
 		"#663300",
 		"#33dd33",
-		"#333333",
+		"#222222",
 		"#00ff99",
 		"#ff6666",
-		"#ff00ff"
+		"#ff00ff",
+		'#e4e4e4',
+		'#220088',
+		'#707000',
+		'#888888'
 	],
-	rankedGame: 0,
+	rankedMode: 0,
+	teamMode: 0,
 	joinedGame: false,
 	searchingGame: false,
 	defaultTitle: 'Firmament Wars | Multiplayer Grand Strategy Warfare',
@@ -314,6 +319,8 @@ g.init = (function(){
 				// console.info("Auto joined game:" + (data.gameId));
 				my.player = data.player;
 				my.playerColor = data.player;
+				g.teamMode = data.teamMode;
+				g.rankedMode = data.rankedMode;
 				my.team = data.team;
 				game.id = data.gameId;
 				g.map = data.mapData;
