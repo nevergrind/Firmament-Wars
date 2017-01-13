@@ -888,7 +888,7 @@ function loadGameState(){
 			</div><hr class="fancyhr">';
 			// init diplomacyPlayers
 			function teamIcon(team){
-				return '<span class="diploTeam" title="Team '+ team +'">'+ team +'</span>';
+				return '<span data-toggle="tooltip" data-placement="right" class="diploTeam" title="Team '+ team +'">'+ team +'</span>';
 			}
 			for (var i=0, len=game.player.length; i<len; i++){
 				var p = game.player[i],
