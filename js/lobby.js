@@ -174,23 +174,43 @@ var lobby = {
 						<img id="lobbyFlag' +i+ '" data-placement="right" class="lobbyFlags block center" src="images/flags/blank.png">\
 					</div>\
 					<div class="col-xs-6 lobbyDetails">\
-						<div class="lobbyAccounts chat-warning">\
-							<i id="lobbyPlayerColor'+ i +'" class="fa fa-square player'+ i +' lobbyPlayer dropdown-toggle';
+						<div class="lobbyAccounts">\
+							<span>\
+							<div id="lobbyTeam'+ i +'" class="lobbyTeams dropdown-toggle';
+							if (i === my.player){
+								str += ' pointer2';
+							}
+							str += '" data-placement="right" data-toggle="dropdown">';
+							if (i === my.player){
+								str += '<i class="fa fa-flag pointer2 lobbyTeamFlag"></i> <span id="lobbyTeamNumber'+ i +'">' + i +'</span>';
+							} else {
+								str += '<i class="fa fa-flag lobbyTeamFlag"></i> <span id="lobbyTeamNumber'+ i +'">' + i +'</span>';
+							}
+							str += '</div>';
+							if (i === my.player){
+								str += 
+								'<ul id="teamDropdown" class="dropdown-menu">\
+									<li class="header text-center selectTeamHeader">Team</li>';
+									for (var j=1; j<=8; j++){
+										str += '<li class="teamChoice">Team '+ j +'</li>';
+									}
+								str += '</ul></span>';
+							}
+							str += '<span><i id="lobbyPlayerColor'+ i +'" class="fa fa-square player'+ i +' lobbyPlayer dropdown-toggle';
 							if (i === my.player){
 								str += ' pointer2';
 							}
 							str += '" data-placement="right" data-toggle="dropdown"></i>';
 							if (i === my.player && fwpaid){
-								str += '<ul id="teamColorDropdown" class="dropdown-menu">\
-									<div class="header text-center selectTeamHeader">Player Color</div>';
-								// set player boxes 1-8; 1-16 for paid
-								var colorNum = fwpaid ? 20 : 8;
-								for (var j=1; j<=colorNum; j++){
-									str += '<i class="fa fa-square player'+ j +' teamChoice" data-playercolor="'+ j +'"></i>';
+								str += 
+								'<ul id="teamColorDropdown" class="dropdown-menu">\
+									<li class="header text-center selectTeamHeader">Player Color</li>';
+								for (var j=1; j<=20; j++){
+									str += '<i class="fa fa-square player'+ j +' playerColorChoice" data-playercolor="'+ j +'"></i>';
 								}
-								str += '</ul>';
+								str += '</ul></span>';
 							}
-							str += '<span id="lobbyAccountName'+ i +'" class="lobbyAccountName"></span>\
+							str += '<span id="lobbyAccountName'+ i +'" class="lobbyAccountName chat-warning"></span>\
 						</div>\
 						<div id="lobbyName' +i+ '" class="lobbyNames nowrap"></div>\
 					</div>\
@@ -343,11 +363,12 @@ var lobby = {
 					container: 'body'
 				});
 			if (my.player === i){
-				$("#lobbyPlayerColor" + i)
-					.attr('title', fwpaid ? 'Select Player Color' : 'Unlock the complete game to choose player color')
-					.tooltip({
-						container: 'body'
-					});
+				$("#lobbyPlayerColor" + i).attr('title', fwpaid ? 
+					'Select Player Color' : 
+					'Unlock the complete game to choose player color')
+					.tooltip({ container: 'body' });
+				$("#lobbyTeam" + i).attr('title', 'Select Team')
+					.tooltip({ container: 'body' });
 			}
 			lobby.updateGovernment(data);
 			lobby.data[i] = data;
@@ -359,6 +380,12 @@ var lobby = {
 			lobby.data[i] = { account: '' };
 		}
 		lobby.styleStartGame();
+	},
+	// update player's team number
+	updateTeamNumber: function(data){
+		console.info("UPDATE TEAM NUMBER: ", data);
+		var i = data.player;
+		document.getElementById('lobbyTeamNumber' + i).textContent = data.team;
 	},
 	// update player's color only
 	updatePlayerColor: function(data){
@@ -449,6 +476,24 @@ var lobby = {
 			}
 			game.player[key].ribbons = str;
 			game.player[key].ribbonArray = arr;
+		}
+	},
+	startGame: function(){
+		if (lobby.totalPlayers() >= 2 && my.player === 1){
+			startGame.style.display = "none";
+			g.lock(1);
+			audio.play('click');
+			$.ajax({
+				type: "GET",
+				url: "php/startGame.php"
+			}).done(function(data){
+				g.unlock();
+			}).fail(function(data){
+				Msg(data.statusText);
+				startGame.style.display = "block";
+			}).always(function(){
+				g.unlock();
+			});
 		}
 	}
 };
@@ -751,6 +796,7 @@ function loadGameState(){
 				game.player[d.player].nation = d.nation;
 				game.player[d.player].player = d.player;
 				game.player[d.player].playerColor = d.playerColor;
+				game.player[d.player].team = d.team;
 				game.player[d.player].government = d.government;
 			}
 			
@@ -841,25 +887,29 @@ function loadGameState(){
 				<span id="options" class="pointer options">Options</span>&nbsp;|&nbsp;\<span id="surrender" class="pointer">Surrender</span><span id="exitSpectate" class="pointer">Exit Game</span>\
 			</div><hr class="fancyhr">';
 			// init diplomacyPlayers
+			function teamIcon(team){
+				return '<span class="diploTeam" title="Team '+ team +'">'+ team +'</span>';
+			}
 			for (var i=0, len=game.player.length; i<len; i++){
 				var p = game.player[i],
 					_flagArr = p.flag.split("."),
 					_flag = _flagArr[0],
 					_flagClass = _flagArr[0].replace(/ /g, "-");
 				if (p.flag){
-					var flag
 					// console.info(game.player[i]);
 					if (p.flag === 'Default.jpg'){
 						str += 
 						'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">\
-							<div class="flag player' + game.player[p.player].playerColor + '" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag +'"></div>\
-							<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>\
+							<div class="flag player' + game.player[p.player].playerColor + '" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag +'"></div>'+ 
+							teamIcon(p.team) +
+							'<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>\
 							<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + p.nation + '</span></div>';
 					} else {
 						str += 
 						'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">\
-							<div class="flag '+ _flagClass +'" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag + '"></div>\
-							<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>\
+							<div class="flag '+ _flagClass +'" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag + '"></div>'+ 
+							teamIcon(p.team) +
+							'<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>\
 							<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + p.nation + '</span></div>';
 					}
 				}
@@ -959,21 +1009,4 @@ function loadGameState(){
 		
 		}, loadGameDelay);
 	});
-}
-function startGame(){
-	if (lobby.totalPlayers() >= 2 && my.player === 1){
-		document.getElementById("startGame").style.display = "none";
-		g.lock(1);
-		audio.play('click');
-		$.ajax({
-			type: "GET",
-			url: "php/startGame.php"
-		}).done(function(data){
-			g.unlock();
-		}).fail(function(data){
-			serverError(data);
-		}).always(function(){
-			g.unlock();
-		});
-	}
-}
+};

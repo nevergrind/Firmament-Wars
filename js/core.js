@@ -314,9 +314,9 @@ g.init = (function(){
 			type: "GET",
 			url: 'php/rejoinGame.php' // check if already in a game
 		}).done(function(data) {
-			console.info('rejoin ', data.gameId);
+			//console.info('rejoin ', data.gameId, data.team);
 			if (data.gameId > 0){
-				// console.info("Auto joined game:" + (data.gameId));
+				console.info("Auto joined game: " + data.team);
 				my.player = data.player;
 				my.playerColor = data.player;
 				g.teamMode = data.teamMode;

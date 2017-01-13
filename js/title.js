@@ -448,6 +448,8 @@ var title = {
 				lobby.updateGovernment(data);
 			} else if (data.type === 'updatePlayerColor'){
 				lobby.updatePlayerColor(data);
+			} else if (data.type === 'updateTeamNumber'){
+				lobby.updateTeamNumber(data);
 			} else if (data.type === 'countdown'){
 				lobby.countdown(data);
 			} else if (data.type === 'update'){

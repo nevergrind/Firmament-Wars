@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	
+	$_SESSION['fwpaid'] = 0;
 	if($_SERVER["SERVER_NAME"] === "localhost"){
 		error_reporting(E_ALL);
 		ini_set('display_errors', true);
@@ -69,7 +69,7 @@
 	
 		<div id="titleMain" class="portal">
 			
-			<header class="shadow4 text-primary">
+			<header id="document" class="shadow4 text-primary">
 				<?php
 				require('php/connect1.php');
 				$stmt = $link->prepare("select fwpaid, referral from accounts where account=? limit 1");
@@ -87,7 +87,7 @@
 					$stmt->bind_param('s', $_SESSION['account']);
 					$stmt->execute();
 					$stmt->bind_result($dName, $dFlag, $rating, $wins, $losses, $teamWins, $teamLosses, $rankedWins, $rankedLosses, $disconnects);
-					while($stmt->fetch()){
+					while ($stmt->fetch()){
 						$nation = $dName;
 						$flag = $dFlag;
 						$_SESSION['rating'] = $rating;
@@ -470,7 +470,12 @@
 				
 				<div>
 					<div class='buffer2'>
-						<label class='control-label'>Map <?php if (!$_SESSION['fwpaid']){ echo '| <span class="text-warning">Unlock the complete game to select all maps</span>'; } ?></label>
+						<label class='control-label'>Map <?php 
+						if (!$_SESSION['fwpaid']){
+								echo '| <span class="text-warning">Unlock the complete game to select all maps</span>'; 
+							}
+						?>
+						</label>
 					</div>
 					
 					<div class='buffer w33'>

@@ -1286,6 +1286,19 @@ circle{
 #lobbyGovernmentDescription{
 	padding: 1em;
 }
+.lobbyTeamFlag{
+	margin-bottom: .125em;
+}
+.lobbyTeams{
+	font-family: Cinzel, Palatino Linotype, serif;
+	display: inline;
+	background: #222;
+	border: 1px solid #aaa;
+	color: #7FFFD4;
+	border-radius: 4px;
+	padding: 0 .5em;
+	margin-right: .5em;
+}
 .lobbyFlags{
 	max-height: 2.8em;
 	margin-top: .1em;
@@ -1308,9 +1321,6 @@ circle{
 	line-height: 1.5em;
 	color: #8df;
 	text-shadow: .5px .5px #145, 1px 1px #145;
-}
-.govDropdown{
-	margin-top: .125em;
 }
 #lobbyChatLogWrap{
 	height: 35%;
@@ -1665,17 +1675,34 @@ table {
 #researchFutureTech{
 	display: none;
 }
+#teamDropdown{
+	width: 8em !important;
+	min-width: 8em !important;
+	border: 2px groove #204d74;
+	background: #00061a;
+	padding: 5px;
+	font-size: 1em;
+}
 #teamColorDropdown{
 	border: 2px groove #204d74;
 	background: #00061a;
 	width: 12em !important;
 	padding: 5px;
+	font-size: 1em;
 }
 .selectTeamHeader{
 	border-bottom: 1px solid #204d74;
 	padding-bottom: .25em;
 }
 .teamChoice{
+	cursor: pointer !important;
+	text-align: center;
+	padding: .625em 0;
+}
+.teamChoice:hover{
+	background: #05b;
+}
+.playerColorChoice{
 	cursor: pointer !important;
 	font-size: 2em;
 	margin: .25em;
@@ -1883,6 +1910,14 @@ table {
 }
 .pbar20{
 	background: #888888;
+}
+.diploTeam{
+	font-family: Cinzel, Palatino Linotype, serif;
+	display: inline-block;
+	width: 1em;
+	text-align: center;
+	color: #7FFFD4;
+	margin-right: .5em;
 }
 .diploSquare{
 	font-size: .875em;

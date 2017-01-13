@@ -139,7 +139,7 @@ var events = {
 		$("#mainWrap").on("click", "#cancelGame", function(){
 			exitGame();
 		}).on("click", "#startGame", function(){
-			startGame();
+			lobby.startGame();
 		});
 		$("#toggleNation").on("click", function(){
 			var e = document.getElementById("configureNation");
@@ -358,12 +358,8 @@ var events = {
 				}
 			});
 			e.preventDefault();
-		}).on('click', '.teamChoice', function(e){
+		}).on('click', '.playerColorChoice', function(e){
 			var playerColor = $(this).data('playercolor');
-			// add ajax call to change team color
-			// add color to $_SESSION['colors'] upon start
-				// overwrite colors[]
-			// verify valid ffa/ranked changes
 			$.ajax({
 				url: 'php/changePlayerColor.php',
 				data: {
@@ -374,6 +370,20 @@ var events = {
 			}).fail(function(data){
 				Msg(data.statusText, 1.5);
 			});
+		}).on('click', '.teamChoice', function(e){
+			var team = $(this).text().slice(5);
+			console.info("TEAM: ", team);
+			$.ajax({
+				url: 'php/changeTeam.php',
+				data: {
+					team: team
+				}
+			}).done(function(data) {
+				my.team = data.team;
+			}).fail(function(data){
+				Msg(data.statusText, 1.5);
+			});
+			
 		});
 	})(),
 	map: (function(){
@@ -483,14 +493,16 @@ $(document).on('keydown', function(e){
 				}
 				e.preventDefault();
 			}
-		} else if (x === 16){
-			game.toggleGameWindows(1);
+		} else if (x === 86){
+			if (g.view === 'game'){
+				game.toggleGameWindows(1);
+			}
 		}
 	}
 });
 $(document).on('keyup', function(e) {
 	var x = e.keyCode;
-	// console.info(g.view, x);
+	//console.info(g.view, x);
 	if (g.view === 'title'){
 		if (x === 13){
 			if (g.focusUpdateNationName){
@@ -527,7 +539,7 @@ $(document).on('keyup', function(e) {
 			}
 		} else {
 			// game hotkeys
-			if (x === 16){
+			if (x === 86){
 				game.toggleGameWindows();
 			} else if (x === 13){
 				// enter
