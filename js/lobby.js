@@ -183,9 +183,9 @@ var lobby = {
 								}
 								str += '" data-placement="right" data-toggle="dropdown">';
 								if (i === my.player){
-									str += '<i class="fa fa-flag pointer2 lobbyTeamFlag"></i> <span id="lobbyTeamNumber'+ i +'">' + i +'</span>';
+									str += '<i class="fa fa-flag pointer2 lobbyTeamFlag"></i> <span id="lobbyTeamNumber'+ i +'" class="lobbyTeamNumbers">' + i +'</span>';
 								} else {
-									str += '<i class="fa fa-flag lobbyTeamFlag"></i> <span id="lobbyTeamNumber'+ i +'">' + i +'</span>';
+									str += '<i class="fa fa-flag lobbyTeamFlag"></i> <span id="lobbyTeamNumber'+ i +'" class="lobbyTeamNumbers">' + i +'</span>';
 								}
 								str += '</div>';
 								if (i === my.player){
@@ -833,7 +833,7 @@ function loadGameState(){
 					}
 				}
 				if (d.player){
-					TweenMax.set(document.getElementById('land' + i), {
+					TweenMax.set('#land' + i, {
 						fill: g.color[game.player[d.player].playerColor]
 					});
 				}
@@ -893,35 +893,42 @@ function loadGameState(){
 				<span id="options" class="pointer options">Options</span>&nbsp;|&nbsp;\<span id="surrender" class="pointer">Surrender</span><span id="exitSpectate" class="pointer">Exit Game</span>\
 			</div><hr class="fancyhr">';
 			// init diplomacyPlayers
-			function teamIcon(team){
-				return '<span data-toggle="tooltip" data-placement="right" class="diploTeam" title="Team '+ team +'">'+ team +'</span>';
+			function diploRow(p){
+				function teamIcon(team){
+					var foo = '<span data-toggle="tooltip" data-placement="right" class="diploTeam" title="Team '+ team +'">'+ team +'</span>';
+					return foo;
+				}
+				var str = '<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">\
+					<div class="flag '+ p.flagClass +'" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ p.flagShort + '"></div>'+ 
+					teamIcon(p.team) +
+					'<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>\
+					<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + p.nation + '</span>\
+				</div>';
+				return str;
 			}
+			var teamArr = [ str ];
 			for (var i=0, len=game.player.length; i<len; i++){
-				var p = game.player[i],
-					_flagArr = p.flag.split("."),
-					_flag = _flagArr[0],
-					_flagClass = _flagArr[0].replace(/ /g, "-");
-				if (p.flag){
-					// console.info(game.player[i]);
-					if (p.flag === 'Default.jpg'){
-						str += 
-						'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">\
-							<div class="flag player' + game.player[p.player].playerColor + '" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag +'"></div>'+ 
-							teamIcon(p.team) +
-							'<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>\
-							<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + p.nation + '</span></div>';
+				var p = game.player[i];
+				if (p.account){
+					p.flagArr = p.flag.split("."),
+					p.flagShort = p.flagArr[0],
+					p.flagClass = p.flag === 'Default.jpg' ? 
+						'player'+ game.player[p.player].playerColor : 
+						p.flagArr[0].replace(/ /g, "-");
+					if (g.teamMode){
+						var foo = diploRow(p);
+						// 100 just in case the players/game are increased later
+						teamArr[p.team*100 + i] = foo;
 					} else {
-						str += 
-						'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">\
-							<div class="flag '+ _flagClass +'" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ _flag + '"></div>'+ 
-							teamIcon(p.team) +
-							'<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>\
-							<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + p.nation + '</span></div>';
+						str += diploRow(p);
 					}
 				}
 			}
-			
-			document.getElementById('diplomacy-ui').innerHTML = str;
+			if (g.teamMode){
+				document.getElementById('diplomacy-ui').innerHTML = teamArr.join("");
+			} else {
+				document.getElementById('diplomacy-ui').innerHTML = str;
+			}
 			
 			$('[data-toggle="tooltip"]').tooltip({
 				delay: {

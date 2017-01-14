@@ -309,7 +309,7 @@ g.init = (function(){
 		});
 	}
 	document.getElementById("flagDropdown").innerHTML = s;
-	if (location.hostname === 'localhost' && location.hash === ''){
+	if (location.hostname === 'localhost'){
 		$.ajax({
 			type: "GET",
 			url: 'php/rejoinGame.php' // check if already in a game
@@ -1048,7 +1048,6 @@ var video = {
 	load: {
 		game: function(){
 			var x = [
-				'nuke.png',
 				'smoke.png',
 				'goldSmoke.png',
 				'bulwark.png'

@@ -482,20 +482,32 @@ var animate = {
 			}
 		});
 		// drop bomb svg
-		var bomb = document.createElementNS("http://www.w3.org/2000/svg","image");
-		bomb.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","images/nuke.png");
-		bomb.setAttributeNS(null,"width",16);
-		bomb.setAttributeNS(null,"height",12);
-		bomb.setAttributeNS(null,"x",x-6);
-		bomb.setAttributeNS(null,"y",y - g.screen.height);
+		var bomb = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+		bomb.setAttributeNS(null, "cx", x);
+		bomb.setAttributeNS(null, "cy", y - g.screen.height);
+		bomb.setAttributeNS(null, "r", 15);
+		bomb.setAttributeNS(null,"fill",g.color[game.player[attacker].playerColor]);
+		bomb.setAttributeNS(null,"stroke","#ffddaa");
+		bomb.setAttributeNS(null,"stroke-width",2);
 		DOM.mapAnimations.appendChild(bomb);
-		TweenMax.to(bomb, 1, {
+		var count = 0;
+		TweenMax.to(bomb, .1, {
 			attr: {
-				y: y
+				r: 3
+			},
+			ease: Linear.easeIn,
+			repeat: -1
+		});
+		TweenMax.to(bomb, 1, {
+			startAt: {
+				alpha: 1,
+			},
+			attr: {
+				cy: y
 			},
 			ease: Power1.easeIn,
 			onComplete: function(){
-				this.target.parentNode.removeChild(this.target);
+				this.target.parentNode.removeChild(bomb);
 			}
 		});
 		new Image('images/smoke.png');

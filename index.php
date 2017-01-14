@@ -288,8 +288,7 @@
 								<th class="gameTableCol4 warCells">Players</th>
 							</tr>
 						</thead>
-						<tbody id="gameTableBody">
-						</tbody>
+						<tbody id="gameTableBody"></tbody>
 					</table>
 				</div>
 			</div>

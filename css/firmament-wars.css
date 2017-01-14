@@ -1289,6 +1289,12 @@ circle{
 .lobbyTeamFlag{
 	margin-bottom: .125em;
 }
+.lobbyTeamNumbers{
+	font-family: Cinzel, Palatino Linotype, serif;
+	display: inline-block;
+	width: 1em;
+	text-align: center;
+}
 .lobbyTeams{
 	font-family: Cinzel, Palatino Linotype, serif;
 	display: inline;

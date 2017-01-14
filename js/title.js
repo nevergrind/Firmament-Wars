@@ -45,6 +45,7 @@ var title = {
 				}
 				// head
 				var str = '';
+				console.info('ReFRESH GAMES: ', data);
 				// body
 				for (var i=0, len=data.length; i<len; i++){
 					var d = data[i];
