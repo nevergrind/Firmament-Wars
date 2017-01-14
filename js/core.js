@@ -995,8 +995,7 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
 })($);
 
 function resizeWindow() {
-    var e = document.getElementById('body'),
-		winWidth = window.innerWidth,
+    var winWidth = window.innerWidth,
 		winHeight = window.innerHeight;
 	if (g.screen.fullScreen){
 		g.screen.width = winWidth;
@@ -1011,13 +1010,13 @@ function resizeWindow() {
     if(w / h > widthToHeight){
     	// too tall
     	w = h * widthToHeight;
-    	e.style.height = h + 'px';
-    	e.style.width = w + 'px';
+    	body.style.height = h + 'px';
+    	body.style.width = w + 'px';
     }else{
     	// too wide
     	h = w / widthToHeight;
-    	e.style.width = w + 'px';
-    	e.style.height = h + 'px';
+    	body.style.width = w + 'px';
+    	body.style.height = h + 'px';
     }
 	TweenMax.set("body", {
 		x: ~~(w/2 + ((winWidth - w) / 2)),
@@ -1027,7 +1026,7 @@ function resizeWindow() {
 		xPercent: -50,
 		force3D: true
 	});
-	e.style.visibility = "visible";
+	body.style.visibility = "visible";
 	if (typeof worldMap[0] !== 'undefined'){
 		worldMap[0].applyBounds();
 	}

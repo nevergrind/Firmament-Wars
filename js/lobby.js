@@ -156,6 +156,7 @@ var lobby = {
 				document.getElementById('lobbyGameNameWrap').style.display = 'none';
 			}
 			e1.innerHTML = x.name;
+			console.info(x.gameMode);
 			document.getElementById('lobbyGameMode').textContent = x.gameMode;
 			g.speed = g.speeds[x.speed];
 			document.getElementById("lobbyGameSpeed").innerHTML = x.speed;

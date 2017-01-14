@@ -142,8 +142,7 @@ var events = {
 			lobby.startGame();
 		});
 		$("#toggleNation").on("click", function(){
-			var e = document.getElementById("configureNation");
-			TweenMax.to(e, g.modalSpeed, {
+			TweenMax.to(configureNation, g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
 					y: 0,
@@ -171,8 +170,7 @@ var events = {
 			title.showBackdrop();
 		});
 		$("#leaderboardBtn").on('click', function(){
-			var e = document.getElementById("leaderboard");
-			TweenMax.to(e, g.modalSpeed, {
+			TweenMax.to(leaderboard, g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
 					top: 0,
@@ -278,11 +276,25 @@ var events = {
 			title.closeModal();
 		});
 		$("#autoJoinGame").on('click', function(){
+			$("#joinGameName").val('');
 			audio.play('click');
 			$("#joinGamePassword").val();
-			$(".wars").filter(":first").trigger("click"); 
+			$(".wars-FFA").filter(":first").trigger("click"); 
+			console.info($(".wars-FFA"));
 			if (!$("#joinGameName").val()){
-				Msg("No unranked games found!", 1.5);
+				Msg("No FFA games found!", 1.5);
+			} else {
+				title.joinGame();
+			}
+		});
+		$("#joinTeamGame").on('click', function(){
+			$("#joinGameName").val('');
+			audio.play('click');
+			$("#joinGamePassword").val();
+			$(".wars-Team").filter(":first").trigger("click"); 
+			console.info($(".wars-Team"));
+			if (!$("#joinGameName").val()){
+				Msg("No team games found!", 1.5);
 			} else {
 				title.joinGame();
 			}

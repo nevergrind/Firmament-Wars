@@ -49,17 +49,16 @@ var title = {
 				for (var i=0, len=data.length; i<len; i++){
 					var d = data[i];
 					title.games[d.id] = d.players * 1;
-					console.info(d);
+					var mode = d.teamMode ? 'Team' : 'FFA';
 					str += 
-					"<tr id='game_"+ d.id +"' class='wars no-select' data-name='" + d.name + "'>\
+					"<tr id='game_"+ d.id +"' class='wars wars-"+ mode +" no-select' data-name='" + d.name + "'>\
 						<td class='warCells'>"+ d.name + "</td>\
 						<td class='warCells'>" + d.map + "</td>\
 						<td class='warCells'>" + d.speed + "</td>\
-						<td class='warCells'>" + (d.teamMode ? 'Team' : 'FFA') + "</td>\
+						<td class='warCells'>" + mode + "</td>\
 					</tr>";
 					
 				}
-				// <td class='warCells'><span id='game_players_"+ d.id +"'>" + d.players + "</span>/" + d.max + "</td>\
 				e.innerHTML = str;
 				$(".wars").filter(":first").trigger("click");
 			}).fail(function(e){
@@ -255,15 +254,16 @@ var title = {
 		// created game
 		// console.info("addGame", data);
 		title.games[data.id] = 1;
-		var e = document.createElement('tr');
+		var e = document.createElement('tr'),
+			mode = data.teamMode ? 'Team' : 'FFA';
 		e.id = 'game_' + data.id;
-		e.className = 'wars no-select';
+		e.className = 'wars wars-'+ mode +' no-select';
 		e.setAttribute('data-name', data.name);
 		e.innerHTML = 
 			"<td class='warCells'>"+ data.name + "</td>\
 			<td class='warCells'>" + data.map + "</td>\
 			<td class='warCells'>" + data.speed + "</td>\
-			<td class='warCells'>" + (data.teamMode ? 'Team' : 'FFA') + "</td>";
+			<td class='warCells'>" + mode + "</td>";
 		DOM.gameTableBody.insertBefore(e, DOM.gameTableBody.childNodes[0]);
 	},
 	removeGame: function(data){
