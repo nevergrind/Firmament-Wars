@@ -94,7 +94,7 @@ var stats = {
 					<div id="statVerse" class="text-right">'+ stats.data.verse +'</div>\
 				</div>\
 				<div id="statDuration" class="col-xs-4 stagBlue text-center">\
-					<div id="gameDuration">Game Duration: '+ stats.gameDuration(data.gameDuration) +'</div>\
+					<div id="gameDuration">Game Duration '+ stats.gameDuration(data.gameDuration) +'</div>\
 					<button id="statsEndGame" class="btn btn-responsive fwBlue shadow4">End Game</button>\
 				</div>\
 			</div>\
@@ -545,7 +545,11 @@ var stats = {
 			<img class="statsFlags" src="images/flags/'+ flag +'">\
 			<div class="statsPlayerWrap">\
 				<div class="statsAccount chat-warning nowrap">\
-					<i class="fa fa-gavel diploSquare statsGov player'+ i +'"></i>'+ p.account +
+					<i class="fa fa-gavel diploSquare statsGov player'+ i +'"></i>';
+					if (g.teamMode){
+						str += '<span class="diploTeam">'+ game.player[i].team +'</span>';
+					}
+					str += p.account +
 				'</div>\
 				<div class="statsNation nowrap">'+ p.nation +'</div>\
 			</div>\

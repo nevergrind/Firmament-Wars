@@ -62,7 +62,7 @@ var g = {
 	chatOn: false,
 	overlay: document.getElementById("overlay"),
 	over: 0,
-	done: 0,
+	showSpectateButton: 1,
 	victory: false,
 	startTime: Date.now(),
 	keyLock: false,
@@ -346,7 +346,7 @@ var game = {
 	name: '',
 	tiles: [],
 	initialized: false,
-	ribbonTitle: [
+	ribbonTitle: ['',
 		'National Combat Medal',
 		'Outstanding Communications Ribbon',
 		'Presidential Citation Ribbon',
@@ -464,57 +464,68 @@ var game = {
 			}
 		}, 12000);
 	},
-	alivePlayers: function(){
-		var count = 0;
-		for (var i=0, len=game.player.length; i<len; i++){
-			if (game.player[i].account){
-				if (game.player[i].alive){
-					count++;
-				}
-			}
-		}
-		return count;
-	},
 	eliminatePlayer: function(data){
 		// player eliminated
-		var i = data.player;
+		var i = data.player,
+			count = 0,
+			teams = [];
 		game.player[i].alive = false;
-		console.info('eliminatePlayer: ', data.player, data);
-		if ($(".alive").length > 1){
-			// found 2 players on diplomacy panel
-			$("#diplomacyPlayer" + i).removeClass('alive');
-			var playerLen = $(".alive").length;
-			if (playerLen < 2){
-				// game done - used for spectate option
-				g.done = 1;
-			}
-			// game over?
-			console.info('eliminate: ', my.player, i);
-			if (!g.over){
-				if (i === my.player){
-					gameDefeat();
-				} else if (game.alivePlayers() === 1){
-					gameVictory();
+		// count alive players remaining
+		game.player.forEach(function(e){
+			if (e.alive && e.account){ 
+				count++;
+				if (teams.indexOf(e.team) === -1){
+					teams.push(e.team);
 				}
 			}
-			// remove
-			TweenMax.to('#diplomacyPlayer' + i, 1, {
-				autoAlpha: 0,
-				onComplete: function(){
-					$("#diplomacyPlayer" + i).css('display', 'none');
-				}
-			});
-			
-			TweenMax.to('#diplomacyPlayer' + i, 1, {
-				startAt: { 
-					transformPerspective: 400,
-					transformOrigin: '50% 0',
-					rotationX: 0
-				},
-				height: 0,
-				rotationX: -90
-			});
+		});
+		// found 2 players on diplomacy panel
+		$("#diplomacyPlayer" + i).removeClass('alive');
+		if (g.teamMode){
+			if (teams.length <= 1){
+				// disables spectate button
+				g.showSpectateButton = 0;
+			}
+		} else {
+			if (count <= 1){
+				// disables spectate button
+				g.showSpectateButton = 0;
+			}
 		}
+		// game over - insurance check to avoid multiples somehow happening
+		if (!g.over){
+			// it's not over... check with server
+			if (i === my.player){
+				gameDefeat();
+			} else {
+				// check if I won
+				if (g.teamMode){
+					if (teams.length <= 1){
+						gameVictory();
+					}
+				} else {
+					if (count <= 1){
+						gameVictory();
+					}
+				}
+			}
+		}
+		// remove
+		TweenMax.to('#diplomacyPlayer' + i, 1, {
+			autoAlpha: 0,
+			onComplete: function(){
+				$("#diplomacyPlayer" + i).css('display', 'none');
+			}
+		});
+		TweenMax.to('#diplomacyPlayer' + i, 1, {
+			startAt: { 
+				transformPerspective: 400,
+				transformOrigin: '50% 0',
+				rotationX: 0
+			},
+			height: 0,
+			rotationX: -90
+		});
 		game.removePlayer(i);
 	},
 	removePlayer: function(p){

@@ -518,7 +518,7 @@ var animate = {
 				circ.setAttributeNS(null,"cx",x);
 				circ.setAttributeNS(null,"cy",y);
 				circ.setAttributeNS(null,"r",1);
-				circ.setAttributeNS(null,"fill",g.color[game.player[game.tiles[attacker].player].playerColor]);
+				circ.setAttributeNS(null,"fill",g.color[game.player[attacker].playerColor]);
 				circ.setAttributeNS(null,"stroke",'#ffdd88');
 				DOM.mapAnimations.appendChild(circ);
 				
@@ -540,7 +540,7 @@ var animate = {
 					ease: Power3.easeOut
 				});
 				TweenMax.to(circ, .05, {
-					fill: "hsl(+=20%, +=100%, +=30%)",
+					fill: "hsl(+=0%, +=0%, +=30%)",
 					repeat: -1,
 					yoyo: true,
 					ease: SteppedEase.config(6)

@@ -161,8 +161,7 @@ var lobby = {
 			document.getElementById("lobbyGameSpeed").innerHTML = x.speed;
 			document.getElementById("lobbyGameMap").innerHTML = x.map;
 			document.getElementById("lobbyGameMax").innerHTML = x.max;
-			var z = x.player === 1 ? "block" : "none";
-			document.getElementById("startGame").style.display = z;
+			document.getElementById("startGame").style.display = x.player === 1 ? "block" : "none";
 			if (!x.startGame){
 				document.getElementById('mainWrap').style.display = "block";
 			}
@@ -174,27 +173,29 @@ var lobby = {
 						<img id="lobbyFlag' +i+ '" data-placement="right" class="lobbyFlags block center" src="images/flags/blank.png">\
 					</div>\
 					<div class="col-xs-6 lobbyDetails">\
-						<div class="lobbyAccounts">\
-							<span>\
-							<div id="lobbyTeam'+ i +'" class="lobbyTeams dropdown-toggle';
-							if (i === my.player){
-								str += ' pointer2';
-							}
-							str += '" data-placement="right" data-toggle="dropdown">';
-							if (i === my.player){
-								str += '<i class="fa fa-flag pointer2 lobbyTeamFlag"></i> <span id="lobbyTeamNumber'+ i +'">' + i +'</span>';
-							} else {
-								str += '<i class="fa fa-flag lobbyTeamFlag"></i> <span id="lobbyTeamNumber'+ i +'">' + i +'</span>';
-							}
-							str += '</div>';
-							if (i === my.player){
-								str += 
-								'<ul id="teamDropdown" class="dropdown-menu">\
-									<li class="header text-center selectTeamHeader">Team</li>';
-									for (var j=1; j<=8; j++){
-										str += '<li class="teamChoice">Team '+ j +'</li>';
-									}
-								str += '</ul></span>';
+						<div class="lobbyAccounts">';
+							if (g.teamMode){
+								// yes, the span is necessary to group the dropdown
+								str += '<span><div id="lobbyTeam'+ i +'" class="lobbyTeams dropdown-toggle';
+								if (i === my.player){
+									str += ' pointer2';
+								}
+								str += '" data-placement="right" data-toggle="dropdown">';
+								if (i === my.player){
+									str += '<i class="fa fa-flag pointer2 lobbyTeamFlag"></i> <span id="lobbyTeamNumber'+ i +'">' + i +'</span>';
+								} else {
+									str += '<i class="fa fa-flag lobbyTeamFlag"></i> <span id="lobbyTeamNumber'+ i +'">' + i +'</span>';
+								}
+								str += '</div>';
+								if (i === my.player){
+									str += 
+									'<ul id="teamDropdown" class="dropdown-menu">\
+										<li class="header text-center selectTeamHeader">Team</li>';
+										for (var j=1; j<=8; j++){
+											str += '<li class="teamChoice">Team '+ j +'</li>';
+										}
+									str += '</ul></span>';
+								}
 							}
 							str += '<span><i id="lobbyPlayerColor'+ i +'" class="fa fa-square player'+ i +' lobbyPlayer dropdown-toggle';
 							if (i === my.player){
@@ -385,7 +386,10 @@ var lobby = {
 	updateTeamNumber: function(data){
 		console.info("UPDATE TEAM NUMBER: ", data);
 		var i = data.player;
-		document.getElementById('lobbyTeamNumber' + i).textContent = data.team;
+		var e = document.getElementById('lobbyTeamNumber' + i);
+		if (e !== null){
+			e.textContent = data.team;
+		}
 	},
 	// update player's color only
 	updatePlayerColor: function(data){
@@ -412,11 +416,10 @@ var lobby = {
 	styleStartGame: function(){
 		if (my.player === 1){
 			// set start game button
-			var e = document.getElementById("startGame");
 			if (lobby.totalPlayers() === 1){
-				e.className = lobby.startClassOff;
+				startGame.className = lobby.startClassOff;
 			} else {
-				e.className = lobby.startClassOn;
+				startGame.className = lobby.startClassOn;
 			}
 		}
 	},
@@ -427,10 +430,9 @@ var lobby = {
 			lobby.gameStarted = true;
 			new Audio('sound/beepHi.mp3');
 			// normal countdown
-			var e = document.getElementById('countdown');
-			e.style.display = 'block';
+			countdown.style.display = 'block';
 			(function repeating(secondsToStart){
-				e.textContent = "Starting game in " + secondsToStart--;
+				countdown.textContent = "Starting game in " + secondsToStart--;
 				if (secondsToStart >= 0){
 					audio.play('beep');
 					setTimeout(repeating, 1000, secondsToStart);
@@ -451,6 +453,9 @@ var lobby = {
 					audio.fade();
 				}
 			})(5);
+			$('[title]').tooltip('disable');
+			cancelGame.style.display = 'none';
+			$("#teamDropdown").css('display', 'none');
 		}
 	},
 	governmentIcon: function(government){
@@ -481,16 +486,16 @@ var lobby = {
 	startGame: function(){
 		if (lobby.totalPlayers() >= 2 && my.player === 1){
 			startGame.style.display = "none";
+			cancelGame.style.display = 'none';
 			g.lock(1);
 			audio.play('click');
 			$.ajax({
 				type: "GET",
 				url: "php/startGame.php"
-			}).done(function(data){
-				g.unlock();
 			}).fail(function(data){
 				Msg(data.statusText);
 				startGame.style.display = "block";
+				cancelGame.style.display = 'block';
 			}).always(function(){
 				g.unlock();
 			});
@@ -695,6 +700,7 @@ function loadGameState(){
 			type: "GET",
 			url: "php/loadGameState.php"
 		}).done(function(data){
+			g.teamMode = data.teamMode;
 			// set map data
 			g.map.sizeX = data.mapData.sizeX;
 			g.map.sizeY = data.mapData.sizeY;
@@ -782,8 +788,7 @@ function loadGameState(){
 			g.removeContainers();
 			g.unlock();
 			g.view = "game";
-			var e = document.getElementById("gameWrap");
-			TweenMax.fromTo(e, 1, {
+			TweenMax.fromTo(gameWrap, 1, {
 				autoAlpha: 0
 			}, {
 				autoAlpha: 1

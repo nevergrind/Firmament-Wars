@@ -247,10 +247,6 @@ var action = {
 		if (my.tgt === defender){
 			return;
 		}
-		// can't attack friendly tile
-		if (game.tiles[defender].player === my.player){
-			return;
-		}
 		if (game.tiles[my.tgt].units === 0){
 			return;
 		}
@@ -286,10 +282,6 @@ var action = {
 		var attacker = my.tgt;
 		var defender = that.id.slice(4)*1;
 		if (my.tgt === defender){
-			return;
-		}
-		// can't attack friendly tile
-		if (game.tiles[defender].player === my.player){
 			return;
 		}
 		if (game.tiles[my.tgt].units === 0){
@@ -346,10 +338,6 @@ var action = {
 		var attacker = my.tgt;
 		var defender = that.id.slice(4)*1;
 		if (my.tgt === defender){
-			return;
-		}
-		// can't attack friendly tile
-		if (game.tiles[defender].player === my.player){
 			return;
 		}
 		if (game.tiles[my.tgt].units === 0){

@@ -214,7 +214,8 @@ function gameDefeat(){
 				<div class="modalBtnChild">Concede Defeat</div>\
 			</div>';
 		}
-		if (!g.done){
+		console.info("DEFEAT: ", g.showSpectateButton);
+		if (g.showSpectateButton){
 			msg += '<div id="spectate" class="endBtn">\
 				<div class="modalBtnChild">Spectate</div>\
 			</div>';
@@ -290,12 +291,12 @@ function triggerEndGame(msg){
 		});
 		$("#spectate").on('click', function(e){
 			$("#victoryScreen, #ui2, #resources-ui").remove();
-			document.getElementById('surrender').style.display = "none";
-			document.getElementById('exitSpectate').style.display = "inline";
+			surrender.style.display = "none";
+			exitSpectate.style.display = "inline";
 		});
 		$("#exitSpectate").on('click', function(){
 			stats.get();
-			TweenMax.to('#diplomacy-ui', 1, {
+			TweenMax.to(diplomacy-ui, 1, {
 				alpha: 0,
 				onComplete: function(){
 					stats.show();
