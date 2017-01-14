@@ -384,7 +384,7 @@ var game = {
 		'Silver Service Medal',
 		'Good Conduct Medal',
 	],
-	ribbonDescription: [
+	ribbonDescription: ['',
 		'Established a new nation',
 		'Confirmed your email address',
 		'Backed a Kickstarter campaign',
