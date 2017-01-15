@@ -557,11 +557,13 @@ tbody{
 }
 #targetFlag{
 	width: 80px;
+	pointer-events: none;
 }
 #targetName{
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	pointer-events: none;
 }
 .ribbonName{
 	font-size: 1.5em;
@@ -723,12 +725,13 @@ tbody{
 	bottom: .25em;
 	right: .25em;
 	width: 16%;
-	max-width: 200px;
+	max-width: 170px;
 	padding: .5em 0;
 	text-overflow: ellipsis;
 	color: #fff;
 	text-align: right;
 	z-index: 9999;
+	pointer-events: none;
 }
 #resources-ui > .row, #target-ui > .row{
 	margin: 0;

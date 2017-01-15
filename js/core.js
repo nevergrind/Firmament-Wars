@@ -9,6 +9,7 @@ if (location.host !== 'localhost'){
 }
 TweenMax.defaultEase = Quad.easeOut;
 var g = {
+	spectateStatus: 0,
 	modalSpeed: .5,
 	friends: [],
 	ignore: [],
@@ -495,17 +496,22 @@ var game = {
 		// game over - insurance check to avoid multiples somehow happening
 		if (!g.over){
 			// it's not over... check with server
+			console.info('ELIMINATED: ', count, teams.length);
 			if (i === my.player){
 				gameDefeat();
 			} else {
 				// check if I won
 				if (g.teamMode){
 					if (teams.length <= 1){
-						gameVictory();
+						setTimeout(function(){
+							gameVictory();
+						}, 1000);
 					}
 				} else {
 					if (count <= 1){
-						gameVictory();
+						setTimeout(function(){
+							gameVictory();
+						}, 1000);
 					}
 				}
 			}
@@ -792,27 +798,29 @@ var my = {
 		$DOM.head.append('<style>.land{ cursor: pointer; }</style>');
 	},
 	nextTarget: function(backwards){
-		my.lastTgt = my.tgt;
-		var count = 0,
-			len = game.tiles.length;
-		backwards ? my.tgt-- : my.tgt++;
-		if (my.tgt < 0){
-			my.tgt = len-1;
-		}
-		while (count < 255 && my.player !== game.tiles[my.tgt % len].player){
+		if (!g.spectateStatus){
+			my.lastTgt = my.tgt;
+			var count = 0,
+				len = game.tiles.length;
 			backwards ? my.tgt-- : my.tgt++;
 			if (my.tgt < 0){
 				my.tgt = len-1;
 			}
-			count++;
+			while (count < 255 && my.player !== game.tiles[my.tgt % len].player){
+				backwards ? my.tgt-- : my.tgt++;
+				if (my.tgt < 0){
+					my.tgt = len-1;
+				}
+				count++;
+			}
+			if (!backwards){
+				my.tgt = my.tgt % len;
+			} else {
+				my.tgt = Math.abs(my.tgt);
+			}
+			my.focusTile(my.tgt, .1);
+			animate.glowTile(my.lastTgt, my.tgt);
 		}
-		if (!backwards){
-			my.tgt = my.tgt % len;
-		} else {
-			my.tgt = Math.abs(my.tgt);
-		}
-		my.focusTile(my.tgt, .1);
-		animate.glowTile(my.lastTgt, my.tgt);
 	},
 	// shift camera to tile
 	focusTile: function(tile, d){

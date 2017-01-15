@@ -199,65 +199,79 @@ function gameDefeat(){
 		type: "GET",
 		url: "php/gameDefeat.php" 
 	}).done(function(data){
+		console.info("DEFEAT: ", data);
+		var msg = '';
 		if (data.ceaseFire){
-			var msg = 
+			msg = 
 			'<p>Armistice!</p>\
 			<div>The campaign has been suspended!</div>\
 			<div id="ceaseFire" class="endBtn">\
 				<div class="modalBtnChild">Cease Fire</div>\
 			</div>';
 		} else if (data.gameDone){
-			var msg = 
+			msg = 
 			'<p>Defeat!</p>\
 			<div>Your campaign for world domination has failed!</div>\
 			<div id="endWar" class="endBtn">\
 				<div class="modalBtnChild">Concede Defeat</div>\
 			</div>';
 		}
-		console.info("DEFEAT: ", g.showSpectateButton);
 		if (g.showSpectateButton){
 			msg += '<div id="spectate" class="endBtn">\
 				<div class="modalBtnChild">Spectate</div>\
 			</div>';
 		}
-		audio.play('shotgun2');
-		triggerEndGame(msg);
+		if (msg){
+			audio.play('shotgun2');
+			triggerEndGame(msg);
+		}
 	}).fail(function(data){
-		serverError(data);
+		console.info("FAIL: ", data);
 	});
 }
 
 
 function gameVictory(){
 	new Audio('sound/shotgun2.mp3');
-	new Audio('sound/mine4.mp3');
-	$.ajax({
-		type: "GET",
-		url: "php/gameVictory.php"
-	}).done(function(data){
-		console.info('defeat: ', data);
-		if (data.ceaseFire){
-			var msg = 
-			'<p>Armistice!</p>\
-			<div>The campaign has been suspended!</div>\
-			<div id="ceaseFire" class="endBtn">\
-				<div class="modalBtnChild">Cease Fire</div>\
-			</div>';
-			audio.play('shotgun2');
-		} else if (data.gameDone){
-			var msg = 
-			'<p>Congratulations!</p>\
-			<div>Your campaign for global domination has succeeded!</div>\
-			<div id="endWar" class="endBtn">\
-				<div class="modalBtnChild">Victory</div>\
-			</div>';
-			audio.play('mine4');
-			g.victory = true;
-		}
-		triggerEndGame(msg);
-	}).fail(function(data){
-		serverError(data);
-	});
+	new Audio('sound/bell-8.mp3');
+	var count = 0;
+	(function repeat(){
+		$.ajax({
+			type: "GET",
+			url: "php/gameVictory.php"
+		}).done(function(data){
+			var msg = '';
+			console.info('VICTORY: ', data);
+			if (data.ceaseFire){
+				msg = 
+				'<p>Armistice!</p>\
+				<div>The campaign has been suspended!</div>\
+				<div id="ceaseFire" class="endBtn">\
+					<div class="modalBtnChild">Cease Fire</div>\
+				</div>';
+				audio.play('shotgun2');
+			} else if (data.gameDone){
+				msg = 
+				'<p>Congratulations!</p>\
+				<div>Your campaign for global domination has succeeded!</div>\
+				<div id="endWar" class="endBtn">\
+					<div class="modalBtnChild">Victory</div>\
+				</div>';
+				audio.play('bell-8');
+				g.victory = true;
+			}
+			if (msg){
+				triggerEndGame(msg);
+			}
+		}).fail(function(data){
+			console.info("FAIL: ", data);
+			if (++count < 5){
+				setTimeout(function(){
+					repeat();
+				}, 2500);
+			}
+		});
+	})();
 }
 function triggerEndGame(msg){
 	$("*").off('click mousedown keydown keyup keypress');
@@ -290,9 +304,10 @@ function triggerEndGame(msg){
 			location.reload();
 		});
 		$("#spectate").on('click', function(e){
-			$("#victoryScreen, #ui2, #resources-ui").remove();
-			surrender.style.display = "none";
-			exitSpectate.style.display = "inline";
+			$("#victoryScreen, #ui2, #resources-ui, #targetWrap").remove();
+			document.getElementById('surrender').style.display = "none";
+			document.getElementById('exitSpectate').style.display = "inline";
+			g.spectateStatus = 1;
 		});
 		$("#exitSpectate").on('click', function(){
 			stats.get();

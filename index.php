@@ -46,9 +46,9 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
 	<script>
-		version = '0-0-28'; 
+		version = '0-0-29'; 
 	</script>
-	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-28">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-29">
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
 
@@ -668,15 +668,15 @@
 
 	<div id="gameWrap">
 	
-		<div id="targetWrap" class="blueBg gameWindow">
+		<div id="targetWrap" class="blueBg gameWindow no-point">
 			<table id="target-ui" class="table table-condensed">
 				<tr>
 					<td id="ribbonWrap" class="tight wideRack">
 					</td>
-					<td id="targetFlag" class="text-center no-select tight">
+					<td id="targetFlag" class="text-center tight">
 						<img src="images/flags/Default.jpg" class="w100 block center">
 					</td>
-					<td id="targetName" class="text-center no-select shadow4 tight"></td>
+					<td id="targetName" class="text-center shadow4 tight"></td>
 				</tr>
 			</table>
 		</div>
@@ -886,7 +886,7 @@
 		</div>
 		
 			
-		<div id="resources-ui" class="container no-select shadow4 blueBg gameWindow">
+		<div id="resources-ui" class="container shadow4 blueBg gameWindow">
 			
 			<div class="row">
 				<div class="col-xs-12 no-padding moves">
@@ -990,20 +990,19 @@
 		
 		<div id="diplomacy-ui" class="shadow4 blueBg gameWindow"></div>
 		
-		<table id="chat-ui" class="fw-text">
+		<table id="chat-ui" class="fw-text no-select no-point">
 			<tr>
-				<td id="chat-content" class="noselect">
-				</td>
+				<td id="chat-content"></td>
 			</tr>
 		</table>
 		
-		<input id="chat-input" class="fw-text noselect nobg" type='text' maxlength="240" autocomplete="off" spellcheck="false"/>
+		<input id="chat-input" class="fw-text nobg" type='text' maxlength="240" autocomplete="off" spellcheck="false"/>
 			
 		<div id="worldWrap"></div>
 		
 		<div id="hud" class="shadow4">Select Target</div>
 		
-		<div id="surrenderScreen" class="fw-primary fw-text no-select">
+		<div id="surrenderScreen" class="fw-primary fw-text">
 			<p>Surrender? Are You Sure?</p>
 			<div id="cancelSurrenderButton" class="endBtn">
 				<div class="modalBtnChild">Cancel</div>
@@ -1013,7 +1012,7 @@
 			</div>
 		</div>
 		
-		<div id="victoryScreen" class="fw-primary fw-text no-select"></div>
+		<div id="victoryScreen" class="fw-primary fw-text"></div>
 		
 		<div id="statWrap" class="fw-text"></div>
 		
