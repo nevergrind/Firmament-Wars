@@ -80,7 +80,6 @@ var action = {
 			action.error('Not enough oil!');
 			return;
 		}
-		g.lock(true);
 		showTarget(that);
 		my.clearHud();
 		// send attack to server
@@ -121,8 +120,6 @@ var action = {
 			Msg(data.statusText, 1.5);
 			// set target attacker
 			showTarget(e1);
-		}).always(function(){
-			g.unlock();
 		});
 	},
 	deploy: function(){
@@ -257,7 +254,6 @@ var action = {
 			action.error();
 			return;
 		}
-		g.lock(true);
 		my.clearHud();
 		showTarget(document.getElementById('land' + attacker));
 		// send attack to server
@@ -275,8 +271,6 @@ var action = {
 			if (e.statusText){
 				Msg(e.statusText, 1.5);
 			}
-		}).always(function(){
-			g.unlock();
 		});
 	},
 	launchMissile: function(that){
@@ -294,7 +288,6 @@ var action = {
 			action.error();
 			return;
 		}
-		g.lock(true);
 		my.clearHud();
 		showTarget(document.getElementById('land' + attacker));
 		// send attack to server
@@ -330,8 +323,6 @@ var action = {
 			if (e.statusText){
 				Msg(e.statusText, 1.5);
 			}
-		}).always(function(){
-			g.unlock();
 		});
 		
 	},
@@ -350,7 +341,6 @@ var action = {
 			action.error();
 			return;
 		}
-		g.lock(true);
 		my.clearHud();
 		showTarget(document.getElementById('land' + attacker));
 		// send attack to server
@@ -379,8 +369,6 @@ var action = {
 			if (e.statusText){
 				Msg(e.statusText, 1.5);
 			}
-		}).always(function(){
-			g.unlock();
 		});
 		
 	},

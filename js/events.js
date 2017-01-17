@@ -12,7 +12,7 @@ var events = {
 		}).on('load', function(){
 			resizeWindow();
 			// background map
-			TweenMax.to("#worldTitle", 300, {
+			TweenMax.to("#worldTitle", 600, {
 				startAt: {
 					xPercent: -50,
 					yPercent: -50,
@@ -237,36 +237,9 @@ var events = {
 		});
 		$("#refreshGameWrap").on("focus", "#gameName", function(){
 			g.focusGameName = true;
-		})
+		});
 		$("#refreshGameWrap").on("blur", "#gameName", function(){
 			g.focusGameName = false;
-		});
-
-		$("#buyFlag").on("click", function(){
-			return;
-			g.lock();
-			$.ajax({
-				url: 'php/buyFlag.php',
-				data: {
-					flag: my.selectedFlagFull
-				}
-			}).done(function(data) {
-				$("#crystalCount").text(data);
-				$("#flagPurchased").css("display", "block");
-				$("#offerFlag").css("display", "none");
-				$(".nationFlag").attr({
-					src: "images/flags/" + my.selectedFlagFull,
-					title: my.selectedFlag
-				});
-				Msg("Your nation's flag is now: " + my.selectedFlag);
-				document.getElementById('selectedFlag').textContent = my.selectedFlag;
-				$("[title]").tooltip('fixTitle');
-			}).fail(function(e){
-				// not enough money
-				Msg(e.statusText);
-			}).always(function(){
-				g.unlock();
-			});
 		});
 		$("#titleViewBackdrop").on('click', function(){
 			title.closeModal();

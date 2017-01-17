@@ -33,7 +33,9 @@ var title = {
 				title.updatePlayers();
 			});
 			// init game refresh
-			Notification.requestPermission();
+			if (typeof Notification === 'function'){
+				Notification.requestPermission();
+			}
 			// initial refresh of games
 			$.ajax({
 				type: 'GET',

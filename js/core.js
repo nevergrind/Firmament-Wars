@@ -614,11 +614,6 @@ var game = {
 						updateTargetStatus = true;
 					}
 					setTileUnits(i, unitColor);
-					if (d.player){
-						TweenMax.set(".mapBars" + i, {
-							opacity: 1
-						});
-					}
 				}
 				if (updateTargetStatus){
 					// update this tile within loop cycle?
@@ -666,11 +661,6 @@ var game = {
 				var unitColor = d.units > game.tiles[i].units ? '#00ff00' : '#ff0000';
 				game.tiles[i].units = d.units;
 				setTileUnits(i, unitColor);
-				if (p){
-					TweenMax.set(".mapBars" + i, {
-						opacity: 1
-					});
-				}
 			}
 			// set text visible
 			TweenMax.set(DOM['unit' + i], {
@@ -680,9 +670,6 @@ var game = {
 			// dead/surrender
 			game.tiles[i].units = 0;
 			// hide mapBars and unit values
-			TweenMax.set(".mapBars" + i, {
-				opacity: 0
-			});
 			TweenMax.set(DOM['unit' + i], {
 				visibility: 'hidden'
 			});
@@ -986,7 +973,11 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
     isMSIE11 = !!navigator.userAgent.match(/Trident\/7\./);
 // browser dependent
 (function($){
-	if (isMSIE || isMSIE11){
+	if (typeof Notification !== 'function'){
+		alert("This browser does not support websockets. We recommend the latest version of Chrome or Firefox");
+		window.stop();
+	}
+	if (isMSIE || isMSIE11 && location.host === 'nevergrind.com'){
 		alert("Firmament Wars does not support Internet Explorer. Consider using Chrome or Firefox for an enjoyable experience.");
 		window.stop();
 		// $("head").append('<style> text { fill: #ffffff; stroke-width: 0px; } </style>');

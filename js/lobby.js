@@ -807,8 +807,7 @@ function loadGameState(){
 			
 			// initialize client tile data
 			var mapCapitals = document.getElementById('mapCapitals'),
-				mapUpgrades = document.getElementById('mapUpgrades'),
-				mapBars = document.getElementById('mapBars');
+				mapUpgrades = document.getElementById('mapUpgrades');
 			for (var i=0, len=data.tiles.length; i<len; i++){
 				var d = data.tiles[i];
 				game.tiles[i] = {
@@ -894,14 +893,15 @@ function loadGameState(){
 			// init diplomacyPlayers
 			function diploRow(p){
 				function teamIcon(team){
-					var foo = '<span data-toggle="tooltip" data-placement="right" class="diploTeam" title="Team '+ team +'">'+ team +'</span>';
-					return foo;
+					return g.teamMode ? 
+						'<span data-toggle="tooltip" data-placement="right" class="diploTeam" title="Team '+ team +'">'+ team +'</span>' :
+						'';
 				}
 				var str = '<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">\
 					<div class="flag '+ p.flagClass +'" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ p.flagShort + '"></div>'+ 
 					teamIcon(p.team) +
 					'<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>\
-					<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + p.nation + '</span>\
+					<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + (my.nation === p.nation ? '<b>'+ p.nation +'</b>' : p.nation) + '</span>\
 				</div>';
 				return str;
 			}

@@ -72,6 +72,7 @@
 			<header id="document" class="shadow4 text-primary">
 				<?php
 				require('php/connect1.php');
+				// paid?
 				$stmt = $link->prepare("select fwpaid, referral from accounts where account=? limit 1");
 				$stmt->bind_param('s', $_SESSION['account']);
 				$stmt->execute();
@@ -80,6 +81,68 @@
 					$_SESSION['fwpaid'] = $fwpaid;
 					$_SESSION['referral'] = $dbreferral;
 				}
+				// load/init nation data
+				// remove players that left
+				mysqli_query($link, 'delete from fwtitle where timestamp < date_sub(now(), interval 1 minute)');
+				
+				// check if nation exists; create if not
+				$query = 'select count(row) from fwnations where account=?';
+				$stmt = $link->prepare($query);
+				$stmt->bind_param('s', $_SESSION['account']);
+				$stmt->execute();
+				$stmt->bind_result($dbcount);
+				while($stmt->fetch()){
+					$count = $dbcount;
+				}
+				$_SESSION['rating'] = 1500;
+				$_SESSION['totalGames'] = 0;
+				$_SESSION['wins'] = 0;
+				$_SESSION['losses'] = 0;
+				$_SESSION['disconnects'] = 0;
+				$_SESSION['disconnectRate'] = 0;
+				$nation = 'Kingdom of '. ucfirst($_SESSION['account']);
+				$flag = 'Default.jpg';
+				if($count > 0){
+					$query = "select nation, flag, rating, wins, losses, teamWins, teamLosses, rankedWins, rankedLosses, disconnects from fwnations where account=?";
+					$stmt = $link->prepare($query);
+					$stmt->bind_param('s', $_SESSION['account']);
+					$stmt->execute();
+					$stmt->bind_result($dName, $dFlag, $rating, $wins, $losses, $teamWins, $teamLosses, $rankedWins, $rankedLosses, $disconnects);
+					while($stmt->fetch()){
+						$nation = $dName;
+						$flag = $dFlag;
+						$_SESSION['rating'] = $rating;
+						$_SESSION['totalGames'] = $wins + $losses + $rankedWins + $rankedLosses + $disconnects;
+						$_SESSION['wins'] = $wins;
+						$_SESSION['losses'] = $losses;
+						$_SESSION['teamWins'] = $teamWins;
+						$_SESSION['teamLosses'] = $teamLosses;
+						$_SESSION['rankedWins'] = $rankedWins;
+						$_SESSION['rankedLosses'] = $rankedLosses;
+						$_SESSION['disconnects'] = $disconnects;
+						$_SESSION['disconnectRate'] = $_SESSION['totalGames'] === 0 ? 0 : round(($_SESSION['disconnects'] / $_SESSION['totalGames']) * 100) ;
+					}
+					// init nation values
+					$_SESSION['rating'] = $rating;
+					$_SESSION['nation'] = $nation;
+					$_SESSION['flag'] = $flag;
+				} else {
+					$query = "insert into fwnations (`account`, `nation`, `flag`) VALUES (?, '$nation', '$flag')";
+					$stmt = $link->prepare($query);
+					$stmt->bind_param('s', $_SESSION['account']);
+					$stmt->execute();
+					// init nation values
+					$_SESSION['nation'] = $nation;
+					$_SESSION['flag'] = $flag;
+					// add ribbon
+					require $_SERVER['DOCUMENT_ROOT']. '/games/firmament-wars/php/addRibbon.php';
+					addRibbon(1);
+				}
+				$arr = explode(".", $_SESSION['flag']);
+				$_SESSION['flagShort'] = $arr[0];
+				$_SESSION['flagClass'] = str_replace(" ", "-", $arr[0]);
+				
+				
 				if (isset($_SESSION['email'])){
 					// fwnation data
 					$query = "select nation, flag, rating, wins, losses, teamWins, teamLosses, rankedWins, rankedLosses, disconnects from fwnations where account=?";
@@ -154,65 +217,6 @@
 				echo '<div id="titleMenu" class="fw-primary">
 					<div id="menuOnline">
 						<div>';
-						// remove players that left
-						mysqli_query($link, 'delete from fwtitle where timestamp < date_sub(now(), interval 1 minute)');
-						
-						// check if nation exists; create if not
-						$query = 'select count(row) from fwnations where account=?';
-						$stmt = $link->prepare($query);
-						$stmt->bind_param('s', $_SESSION['account']);
-						$stmt->execute();
-						$stmt->bind_result($dbcount);
-						while($stmt->fetch()){
-							$count = $dbcount;
-						}
-						$_SESSION['rating'] = 1500;
-						$_SESSION['totalGames'] = 0;
-						$_SESSION['wins'] = 0;
-						$_SESSION['losses'] = 0;
-						$_SESSION['disconnects'] = 0;
-						$_SESSION['disconnectRate'] = 0;
-						$nation = 'Kingdom of '. ucfirst($_SESSION['account']);
-						$flag = 'Default.jpg';
-						if($count > 0){
-							$query = "select nation, flag, rating, wins, losses, teamWins, teamLosses, rankedWins, rankedLosses, disconnects from fwnations where account=?";
-							$stmt = $link->prepare($query);
-							$stmt->bind_param('s', $_SESSION['account']);
-							$stmt->execute();
-							$stmt->bind_result($dName, $dFlag, $rating, $wins, $losses, $teamWins, $teamLosses, $rankedWins, $rankedLosses, $disconnects);
-							while($stmt->fetch()){
-								$nation = $dName;
-								$flag = $dFlag;
-								$_SESSION['rating'] = $rating;
-								$_SESSION['totalGames'] = $wins + $losses + $rankedWins + $rankedLosses + $disconnects;
-								$_SESSION['wins'] = $wins;
-								$_SESSION['losses'] = $losses;
-								$_SESSION['teamWins'] = $teamWins;
-								$_SESSION['teamLosses'] = $teamLosses;
-								$_SESSION['rankedWins'] = $rankedWins;
-								$_SESSION['rankedLosses'] = $rankedLosses;
-								$_SESSION['disconnects'] = $disconnects;
-								$_SESSION['disconnectRate'] = $_SESSION['totalGames'] === 0 ? 0 : round(($_SESSION['disconnects'] / $_SESSION['totalGames']) * 100) ;
-							}
-							// init nation values
-							$_SESSION['rating'] = $rating;
-							$_SESSION['nation'] = $nation;
-							$_SESSION['flag'] = $flag;
-						} else {
-							$query = "insert into fwnations (`account`, `nation`, `flag`) VALUES (?, '$nation', '$flag')";
-							$stmt = $link->prepare($query);
-							$stmt->bind_param('s', $_SESSION['account']);
-							$stmt->execute();
-							// init nation values
-							$_SESSION['nation'] = $nation;
-							$_SESSION['flag'] = $flag;
-							// add ribbon
-							require $_SERVER['DOCUMENT_ROOT']. '/games/firmament-wars/php/addRibbon.php';
-							addRibbon(1);
-						}
-						$arr = explode(".", $_SESSION['flag']);
-						$_SESSION['flagShort'] = $arr[0];
-						$_SESSION['flagClass'] = str_replace(" ", "-", $arr[0]);
 						echo
 						'
 							</div>
@@ -668,7 +672,7 @@
 
 	<div id="gameWrap">
 	
-		<div id="targetWrap" class="blueBg gameWindow no-point">
+		<div id="targetWrap" class="blueBg gameWindow">
 			<table id="target-ui" class="table table-condensed">
 				<tr>
 					<td id="ribbonWrap" class="tight wideRack">

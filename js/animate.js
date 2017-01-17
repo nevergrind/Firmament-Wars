@@ -14,21 +14,16 @@ var animate = {
 			alpha: 1
 		}, .016);
 	},
+	colors: [
+		'#ffffff',
+		'#ffdddd',
+		'#ffddaa',
+		'#ffeecc',
+		'#ffffaa',
+		'#ffffcc'
+	],
 	randomColor: function(){
-		var x = ~~(Math.random()*6),
-			c = '#ffffff';
-		if (x === 0){
-			c = '#88aaff';
-		} else if (x === 1){
-			c = '#ffddaa';
-		} else if (x === 2){
-			c = '#ffeedd';
-		} else if (x === 3){
-			c = '#eeeecc';
-		} else if (x === 4){
-			c = '#ffbb77';
-		}
-		return c;
+		return animate.colors[~~(Math.random()*6)];
 	},
 	getXY: function(tile){
 		var box = DOM['unit' + tile].getBBox(),
@@ -120,7 +115,6 @@ var animate = {
 		if (game.tiles[i].defense){
 			boxHeight += 4;
 		}
-		var boxOpacity = game.tiles[i].player ? 1 : 0;
 		var foodWidth = game.tiles[i].food * 3;
 		if (foodWidth > 24){
 			foodWidth = 24;
@@ -134,7 +128,7 @@ var animate = {
 		svg.setAttributeNS(null,"y",y + 26);
 		svg.setAttributeNS(null,"fill","#2a2a2a");
 		svg.setAttributeNS(null,"stroke","#000000");
-		svg.setAttributeNS(null,"opacity",boxOpacity);
+		svg.setAttributeNS(null,"opacity",1);
 		svg.setAttributeNS(null,"class","mapBars" + i);
 		DOM.mapBars.appendChild(svg);
 		// food
@@ -147,7 +141,7 @@ var animate = {
 		svg.setAttributeNS(null,"y2",y);
 		svg.setAttributeNS(null,"stroke","#88dd00");
 		svg.setAttributeNS(null,"stroke-width","3");
-		svg.setAttributeNS(null,"opacity",boxOpacity);
+		svg.setAttributeNS(null,"opacity",1);
 		svg.setAttributeNS(null,"class","mapBars mapBars" + i);
 		DOM.mapBars.appendChild(svg);
 		// culture
@@ -164,7 +158,7 @@ var animate = {
 			svg.setAttributeNS(null,"y2",y);
 			svg.setAttributeNS(null,"stroke","#dd22dd");
 			svg.setAttributeNS(null,"stroke-width","3");
-			svg.setAttributeNS(null,"opacity",boxOpacity);
+			svg.setAttributeNS(null,"opacity",1);
 			svg.setAttributeNS(null,"class","mapBars mapBars" + i);
 			DOM.mapBars.appendChild(svg);
 		}
@@ -179,7 +173,7 @@ var animate = {
 			svg.setAttributeNS(null,"y2",y);
 			svg.setAttributeNS(null,"stroke","#ffff00");
 			svg.setAttributeNS(null,"stroke-width","3");
-			svg.setAttributeNS(null,"opacity",boxOpacity);
+			svg.setAttributeNS(null,"opacity",1);
 			svg.setAttributeNS(null,"class","mapBars mapBars" + i);
 			DOM.mapBars.appendChild(svg);
 		}
@@ -197,29 +191,40 @@ var animate = {
 			h1 = 50,
 			w2 = w1/2,
 			h2 = h1/2 - 10;
+		
 		for (var i=0; i<shots; i++){
-			(function(Math){
+			(function(Math, Linear){
 				var path = document.createElementNS("http://www.w3.org/2000/svg","path"),
 					x2 = box2.x + (Math.random() * w1) - w2;
 					y2 = box2.y + (Math.random() * h1) - h2;
+				var drawPath = Math.random() > .5 ? 
+				"M "+ (box1.x + ~~(Math.random()*16)-8) +","+ (box1.y + ~~(Math.random()*16)-8) + ' '+ x2 +","+ y2 :
+				"M "+ x2 +","+ y2 +' ' + (box1.x + ~~(Math.random()*16)-8) +","+ (box1.y + ~~(Math.random()*16)-8)
 				path.setAttributeNS(null,"stroke",animate.randomColor());
 				path.setAttributeNS(null,"stroke-width",2);
 				DOM.world.appendChild(path);
-				TweenMax.to(path, .07, {
+				var index = Math.random() > .5 ? 0 : 1;
+				TweenMax.to(path, .01, {
 					delay: (i / shots) * delay[sfx],
 					startAt: {
 						attr: {
-							d: "M " + box1.x +","+ box1.y + ' ' + x2 +","+ y2
+							d: drawPath
 						},
-						drawSVG: '0'
+						drawSVG: '0%'
 					},
-					drawSVG: '62% 100%',
+					drawSVG: '0% 100%',
+					ease: Quad.easeIn,
 					onComplete: function(){
-						this.target.parentNode.removeChild(this.target);
-					},
-					ease: Linear.easeNone
+						TweenMax.to(path, .01, {
+							drawSVG: '100% 100%',
+							ease: Linear.easeNone,
+							onComplete: function(){
+								this.target.parentNode.removeChild(this.target);
+							}
+						});
+					}
 				});
-			})(Math);
+			})(Math, Quad);
 		}
 	},
 	cannons: function(atkTile, defTile, playSound){
@@ -246,7 +251,7 @@ var animate = {
 				circ.setAttributeNS(null,"cy",y1);
 				circ.setAttributeNS(null,"r",4);
 				circ.setAttributeNS(null,"fill",g.color[game.player[game.tiles[atkTile].player].playerColor]);
-				circ.setAttributeNS(null,"stroke",'#ffddaa');
+				circ.setAttributeNS(null,"stroke",animate.randomColor());
 				circ.setAttributeNS(null,"strokeWidth",1);
 				DOM.mapAnimations.appendChild(circ);
 				
@@ -262,7 +267,7 @@ var animate = {
 					ease: Linear.easeNone,
 					onComplete: function(){
 						// explode outward
-						var d1 = Math.random()*.3 + .3,
+						var d1 = Math.random()*.5 + .3,
 							d2 = d1/2,
 							s1 = (d1 * 10) + 3;
 						TweenMax.to(circ, d2, {
@@ -356,19 +361,17 @@ var animate = {
 			ease: Power2.easeIn,
 			onUpdate: function(){
 				count++;
-				if (count % 4 === 0){
+				if (count % 2 === 0){
 					// smoke trail
-					var x = x1 + mis._gsTransform.x;
-					var y = y1 + mis._gsTransform.y;
 					var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
 					svg.setAttributeNS(null, 'height', 40);
 					svg.setAttributeNS(null, 'width', 40);
 					svg.setAttributeNS(null, 'opacity', 1);
-					svg.setAttributeNS(null, "x", mis.getAttribute('cx'));
-					svg.setAttributeNS(null, "y", mis.getAttribute('cy'));
+					svg.setAttributeNS(null, "x", mis.getAttribute('cx')-10);
+					svg.setAttributeNS(null, "y", mis.getAttribute('cy')-10);
 					svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/smoke.png');
 					DOM.mapAnimations.appendChild(svg);
-					TweenMax.to(svg, .5, {
+					TweenMax.to(svg, .3, {
 						startAt: {
 							xPercent: -50,
 							yPercent: -50,
@@ -386,7 +389,7 @@ var animate = {
 			},
 			onComplete: function(){
 				this.target.parentNode.removeChild(this.target);
-				animate.missileExplosion(defender);
+				animate.missileExplosion(defender, g.color[game.player[game.tiles[attacker].player].playerColor]);
 			}
 		});
 		/*
@@ -401,7 +404,7 @@ var animate = {
 			},
 		*/
 	},
-	missileExplosion: function(tile){
+	missileExplosion: function(tile, misColor){
 		var box = DOM['unit' + tile].getBBox(),
 			a = [5, 6, 8],
 			sfx = ~~(Math.random() * 3);
@@ -416,7 +419,7 @@ var animate = {
 				circ.setAttributeNS(null,"cx",x);
 				circ.setAttributeNS(null,"cy",y);
 				circ.setAttributeNS(null,"r",0);
-				circ.setAttributeNS(null,"fill",animate.randomColor());
+				circ.setAttributeNS(null,"fill",misColor);
 				circ.setAttributeNS(null,"stroke",'#ffffaa');
 				DOM.mapAnimations.appendChild(circ);
 				
@@ -427,9 +430,9 @@ var animate = {
 						r: 32
 					},
 					onComplete: function(){
-						TweenMax.to(circ, .5, {
+						TweenMax.to(circ, 1, {
 							attr: {
-								r: 16
+								r: 1
 							},
 							ease: Power1.easeIn,
 							onComplete: function(){
@@ -439,16 +442,15 @@ var animate = {
 					},
 					ease: Power4.easeOut
 				});
-				TweenMax.to(circ, 1.25, {
+				TweenMax.to(circ, .1, {
+					fill: "hsl(+=0%, +=0%, +="+ ~~(Math.random()*100) +"%)",
+					repeat: -1
+				});
+				TweenMax.to(circ, 1.75, {
 					startAt:{
 						alpha: 1
 					},
 					alpha: 0,
-					onUpdate: function(){
-						TweenMax.set(circ, {
-							fill: animate.randomColor()
-						});
-					},
 					ease: Power2.easeIn
 				});
 			})(Math);
@@ -515,6 +517,7 @@ var animate = {
 		TweenMax.to(g, 1, {
 			onComplete: function(){
 				audio.play('bomb9');
+				/*
 				TweenMax.to(DOM.screenFlash, .1, {
 					startAt: {
 						opacity: 1,
@@ -524,8 +527,9 @@ var animate = {
 					background: '#ff8800',
 					ease: Expo.easeOut
 				});
+				*/
 				// shake
-				animate.screenShake(16, 10, .016, true);
+				// animate.screenShake(16, 10, .016, true);
 				var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
 				circ.setAttributeNS(null,"cx",x);
 				circ.setAttributeNS(null,"cy",y);
