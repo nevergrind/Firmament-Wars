@@ -7,18 +7,23 @@ var audio = {
 		return !!a.canPlayType ? true : false;
 	})(document.createElement('audio')),
 	play: function(foo, bg){
-		if (foo && audio.ext === 'mp3' && g.config.audio.soundVolume) {
+		console.info(foo, bg, g.config.audio.musicVolume, g.config.audio.soundVolume);
+		if (foo) {
 			if (bg){
 				// music
-				DOM.bgmusic.pause();
-				if (fwpaid){
-					DOM.bgmusic.src = "music/" + foo + "." + audio.ext;
+				if (g.config.audio.musicVolume){
+					DOM.bgmusic.pause();
+					if (fwpaid){
+						DOM.bgmusic.src = "music/" + foo + "." + audio.ext;
+					}
 				}
 			} else {
 				// sfx
-				var sfx = new Audio("sound/" + foo + "." + audio.ext);
-				sfx.volume = g.config.audio.soundVolume / 100;
-				sfx.play();
+				if (g.config.audio.soundVolume){
+					var sfx = new Audio("sound/" + foo + "." + audio.ext);
+					sfx.volume = g.config.audio.soundVolume / 100;
+					sfx.play();
+				}
 			}
 		}
 	},
@@ -50,7 +55,7 @@ var audio = {
 	trackIndex: 0,
 	totalTracks: 1,
 	gameMusicInit: function(){
-		if (audio.ext === 'mp3' && g.config.audio.musicVolume){
+		if (g.config.audio.musicVolume){
 			audio.pause();
 			audio.trackIndex = ~~(Math.random() * audio.totalTracks);
 			audio.gameMusicPlayNext();
@@ -59,32 +64,30 @@ var audio = {
 	// rotating music tracks in game
 	gameMusicPlayNext: function(){
 		// FIX IT SO IT USES BGAUDIO
-		if (audio.ext === 'mp3'){
-			var tracks = [
-				//'WaitingBetweenWorlds'
-				'ambient0',
-				'ambient1',
-				'ambient2',
-				'ambient3',
-				'ambient4',
-				'ambient5',
-				'ambient6',
-				'ambient7',
-				'ambient8'
-			]
-			audio.totalTracks = tracks.length;
-			audio.trackIndex++;
-			// future various tracks
-			if (my.government){
-				// government specific tracks?
-			}
-			DOM.bgmusic.pause();
-			if (fwpaid){
-				DOM.bgmusic.src = "music/" + tracks[audio.trackIndex % audio.totalTracks] +"." + audio.ext;
-				DOM.bgmusic.volume = g.config.audio.musicVolume / 100;
-				DOM.bgmusic.onended = function(){
-					audio.gameMusicPlayNext();
-				}
+		var tracks = [
+			//'WaitingBetweenWorlds'
+			'ambient0',
+			'ambient1',
+			'ambient2',
+			'ambient3',
+			'ambient4',
+			'ambient5',
+			'ambient6',
+			'ambient7',
+			'ambient8'
+		]
+		audio.totalTracks = tracks.length;
+		audio.trackIndex++;
+		// future various tracks
+		if (my.government){
+			// government specific tracks?
+		}
+		DOM.bgmusic.pause();
+		if (fwpaid){
+			DOM.bgmusic.src = "music/" + tracks[audio.trackIndex % audio.totalTracks] +"." + audio.ext;
+			DOM.bgmusic.volume = g.config.audio.musicVolume / 100;
+			DOM.bgmusic.onended = function(){
+				audio.gameMusicPlayNext();
 			}
 		}
 	},
@@ -106,50 +109,46 @@ var audio = {
 	cache: {},
 	load: {
 		title: function(){
-			if (audio.ext === 'mp3'){
-				var x = [
-					'click', 
-					'beep'
-				];
-				for (var i=0, len=x.length; i<len; i++){
-					var z = x[i];
-					audio.cache[z] = new Audio("sound/" + z + ".mp3");
-				}
+			var x = [
+				'click', 
+				'beep'
+			];
+			for (var i=0, len=x.length; i<len; i++){
+				var z = x[i];
+				audio.cache[z] = new Audio("sound/" + z + ".mp3");
 			}
 		},
 		game: function(){
-			if (audio.ext === 'mp3'){
-				var x = [
-					'machine0',
-					'machine1',
-					'machine2',
-					'machine3',
-					'machine4',
-					'machine5',
-					'machine6',
-					'machine7',
-					'machine8',
-					'machine9',
-					'boots0',
-					'boots1',
-					'boots2',
-					'chat', 
-					'food', 
-					'culture',
-					'error',
-					'build',
-					'grenade5',
-					'grenade6',
-					'grenade8',
-					'missile7',
-					'bomb9',
-					'warning',
-					'research'
-				];
-				for (var i=0, len=x.length; i<len; i++){
-					var z = x[i];
-					audio.cache[z] = new Audio("sound/" + z + ".mp3");
-				}
+			var x = [
+				'machine0',
+				'machine1',
+				'machine2',
+				'machine3',
+				'machine4',
+				'machine5',
+				'machine6',
+				'machine7',
+				'machine8',
+				'machine9',
+				'boots0',
+				'boots1',
+				'boots2',
+				'chat', 
+				'food', 
+				'culture',
+				'error',
+				'build',
+				'grenade5',
+				'grenade6',
+				'grenade8',
+				'missile7',
+				'bomb9',
+				'warning',
+				'research'
+			];
+			for (var i=0, len=x.length; i<len; i++){
+				var z = x[i];
+				audio.cache[z] = new Audio("sound/" + z + ".mp3");
 			}
 		}
 	},

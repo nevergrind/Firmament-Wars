@@ -182,8 +182,9 @@ var animate = {
 		var box1 = DOM['unit' + atkTile].getBBox(),
 			box2 = DOM['unit' + defTile].getBBox();
 		var sfx = ~~(Math.random()*9);
-		var delay = [.5, .5, .33, .33, .33, .33, .8, .33, .66, .4];
+		var delay = [.6, .6, .43, .43, .43, .43, .9, .43, .76, .43];
 		if (playSound){
+			console.info(delay, sfx)
 			audio.play('machine' + sfx);
 		}
 		var shots = 30,
@@ -198,13 +199,12 @@ var animate = {
 					x2 = box2.x + (Math.random() * w1) - w2;
 					y2 = box2.y + (Math.random() * h1) - h2;
 				var drawPath = Math.random() > .5 ? 
-				"M "+ (box1.x + ~~(Math.random()*16)-8) +","+ (box1.y + ~~(Math.random()*16)-8) + ' '+ x2 +","+ y2 :
-				"M "+ x2 +","+ y2 +' ' + (box1.x + ~~(Math.random()*16)-8) +","+ (box1.y + ~~(Math.random()*16)-8)
+					"M "+ (box1.x + ~~(Math.random()*16)-8) +","+ (box1.y + ~~(Math.random()*16)-8) + ' '+ x2 +","+ y2 :
+					"M "+ x2 +","+ y2 +' ' + (box1.x + ~~(Math.random()*16)-8) +","+ (box1.y + ~~(Math.random()*16)-8)
 				path.setAttributeNS(null,"stroke",animate.randomColor());
-				path.setAttributeNS(null,"stroke-width",2);
+				path.setAttributeNS(null,"stroke-width",1);
 				DOM.world.appendChild(path);
-				var index = Math.random() > .5 ? 0 : 1;
-				TweenMax.to(path, .01, {
+				TweenMax.to(path, .075, {
 					delay: (i / shots) * delay[sfx],
 					startAt: {
 						attr: {
@@ -213,11 +213,11 @@ var animate = {
 						drawSVG: '0%'
 					},
 					drawSVG: '0% 100%',
-					ease: Quad.easeIn,
+					ease: Power2.easeIn,
 					onComplete: function(){
-						TweenMax.to(path, .01, {
+						TweenMax.to(path, .125, {
 							drawSVG: '100% 100%',
-							ease: Linear.easeNone,
+							ease: Power2.easeOut,
 							onComplete: function(){
 								this.target.parentNode.removeChild(this.target);
 							}
