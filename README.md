@@ -3,7 +3,7 @@
 
 # Kickstarter Campaign
 
-* [Project Preview](https://www.kickstarter.com/projects/nevergrind/1288184267?token=a3a5569b)
+* [Kickstarter project](https://www.kickstarter.com/projects/nevergrind/1288184267?token=a3a5569b) starts January 24th, 2017!
 
 # Firmament Wars Technology Stack
 
