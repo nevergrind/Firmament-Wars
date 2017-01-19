@@ -3,7 +3,7 @@
 
 # Kickstarter Campaign
 
-* [Project Preview](goo.gl/899SYD)
+* [Project Preview](https://www.kickstarter.com/projects/nevergrind/1288184267?token=a3a5569b)
 
 # Firmament Wars Technology Stack
 
