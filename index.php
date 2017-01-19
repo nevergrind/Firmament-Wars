@@ -98,6 +98,10 @@
 				$_SESSION['totalGames'] = 0;
 				$_SESSION['wins'] = 0;
 				$_SESSION['losses'] = 0;
+				$_SESSION['teamWins'] = 0;
+				$_SESSION['teamLosses'] = 0;
+				$_SESSION['rankedWins'] = 0;
+				$_SESSION['rankedLosses'] = 0;
 				$_SESSION['disconnects'] = 0;
 				$_SESSION['disconnectRate'] = 0;
 				$nation = 'Kingdom of '. ucfirst($_SESSION['account']);
@@ -614,8 +618,7 @@
 							<li>Unlock all maps</li>
 							<li>Rename your nation</li>
 							<li>Display your military ribbons in game</li>
-							<li>Unlock friend list and display their online status</li>
-							<li>Unlock ability to select from 16 player colors</li>
+							<li>Unlock ability to select from 20 player colors</li>
 							<li>Enable the game\'s music</li>
 						</ul>
 					</div>

@@ -524,9 +524,7 @@ $(document).on('keyup', function(e) {
 			}
 		} else {
 			// game hotkeys
-			if (x === 86){
-				game.toggleGameWindows();
-			} else if (x === 13){
+			if (x === 13){
 				// enter
 				toggleChatMode();
 			}  else if (x === 27){

@@ -296,7 +296,7 @@ var title = {
 			while (DOM.titleChatLog.childNodes.length > 500) {
 				DOM.titleChatLog.removeChild(DOM.titleChatLog.firstChild);
 			}
-			var z = document.createElement('div');
+			var z = document.createElement('div'); 
 			if (data.type){
 				z.className = data.type;
 			}

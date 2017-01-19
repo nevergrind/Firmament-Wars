@@ -209,17 +209,18 @@ var g = {
 			var type = ' says: ';
 			if (data.flag && (data.msg || data.message)){
 				console.info(data);
+				console.info(data.message);
+				console.info(data.msg);
 				// sent by a player
 				if (data.type === 'chat-whisper'){
 					type = ' whispers: ';
 				}
 				var prefix = data.account + type;
-				var flagFile = data.flag + (data.flag === 'Nepal' ? '.png' : '.jpg');
-				console.info(flagFile);
+				var flagFile = data.flag.replace(/-/g, ' ') + (data.flag === 'Nepal' ? '.png' : '.jpg');
 				g.notification = new Notification(prefix, {
 					icon: 'images/flags/' + flagFile,
 					tag: "Firmament Wars",
-					body: data.msg
+					body: data.msg ? data.msg : data.message
 				});
 				g.notification.onclick = function(){
 					window.focus();
@@ -423,9 +424,9 @@ var game = {
 		'Won 100 team games',
 		'Played 200 games and maintained a disconnect rate below 5%',
 	],
-	toggleGameWindows: function(hide){
+	toggleGameWindows: function(){
 		TweenMax.set(DOM.gameWindows, {
-			visibility: hide ? 'hidden' : 'visible'
+			visibility: $("#targetWrap").css('visibility') === 'visible' ? 'hidden' : 'visible'
 		});
 	},
 	player: [0,0,0,0,0,0,0,0,0], // cached values on client to reduce DB load

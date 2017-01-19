@@ -7,7 +7,6 @@ var audio = {
 		return !!a.canPlayType ? true : false;
 	})(document.createElement('audio')),
 	play: function(foo, bg){
-		console.info(foo, bg, g.config.audio.musicVolume, g.config.audio.soundVolume);
 		if (foo) {
 			if (bg){
 				// music
@@ -15,6 +14,7 @@ var audio = {
 					DOM.bgmusic.pause();
 					if (fwpaid){
 						DOM.bgmusic.src = "music/" + foo + "." + audio.ext;
+						DOM.bgmusic.volume = g.config.audio.musicVolume / 100;
 					}
 				}
 			} else {
