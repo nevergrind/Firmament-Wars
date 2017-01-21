@@ -1018,7 +1018,7 @@ function resizeWindow() {
     	body.style.width = w + 'px';
     	body.style.height = h + 'px';
     }
-	TweenMax.set("body", {
+	TweenMax.set("#body", {
 		x: ~~(w/2 + ((winWidth - w) / 2)),
 		y: ~~(h/2 + ((winHeight - h) / 2)),
 		opacity: 1,

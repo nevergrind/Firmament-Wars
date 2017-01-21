@@ -44,7 +44,7 @@ var lobby = {
 		} else if (government === "Democracy"){
 			str = '<div id="lobbyGovName" class="text-primary">Democracy</div>\
 				<div id="lobbyGovPerks">\
-					<div>Unlimited Army Deployment</div>\
+					<div>4x Maximum Army Deployment</div>\
 					<div>+50% crystal bonus</div>\
 					<div>More great people</div>\
 					<div>Start with a wall</div>\
@@ -901,7 +901,7 @@ function loadGameState(){
 					<div class="flag '+ p.flagClass +'" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ p.flagShort + '"></div>'+ 
 					teamIcon(p.team) +
 					'<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>\
-					<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + (my.nation === p.nation ? '<b>'+ p.nation +'</b>' : p.nation) + '</span>\
+					<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + (my.player === p.player ? '<b>'+ p.nation +'</b>' : p.nation) + '</span>\
 				</div>';
 				return str;
 			}

@@ -16,11 +16,12 @@ var animate = {
 	},
 	colors: [
 		'#ffffff',
-		'#ffdddd',
+		'#ffaa66',
+		'#ffcc99',
 		'#ffddaa',
-		'#ffeecc',
-		'#ffffaa',
-		'#ffffcc'
+		'#ffff99',
+		'#ff5555',
+		'#ffff55'
 	],
 	randomColor: function(){
 		return animate.colors[~~(Math.random()*6)];
@@ -517,17 +518,15 @@ var animate = {
 		TweenMax.to(g, 1, {
 			onComplete: function(){
 				audio.play('bomb9');
-				/*
-				TweenMax.to(DOM.screenFlash, .1, {
+				TweenMax.to(DOM.screenFlash, .05, {
 					startAt: {
-						opacity: 1,
+						opacity: .7,
 						background: '#ffffff'
 					},
 					opacity: 0,
 					background: '#ff8800',
 					ease: Expo.easeOut
 				});
-				*/
 				// shake
 				// animate.screenShake(16, 10, .016, true);
 				var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
@@ -633,6 +632,7 @@ var animate = {
 			alpha: 1,
 			onComplete: function(){
 				$("#title-chat-input").focus();
+				resizeWindow();
 			},
 			ease: Quad.easeIn
 		});

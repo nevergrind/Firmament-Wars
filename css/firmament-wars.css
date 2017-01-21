@@ -138,6 +138,16 @@ a:hover{
 	width: 100%;
 	height: 100%;
 }
+#comingSoon{
+	position: absolute;
+	top: 10%;
+	width: 100%;
+	text-align: center;
+	color: #8bf;
+	font-size: 4em;
+	letter-spacing: .25em;
+	font-family: Cinzel, Times New Roman, serif;
+}
 .fwHidden, #titleMain{
 	visibility: hidden;
 	opacity: 0;
@@ -163,7 +173,7 @@ a:hover{
 	left: 0%;
 	width: 100%;
 	height: 100%;
-	background: rgba(2,4,21,1);
+	background: #0a246a;
 }
 .fw-text{
 	color: #bef;
@@ -1041,8 +1051,8 @@ table td, .table th, .table td {
 	left: 0%;
 	width: 195.31%;
 	height: 143.22%;
-	background: rgba(2,4,21,1);
-	background-image: url('../images/fw_grid3.png');
+	background: #0a246a;
+	background-image: url('../images/fw_grid8.png');
 }
 .worldWater{
 	position: absolute;

@@ -40,10 +40,11 @@
 									token: token
 								}
 							}).done(function(data){
-								if (data !== 'Persistent login failed'){
-									localStorage.setItem('token', token);
-									location.reload();
-								}
+								console.info(data);
+								localStorage.setItem('token', token);
+								location.reload();
+							}).fail(function(data){
+								console.warn(data);
 							});
 						});
 					}

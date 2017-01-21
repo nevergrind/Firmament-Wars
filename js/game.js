@@ -211,18 +211,18 @@ function gameDefeat(){
 		} else if (data.gameDone){
 			msg = 
 			'<p>Defeat!</p>\
-			<div>Your campaign for world domination has failed!</div>\
-			<div id="endWar" class="endBtn">\
+			<div>Your campaign for world domination has failed!</div>';
+			if (g.showSpectateButton){
+				msg += 
+				'<div id="spectate" class="endBtn">\
+					<div class="modalBtnChild">Spectate</div>\
+				</div>';
+			}
+			msg += '<div id="endWar" class="endBtn">\
 				<div class="modalBtnChild">Concede Defeat</div>\
 			</div>';
 		}
-		if (g.showSpectateButton){
-			msg += '<div id="spectate" class="endBtn">\
-				<div class="modalBtnChild">Spectate</div>\
-			</div>';
-		}
 		if (msg){
-			audio.play('shotgun2');
 			triggerEndGame(msg);
 		}
 	}).fail(function(data){
@@ -232,8 +232,7 @@ function gameDefeat(){
 
 
 function gameVictory(){
-	new Audio('sound/shotgun2.mp3');
-	new Audio('sound/bell-8.mp3');
+	new Audio('sound/sniper0.mp3');
 	var count = 0;
 	(function repeat(){
 		$.ajax({
@@ -257,11 +256,10 @@ function gameVictory(){
 				<div id="endWar" class="endBtn">\
 					<div class="modalBtnChild">Victory</div>\
 				</div>';
-				audio.play('bell-8');
 				g.victory = true;
 			}
 			if (msg){
-				triggerEndGame(msg);
+				triggerEndGame(msg, 1);
 			}
 		}).fail(function(data){
 			console.info("FAIL: ", data);
@@ -273,7 +271,7 @@ function gameVictory(){
 		});
 	})();
 }
-function triggerEndGame(msg){
+function triggerEndGame(msg, victory){
 	$("*").off('click mousedown keydown keyup keypress');
 	$("#chat-input").remove();
 	window.onbeforeunload = null;
@@ -287,6 +285,11 @@ function triggerEndGame(msg){
 		var e = document.getElementById('victoryScreen');
 		e.innerHTML = msg;
 		e.style.display = 'block';
+		if (victory){
+			audio.play('sniper0');
+		} else {
+			audio.play('shotgun2');
+		}
 		$("#endWar").on('mousedown', function(e){
 			if (e.which === 1){
 				$("#endWar").off();
@@ -311,7 +314,7 @@ function triggerEndGame(msg){
 		});
 		$("#exitSpectate").on('click', function(){
 			stats.get();
-			TweenMax.to(diplomacy-ui, 1, {
+			TweenMax.to('#diplomacy-ui', 1, {
 				alpha: 0,
 				onComplete: function(){
 					stats.show();

@@ -170,7 +170,7 @@ var events = {
 			title.showBackdrop();
 		});
 		$("#leaderboardBtn").on('click', function(){
-			TweenMax.to(leaderboard, g.modalSpeed, {
+			TweenMax.to(document.getElementById('leaderboard'), g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
 					top: 0,

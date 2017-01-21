@@ -28,7 +28,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head id='head'>
-	<title>Firmament Wars | Multiplayer Grand Strategy | Realtime Risk Warfare</title>
+	<title>Firmament Wars | Multiplayer Strategy | Realtime Risk-Like Warfare</title>
 	<meta charset="utf-8">
 	<meta name="keywords" content="risk, civilization, starcraft, multiplayer, pol, strategy, gaming">
 	<meta name="description" content="Firmament Wars is a browser-based politically incorrect Risk-like strategy game with realtime combat in FFA, ranked, and team modes!">
@@ -46,9 +46,9 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
 	<script>
-		version = '0-0-29'; 
+		version = '0-0-31'; 
 	</script>
-	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-29">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-31">
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
 
@@ -350,11 +350,11 @@
 					?>
 				</div>
 			<?php
-			
-			echo '</div>';
+			} else {
+				echo '<div id="comingSoon" class="shadow4">Coming March 14th</div>';
 			}
 			?>
-			
+			</div>
 				
 		</div>
 	

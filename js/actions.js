@@ -136,31 +136,19 @@ var action = {
 			return;
 		}
 		if (t.units <= 254){
-			// determine number
-			var deployedUnits = my.manpower < my.maxDeployment ? my.manpower : my.maxDeployment,
-				tgt = my.tgt;
-			var rem = 0;
-			if (t.units + deployedUnits > 255){
-				rem = ~~((t.units + deployedUnits) - 255);
-				deployedUnits = ~~(255 - t.units);
-			} else {
-				rem = my.manpower - deployedUnits;
-			}
-			console.log('deploy: ', tgt, t.units, deployedUnits);
-			// game.tiles[tgt].units = t.units + deployedUnits;
 			// do it
+			var tgt = my.tgt;
 			$.ajax({
 				url: 'php/deploy.php',
 				data: {
-					deployedUnits: deployedUnits,
-					target: tgt
+					target: my.tgt
 				}
 			}).done(function(data) {
 				console.info("deploy: ", data);
 				if (data.production !== undefined){
 					audio.move();
+					game.tiles[tgt].units = data.units;
 					my.manpower = data.manpower;
-					DOM.manpower.textContent = my.manpower;
 					setProduction(data);
 					setTileUnits(tgt, '#00ff00');
 				}
@@ -173,7 +161,8 @@ var action = {
 		}
 	},
 	recruit: function(){
-		var t = game.tiles[my.tgt];
+		var t = game.tiles[my.tgt],
+			tgt = my.tgt;
 		if (t.player !== my.player){
 			return;
 		}
@@ -185,21 +174,19 @@ var action = {
 			$.ajax({
 				url: 'php/recruit.php',
 				data: {
-					target: my.tgt
+					target: tgt
 				}
 			}).done(function(data) {
-				console.info("recruit: ", data.moves, data);
-				setMoves(data);
-			
-				var deployedUnits = 3 + ~~(my.cultureBonus / 30);
-				
-				if (t.units + deployedUnits > 255){
-					game.tiles[my.tgt].units = 255;
-				} else {
-					game.tiles[my.tgt].units += deployedUnits;
+				//console.info("recruit: ", data.moves, data);
+				if (data.production !== undefined){
+					setMoves(data);
+					game.tiles[tgt].units = data.units;
+					setProduction(data);
+					setTileUnits(tgt, '#00ff00');
+					audio.move();
 				}
 				// do it
-				setTileUnits(my.tgt, '#00ff00');
+				setTileUnits(tgt, '#00ff00');
 				audio.move();
 			}).fail(function(e){
 				audio.play('error');
