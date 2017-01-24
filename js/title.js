@@ -65,7 +65,7 @@ var title = {
 				$(".wars").filter(":first").trigger("click");
 			}).fail(function(e){
 				console.info(e.responseText);
-				Msg("Server error.");
+				//Msg("Server error.");
 			});
 			setTimeout(function(){
 				g.keepAlive();
