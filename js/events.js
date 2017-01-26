@@ -400,8 +400,9 @@ var events = {
 			if (isFirefox){
 				setMousePosition(e.originalEvent.layerX, e.originalEvent.layerY);
 			} else {
-				// console.info(e.offsetX, e.offsetY);
+				//console.info(e.offsetX, e.offsetY);
 				setMousePosition(e.offsetX, e.offsetY);
+				console.info(e.clientX, e.clientY);
 			}
 		});
 		$("#diplomacy-ui").on('click', '#surrender', function(e){
@@ -416,6 +417,11 @@ var events = {
 				document.getElementById('createGameMap').innerHTML = x;
 				document.getElementById('createGameTiles').innerHTML = title.mapData[key].tiles;
 				document.getElementById('createGamePlayers').innerHTML = title.mapData[key].players;
+				var e1 = $("#gamePlayers");
+				e1.attr("max", title.mapData[key].players);
+				if (e1.val() * 1 > title.mapData[key].players){
+					e1.val(title.mapData[key].players);
+				}
 			} else {
 				Msg("Unlock the complete game for access to all maps.");
 			}

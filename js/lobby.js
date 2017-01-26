@@ -706,8 +706,7 @@ function loadGameState(){
 			g.map.sizeY = data.mapData.sizeY;
 			g.map.name = data.mapData.name;
 			g.map.tiles = data.mapData.tiles;
-			
-			// console.warn(data.tiles.length, g.map.tiles);
+			//console.warn(data.tiles.length, g.map.tiles);
 			if (data.tiles.length < g.map.tiles){
 				if (g.loadAttempts < 10){
 					setTimeout(function(){

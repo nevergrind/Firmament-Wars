@@ -353,7 +353,7 @@ echo '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<path d="M 812,835 Q 750 850 779 806"/>
 	</g>
 	
-	<g>
+	<g> 
 		<text x="340" y="952" class="unit" id="unit0">0</text>
 		<text x="344" y="1028" class="unit" id="unit1">0</text>
 		<text x="541" y="1076" class="unit" id="unit2">0</text>
@@ -436,5 +436,3 @@ echo '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 	
 	require ('mapTargeting.php');
 echo '</svg>';
-
-?>

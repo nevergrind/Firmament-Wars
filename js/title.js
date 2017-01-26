@@ -287,6 +287,11 @@ var title = {
 			name: 'Flat Earth',
 			tiles: 78,
 			players: 8
+		},
+		UnitedStates: {
+			name: 'United States',
+			tiles: 44,
+			players: 4
 		}
 	},
 	chatDrag: false,
