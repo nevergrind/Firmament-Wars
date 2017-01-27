@@ -1003,6 +1003,11 @@ function loadGameState(){
 				
 				// focus on player home
 				my.focusTile(my.capital);
+				if (game.tiles[my.tgt].units > 1){
+					// activate targeting
+					var o = new Target({});
+					action.target(o);
+				}
 				// add warning for players
 				if (location.host !== 'localhost'){
 					window.onbeforeunload = function(){

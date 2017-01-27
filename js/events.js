@@ -401,7 +401,6 @@ var events = {
 				setMousePosition(e.originalEvent.layerX, e.originalEvent.layerY);
 			} else {
 				setMousePosition(e.offsetX, e.offsetY);
-				// viewbox must match mapSize
 				//console.info('offset: ', e.offsetX, e.offsetY);
 			}
 		});
