@@ -400,9 +400,9 @@ var events = {
 			if (isFirefox){
 				setMousePosition(e.originalEvent.layerX, e.originalEvent.layerY);
 			} else {
-				//console.info(e.offsetX, e.offsetY);
 				setMousePosition(e.offsetX, e.offsetY);
-				console.info(e.clientX, e.clientY);
+				// viewbox must match mapSize
+				//console.info('offset: ', e.offsetX, e.offsetY);
 			}
 		});
 		$("#diplomacy-ui").on('click', '#surrender', function(e){

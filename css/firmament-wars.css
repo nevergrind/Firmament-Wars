@@ -1049,8 +1049,10 @@ table td, .table th, .table td {
 	position: absolute;
 	top: 0%;
 	left: 0%;
+	/*
 	width: 195.31%;
 	height: 143.22%;
+	*/
 	background: #0a246a;
 	background-image: url('../images/fw_grid8.png');
 }
