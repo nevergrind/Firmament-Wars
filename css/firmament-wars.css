@@ -1049,12 +1049,7 @@ table td, .table th, .table td {
 	position: absolute;
 	top: 0%;
 	left: 0%;
-	/*
-	width: 195.31%;
-	height: 143.22%;
-	*/
 	background: #0a246a;
-	background-image: url('../images/fw_grid8.png');
 }
 .worldWater{
 	position: absolute;
@@ -1062,20 +1057,8 @@ table td, .table th, .table td {
 	left: -50%;
 	width: 200%;
 	height: 200%;
-	opacity: 1;
-	background: url('../images/water13.jpg');
-}
-#worldWater2{
-	opacity: .5;
-	background: url('../images/water14.jpg');
-}
-#worldWater3{
-	opacity: .5;
-	background: url('../images/water16.jpg');
-}
-#worldWater4{
-	opacity: .5;
-	background: url('../images/water2.jpg');
+	opacity: 0;
+	background: url('../images/fw_grid2.png');
 }
 #world{
 	position: absolute;

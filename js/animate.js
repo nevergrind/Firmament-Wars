@@ -722,49 +722,71 @@ var animate = {
 		})(count, d, interval, DOM.gameWrap, Math);
 	},
 	water: function(){
-		/*
-		var delay = 100,
-			e1 = document.getElementById('worldWater1'),
+		var e1 = document.getElementById('worldWater1'),
 			e2 = document.getElementById('worldWater2'),
-			e3 = document.getElementById('worldWater3'),
-			e4 = document.getElementById('worldWater4');
+			e3 = document.getElementById('worldWater3');
 		// animate water
-		// up left
-		TweenMax.to(e1, delay, {
-			backgroundPosition: '-800px -800px',
-			repeat: -1,
-			ease: Linear.easeNone
-		});
-		// down right
-		TweenMax.to(e2, delay, {
-			startAt: {
-				backgroundPosition: '400px 300px'
-			},
-			backgroundPosition: '1200px 1100px', 
-			repeat: -1,
-			ease: Linear.easeNone
-		});
-		// down left
-		TweenMax.to(e3, delay, {
-			startAt: {
-				backgroundPosition: '200px 150px', 
-			},
-			backgroundPosition: '200px -650px', 
-			repeat: -1,
-			yoyo: true,
-			ease: Linear.easeNone
-		});
-		// up right
-		TweenMax.to(e4, delay, {
-			startAt: {
-				backgroundPosition: '600px 250px', 
-			},
-			backgroundPosition: '-200px 1050px', 
-			repeat: -1,
-			yoyo: true,
-			ease: Linear.easeNone
-		});
-		*/
+		(function(Math, TweenMax, Linear){
+			TweenMax.set(e1, {
+				alpha: 1
+			});
+			var delay = 1.5;
+			(function water1(x){
+				x += 4 * (Math.random() > .5 ? 1 : -1);
+				TweenMax.to(e1, delay, {
+					startAt: {
+						backgroundPosition: x +'px 0px',
+						alpha: 0
+					},
+					alpha: 1,
+					repeat: 1,
+					yoyo: true,
+					onComplete: function(){
+						water1(x);
+					},
+					ease: Linear.easeNone
+				});
+			})(0);
+			
+			TweenMax.delayedCall(delay * (2/3), function(){
+				(function water2(x){
+					x += 4 * (Math.random() > .5 ? 1 : -1);
+					TweenMax.to(e2, delay, {
+						startAt: {
+							backgroundPosition: x +'px 0px',
+							alpha: 0
+						},
+						alpha: 1,
+						repeat: 1,
+						yoyo: true,
+						onComplete: function(){
+							water2(x);
+						},
+						ease: Linear.easeNone
+					});
+				})(24);
+			});
+			
+			TweenMax.delayedCall(delay * (4/3), function(){
+				(function water3(x){
+					x += 4 * (Math.random() > .5 ? 1 : -1);
+					TweenMax.to(e3, delay, {
+						startAt: {
+							backgroundPosition: x +'px 0px',
+							alpha: 0
+						},
+						alpha: 1,
+						repeat: 1,
+						yoyo: true,
+						onComplete: function(){
+							water3(x);
+						},
+						ease: Linear.easeNone
+					});
+				})(48);
+			});
+			
+		})(Math, TweenMax, Linear);
 	},
 	glowTile: function(oldTgt, newTgt){
 		var e1 = document.getElementById('land' + oldTgt),
