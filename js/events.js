@@ -401,7 +401,7 @@ var events = {
 				setMousePosition(e.originalEvent.layerX, e.originalEvent.layerY);
 			} else {
 				setMousePosition(e.offsetX, e.offsetY);
-				//console.info('offset: ', e.offsetX, e.offsetY);
+				//console.info(e.offsetX, e.offsetY);
 			}
 		});
 		$("#diplomacy-ui").on('click', '#surrender', function(e){
@@ -538,6 +538,7 @@ $(document).on('keyup', function(e) {
 				my.attackName = '';
 				my.clearHud();
 				showTarget(document.getElementById('land' + my.tgt));
+				console.clear();
 			} else if (x === 65){
 				// a
 				var o = new Target();

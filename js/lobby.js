@@ -863,21 +863,25 @@ function loadGameState(){
 				svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/flags/' + flag);
 				mapFlagWrap.appendChild(svg);
 				// add star for capital to map
-				if (game.tiles[i].capital){
-					var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-					svg.id = 'mapCapital' + i;
-					svg.setAttributeNS(null, 'height', 30);
-					svg.setAttributeNS(null, 'width', 30);
-					svg.setAttributeNS(null,"x",x - 15);
-					svg.setAttributeNS(null,"y",y + 17);
-					svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/capital.png');
-					mapCapitals.appendChild(svg);
-					TweenMax.set(svg, {
-						transformOrigin: '50% 50%',
-						rotation: 45,
-						repeat: -1,
-						ease: Linear.easeNone
-					});
+				if (game.tiles[i] !== undefined){
+					if (game.tiles[i].capital){
+						var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+						svg.id = 'mapCapital' + i;
+						svg.setAttributeNS(null, 'height', 30);
+						svg.setAttributeNS(null, 'width', 30);
+						svg.setAttributeNS(null,"x",x - 15);
+						svg.setAttributeNS(null,"y",y + 17);
+						svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/capital.png');
+						mapCapitals.appendChild(svg);
+						TweenMax.set(svg, {
+							transformOrigin: '50% 50%',
+							rotation: 45,
+							repeat: -1,
+							ease: Linear.easeNone
+						});
+					}
+				} else {
+					console.warn("COULD NOT FIND: ", i);
 				}
 			}
 			// init map DOM elements
@@ -978,7 +982,7 @@ function loadGameState(){
 					});
 				} else {
 					zug.on("click", function(e){
-						console.info(this.id);
+						console.info(this.id, $(this).data('name'), e.offsetX, e.offsetY);
 						triggerAction(this);
 					});
 				}

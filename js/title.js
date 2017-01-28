@@ -292,6 +292,11 @@ var title = {
 			name: 'United States',
 			tiles: 44,
 			players: 4
+		},
+		France: {
+			name: 'France',
+			tiles: 81,
+			players: 8
 		}
 	},
 	chatDrag: false,

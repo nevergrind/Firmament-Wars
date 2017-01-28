@@ -185,7 +185,7 @@ var animate = {
 		var sfx = ~~(Math.random()*9);
 		var delay = [.6, .6, .43, .43, .43, .43, .9, .43, .76, .43];
 		if (playSound){
-			console.info(delay, sfx)
+			//console.info(delay, sfx)
 			audio.play('machine' + sfx);
 		}
 		var shots = 30,

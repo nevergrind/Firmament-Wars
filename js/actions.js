@@ -105,7 +105,7 @@ var action = {
 			if (data.rewardMsg){
 				game.chat({ message: '<span class="chat-news">' + data.rewardMsg + '</span>' });
 				setResources(data);
-				console.info('REWARD: ', data);
+				//console.info('REWARD: ', data);
 			}
 			setMoves(data); 
 			// reset target if lost
@@ -144,7 +144,7 @@ var action = {
 					target: my.tgt
 				}
 			}).done(function(data) {
-				console.info("deploy: ", data);
+				//console.info("deploy: ", data);
 				if (data.production !== undefined){
 					audio.move();
 					game.tiles[tgt].units = data.units;

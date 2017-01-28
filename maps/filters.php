@@ -5,4 +5,4 @@
 			<feGaussianBlur result="blurOut" in="offOut" stdDeviation="2" />
 			<feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
 		</filter>
-	</defs>';
+</defs>';
