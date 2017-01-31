@@ -781,7 +781,7 @@ tbody{
 .blueBg{
 	border: 1px solid rgba(176,240,255,1);
 	border-radius: 4px;
-	background: rgba(0, 8, 33, .9);
+	background: rgba(0, 8, 33, 1);
 }
 .stagBlue{
 	border: 1px solid rgba(176,240,255,1);
@@ -1081,11 +1081,16 @@ table td, .table th, .table td {
 .land{
 	fill: #02063a;
 	fill-opacity: 1;
+	fill-rule:evenodd;
 	stroke: #85daf2;
 	stroke-opacity: 1;
 	stroke-width: 1;
 	overflow: visible;
 	cursor: pointer;
+}
+.dead{
+	fill: #666;
+	stroke: #111;
 }
 .landOutline{
 	stroke: #85daf2;

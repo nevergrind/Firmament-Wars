@@ -147,13 +147,15 @@ var action = {
 				//console.info("deploy: ", data);
 				if (data.production !== undefined){
 					audio.move();
-					game.tiles[tgt].units = data.units;
-					my.manpower = data.manpower;
-					setProduction(data);
-					setTileUnits(tgt, '#00ff00');
 				}
 			}).fail(function(e){
 				audio.play('error');
+			}).always(function(data){
+				//console.info("DEPLOY: ", data);
+				game.tiles[tgt].units = data.units;
+				my.manpower = data.manpower;
+				setResources(data);
+				setTileUnits(tgt, '#00ff00');
 			});
 			TweenMax.set('#manpower', {
 			  color: '#fff'
@@ -179,17 +181,16 @@ var action = {
 			}).done(function(data) {
 				//console.info("recruit: ", data.moves, data);
 				if (data.production !== undefined){
-					setMoves(data);
-					game.tiles[tgt].units = data.units;
-					setProduction(data);
-					setTileUnits(tgt, '#00ff00');
 					audio.move();
 				}
-				// do it
-				setTileUnits(tgt, '#00ff00');
-				audio.move();
 			}).fail(function(e){
 				audio.play('error');
+			}).always(function(data){
+				//console.info("RECRUIT: ", data);
+				setMoves(data);
+				game.tiles[tgt].units = data.units;
+				setProduction(data);
+				setTileUnits(tgt, '#00ff00');
 			});
 		}
 	},
@@ -258,6 +259,8 @@ var action = {
 			if (e.statusText){
 				Msg(e.statusText, 1.5);
 			}
+		}).always(function(data){
+			console.info('always: ', data);
 		});
 	},
 	launchMissile: function(that){

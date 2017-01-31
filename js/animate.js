@@ -726,13 +726,13 @@ var animate = {
 			e2 = document.getElementById('worldWater2'),
 			e3 = document.getElementById('worldWater3');
 		// animate water
-		(function(Math, TweenMax, Linear){
+		(function(Math, TweenMax, Sine){
 			TweenMax.set(e1, {
 				alpha: 1
 			});
-			var delay = 1.5;
+			var delay = 1;
 			(function water1(x){
-				x += 4 * (Math.random() > .5 ? 1 : -1);
+				x += 4;
 				TweenMax.to(e1, delay, {
 					startAt: {
 						backgroundPosition: x +'px 0px',
@@ -742,15 +742,17 @@ var animate = {
 					repeat: 1,
 					yoyo: true,
 					onComplete: function(){
-						water1(x);
+						TweenMax.delayedCall(delay, function(){
+							water1(x);
+						});
 					},
-					ease: Linear.easeNone
+					ease: Power1.easeOut
 				});
 			})(0);
 			
-			TweenMax.delayedCall(delay * (2/3), function(){
+			TweenMax.delayedCall(delay, function(){
 				(function water2(x){
-					x += 4 * (Math.random() > .5 ? 1 : -1);
+					x += 4;
 					TweenMax.to(e2, delay, {
 						startAt: {
 							backgroundPosition: x +'px 0px',
@@ -760,16 +762,18 @@ var animate = {
 						repeat: 1,
 						yoyo: true,
 						onComplete: function(){
-							water2(x);
+							TweenMax.delayedCall(delay, function(){
+								water2(x);
+							});
 						},
-						ease: Linear.easeNone
+						ease: Power1.easeOut
 					});
 				})(24);
 			});
 			
-			TweenMax.delayedCall(delay * (4/3), function(){
+			TweenMax.delayedCall(delay * 2, function(){
 				(function water3(x){
-					x += 4 * (Math.random() > .5 ? 1 : -1);
+					x += 4;
 					TweenMax.to(e3, delay, {
 						startAt: {
 							backgroundPosition: x +'px 0px',
@@ -779,14 +783,16 @@ var animate = {
 						repeat: 1,
 						yoyo: true,
 						onComplete: function(){
-							water3(x);
+							TweenMax.delayedCall(delay, function(){
+								water3(x);
+							});
 						},
-						ease: Linear.easeNone
+						ease: Power1.easeOut
 					});
 				})(48);
 			});
 			
-		})(Math, TweenMax, Linear);
+		})(Math, TweenMax, Sine);
 	},
 	glowTile: function(oldTgt, newTgt){
 		var e1 = document.getElementById('land' + oldTgt),

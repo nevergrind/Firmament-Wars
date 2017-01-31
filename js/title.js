@@ -290,7 +290,7 @@ var title = {
 		},
 		UnitedStates: {
 			name: 'United States',
-			tiles: 44,
+			tiles: 48,
 			players: 4
 		},
 		France: {

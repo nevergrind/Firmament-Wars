@@ -34,48 +34,62 @@
 		'key' => 'FlatEarth',
 		'tiles' => 78,
 		'maxPlayers' => 8,
-		'startTiles' => [9, 10, 13, 48, 53, 19, 32, 41],
-		'sizeX' => 1600,
-		'sizeY' => 1600,
+		'startTiles' => [13, 14, 52, 23, 54, 47, 36, 59],
+		'sizeX' => 1920,
+		'sizeY' => 1920,
 		'tileNames' => array(
-			'Santiago', 'Montevideo', 'Salvador', 'Sao Paolo', 'Amazon', 
-			'Georgetown', 'San Francisco', 'Mexico City', 'Lima', 'Patagonia', 
-			'Havana', 'Anchorage', 'Edmonton', 'Iceland', 'Thule Air Base', 
-			'New York', 'Irkutsk', 'Ural', 'Moscow', 'Stockholm', 
-			'Addis Ababa', 'Warsaw', 'Madrid', 'Rabat', 'Bamako', // 20
-			'Abuja', 'Kinshasa', 'Luanda', 'Johannesburg', 'Mogadishu', 
-			'Cairo', 'Oman', 'Sana\'a', 'Mecca', 'Tehran', 
-			'Kabul', 'Singapore', 'Bangkok', 'Kamchatka', 'Seattle', 
-			'Yakutsk', 'Antananorivo', 'Jerusalem', 'Athens', 'Berlin', // 40
-			'Paris', 'London', 'Shanghai', 'Tokyo', 'Hong Kong', 
-			'Manila', 'Jakarta', 'Port Moresby', 'Wellington', 'Perth', 
-			'Sydney', 'Adelaide', 'Gibson Desert', 'Mumbai', 'Tashkent',
-			'New Delhi', 'Kathmandu', 'Chongqing', 'Ulaanbaatar', 'Urumqi', // 60
-			'Tibet', 'Tripoli', 'Algiers', 'Bangui', 'Gaborone', 
-			'Lusaka', 'Tbilisi', 'Harare', 'Nairobi', 'Ankara', // 70
-			'Bogota', 'Chicago', 'Washington'
+			'Santiago', 'Montevideo', 'Salvador', 'Sao Paolo', 'Amazon', //0
+			'Georgetown', 'Los Angeles', 'Mexico City', 'Lima', 'Seattle', 
+			'Chicago', 'New York', 'Bogota', 'Patagonia', 'Havana', //10
+			'Anchorage', 'Edmonton', 'Iceland', 'Thule Air Base', 'Montreal', 
+			'Irkutsk', 'Tomsk', 'Ural', 'Stockholm', 'Moscow', // 20
+			'Warsaw', 'Madrid', 'Rabat', 'Bamako', 'Abuja', 
+			'Kinshasa', 'Luanda', 'Johannesburg', 'Mogadishu', 'Addis Ababa', //30
+			'Cairo', "Sana'a", 'Mecca', 'Tehran', 'Kabul', 
+			'Singapore', 'Bangkok', 'Kamchatka', 'Ankara', 'Nairobi', // 40
+			'Harare', 'Yakutsk', 'Antananorivo', 'Jerusalem', 'Athens', 
+			'Berlin', 'Paris', 'London', 'Shanghai', 'Tokyo', //50
+			'Hong Kong', 'Manila', 'Jakarta', 'Port Moresby', 'Wellington',
+			'Perth', 'Sydney', 'Adelaide', 'Gibson Desert', 'Mumbai', // 60
+			'Tbilisi', 'Tashkent', 'New Delhi', 'Kathmandu', 'Chongqing', 
+			'Ulaanbaatar', 'Urumqi', 'Tibet', 'Tripoli', 'Algiers', // 70
+			'Bangui', 'Lusaka', 'Gaborone'
 		)
 	);
 	$mapData['UnitedStates'] = (object) array(
 		'name' => 'United States',
 		'key' => 'UnitedStates',
-		'tiles' => 44,
+		'tiles' => 48,
 		'maxPlayers' => 4,
-		'startTiles' => [42, 25, 1, 7], 
-		'sizeX' => 1491,
-		'sizeY' => 1080,
+		'startTiles' => [7, 1, 28, 46], 
+		'sizeX' => 1920,
+		'sizeY' => 1391,
 		'tileNames' => array(
 			'Massachusetts', 'Minnesota', 'Montana', 'North Dakota', 'Idaho', 
 			'Washington', 'Arizona', 'California', 'Colorado', 'Nevada', 
 			'New Mexico', 'Oregon', 'Utah', 'Wyoming', 'Arkansas', // 10
 			'Iowa', 'Kansas', 'Missouri', 'Nebraska', 'Oklahoma', 
-			'South Dakota', 'Louisiana', 'Texas', 'New Hampshire', 'Alabama', // 20
-			'Florida', 'Georgia', 'Mississippi', 'South Carolina', 'Illinois', 
-			'Indiana', 'Kentucky', 'North Carolina', 'Ohio', 'Tennessee', // 30
-			'Virginia', 'Wisconsin', 'West Virginia', 'Maryland', 'New Jersey', 
-			'New York', 'Pennsylvania', 'Maine', 'Michigan' // 40
+			'South Dakota', 'Louisiana', 'Texas', 'Connecticut', 'New Hampshire', // 20
+			'Rhode Island', 'Vermont', 'Alabama', 'Florida', 'Georgia', 
+			'Mississippi', 'South Carolina', 'Illinois', 'Indiana', 'Kentucky', // 30
+			'North Carolina', 'Ohio', 'Tennessee', 'Virginia', 'Wisconsin', 
+			'West Virginia', 'Delaware', 'Maryland', 'New Jersey', 'New York', // 40
+			'Pennsylvania', 'Maine', 'Michigan'
 		)
 	);
+	/*
+			'', '', '', '', '', 
+			'', '', '', '', '', 
+			'', '', '', '', '', // 10
+			'', '', '', '', '', 
+			'', '', '', '', '', // 20
+			'', '', '', '', '', 
+			'', '', '', '', '', // 30
+			'', '', '', '', '', 
+			'', '', '', '', 'TEST', // 40
+			'', '', ''
+	
+	*/
 	$mapData['France'] = (object) array(
 		'name' => 'France',
 		'key' => 'France',

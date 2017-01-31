@@ -349,7 +349,7 @@ var lobby = {
 		var i = data.player;
 		if (data.account !== undefined){
 			// add
-			console.info("ADD PLAYER: ", data);
+			//console.info("ADD PLAYER: ", data);
 			document.getElementById("lobbyRow" + i).style.display = 'block';
 			// different player account
 			document.getElementById("lobbyAccountName" + i).innerHTML = data.account;
@@ -384,7 +384,7 @@ var lobby = {
 	},
 	// update player's team number
 	updateTeamNumber: function(data){
-		console.info("UPDATE TEAM NUMBER: ", data);
+		//console.info("UPDATE TEAM NUMBER: ", data);
 		var i = data.player;
 		var e = document.getElementById('lobbyTeamNumber' + i);
 		if (e !== null){
@@ -393,7 +393,7 @@ var lobby = {
 	},
 	// update player's color only
 	updatePlayerColor: function(data){
-		console.info("UPDATE PLAYER COLOR ", data);
+		//console.info("UPDATE PLAYER COLOR ", data);
 		var i = data.player;
 		var str = my.player === i ? 
 			'fa fa-square lobbyPlayer dropdown-toggle pointer2 player' + data.playerColor :
@@ -590,6 +590,9 @@ function setResources(d){
 					DOM.manpower.textContent = ~~my.manpower;
 				}
 			});
+		} else {
+			my.manpower = d.manpower;
+			DOM.manpower.textContent = my.manpower;
 		}
 	}
 	if (d.foodMax !== undefined){
@@ -982,7 +985,7 @@ function loadGameState(){
 					});
 				} else {
 					zug.on("click", function(e){
-						console.info(this.id, $(this).data('name'), e.offsetX, e.offsetY);
+						console.info(this.id, e.offsetX, e.offsetY);
 						triggerAction(this);
 					});
 				}
