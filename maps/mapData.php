@@ -77,19 +77,6 @@
 			'Pennsylvania', 'Maine', 'Michigan'
 		)
 	);
-	/*
-			'', '', '', '', '', 
-			'', '', '', '', '', 
-			'', '', '', '', '', // 10
-			'', '', '', '', '', 
-			'', '', '', '', '', // 20
-			'', '', '', '', '', 
-			'', '', '', '', '', // 30
-			'', '', '', '', '', 
-			'', '', '', '', 'TEST', // 40
-			'', '', ''
-	
-	*/
 	$mapData['France'] = (object) array(
 		'name' => 'France',
 		'key' => 'France',
@@ -123,7 +110,7 @@
 		'key' => 'Italy',
 		'tiles' => 81,
 		'maxPlayers' => 8,
-		'startTiles' => [0, 1, 2, 3, 4, 5, 6, 7],
+		'startTiles' => [45, 39, 13, 29, 6, 9, 72, 73],
 		'sizeX' => 1920,
 		'sizeY' => 2006,
 		'tileNames' => array(
@@ -143,10 +130,7 @@
 			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 
 			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //70
 			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //80
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //90
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax'
+			'Oyonnax' //80
 		)
 	);
 	$mapData['TEMPLATE'] = (object) array(

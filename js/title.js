@@ -297,6 +297,11 @@ var title = {
 			name: 'France',
 			tiles: 81,
 			players: 8
+		},
+		Italy: {
+			name: 'Italy',
+			tiles: 81,
+			players: 8
 		}
 	},
 	chatDrag: false,

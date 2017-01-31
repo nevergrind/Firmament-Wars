@@ -104,7 +104,6 @@ function showTarget(e, hover, skipOldTgtUpdate){
 	}
 	if (typeof e === 'object'){
 		var tileId = e.id.slice(4)*1;
-		// console.info('tileId: ', tileId);
 		var d = game.tiles[tileId];
 		var cacheOldTgt = my.tgt;
 		if (!hover){
