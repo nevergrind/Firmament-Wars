@@ -537,7 +537,7 @@ $(document).on('keyup', function(e) {
 				my.attackOn = false;
 				my.attackName = '';
 				my.clearHud();
-				showTarget(document.getElementById('land' + my.tgt));
+				showTarget(document.getElementById('land' + my.tgt)); 
 				console.clear();
 			} else if (x === 65){
 				// a

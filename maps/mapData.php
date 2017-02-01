@@ -114,23 +114,23 @@
 		'sizeX' => 1920,
 		'sizeY' => 2006,
 		'tileNames' => array(
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //0
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //10
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //20
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //30
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //40
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //50
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //60
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //70
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 
-			'Oyonnax' //80
+			'Bologna', 'Parma', 'Varzi', 'Chioggia', 'Ferrara', //0
+			'Rimini', 'Pesaro', 'Genoa', 'Savona', 'Ventimiglia', 
+			'La Spezia', 'Carbonia', 'Oristano', 'Sassari', 'Olbia', //10
+			'Nuoro', 'Arbatax', 'Cagliari', 'Grosseto', 'Livorno', 
+			'Viareggio', 'Florence', 'Bibbiena', 'Paganico', 'Policoro', //20
+			'Potenza', 'Cosenza', 'Catanzaro', 'Reggio Calabria', 'Naples', 
+			'Benevento', 'Avellino', 'Pompeii', 'Termoli', 'Isernia', //30
+			'Bari', 'Foggia', 'Barletta', 'Brindisi', 'Lecce', 
+			'Taranto', 'Marsala', 'Palermo', 'Messina', 'Catania', //40
+			'Syracuse', 'Agrigento', 'Vasto', 'Pescara', 'Avezzano', 
+			'Latina', 'Rome', 'Tivoli', 'Terracina', 'Ancona', //50
+			'Teramo', 'Montesilvano', "L'Aquila", 'Turin', 'Biella', 
+			'Premia', 'Varese', 'Allessandria', 'Cuneo', 'Aosta', //60
+			'Clusone', 'Sondrio', 'Breno', 'Verona', 'Voghera', 
+			'Pavia', 'Milan', 'Como', 'Udine', 'Pordenone', //70
+			'Bressanone', 'Bolzano', 'Venice', 'Vicenza', 'Treviso', 
+			'Belluno' //80
 		)
 	);
 	$mapData['TEMPLATE'] = (object) array(
@@ -163,4 +163,4 @@
 			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //90
 			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax'
 		)
-	);
+	);;

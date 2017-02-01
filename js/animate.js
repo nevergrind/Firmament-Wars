@@ -726,11 +726,11 @@ var animate = {
 			e2 = document.getElementById('worldWater2'),
 			e3 = document.getElementById('worldWater3');
 		// animate water
-		(function(Math, TweenMax, Sine){
+		(function(Math, TweenMax){
 			TweenMax.set(e1, {
 				alpha: 1
 			});
-			var delay = 1;
+			var delay = 2;
 			(function water1(x){
 				x += 4;
 				TweenMax.to(e1, delay, {
@@ -745,8 +745,7 @@ var animate = {
 						TweenMax.delayedCall(delay, function(){
 							water1(x);
 						});
-					},
-					ease: Power1.easeOut
+					}
 				});
 			})(0);
 			
@@ -765,8 +764,7 @@ var animate = {
 							TweenMax.delayedCall(delay, function(){
 								water2(x);
 							});
-						},
-						ease: Power1.easeOut
+						}
 					});
 				})(24);
 			});
@@ -786,13 +784,12 @@ var animate = {
 							TweenMax.delayedCall(delay, function(){
 								water3(x);
 							});
-						},
-						ease: Power1.easeOut
+						}
 					});
 				})(48);
 			});
 			
-		})(Math, TweenMax, Sine);
+		})(Math, TweenMax);
 	},
 	glowTile: function(oldTgt, newTgt){
 		var e1 = document.getElementById('land' + oldTgt),
