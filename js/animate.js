@@ -106,7 +106,7 @@ var animate = {
 	},
 	initMapBars: function(i, x, y){
 		var e = DOM['unit' + i];
-		var x = e.getAttribute('x') - 24;
+		var x = e.getAttribute('x') - 17;
 		var y = e.getAttribute('y') - 24;
 		
 		var boxHeight = 6;
@@ -792,17 +792,17 @@ var animate = {
 		})(Math, TweenMax);
 	},
 	glowTile: function(oldTgt, newTgt){
-		var e1 = document.getElementById('land' + oldTgt),
-			e2 = document.getElementById('land' + newTgt);
-		TweenMax.set(e1, {
-			stroke: '#85daf2',
+		TweenMax.set(DOM['land' + oldTgt], {
+			stroke: '#000000', 
 			filter: '',
 			strokeWidth: 1
 		});
-		TweenMax.set(e2, {
-			stroke: '#aaeeff',
-			filter: 'url(#glow)',
-			strokeWidth: 2
+		TweenMax.set(DOM['land' + newTgt], {
+			stroke: g.color[game.player[!game.tiles[newTgt].player ? my.player : game.tiles[newTgt].player].playerColor], filter: "url(#filterGlow)",
+			strokeWidth: 3
+		});
+		TweenMax.set(DOM['land' + newTgt], {
+			stroke: "hsl(+=0%, +=0%, +=25%)",
 		});
 		game.updateTopTile(newTgt);
 	}

@@ -208,12 +208,10 @@ var events = {
 					src: "images/flags/" + my.selectedFlagFull,
 					title: my.selectedFlag
 				});
-				$("#flagPurchased").css("display", "block");
 				Msg("Your nation's flag is now: " + my.selectedFlag);
 				document.getElementById('selectedFlag').textContent = my.selectedFlag;
 				$("[title]").tooltip('fixTitle');
 			}).fail(function(e){
-				$("#flagPurchased").css("display", "none");
 				$("#offerFlag").css("display", "block");
 			}).always(function(){
 				g.unlock(1);
@@ -537,7 +535,7 @@ $(document).on('keyup', function(e) {
 				my.attackOn = false;
 				my.attackName = '';
 				my.clearHud();
-				showTarget(document.getElementById('land' + my.tgt)); 
+				showTarget(DOM['land' + my.tgt]); 
 				console.clear();
 			} else if (x === 65){
 				// a

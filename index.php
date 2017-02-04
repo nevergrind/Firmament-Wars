@@ -543,10 +543,10 @@
 							echo '
 							<input id="updateNationName" class="form-control" type="text" maxlength="32" autocomplete="off" size="24" aria-describedby="updateNationNameStatus" placeholder="Enter New Nation Name">
 							<span class="input-group-btn">
-							<button id="submitNationName" class="btn fwBlue shadow4" type="button">
-								Update Nation Name
-							</button>
-						</span>';
+								<button id="submitNationName" class="btn fwBlue shadow4" type="button">
+									Update Nation Name
+								</button>
+							</span>';
 						} else {
 							echo "Unlock the complete game to update your nation's name";
 						}
@@ -577,10 +577,14 @@
 						<ul id="flagDropdown" class="dropdown-menu fwDropdown"></ul>
 					</div>
 					<div id="flagPurchased" class="flagPurchasedStatus">
-						<h4 class="text-center text-success shadow4">
-							<i class="fa fa-check"></i>
-							&ensp;Flag Unlocked!
-						</h4>
+						<?php
+							if (!$_SESSION['fwpaid']){
+								echo 
+								'<div class="text-warning text-small">
+									Free flags: Algeria, Botswana, Morocco, Malaysia, Pakistan, Croatia, Estonia, Montenegro, Uzbekistan, Flanders, Jordan, Bahamas, Honduras, New Zealand, Chile, Peru
+								</div>';
+							}
+						?>
 					</div>
 				</div>
 				<div class="col-xs-6">
@@ -589,7 +593,7 @@
 						if (isset($_SESSION['flag'])){ echo $flag; }
 					?>">
 					<div id="offerFlag" class="flagPurchasedStatus shadow4">
-						<h5 class="text-center">Unlock the complete game to change your flag</h5>
+						<h5 class="text-center">Unlock the complete game to unlock all flags</h5>
 					</div>
 				</div>
 			</div>

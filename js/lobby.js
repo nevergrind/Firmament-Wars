@@ -845,8 +845,8 @@ function loadGameState(){
 			for (var i=0, len=a.length; i<len; i++){
 				// set flag position and value
 				var t = game.tiles[i];
-				var x = a[i].getAttribute('x') - 24;
-				var y = a[i].getAttribute('y') - 24;
+				var x = a[i].getAttribute('x') - 20;
+				var y = a[i].getAttribute('y') - 30;
 				var flag = 'blank.png';
 				if (t !== undefined){
 					if (!t.flag && t.units){ // FIX TODO??
@@ -858,8 +858,8 @@ function loadGameState(){
 				// dynamically add svg flag image to the map
 				var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
 				svg.id = 'flag' + i;
-				svg.setAttributeNS(null, 'height', 24);
-				svg.setAttributeNS(null, 'width', 24);
+				svg.setAttributeNS(null, 'height', 40);
+				svg.setAttributeNS(null, 'width', 40);
 				svg.setAttributeNS(null,"x",x);
 				svg.setAttributeNS(null,"y",y + 5);
 				svg.setAttributeNS(null,"class","mapFlag");
@@ -870,9 +870,9 @@ function loadGameState(){
 					if (game.tiles[i].capital){
 						var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
 						svg.id = 'mapCapital' + i;
-						svg.setAttributeNS(null, 'height', 30);
-						svg.setAttributeNS(null, 'width', 30);
-						svg.setAttributeNS(null,"x",x - 15);
+						svg.setAttributeNS(null, 'height', 32);
+						svg.setAttributeNS(null, 'width', 32);
+						svg.setAttributeNS(null,"x",x - 16);
 						svg.setAttributeNS(null,"y",y + 17);
 						svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/capital.png');
 						mapCapitals.appendChild(svg);
@@ -907,7 +907,9 @@ function loadGameState(){
 					<div class="flag '+ p.flagClass +'" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ p.flagShort + '"></div>'+ 
 					teamIcon(p.team) +
 					'<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>\
-					<span class="diploNames large" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">' + (my.player === p.player ? '<b>'+ p.nation +'</b>' : p.nation) + '</span>\
+					<span class="diploNames'+
+					(my.player === p.player ? ' text-warning' : '') +
+					'" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">'+ p.nation +'</span>\
 				</div>';
 				return str;
 			}

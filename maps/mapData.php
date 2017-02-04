@@ -87,20 +87,20 @@
 		'sizeY' => 1592,
 		'tileNames' => array(
 			'Oyonnax', 'Maubeuge', 'Nevers', 'Digne', 'Nice', //0
-			'Lyon', 'Charleville-Mézières', 'Toulouse', 'Châlons-en-Champagne', 'Narbonne', 
-			'Saint-Flour', 'Haguenau', 'Marseille', 'Caen', 'Égletons', //10
-			'Angoulême', 'Rochefort', 'Melun', 'Limoges', 'Ajaccio', 
+			'Lyon', 'Charleville-Mezieres', 'Toulouse', 'Chalons-en-Champagne', 'Narbonne', 
+			'Saint-Flour', 'Haguenau', 'Marseille', 'Caen', 'Egletons', //10
+			'Angouleme', 'Rochefort', 'Melun', 'Limoges', 'Ajaccio', 
 			'Langres', 'Saint-Brieuc', 'La Souterraine', 'Cholet', 'Bergerac', //20
-			'Besançon', 'Valence', 'Paris', 'Lisieux', 'Versailles', 
+			'Besancon', 'Valence', 'Paris', 'Lisieux', 'Versailles', 
 			'Brest', 'Nimes', 'Orthez', 'Bordeaux', 'Bastia', //30
-			'Saint-Étienne', 'Bar-le-Duc', 'Langres', 'Thonon-les-Bains', 'Bellac', 
-			'Briançon', 'Larrau', 'Montpellier', 'St-Malo', 'Châteauroux', //40
+			'Saint-Etienne', 'Bar-le-Duc', 'Langres', 'Thonon-les-Bains', 'Bellac', 
+			'Briancon', 'Larrau', 'Montpellier', 'St-Malo', 'Chateauroux', //40
 			'Tours', 'Grenoble', 'Champagnole', 'Sabres', 'Chartres', 
-			'Lyon', 'Nantes', 'Évry', 'Montauban', 'Agen', //50
+			'Lyon', 'Nantes', 'Evry', 'Montauban', 'Agen', //50
 			'Le Puy', 'Angers', 'Saulces-Monclin', 'Gorron', 'Metz', 
 			'Verdun', 'Lorient', 'Auxerre', 'Calais', 'Montdidier', //60
-			'Évreux', 'Vichy', 'Bayonne', 'Perpignan', 'Dijon', 
-			'Alençon', 'Meaux', 'Le Havre', 'Amiens', 'Rodez', //70
+			'Evreux', 'Vichy', 'Bayonne', 'Perpignan', 'Dijon', 
+			'Alencon', 'Meaux', 'Le Havre', 'Amiens', 'Rodez', //70
 			'Mulhouse', 'Cannes', 'La Roche-sur-Yon', 'Poitiers', 'Nancy', 
 			'Nangis' //80
 		)
@@ -133,6 +133,53 @@
 			'Belluno' //80
 		)
 	);
+	$mapData['Japan'] = (object) array(
+		'name' => 'Japan',
+		'key' => 'Japan',
+		'tiles' => 47,
+		'maxPlayers' => 6,
+		'startTiles' => [29, 11, 3, 16, 31, 14], 
+		'sizeX' => 1920,
+		'sizeY' => 1920,
+		'tileNames' => array(
+			'Aichi', 'Akita', 'Aomori', 'Chiba', 'Ehime', 
+			'Fukui', 'Fukuoka', 'Fukushima', 'Gifu', 'Gunma', 
+			'Hyogo', 'Hokkaido', 'Hiroshima', 'Ibaraki', 'Ishikawa', // 10
+			'Iwate', 'Kochi', 'Kogawa', 'Kumamoto', 'Kanagawa', 
+			'Kagoshima', 'Kyoto', 'Mie', 'Miyaki', 'Miyazaki', // 20
+			'Niigata', 'Nagano', 'Nara', 'Nagasaki', 'Okinawa', 
+			'Osaka', 'Okayama', 'Oita', 'Saga', 'Shiga', // 30
+			'Shimane', 'Saitama', 'Shizuoka', 'Tochigi', 'Tokyo', 
+			'Tokushima', 'Tottori', 'Toyama', 'Wakayama', 'Yamaguchi', // 40
+			'Yamanashi', 'Yamagata'
+		)
+	);
+	$mapData['Turkey'] = (object) array(
+		'name' => 'Turkey',
+		'key' => 'Turkey',
+		'tiles' => 75,
+		'maxPlayers' => 7,
+		'startTiles' => [48,10,74,36,60,9,65],
+		'sizeX' => 2250,
+		'sizeY' => 1080,
+		'tileNames' => array(
+			'Adana', 'Adiyaman', 'Afyonkarahisar', 'Agri', 'Aksaray', //0
+			'Amasya', 'Ankara', 'Antalya', 'Ardahan', 'Artvin', 
+			'Aydin', 'Balikesir', 'Bartin', 'Siirt', 'Bayburt', //10
+			'Bilecik', 'Bingol', 'Bitlis', 'Bolu', 'Burdur', 
+			'Bursa', 'Canakkale', 'Cankiri', 'Corum', 'Denizli', //20
+			'Diyarbakir', 'Sakarya', 'Edirne', 'Elazig', 'Erzincan', 
+			'Erzurum', 'Eskisehir', 'Gaziantep', 'Giresun', 'Gumushane', //30
+			'Hakkari', 'Hatay', 'Mersin', 'Igdir', 'Isparta', 
+			'Istanbul', 'Izmir', 'Kahramanmaras', 'Karaman', 'Kars', //40
+			'Kastamonu', 'Kayseri', 'Kirikkale', 'Kirklarelli', 'Kirsehir', 
+			'Kocaeli', 'Konya', 'Kutayah', 'Malatya', 'Manisa', //50
+			'Mardin', 'Mugla', 'Mus', 'Nevsehir', 'Nigde', 
+			'Ordu', 'Rize', 'Samsun', 'Sanliurfa', 'Sinop', //60
+			'Sirnak', 'Sivas', 'Tekirdag', 'Tokat', 'Trabzon', 
+			'Tunceli', 'Usak', 'Van', 'Yozgat', 'Zonguldak' //70
+		)
+	);
 	$mapData['TEMPLATE'] = (object) array(
 		'name' => 'TEMPLATE',
 		'key' => 'TEMPLATE',
@@ -142,25 +189,25 @@
 		'sizeX' => 1920,
 		'sizeY' => 1080,
 		'tileNames' => array(
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //0
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //10
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //20
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //30
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //40
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //50
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //60
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //70
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //80
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', //90
-			'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax', 'Oyonnax'
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //0
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //10
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //20
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //30
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //40
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //50
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //60
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //70
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //80
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //90
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX'
 		)
-	);;
+	);

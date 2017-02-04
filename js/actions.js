@@ -17,7 +17,7 @@ var action = {
 		}
 		Msg(msg, 1.5);
 		my.clearHud();
-		showTarget(document.getElementById('land' + my.tgt));
+		showTarget(DOM['land' + my.tgt]);
 	},
 	target: function(o){
 		my.targetData = o;
@@ -29,7 +29,7 @@ var action = {
 			my.attackOn = false;
 			my.attackName = '';
 			my.clearHud();
-			showTarget(document.getElementById('land' + my.tgt));
+			showTarget(DOM['land' + my.tgt]);
 			return;
 		}
 		if (my.moves < o.cost){
@@ -83,7 +83,7 @@ var action = {
 		showTarget(that);
 		my.clearHud();
 		// send attack to server
-		var e1 = document.getElementById('land' + attacker);
+		var e1 = DOM['land' + attacker];
 		$.ajax({
 			url: 'php/attackTile.php',
 			data: {
@@ -219,7 +219,7 @@ var action = {
 			setProduction(data);
 			if (oldTgt === my.tgt){
 				game.tiles[my.tgt].defense++;
-				showTarget(document.getElementById('land' + my.tgt));
+				showTarget(DOM['land' + my.tgt]);
 			}
 		}).fail(function(e){
 			console.info(e.responseText);
@@ -243,7 +243,7 @@ var action = {
 			return;
 		}
 		my.clearHud();
-		showTarget(document.getElementById('land' + attacker));
+		showTarget(DOM['land' + attacker]);
 		// send attack to server
 		$.ajax({
 			url: 'php/fireCannons.php',
@@ -279,7 +279,7 @@ var action = {
 			return;
 		}
 		my.clearHud();
-		showTarget(document.getElementById('land' + attacker));
+		showTarget(DOM['land' + attacker]);
 		// send attack to server
 		$.ajax({
 			url: 'php/launchMissile.php',
@@ -332,7 +332,7 @@ var action = {
 			return;
 		}
 		my.clearHud();
-		showTarget(document.getElementById('land' + attacker));
+		showTarget(DOM['land' + attacker]);
 		// send attack to server
 		$.ajax({
 			url: 'php/launchNuke.php',
@@ -341,7 +341,7 @@ var action = {
 				defender: defender
 			}
 		}).done(function(data) {
-			var e1 = document.getElementById('land' + defender),
+			var e1 = DOM['land' + defender],
 				box = e1.getBBox();
 			setTimeout(function(){
 				$.ajax({

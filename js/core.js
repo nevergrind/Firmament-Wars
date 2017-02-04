@@ -602,7 +602,7 @@ var game = {
 					if (DOM['flag' + i] !== null){
 						DOM['flag' + i].href.baseVal = "images/flags/" + newFlag;
 					}
-					TweenMax.set(document.getElementById('land' + i), {
+					TweenMax.set(DOM['land' + i], {
 						fill: g.color[game.player[d.player].playerColor]
 					});
 				}
@@ -618,7 +618,7 @@ var game = {
 				}
 				if (updateTargetStatus){
 					// update this tile within loop cycle?
-					showTarget(document.getElementById('land' + i));
+					showTarget(DOM['land' + i]);
 					game.updateTopTile(i);
 				}
 			}
@@ -631,10 +631,10 @@ var game = {
 		game.tiles[i].defense = data.defense;
 		animate.updateMapBars(i);
 		if (my.tgt === i){
-			showTarget(document.getElementById('land' + my.tgt));
+			showTarget(DOM['land' + my.tgt]);
 		}
 	},
-	updateTile: function(d, override){
+	updateTile: function(d){
 		var i = d.tile,
 			p = d.player;
 		// only update client data
@@ -651,7 +651,7 @@ var game = {
 			DOM['flag' + i].href.baseVal = "images/flags/" + newFlag;
 		}
 		// land color
-		var land = document.getElementById('land' + i);
+		var land = DOM['land' + i];
 		TweenMax.set(land, {
 			fill: g.color[game.player[p].playerColor]
 		});
@@ -841,7 +841,7 @@ var my = {
 				x: x * g.resizeX,
 				y: y * g.resizeY
 			});
-			showTarget(document.getElementById('land' + tile), false, 1);
+			showTarget(DOM['land' + tile], false, 1);
 			my.flashTile(tile);
 		}
 	},

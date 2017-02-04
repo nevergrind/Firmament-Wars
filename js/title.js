@@ -103,7 +103,6 @@ var title = {
 									// replace player flag
 									var flagElement = document.getElementById("titlePlayerFlag_" + account);
 									if (flagElement !== null){
-										console.info(flag);
 										var flagClass = flag.split(".");
 										flagElement.className = 'flag ' + flagClass[0].replace(/ /g, "-");
 									}
@@ -288,11 +287,6 @@ var title = {
 			tiles: 78,
 			players: 8
 		},
-		UnitedStates: {
-			name: 'United States',
-			tiles: 48,
-			players: 4
-		},
 		France: {
 			name: 'France',
 			tiles: 81,
@@ -302,6 +296,21 @@ var title = {
 			name: 'Italy',
 			tiles: 81,
 			players: 8
+		},
+		Japan: {
+			name: "Japan",
+			tiles: 47,
+			players: 6
+		},
+		Turkey: {
+			name: "Turkey",
+			tiles: 75,
+			players: 7
+		},
+		UnitedStates: {
+			name: 'United States',
+			tiles: 48,
+			players: 4
 		}
 	},
 	chatDrag: false,

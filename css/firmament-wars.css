@@ -32,10 +32,11 @@ body{
 }
 header{
 	position: absolute;
+	font-family: Cinzel, Palatino Linotype, serif;
 	top: 0%;
 	left: 0%;
 	width: 100%;
-	font-size: 1.375em;
+	font-size: 1.275em;
 	padding: .25em .5em;
 	word-spacing: .05em;
 }
@@ -1083,6 +1084,7 @@ table td, .table th, .table td {
 	fill-opacity: 1;
 	fill-rule:evenodd;
 	stroke: #85daf2;
+	stroke: #000000;
 	stroke-opacity: 1;
 	stroke-width: 1;
 	overflow: visible;
@@ -1092,8 +1094,9 @@ table td, .table th, .table td {
 	fill: #666;
 	stroke: #111;
 }
-.landOutline{
-	stroke: #85daf2;
+#topTile{
+	filter: url(#filterGlow);
+	stroke-width: 3;
 }
 .unit{
 	visibility: hidden;
@@ -1134,7 +1137,7 @@ table td, .table th, .table td {
 text{
 	fill: rgba(255,255,255,1);
 	stroke: rgba(0,0,0,1);
-	stroke-width: 3px;
+	stroke-width: 3;
 	stroke-linejoin: round;
 	paint-order: stroke;
 }
@@ -1664,7 +1667,7 @@ table {
 	height:32px;
 }
 #flagPurchased{
-	display: none;
+	margin: .25em .5em;
 }
 #offerFlag{
 	position: absolute;
@@ -2214,7 +2217,10 @@ table {
 	color: #d11;
 }
 .text-hotkey{
-	color: #5dd;
+	color: #ff0;
+}
+.text-small{
+	font-size: 85%;
 }
 .input-group-addon{
 	text-shadow: none;
