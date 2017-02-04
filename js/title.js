@@ -307,6 +307,11 @@ var title = {
 			tiles: 75,
 			players: 7
 		},
+		UnitedKingdom: {
+			name: "United Kingdom",
+			tiles: 70,
+			players: 7
+		},
 		UnitedStates: {
 			name: 'United States',
 			tiles: 48,
