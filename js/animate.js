@@ -793,16 +793,17 @@ var animate = {
 	},
 	glowTile: function(oldTgt, newTgt){
 		TweenMax.set(DOM['land' + oldTgt], {
-			stroke: '#000000', 
-			filter: '',
+			fill: g.color[game.player[game.tiles[oldTgt].player].playerColor],
+			stroke: '#000000',
 			strokeWidth: 1
 		});
 		TweenMax.set(DOM['land' + newTgt], {
-			stroke: g.color[game.player[!game.tiles[newTgt].player ? my.player : game.tiles[newTgt].player].playerColor], filter: "url(#filterGlow)",
+			fill: g.color[game.player[!game.tiles[newTgt].player ? my.player : game.tiles[newTgt].player].playerColor],
+			stroke: '#aaaaaa',
 			strokeWidth: 3
 		});
 		TweenMax.set(DOM['land' + newTgt], {
-			stroke: "hsl(+=0%, +=0%, +=25%)",
+			fill: "hsl(+=0%, +=0%, +=20%)",
 		});
 		game.updateTopTile(newTgt);
 	}

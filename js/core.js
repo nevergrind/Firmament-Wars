@@ -850,6 +850,7 @@ var my = {
 		if (!my.attackOn){
 			// flag unit text
 			if (game.tiles[tile].units){
+				/*
 				TweenMax.to(DOM['unit' + tile], .05, {
 					startAt: {
 						transformOrigin: '50% 50%',
@@ -860,6 +861,7 @@ var my = {
 					repeat: 6,
 					yoyo: true
 				});
+				*/
 				TweenMax.set(DOM['unit' + tile], {
 					visibility: 'visible'
 				});

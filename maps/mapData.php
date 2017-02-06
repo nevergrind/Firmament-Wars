@@ -183,32 +183,26 @@
 	$mapData['UnitedKingdom'] = (object) array(
 		'name' => 'United Kingdom',
 		'key' => 'UnitedKingdom',
-		'tiles' => 70,
-		'maxPlayers' => 7,
-		'startTiles' => [0, 1, 2, 3, 4, 5, 6],
+		'tiles' => 69,
+		'maxPlayers' => 8,
+		'startTiles' => [35, 55, 50, 33, 40, 45, 5, 62],
 		'sizeX' => 1920,
 		'sizeY' => 2200,
 		'tileNames' => array(
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //0
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //10
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //20
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //30
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //40
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //50
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //60
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //70
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //80
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //90
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX'
+			'Paisley', 'Stirling', 'Glasgow', 'Aberdeen', 'Dundee', //0
+			'Edinburgh', 'Middlesbrough', 'Alnwick', 'Southampton', 'Northampton', 
+			'Cheltenham', 'Windsor', 'Luton', 'Bristol', 'Taunton', //10
+			'Exeter', 'Weymouth', 'Peterborough', 'Leicester', 'Hull', 
+			'Scunthorpe', 'Sheffield', 'London', 'Grimsby', 'Belfast', //20
+			'Colerane', 'Omagh', 'Armagh', 'Newcastle', 'Cookstown', 
+			'Ballymena', 'Swansea', 'Aberystwyth', 'Haverfordwest', 'Chester', //30
+			'Falmouth', 'Newtown', 'Newport', 'Scarborough', 'Shrewsbury', 
+			'Preston', 'Rhyl', 'Holyhead', 'Colwyn Bay', 'Bangor', //40
+			'Enniskillen', 'Dumfries', 'Carlisle', 'Chelmsford', 'Ipswich', 
+			'Norwich', 'Hastings', 'Canterbury', 'Inverness', 'Oban', //50
+			'Brighton', 'Kettering', 'Coventry', 'Reading', 'Guildford', 
+			'Bath', 'Nottingham', 'Stornoway', 'Liverpool', 'Worcester', //60
+			'Oxford', 'Birmingham', 'Leeds', 'Doncaster'
 		)
 	);
 	$mapData['TEMPLATE'] = (object) array(

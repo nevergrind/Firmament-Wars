@@ -1095,8 +1095,6 @@ table td, .table th, .table td {
 	stroke: #111;
 }
 #topTile{
-	filter: url(#filterGlow);
-	stroke-width: 3;
 }
 .unit{
 	visibility: hidden;

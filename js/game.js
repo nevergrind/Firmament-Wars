@@ -171,6 +171,7 @@ function showTarget(e, hover, skipOldTgtUpdate){
 function setTileUnits(i, unitColor){
 	DOM['unit' + i].textContent = game.tiles[i].units === 0 ? "" : ~~game.tiles[i].units;
 	if (unitColor === '#00ff00'){
+		/*
 		TweenMax.to(DOM['unit' + i], .05, {
 			startAt: {
 				transformOrigin: (game.tiles[i].units.length * 3) + ' 12',
@@ -181,12 +182,13 @@ function setTileUnits(i, unitColor){
 			repeat: 12,
 			yoyo: true
 		});
+		*/
 	} else {
 		TweenMax.to(DOM['unit' + i], .5, {
 			startAt: {
 				fill: '#ff0000'
 			},
-			ease: Power2.easeIn,
+			ease: Power4.easeIn,
 			fill: '#ffffff'
 		});
 	}
