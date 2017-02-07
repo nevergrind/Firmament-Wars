@@ -727,8 +727,8 @@
 						<span class='text-hotkey'>A</span>ttack
 					</div>
 					<div class="col-xs-4 tight2 text-right crystalCost">
-						<i class="glyphicon glyphicon-oil moves pointer actionBolt"></i>
-						<span id='attackCost'>2</span>
+						<i class="fa fa-bolt moves pointer actionBolt">
+						</i><span id='attackCost'>2</span>
 					</div>
 				</div>
 				
@@ -740,8 +740,8 @@
 						<span class='text-hotkey'>S</span>plit Attack
 					</div>
 					<div class="col-xs-4 tight2 text-right crystalCost">
-						<i class="glyphicon glyphicon-oil moves pointer actionBolt"></i>
-						<span id="splitAttackCost">1</span>
+						<i class="fa fa-bolt moves pointer actionBolt">
+						</i><span id="splitAttackCost">1</span>
 					</div>
 				</div>
 				
@@ -753,8 +753,8 @@
 						<span class='text-hotkey'>R</span>ecruit
 					</div>
 					<div class="col-xs-4 tight2 text-right crystalCost">
-						<i class="glyphicon glyphicon-oil moves pointer actionBolt"></i>
-						<span id="recruitCost">4</span>
+						<i class="fa fa-bolt moves pointer actionBolt">
+						</i><span id="recruitCost">4</span>
 					</div>
 				</div>
 				
@@ -766,7 +766,7 @@
 						<span class='text-hotkey'>D</span>eploy
 					</div>
 					<div class="col-xs-4 tight2 text-right crystalCost">
-						<i class="fa fa-diamond production pointer actionBolt"></i>
+						<i class="fa fa-gavel production pointer actionBolt"></i>
 						<span id='deployCost'>20</cost>
 					</div>
 				</div>
@@ -779,7 +779,7 @@
 						Fire <span class='text-hotkey'>C</span>annons
 					</div>
 					<div class="col-xs-4 tight2 text-right crystalCost">
-						<i class="fa fa-diamond production pointer actionBolt"></i>
+						<i class="fa fa-gavel production pointer actionBolt"></i>
 						<span id='cannonsCost'>40</span>
 					</div>
 				</div>
@@ -792,7 +792,7 @@
 						<span class='text-hotkey'>B</span>uild <span id="buildWord">Bunker</span>
 					</div>
 					<div class="col-xs-4 tight2 text-right crystalCost">
-						<i class="fa fa-diamond production pointer actionBolt"></i>
+						<i class="fa fa-gavel production pointer actionBolt"></i>
 						<span id="buildCost">80</span>
 					</div>
 				</div>
@@ -805,7 +805,7 @@
 						Launch <span class='text-hotkey'>M</span>issile
 					</div>
 					<div class="col-xs-4 tight2 text-right crystalCost">
-						<i class="fa fa-diamond production pointer actionBolt"></i>
+						<i class="fa fa-gavel production pointer actionBolt"></i>
 						<span id='missileCost'>60</span>
 					</div>
 				</div>
@@ -816,7 +816,7 @@
 					title="Launch a nuclear weapon at any enemy territory. Kills 80-99% of armies and destroys all structures.">
 					<div class="col-xs-8">Launch <span class='text-hotkey'>N</span>uke</div>
 					<div class="col-xs-4 tight2 text-right crystalCost">
-						<i class="fa fa-diamond production pointer actionBolt"></i>
+						<i class="fa fa-gavel production pointer actionBolt"></i>
 						<span id='nukeCost'>400</span>
 					</div>
 				</div>
@@ -836,7 +836,7 @@
 						<span class='text-hotkey'>G</span>unpowder
 					</div>
 					<div class="col-xs-4 tight2 text-right crystalCost">
-						<i class="fa fa-diamond production pointer actionBolt"></i>
+						<i class="fa fa-gavel production pointer actionBolt"></i>
 						<span id='gunpowderCost'>80</span>
 					</div>
 				</div>
@@ -849,7 +849,7 @@
 						<span class='text-hotkey'>E</span>ngineering
 					</div>
 					<div class="col-xs-4 tight2 text-right crystalCost">
-						<i class="fa fa-diamond production pointer actionBolt"></i>
+						<i class="fa fa-gavel production pointer actionBolt"></i>
 						<span id='engineeringCost'>120</span>
 					</div>
 				</div>
@@ -862,7 +862,7 @@
 						Roc<span class='text-hotkey'>k</span>etry
 					</div>
 					<div class="col-xs-4 tight2 text-right crystalCost">
-						<i class="fa fa-diamond production pointer actionBolt"></i>
+						<i class="fa fa-gavel production pointer actionBolt"></i>
 						<span id='rocketryCost'>200</span>
 					</div>
 				</div>
@@ -875,7 +875,7 @@
 						A<span class='text-hotkey'>t</span>omic Theory
 					</div>
 					<div class="col-xs-4 tight2 text-right crystalCost">
-						<i class="fa fa-diamond production pointer actionBolt"></i>
+						<i class="fa fa-gavel production pointer actionBolt"></i>
 						<span id='atomicTheoryCost'>250</span>
 					</div>
 				</div>
@@ -888,7 +888,7 @@
 						<span class='text-hotkey'>F</span>uture Tech
 					</div>
 					<div class="col-xs-4 tight2 text-right crystalCost">
-						<i class="fa fa-diamond production pointer actionBolt"></i>
+						<i class="fa fa-gavel production pointer actionBolt"></i>
 						<span id='futureTechCost'>1000</span>
 					</div>
 				</div>
@@ -901,8 +901,8 @@
 			
 			<div class="row">
 				<div class="col-xs-12 no-padding moves">
-					<span data-toggle="tooltip" title="Oil is used to move and recruit armies.">
-						Oil <i class="glyphicon glyphicon-oil"></i>
+					<span data-toggle="tooltip" title="Energy is used to move and recruit armies.">
+						Energy <i class="fa fa-bolt"></i>
 					</span>
 				</div>
 			</div>
@@ -910,7 +910,7 @@
 				<div class="col-xs-12 no-padding">
 					<div class="resourceIndicator">
 						<span id="moves">2</span> 
-						<span data-toggle="tooltip" title="Oil per turn">
+						<span data-toggle="tooltip" title="Energy per turn">
 							(+<span id="sumMoves">4</span>)
 						</span>
 					</div>
@@ -923,7 +923,7 @@
 						+<span id="turnBonus">0</span>%
 					</span>
 					<span data-toggle="tooltip" title="Crystals are used to deploy troops, build structures, and research technology.">
-						Crystals <i class="fa fa-diamond"></i>
+						Crystals <i class="fa fa-gavel"></i>
 					</span>
 				</div>
 			</div>
@@ -999,6 +999,7 @@
 			</div>
 		</div>
 		
+		<div id="hotkey-ui" class="shadow4">Press V to toggle the UI</div>
 		<div id="diplomacy-ui" class="shadow4 blueBg gameWindow"></div>
 		
 		<table id="chat-ui" class="fw-text no-select no-point">

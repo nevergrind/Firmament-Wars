@@ -546,7 +546,7 @@ var stats = {
 			<img class="statsFlags" src="images/flags/'+ flag +'">\
 			<div class="statsPlayerWrap">\
 				<div class="statsAccount chat-warning nowrap">\
-					<i class="fa fa-gavel diploSquare statsGov player'+ i +'"></i>';
+					<i class="fa '+ lobby.governmentIcon(p.government) +' diploSquare statsGov player'+ i +'"></i>';
 					if (g.teamMode){
 						str += '<span class="diploTeam">'+ game.player[i].team +'</span>';
 					}

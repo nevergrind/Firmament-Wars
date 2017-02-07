@@ -526,6 +526,7 @@ $(document).on('keyup', function(e) {
 				toggleChatMode();
 			}
 		} else {
+			console.info(x);
 			// game hotkeys
 			if (x === 13){
 				// enter

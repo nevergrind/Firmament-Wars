@@ -33,7 +33,7 @@ var action = {
 			return;
 		}
 		if (my.moves < o.cost){
-			action.error('Not enough oil!');
+			action.error('Not enough energy!');
 			return;
 		}
 		if (game.tiles[my.tgt].units < o.minimum){
@@ -77,7 +77,7 @@ var action = {
 		}
 		if ((my.moves < 2 && !my.splitAttack) ||
 			(my.moves < 1 && my.splitAttack) ){
-			action.error('Not enough oil!');
+			action.error('Not enough energy!');
 			return;
 		}
 		showTarget(that);
@@ -169,7 +169,7 @@ var action = {
 			return;
 		}
 		if (my.moves < my.recruitCost){
-			action.error('Not enough oil!');
+			action.error('Not enough energy!');
 			return;
 		}
 		if (t.units <= 254){

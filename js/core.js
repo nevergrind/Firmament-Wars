@@ -425,8 +425,21 @@ var game = {
 		'Played 200 games and maintained a disconnect rate below 5%',
 	],
 	toggleGameWindows: function(){
+		var x = $("#targetWrap").css('visibility') === 'visible';
 		TweenMax.set(DOM.gameWindows, {
-			visibility: $("#targetWrap").css('visibility') === 'visible' ? 'hidden' : 'visible'
+			visibility: x ? 'hidden' : 'visible'
+		});
+		TweenMax.to('#hotkey-ui', 5, {
+			startAt: {
+				opacity: 1,
+				visibility: x ? 'visible' : 'hidden'
+			},
+			opacity: 1,
+			onComplete: function(){
+				TweenMax.to('#hotkey-ui', .5, {
+					opacity: 0
+				});
+			}
 		});
 	},
 	player: [0,0,0,0,0,0,0,0,0], // cached values on client to reduce DB load
@@ -438,10 +451,6 @@ var game = {
 				DOM['unit' + i] = d.getElementById('unit' + i);
 			}
 		})(document, game.tiles.length);
-	},
-	updateTopTile: function(i){
-		document.getElementById('topTile')
-			.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#land' + i);
 	},
 	chat: function(data){
 		while (DOM.chatContent.childNodes.length > 10) {
@@ -619,7 +628,7 @@ var game = {
 				if (updateTargetStatus){
 					// update this tile within loop cycle?
 					showTarget(DOM['land' + i]);
-					game.updateTopTile(i);
+					//game.updateTopTile(i);
 				}
 			}
 		}).fail(function(data){
@@ -679,7 +688,7 @@ var game = {
 		if (my.tgt === i){
 			// update this tile within loop cycle?
 			showTarget(land);
-			game.updateTopTile(i);
+			//game.updateTopTile(i);
 		}
 	},
 	updateResources: function(){
@@ -877,6 +886,7 @@ var DOM;
 function initDom(){
 	var d = document;
 	DOM = {
+		landWrap: d.getElementById('landWrap'),
 		gameWindows: d.getElementsByClassName('gameWindow'),
 		sumMoves: d.getElementById('sumMoves'),
 		moves: d.getElementById('moves'),

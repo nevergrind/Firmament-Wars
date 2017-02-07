@@ -61,7 +61,7 @@ var lobby = {
 			str = '<div id="lobbyGovName" class="text-primary">Fascism</div>\
 				<div id="lobbyGovPerks">\
 					<div>Fervor doubles bonus troops</div>\
-					<div>3x Starting Oil</div>\
+					<div>2x Starting Energy</div>\
 					<div>Start with Great General</div>\
 					<div>1/2 cost Deploy</div>\
 				</div>';
@@ -460,13 +460,13 @@ var lobby = {
 	},
 	governmentIcon: function(government){
 		var icon = {
-			Despotism: 'fa fa-gavel', //  glyphicon glyphicon-screenshot
+			Despotism: 'fa fa-bullhorn', //  glyphicon glyphicon-screenshot
 			Monarchy: 'glyphicon glyphicon-king',
-			Democracy: 'fa fa-institution', // fa-institution fa fa-balance-scale
+			Democracy: 'fa fa-balance-scale', // fa-institution fa fa-balance-scale
 			Fundamentalism: 'fa fa-book',
 			Fascism: 'glyphicon glyphicon-fire',
 			Republic: 'glyphicon glyphicon-grain', 
-			Communism: 'fa fa-flask'
+			Communism: 'fa fa-globe'
 		};
 		return icon[government];
 	},
@@ -957,7 +957,7 @@ function loadGameState(){
 					stroke: g.color[game.player[my.player].playerColor]
 				});
 				TweenMax.set(DOM.targetLine, {
-					stroke: "hsl(+=0%, +=0%, +=15%)"
+					stroke: "hsl(+=0%, +=0%, +=30%)"
 				});
 				
 				function triggerAction(that){
@@ -976,30 +976,30 @@ function loadGameState(){
 						showTarget(that);
 					}
 				}
-				var zug = $('.land');
+				var zug = $("#gameWrap");
 				// map events
 				if (isMSIE || isMSIE11){
-					zug.on("click", function(){
+					zug.on("click", ".land", function(){
 						triggerAction(this);
 						TweenMax.set(this, {
-							fill: "hsl(+=0%, +=0%, +=15%)"
+							fill: "hsl(+=0%, +=0%, +=20%)"
 						});
 					});
 				} else {
-					zug.on("click", function(e){
+					zug.on("click", ".land", function(e){
 						console.info(this.id, e.offsetX, e.offsetY);
 						triggerAction(this);
 					});
 				}
-				zug.on("mouseenter", function(){
+				zug.on("mouseenter", ".land", function(){
 					my.lastTarget = this;
 					if (my.attackOn){
 						showTarget(this, true);
 					}
 					TweenMax.set(this, {
-						fill: "hsl(+=0%, +=0%, +=15%)"
+						fill: "hsl(+=0%, +=0%, +=20%)"
 					});
-				}).on("mouseleave", function(){
+				}).on("mouseleave", ".land", function(){
 					var land = this.id.slice(4)*1;
 					if (game.tiles.length > 0){
 						var player = game.tiles[land] !== undefined ? game.tiles[land].player : 0,

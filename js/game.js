@@ -134,9 +134,10 @@ function showTarget(e, hover, skipOldTgtUpdate){
 				}
 			});
 			
-			TweenMax.fromTo([DOM.targetLine, DOM.targetLineShadow], .2, {
-				strokeDashoffset: 0
-			}, {
+			TweenMax.to([DOM.targetLine, DOM.targetLineShadow], .2, {
+				startAt: {
+					strokeDashoffset: 0
+				},
 				strokeDashoffset: -12,
 				repeat: -1,
 				ease: Linear.easeNone

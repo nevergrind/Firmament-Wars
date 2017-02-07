@@ -555,7 +555,7 @@ var animate = {
 					ease: Power3.easeOut
 				});
 				TweenMax.to(circ, .05, {
-					fill: "hsl(+=0%, +=0%, +=30%)",
+					fill: "hsl(+=0%, +=0%, +=20%)",
 					repeat: -1,
 					yoyo: true,
 					ease: SteppedEase.config(6)
@@ -795,16 +795,37 @@ var animate = {
 		TweenMax.set(DOM['land' + oldTgt], {
 			fill: g.color[game.player[game.tiles[oldTgt].player].playerColor],
 			stroke: '#000000',
+			strokeDasharray: 'none',
+			strokeDashoffset: 0,
 			strokeWidth: 1
 		});
-		TweenMax.set(DOM['land' + newTgt], {
-			fill: g.color[game.player[!game.tiles[newTgt].player ? my.player : game.tiles[newTgt].player].playerColor],
-			stroke: '#aaaaaa',
-			strokeWidth: 3
+		// move to top
+		var x = DOM['land' + newTgt].cloneNode(true);
+		DOM.landWrap.appendChild(x);
+		DOM['land' + newTgt].parentNode.removeChild(DOM['land' + newTgt]);
+		// cache
+		DOM['land' + newTgt] = document.getElementById('land' + newTgt);
+		
+		var newColor = g.color[game.player[!game.tiles[newTgt].player ? my.player : game.tiles[newTgt].player].playerColor];
+		console.info(newColor);
+		TweenMax.set(DOM['land'+ newTgt], {
+			stroke: g.color[game.player[!game.tiles[newTgt].player ? my.player : game.tiles[newTgt].player].playerColor],
+			onComplete: function(){
+				TweenMax.set(DOM['land' + newTgt], {
+					stroke: "hsl(+=0%, +=0%, +=30%)",
+				});
+			}
 		});
-		TweenMax.set(DOM['land' + newTgt], {
-			fill: "hsl(+=0%, +=0%, +=20%)",
+		TweenMax.to(DOM['land' + newTgt], .9, {
+			startAt: {
+				fill: g.color[game.player[!game.tiles[newTgt].player ? 0 : game.tiles[newTgt].player].playerColor],
+				strokeDasharray: '6,3',
+				strokeWidth: 2,
+				strokeDashoffset: 0
+			},
+			strokeDashoffset: 9,
+			repeat: -1,
+			ease: Linear.easeNone
 		});
-		game.updateTopTile(newTgt);
 	}
 }

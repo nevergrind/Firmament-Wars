@@ -748,6 +748,18 @@ tbody{
 	margin: 0;
 	padding: 0 .5em;
 }
+#hotkey-ui{
+	font-family: Cinzel, Palatino Linotype, serif;
+	color: #8df;
+	position: absolute;
+	top: .25em;
+	font-size: 2em;
+	width: 100%;
+	text-align: center;
+	visibility: hidden;
+	pointer-events: none;
+	z-index: 9999;
+}
 #diploHead{
 	font-family: Cinzel, Palatino Linotype, serif;
 	color: #8df;
@@ -1093,8 +1105,6 @@ table td, .table th, .table td {
 .dead{
 	fill: #666;
 	stroke: #111;
-}
-#topTile{
 }
 .unit{
 	visibility: hidden;
