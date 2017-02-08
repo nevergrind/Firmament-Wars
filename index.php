@@ -499,11 +499,11 @@
 						<label class='control-label'>Map Details</label>
 					</div>
 					<div class='buffer'>
-						<span data-toggle='tooltip' title='Max players on this map'>
+						<span title='Max players on this map'>
 							<i class='fa fa-users'></i>
 							<span id='createGamePlayers'>8</span>
 						</span>&ensp;
-						<span data-toggle='tooltip' title='Number of territories on this map'>
+						<span title='Number of territories on this map'>
 							<i class='fa fa-globe'></i> 
 							<span id='createGameTiles'>83</span>
 						</span>
@@ -695,22 +695,19 @@
 		<div id="ui2" class="blueBg gameWindow">
 			<div id="ui2-head" class="stagBlue">
 				<span id='manpowerWrap' class="manpower pull-left">
-					<span data-toggle="tooltip" 
-						data-placement="bottom"
+					<span  
 						title="Great Generals boost army offense">
 						<i class="glyphicon glyphicon-star"></i>
 						<span id="oBonus">0</span> 
 					</span>&nbsp;
-					<span data-toggle="tooltip"  
-						data-placement="bottom"
+					<span   
 						title="Great Tacticians boost army defense" class="marginLeft">
 						<i class="glyphicon glyphicon-star-empty"></i>
 						<span id="dBonus">0</span>
 					</span>
 				</span>
 				<span class="marginLeft">
-					<span data-toggle="tooltip"  
-						data-placement="bottom" 
+					<span
 						title="Deploy armies to conquered territories">
 						<i class="fa fa-angle-double-up manpower"></i> Armies <span id="manpower">0</span>
 					</span>
@@ -718,10 +715,9 @@
 			</div>
 						
 			<div id="tileActions" class="container w100">
+				<div class="actionHead shadow4">Command</div>
 				
 				<div id="attack" class="actionButtons row" 
-					data-placement="left" 
-					data-toggle="tooltip" 
 					title="Move/attack with all armies">
 					<div class="col-xs-8">
 						<span class='text-hotkey'>A</span>ttack
@@ -733,8 +729,7 @@
 				</div>
 				
 				<div id="splitAttack" class="actionButtons row" 
-					data-placement="left" 
-					data-toggle="tooltip" 
+					 
 					title="Move/attack with half of your armies">
 					<div class="col-xs-8">
 						<span class='text-hotkey'>S</span>plit Attack
@@ -746,8 +741,7 @@
 				</div>
 				
 				<div id="recruit" class="actionButtons row" 
-					data-placement="left" 
-					data-toggle="tooltip" 
+					 
 					title="">
 					<div class="col-xs-8">
 						<span class='text-hotkey'>R</span>ecruit
@@ -758,10 +752,11 @@
 					</div>
 				</div>
 				
+				<div class="actionHead shadow4">Build</div>
+				
 				<div id="deploy" class="actionButtons row" 
-					data-placement="left" 
-					data-toggle="tooltip" 
-					title="Deploy up to 24 armies">
+					 
+					title="Deploy armies to a tile">
 					<div class="col-xs-8">
 						<span class='text-hotkey'>D</span>eploy
 					</div>
@@ -772,8 +767,7 @@
 				</div>
 				
 				<div id="fireCannons" class="actionButtons row" 
-					data-placement="left" 
-					data-toggle="tooltip" 
+					 
 					title="">
 					<div class="col-xs-8">
 						Fire <span class='text-hotkey'>C</span>annons
@@ -785,8 +779,7 @@
 				</div>
 			
 				<div id="upgradeTileDefense" class="actionButtons row" 
-					data-placement="left" 
-					data-toggle="tooltip" 
+					 
 					title="Bunkers upgrade the structural defense of a territory">
 					<div class="col-xs-8">
 						<span class='text-hotkey'>B</span>uild <span id="buildWord">Bunker</span>
@@ -798,8 +791,7 @@
 				</div>
 				
 				<div id="launchMissile" class="actionButtons row" 
-					data-placement="left" 
-					data-toggle="tooltip" 
+					 
 					title="">
 					<div class="col-xs-8">
 						Launch <span class='text-hotkey'>M</span>issile
@@ -811,8 +803,7 @@
 				</div>
 				
 				<div id="launchNuke" class="actionButtons row" 
-					data-placement="left" 
-					data-toggle="tooltip" 
+					 
 					title="Launch a nuclear weapon at any enemy territory. Kills 80-99% of armies and destroys all structures.">
 					<div class="col-xs-8">Launch <span class='text-hotkey'>N</span>uke</div>
 					<div class="col-xs-4 tight2 text-right productionCost">
@@ -826,11 +817,10 @@
 			</div>
 			
 			<div id="tileResearch" class="container w100">
-				<div id="researchHead" class="text-center shadow4">Research</div>
+				<div class="actionHead shadow4">Research</div>
 				
 				<div id="researchGunpowder" class="actionButtons row" 
-					data-placement="left" 
-					data-toggle="tooltip" 
+					 
 					title="Research gunpowder to unlock cannons.">
 					<div class="col-xs-8">
 						<span class='text-hotkey'>G</span>unpowder
@@ -842,8 +832,7 @@
 				</div>
 				
 				<div id="researchEngineering" class="actionButtons row" 
-					data-placement="left" 
-					data-toggle="tooltip" 
+					 
 					title="Research engineering to unlock walls and fortresses.">
 					<div class="col-xs-8">
 						<span class='text-hotkey'>E</span>ngineering
@@ -855,8 +844,7 @@
 				</div>
 				
 				<div id="researchRocketry" class="actionButtons row" 
-					data-placement="left" 
-					data-toggle="tooltip" 
+					 
 					title="Research rocketry to unlock missiles.">
 					<div class="col-xs-8">
 						Roc<span class='text-hotkey'>k</span>etry
@@ -868,8 +856,7 @@
 				</div>
 				
 				<div id="researchAtomicTheory" class="actionButtons row" 
-					data-placement="left" 
-					data-toggle="tooltip" 
+					 
 					title="Research atomic theory to unlock nuclear weapons.">
 					<div class="col-xs-8">
 						A<span class='text-hotkey'>t</span>omic Theory
@@ -881,8 +868,7 @@
 				</div>
 				
 				<div id="researchFutureTech" class="actionButtons row" 
-					data-placement="left" 
-					data-toggle="tooltip" 
+					 
 					title="Research future technology.">
 					<div class="col-xs-8">
 						<span class='text-hotkey'>F</span>uture Tech
@@ -901,7 +887,7 @@
 			
 			<div class="row">
 				<div class="col-xs-12 no-padding moves">
-					<span data-toggle="tooltip" title="Energy is used to move and recruit armies.">
+					<span  title="Energy is used to move and recruit armies.">
 						Energy <i class="fa fa-bolt"></i>
 					</span>
 				</div>
@@ -910,7 +896,7 @@
 				<div class="col-xs-12 no-padding">
 					<div class="resourceIndicator">
 						<span id="moves">2</span> 
-						<span data-toggle="tooltip" title="Energy per turn">
+						<span  title="Energy per turn">
 							(+<span id="sumMoves">4</span>)
 						</span>
 					</div>
@@ -919,10 +905,10 @@
 			
 			<div class="row">
 				<div class="col-xs-12 no-padding production">
-					<span data-toggle="tooltip" title="Productions Bonus">
-						+<span id="turnBonus">0</span>%
+					<span  title="Productions Bonus">
+						+<span id="productionBonus">0</span>%
 					</span>
-					<span data-toggle="tooltip" title="Production are used to deploy troops, build structures, and research technology.">
+					<span  title="Production are used to deploy troops, build structures, and research technology.">
 						Production <i class="fa fa-gavel"></i>
 					</span>
 				</div>
@@ -931,7 +917,7 @@
 				<div class="col-xs-12 no-padding">
 					<div class="resourceIndicator">
 						<span id="production">0</span> 
-						<span data-toggle="tooltip" title="Production per turn">
+						<span  title="Production per turn">
 							(+<span id="sumProduction">0</span>)
 						</span>
 					</div>
@@ -940,10 +926,10 @@
 			
 			<div class="row">
 				<div class="col-xs-12 no-padding food">
-					<span data-toggle="tooltip" title="Food Bonus">
+					<span  title="Food Bonus">
 						+<span id="foodBonus">0</span>%
 					</span>
-					<span data-toggle="tooltip" title="Food milestones produce additional armies">
+					<span  title="Food milestones produce additional armies">
 						Food <i class="glyphicon glyphicon-apple"></i> 
 					</span>
 				</div>
@@ -953,7 +939,7 @@
 				<div class="col-xs-12 no-padding">
 					<div class="resourceIndicator">
 						<span id="food">0</span>/<span id="foodMax">25</span> 
-						<span data-toggle="tooltip" title="Food per turn">
+						<span  title="Food per turn">
 							(+<span id="sumFood">0</span>)
 						</span>
 					</div>
@@ -970,10 +956,10 @@
 			
 			<div class="row">
 				<div class="col-xs-12 no-padding culture">
-					<span data-toggle="tooltip" title="Culture Bonus">
+					<span  title="Culture Bonus">
 						+<span id="cultureBonus">0</span>%
 					</span>
-					<span data-toggle="tooltip" title="Culture milestones produce special rewards">
+					<span  title="Culture milestones produce special rewards">
 						Culture <i class="fa fa-flag"></i>
 					</span>
 				</div>
@@ -983,7 +969,7 @@
 				<div class="col-xs-12 no-padding">
 					<div class="resourceIndicator">
 						<span id="culture">0</span>/<span id="cultureMax">400</span> 
-						<span data-toggle="tooltip" title="Culture per turn">
+						<span  title="Culture per turn">
 							(+<span id="sumCulture">0</span>)
 						</span>
 					</div>

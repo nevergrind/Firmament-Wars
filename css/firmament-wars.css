@@ -265,12 +265,12 @@ a:hover{
 	text-shadow: .5px .5px #222, 1px 1px #222;
 }
 .chat-moves{
-	color: #dd6600;
-	text-shadow: .5px .5px #420, 1px 1px #420;
-}
-.chat-production{
 	color: #33e5e5;
 	text-shadow: .5px .5px #044, 1px 1px #044;
+}
+.chat-production{
+	color: #dd6600;
+	text-shadow: .5px .5px #420, 1px 1px #420;
 }
 .chat-food{
 	color: #8d0;
@@ -542,7 +542,7 @@ tbody{
 	margin: 0 auto;
 	width: 35%;
 	max-width: 400px;
-	padding: .25em 0 0 .4em;
+	padding: .5em 0 .5em .5em;
 	z-index: 9999;
 }
 #ribbonBackdrop{
@@ -737,7 +737,7 @@ tbody{
 	bottom: .25em;
 	right: .25em;
 	width: 16%;
-	max-width: 170px;
+	max-width: 160px;
 	padding: .5em 0;
 	text-overflow: ellipsis;
 	color: #fff;
@@ -905,8 +905,9 @@ tbody{
 	font-size: .875em;
 	margin: 2% 0;
 }
-#researchHead{
+.actionHead{
 	font-family: Cinzel, Palatino Linotype, serif;
+	text-align: center;
 	font-size: 1.5em;
 	letter-spacing: .25em;
 }
@@ -914,7 +915,6 @@ tbody{
 	position: relative;
 }
 #tileActions, #tileResearch{
-	margin-top: 4%;
 	font-size: .625em;
 }
 #tileActionsOverlay{
@@ -1120,27 +1120,31 @@ table td, .table th, .table td {
 	stroke-dasharray:2,1;
 	overflow: hidden;
 }
-.targetBarsWrap{
-	margin: 3px 4px 3px;
+#targetBarsWrap{
+	position: relative;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	border: 1px solid #357;
+	width: 98%;
+	height: 27px;
 	background: #1a1a1a;
-	height: 7px;
-	border: 1px solid #1a1a1a;
-	overflow: hidden;
 }
 .targetBars{
-	padding: 0;
-	margin: 0;
-	width: 100%;
-	height: 2px;
+	stroke-width: 5px;
+	stroke-dasharray: 3,1;
 }
 .targetBarsFood{
-	border-top: 2px dotted #8d0;
+	stroke: #8d0;
+}
+.targetBarsProduction{
+	stroke: #d60;
 }
 .targetBarsCulture{
-	border-top: 2px dotted #d2d;
+	stroke: #d2d;
 }
 .targetBarsDefense{
-	border-top: 2px dotted #ff0;
+	stroke: #ff0;
 }
 text{
 	fill: rgba(255,255,255,1);
@@ -1956,6 +1960,13 @@ table {
 #foodBar{
 	margin: 0;
 	background: #8d0;
+	border: none;
+	width: 0;
+	border-radius: 0;
+}
+#productionBar{
+	margin: 0;
+	background: #d60;
 	border: none;
 	width: 0;
 	border-radius: 0;

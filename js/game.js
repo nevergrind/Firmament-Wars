@@ -38,35 +38,32 @@ function updateTileInfo(tileId){
 	DOM.targetFlag.innerHTML = 
 		'<img src="images/flags/' + flag + '" class="w100 block center">';
 	
-	var str = '';
+	var str = '<div>';
 	if (t.capital){
 		str += 
-		'<span id="tileName" class="no-select fa-stack" data-toggle="tooltip" title="Capital Palace<br> Boosts tile defense">\
+		'<span id="tileName" class="no-select fa-stack" title="Capital Palace Boosts tile defense">\
 			<i class="glyphicon glyphicon-star capitalStar"></i>\
 		</span> ';
 	}
 	if (!t.player){
 		var foodWidth = 0;
 		var cultureWidth = 0;
+		var productionWidth = 0;
 		var defWidth = 0;
 	} else {
-		var foodWidth = ~~(((t.food > 8 ? 8 : t.food) / 8) * 100);
-		var cultureWidth = ~~(((t.culture > 8 ? 8 : t.culture) / 8) * 100);
-		var defWidth = ~~((t.defense / 4) * 100);
+		var foodWidth = ~~(((t.food > 8 ? 8 : t.food) / 8) * 99);
+		var productionWidth = ~~(((t.production > 8 ? 8 : t.production) / 8) * 99);
+		var cultureWidth = ~~(((t.culture > 8 ? 8 : t.culture) / 8) * 99);
+		var defWidth = ~~((t.defense / 4) * 99);
+		console.info(defWidth);
 	}
 	str += name + '</div>\
-		<div class="targetBarsWrap">\
-			<div class="targetBars targetBarsFood" style="width: ' + foodWidth + '%"></div>\
-			<div class="targetBars targetBarsFood" style="width: ' + foodWidth + '%"></div>\
-		</div>\
-		<div class="targetBarsWrap">\
-			<div class="targetBars targetBarsCulture" style="width: ' + cultureWidth + '%"></div>\
-			<div class="targetBars targetBarsCulture" style="width: ' + cultureWidth + '%"></div>\
-		</div>\
-		<div class="targetBarsWrap">\
-			<div class="targetBars targetBarsDefense" style="width: ' + defWidth + '%"></div>\
-			<div class="targetBars targetBarsDefense" style="width: ' + defWidth + '%"></div>\
-		</div>';
+		<svg id="targetBarsWrap">\
+			<line class="targetBars targetBarsFood" opacity="'+ (foodWidth ? 1 : 0) +'" x1="1%" y1="4" x2="'+ foodWidth +'%" y2="4" />\
+			<line class="targetBars targetBarsProduction" opacity="'+ (productionWidth ? 1 : 0) +'" x1="1%" y1="10" x2="'+ productionWidth +'%" y2="10" />\
+			<line class="targetBars targetBarsCulture" opacity="'+ (cultureWidth ? 1 : 0) +'"x1="1%" y1="16" x2="'+ cultureWidth +'%" y2="16" />\
+			<line class="targetBars targetBarsDefense" opacity="'+ (defWidth ? 1 : 0) +'"x1="1%" y1="22" x2="'+ defWidth +'%" y2="22" />\
+		</svg>';
 		
 	DOM.targetName.innerHTML = str;
 	
@@ -87,10 +84,12 @@ function updateTileInfo(tileId){
 			defWord[2] = 'Fortresse';
 		}
 		var tooltip = defWord[ind] + 's upgrade the defense of a territory.' + defTooltip[ind];
+		/*
 		$('#upgradeTileDefense')
 			.attr('title', tooltip)
 			.tooltip('fixTitle')
 			.tooltip('hide');
+		*/
 	}
 	// actions panel
 	my.player === t.player ? 

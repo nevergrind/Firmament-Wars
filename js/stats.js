@@ -540,15 +540,15 @@ var stats = {
 		return str;
 	},
 	playerCell: function(p, i){
-		i = game.player[i].playerColor;
-		var flag = p.flag === 'Default.jpg' ? 'Player'+ i +'.jpg' : p.flag;
+		var color = game.player[i].playerColor,
+			flag = p.flag === 'Default.jpg' ? 'Player'+ color +'.jpg' : p.flag;
 		var str = '<td>\
 			<img class="statsFlags" src="images/flags/'+ flag +'">\
 			<div class="statsPlayerWrap">\
 				<div class="statsAccount chat-warning nowrap">\
-					<i class="fa '+ lobby.governmentIcon(p.government) +' diploSquare statsGov player'+ i +'"></i>';
+					<i class="fa '+ lobby.governmentIcon(game.player[i].government) +' diploSquare statsGov player'+ color +'"></i>';
 					if (g.teamMode){
-						str += '<span class="diploTeam">'+ game.player[i].team +'</span>';
+						str += '<span class="diploTeam">'+ game.player[color].team +'</span>';
 					}
 					str += p.account +
 				'</div>\

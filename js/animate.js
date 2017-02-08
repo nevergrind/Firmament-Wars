@@ -110,6 +110,9 @@ var animate = {
 		var y = e.getAttribute('y') - 24;
 		
 		var boxHeight = 6;
+		if (game.tiles[i].production){
+			boxHeight += 4;
+		}
 		if (game.tiles[i].culture){
 			boxHeight += 4;
 		}
@@ -123,7 +126,7 @@ var animate = {
 		// wrapper
 		x += 4
 		var svg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-		svg.setAttributeNS(null, 'width', 26);
+		svg.setAttributeNS(null, 'width', 25);
 		svg.setAttributeNS(null, 'height', boxHeight);
 		svg.setAttributeNS(null,"x",x);
 		svg.setAttributeNS(null,"y",y + 26);
@@ -145,6 +148,24 @@ var animate = {
 		svg.setAttributeNS(null,"opacity",1);
 		svg.setAttributeNS(null,"class","mapBars mapBars" + i);
 		DOM.mapBars.appendChild(svg);
+		// production
+		if (game.tiles[i].production){
+			y += 4;
+			var productionWidth = game.tiles[i].production * 6;
+			if (productionWidth > 24){
+				productionWidth = 24;
+			}
+			var svg = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+			svg.setAttributeNS(null,"x1",x);
+			svg.setAttributeNS(null,"y1",y);
+			svg.setAttributeNS(null,"x2",x + productionWidth);
+			svg.setAttributeNS(null,"y2",y);
+			svg.setAttributeNS(null,"stroke","#dd6600");
+			svg.setAttributeNS(null,"stroke-width","3");
+			svg.setAttributeNS(null,"opacity",1);
+			svg.setAttributeNS(null,"class","mapBars mapBars" + i);
+			DOM.mapBars.appendChild(svg);
+		}
 		// culture
 		if (game.tiles[i].culture){
 			y += 4;
@@ -807,7 +828,6 @@ var animate = {
 		DOM['land' + newTgt] = document.getElementById('land' + newTgt);
 		
 		var newColor = g.color[game.player[!game.tiles[newTgt].player ? my.player : game.tiles[newTgt].player].playerColor];
-		console.info(newColor);
 		TweenMax.set(DOM['land'+ newTgt], {
 			stroke: g.color[game.player[!game.tiles[newTgt].player ? my.player : game.tiles[newTgt].player].playerColor],
 			onComplete: function(){

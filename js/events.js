@@ -210,7 +210,7 @@ var events = {
 				});
 				Msg("Your nation's flag is now: " + my.selectedFlag);
 				document.getElementById('selectedFlag').textContent = my.selectedFlag;
-				$("[title]").tooltip('fixTitle');
+				//$("[title]").tooltip('fixTitle');
 			}).fail(function(e){
 				$("#offerFlag").css("display", "block");
 			}).always(function(){
@@ -526,7 +526,6 @@ $(document).on('keyup', function(e) {
 				toggleChatMode();
 			}
 		} else {
-			console.info(x);
 			// game hotkeys
 			if (x === 13){
 				// enter

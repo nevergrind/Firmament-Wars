@@ -512,6 +512,7 @@ var title = {
 			} else if (data.type === 'updateTile'){
 				// attacker tile update
 				game.updateTile(data);
+				game.setSumValues();
 			} else if (data.type === 'food'){
 				if (data.account.indexOf(my.account) > -1){
 					audio.play('food');
@@ -814,7 +815,7 @@ var title = {
 	if (e1 !== null){
 		e1.innerHTML = str;
 	}
-	$('[title]').tooltip();
+	//$('[title]').tooltip();
 	setTimeout(function(){
 		animate.logo(Linear.easeNone);
 	}, 250);

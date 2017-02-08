@@ -170,7 +170,7 @@ var lobby = {
 				str += 
 				'<div id="lobbyRow' +i+ '" class="row lobbyRow">\
 					<div class="col-xs-2">\
-						<img id="lobbyFlag' +i+ '" data-placement="right" class="lobbyFlags block center" src="images/flags/blank.png">\
+						<img id="lobbyFlag' +i+ '" class="lobbyFlags block center" src="images/flags/blank.png">\
 					</div>\
 					<div class="col-xs-6 lobbyDetails">\
 						<div class="lobbyAccounts">';
@@ -180,7 +180,7 @@ var lobby = {
 								if (i === my.player){
 									str += ' pointer2';
 								}
-								str += '" data-placement="right" data-toggle="dropdown">';
+								str += '" data-toggle="dropdown">';
 								if (i === my.player){
 									str += '<i class="fa fa-flag pointer2 lobbyTeamFlag"></i> <span id="lobbyTeamNumber'+ i +'" class="lobbyTeamNumbers">' + i +'</span>';
 								} else {
@@ -201,7 +201,7 @@ var lobby = {
 							if (i === my.player){
 								str += ' pointer2';
 							}
-							str += '" data-placement="right" data-toggle="dropdown"></i>';
+							str += '" data-toggle="dropdown"></i>';
 							if (i === my.player && fwpaid){
 								str += 
 								'<ul id="teamColorDropdown" class="dropdown-menu">\
@@ -453,7 +453,7 @@ var lobby = {
 					audio.fade();
 				}
 			})(5);
-			$('[title]').tooltip('disable');
+			//$('[title]').tooltip('disable');
 			cancelGame.style.display = 'none';
 			$("#teamDropdown").css('display', 'none');
 		}
@@ -504,15 +504,15 @@ var lobby = {
 };
 
 function initOffensiveTooltips(){
+	// Kills ' + (2 + my.oBonus) + ' + 4% of armies.
 	$('#fireCannons')
-		.attr('title', 'Fire cannons at an adjacent enemy tile. Kills ' + (2 + my.oBonus) + ' + 4% of armies.')
-		.tooltip('fixTitle');
+		.attr('title', 'Fire cannons at an adjacent enemy tile.').tooltip('fixTitle');
+	// Kills ' + (5 + (my.oBonus * 2)) + ' + 15% of armies
 	$('#launchMissile')
-		.attr('title', 'Launch a missile at any enemy territory. Kills ' + (5 + (my.oBonus * 2)) + ' + 15% of armies.')
-		.tooltip('fixTitle');
+		.attr('title', 'Launch a missile at any enemy territory.').tooltip('fixTitle');
+	// Recruit ' + (3 + ~~(my.cultureBonus / 30)) + ' armies.
 	$('#recruit')
-		.attr('title', 'Recruit ' + (3 + ~~(my.cultureBonus / 30)) + ' armies. Boosted by culture.')
-		.tooltip('fixTitle');
+		.attr('title', 'Recruit armies from the civilian population. Boosted by culture.');
 }
 function initResources(d){
 	my.food = d.food;
@@ -531,12 +531,12 @@ function initResources(d){
 	DOM.cultureMax.textContent = d.cultureMax;
 	// sum
 	DOM.sumFood.textContent = d.sumFood;
-	DOM.sumProduction.textContent = d.turnProduction;
+	DOM.sumProduction.textContent = d.sumProduction;
 	DOM.sumCulture.textContent = d.sumCulture;
 	// bonus values
 	DOM.oBonus.textContent = d.oBonus;
 	DOM.dBonus.textContent = d.dBonus;
-	DOM.turnBonus.textContent = d.turnBonus;
+	DOM.productionBonus.textContent = d.productionBonus;
 	DOM.foodBonus.textContent = d.foodBonus;
 	DOM.cultureBonus.textContent = d.cultureBonus;
 	setBars(d);
@@ -639,10 +639,10 @@ function setResources(d){
 			my.dBonus = d.dBonus;
 		}
 	}
-	if (d.turnBonus !== undefined){
-		if (my.turnBonus !== d.turnBonus){
-			DOM.turnBonus.textContent = d.turnBonus;
-			my.turnBonus = d.turnBonus;
+	if (d.productionBonus !== undefined){
+		if (my.productionBonus !== d.productionBonus){
+			DOM.productionBonus.textContent = d.productionBonus;
+			my.productionBonus = d.productionBonus;
 		}
 	}
 	if (d.foodBonus !== undefined){
@@ -746,7 +746,7 @@ function loadGameState(){
 			my.nation = data.nation;
 			my.foodMax = data.foodMax;
 			my.production = data.production;
-			my.turnProduction = data.turnProduction;
+			my.sumProduction = data.sumProduction;
 			my.cultureMax = data.cultureMax;
 			my.moves = data.moves;
 			my.government = data.government;
@@ -821,6 +821,7 @@ function loadGameState(){
 					capital: data.capitalTiles.indexOf(i) > -1 && d.flag ? true : false,
 					units: d.units,
 					food: d.food,
+					production: d.production,
 					culture: d.culture,
 					defense: d.defense
 				}
@@ -838,6 +839,7 @@ function loadGameState(){
 					});
 				}
 			}
+			g.tileCount = len;
 			// init map flags
 			var a = document.getElementsByClassName('unit'),
 				mapBars = document.getElementById('mapBars'),
@@ -900,16 +902,16 @@ function loadGameState(){
 			function diploRow(p){
 				function teamIcon(team){
 					return g.teamMode ? 
-						'<span data-toggle="tooltip" data-placement="right" class="diploTeam" title="Team '+ team +'">'+ team +'</span>' :
+						'<span  class="diploTeam" title="Team '+ team +'">'+ team +'</span>' :
 						'';
 				}
 				var str = '<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">\
-					<div class="flag '+ p.flagClass +'" data-toggle="tooltip" data-container="#diplomacy-ui" data-placement="right" title="'+ p.flagShort + '"></div>'+ 
+					<div class="flag '+ p.flagClass +'"  data-container="#diplomacy-ui" title="'+ p.flagShort + '"></div>'+ 
 					teamIcon(p.team) +
-					'<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right" data-toggle="tooltip" title="' + p.government + '"></i>\
+					'<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ game.player[p.player].playerColor +'"  title="' + p.government + '"></i>\
 					<span class="diploNames'+
 					(my.player === p.player ? ' text-warning' : '') +
-					'" data-toggle="tooltip" data-placement="right" title="'+ p.account +'">'+ p.nation +'</span>\
+					'"  title="'+ p.account +'">'+ p.nation +'</span>\
 				</div>';
 				return str;
 			}
@@ -936,13 +938,14 @@ function loadGameState(){
 			} else {
 				document.getElementById('diplomacy-ui').innerHTML = str;
 			}
-			
-			$('[data-toggle="tooltip"]').tooltip({
+			/*
+			$('[title]').tooltip({
 				delay: {
 					show: 0,
 					hide: 0
 				}
 			});
+			*/
 			initResources(data);
 			lobby.initRibbons(data.ribbons);
 			setTimeout(function(){

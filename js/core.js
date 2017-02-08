@@ -259,7 +259,7 @@ var g = {
 }
 g.init = (function(){
 	// console.info("Initializing game...");
-	$('[title]').tooltip();
+	//$('[title]').tooltip();
 	// build map drop-down 
 	var s = "<li><a class='flagSelect'>Default</a></li>";
 	var flagData = {
@@ -660,8 +660,7 @@ var game = {
 			DOM['flag' + i].href.baseVal = "images/flags/" + newFlag;
 		}
 		// land color
-		var land = DOM['land' + i];
-		TweenMax.set(land, {
+		TweenMax.set(DOM['land' + i], {
 			fill: g.color[game.player[p].playerColor]
 		});
 		
@@ -687,9 +686,26 @@ var game = {
 		
 		if (my.tgt === i){
 			// update this tile within loop cycle?
-			showTarget(land);
+			showTarget(DOM['land' + i]);
 			//game.updateTopTile(i);
 		}
+	},
+	setSumValues: function(){
+		var o = {
+			food: 0,
+			production: 0,
+			culture: 0
+		}
+		for (var i=0; i<g.tileCount; i++){
+			if (my.player === game.tiles[i].player){
+				o.food += game.tiles[i].food;
+				o.production += game.tiles[i].production;
+				o.culture += game.tiles[i].culture;
+			}
+		}
+		DOM.sumFood.textContent = o.food;
+		DOM.sumProduction.textContent = o.production;
+		DOM.sumCulture.textContent = o.culture;
 	},
 	updateResources: function(){
 		if (!g.over){
@@ -740,10 +756,10 @@ var my = {
 	culture: 0,
 	oBonus: -1,
 	dBonus: -1,
-	turnBonus: -1,
+	productionBonus: -1,
 	foodBonus: -1,
 	cultureBonus: -1,
-	turnProduction: 10,
+	sumProduction: 10,
 	foodMax: 25,
 	cultureMax: 400,
 	manpower: 0,
@@ -918,7 +934,7 @@ function initDom(){
 		targetName: d.getElementById('targetName'),
 		oBonus: d.getElementById('oBonus'),
 		dBonus: d.getElementById('dBonus'),
-		turnBonus: d.getElementById('turnBonus'),
+		productionBonus: d.getElementById('productionBonus'),
 		foodBonus: d.getElementById('foodBonus'),
 		cultureBonus: d.getElementById('cultureBonus'),
 		foodBar: d.getElementById('foodBar'),

@@ -83,7 +83,6 @@ var action = {
 		showTarget(that);
 		my.clearHud();
 		// send attack to server
-		var e1 = DOM['land' + attacker];
 		$.ajax({
 			url: 'php/attackTile.php',
 			data: {
@@ -110,7 +109,7 @@ var action = {
 			setMoves(data); 
 			// reset target if lost
 			if (!data.victory){
-				showTarget(e1);
+				showTarget(DOM['land' + attacker]);
 			}
 			// process barbarian reward messages
 			game.reportMilestones(data);
@@ -119,7 +118,7 @@ var action = {
 			audio.play('error');
 			Msg(data.statusText, 1.5);
 			// set target attacker
-			showTarget(e1);
+			showTarget(DOM['land' + attacker]);
 		});
 	},
 	deploy: function(){
@@ -208,8 +207,6 @@ var action = {
 			action.error();
 			return;
 		}
-		
-		
 		$.ajax({
 			url: 'php/upgradeTileDefense.php',
 			data: {
@@ -217,10 +214,6 @@ var action = {
 			}
 		}).done(function(data) {
 			setProduction(data);
-			if (oldTgt === my.tgt){
-				game.tiles[my.tgt].defense++;
-				showTarget(DOM['land' + my.tgt]);
-			}
 		}).fail(function(e){
 			console.info(e.responseText);
 			Msg(e.statusText);
