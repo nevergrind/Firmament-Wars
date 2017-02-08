@@ -399,7 +399,7 @@
 				<div id="lobbyGovernmentDescription" class="fw-primary text-center lobbyRelWrap">
 					<div id="lobbyGovName" class='text-primary'>Despotism</div>
 					<div id="lobbyGovPerks">
-						<div>3x starting crystals</div>
+						<div>3x starting production</div>
 						<div>+50% starting armies</div>
 						<div>Start With a Bunker</div>
 						<div>Free Split Attack</div>
@@ -726,7 +726,7 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>A</span>ttack
 					</div>
-					<div class="col-xs-4 tight2 text-right crystalCost">
+					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-bolt moves pointer actionBolt">
 						</i><span id='attackCost'>2</span>
 					</div>
@@ -739,7 +739,7 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>S</span>plit Attack
 					</div>
-					<div class="col-xs-4 tight2 text-right crystalCost">
+					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-bolt moves pointer actionBolt">
 						</i><span id="splitAttackCost">1</span>
 					</div>
@@ -752,7 +752,7 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>R</span>ecruit
 					</div>
-					<div class="col-xs-4 tight2 text-right crystalCost">
+					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-bolt moves pointer actionBolt">
 						</i><span id="recruitCost">4</span>
 					</div>
@@ -765,7 +765,7 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>D</span>eploy
 					</div>
-					<div class="col-xs-4 tight2 text-right crystalCost">
+					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
 						<span id='deployCost'>20</cost>
 					</div>
@@ -778,7 +778,7 @@
 					<div class="col-xs-8">
 						Fire <span class='text-hotkey'>C</span>annons
 					</div>
-					<div class="col-xs-4 tight2 text-right crystalCost">
+					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
 						<span id='cannonsCost'>40</span>
 					</div>
@@ -791,7 +791,7 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>B</span>uild <span id="buildWord">Bunker</span>
 					</div>
-					<div class="col-xs-4 tight2 text-right crystalCost">
+					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
 						<span id="buildCost">80</span>
 					</div>
@@ -804,7 +804,7 @@
 					<div class="col-xs-8">
 						Launch <span class='text-hotkey'>M</span>issile
 					</div>
-					<div class="col-xs-4 tight2 text-right crystalCost">
+					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
 						<span id='missileCost'>60</span>
 					</div>
@@ -815,7 +815,7 @@
 					data-toggle="tooltip" 
 					title="Launch a nuclear weapon at any enemy territory. Kills 80-99% of armies and destroys all structures.">
 					<div class="col-xs-8">Launch <span class='text-hotkey'>N</span>uke</div>
-					<div class="col-xs-4 tight2 text-right crystalCost">
+					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
 						<span id='nukeCost'>400</span>
 					</div>
@@ -835,7 +835,7 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>G</span>unpowder
 					</div>
-					<div class="col-xs-4 tight2 text-right crystalCost">
+					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
 						<span id='gunpowderCost'>80</span>
 					</div>
@@ -848,7 +848,7 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>E</span>ngineering
 					</div>
-					<div class="col-xs-4 tight2 text-right crystalCost">
+					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
 						<span id='engineeringCost'>120</span>
 					</div>
@@ -861,7 +861,7 @@
 					<div class="col-xs-8">
 						Roc<span class='text-hotkey'>k</span>etry
 					</div>
-					<div class="col-xs-4 tight2 text-right crystalCost">
+					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
 						<span id='rocketryCost'>200</span>
 					</div>
@@ -874,7 +874,7 @@
 					<div class="col-xs-8">
 						A<span class='text-hotkey'>t</span>omic Theory
 					</div>
-					<div class="col-xs-4 tight2 text-right crystalCost">
+					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
 						<span id='atomicTheoryCost'>250</span>
 					</div>
@@ -887,7 +887,7 @@
 					<div class="col-xs-8">
 						<span class='text-hotkey'>F</span>uture Tech
 					</div>
-					<div class="col-xs-4 tight2 text-right crystalCost">
+					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
 						<span id='futureTechCost'>1000</span>
 					</div>
@@ -919,11 +919,11 @@
 			
 			<div class="row">
 				<div class="col-xs-12 no-padding production">
-					<span data-toggle="tooltip" title="Crystals Bonus">
+					<span data-toggle="tooltip" title="Productions Bonus">
 						+<span id="turnBonus">0</span>%
 					</span>
-					<span data-toggle="tooltip" title="Crystals are used to deploy troops, build structures, and research technology.">
-						Crystals <i class="fa fa-gavel"></i>
+					<span data-toggle="tooltip" title="Production are used to deploy troops, build structures, and research technology.">
+						Production <i class="fa fa-gavel"></i>
 					</span>
 				</div>
 			</div>
@@ -931,7 +931,7 @@
 				<div class="col-xs-12 no-padding">
 					<div class="resourceIndicator">
 						<span id="production">0</span> 
-						<span data-toggle="tooltip" title="Crystals per turn">
+						<span data-toggle="tooltip" title="Production per turn">
 							(+<span id="sumProduction">0</span>)
 						</span>
 					</div>
@@ -943,7 +943,7 @@
 					<span data-toggle="tooltip" title="Food Bonus">
 						+<span id="foodBonus">0</span>%
 					</span>
-					<span data-toggle="tooltip" title="Food milestones produce armies and increase crystal production">
+					<span data-toggle="tooltip" title="Food milestones produce additional armies">
 						Food <i class="glyphicon glyphicon-apple"></i> 
 					</span>
 				</div>

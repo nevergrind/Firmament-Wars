@@ -28,7 +28,7 @@ var lobby = {
 		if (government === "Despotism"){
 			str = '<div id="lobbyGovName" class="text-primary">Despotism</div>\
 				<div id="lobbyGovPerks">\
-					<div>3x starting crystals</div>\
+					<div>3x starting production</div>\
 					<div>+50% starting armies</div>\
 					<div>Start With a Bunker</div>\
 					<div>Free Split Attack</div>\
@@ -45,7 +45,7 @@ var lobby = {
 			str = '<div id="lobbyGovName" class="text-primary">Democracy</div>\
 				<div id="lobbyGovPerks">\
 					<div>4x Maximum Army Deployment</div>\
-					<div>+50% crystal bonus</div>\
+					<div>+50% production bonus</div>\
 					<div>More great people</div>\
 					<div>Start with a wall</div>\
 				</div>';

@@ -13,7 +13,7 @@ function Target(o){
 var action = {
 	error: function(msg){
 		if (msg === undefined){
-			msg = "Not enough crystals!";
+			msg = "Not enough production!";
 		}
 		Msg(msg, 1.5);
 		my.clearHud();

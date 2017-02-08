@@ -469,7 +469,7 @@ var stats = {
 	},
 	statResources: function(){
 		// head
-		var str = stats.playerHead(['Oil', 'Crystals', 'Food', 'Culture']);
+		var str = stats.playerHead(['Energy', 'Production', 'Food', 'Culture']);
 		// player rows
 		for (var i=1; i<=8; i++){
 			var d = stats.data[i];
@@ -480,9 +480,9 @@ var stats = {
 						max: d.moves,
 						key: 'moves'
 					}, {
-						id: 'p'+ i +'-crystals',
-						max: d.crystals,
-						key: 'crystals'
+						id: 'p'+ i +'-production',
+						max: d.production,
+						key: 'production'
 					}, {
 						id: 'p'+ i +'-food',
 						max: d.food,
@@ -505,8 +505,8 @@ var stats = {
 					</td>\
 					<td class="statTD">\
 						<div class="statBar pb'+ color +'">\
-							<div id="p'+ i +'-crystals-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
-							<div id="p'+ i +'-crystals" class="statVal">0</div>\
+							<div id="p'+ i +'-production-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
+							<div id="p'+ i +'-production" class="statVal">0</div>\
 						</div>\
 					</td>\
 					<td class="statTD">\
@@ -631,6 +631,6 @@ var stats = {
 	},
 	resourcesTotal: function(i){
 		var x = stats.data[i];
-		return ~~( (x.food / 20) + (x.culture / 60) + (x.crystals / 20) );
+		return ~~( (x.food / 20) + (x.culture / 60) + (x.production / 20) );
 	}
 }

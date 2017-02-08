@@ -783,7 +783,7 @@ tbody{
 	margin: 0 !important;
 	padding: 0 5% 0 0 !important;
 }
-.crystalCost{
+.productionCost{
 	padding-left: 5px;
 }
 #target-ui{
@@ -882,13 +882,13 @@ tbody{
 	color: #ffff00;;
 }
 .moves{
-	color: #dd6600;
+	color: #33e5e5;
 }
 .food{
 	color: #8d0;
 }
 .production{
-	color: #33e5e5;
+	color: #dd6600;
 }
 .culture{
 	color: #d2d;
@@ -1668,12 +1668,6 @@ table {
 #buyFlag:hover{
 	color: #00bb00;
 }
-.crystal{
-	float: left;
-	background: url('/images1/currency.png') 100% 0 / 200% 100%;
-	width:32px;
-	height:32px;
-}
 #flagPurchased{
 	margin: .25em .5em;
 }
@@ -2304,9 +2298,6 @@ input[type=number]::-webkit-outer-spin-button {
 	text-shadow: 1px 1px #000;
 	border: 2px ridge #357;
 	background: rgba(16, 56, 96, 1);
-}
-.text-crystal{
-	color: #8bf;
 }
 /* helper classes */
 .no-padding{
