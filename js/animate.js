@@ -34,45 +34,59 @@ var animate = {
 			}
 		return o;
 	},
-	upgrade: function(tile){
-		audio.play('build');
+	icon: {
+		armies: {
+			audio: '',
+			text: '\uf102',
+			color: '#ff0'
+		},
+		energy: {
+			audio: '',
+			text: '\uf0e7',
+			color: '#33e5e5'
+		},
+		food: {
+			audio: '',
+			text: '\uf179',
+			color: '#8d0'
+		},
+		production: {
+			audio: '',
+			text: '\uf0e3',
+			color: '#d60'
+		},
+		culture: {
+			audio: '',
+			text: '\uf024',
+			color: '#d2d'
+		},
+		shield: {
+			audio: 'build',
+			text: '\uf132',
+			color: '#ff0'
+		}
+	},
+	upgrade: function(tile, type, count){
+		if (animate.icon[type].audio){
+			audio.play(animate.icon[type].audio);
+		}
 		var box = DOM['unit' + tile].getBBox();
 		var x = box.x + box.width/2 - 10;
 		var y = box.y + box.height/2 + 10;
-		// smoke
-		var size = game.tiles[tile].defense - game.tiles[tile].capital ? 1 : 0;
-		for (var i=1; i<=(3 + (size*3)); i++){
-			var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-			svg.setAttributeNS(null, 'height', 256);
-			svg.setAttributeNS(null, 'width', 256);
-			svg.setAttributeNS(null,"x",x);
-			svg.setAttributeNS(null,"y",y);
-			svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/goldSmoke.png');
-			DOM.mapAnimations.appendChild(svg);
-			TweenMax.to(svg, .5, {
-				startAt: {
-					xPercent: -50,
-					yPercent: -50,
-					transformOrigin: '50% 50%',
-					alpha: 1,
-					scale: 0
-				},
-				scale: i*.1,
-				alpha: 0,
-				onComplete: function(){
-					this.target.parentNode.removeChild(this.target);
-				}
-			});
+		// show icon
+		var text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+		text.setAttributeNS(null,"x",x);
+		text.setAttributeNS(null,"y",y);
+        text.style.fontFamily = 'FontAwesome';
+        text.style.fontSize = '20px';
+        text.style.fill = animate.icon[type].color;
+		if (count){
+			text.textContent = '+'+ count + ' '+ animate.icon[type].text;
+		} else {
+			text.textContent = animate.icon[type].text;
 		}
-		// show shield
-		var shield = document.createElementNS("http://www.w3.org/2000/svg","image");
-		shield.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","images/bulwark.png");
-		shield.setAttributeNS(null,"width",28);
-		shield.setAttributeNS(null,"height",32);
-		shield.setAttributeNS(null,"x",x);
-		shield.setAttributeNS(null,"y",y);
-		DOM.mapAnimations.appendChild(shield);
-		TweenMax.to(shield, .5, {
+		DOM.mapAnimations.appendChild(text);
+		TweenMax.to(text, .5, {
 			startAt: {
 				xPercent: -50,
 				yPercent: -50,
@@ -83,10 +97,10 @@ var animate = {
 			scale: 1,
 			ease: Back.easeOut.config(3)
 		});
-		TweenMax.to(shield, 1.5, {
+		TweenMax.to(text, 1.5, {
 			y: '-=30'
 		});
-		TweenMax.to(shield, .5, {
+		TweenMax.to(text, .5, {
 			delay: 1.5,
 			alpha: 0,
 			onComplete: function(){

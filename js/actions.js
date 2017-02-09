@@ -91,7 +91,7 @@ var action = {
 				split: my.splitAttack ? 1 : 0
 			}
 		}).done(function(data){
-			// console.info('attackTile', data);
+			//console.info('attackTile', data);
 			// animate attack
 			if (game.tiles[defender].player !== my.player){
 				if (!game.tiles[defender].units){
@@ -104,7 +104,15 @@ var action = {
 			if (data.rewardMsg){
 				game.chat({ message: '<span class="chat-news">' + data.rewardMsg + '</span>' });
 				setResources(data);
-				//console.info('REWARD: ', data);
+				if (data.sumFood){
+					animate.upgrade(defender, 'food', data.sumFood);
+				} else if (data.sumProduction){
+					animate.upgrade(defender, 'production', data.sumProduction);
+				} else if (data.sumCulture){
+					animate.upgrade(defender, 'culture', data.sumCulture);
+				} else if (data.sumMoves){
+					animate.upgrade(defender, 'energy', data.sumMoves);
+				}
 			}
 			setMoves(data); 
 			// reset target if lost

@@ -509,10 +509,16 @@ var title = {
 				// defender tile update
 				animate.gunfire(data.attackerTile, data.tile, data.player === my.player);
 				game.updateTile(data);
+				if (data.rewardUnits){
+					animate.upgrade(data.tile, 'armies', data.rewardUnits);
+				}
 			} else if (data.type === 'updateTile'){
 				// attacker tile update
 				game.updateTile(data);
 				game.setSumValues();
+				if (data.rewardUnits){
+					animate.upgrade(data.tile, 'armies', data.rewardUnits);
+				}
 			} else if (data.type === 'food'){
 				if (data.account.indexOf(my.account) > -1){
 					audio.play('food');
@@ -520,7 +526,7 @@ var title = {
 			} else if (data.type === 'upgrade'){
 				// fetch updated tile defense data
 				game.updateDefense(data);
-				animate.upgrade(data.tile);
+				animate.upgrade(data.tile, 'shield');
 			} else if (data.type === 'eliminated'){
 				game.eliminatePlayer(data);
 			} else if (data.type === 'disconnect'){

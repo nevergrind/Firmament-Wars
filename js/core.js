@@ -1076,9 +1076,7 @@ var video = {
 	load: {
 		game: function(){
 			var x = [
-				'smoke.png',
-				'goldSmoke.png',
-				'bulwark.png'
+				'smoke.png'
 			];
 			for (var i=0, len=x.length; i<len; i++){
 				var z = x[i];
