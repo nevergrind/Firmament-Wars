@@ -112,6 +112,13 @@ var action = {
 					animate.upgrade(defender, 'culture', data.sumCulture);
 				} else if (data.sumMoves){
 					animate.upgrade(defender, 'energy', data.sumMoves);
+				} else if (data.foodReward){
+					// food %
+					animate.upgrade(defender, 'food', data.foodReward +'%');
+				} else if (data.productionReward){
+					animate.upgrade(defender, 'production', data.productionReward +'%');
+				} else if (data.cultureReward){
+					animate.upgrade(defender, 'culture', data.cultureReward +'%');
 				}
 			}
 			setMoves(data); 

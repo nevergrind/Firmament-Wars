@@ -541,8 +541,8 @@ tbody{
 	right: 0;
 	margin: 0 auto;
 	width: 35%;
-	max-width: 400px;
-	padding: .5em 0 .5em .5em;
+	max-width: 560px;
+	padding: .25em;
 	z-index: 9999;
 }
 #ribbonBackdrop{
@@ -568,14 +568,11 @@ tbody{
 	width: 100px;
 }
 #targetFlag{
-	width: 80px;
+	width: 92px;
 	pointer-events: none;
 }
 #targetName{
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	pointer-events: none;
+	font-size: .875em;
 }
 .ribbonName{
 	font-size: 1.5em;
@@ -1127,12 +1124,13 @@ table td, .table th, .table td {
 	right: 0;
 	border: 1px solid #357;
 	width: 98%;
-	height: 27px;
+	height: 43px;
 	background: #1a1a1a;
+	border-radius: 4px;
 }
 .targetBars{
-	stroke-width: 5px;
-	stroke-dasharray: 3,1;
+	stroke-width: 8px;
+	stroke-dasharray: 1,1;
 }
 .targetBarsFood{
 	stroke: #8d0;
@@ -1498,6 +1496,28 @@ circle{
 	color: #ffc500;
 	margin-right: .125em;
 	font-size: .875em;
+}
+.mapStar{
+	fill: #ffc500;
+	stroke: #000;
+	stroke-width: 2;
+}
+span.unlockGameBtn{
+	border-bottom: 1px solid #ff0;
+	color: #ff0;
+	cursor: pointer;
+}
+#avatar{
+	width: 64px;
+	height: 64px;
+}
+#avatarWrap{
+	width: 70px;
+}
+#configureAvatarImage{
+	float: right;
+	width: 200px;
+	height: 200px;
 }
 .fa-stack{
 	width: 1em;
@@ -2881,8 +2901,12 @@ input[type=number]::-webkit-outer-spin-button {
 		font-size: .925em; 
 		padding: 3px 6px;
 	}
+	#avatar{
+		width: 60px;
+		height: 60px;
+	}
 	#targetFlag{
-		width: 76px;
+		width: 88px;
 	}
 	.wideRack{
 		width: 100px;
@@ -2896,8 +2920,12 @@ input[type=number]::-webkit-outer-spin-button {
 		font-size: .875em; 
 		padding: 2px 4px;
 	}
+	#avatar{
+		width: 56px;
+		height: 56px;
+	}
 	#targetFlag{
-		width: 72px;
+		width: 84px;
 	}
 	.wideRack{
 		width: 75px;
@@ -2911,8 +2939,12 @@ input[type=number]::-webkit-outer-spin-button {
 		font-size: .825em; 
 		padding: 2px 4px;
 	}
+	#avatar{
+		width: 52px;
+		height: 52px;
+	}
 	#targetFlag{
-		width: 68px;
+		width: 80px;
 	}
 	.wideRack{
 		width: 75px;
@@ -2926,8 +2958,12 @@ input[type=number]::-webkit-outer-spin-button {
 		font-size: .75em; 
 		padding: 1px 2px;
 	}
+	#avatar{
+		width: 48px;
+		height: 48px;
+	}
 	#targetFlag{
-		width: 64px;
+		width: 76px;
 	}
 	.wideRack{
 		width: 75px;

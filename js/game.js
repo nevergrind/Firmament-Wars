@@ -22,6 +22,12 @@ function updateTileInfo(tileId){
 		name = t.name;
 		account = t.account;
 	}
+	if (game.player[t.player].avatar){
+		DOM.avatarWrap.style.display = 'table-cell';
+		DOM.avatar.src = game.player[t.player].avatar;
+	} else {
+		DOM.avatarWrap.style.display = 'none';
+	}
 	if (game.player[t.player].ribbons === undefined){
 		DOM.ribbonWrap.style.display = 'none';
 	} else {
@@ -38,7 +44,7 @@ function updateTileInfo(tileId){
 	DOM.targetFlag.innerHTML = 
 		'<img src="images/flags/' + flag + '" class="w100 block center">';
 	
-	var str = '<div>';
+	var str = '<div class="nowrap">';
 	if (t.capital){
 		str += 
 		'<span id="tileName" class="no-select fa-stack" title="Capital Palace Boosts tile defense">\
@@ -55,14 +61,13 @@ function updateTileInfo(tileId){
 		var productionWidth = ~~(((t.production > 8 ? 8 : t.production) / 8) * 99);
 		var cultureWidth = ~~(((t.culture > 8 ? 8 : t.culture) / 8) * 99);
 		var defWidth = ~~((t.defense / 4) * 99);
-		console.info(defWidth);
 	}
 	str += name + '</div>\
 		<svg id="targetBarsWrap">\
-			<line class="targetBars targetBarsFood" opacity="'+ (foodWidth ? 1 : 0) +'" x1="1%" y1="4" x2="'+ foodWidth +'%" y2="4" />\
-			<line class="targetBars targetBarsProduction" opacity="'+ (productionWidth ? 1 : 0) +'" x1="1%" y1="10" x2="'+ productionWidth +'%" y2="10" />\
-			<line class="targetBars targetBarsCulture" opacity="'+ (cultureWidth ? 1 : 0) +'"x1="1%" y1="16" x2="'+ cultureWidth +'%" y2="16" />\
-			<line class="targetBars targetBarsDefense" opacity="'+ (defWidth ? 1 : 0) +'"x1="1%" y1="22" x2="'+ defWidth +'%" y2="22" />\
+			<line id="targetBarFood" class="targetBars targetBarsFood" opacity="'+ (foodWidth ? 1 : 0) +'" x1="1%" x2="'+ foodWidth +'%" y1="7" y2="7" />\
+			<line id="targetBarProduction" class="targetBars targetBarsProduction" opacity="'+ (productionWidth ? 1 : 0) +'" x1="1%" x2="'+ productionWidth +'%" y1="16" y2="16" />\
+			<line id="targetBarCulture" class="targetBars targetBarsCulture" opacity="'+ (cultureWidth ? 1 : 0) +'"x1="1%" x2="'+ cultureWidth +'%" y1="25" y2="25" />\
+			<line id="targetBarDefense" class="targetBars targetBarsDefense" opacity="'+ (defWidth ? 1 : 0) +'"x1="1%" x2="'+ defWidth +'%" y1="34" y2="34" />\
 		</svg>';
 		
 	DOM.targetName.innerHTML = str;

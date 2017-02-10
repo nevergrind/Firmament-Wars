@@ -380,7 +380,7 @@ var title = {
 			if (fwpaid){
 				g.chat("You don't have any friends!<img src='images/chat/random/feelsbad.png'>", 'chat-muted');
 			} else {
-				g.chat("This is a paid feature. Unlock the complete game to check your friend's status.", 'chat-muted');
+				g.chat("This is a paid feature. <span class='unlockGameBtn'>Unlock the complete game</span> to check your friend's status.", 'chat-muted');
 			}
 		}
 	},
@@ -696,13 +696,9 @@ var title = {
 			e4 = document.getElementById('optionsModal'),
 			e5 = document.getElementById('leaderboard'),
 			e6 = document.getElementById('unlockGame');
-		TweenMax.to([e1,e2,e3,e4,e5,e6], .2, {
+		TweenMax.set([e1,e2,e3,e4,e5,e6], {
 			alpha: 0,
-			onComplete: function(){
-				TweenMax.set(this.target, {
-					visibility: 'hidden'
-				});
-			}
+			visibility: 'hidden'
 		});
 		g.isModalOpen = false;
 	},

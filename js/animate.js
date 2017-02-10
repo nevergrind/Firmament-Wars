@@ -123,7 +123,7 @@ var animate = {
 		var x = e.getAttribute('x') - 17;
 		var y = e.getAttribute('y') - 24;
 		
-		var boxHeight = 6;
+		var boxHeight = 4;
 		if (game.tiles[i].production){
 			boxHeight += 4;
 		}
@@ -150,7 +150,7 @@ var animate = {
 		svg.setAttributeNS(null,"class","mapBars" + i);
 		DOM.mapBars.appendChild(svg);
 		// food
-		y += 29;
+		y += 28;
 		x += 1
 		var svg = document.createElementNS('http://www.w3.org/2000/svg', 'line');
 		svg.setAttributeNS(null,"x1",x);
@@ -846,7 +846,7 @@ var animate = {
 			stroke: g.color[game.player[!game.tiles[newTgt].player ? my.player : game.tiles[newTgt].player].playerColor],
 			onComplete: function(){
 				TweenMax.set(DOM['land' + newTgt], {
-					stroke: "hsl(+=0%, +=0%, +=30%)",
+					stroke: "hsl(+=0%, +=0%, +=20%)",
 				});
 			}
 		});

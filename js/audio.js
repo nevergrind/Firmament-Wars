@@ -93,7 +93,7 @@ var audio = {
 	},
 	fade: function(){
 		var x = {
-			vol: 1
+			vol: g.config.audio.musicVolume / 100
 		}
 		TweenMax.to(x, 2.5, {
 			vol: 0,

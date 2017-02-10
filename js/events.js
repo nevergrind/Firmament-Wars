@@ -142,6 +142,11 @@ var events = {
 			lobby.startGame();
 		});
 		$("#toggleNation").on("click", function(){
+			var foo = new Image();
+			foo.src = 'php/avatars/'+ nationRow +'.jpg';
+			foo.onload = function(){
+				document.getElementById('configureAvatarImage').src = 'php/avatars/'+ nationRow +'.jpg';
+			};
 			TweenMax.to(configureNation, g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
@@ -153,7 +158,8 @@ var events = {
 			});
 			title.showBackdrop();
 		});
-		$("#unlockGameBtn").on("click", function(){
+		$("#mainWrap").on("click", ".unlockGameBtn", function(){
+			title.closeModal();
 			var e = document.getElementById("unlockGame");
 			TweenMax.to(e, g.modalSpeed, {
 				startAt: {
@@ -624,3 +630,26 @@ $(document).on('keyup', function(e) {
 		}
 	}
 });
+
+ $("#uploadDictator").on('submit', function(e){
+	e.preventDefault();
+	console.info("UPLOAD IMAGE");
+	$.ajax({
+		url: "php/uploadDictator.php",
+		type: "POST",
+		data:  new FormData(this),
+		contentType: false,
+		cache: false,
+		processData:false,
+		beforeSend: function(){
+			$("#uploadErr").text('');
+		}
+	}).done(function(data){
+		console.info("IMAGE: ", 'php/'+ data);
+		$("#uploadErr").text("Avatar updated successfully!");
+		document.getElementById('configureAvatarImage').src = 'php/'+ data +'?v='+ Date.now(); 
+	}).fail(function(data){
+		console.info("FAIL: ", data);
+		$("#uploadErr").html(data.statusText);
+	});
+ });

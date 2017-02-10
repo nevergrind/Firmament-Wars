@@ -470,6 +470,17 @@ var lobby = {
 		};
 		return icon[government];
 	},
+	initAvatars: function(data){
+		data.players.forEach(function(e, i){
+			(function(i){
+				var img = new Image();
+				img.src =  'php/avatars/'+ e.nationRow +'.jpg';
+				img.onload = function(){
+					game.player[++i].avatar = 'php/avatars/'+ e.nationRow +'.jpg';
+				}
+			})(i);
+		});
+	},
 	initRibbons: function(data){
 		for (var key in data){
 			var str = '',
@@ -677,6 +688,7 @@ function Nation(){
 	this.flag = "";
 	this.playerColor = 0;
 	this.alive = true;
+	this.avatar = '';
 	return this;
 }
 
@@ -870,20 +882,19 @@ function loadGameState(){
 				// add star for capital to map
 				if (game.tiles[i] !== undefined){
 					if (game.tiles[i].capital){
-						var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+						var svg = document.createElementNS('http://www.w3.org/2000/svg', 'path');
 						svg.id = 'mapCapital' + i;
-						svg.setAttributeNS(null, 'height', 32);
-						svg.setAttributeNS(null, 'width', 32);
-						svg.setAttributeNS(null,"x",x - 16);
-						svg.setAttributeNS(null,"y",y + 17);
-						svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/capital.png');
+						svg.setAttributeNS(null,'class','mapStar');
+						svg.setAttributeNS(null,'d','m '+ x +','+ y +' 5.79905,17.10796 18.05696,0.50749 -14.47863,10.80187 5.09725,17.33001 -14.74733,-10.43203 -14.90668,10.20304 5.36427,-17.24922 -14.31008,-11.02418 18.06264,-0.22858 z');
 						mapCapitals.appendChild(svg);
-						TweenMax.set(svg, {
-							transformOrigin: '50% 50%',
-							rotation: 45,
-							repeat: -1,
-							ease: Linear.easeNone
-						});
+						if (!isMobile){
+							TweenMax.to(svg, 60, {
+								transformOrigin: '50% 50%',
+								rotation: 360,
+								repeat: -1,
+								ease: Linear.easeNone
+							});
+						}
 					}
 				} else {
 					console.warn("COULD NOT FIND: ", i);
@@ -948,6 +959,8 @@ function loadGameState(){
 			*/
 			initResources(data);
 			lobby.initRibbons(data.ribbons);
+			// set images
+			lobby.initAvatars(data);
 			setTimeout(function(){
 				// init draggable map
 				worldMap = Draggable.create(DOM.worldWrap, {
@@ -960,7 +973,7 @@ function loadGameState(){
 					stroke: g.color[game.player[my.player].playerColor]
 				});
 				TweenMax.set(DOM.targetLine, {
-					stroke: "hsl(+=0%, +=0%, +=30%)"
+					stroke: "hsl(+=0%, +=0%, +=20%)"
 				});
 				
 				function triggerAction(that){
@@ -985,7 +998,7 @@ function loadGameState(){
 					zug.on("click", ".land", function(){
 						triggerAction(this);
 						TweenMax.set(this, {
-							fill: "hsl(+=0%, +=0%, +=20%)"
+							fill: "hsl(+=0%, +=0%, +=12%)"
 						});
 					});
 				} else {
@@ -1000,7 +1013,7 @@ function loadGameState(){
 						showTarget(this, true);
 					}
 					TweenMax.set(this, {
-						fill: "hsl(+=0%, +=0%, +=20%)"
+						fill: "hsl(+=0%, +=0%, +=12%)"
 					});
 				}).on("mouseleave", ".land", function(){
 					var land = this.id.slice(4)*1;

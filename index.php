@@ -107,12 +107,13 @@
 				$nation = 'Kingdom of '. ucfirst($_SESSION['account']);
 				$flag = 'Default.jpg';
 				if($count > 0){
-					$query = "select nation, flag, rating, wins, losses, teamWins, teamLosses, rankedWins, rankedLosses, disconnects from fwnations where account=?";
+					$query = "select row, nation, flag, rating, wins, losses, teamWins, teamLosses, rankedWins, rankedLosses, disconnects from fwnations where account=?";
 					$stmt = $link->prepare($query);
 					$stmt->bind_param('s', $_SESSION['account']);
 					$stmt->execute();
-					$stmt->bind_result($dName, $dFlag, $rating, $wins, $losses, $teamWins, $teamLosses, $rankedWins, $rankedLosses, $disconnects);
+					$stmt->bind_result($dRow, $dName, $dFlag, $rating, $wins, $losses, $teamWins, $teamLosses, $rankedWins, $rankedLosses, $disconnects);
 					while($stmt->fetch()){
+						$_SESSION['nationRow'] = $dRow;
 						$nation = $dName;
 						$flag = $dFlag;
 						$_SESSION['rating'] = $rating;
@@ -134,10 +135,12 @@
 					$query = "insert into fwnations (`account`, `nation`, `flag`) VALUES (?, '$nation', '$flag')";
 					$stmt = $link->prepare($query);
 					$stmt->bind_param('s', $_SESSION['account']);
+					$stmt->store_result();
 					$stmt->execute();
 					// init nation values
 					$_SESSION['nation'] = $nation;
 					$_SESSION['flag'] = $flag;
+					$_SESSION['nationRow'] = $stmt->insert_id;
 					// add ribbon
 					require $_SERVER['DOCUMENT_ROOT']. '/games/firmament-wars/php/addRibbon.php';
 					addRibbon(1);
@@ -230,7 +233,7 @@
 						<button id="leaderboardBtn" type="button" class="btn fwBlue btn-responsive shadow4">Leaderboard</button>';
 						if (!$_SESSION['fwpaid']){
 							echo '
-							<button id="unlockGameBtn" type="button" class="btn fwGreen btn-responsive shadow4">Unlock Complete Game</button>';
+							<button type="button" class="unlockGameBtn btn fwGreen btn-responsive shadow4">Unlock Complete Game</button>';
 						}
 					echo '</div>
 						
@@ -479,7 +482,7 @@
 					<div class='buffer2'>
 						<label class='control-label'>Map <?php 
 						if (!$_SESSION['fwpaid']){
-								echo '| <span class="text-warning">Unlock the complete game to select all maps</span>'; 
+								echo '| <span class="unlockGameBtn text-warning">Unlock the complete game to select all maps</span>'; 
 							}
 						?>
 						</label>
@@ -536,24 +539,24 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12">
-					<div class="input-group">
-						
-						<?php
-						if ($_SESSION['fwpaid']){
-							echo '
+					<?php
+					if ($_SESSION['fwpaid']){
+						echo '
+						<div class="input-group">
 							<input id="updateNationName" class="form-control" type="text" maxlength="32" autocomplete="off" size="24" aria-describedby="updateNationNameStatus" placeholder="Enter New Nation Name">
 							<span class="input-group-btn">
 								<button id="submitNationName" class="btn fwBlue shadow4" type="button">
 									Update Nation Name
 								</button>
-							</span>';
-						} else {
-							echo "Unlock the complete game to update your nation's name";
-						}
-						?>
-					</div>
+							</span>
+						</div>';
+					} else {
+						echo "<div class='text-center'><span class='unlockGameBtn text-warning'>Unlock the complete game to update your nation's name</span></div>";
+					}
+					?>
 				</div>
 			</div>
+			
 			<div class="row text-center">
 				<div class='col-xs-12'>
 					<hr class="fancyhr">
@@ -562,8 +565,22 @@
 				</div>
 			</div>
 			
-			<div class="row">
-				<div class="col-xs-6 text-center">
+			<div class="row text-center">
+				
+				<?php
+				if (!$_SESSION['fwpaid']){
+					echo 
+					'<div class="col-xs-12">
+						<p class="text-warning text-small">
+							Free flags: Algeria, Botswana, Morocco, Malaysia, Pakistan, Croatia, Estonia, Montenegro, Uzbekistan, Flanders, Jordan, Bahamas, Honduras, New Zealand, Chile, Peru
+						</p>
+						<p class="text-warning">
+							<span class="unlockGameBtn">Unlock the complete game to update your dictator\'s avatar</span>
+						</p>
+					</div>';
+				}
+				?>
+				<div class="col-xs-6">
 					<div class="dropdown">
 						<button class="btn dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">
 							<span id="selectedFlag"><?php 
@@ -576,19 +593,9 @@
 						</button>
 						<ul id="flagDropdown" class="dropdown-menu fwDropdown"></ul>
 					</div>
-					<div id="flagPurchased" class="flagPurchasedStatus">
-						<?php
-							if (!$_SESSION['fwpaid']){
-								echo 
-								'<div class="text-warning text-small">
-									Free flags: Algeria, Botswana, Morocco, Malaysia, Pakistan, Croatia, Estonia, Montenegro, Uzbekistan, Flanders, Jordan, Bahamas, Honduras, New Zealand, Chile, Peru
-								</div>';
-							}
-						?>
-					</div>
+					<div id="flagPurchased" class="flagPurchasedStatus"></div>
 				</div>
 				<div class="col-xs-6">
-					
 					<img id="updateNationFlag" class="w100 block center" src="images/flags/<?php 
 						if (isset($_SESSION['flag'])){ echo $flag; }
 					?>">
@@ -597,6 +604,43 @@
 					</div>
 				</div>
 			</div>
+			
+			
+			<div class="row text-center">
+				<div class='col-xs-12'>
+					<hr class="fancyhr">
+					<h2 class='header'>Update Avatar</h2>
+					<hr class="fancyhr">
+				</div>
+			</div>
+			<div class="row">
+				<?php
+					if (!$_SESSION['fwpaid']){
+						echo 
+						'<div class="col-xs-12 text-warning text-center">
+							<span class="unlockGameBtn">Unlock the complete game to update your dictator\'s avatar</span>
+						</div>';
+					} else {
+						echo
+						'<div class="col-xs-8">
+							<form id="uploadDictator" action="php/uploadDictator.php" method="post" enctype="multipart/form-data">
+								<p>Upload your dictator avatar. Must be a jpg < 50kb:</p>
+								<p>
+									<input id="dictatorAvatar" class="btn btn-primary fwBlue shadow4" type="file" accept=".jpg" name="image">
+								</p>
+								<p id="uploadErr" class="text-warning"></p>
+								<p>
+									<input class="btn btn-primary fwBlue shadow4" type="submit" value="Upload" name="submit">
+								</p>
+							</form>
+						</div>
+						<div class="col-xs-4">
+							<img id="configureAvatarImage" class="dictator">
+						</div>';
+					}
+				?>
+			</div>
+			
 			<div class='row buffer text-center'>
 				<div class='col-xs-12'>
 					<hr class="fancyhr">
@@ -624,6 +668,7 @@
 							<li>Display your military ribbons in game</li>
 							<li>Unlock ability to select from 20 player colors</li>
 							<li>Enable the game\'s music</li>
+							<li>Unlock ability to display and change your dictator\'s avatar</li>
 						</ul>
 					</div>
 				</div>
@@ -682,7 +727,9 @@
 		<div id="targetWrap" class="blueBg gameWindow">
 			<table id="target-ui" class="table table-condensed">
 				<tr>
-					<td id="ribbonWrap" class="tight wideRack">
+					<td id="ribbonWrap" class="tight wideRack"></td>
+					<td id="avatarWrap" class="tight">
+						<img id="avatar" src="">
 					</td>
 					<td id="targetFlag" class="text-center tight">
 						<img src="images/flags/Default.jpg" class="w100 block center">
@@ -968,7 +1015,7 @@
 			<div class="row">
 				<div class="col-xs-12 no-padding">
 					<div class="resourceIndicator">
-						<span id="culture">0</span>/<span id="cultureMax">400</span> 
+						<span id="culture">0</span>/<span id="cultureMax">300</span> 
 						<span  title="Culture per turn">
 							(+<span id="sumCulture">0</span>)
 						</span>
@@ -1066,7 +1113,6 @@
 <script src="js/libs/MorphSVGPlugin.min.js"></script> 
 <script src="js/libs/autobahn.js"></script>
 <script src="https://js.stripe.com/v2/"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/AttrPlugin.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/bootstrap-slider.min.js"></script>
 
@@ -1074,6 +1120,7 @@
 	require($_SERVER['DOCUMENT_ROOT'] . "/includes/ga.php");
 	echo '<script>
 		var fwpaid = '.$_SESSION['fwpaid'].';
+		var nationRow = '.$_SESSION['nationRow'].';
 	</script>';
 ?>
 <script>
