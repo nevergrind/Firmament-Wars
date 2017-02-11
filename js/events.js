@@ -143,9 +143,9 @@ var events = {
 		});
 		$("#toggleNation").on("click", function(){
 			var foo = new Image();
-			foo.src = 'php/avatars/'+ nationRow +'.jpg';
+			foo.src = 'php/avatars/'+ ~~(nationRow / 10000) +'/'+ nationRow +'.jpg';
 			foo.onload = function(){
-				document.getElementById('configureAvatarImage').src = 'php/avatars/'+ nationRow +'.jpg';
+				document.getElementById('configureAvatarImage').src = 'php/avatars/'+ ~~(nationRow / 10000) +'/'+ nationRow +'.jpg';
 			};
 			TweenMax.to(configureNation, g.modalSpeed, {
 				startAt: {

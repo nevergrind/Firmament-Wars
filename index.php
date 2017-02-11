@@ -46,9 +46,9 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
 	<script>
-		version = '0-0-31'; 
+		version = '0-0-32'; 
 	</script>
-	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-31">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-32">
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
 
@@ -173,7 +173,7 @@
 					}
 					
 					echo 
-					'<a href="/account">Account</a>&ensp;';
+					'<a href="/account">'. $_SESSION['account'] .'</a>&ensp;';
 				}
 				?>
 					<a href="/forums" title="Nevergrind Browser Game Forums">Forums</a>&ensp; 
@@ -624,7 +624,7 @@
 						echo
 						'<div class="col-xs-8">
 							<form id="uploadDictator" action="php/uploadDictator.php" method="post" enctype="multipart/form-data">
-								<p>Upload your dictator avatar. Must be a jpg < 50kb:</p>
+								<p>Upload your dictator avatar. Must be a jpg < 30 kb:</p>
 								<p>
 									<input id="dictatorAvatar" class="btn btn-primary fwBlue shadow4" type="file" accept=".jpg" name="image">
 								</p>

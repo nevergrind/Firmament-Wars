@@ -474,9 +474,9 @@ var lobby = {
 		data.players.forEach(function(e, i){
 			(function(i){
 				var img = new Image();
-				img.src =  'php/avatars/'+ e.nationRow +'.jpg';
+				img.src =  'php/avatars/'+ ~~(e.nationRow / 10000) +'/'+ e.nationRow +'.jpg';
 				img.onload = function(){
-					game.player[++i].avatar = 'php/avatars/'+ e.nationRow +'.jpg';
+					game.player[++i].avatar = 'php/avatars/'+ ~~(e.nationRow / 10000) +'/'+ e.nationRow +'.jpg';
 				}
 			})(i);
 		});
