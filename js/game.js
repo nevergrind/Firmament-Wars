@@ -41,13 +41,12 @@ function updateTileInfo(tileId){
 	DOM.ribbonWrap.innerHTML = game.player[t.player].ribbons === undefined ? 
 		'' : game.player[t.player].ribbons;
 	var str = ''
-	DOM.targetFlag.innerHTML = 
-		'<img src="images/flags/' + flag + '" class="w100 block center">';
-	
-	var str = '<div class="nowrap">';
+	// tileName and bars
+	document.getElementById('ui2-flag').src = 'images/flags/'+ flag;
+	var str = '<img class="targetFlag" src="images/flags/' + flag + '"><div id="targetNameSpan" class="nowrap">';
 	if (t.capital){
 		str += 
-		'<span id="tileName" class="no-select fa-stack" title="Capital Palace Boosts tile defense">\
+		'<span id="tileName" class="no-select fa-stack shadow4" title="Capital Palace Boosts tile defense">\
 			<i class="glyphicon glyphicon-star capitalStar"></i>\
 		</span> ';
 	}

@@ -510,14 +510,14 @@ var title = {
 				animate.gunfire(data.attackerTile, data.tile, data.player === my.player);
 				game.updateTile(data);
 				if (data.rewardUnits){
-					animate.upgrade(data.tile, 'armies', data.rewardUnits);
+					animate.upgrade(data.tile, 'troops', data.rewardUnits);
 				}
 			} else if (data.type === 'updateTile'){
 				// attacker tile update
 				game.updateTile(data);
 				game.setSumValues();
 				if (data.rewardUnits){
-					animate.upgrade(data.tile, 'armies', data.rewardUnits);
+					animate.upgrade(data.tile, 'troops', data.rewardUnits);
 				}
 			} else if (data.type === 'food'){
 				if (data.account.indexOf(my.account) > -1){

@@ -37,7 +37,7 @@ var action = {
 			return;
 		}
 		if (game.tiles[my.tgt].units < o.minimum){
-			Msg("You need at least " + o.minimum + " armies to attack!", 1.5);
+			Msg("You need at least " + o.minimum + " troops to attack!", 1.5);
 			my.clearHud();
 			return;
 		}
@@ -71,7 +71,7 @@ var action = {
 		my.attackOn = false;
 		my.attackName = '';
 		if (game.tiles[my.tgt].units === 1){
-			Msg("You need at least 2 armies to move/attack!", 1.5);
+			Msg("You need at least 2 troops to move/attack!", 1.5);
 			my.clearHud();
 			return;
 		}
@@ -146,7 +146,7 @@ var action = {
 			return;
 		}
 		if (!my.manpower){
-			action.error("No armies available for deployment!");
+			action.error("No troops available for deployment!");
 			return;
 		}
 		if (t.units <= 254){

@@ -29,7 +29,7 @@ var lobby = {
 			str = '<div id="lobbyGovName" class="text-primary">Despotism</div>\
 				<div id="lobbyGovPerks">\
 					<div>3x starting production</div>\
-					<div>+50% starting armies</div>\
+					<div>+50% starting troops</div>\
 					<div>Start With a Bunker</div>\
 					<div>Free Split Attack</div>\
 				</div>';
@@ -44,7 +44,7 @@ var lobby = {
 		} else if (government === "Democracy"){
 			str = '<div id="lobbyGovName" class="text-primary">Democracy</div>\
 				<div id="lobbyGovPerks">\
-					<div>4x Maximum Army Deployment</div>\
+					<div>4x Maximum Troop Deployment</div>\
 					<div>+50% production bonus</div>\
 					<div>More great people</div>\
 					<div>Start with a wall</div>\
@@ -515,15 +515,15 @@ var lobby = {
 };
 
 function initOffensiveTooltips(){
-	// Kills ' + (2 + my.oBonus) + ' + 4% of armies.
+	// Kills ' + (2 + my.oBonus) + ' + 4% of troops.
 	$('#fireCannons')
 		.attr('title', 'Fire cannons at an adjacent enemy tile.').tooltip('fixTitle');
-	// Kills ' + (5 + (my.oBonus * 2)) + ' + 15% of armies
+	// Kills ' + (5 + (my.oBonus * 2)) + ' + 15% of troops
 	$('#launchMissile')
 		.attr('title', 'Launch a missile at any enemy territory.').tooltip('fixTitle');
-	// Recruit ' + (3 + ~~(my.cultureBonus / 30)) + ' armies.
+	// Recruit ' + (3 + ~~(my.cultureBonus / 30)) + ' troops.
 	$('#recruit')
-		.attr('title', 'Recruit armies from the civilian population. Boosted by culture.');
+		.attr('title', 'Recruit troops from the civilian population. Boosted by culture.');
 }
 function initResources(d){
 	my.food = d.food;
@@ -973,7 +973,7 @@ function loadGameState(){
 					stroke: g.color[game.player[my.player].playerColor]
 				});
 				TweenMax.set(DOM.targetLine, {
-					stroke: "hsl(+=0%, +=0%, +=20%)"
+					stroke: "hsl(+=0%, +=0%, +=15%)"
 				});
 				
 				function triggerAction(that){

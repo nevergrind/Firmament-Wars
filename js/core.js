@@ -932,7 +932,6 @@ function initDom(){
 		avatarWrap: d.getElementById('avatarWrap'),
 		avatar: d.getElementById('avatar'),
 		ribbonWrap: d.getElementById('ribbonWrap'),
-		targetFlag: d.getElementById('targetFlag'),
 		targetName: d.getElementById('targetName'),
 		oBonus: d.getElementById('oBonus'),
 		dBonus: d.getElementById('dBonus'),
@@ -1078,6 +1077,7 @@ var video = {
 	load: {
 		game: function(){
 			var x = [
+				'flare2.png',
 				'smoke.png'
 			];
 			for (var i=0, len=x.length; i<len; i++){

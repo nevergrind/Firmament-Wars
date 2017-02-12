@@ -35,7 +35,7 @@ var animate = {
 		return o;
 	},
 	icon: {
-		armies: {
+		troops: {
 			audio: '',
 			text: '\uf102',
 			color: '#ff0'
@@ -230,13 +230,15 @@ var animate = {
 			h2 = h1/2 - 10;
 		
 		for (var i=0; i<shots; i++){
-			(function(Math, Linear){
+			(function(){
 				var path = document.createElementNS("http://www.w3.org/2000/svg","path"),
 					x2 = box2.x + (Math.random() * w1) - w2;
 					y2 = box2.y + (Math.random() * h1) - h2;
+				var x1 = box1.x + ~~(Math.random()*16)-8,
+					y1 = box1.y + ~~(Math.random()*16)-8;
 				var drawPath = Math.random() > .5 ? 
-					"M "+ (box1.x + ~~(Math.random()*16)-8) +","+ (box1.y + ~~(Math.random()*16)-8) + ' '+ x2 +","+ y2 :
-					"M "+ x2 +","+ y2 +' ' + (box1.x + ~~(Math.random()*16)-8) +","+ (box1.y + ~~(Math.random()*16)-8)
+					"M "+ x1 +","+ y1 + ' '+ x2 +","+ y2 :
+					"M "+ x2 +","+ y2 +' ' + x1 +","+ y1
 				path.setAttributeNS(null,"stroke",animate.randomColor());
 				path.setAttributeNS(null,"stroke-width",1);
 				DOM.world.appendChild(path);
@@ -260,7 +262,7 @@ var animate = {
 						});
 					}
 				});
-			})(Math, Quad);
+			})();
 		}
 	},
 	cannons: function(atkTile, defTile, playSound){
@@ -841,18 +843,19 @@ var animate = {
 		// cache
 		DOM['land' + newTgt] = document.getElementById('land' + newTgt);
 		
-		var newColor = g.color[game.player[!game.tiles[newTgt].player ? my.player : game.tiles[newTgt].player].playerColor];
+		var newStroke = g.color[game.player[!game.tiles[newTgt].player ? my.player : game.tiles[newTgt].player].playerColor];
+		var newFill = g.color[game.player[!game.tiles[newTgt].player ? 0 : game.tiles[newTgt].player].playerColor];
 		TweenMax.set(DOM['land'+ newTgt], {
-			stroke: g.color[game.player[!game.tiles[newTgt].player ? my.player : game.tiles[newTgt].player].playerColor],
+			fill: newFill,
+			stroke: newStroke,
 			onComplete: function(){
-				TweenMax.set(DOM['land' + newTgt], {
-					stroke: "hsl(+=0%, +=0%, +=20%)",
+				TweenMax.set(this.target, {
+					stroke: "hsl(+=0%, +=0%, +=15%)"
 				});
 			}
 		});
 		TweenMax.to(DOM['land' + newTgt], .9, {
 			startAt: {
-				fill: g.color[game.player[!game.tiles[newTgt].player ? 0 : game.tiles[newTgt].player].playerColor],
 				strokeDasharray: '6,3',
 				strokeWidth: 2,
 				strokeDashoffset: 0

@@ -403,7 +403,7 @@
 					<div id="lobbyGovName" class='text-primary'>Despotism</div>
 					<div id="lobbyGovPerks">
 						<div>3x starting production</div>
-						<div>+50% starting armies</div>
+						<div>+50% starting troops</div>
 						<div>Start With a Bunker</div>
 						<div>Free Split Attack</div>
 					</div>
@@ -624,7 +624,7 @@
 						echo
 						'<div class="col-xs-8">
 							<form id="uploadDictator" action="php/uploadDictator.php" method="post" enctype="multipart/form-data">
-								<p>Upload your dictator avatar. Must be a jpg < 30 kb:</p>
+								<p>Upload your dictator avatar. A 100x100 image is recommended. Image must be a jpg < 30 kb:</p>
 								<p>
 									<input id="dictatorAvatar" class="btn btn-primary fwBlue shadow4" type="file" accept=".jpg" name="image">
 								</p>
@@ -725,14 +725,11 @@
 	<div id="gameWrap">
 	
 		<div id="targetWrap" class="blueBg gameWindow">
-			<table id="target-ui" class="table table-condensed">
+			<table id="target-ui">
 				<tr>
 					<td id="ribbonWrap" class="tight wideRack"></td>
 					<td id="avatarWrap" class="tight">
 						<img id="avatar" src="">
-					</td>
-					<td id="targetFlag" class="text-center tight">
-						<img src="images/flags/Default.jpg" class="w100 block center">
 					</td>
 					<td id="targetName" class="text-center shadow4 tight"></td>
 				</tr>
@@ -740,23 +737,24 @@
 		</div>
 		
 		<div id="ui2" class="blueBg gameWindow">
+			<img id="ui2-flag" class="ui2-flag">
 			<div id="ui2-head" class="stagBlue">
 				<span id='manpowerWrap' class="manpower pull-left">
 					<span  
-						title="Great Generals boost army offense">
+						title="Great Generals boost troop attack">
 						<i class="glyphicon glyphicon-star"></i>
 						<span id="oBonus">0</span> 
 					</span>&nbsp;
 					<span   
-						title="Great Tacticians boost army defense" class="marginLeft">
+						title="Great Tacticians boost troop defense" class="marginLeft">
 						<i class="glyphicon glyphicon-star-empty"></i>
 						<span id="dBonus">0</span>
 					</span>
 				</span>
 				<span class="marginLeft">
 					<span
-						title="Deploy armies to conquered territories">
-						<i class="fa fa-angle-double-up manpower"></i> Armies <span id="manpower">0</span>
+						title="Deploy troops to conquered territories">
+						<i class="fa fa-angle-double-up manpower"></i> Troops <span id="manpower">0</span>
 					</span>
 				</span>
 			</div>
@@ -765,7 +763,7 @@
 				<div class="actionHead shadow4">Command</div>
 				
 				<div id="attack" class="actionButtons row" 
-					title="Move/attack with all armies">
+					title="Move/attack with all troops">
 					<div class="col-xs-8">
 						<span class='text-hotkey'>A</span>ttack
 					</div>
@@ -777,7 +775,7 @@
 				
 				<div id="splitAttack" class="actionButtons row" 
 					 
-					title="Move/attack with half of your armies">
+					title="Move/attack with half of your troops">
 					<div class="col-xs-8">
 						<span class='text-hotkey'>S</span>plit Attack
 					</div>
@@ -803,9 +801,9 @@
 				
 				<div id="deploy" class="actionButtons row" 
 					 
-					title="Deploy armies to a tile">
+					title="Deploy troops to a tile">
 					<div class="col-xs-8">
-						<span class='text-hotkey'>D</span>eploy
+						<span class='text-hotkey'>D</span>eploy Troops
 					</div>
 					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
@@ -851,7 +849,7 @@
 				
 				<div id="launchNuke" class="actionButtons row" 
 					 
-					title="Launch a nuclear weapon at any enemy territory. Kills 80-99% of armies and destroys all structures.">
+					title="Launch a nuclear weapon at any enemy territory. Kills 80-99% of troops and destroys all structures.">
 					<div class="col-xs-8">Launch <span class='text-hotkey'>N</span>uke</div>
 					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
@@ -934,7 +932,7 @@
 			
 			<div class="row">
 				<div class="col-xs-12 no-padding moves">
-					<span  title="Energy is used to move and recruit armies.">
+					<span  title="Energy is used to move and recruit troops.">
 						Energy <i class="fa fa-bolt"></i>
 					</span>
 				</div>
@@ -976,7 +974,7 @@
 					<span  title="Food Bonus">
 						+<span id="foodBonus">0</span>%
 					</span>
-					<span  title="Food milestones produce additional armies">
+					<span  title="Food milestones produce additional troops">
 						Food <i class="glyphicon glyphicon-apple"></i> 
 					</span>
 				</div>
