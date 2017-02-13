@@ -624,7 +624,7 @@
 						echo
 						'<div class="col-xs-8">
 							<form id="uploadDictator" action="php/uploadDictator.php" method="post" enctype="multipart/form-data">
-								<p>Upload your dictator avatar. A 100x100 image is recommended. Image must be a jpg < 30 kb:</p>
+								<p>Upload your dictator avatar. A 120x120 image is recommended. Image must be a jpg < 30 kb:</p>
 								<p>
 									<input id="dictatorAvatar" class="btn btn-primary fwBlue shadow4" type="file" accept=".jpg" name="image">
 								</p>

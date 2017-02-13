@@ -544,16 +544,16 @@ tbody{
     -o-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
     transform: rotate(90deg);
-	opacity: .4;
+	opacity: .3;
 	z-index: -5;
 }
 .targetFlag{
 	position: absolute;
-	top: -50%;
+	top: -40%;
 	left: 0;
 	width: 100%;
 	height: auto;
-	opacity: .4;
+	opacity: .3;
 	z-index: 0;
 }
 #targetWrap{
@@ -806,7 +806,7 @@ tbody{
 	top: -50%;
 	left: 0;
 	width: 100%;
-	opacity: .4;
+	opacity: .3;
 	background-size: 100% !important;
 	background-position: -50% !important;
 	z-index: -1;
@@ -1552,8 +1552,8 @@ span.unlockGameBtn{
 	cursor: pointer;
 }
 #avatar{
-	width: 100px;
-	height: 100px;
+	width: 120px;
+	height: 120px;
 }
 #avatarWrap{
 	width: 100px;

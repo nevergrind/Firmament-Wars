@@ -16,6 +16,7 @@ function updateTileInfo(tileId){
 	} else {
 		if (t.flag === "Default.jpg"){
 			flag = "Player" + game.player[t.player].playerColor + ".jpg";
+			flag = t.flag;
 		} else {
 			flag = t.flag;
 		}
