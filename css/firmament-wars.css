@@ -549,7 +549,7 @@ tbody{
 }
 .targetFlag{
 	position: absolute;
-	top: 0;
+	top: -50%;
 	left: 0;
 	width: 100%;
 	height: auto;
@@ -560,11 +560,11 @@ tbody{
 	position: absolute;
 	top: 0;
 	right: 220px;
-	border: none;
+	border-top: none;
+	border-right: none;
 	border-radius: 0 0 0 4px;
 	z-index: 9999;
 	background: rgba(0,0,0,0);
-	overflow: hidden;
 }
 #targetNameSpan{
 	position: relative;
@@ -583,9 +583,10 @@ tbody{
 	text-align: center;
 }
 #ribbonWrap{
-	line-height: 5px;
+	position: absolute;
+	line-height: 4px;
+	top: 0;
 	text-align: center;
-	vertical-align: top;
 }
 .narrowRack{
 	width: 75px;
@@ -785,23 +786,42 @@ tbody{
 	pointer-events: none;
 	z-index: 9999;
 }
-#diploHead{
-	font-family: Cinzel, Palatino Linotype, serif;
-	color: #8df;
-	margin-bottom: .25em;
-	letter-spacing: .25em;
+#resourceHead{
+	color: #fff;
+	padding: 0 6px;
+	padding-bottom: 2px;
+	letter-spacing: 2px;
+	margin-bottom: 4px;
+	border-bottom: 1px solid #2a2a2a;
+}
+.diplomacyPlayers{
+	position: relative;
+	border-top: 1px outset #2a2a2a;
+	border-bottom: 1px outset #2a2a2a;
+	padding: 0 6px;
+	overflow: hidden;
+}
+.diploFlag{
+	position: absolute;
+	top: -50%;
+	left: 0;
+	width: 100%;
+	opacity: .4;
+	background-size: 100% !important;
+	background-position: -50% !important;
+	z-index: -1;
 }
 #diplomacy-ui{
 	position: absolute;
 	left: 0;
 	top: 0;
-	padding: 8px;
 	border-radius: 0 0 4px 0;
 	border-top: none;
 	border-left: none;
 	color: #fff;
 	text-align: left;
 	z-index: 9999;
+	overflow: hidden;
 }
 .tight{
 	margin: 0 !important;
@@ -821,7 +841,7 @@ tbody{
 	overflow: hidden;
 }
 .blueBg{
-	border: 1px solid rgba(176,240,255,1);
+	border: 1px solid #2a2a2a; /* rgba(176,240,255,1) */
 	border-radius: 4px;
 	background: rgba(0, 8, 33, 1);
 }
@@ -892,14 +912,6 @@ tbody{
 #lobbyFirmamentWarsLogo{
 	opacity: 1;
 	width: 100%;
-}
-#surrender{
-	margin-right: .375em;
-}
-.surrender{
-	margin-right: .375em;
-	opacity: 0;
-	pointer-events: none;
 }
 .resourceIndicator{
 	white-space: nowrap;
@@ -1155,15 +1167,14 @@ table td, .table th, .table td {
 	margin: 0 auto;
 	left: 0;
 	right: 0;
-	border: 1px solid #357;
 	width: 98%;
 	height: 43px;
-	background: #1a1a1a;
+	background: none;
 	border-radius: 4px;
 }
 .targetBars{
 	stroke-width: 8px;
-	stroke-dasharray: 3,1;
+	stroke-dasharray: 3,2;
 }
 .targetBarsFood{
 	stroke: #8d0;
@@ -1546,6 +1557,8 @@ span.unlockGameBtn{
 }
 #avatarWrap{
 	width: 100px;
+	border-radius: 0 0 0 4px;
+	overflow: hidden;
 }
 #configureAvatarImage{
 	float: right;

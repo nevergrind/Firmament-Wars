@@ -906,23 +906,21 @@ function loadGameState(){
 			for (var i=0; i<len; i++){
 				animate.initMapBars(i);
 			}
-			var str = '<div id="diploHead">\
-				<span id="options" class="pointer options">Options</span>&nbsp;|&nbsp;\<span id="surrender" class="pointer">Surrender</span><span id="exitSpectate" class="pointer">Exit Game</span>\
-			</div><hr class="fancyhr">';
+			var str = '';
 			// init diplomacyPlayers
 			function diploRow(p){
 				function teamIcon(team){
 					return g.teamMode ? 
-						'<span  class="diploTeam" title="Team '+ team +'">'+ team +'</span>' :
+						'<span class="diploTeam" title="Team '+ team +'">'+ team +'</span>' :
 						'';
 				}
-				var str = '<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">\
-					<div class="flag '+ p.flagClass +'"  data-container="#diplomacy-ui" title="'+ p.flagShort + '"></div>'+ 
+				var str = '<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">'+
+					// line 1
+					'<img class="diploFlag" src="images/flags/'+ p.flag + '">'+
+					'<div class="flag '+ p.flagClass +'"  data-container="#diplomacy-ui" title="'+ p.flagShort + '"></div>'+ p.account + '<br>'+ 
 					teamIcon(p.team) +
-					'<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ game.player[p.player].playerColor +'"  title="' + p.government + '"></i>\
-					<span class="diploNames'+
-					(my.player === p.player ? ' text-warning' : '') +
-					'"  title="'+ p.account +'">'+ p.nation +'</span>\
+					'<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ game.player[p.player].playerColor +'"  title="' + p.government + '"></i>'+
+					'<span class="diploNames" title="'+ p.account +'">'+ p.nation +'</span>\
 				</div>';
 				return str;
 			}

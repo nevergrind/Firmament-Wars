@@ -408,7 +408,7 @@ var events = {
 				//console.info(e.offsetX, e.offsetY);
 			}
 		});
-		$("#diplomacy-ui").on('click', '#surrender', function(e){
+		$("#resources-ui").on('click', '#surrender', function(e){
 			surrenderMenu(); 
 		});
 		$("#createGameWrap").on('click', '.mapSelect', function(e){

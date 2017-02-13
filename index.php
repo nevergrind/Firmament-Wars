@@ -173,7 +173,7 @@
 					}
 					
 					echo 
-					'<a href="/account">'. $_SESSION['account'] .'</a>&ensp;';
+					'<a href="/account" class="btn fwBlue btn-responsive shadow4" title="Manage Account">'. $_SESSION['account'] .'</a>&ensp;';
 				}
 				?>
 					<a href="/forums" title="Nevergrind Browser Game Forums">Forums</a>&ensp; 
@@ -727,8 +727,8 @@
 		<div id="targetWrap" class="blueBg gameWindow">
 			<table id="target-ui">
 				<tr>
-					<td id="ribbonWrap" class="tight wideRack"></td>
 					<td id="avatarWrap" class="tight">
+						<div id="ribbonWrap" class="tight wideRack"></div>
 						<img id="avatar" src="">
 					</td>
 					<td id="targetName" class="text-center shadow4 tight"></td>
@@ -929,6 +929,11 @@
 		
 			
 		<div id="resources-ui" class="container shadow4 blueBg gameWindow">
+			<div id="resourceHead">
+				<i id="options" class="pointer options fa fa-cog" title="Options"></i>
+				<i id="surrender" class="pointer fa fa-flag" title="Surrender"></i>
+				<div id="exitSpectate" class="pointer fa-times-circle">Exit Game</div>
+			</div>
 			
 			<div class="row">
 				<div class="col-xs-12 no-padding moves">

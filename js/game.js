@@ -37,6 +37,7 @@ function updateTileInfo(tileId){
 		} else {
 			DOM.ribbonWrap.className = 'tight narrowRack';
 		}
+		TweenMax.set(DOM.ribbonWrap, { xPercent: -100 })
 	}
 	DOM.ribbonWrap.innerHTML = game.player[t.player].ribbons === undefined ? 
 		'' : game.player[t.player].ribbons;
