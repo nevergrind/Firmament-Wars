@@ -277,11 +277,18 @@ var title = {
 		}
 	},
 	mapData: {
+		EarthOmega: {
+			name: 'Earth Omega',
+			tiles: 85,
+			players: 8
+		},
+		/*
 		EarthAlpha: {
 			name: 'Earth Alpha',
 			tiles: 83,
 			players: 8
 		},
+		*/
 		FlatEarth: {
 			name: 'Flat Earth',
 			tiles: 78,
@@ -689,14 +696,17 @@ var title = {
 		});
 		g.isModalOpen = true;
 	},
+	modalElements: [
+		document.getElementById("configureNation"),
+		document.getElementById("titleViewBackdrop"),
+		document.getElementById('createGameWrap'),
+		document.getElementById('optionsModal'),
+		document.getElementById('leaderboard'),
+		document.getElementById('unlockGame'),
+		document.getElementById('hotkeysModal')
+	],
 	closeModal: function(){
-		var e1 = document.getElementById("configureNation"),
-			e2 = document.getElementById("titleViewBackdrop"),
-			e3 = document.getElementById('createGameWrap'),
-			e4 = document.getElementById('optionsModal'),
-			e5 = document.getElementById('leaderboard'),
-			e6 = document.getElementById('unlockGame');
-		TweenMax.set([e1,e2,e3,e4,e5,e6], {
+		TweenMax.set(title.modalElements, {
 			alpha: 0,
 			visibility: 'hidden'
 		});
@@ -817,7 +827,9 @@ var title = {
 	if (e1 !== null){
 		e1.innerHTML = str;
 	}
-	//$('[title]').tooltip();
+	$('[title]').tooltip({
+		animation: false
+	});
 	setTimeout(function(){
 		animate.logo(Linear.easeNone);
 	}, 250);

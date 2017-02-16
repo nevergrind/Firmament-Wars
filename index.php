@@ -491,7 +491,7 @@
 					<div class='buffer w33'>
 						<div class='dropdown'>
 							<button class='btn btn-primary dropdown-toggle shadow4 fwDropdownButton' type='button' data-toggle='dropdown'>
-								<span id='createGameMap'>Earth Alpha</span>
+								<span id='createGameMap'>Earth Omega</span>
 								<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 							</button>
 							<ul id='mapDropdown' class='dropdown-menu fwDropdown createGameInput'></ul>
@@ -508,7 +508,7 @@
 						</span>&ensp;
 						<span title='Number of territories on this map'>
 							<i class='fa fa-globe'></i> 
-							<span id='createGameTiles'>83</span>
+							<span id='createGameTiles'>84</span>
 						</span>
 					</div>
 				</div>
@@ -737,15 +737,19 @@
 		</div>
 		
 		<div id="ui2" class="blueBg gameWindow">
-			<img id="ui2-flag" class="ui2-flag">
+			<div class="flagWrapper">
+				<img id="ui2-flag" class="ui2-flag">
+			</div>
 			<div id="ui2-head" class="stagBlue">
 				<span id='manpowerWrap' class="manpower pull-left">
 					<span  
+						data-placement="bottom"
 						title="Great Generals boost troop attack">
 						<i class="glyphicon glyphicon-star"></i>
 						<span id="oBonus">0</span> 
 					</span>&nbsp;
 					<span   
+						data-placement="bottom"
 						title="Great Tacticians boost troop defense" class="marginLeft">
 						<i class="glyphicon glyphicon-star-empty"></i>
 						<span id="dBonus">0</span>
@@ -753,6 +757,7 @@
 				</span>
 				<span class="marginLeft">
 					<span
+						data-placement="bottom"
 						title="Deploy troops to conquered territories">
 						<i class="fa fa-angle-double-up manpower"></i> Troops <span id="manpower">0</span>
 					</span>
@@ -763,6 +768,7 @@
 				<div class="actionHead shadow4">Command</div>
 				
 				<div id="attack" class="actionButtons row" 
+					data-placement="bottom"
 					title="Move/attack with all troops">
 					<div class="col-xs-8">
 						<span class='text-hotkey'>A</span>ttack
@@ -774,7 +780,6 @@
 				</div>
 				
 				<div id="splitAttack" class="actionButtons row" 
-					 
 					title="Move/attack with half of your troops">
 					<div class="col-xs-8">
 						<span class='text-hotkey'>S</span>plit Attack
@@ -786,10 +791,9 @@
 				</div>
 				
 				<div id="recruit" class="actionButtons row" 
-					 
-					title="">
+					title="Recruit 3 troops from the civilian population. Boosted by culture.">
 					<div class="col-xs-8">
-						<span class='text-hotkey'>R</span>ecruit
+						<span class='text-hotkey'>R</span>ecruit Troops
 					</div>
 					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-bolt moves pointer actionBolt">
@@ -800,7 +804,6 @@
 				<div class="actionHead shadow4">Build</div>
 				
 				<div id="deploy" class="actionButtons row" 
-					 
 					title="Deploy troops to a tile">
 					<div class="col-xs-8">
 						<span class='text-hotkey'>D</span>eploy Troops
@@ -811,9 +814,8 @@
 					</div>
 				</div>
 				
-				<div id="fireCannons" class="actionButtons row" 
-					 
-					title="">
+				<div id="fireCannons" class="actionButtons row"
+					title="Fire cannons at an adjacent enemy tile. Kills 2 + 4% of troops.">
 					<div class="col-xs-8">
 						Fire <span class='text-hotkey'>C</span>annons
 					</div>
@@ -835,9 +837,8 @@
 					</div>
 				</div>
 				
-				<div id="launchMissile" class="actionButtons row" 
-					 
-					title="">
+				<div id="launchMissile" class="actionButtons row"
+					title="Launch a missile at any enemy territory. Kills 5 + 15% of troops.">
 					<div class="col-xs-8">
 						Launch <span class='text-hotkey'>M</span>issile
 					</div>
@@ -848,7 +849,6 @@
 				</div>
 				
 				<div id="launchNuke" class="actionButtons row" 
-					 
 					title="Launch a nuclear weapon at any enemy territory. Kills 80-99% of troops and destroys all structures.">
 					<div class="col-xs-8">Launch <span class='text-hotkey'>N</span>uke</div>
 					<div class="col-xs-4 tight2 text-right productionCost">
@@ -930,6 +930,7 @@
 			
 		<div id="resources-ui" class="container shadow4 blueBg gameWindow">
 			<div id="resourceHead">
+				<i id="hotkeys" class="pointer options fa fa-keyboard-o" title="Hotkeys"></i>
 				<i id="options" class="pointer options fa fa-cog" title="Options"></i>
 				<i id="surrender" class="pointer fa fa-flag" title="Surrender"></i>
 				<div id="exitSpectate" class="pointer fa-times-circle">Exit Game</div>
@@ -958,7 +959,7 @@
 					<span  title="Productions Bonus">
 						+<span id="productionBonus">0</span>%
 					</span>
-					<span  title="Production are used to deploy troops, build structures, and research technology.">
+					<span  title="Production is used to deploy troops, build structures, and research technology.">
 						Production <i class="fa fa-gavel"></i>
 					</span>
 				</div>
@@ -1067,6 +1068,72 @@
 	</div>
 
 	<audio id="bgmusic" autoplay loop preload="auto"></audio>
+	
+	<div id="hotkeysModal" class='fw-primary titleModal'>
+		<h2 class='header text-center'>Hotkeys</h2>
+		<hr class="fancyhr">
+		
+		<div id="hotkeysFormWrap" class="container w100">
+			<div class='row buffer2'>
+				<div class='col-xs-4'>
+					TAB
+				</div>
+				<div class='col-xs-8'>
+					Next Target
+				</div>
+			</div>
+			
+			<div class='row'>
+				<div class='col-xs-4'>
+					SHIFT+TAB
+				</div>
+				<div class='col-xs-8'>
+					Previous Target
+				</div>
+			</div>
+			
+			<div class='row'>
+				<div class='col-xs-4'>
+					ENTER
+				</div>
+				<div class='col-xs-8'>
+					Open Chat
+				</div>
+			</div>
+			
+			<div class='row'>
+				<div class='col-xs-4'>
+					ESC
+				</div>
+				<div class='col-xs-8'>
+					Clear Chat/Target
+				</div>
+			</div>
+			
+			<div class='row'>
+				<div class='col-xs-4'>
+					V
+				</div>
+				<div class='col-xs-8'>
+					Toggle UI
+				</div>
+			</div>
+			
+			<div class='row'>
+				<div class='col-xs-4'>
+					CTRL+R
+				</div>
+				<div class='col-xs-8'>
+					Reply to last private message
+				</div>
+			</div>
+		</div>
+		
+		<hr class='fancyhr buffer2'>
+		<div class='text-center'>
+			<button id='hotkeysDone' type='button' class='btn btn-md fwGreen btn-responsive shadow4'>Done</button>
+		</div>
+	</div>
 	
 	<div id="optionsModal" class='fw-primary titleModal'>
 		<h2 class='header text-center'>Options</h2>

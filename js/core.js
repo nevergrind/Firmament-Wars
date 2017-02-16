@@ -124,11 +124,11 @@ var g = {
 		mouseTransY: 50
 	},
 	map: {
-		sizeX: 2000,
-		sizeY: 1000,
-		name: 'Earth Alpha',
-		key: 'EarthAlpha',
-		tiles: 83
+		sizeX: 3200,
+		sizeY: 1500,
+		name: 'Earth Omega',
+		key: 'EarthOmega',
+		tiles: 85
 	},
 	updateUserInfo: function(){
 		if (location.host !== 'localhost'){
@@ -259,7 +259,9 @@ var g = {
 }
 g.init = (function(){
 	// console.info("Initializing game...");
-	//$('[title]').tooltip();
+	$('[title]').tooltip({
+		animation: false
+	});
 	// build map drop-down 
 	var s = "<li><a class='flagSelect'>Default</a></li>";
 	var flagData = {
@@ -1077,7 +1079,6 @@ var video = {
 	load: {
 		game: function(){
 			var x = [
-				'flare2.png',
 				'smoke.png'
 			];
 			for (var i=0, len=x.length; i<len; i++){

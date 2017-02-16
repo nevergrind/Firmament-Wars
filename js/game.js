@@ -38,7 +38,6 @@ function updateTileInfo(tileId){
 		} else {
 			DOM.ribbonWrap.className = 'tight narrowRack';
 		}
-		TweenMax.set(DOM.ribbonWrap, { xPercent: -100 })
 	}
 	DOM.ribbonWrap.innerHTML = game.player[t.player].ribbons === undefined ? 
 		'' : game.player[t.player].ribbons;
@@ -77,8 +76,8 @@ function updateTileInfo(tileId){
 		ind = t.defense - (t.capital ? 1 : 0);
 		var defTooltip = [
 			'',
-			' Walls reduce cannon damage by 50% and cannot be flipped by Revolutionaries.',
-			' Fortresses reduce cannon damage by 75%, missile damage by 50%, and cannot be flipped by Revolutionaries.'
+			' Walls reduce cannon damage by 50%.',
+			' Fortresses reduce cannon damage by 75% and missile damage by 50%.'
 		];
 	if (ind > 2){
 		DOM.upgradeTileDefense.style.display = 'none';
@@ -90,12 +89,13 @@ function updateTileInfo(tileId){
 			defWord[2] = 'Fortresse';
 		}
 		var tooltip = defWord[ind] + 's upgrade the defense of a territory.' + defTooltip[ind];
-		/*
 		$('#upgradeTileDefense')
 			.attr('title', tooltip)
 			.tooltip('fixTitle')
-			.tooltip('hide');
-		*/
+			.tooltip('hide')
+			.tooltip({
+				animation: false
+			});
 	}
 	// actions panel
 	my.player === t.player ? 

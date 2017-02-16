@@ -1,6 +1,35 @@
 <?php
 	// viewbox must match sizeX, sizeY
 	$mapData = [];
+	$mapData['EarthOmega'] = (object) array(
+		'name' => 'Earth Omega',
+		'key' => 'EarthOmega',
+		'tiles' => 84,
+		'maxPlayers' => 8,
+		'startTiles' => [40, 44, 58, 51, 5, 52, 63, 62],
+		'sizeX' => 3200,
+		'sizeY' => 1500,
+		'tileNames' => array(
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //0
+			'Argentina', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'Germany', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //10
+			'Panama', 'Bolivia', 'Brazil', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'Canada', 'Italy', 'XXXXXXXX', 'XXXXXXXX', //20
+			'XXXXXXXX', 'XXXXXXXX', 'Colombia', 'Cuba', 'XXXXXXXX', 
+			'XXXXXXXX', 'Peru', 'XXXXXXXX', 'XXXXXXXX', 'United Kingdom', //30
+			'Greenland', 'Guyana', 'XXXXXXXX', 'XXXXXXXX', 'Iceland', 
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //40
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'Mexico', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //50
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'Poland', 'Spain', //60
+			'Paraguay', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'XXXXXXXX', 'United States', 'XXXXXXXX', 'XXXXXXXX', //70
+			'XXXXXXXX', 'Alaska', 'Venezuela', 'XXXXXXXX', 'XXXXXXXX', 
+			'France', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //80
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX'
+		)
+	);
 	$mapData['EarthAlpha'] = (object) array(
 		'name' => 'Earth Alpha',
 		'key' => 'EarthAlpha',

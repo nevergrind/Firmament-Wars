@@ -361,15 +361,23 @@ var lobby = {
 			$('#lobbyFlag' + i)
 				.attr('title', data.flag.split(".").shift())
 				.tooltip({
+					animation: false,
+					placement: 'right',
 					container: 'body'
 				});
 			if (my.player === i){
 				$("#lobbyPlayerColor" + i).attr('title', fwpaid ? 
 					'Select Player Color' : 
 					'Unlock the complete game to choose player color')
-					.tooltip({ container: 'body' });
+					.tooltip({
+						container: 'body',
+						animation: false
+					});
 				$("#lobbyTeam" + i).attr('title', 'Select Team')
-					.tooltip({ container: 'body' });
+					.tooltip({
+						container: 'body',
+						animation: false
+					});
 			}
 			lobby.updateGovernment(data);
 			lobby.data[i] = data;
@@ -453,7 +461,7 @@ var lobby = {
 					audio.fade();
 				}
 			})(5);
-			//$('[title]').tooltip('disable');
+			$('[title]').tooltip('disable');
 			cancelGame.style.display = 'none';
 			$("#teamDropdown").css('display', 'none');
 		}
@@ -517,13 +525,24 @@ var lobby = {
 function initOffensiveTooltips(){
 	// Kills ' + (2 + my.oBonus) + ' + 4% of troops.
 	$('#fireCannons')
-		.attr('title', 'Fire cannons at an adjacent enemy tile.').tooltip('fixTitle');
+		.attr('title', 'Fire cannons at an adjacent enemy tile. Kills ' + (2 + my.oBonus) + ' + 4% of troops.')
+		.tooltip('fixTitle')
+		.tooltip({
+			animation: false
+		});
 	// Kills ' + (5 + (my.oBonus * 2)) + ' + 15% of troops
 	$('#launchMissile')
-		.attr('title', 'Launch a missile at any enemy territory.').tooltip('fixTitle');
+		.attr('title', 'Launch a missile at any enemy territory. Kills ' + (5 + (my.oBonus * 2)) + ' + 15% of troops.').tooltip('fixTitle')
+		.tooltip({
+			animation: false
+		});
 	// Recruit ' + (3 + ~~(my.cultureBonus / 30)) + ' troops.
 	$('#recruit')
-		.attr('title', 'Recruit troops from the civilian population. Boosted by culture.');
+		.attr('title', 'Recruit ' + (3 + ~~(my.cultureBonus / 30)) + ' troops from the civilian population. Boosted by culture.')
+		.tooltip('fixTitle')
+		.tooltip({
+			animation: false
+		});
 }
 function initResources(d){
 	my.food = d.food;
@@ -911,16 +930,23 @@ function loadGameState(){
 			function diploRow(p){
 				function teamIcon(team){
 					return g.teamMode ? 
-						'<span class="diploTeam" title="Team '+ team +'">'+ team +'</span>' :
+						'<span class="diploTeam" data-placement="right" title="Team '+ team +'">'+ team +'</span>' :
 						'';
 				}
+				console.info(p.government);
 				var str = '<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">'+
-					// line 1
-					'<img class="diploFlag" src="images/flags/'+ p.flag + '">'+
-					'<div class="flag '+ p.flagClass +'"  data-container="#diplomacy-ui" title="'+ p.flagShort + '"></div>'+ p.account + '<br>'+ 
+					// bg
+					'<div class="flagWrapper">'+
+						'<img class="diploFlag" src="images/flags/'+ p.flag + '">'+
+					'</div><div>'+
+					// row 1
+					'<div class="flag '+ p.flagClass +'" data-placement="right" title="'+ p.flagShort + '"></div>'+ p.account + '</div>'+
+					// row 2
+					'<div>'+ 
 					teamIcon(p.team) +
-					'<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ game.player[p.player].playerColor +'"  title="' + p.government + '"></i>'+
-					'<span class="diploNames" title="'+ p.account +'">'+ p.nation +'</span>\
+					'<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right" title="' + p.government + '"></i>'+
+					p.nation +
+					'</div>\
 				</div>';
 				return str;
 			}
@@ -947,14 +973,9 @@ function loadGameState(){
 			} else {
 				document.getElementById('diplomacy-ui').innerHTML = str;
 			}
-			/*
 			$('[title]').tooltip({
-				delay: {
-					show: 0,
-					hide: 0
-				}
+				animation: false
 			});
-			*/
 			initResources(data);
 			lobby.initRibbons(data.ribbons);
 			// set images

@@ -124,8 +124,19 @@ var events = {
 				alpha: 1
 			});
 			title.showBackdrop();
+		}).on("click", '#hotkeys', function(){
+			TweenMax.to(document.getElementById("hotkeysModal"), g.modalSpeed, {
+				startAt: {
+					visibility: 'visible',
+					y: 0,
+					alpha: 0
+				},
+				y: 30,
+				alpha: 1
+			});
+			title.showBackdrop();
 		});
-		$("#optionsDone, #cancelCreateGame").on("click", function(){
+		$("#hotkeysDone, #optionsDone, #cancelCreateGame").on("click", function(){
 			title.closeModal();
 		});
 
@@ -216,7 +227,11 @@ var events = {
 				});
 				Msg("Your nation's flag is now: " + my.selectedFlag);
 				document.getElementById('selectedFlag').textContent = my.selectedFlag;
-				//$("[title]").tooltip('fixTitle');
+				$("[title]")
+					.tooltip('fixTitle')
+					.tooltip({
+						animation: false
+					});
 			}).fail(function(e){
 				$("#offerFlag").css("display", "block");
 			}).always(function(){
