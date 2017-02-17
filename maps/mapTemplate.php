@@ -1,5 +1,5 @@
 <?php 
-require('waters.php');
+
 echo '
 <?xml version="1.1" encoding="UTF-8" standalone="no"?> 
 <svg

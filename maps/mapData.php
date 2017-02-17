@@ -4,30 +4,28 @@
 	$mapData['EarthOmega'] = (object) array(
 		'name' => 'Earth Omega',
 		'key' => 'EarthOmega',
-		'tiles' => 84,
+		'tiles' => 78,
 		'maxPlayers' => 8,
-		'startTiles' => [40, 44, 58, 51, 5, 52, 63, 62],
+		'startTiles' => [72, 5, 47, 66, 80, 69, 41, 8],
 		'sizeX' => 3200,
 		'sizeY' => 1500,
 		'tileNames' => array(
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //0
-			'Argentina', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
-			'XXXXXXXX', 'Germany', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //10
-			'Panama', 'Bolivia', 'Brazil', 'XXXXXXXX', 'XXXXXXXX', 
-			'XXXXXXXX', 'Canada', 'Italy', 'XXXXXXXX', 'XXXXXXXX', //20
-			'XXXXXXXX', 'XXXXXXXX', 'Colombia', 'Cuba', 'XXXXXXXX', 
-			'XXXXXXXX', 'Peru', 'XXXXXXXX', 'XXXXXXXX', 'United Kingdom', //30
-			'Greenland', 'Guyana', 'XXXXXXXX', 'XXXXXXXX', 'Iceland', 
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //40
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
-			'Mexico', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //50
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'Poland', 'Spain', //60
-			'Paraguay', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
-			'XXXXXXXX', 'XXXXXXXX', 'United States', 'XXXXXXXX', 'XXXXXXXX', //70
-			'XXXXXXXX', 'Alaska', 'Venezuela', 'XXXXXXXX', 'XXXXXXXX', 
-			'France', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //80
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX'
+			'Afghanistan', 'Angola', 'Gabon', 'Greece', 'Oman', //0
+			'Argentina', 'Turkey', 'Romania', 'Australia', 'Austria', 
+			'Tanzania', 'Germany', 'Ghana', 'India', 'Belarus', //10
+			'Panama', 'Bolivia', 'Brazil', 'Indonesia', 'Botswana', 
+			'Central African Republic', 'Canada', 'Italy', 'China', 'Liberia', //20
+			'Nigeria', 'Democratic Republic of the Congo', 'Colombia', 'Cuba', 'Ethiopia', 
+			'Algeria', 'Peru', 'Egypt', 'Finland', 'United Kingdom', //30
+			'Greenland', 'Guyana', 'Iran', 'Iraq', 'Iceland', 
+			'Israel', 'Japan', 'Kazakhastan', 'Uzbekistan', 'Cambodia', //40
+			'Korea', 'Libya', 'South Africa', 'Morocco', 'Madagascar', 
+			'Mexico', 'Mali', 'Thailand', 'Mongolia', 'Mozambique', //50
+			'Namibia', 'Niger', 'Norway', 'Svalbard', 'New Zealand', 
+			'Pakistan', 'Philippines', 'Papua New Guinea', 'Poland', 'Spain', //60
+			'Paraguay', 'Saudi Arabia', 'Russia', 'Sudan', 'Sweden', 
+			'Chad', 'Ukraine', 'United States', 'Alaska', 'Venezuela', // 70
+			'Yemen', 'Somalia', 'France'
 		)
 	);
 	$mapData['EarthAlpha'] = (object) array(

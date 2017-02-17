@@ -279,7 +279,7 @@ var title = {
 	mapData: {
 		EarthOmega: {
 			name: 'Earth Omega',
-			tiles: 85,
+			tiles: 78,
 			players: 8
 		},
 		/*

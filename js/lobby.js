@@ -933,7 +933,6 @@ function loadGameState(){
 						'<span class="diploTeam" data-placement="right" title="Team '+ team +'">'+ team +'</span>' :
 						'';
 				}
-				console.info(p.government);
 				var str = '<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">'+
 					// bg
 					'<div class="flagWrapper">'+
@@ -1060,7 +1059,6 @@ function loadGameState(){
 				}
 				game.startGameState();
 			}, 250);
-			animate.water();
 		}).fail(function(data){
 			serverError(data);
 		}).always(function(){

@@ -758,80 +758,10 @@ var animate = {
 			});
 		})(count, d, interval, DOM.gameWrap, Math);
 	},
-	water: function(){
-		var e1 = document.getElementById('worldWater1'),
-			e2 = document.getElementById('worldWater2'),
-			e3 = document.getElementById('worldWater3');
-		// animate water
-		(function(Math, TweenMax){
-			TweenMax.set(e1, {
-				alpha: 1
-			});
-			var delay = 2;
-			(function water1(x){
-				x += 4;
-				TweenMax.to(e1, delay, {
-					startAt: {
-						backgroundPosition: x +'px 0px',
-						alpha: 0
-					},
-					alpha: 1,
-					repeat: 1,
-					yoyo: true,
-					onComplete: function(){
-						TweenMax.delayedCall(delay, function(){
-							water1(x);
-						});
-					}
-				});
-			})(0);
-			
-			TweenMax.delayedCall(delay, function(){
-				(function water2(x){
-					x += 4;
-					TweenMax.to(e2, delay, {
-						startAt: {
-							backgroundPosition: x +'px 0px',
-							alpha: 0
-						},
-						alpha: 1,
-						repeat: 1,
-						yoyo: true,
-						onComplete: function(){
-							TweenMax.delayedCall(delay, function(){
-								water2(x);
-							});
-						}
-					});
-				})(24);
-			});
-			
-			TweenMax.delayedCall(delay * 2, function(){
-				(function water3(x){
-					x += 4;
-					TweenMax.to(e3, delay, {
-						startAt: {
-							backgroundPosition: x +'px 0px',
-							alpha: 0
-						},
-						alpha: 1,
-						repeat: 1,
-						yoyo: true,
-						onComplete: function(){
-							TweenMax.delayedCall(delay, function(){
-								water3(x);
-							});
-						}
-					});
-				})(48);
-			});
-			
-		})(Math, TweenMax);
-	},
 	glowTile: function(oldTgt, newTgt){
 		TweenMax.set(DOM['land' + oldTgt], {
 			fill: g.color[game.player[game.tiles[oldTgt].player].playerColor],
-			stroke: '#000000',
+			stroke: '#aaa',
 			strokeDasharray: 'none',
 			strokeDashoffset: 0,
 			strokeWidth: 1
@@ -854,10 +784,10 @@ var animate = {
 				});
 			}
 		});
-		TweenMax.to(DOM['land' + newTgt], .9, {
+		TweenMax.to(DOM['land' + newTgt], .4, {
 			startAt: {
 				strokeDasharray: '6,3',
-				strokeWidth: 2,
+				strokeWidth: 3,
 				strokeDashoffset: 0
 			},
 			strokeDashoffset: 9,
