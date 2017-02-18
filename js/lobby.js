@@ -55,7 +55,7 @@ var lobby = {
 					<div>Overrun ability</div>\
 					<div>Infiltration</div>\
 					<div>Faster growth</div>\
-					<div>1/2 cost Recruit</div>\
+					<div>1/2 cost Rush</div>\
 				</div>';
 		} else if (government === "Fascism"){
 			str = '<div id="lobbyGovName" class="text-primary">Fascism</div>\
@@ -523,26 +523,17 @@ var lobby = {
 };
 
 function initOffensiveTooltips(){
-	// Kills ' + (2 + my.oBonus) + ' + 4% of troops.
 	$('#fireCannons')
 		.attr('title', 'Fire cannons at an adjacent enemy tile. Kills ' + (2 + my.oBonus) + ' + 4% of troops.')
 		.tooltip('fixTitle')
-		.tooltip({
-			animation: false
-		});
-	// Kills ' + (5 + (my.oBonus * 2)) + ' + 15% of troops
+		.tooltip({ animation: false });
 	$('#launchMissile')
 		.attr('title', 'Launch a missile at any enemy territory. Kills ' + (5 + (my.oBonus * 2)) + ' + 15% of troops.').tooltip('fixTitle')
-		.tooltip({
-			animation: false
-		});
-	// Recruit ' + (3 + ~~(my.cultureBonus / 30)) + ' troops.
-	$('#recruit')
-		.attr('title', 'Recruit ' + (3 + ~~(my.cultureBonus / 30)) + ' troops from the civilian population. Boosted by culture.')
+		.tooltip({ animation: false });
+	$('#rush')
+		.attr('title', 'Deploy ' + (3 + ~~(my.cultureBonus / 30)) + ' troops using energy instead of production. Boosted by culture.')
 		.tooltip('fixTitle')
-		.tooltip({
-			animation: false
-		});
+		.tooltip({ animation: false });
 }
 function initResources(d){
 	my.food = d.food;
@@ -685,7 +676,7 @@ function setResources(d){
 		if (my.cultureBonus !== d.cultureBonus){
 			DOM.cultureBonus.textContent = d.cultureBonus;
 			my.cultureBonus = d.cultureBonus;
-			// recruit bonus changes
+			// rush bonus changes
 			initOffensiveTooltips();
 		}
 	}
@@ -792,8 +783,8 @@ function loadGameState(){
 			} else if (my.government === 'Democracy'){
 				my.maxDeployment = 254;
 			} else if (my.government === 'Fundamentalism'){
-				my.recruitCost = 2;
-				document.getElementById('recruitCost').textContent = my.recruitCost;
+				my.rushCost = 2;
+				document.getElementById('rushCost').textContent = my.rushCost;
 			} else if (my.government === 'Fascism'){
 				document.getElementById('moves').textContent = 12;
 				my.deployCost = 10;
@@ -859,14 +850,20 @@ function loadGameState(){
 				// init flag unit values
 				var zig = document.getElementById('unit' + i);
 				if (zig !== null){
-					zig.textContent = d.units === 0 ? 0 : d.units;
+					zig.textContent = d.units === 0 ? 0 : d.units; 
 					if (d.units){
 						zig.style.visibility = 'visible';
 					}
 				}
 				if (d.player){
 					TweenMax.set('#land' + i, {
-						fill: g.color[game.player[d.player].playerColor]
+						fill: g.color[game.player[d.player].playerColor],
+						stroke: g.color[game.player[d.player].playerColor],
+						onComplete: function(){
+							TweenMax.set(this.target, {
+								stroke: "hsl(+=0%, +=0%, -=30%)"
+							});
+						}
 					});
 				}
 			}
@@ -1016,7 +1013,7 @@ function loadGameState(){
 					zug.on("click", ".land", function(){
 						triggerAction(this);
 						TweenMax.set(this, {
-							fill: "hsl(+=0%, +=0%, +=12%)"
+							fill: "hsl(+=0%, +=0%, -=5%)"
 						});
 					});
 				} else {
@@ -1031,7 +1028,7 @@ function loadGameState(){
 						showTarget(this, true);
 					}
 					TweenMax.set(this, {
-						fill: "hsl(+=0%, +=0%, +=12%)"
+						fill: "hsl(+=0%, +=0%, -=5%)"
 					});
 				}).on("mouseleave", ".land", function(){
 					var land = this.id.slice(4)*1;

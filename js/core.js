@@ -613,8 +613,14 @@ var game = {
 					if (DOM['flag' + i] !== null){
 						DOM['flag' + i].href.baseVal = "images/flags/" + newFlag;
 					}
-					TweenMax.set(DOM['land' + i], {
-						fill: g.color[game.player[d.player].playerColor]
+					TweenMax.set(DOM['land' + i], { 
+						fill: g.color[game.player[d.player].playerColor],
+						stroke: d.player ? g.color[game.player[d.player].playerColor] : '#aaa',
+						onComplete: function(){
+							TweenMax.set(this.target, {
+								stroke: "hsl(+=0%, +=0%, -=30%)"
+							});
+						}
 					});
 				}
 				// check unit value
@@ -663,7 +669,13 @@ var game = {
 		}
 		// land color
 		TweenMax.set(DOM['land' + i], {
-			fill: g.color[game.player[p].playerColor]
+			fill: g.color[game.player[p].playerColor],
+			stroke: p ? g.color[game.player[p].playerColor] : '#aaa',
+			onComplete: function(){
+				TweenMax.set(this.target, {
+					stroke: "hsl(+=0%, +=0%, -=30%)"
+				});
+			}
 		});
 		
 		// check unit value
@@ -732,7 +744,7 @@ var game = {
 				};
 				game.chat(o);
 				audio.play('culture');
-				// recruit bonus changes
+				// rush bonus changes
 				initOffensiveTooltips();
 			}
 		}
@@ -777,7 +789,7 @@ var my = {
 	splitAttackCost: 1,
 	attackCost: 2,
 	deployCost: 20,
-	recruitCost: 4,
+	rushCost: 4,
 	weaponCost: 1,
 	maxDeployment: 24,
 	buildCost: 1,
@@ -834,7 +846,7 @@ var my = {
 				my.tgt = Math.abs(my.tgt);
 			}
 			my.focusTile(my.tgt, .1);
-			animate.glowTile(my.lastTgt, my.tgt);
+			animate.selectTile(my.lastTgt, my.tgt);
 		}
 	},
 	// shift camera to tile

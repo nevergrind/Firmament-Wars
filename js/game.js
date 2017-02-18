@@ -114,7 +114,7 @@ function showTarget(e, hover, skipOldTgtUpdate){
 		if (!hover){
 			if (cacheOldTgt !== tileId){
 				my.tgt = tileId;
-				animate.glowTile(cacheOldTgt, tileId);
+				animate.selectTile(cacheOldTgt, tileId);
 			}
 		}
 		// animate targetLine on hover

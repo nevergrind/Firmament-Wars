@@ -758,13 +758,18 @@ var animate = {
 			});
 		})(count, d, interval, DOM.gameWrap, Math);
 	},
-	glowTile: function(oldTgt, newTgt){
+	selectTile: function(oldTgt, newTgt){
 		TweenMax.set(DOM['land' + oldTgt], {
 			fill: g.color[game.player[game.tiles[oldTgt].player].playerColor],
-			stroke: '#aaa',
+			stroke: game.tiles[oldTgt].player ? g.color[game.player[game.tiles[oldTgt].player].playerColor] : '#aaa',
 			strokeDasharray: 'none',
 			strokeDashoffset: 0,
-			strokeWidth: 1
+			strokeWidth: 1,
+			onComplete: function(){
+				TweenMax.set(this.target, {
+					stroke: "hsl(+=0%, +=0%, -=30%)"
+				});
+			}
 		});
 		// move to top
 		var x = DOM['land' + newTgt].cloneNode(true);
@@ -773,14 +778,16 @@ var animate = {
 		// cache
 		DOM['land' + newTgt] = document.getElementById('land' + newTgt);
 		
-		var newStroke = g.color[game.player[!game.tiles[newTgt].player ? my.player : game.tiles[newTgt].player].playerColor];
-		var newFill = g.color[game.player[!game.tiles[newTgt].player ? 0 : game.tiles[newTgt].player].playerColor];
+		var newStroke = g.color[game.player[!game.tiles[newTgt].player ? 
+			my.player : game.tiles[newTgt].player].playerColor];
+		var newFill = g.color[game.player[!game.tiles[newTgt].player ? 
+			0 : game.tiles[newTgt].player].playerColor];
 		TweenMax.set(DOM['land'+ newTgt], {
 			fill: newFill,
 			stroke: newStroke,
 			onComplete: function(){
 				TweenMax.set(this.target, {
-					stroke: "hsl(+=0%, +=0%, +=15%)"
+					stroke: "hsl(+=0%, +=0%, +=20%)"
 				});
 			}
 		});

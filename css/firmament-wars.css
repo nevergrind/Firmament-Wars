@@ -584,13 +584,11 @@ tbody{
 }
 #ribbonWrap{
 	position: absolute;
-	background: #222;
-	border-top: 1px solid #000;
-	border-left: 1px solid #000;
 	line-height: 4px;
-	right: 0;
-	bottom: 0;
+	right: -1px;
+	bottom: -1px;
 	text-align: center;
+	background: #000;
 }
 .narrowRack{
 	width: 72px;
@@ -809,7 +807,7 @@ tbody{
 }
 .diplomacyPlayers{
 	position: relative;
-	border: 1px outset #2a2a2a;
+	border: 2px ridge #333;
 	padding: 0 6px;
 	overflow: hidden;
 }
@@ -1153,7 +1151,7 @@ table td, .table th, .table td {
 	fill: #02063a;
 	fill-opacity: 1;
 	fill-rule:evenodd;
-	stroke: #aaa;
+	stroke: #aaa; 
 	stroke-opacity: 1;
 	stroke-width: 1;
 	overflow: visible;
@@ -1650,9 +1648,6 @@ table {
 	font-family: Cinzel, Palatino Linotype, serif;
 	padding-left: 1em;
 }
-#updateNationFlag{
-	display: none;
-}
 #nationName{
 	overflow: hidden;
 	word-break: break-word;
@@ -1756,21 +1751,6 @@ table {
 }
 #flagPurchased{
 	margin: .25em .5em;
-}
-#offerFlag{
-	position: absolute;
-	top: 5%;
-	left: 0;
-	right: 0;
-	margin: 0 auto;
-	padding: 0 1em;
-	display: none;
-	text-align: center;
-	width: 55%;
-	background: rgba(0,0,0,.9);
-	border-radius: 6px;
-	border: 1px solid #3377dd;
-	
 }
 #researchFutureTech{
 	display: none;

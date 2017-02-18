@@ -219,7 +219,6 @@ var events = {
 					flag: my.selectedFlagFull
 				}
 			}).done(function(data) {
-				$("#offerFlag").css("display", "none");
 				my.flag = my.selectedFlagFull;
 				$(".nationFlag").attr({
 					src: "images/flags/" + my.selectedFlagFull,
@@ -232,8 +231,6 @@ var events = {
 					.tooltip({
 						animation: false
 					});
-			}).fail(function(e){
-				$("#offerFlag").css("display", "block");
 			}).always(function(){
 				g.unlock(1);
 				TweenMax.to("#updateNationFlag", 1, {
@@ -593,7 +590,7 @@ $(document).on('keyup', function(e) {
 						}
 						return false;
 					} else {
-						action.recruit();
+						action.rush();
 					}
 				}
 			} else if (x === 69){

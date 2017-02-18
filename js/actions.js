@@ -165,7 +165,6 @@ var action = {
 			}).fail(function(e){
 				audio.play('error');
 			}).always(function(data){
-				//console.info("DEPLOY: ", data);
 				game.tiles[tgt].units = data.units;
 				my.manpower = data.manpower;
 				setResources(data);
@@ -176,35 +175,40 @@ var action = {
 			});
 		}
 	},
-	recruit: function(){
+	rush: function(){
 		var t = game.tiles[my.tgt],
 			tgt = my.tgt;
 		if (t.player !== my.player){
 			return;
 		}
-		if (my.moves < my.recruitCost){
+		if (my.moves < my.rushCost){
 			action.error('Not enough energy!');
+			return;
+		}
+		if (!my.manpower){
+			action.error("No troops available to rush!");
 			return;
 		}
 		if (t.units <= 254){
 			$.ajax({
-				url: 'php/recruit.php',
+				url: 'php/rush.php',
 				data: {
 					target: tgt
 				}
 			}).done(function(data) {
-				//console.info("recruit: ", data.moves, data);
 				if (data.production !== undefined){
 					audio.move();
 				}
 			}).fail(function(e){
 				audio.play('error');
 			}).always(function(data){
-				//console.info("RECRUIT: ", data);
 				setMoves(data);
 				game.tiles[tgt].units = data.units;
-				setProduction(data);
+				//setProduction(data);
 				setTileUnits(tgt, '#00ff00');
+				
+				// my.manpower = data.manpower;
+				setResources(data);
 			});
 		}
 	},
@@ -477,9 +481,9 @@ $("#gameWrap").on("mousedown", '#attack', function(e){
 		});
 		action.target(o);
 	}
-}).on('mousedown', '#recruit', function(e){
+}).on('mousedown', '#rush', function(e){
 	if (e.which === 1){
-		action.recruit();
+		action.rush();
 	}
 }).on('mousedown', '#upgradeTileDefense', function(e){
 	if (e.which === 1){

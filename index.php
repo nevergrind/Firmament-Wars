@@ -508,7 +508,7 @@
 						</span>&ensp;
 						<span title='Number of territories on this map'>
 							<i class='fa fa-globe'></i> 
-							<span id='createGameTiles'>84</span>
+							<span id='createGameTiles'>78</span>
 						</span>
 					</div>
 				</div>
@@ -566,29 +566,10 @@
 			</div>
 			
 			<div class="row text-center">
-				
-				<?php
-				if (!$_SESSION['fwpaid']){
-					echo 
-					'<div class="col-xs-12">
-						<p class="text-warning text-small">
-							Free flags: Algeria, Botswana, Morocco, Malaysia, Pakistan, Croatia, Estonia, Montenegro, Uzbekistan, Flanders, Jordan, Bahamas, Honduras, New Zealand, Chile, Peru
-						</p>
-						<p class="text-warning">
-							<span class="unlockGameBtn">Unlock the complete game to update your dictator\'s avatar</span>
-						</p>
-					</div>';
-				}
-				?>
 				<div class="col-xs-6">
 					<div class="dropdown">
 						<button class="btn dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">
-							<span id="selectedFlag"><?php 
-								if (isset($_SESSION['flag'])){
-									$flagShort = explode(".", $_SESSION['flag']);
-									echo $flagShort[0];
-								}
-								?></span>
+							<span id="selectedFlag"><?php echo $_SESSION['flagShort']; ?></span>
 							<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 						</button>
 						<ul id="flagDropdown" class="dropdown-menu fwDropdown"></ul>
@@ -596,12 +577,7 @@
 					<div id="flagPurchased" class="flagPurchasedStatus"></div>
 				</div>
 				<div class="col-xs-6">
-					<img id="updateNationFlag" class="w100 block center" src="images/flags/<?php 
-						if (isset($_SESSION['flag'])){ echo $flag; }
-					?>">
-					<div id="offerFlag" class="flagPurchasedStatus shadow4">
-						<h5 class="text-center">Unlock the complete game to unlock all flags</h5>
-					</div>
+					<img id="updateNationFlag" class="w100 block center" src="images/flags/<?php echo $flag; ?>">
 				</div>
 			</div>
 			
@@ -662,13 +638,12 @@
 					<div class="col-xs-12">
 						<h4>Paid Features:</h4>
 						<ul>
-							<li>Unlock all flags</li>
-							<li>Unlock all maps</li>
+							<li>Unlock 7 maps: Flat Earth, United States, France, Italy, Japan, Turkey, United Kingdom</li>
 							<li>Rename your nation</li>
+							<li>Unlock ability to display and change your dictator\'s avatar</li>
 							<li>Display your military ribbons in game</li>
 							<li>Unlock ability to select from 20 player colors</li>
 							<li>Enable the game\'s music</li>
-							<li>Unlock ability to display and change your dictator\'s avatar</li>
 						</ul>
 					</div>
 				</div>
@@ -790,14 +765,14 @@
 					</div>
 				</div>
 				
-				<div id="recruit" class="actionButtons row" 
-					title="Recruit 3 troops from the civilian population. Boosted by culture.">
+				<div id="rush" class="actionButtons row" 
+					title="Deploy 3 troops using energy instead of production. Boosted by culture.">
 					<div class="col-xs-8">
-						<span class='text-hotkey'>R</span>ecruit Troops
+						<span class='text-hotkey'>R</span>ush Troops
 					</div>
 					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-bolt moves pointer actionBolt">
-						</i><span id="recruitCost">4</span>
+						</i><span id="rushCost">4</span>
 					</div>
 				</div>
 				
@@ -933,12 +908,12 @@
 				<i id="hotkeys" class="pointer options fa fa-keyboard-o" title="Hotkeys"></i>
 				<i id="options" class="pointer options fa fa-cog" title="Options"></i>
 				<i id="surrender" class="pointer fa fa-flag" title="Surrender"></i>
-				<div id="exitSpectate" class="pointer fa-times-circle">Exit Game</div>
+				<i id="exitSpectate" class="pointer fa-times-circle">Exit Game</i>
 			</div>
 			
 			<div class="row">
 				<div class="col-xs-12 no-padding moves">
-					<span  title="Energy is used to move and recruit troops.">
+					<span title="Energy is used to move and rush troops.">
 						Energy <i class="fa fa-bolt"></i>
 					</span>
 				</div>
