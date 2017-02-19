@@ -170,7 +170,7 @@ var lobby = {
 				str += 
 				'<div id="lobbyRow' +i+ '" class="row lobbyRow">\
 					<div class="col-xs-2">\
-						<img id="lobbyFlag' +i+ '" class="lobbyFlags block center" src="images/flags/blank.png">\
+						<img id="lobbyFlag' +i+ '" class="lobbyFlags block center" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">\
 					</div>\
 					<div class="col-xs-6 lobbyDetails">\
 						<div class="lobbyAccounts">';
@@ -269,6 +269,8 @@ var lobby = {
 			x: '100%',
 			ease: Quad.easeIn
 		});
+		document.getElementById('lobbyFirmamentWarsLogo').src = 'images/title/firmamentWarsTitle_logo_cropped_640x206.png';
+		document.getElementById('worldTitle').src = 'images/FlatWorld50-2.jpg';
 		TweenMax.to(titleMenu, d, {
 			x: '-100%',
 			ease: Quad.easeIn,
@@ -859,6 +861,7 @@ function loadGameState(){
 					TweenMax.set('#land' + i, {
 						fill: g.color[game.player[d.player].playerColor],
 						stroke: g.color[game.player[d.player].playerColor],
+						strokeWidth: 1.5,
 						onComplete: function(){
 							TweenMax.set(this.target, {
 								stroke: "hsl(+=0%, +=0%, -=30%)"

@@ -94,11 +94,13 @@ var action = {
 			//console.info('attackTile', data);
 			// animate attack
 			if (game.tiles[defender].player !== my.player){
+				/*
 				if (!game.tiles[defender].units){
 					audio.move();
 				}
+				*/
 			} else {
-				audio.move();
+				//audio.move();
 			}
 			// barbarian message
 			if (data.rewardMsg){
@@ -129,7 +131,7 @@ var action = {
 			// process barbarian reward messages
 			game.reportMilestones(data);
 		}).fail(function(data){
-			console.info('attackTile', data);
+			//console.info('attackTile', data);
 			audio.play('error');
 			Msg(data.statusText, 1.5);
 			// set target attacker
@@ -159,9 +161,11 @@ var action = {
 				}
 			}).done(function(data) {
 				//console.info("deploy: ", data);
+				/*
 				if (data.production !== undefined){
 					audio.move();
 				}
+				*/
 			}).fail(function(e){
 				audio.play('error');
 			}).always(function(data){
@@ -196,9 +200,11 @@ var action = {
 					target: tgt
 				}
 			}).done(function(data) {
+				/*
 				if (data.production !== undefined){
 					audio.move();
 				}
+				*/
 			}).fail(function(e){
 				audio.play('error');
 			}).always(function(data){

@@ -2,8 +2,8 @@
 // map zooming and scrolling
 function mouseZoomIn(e){
 	g.mouse.zoom += 20;
-	if (g.mouse.zoom > 200){
-		g.mouse.zoom = 200;
+	if (g.mouse.zoom > 300){
+		g.mouse.zoom = 300;
 	}
 	TweenMax.set(DOM.worldWrap, {
 		transformOrigin: g.mouse.transX + "% " + g.mouse.transY + "%",

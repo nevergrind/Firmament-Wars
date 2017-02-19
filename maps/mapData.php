@@ -6,7 +6,7 @@
 		'key' => 'EarthOmega',
 		'tiles' => 78,
 		'maxPlayers' => 8,
-		'startTiles' => [72, 5, 47, 66, 80, 69, 41, 8],
+		'startTiles' => [72, 5, 77, 69, 47, 66, 41, 8], 
 		'sizeX' => 3200,
 		'sizeY' => 1500,
 		'tileNames' => array(

@@ -123,19 +123,14 @@ a:hover{
 /* logo */
 #firmamentWarsLogoWrap{
 	background: #000;
-	width: 100%;
-	height: 100%;
-}
-.titleBG{
 	position: absolute;
 	top: 0;
+	right: 0;
 	left: 0;
-	width: 100%;
-	height: auto;
+	bottom: 0;
 }
-.titleStars{
-	background: url('../images/title/firmamentWarsTitle_stars.png');
-	background-size: 800px 800px;
+#firmamentWarsLogo{
+	position: absolute;
 	width: 100%;
 	height: 100%;
 }
@@ -148,23 +143,6 @@ a:hover{
 	font-size: 4em;
 	letter-spacing: .25em;
 	font-family: Cinzel, Times New Roman, serif;
-}
-.fwHidden, #titleMain{
-	visibility: hidden;
-	opacity: 0;
-}
-#titleGlobe{
-	top: auto;
-	bottom: 0;
-	transform: translateY(20%);
-}
-#firmamentWarsLogo{
-	left: 0;
-	right: 0;
-	margin: 0 auto;
-	transform: translateY(-15%);
-	width: 100%;
-	max-width: 1400px;
 }
 /* Firmament Wars */
 #gameWrap{
@@ -301,6 +279,7 @@ a:hover{
 	overflow: hidden;
 	padding: .5% .75%;
 	z-index: 100;
+	border-radius: 0;
 }
 #refreshGameWrap{
 	color: #bef;
@@ -352,6 +331,7 @@ tbody{
 	right: 0;
 	width: 48%;
 	bottom: -2%;
+	border-radius: 0;
 }
 #titleChatWrap{
 	position: relative;
@@ -803,12 +783,13 @@ tbody{
 	padding-bottom: 2px;
 	letter-spacing: 2px;
 	margin-bottom: 4px;
-	border-bottom: 1px solid #2a2a2a;
+	border-bottom: 1px solid #357;
 }
 .diplomacyPlayers{
 	position: relative;
-	border: 2px ridge #333;
+	border: 2px ridge #357;
 	padding: 0 6px;
+	margin: 1px;
 	overflow: hidden;
 }
 .diploFlag{
@@ -851,7 +832,7 @@ tbody{
 	overflow: hidden;
 }
 .blueBg{
-	border: 1px solid #2a2a2a; /* rgba(176,240,255,1) */
+	border: 1px solid #357; /* rgba(176,240,255,1) */
 	border-radius: 4px;
 	background: rgba(0, 8, 33, 1);
 }
@@ -1153,7 +1134,8 @@ table td, .table th, .table td {
 	fill-rule:evenodd;
 	stroke: #aaa; 
 	stroke-opacity: 1;
-	stroke-width: 1;
+	stroke-width: 2;
+	stroke-linejoin: round;
 	overflow: visible;
 	cursor: pointer;
 }

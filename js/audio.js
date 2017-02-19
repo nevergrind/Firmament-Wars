@@ -130,9 +130,6 @@ var audio = {
 				'machine7',
 				'machine8',
 				'machine9',
-				'boots0',
-				'boots1',
-				'boots2',
 				'chat', 
 				'food', 
 				'culture',
@@ -154,8 +151,8 @@ var audio = {
 	},
 	musicStart: function(){
 		if (g.view !== 'game'){
-			// audio.play("ReturnOfTheFallen", 1);
-			audio.play("WaitingBetweenWorlds", 1);
+			audio.play("ReturnOfTheFallen", 1);
+			//audio.play("WaitingBetweenWorlds", 1);
 		} else {
 			audio.gameMusicPlayNext();
 		}

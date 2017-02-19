@@ -75,7 +75,7 @@ var socket = {
 						document.getElementById('titleChatBody').innerHTML = '';
 					}
 					title.updatePlayers(true);
-					location.hash = my.channel === 'global' ? '' : my.channel;
+					location.hash = my.channel;
 				});
 			}
 		}
@@ -158,9 +158,6 @@ var socket = {
 		// chat updates
 		if (g.view === 'title' && socket.initialConnection){
 			socket.initialConnection = false;
-			var initChannel = location.hash.length > 1 ?
-				location.hash.slice(1) :
-				'global';
 			document.getElementById('titleChatHeaderChannel').innerHTML = my.channel;
 			socket.setChannel(initChannel);
 			socket.zmq.subscribe('title:refreshGames', function(topic, data) {

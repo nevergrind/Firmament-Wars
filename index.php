@@ -42,9 +42,9 @@
 	
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-	<link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
+	<link href="//fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
+	<link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<script>
 		version = '0-0-32'; 
 	</script>
@@ -56,13 +56,8 @@
 		
 	<div id="titleViewBackdrop"></div>
 
-	<div id="firmamentWarsLogoWrap" class="titleBG">
-		<div id="firmamentWarsStars1" class="titleBG titleStars"></div>
-		<div id="firmamentWarsStars2" class="titleBG titleStars"></div>
-		<div id="firmamentWarsStars3" class="titleBG titleStars"></div>
-		
-		<img src="images/title/FirmamentWarsTitle_globe4.png" id="titleGlobe" class="titleBG">
-		<img src="images/title/firmamentWarsTitle_logo.png" id="firmamentWarsLogo" class="titleBG fwHidden" title="Firmament Wars Logo">
+	<div id="firmamentWarsLogoWrap">
+		<img src="images/title/firmament_wars_title_screen_1920_50.jpg" id="firmamentWarsLogo" title="Firmament Wars Logo">
 	</div>
 	
 	<div id="mainWrap" class="portal">
@@ -180,7 +175,7 @@
 					<a href="/blog" title="Nevergrind Browser Game Development News and Articles">Blog</a>&ensp;
 				<?php
 				if (isset($_SESSION['email'])){
-					echo '<a id="options" class="pointer options">Options</a>';
+					echo '<i id="options" class="pointer options fa fa-volume-up"></i>';
 				}
 				?>
 				<div class="pull-right text-primary">
@@ -321,18 +316,18 @@
 					if (!$whitelisted){
 						echo '<div class="chat-alert">You currently do not have access to play Firmament Wars. You must get beta access from the administrator.</div>';
 					}
-					$total = 0;
+					$currentPlayers = 0;
 					/* count from title screen */
 					$result = mysqli_query($link, 'select count(row) count from `fwtitle` where timestamp > date_sub(now(), interval 20 second)');
 					while ($row = mysqli_fetch_assoc($result)){
-						$total += $row['count'];
+						$currentPlayers += $row['count'];
 					}
 					/* count playing game */
 					$result = mysqli_query($link, 'select count(row) count from `fwplayers` where timestamp > date_sub(now(), interval 20 second)');
 					// Associative array
 					while ($row = mysqli_fetch_assoc($result)){
-						$total += $row['count'];
-						echo '<div>There '. ($total === 1 ? 'is' : 'are') .' '. $total . ' '. ($total === 1 ? 'person' : 'people') .' playing Firmament Wars</div><div class="chat-muted">Type /help for chat commands</div>';
+						$currentPlayers += $row['count'];
+						echo '<div>There '. ($currentPlayers === 1 ? 'is' : 'are') .' '. $currentPlayers . ' '. ($currentPlayers === 1 ? 'person' : 'people') .' playing Firmament Wars</div><div class="chat-muted">Type /help for chat commands</div>';
 					}
 					echo 
 					'</div>';
@@ -363,7 +358,7 @@
 	
 		<div id="joinGameLobby" class="shadow4">
 		
-			<img id="worldTitle" src="images/FlatWorld75-2.jpg">
+			<img id="worldTitle" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 		
 			<div id="lobbyLeftCol">
 			
@@ -383,7 +378,7 @@
 			<div id="lobbyRightCol">
 			
 				<div id="lobbyGame" class="fw-primary">
-					<img src="images/title/firmamentWarsTitle_logo_cropped_640x206.png" id="lobbyFirmamentWarsLogo">
+					<img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" id="lobbyFirmamentWarsLogo">
 					<div id="lobbyRankedMatch" class="shadow4 ranked">Ranked Match</div> 
 					<div id="lobbyGameNameWrap">
 						<div class='text-primary margin-top'>Game Name:</div> 
@@ -704,7 +699,7 @@
 				<tr>
 					<td id="avatarWrap" class="tight">
 						<div id="ribbonWrap" class="tight wideRack"></div>
-						<img id="avatar" src="">
+						<img id="avatar" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 					</td>
 					<td id="targetName" class="text-center shadow4 tight"></td>
 				</tr>
@@ -906,7 +901,7 @@
 		<div id="resources-ui" class="container shadow4 blueBg gameWindow">
 			<div id="resourceHead">
 				<i id="hotkeys" class="pointer options fa fa-keyboard-o" title="Hotkeys"></i>
-				<i id="options" class="pointer options fa fa-cog" title="Options"></i>
+				<i id="options" class="pointer options fa fa-volume-up" title="Audio"></i>
 				<i id="surrender" class="pointer fa fa-flag" title="Surrender"></i>
 				<i id="exitSpectate" class="pointer fa-times-circle">Exit Game</i>
 			</div>
@@ -1111,7 +1106,7 @@
 	</div>
 	
 	<div id="optionsModal" class='fw-primary titleModal'>
-		<h2 class='header text-center'>Options</h2>
+		<h2 class='header text-center'>Audio</h2>
 		<hr class="fancyhr">
 		<div id="optionsFormWrap" class="container w100">
 		
@@ -1148,25 +1143,31 @@
 	<div id="Msg" class="shadow4"></div>
 </body>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="js/libs/DrawSVGPlugin.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/utils/Draggable.min.js"></script>
-<script src="js/libs/ScrambleTextPlugin.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/utils/Draggable.min.js"></script>
 <script src="js/libs/SplitText.min.js"></script>
-<script src="js/libs/ThrowPropsPlugin.min.js"></script> 
-<script src="js/libs/MorphSVGPlugin.min.js"></script> 
 <script src="js/libs/autobahn.js"></script>
-<script src="https://js.stripe.com/v2/"></script>
+<script src="//js.stripe.com/v2/"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/bootstrap-slider.min.js"></script>
-
+<script>
+var testing = 5;
+</script>
 <?php
-	require($_SERVER['DOCUMENT_ROOT'] . "/includes/ga.php");
+	require $_SERVER['DOCUMENT_ROOT'] . '/includes/ga.php';
 	echo '<script>
-		var fwpaid = '.$_SESSION['fwpaid'].';
-		var nationRow = '.$_SESSION['nationRow'].';
+		var fwpaid = '. $_SESSION['fwpaid'] .';
+		var nationRow = '. $_SESSION['nationRow'] .';
+		// set channel
+		if (location.hash.length > 1){
+			initChannel = location.hash.slice(1);
+		} else {
+			initChannel = "usa-" + (~~(Math.random()*'. ($currentPlayers / 1500) .')+1);
+		}
 	</script>';
+	echo '$_SESSION["testing"] = <script>testing</script>';
 ?>
 <script>
 	(function(d){
@@ -1196,13 +1197,9 @@
 			x.async = false;
 			d.head.appendChild(x);
 		}
-		// payments
-		if (location.host === "localhost"){
-			Stripe.setPublishableKey('pk_test_GtNfTRB1vYUiMv1GY2kSSRRh');
-		} else {
+		location.host === "localhost" ? 
+			Stripe.setPublishableKey('pk_test_GtNfTRB1vYUiMv1GY2kSSRRh') :
 			Stripe.setPublishableKey('pk_live_rPSfoOYjUrmJyQYLnYJw71Zm');
-		}
-		
 	})(document);
 </script>
 </html>

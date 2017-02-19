@@ -613,70 +613,12 @@ var animate = {
 		});
 	},
 	logo: function(linear){
-		var globeDelay = 1;
-		// animate stars
-		var stars = [
-			document.getElementById('firmamentWarsStars1'),
-			document.getElementById('firmamentWarsStars2'),
-			document.getElementById('firmamentWarsStars3')
-		];
-		
-		TweenMax.to(stars[0], 150, {
-			backgroundPosition: '-800px 0px', 
-			repeat: -1,
-			ease: linear
-		});
-		TweenMax.to(stars[1], 100, {
-			startAt: {
-				backgroundPosition: '250px 250px', 
-			},
-			backgroundPosition: '-1050px 250px', 
-			repeat: -1,
-			ease: linear
-		});
-		TweenMax.to(stars[2], 60, {
-			startAt: {
-				backgroundPosition: '600px 500px', 
-			},
-			backgroundPosition: '-200px 500px', 
-			repeat: -1,
-			ease: linear
-		});
-		// logo
-		var fwLogo = document.getElementById('firmamentWarsLogo');
-		TweenMax.to(fwLogo, globeDelay, {
-			startAt: {
-				transformPerspective: 1600,
-				transformOrigin: '50% 50% -1600',
-				rotationY: 180,
-				scale: .2,
-				visibility: 'visible',
-				alpha: 0,
-				yPercent: -50,
-				y: '-50%'
-			},
-			rotationY: 0,
-			scale: 1,
-			alpha: 1,
-			ease: Quad.easeInOut
-		});
-		
 		TweenMax.to('#titleMain', .5, {
-			delay: globeDelay,
-			startAt: {
-				visibility: 'visible'
-			},
-			alpha: 1,
+			delay: 1,
 			onComplete: function(){
 				$("#title-chat-input").focus();
 				resizeWindow();
-			},
-			ease: Quad.easeIn
-		});
-		// globe
-		var globe = document.getElementById('titleGlobe');
-		TweenMax.to(globe, globeDelay, {
-			y: '10%'
+			}
 		});
 	},
 	smoke: function(tile, x, y, scale){
@@ -764,9 +706,10 @@ var animate = {
 			stroke: game.tiles[oldTgt].player ? g.color[game.player[game.tiles[oldTgt].player].playerColor] : '#aaa',
 			strokeDasharray: 'none',
 			strokeDashoffset: 0,
-			strokeWidth: 1,
+			strokeWidth: 1.5,
 			onComplete: function(){
 				TweenMax.set(this.target, {
+					strokeWidth: 1.5,
 					stroke: "hsl(+=0%, +=0%, -=30%)"
 				});
 			}
@@ -793,11 +736,11 @@ var animate = {
 		});
 		TweenMax.to(DOM['land' + newTgt], .4, {
 			startAt: {
-				strokeDasharray: '6,3',
+				strokeDasharray: '5,5',
 				strokeWidth: 3,
 				strokeDashoffset: 0
 			},
-			strokeDashoffset: 9,
+			strokeDashoffset: 10,
 			repeat: -1,
 			ease: Linear.easeNone
 		});

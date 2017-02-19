@@ -186,8 +186,8 @@ var g = {
 	},
 	config: {
 		audio: {
-			musicVolume: 50,
-			soundVolume: 50
+			musicVolume: 30,
+			soundVolume: 60
 		}
 	},
 	geo: {},
@@ -355,7 +355,7 @@ var game = {
 		'Outstanding Communications Ribbon',
 		'Presidential Citation Ribbon',
 		'Ceremonial Commendation Ribbon',
-		'Civic Service Ribbon',
+		'Civic Service Ribbon',//5
 		'Bronze Campaign Medal',
 		'Bronze Service Medal',
 		'Bronze Expeditionary Medal',
@@ -388,12 +388,12 @@ var game = {
 		'Silver Service Medal',
 		'Good Conduct Medal',
 	],
-	ribbonDescription: ['',
+	ribbonDescription: ['', // 0
 		'Established a new nation',
 		'Confirmed your email address',
-		'Backed a Kickstarter campaign',
+		'Beat the developer of Firmament Wars',
 		'Selected a national flag',
-		'Named your nation',
+		'Named your nation',//5
 		'Won 10 ranked games',
 		'Won 10 team games',
 		'Won 10 FFA games',
@@ -616,6 +616,7 @@ var game = {
 					TweenMax.set(DOM['land' + i], { 
 						fill: g.color[game.player[d.player].playerColor],
 						stroke: d.player ? g.color[game.player[d.player].playerColor] : '#aaa',
+						strokeWidth: 1.5,
 						onComplete: function(){
 							TweenMax.set(this.target, {
 								stroke: "hsl(+=0%, +=0%, -=30%)"
@@ -671,6 +672,7 @@ var game = {
 		TweenMax.set(DOM['land' + i], {
 			fill: g.color[game.player[p].playerColor],
 			stroke: p ? g.color[game.player[p].playerColor] : '#aaa',
+			strokeWidth: 1.5,
 			onComplete: function(){
 				TweenMax.set(this.target, {
 					stroke: "hsl(+=0%, +=0%, -=30%)"
@@ -1077,10 +1079,6 @@ function resizeWindow() {
 	g.resizeY = h / g.screen.height;
 	TweenMax.set("#worldTitle", {
 		xPercent: -50,
-		yPercent: -50
-	});
-	TweenMax.set('#firmamentWarsLogo', {
-		top: '50%',
 		yPercent: -50
 	});
 }

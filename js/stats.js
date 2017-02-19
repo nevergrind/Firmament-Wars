@@ -68,7 +68,7 @@
 var stats = {
 	init: function(data){
 		var flag = my.flag === 'Default.jpg' ? 'Player'+ game.player[my.player].playerColor +'.jpg' : my.flag;
-		var str = '<img id="statWorld" src="images/FlatWorld75-2.jpg">\
+		var str = '<img id="statWorld" src="images/FlatWorld50-2.jpg">\
 		<div id="statResult" class="no-select">\
 			<span id="statGameResult">Defeat</span>!\
 			<img class="statResultFlag pull-left" src="images/flags/'+ flag +'">\
