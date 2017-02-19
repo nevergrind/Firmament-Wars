@@ -52,38 +52,32 @@ var audio = {
 	pause: function(){
 		DOM.bgmusic.pause();
 	},
-	trackIndex: 0,
-	totalTracks: 1,
 	gameMusicInit: function(){
 		if (g.config.audio.musicVolume){
 			audio.pause();
-			audio.trackIndex = ~~(Math.random() * audio.totalTracks);
 			audio.gameMusicPlayNext();
 		}
 	},
 	// rotating music tracks in game
+	trackIndex: ~~(Math.random() * 8),
+	tracks: [
+		'BehindTheShield',
+		'DeceptionPoint',
+		'HeroicReturn',
+		'JourneyOfForgottenSoldiers',
+		'LeadingTheCharge',
+		'RiseAgainstTheMachine',
+		'TheAssault',
+		'WithGreatPower'
+	],
 	gameMusicPlayNext: function(){
 		// FIX IT SO IT USES BGAUDIO
-		var tracks = [
-			//'WaitingBetweenWorlds'
-			'BehindTheShield',
-			'DeceptionPoint',
-			'HeroicReturn',
-			'JourneyOfForgottenSoldiers',
-			'LeadingTheCharge',
-			'RiseAgainstTheMachine',
-			'TheAssault',
-			'WithGreatPower'
-		]
-		audio.totalTracks = tracks.length;
-		audio.trackIndex++;
-		// future various tracks
-		if (my.government){
-			// government specific tracks?
-		}
+		audio.totalTracks = audio.tracks.length;
+		var nowPlaying = audio.tracks[++audio.trackIndex % audio.totalTracks];
+		console.info("Now playing: ", nowPlaying);
 		DOM.bgmusic.pause();
 		if (fwpaid){
-			DOM.bgmusic.src = "music/" + tracks[audio.trackIndex % audio.totalTracks] +".mp3";
+			DOM.bgmusic.src = "music/" + nowPlaying +".mp3";
 			DOM.bgmusic.volume = g.config.audio.musicVolume / 100;
 			DOM.bgmusic.onended = function(){
 				audio.gameMusicPlayNext();

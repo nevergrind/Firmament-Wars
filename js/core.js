@@ -299,7 +299,7 @@ g.init = (function(){
 		},
 		Miscellaneous: {
 			group: "Miscellaneous",
-			name: ['Anarcho-Capitalist', 'Christian', 'Edgemaster', 'European Union', 'High Energy', 'ISIS', 'Northwest Front', 'Pan-African Flag', 'pol', 'Rainbow Flag', 'United Nations']
+			name: ['Anarcho-Capitalist', 'Christian', 'Edgemaster', 'European Union', 'High Energy', 'ISIS', 'Kekistan', 'Northwest Front', 'Pan-African Flag', 'pol', 'Rainbow Flag', 'United Nations']
 		},
 		SouthAmerica: {
 			group: "South America",

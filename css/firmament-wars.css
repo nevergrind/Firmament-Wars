@@ -2380,7 +2380,7 @@ input[type=number]::-webkit-outer-spin-button {
 	position: relative;
 	display: inline-block;
 	top: .125em;
-	background-image: url('../images/flags/flagMap.png');
+	background-image: url('../images/flags/flagMap2.png');
 	background-size: 2000% 800%;
 	margin: .125em .5em 0 0;
 	height: 15px;
@@ -2843,6 +2843,21 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .player16{
 	background-position: -1000% -700%;
+}
+.player17{
+	background-position: -1100% -700%;
+}
+.player18{
+	background-position: -1200% -700%;
+}
+.player19{
+	background-position: -1300% -700%;
+}
+.player20{
+	background-position: -1400% -700%;
+}
+.Kekistan{
+	background-position: -1500% -700%;
 }
 
 /* responsive height */

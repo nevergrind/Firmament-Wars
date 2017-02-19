@@ -470,7 +470,7 @@ var lobby = {
 	},
 	governmentIcon: function(government){
 		var icon = {
-			Despotism: 'fa fa-bullhorn', //  glyphicon glyphicon-screenshot
+			Despotism: 'fa fa-chevron-circle-up', //  glyphicon glyphicon-screenshot
 			Monarchy: 'glyphicon glyphicon-king',
 			Democracy: 'fa fa-balance-scale', // fa-institution fa fa-balance-scale
 			Fundamentalism: 'fa fa-book',
