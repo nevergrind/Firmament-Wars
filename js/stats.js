@@ -123,6 +123,7 @@ var stats = {
 		stats.setLeaderValues();
 	},
 	show: function(){
+		DOM.bgmusic.src = "music/HeartOfChampions.mp3";
 		stats.setView('statOverview');
 		if (g.victory){
 			audio.play('victory');

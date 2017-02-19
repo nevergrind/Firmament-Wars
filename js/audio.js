@@ -13,14 +13,14 @@ var audio = {
 				if (g.config.audio.musicVolume){
 					DOM.bgmusic.pause();
 					if (fwpaid){
-						DOM.bgmusic.src = "music/" + foo + "." + audio.ext;
+						DOM.bgmusic.src = "music/" + foo + ".mp3";
 						DOM.bgmusic.volume = g.config.audio.musicVolume / 100;
 					}
 				}
 			} else {
 				// sfx
 				if (g.config.audio.soundVolume){
-					var sfx = new Audio("sound/" + foo + "." + audio.ext);
+					var sfx = new Audio("sound/" + foo + ".mp3");
 					sfx.volume = g.config.audio.soundVolume / 100;
 					sfx.play();
 				}
@@ -66,15 +66,14 @@ var audio = {
 		// FIX IT SO IT USES BGAUDIO
 		var tracks = [
 			//'WaitingBetweenWorlds'
-			'ambient0',
-			'ambient1',
-			'ambient2',
-			'ambient3',
-			'ambient4',
-			'ambient5',
-			'ambient6',
-			'ambient7',
-			'ambient8'
+			'BehindTheShield',
+			'DeceptionPoint',
+			'HeroicReturn',
+			'JourneyOfForgottenSoldiers',
+			'LeadingTheCharge',
+			'RiseAgainstTheMachine',
+			'TheAssault',
+			'WithGreatPower'
 		]
 		audio.totalTracks = tracks.length;
 		audio.trackIndex++;
@@ -84,7 +83,7 @@ var audio = {
 		}
 		DOM.bgmusic.pause();
 		if (fwpaid){
-			DOM.bgmusic.src = "music/" + tracks[audio.trackIndex % audio.totalTracks] +"." + audio.ext;
+			DOM.bgmusic.src = "music/" + tracks[audio.trackIndex % audio.totalTracks] +".mp3";
 			DOM.bgmusic.volume = g.config.audio.musicVolume / 100;
 			DOM.bgmusic.onended = function(){
 				audio.gameMusicPlayNext();

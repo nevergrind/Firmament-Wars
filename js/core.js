@@ -186,7 +186,7 @@ var g = {
 	},
 	config: {
 		audio: {
-			musicVolume: 30,
+			musicVolume: 20,
 			soundVolume: 60
 		}
 	},
@@ -653,7 +653,7 @@ var game = {
 		}
 	},
 	updateTile: function(d){
-		var i = d.tile,
+		var i = d.tile * 1,
 			p = d.player;
 		// only update client data
 		game.tiles[i].player = p;
@@ -675,7 +675,7 @@ var game = {
 			strokeWidth: 1.5,
 			onComplete: function(){
 				TweenMax.set(this.target, {
-					stroke: "hsl(+=0%, +=0%, -=30%)"
+					stroke: "hsl(+=0%, +=0%, "+ (my.tgt === i ? "+=15%)" : "-=30%)")
 				});
 			}
 		});

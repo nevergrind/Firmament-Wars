@@ -1205,11 +1205,13 @@ text{
 	stroke: rgba(0,0,0,1);
 }
 #targetCrosshair{
-	stroke: "#1a1a1a";
-	stroke-width: 12;
 	visibility: hidden;
 	fill: #f00;
 	pointer-events: none;
+}
+.crosshair{
+	stroke: "#1a1a1a";
+	stroke-width: 12;
 }
 .paths{
 	stroke: rgba(255,255,0,1);

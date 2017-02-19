@@ -301,6 +301,7 @@
 			
 			<div id="titleChat" class="fw-primary text-center">';
 				/* left flag window */
+				$currentPlayers = 0;
 				if (isset($_SESSION['email'])){
 					echo '
 					<div id="titleChatPlayers" class="titlePanelLeft">
@@ -316,7 +317,6 @@
 					if (!$whitelisted){
 						echo '<div class="chat-alert">You currently do not have access to play Firmament Wars. You must get beta access from the administrator.</div>';
 					}
-					$currentPlayers = 0;
 					/* count from title screen */
 					$result = mysqli_query($link, 'select count(row) count from `fwtitle` where timestamp > date_sub(now(), interval 20 second)');
 					while ($row = mysqli_fetch_assoc($result)){

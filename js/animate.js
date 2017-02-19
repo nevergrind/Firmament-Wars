@@ -266,7 +266,7 @@ var animate = {
 		}
 	},
 	cannons: function(atkTile, defTile, playSound){
-		var box1 = DOM['land' + atkTile].getBBox(),
+		var box1 = DOM['unit' + atkTile].getBBox(),
 			box2 = DOM['land' + defTile].getBBox(),
 			box3 = DOM['unit' + defTile].getBBox();
 		if (game.tiles[atkTile].player === my.player){
@@ -730,7 +730,7 @@ var animate = {
 			stroke: newStroke,
 			onComplete: function(){
 				TweenMax.set(this.target, {
-					stroke: "hsl(+=0%, +=0%, +=20%)"
+					stroke: "hsl(+=0%, +=0%, +=15)"
 				});
 			}
 		});

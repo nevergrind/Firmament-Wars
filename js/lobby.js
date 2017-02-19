@@ -858,6 +858,7 @@ function loadGameState(){
 					}
 				}
 				if (d.player){
+					// init map appearance
 					TweenMax.set('#land' + i, {
 						fill: g.color[game.player[d.player].playerColor],
 						stroke: g.color[game.player[d.player].playerColor],
@@ -918,6 +919,13 @@ function loadGameState(){
 				} else {
 					console.warn("COULD NOT FIND: ", i);
 				}
+				var svgTgt = document.getElementById('targetCrosshair');
+				TweenMax.to(svgTgt, 10, {
+					transformOrigin: '50% 50%',
+					rotation: 360,
+					repeat: -1,
+					ease: Linear.easeNone
+				});
 			}
 			// init map DOM elements
 			game.initMap();

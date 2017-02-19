@@ -343,7 +343,7 @@ echo '
 		<text x="1528" y="515" class="unit" id="unit64">0</text>
 		<text x="1033" y="1148" class="unit" id="unit65">0</text>
 		<text x="1960" y="683" class="unit" id="unit66">0</text>
-		<text x="1875" y="354" class="unit" id="unit67">0</text>
+		<text x="2219" y="296" class="unit" id="unit67">0</text>
 		<text x="1834" y="755" class="unit" id="unit68">0</text>
 		<text x="1684" y="323" class="unit" id="unit69">0</text>
 		<text x="1734" y="770" class="unit" id="unit70">0</text>
