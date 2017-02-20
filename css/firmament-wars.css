@@ -26,9 +26,8 @@ body{
 	font-family: Roboto, Verdana, Arial, sans-serif;
 	font-size: 1em;
 	position: absolute;
-	opacity: 0;
+	visibility: hidden;
 	background: #000;
-	overflow: hidden;
 }
 header{
 	position: absolute;
@@ -1097,19 +1096,6 @@ table td, .table th, .table td {
 	left: 0%;
 	background: #0a246a;
 }
-#grid{
-	width: 100%;
-	height: 100%;
-}
-.worldWater{
-	position: absolute;
-	top: -50%;
-	left: -50%;
-	width: 200%;
-	height: 200%;
-	opacity: 1;
-	background: url('../images/fw_grid2.png');
-}
 #world{
 	position: absolute;
 	top: 0%; 
@@ -1466,11 +1452,12 @@ circle{
 #Msg{
 	opacity: 0;
 	position: absolute;
-	top: 110px;
+	top: 120px;
 	left: 0;
 	right: 0;
 	margin: 0 auto;
 	width: 80%;
+	max-width: 800px;
 	padding: 0 8%;
 	text-align: center;
 	font-size: 1.5em;
@@ -1498,7 +1485,7 @@ circle{
 	font-family: Cinzel, Palatino Linotype, serif;
 	letter-spacing: .1em;
 	position: absolute;
-	top: 110px;
+	top: 120px;
 	left: 0%;
 	width: 100%;
 	text-align: center;
@@ -2148,10 +2135,26 @@ table {
     background: -ms-linear-gradient(bottom, rgba(16, 64, 128, 1) 0%, rgba(0, 16, 64,1) 100%) !important;
     background: -o-linear-gradient(bottom, rgba(16, 64, 128, 1) 0%, rgba(0, 16, 64,1) 100%) !important;
 }
+.statWrapper{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+.statFlagBG{
+	position: absolute;
+	top: -50px;
+	left: 0;
+	width: 100%;
+	opacity: .25;
+}
 .statRow{
 	border: 1px solid #037;
 	border-left: none;
 	border-right: none;
+	background: #000;
 }
 .statSpacer{
 	height: 2px;
@@ -2160,11 +2163,13 @@ table {
 	height: 0;
 }
 .statsFlags{
+	position: relative;
 	max-height: 3em;
 	margin: 0 .5em .5em;
 	float: left;
 }
 .statsPlayerWrap{
+	position: relative;
 	margin-left: 6.5em;
 }
 .statsAccount{

@@ -19,12 +19,10 @@
 						token: token
 					}
 				}).done(function(data){
-					if (data !== 'Persistent login failed'){
-						location.reload();
-					} else {
+					if (data === "Login successful!"){
 						$.ajax({
 							type: 'POST',
-							url: '/php/master1.php',
+							url: '/php/master1.php', 
 							data: {
 								run: "getToken",
 								email: email
@@ -47,6 +45,8 @@
 								console.warn(data);
 							});
 						});
+					} else {
+						console.warn("Persistent login failed! ", data);
 					}
 				});
 			} else {
@@ -123,7 +123,7 @@ var stats = {
 		stats.setLeaderValues();
 	},
 	show: function(){
-		DOM.bgmusic.src = "music/HeartOfChampions.mp3";
+		audio.play("HeartOfChampions", 1);
 		stats.setView('statOverview');
 		if (g.victory){
 			audio.play('victory');
@@ -314,7 +314,7 @@ var stats = {
 					},
 				]
 				stats.animate(a, 1.5);
-				str += '<tr class="stagBlue statRow">' +
+				str += '<tr class="statRow">' +
 					stats.playerCell(d, i);
 					var color = game.player[i].playerColor,
 						a = ['units', 'structures', 'weapons', 'resources', 'total'],
@@ -322,7 +322,7 @@ var stats = {
 					for (var j=0; j<len; j++){
 						var sumRow = (j+1 === len) ? ' statSum' : '';
 						str += 
-						'<td class="statTD">\
+						'<td class="stagBlue statTD">\
 							<div class="statBar pb'+ color +'">\
 								<div id="p'+ i +'-'+ a[j] +'-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 								<div id="p'+ i +'-'+ a[j] +'" class="statVal'+ sumRow +'">0</div>\
@@ -369,7 +369,7 @@ var stats = {
 						len = a.length;
 					for (var j=0; j<len; j++){
 						str += 
-						'<td class="statTD">\
+						'<td class="stagBlue statTD">\
 							<div class="statBar pb'+ color +'">\
 								<div id="p'+ i +'-'+ a[j] +'-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 								<div id="p'+ i +'-'+ a[j] +'" class="statVal">0</div>\
@@ -412,7 +412,7 @@ var stats = {
 						len = a.length;
 					for (var j=0; j<len; j++){
 						str += 
-						'<td class="statTD">\
+						'<td class="stagBlue statTD">\
 							<div class="statBar pb'+ color +'">\
 								<div id="p'+ i +'-'+ a[j] +'-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 								<div id="p'+ i +'-'+ a[j] +'" class="statVal">0</div>\
@@ -455,7 +455,7 @@ var stats = {
 						len = a.length;
 					for (var j=0; j<len; j++){
 						str += 
-						'<td class="statTD">\
+						'<td class="stagBlue statTD">\
 							<div class="statBar pb'+ color +'">\
 								<div id="p'+ i +'-'+ a[j] +'-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 								<div id="p'+ i +'-'+ a[j] +'" class="statVal">0</div>\
@@ -498,25 +498,25 @@ var stats = {
 				str += '<tr class="stagBlue statRow">' +
 					stats.playerCell(d, i);
 					var color = game.player[i].playerColor;
-					str += '<td class="statTD">\
+					str += '<td class="stagBlue statTD">\
 						<div class="statBar pb'+ color +'">\
 							<div id="p'+ i +'-moves-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-moves" class="statVal">0</div>\
 						</div>\
 					</td>\
-					<td class="statTD">\
+					<td class="stagBlue statTD">\
 						<div class="statBar pb'+ color +'">\
 							<div id="p'+ i +'-production-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-production" class="statVal">0</div>\
 						</div>\
 					</td>\
-					<td class="statTD">\
+					<td class="stagBlue statTD">\
 						<div class="statBar pb'+ color +'">\
 							<div id="p'+ i +'-food-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-food" class="statVal">0</div>\
 						</div>\
 					</td>\
-					<td class="statTD">\
+					<td class="stagBlue statTD">\
 						<div class="statBar pb'+ color +'">\
 							<div id="p'+ i +'-culture-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\
 							<div id="p'+ i +'-culture" class="statVal">0</div>\
@@ -543,11 +543,12 @@ var stats = {
 	playerCell: function(p, i){
 		var color = game.player[i].playerColor,
 			flag = p.flag === 'Default.jpg' ? 'Player'+ color +'.jpg' : p.flag;
-		var str = '<td>\
+		var str = '<td style="position: relative">\
+			<div class="statWrapper"><img class="statFlagBG" src="images/flags/'+ flag +'"></div>\
 			<img class="statsFlags" src="images/flags/'+ flag +'">\
 			<div class="statsPlayerWrap">\
 				<div class="statsAccount chat-warning nowrap">\
-					<i class="fa '+ lobby.governmentIcon(game.player[i].government) +' diploSquare statsGov player'+ color +'"></i>';
+					<i class="'+ lobby.governmentIcon(game.player[i].government) +' diploSquare statsGov player'+ color +'"></i>';
 					if (g.teamMode){
 						str += '<span class="diploTeam">'+ game.player[color].team +'</span>';
 					}

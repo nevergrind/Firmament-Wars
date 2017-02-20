@@ -36,5 +36,5 @@
 	</pattern>
 	
 </defs>
-<rect id="grid" fill="url(#smallGrid)" />
+<rect id="grid" fill="url(#smallGrid)" width="100%" height="100%" />
 ';

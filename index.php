@@ -1,6 +1,8 @@
 <?php
 	session_start();
-	$_SESSION['fwpaid'] = 0;
+	if (!isset($_SESSION['fwpaid'])){
+		$_SESSION['fwpaid'] = 0;
+	}
 	if($_SERVER["SERVER_NAME"] === "localhost"){
 		error_reporting(E_ALL);
 		ini_set('display_errors', true);
@@ -43,12 +45,12 @@
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
-	<link href="//fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
-	<link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Cinzel">
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-33">
 	<script>
-		version = '0-0-32'; 
+		version = '0-0-33'; 
 	</script>
-	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-32">
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
 
@@ -67,14 +69,17 @@
 			<header id="document" class="shadow4 text-primary">
 				<?php
 				require('php/connect1.php');
-				// paid?
-				$stmt = $link->prepare("select fwpaid, referral from accounts where account=? limit 1");
-				$stmt->bind_param('s', $_SESSION['account']);
-				$stmt->execute();
-				$stmt->bind_result($fwpaid, $dbreferral);
-				while ($stmt->fetch()){
-					$_SESSION['fwpaid'] = $fwpaid;
-					$_SESSION['referral'] = $dbreferral;
+				// check if paid
+				if (!$_SESSION['fwpaid']){
+					$stmt = $link->prepare("select account from fwpaid where account=? limit 1");
+					$stmt->bind_param('s', $_SESSION['account']);
+					$stmt->execute();
+					$stmt->bind_result($dbAccount);
+					$stmt->store_result();
+					// check if the game exists at all
+					if ($stmt->num_rows){
+						$_SESSION['fwpaid'] = 1;
+					}
 				}
 				// load/init nation data
 				// remove players that left
@@ -215,6 +220,7 @@
 			</header>
 			
 			<?php
+			$currentPlayers = 0;
 			if (isset($_SESSION['email']) && $whitelisted){
 				echo '<div id="titleMenu" class="fw-primary">
 					<div id="menuOnline">
@@ -301,13 +307,12 @@
 			
 			<div id="titleChat" class="fw-primary text-center">';
 				/* left flag window */
-				$currentPlayers = 0;
 				if (isset($_SESSION['email'])){
 					echo '
 					<div id="titleChatPlayers" class="titlePanelLeft">
 						<div id="titleChatHeader" class="chat-warning nowrap">
 							<span id="titleChatHeaderChannel"></span> 
-							(<span id="titleChatHeaderCount">1</span>)
+							<span id="titleChatHeaderCount"></span>
 						</div>
 						<div id="titleChatBody"></div>
 					</div>
@@ -1145,16 +1150,22 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script src="js/libs/DrawSVGPlugin.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/utils/Draggable.min.js"></script>
+<script src="js/libs/DrawSVGPlugin.min.js"></script>
 <script src="js/libs/SplitText.min.js"></script>
-<script src="js/libs/autobahn.js"></script>
-<script src="//js.stripe.com/v2/"></script>
+<script src="js/libs/autobahn.min.js"></script>
+<?php
+	if (!$_SESSION['fwpaid']){
+		echo '<script src="https://js.stripe.com/v2/"></script>
+			<script>
+				location.host === "localhost" ? 
+					Stripe.setPublishableKey("pk_test_GtNfTRB1vYUiMv1GY2kSSRRh") :
+					Stripe.setPublishableKey("pk_live_rPSfoOYjUrmJyQYLnYJw71Zm");
+			</script>';
+	}
+?>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/bootstrap-slider.min.js"></script>
-<script>
-var testing = 5;
-</script>
 <?php
 	require $_SERVER['DOCUMENT_ROOT'] . '/includes/ga.php';
 	echo '<script>
@@ -1164,12 +1175,8 @@ var testing = 5;
 		if (location.hash.length > 1){
 			initChannel = location.hash.slice(1);
 		} else {
-			initChannel = "usa-" + (~~(Math.random()*'. ($currentPlayers / 1500) .')+1);
-		}
-	</script>';
-	echo '$_SESSION["testing"] = <script>testing</script>';
-?>
-<script>
+			initChannel = "usa-" + (~~(Math.random()*'. ($currentPlayers / 1000) .') + 1);
+		}'; ?>
 	(function(d){
 		if (location.host === 'nevergrind.com' || location.hash === '#test'){
 			var scripts = [
@@ -1197,9 +1204,6 @@ var testing = 5;
 			x.async = false;
 			d.head.appendChild(x);
 		}
-		location.host === "localhost" ? 
-			Stripe.setPublishableKey('pk_test_GtNfTRB1vYUiMv1GY2kSSRRh') :
-			Stripe.setPublishableKey('pk_live_rPSfoOYjUrmJyQYLnYJw71Zm');
 	})(document);
 </script>
 </html>

@@ -613,13 +613,8 @@ var animate = {
 		});
 	},
 	logo: function(linear){
-		TweenMax.to('#titleMain', .5, {
-			delay: 1,
-			onComplete: function(){
-				$("#title-chat-input").focus();
-				resizeWindow();
-			}
-		});
+		$("#title-chat-input").focus();
+		resizeWindow();
 	},
 	smoke: function(tile, x, y, scale){
 		if (x === undefined){

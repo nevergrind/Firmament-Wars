@@ -121,7 +121,7 @@ var title = {
 							}
 						}
 						if (g.view === 'title'){
-							document.getElementById('titleChatHeaderCount').textContent = len;
+							document.getElementById('titleChatHeaderCount').textContent = '('+ len +')';
 						}
 						// game data sanity check
 						var serverGames = [];
@@ -514,7 +514,8 @@ var title = {
 				game.updateDefense(data);
 			} else if (data.type === 'gunfire'){
 				// defender tile update
-				animate.gunfire(data.attackerTile, data.tile, data.player === my.player);
+				console.info('gunfire ', data);
+				animate.gunfire(data.attackerTile, data.tile, data.player === my.player || data.playerB === my.player); 
 				game.updateTile(data);
 				if (data.rewardUnits){
 					animate.upgrade(data.tile, 'troops', data.rewardUnits);
@@ -544,6 +545,7 @@ var title = {
 				if (data.type === 'gunfire'){
 					// ? when I'm attacked?
 					if (data.defender === my.account){
+						// display msg?
 						game.chat(data);
 					}
 					// lost attack
@@ -830,7 +832,5 @@ var title = {
 	$('[title]').tooltip({
 		animation: false
 	});
-	setTimeout(function(){
-		animate.logo(Linear.easeNone);
-	}, 250);
+	animate.logo();
 })();

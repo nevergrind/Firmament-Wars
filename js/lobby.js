@@ -201,7 +201,7 @@ var lobby = {
 							if (i === my.player){
 								str += ' pointer2';
 							}
-							str += '" data-toggle="dropdown"></i>';
+							str += '" data-placement="right" data-toggle="dropdown"></i>';
 							if (i === my.player && fwpaid){
 								str += 
 								'<ul id="teamColorDropdown" class="dropdown-menu">\
@@ -470,9 +470,9 @@ var lobby = {
 	},
 	governmentIcon: function(government){
 		var icon = {
-			Despotism: 'fa fa-chevron-circle-up', //  glyphicon glyphicon-screenshot
+			Despotism: 'glyphicon glyphicon-bullhorn',
 			Monarchy: 'glyphicon glyphicon-king',
-			Democracy: 'fa fa-balance-scale', // fa-institution fa fa-balance-scale
+			Democracy: 'fa fa-balance-scale',
 			Fundamentalism: 'fa fa-book',
 			Fascism: 'glyphicon glyphicon-fire',
 			Republic: 'glyphicon glyphicon-grain', 
@@ -990,6 +990,7 @@ function loadGameState(){
 			setTimeout(function(){
 				// init draggable map
 				worldMap = Draggable.create(DOM.worldWrap, {
+					minimumMovement: 4,
 					type: 'x,y',
 					bounds: "#gameWrap"
 				});
