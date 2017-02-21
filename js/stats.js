@@ -123,10 +123,11 @@ var stats = {
 		stats.setLeaderValues();
 	},
 	show: function(){
+		DOM.bgmusic.loop = true;
 		audio.play("HeartOfChampions", 1);
 		stats.setView('statOverview');
 		if (g.victory){
-			audio.play('victory');
+			audio.play('bell-8');
 			document.getElementById('statGameResult').textContent = "Victory";
 		} else {
 			audio.play('defeat');
@@ -529,7 +530,7 @@ var stats = {
 		return str;
 	},
 	playerHead: function(column){
-		var str = '<tr><th style="width: 35%"></th>';
+		var str = '<tr><th style="width: 420px"></th>';
 		for (var i=0, len=column.length; i<len; i++){
 			if (i === 4){
 				str += '<th class="text-center statHead chat-warning">'+ column[i] +'</th>';

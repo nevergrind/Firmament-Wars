@@ -955,6 +955,9 @@ function loadGameState(){
 					p.nation +
 					'</div>\
 				</div>';
+				if (my.player === p.player){
+					document.getElementById('ui2-flag').src = 'images/flags/'+ p.flag;
+				}
 				return str;
 			}
 			var teamArr = [ str ];
@@ -1016,7 +1019,7 @@ function loadGameState(){
 							action.launchNuke(that);
 						}
 					} else {
-						showTarget(that);
+						ui.showTarget(that);
 					}
 				}
 				var zug = $("#gameWrap");
@@ -1037,7 +1040,7 @@ function loadGameState(){
 				zug.on("mouseenter", ".land", function(){
 					my.lastTarget = this;
 					if (my.attackOn){
-						showTarget(this, true);
+						ui.showTarget(this, true);
 					}
 					TweenMax.set(this, {
 						fill: "hsl(+=0%, +=0%, -=5%)"

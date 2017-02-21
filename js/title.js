@@ -514,7 +514,6 @@ var title = {
 				game.updateDefense(data);
 			} else if (data.type === 'gunfire'){
 				// defender tile update
-				console.info('gunfire ', data);
 				animate.gunfire(data.attackerTile, data.tile, data.player === my.player || data.playerB === my.player); 
 				game.updateTile(data);
 				if (data.rewardUnits){
@@ -529,7 +528,7 @@ var title = {
 				}
 			} else if (data.type === 'food'){
 				if (data.account.indexOf(my.account) > -1){
-					audio.play('food');
+					audio.play('hup2');
 				}
 			} else if (data.type === 'upgrade'){
 				// fetch updated tile defense data
@@ -705,7 +704,8 @@ var title = {
 		document.getElementById('optionsModal'),
 		document.getElementById('leaderboard'),
 		document.getElementById('unlockGame'),
-		document.getElementById('hotkeysModal')
+		document.getElementById('hotkeysModal'),
+		document.getElementById('joinPrivateGameModal')
 	],
 	closeModal: function(){
 		TweenMax.set(title.modalElements, {
@@ -762,9 +762,10 @@ var title = {
 		}
 	},
 	joinGame: function(){
-		g.name = $("#joinGameName").val();
+		g.name = $("#joinGame").val();
 		if (!g.name){
 			Msg("Game name is not valid!", 1.5);
+			$("#joinGame").focus().select();
 			return;
 		}
 		g.password = $("#joinGamePassword").val();

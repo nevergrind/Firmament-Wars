@@ -42,11 +42,11 @@ var events = {
 
 		$("#titleMenu").on("click", ".wars", function(){
 			var gameName = $(this).data("name");
-			$("#joinGameName").val(gameName);
+			$("#joinGame").val(gameName);
 			$("#joinGamePassword").val('');
 		}).on("dblclick", ".wars", function(){
 			var gameName = $(this).data("name");
-			$("#joinGameName").val(gameName);
+			$("#joinGame").val(gameName);
 			$("#joinGamePassword").val('');
 			title.joinGame();
 		});
@@ -143,7 +143,7 @@ var events = {
 
 		// cached values on client to reduce DB load
 
-		$("#titleMenu").on("click", "#joinGame", function(){
+		$("#joinPrivateGameModal").on("click", "#joinPrivateGameBtn", function(){
 			title.joinGame();
 		});
 
@@ -158,7 +158,7 @@ var events = {
 			foo.onload = function(){
 				document.getElementById('configureAvatarImage').src = 'php/avatars/'+ ~~(nationRow / 10000) +'/'+ nationRow +'.jpg';
 			};
-			TweenMax.to(configureNation, g.modalSpeed, {
+			TweenMax.to('#configureNation', g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
 					y: 0,
@@ -166,6 +166,23 @@ var events = {
 				},
 				y: 30,
 				alpha: 1
+			});
+			title.showBackdrop();
+		});
+		$("#joinGameBtn").on("click", function(){
+			var e = $("#joinGame");
+			e.val('');
+			TweenMax.to('#joinPrivateGameModal', g.modalSpeed, {
+				startAt: {
+					visibility: 'visible',
+					y: 0,
+					alpha: 0
+				},
+				y: 30,
+				alpha: 1,
+				onComplete: function(){
+					e.focus();
+				}
 			});
 			title.showBackdrop();
 		});
@@ -265,24 +282,24 @@ var events = {
 			title.closeModal();
 		});
 		$("#autoJoinGame").on('click', function(){
-			$("#joinGameName").val('');
+			$("#joinGame").val('');
 			audio.play('click');
 			$("#joinGamePassword").val();
 			$(".wars-FFA").filter(":first").trigger("click"); 
 			console.info($(".wars-FFA"));
-			if (!$("#joinGameName").val()){
+			if (!$("#joinGame").val()){
 				Msg("No FFA games found!", 1.5);
 			} else {
 				title.joinGame();
 			}
 		});
 		$("#joinTeamGame").on('click', function(){
-			$("#joinGameName").val('');
+			$("#joinGame").val('');
 			audio.play('click');
 			$("#joinGamePassword").val();
 			$(".wars-Team").filter(":first").trigger("click"); 
 			console.info($(".wars-Team"));
-			if (!$("#joinGameName").val()){
+			if (!$("#joinGame").val()){
 				Msg("No team games found!", 1.5);
 			} else {
 				title.joinGame();
@@ -553,8 +570,8 @@ $(document).on('keyup', function(e) {
 				my.attackOn = false;
 				my.attackName = '';
 				my.clearHud();
-				showTarget(DOM['land' + my.tgt]); 
-				console.clear();
+				ui.showTarget(DOM['land' + my.tgt]); 
+				//console.clear();
 			} else if (x === 65){
 				// a
 				var o = new Target();

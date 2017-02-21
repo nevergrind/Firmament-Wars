@@ -280,14 +280,10 @@
 								</li>
 							</ul>
 						</div>
+						<button id="joinGameBtn" type="button" class="btn fwBlue btn-responsive shadow4">Join Private Game</button>
 					</div>
 					
 					<hr class="fancyhr">
-					<div>
-						<input type="text" class="joinGameInputs fwBlueInput" id="joinGameName" maxlength="32" placeholder="Game Name">
-						<input type="text" class="joinGameInputs fwBlueInput" id="joinGamePassword" maxlength="16" placeholder="Password (Optional)">
-						<button id="joinGame" type="button" class="btn btn-md fwBlue btn-responsive shadow4">Join Game</button>
-					</div>
 				</div>
 
 				<div id="refreshGameWrap" class="buffer2">
@@ -522,6 +518,40 @@
 			</div>
 		</div>
 		
+		<div id="joinPrivateGameModal" class="fw-primary container titleModal">
+			<div class="row text-center">
+				<div class='col-xs-12'>
+					<h2 class='header'>Join Private Game</h2>
+					<hr class="fancyhr">
+				</div>
+			</div>
+			
+			<div class="row buffer2 privateRow">
+				<div class='col-xs-4 privateLabel'>
+					<label class="control-label">Game Name</label>
+				</div>
+				<div class='col-xs-8'>
+					<input type="text" class="joinGameInputs fwBlueInput" id="joinGame" maxlength="32" placeholder="Game Name">
+				</div>
+			</div>
+			
+			<div class="row buffer2 privateRow">
+				<div class='col-xs-4 privateLabel'>
+					<label class="control-label">Password</label>
+				</div>
+				<div class='col-xs-8'>
+					<input type="text" class="joinGameInputs fwBlueInput" id="joinGamePassword" maxlength="16" placeholder="Password (Optional)">
+				</div>
+			</div>
+			
+			<div class='row buffer text-center'>
+				<div class='col-xs-12'>
+					<hr class="fancyhr">
+					<button id="joinPrivateGameBtn" type="button" class="btn btn-md fwGreen btn-responsive shadow4">Join Game</button>
+				</div>
+			</div>
+		</div>
+		
 		<div id="configureNation" class="fw-primary container titleModal">
 			<div class="row text-center">
 				<div class='col-xs-12'>
@@ -698,7 +728,6 @@
 	</div>
 
 	<div id="gameWrap">
-	
 		<div id="targetWrap" class="blueBg gameWindow">
 			<table id="target-ui">
 				<tr>
@@ -706,7 +735,29 @@
 						<div id="ribbonWrap" class="tight wideRack"></div>
 						<img id="avatar" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 					</td>
-					<td id="targetName" class="text-center shadow4 tight"></td>
+					<td id="targetName" class="text-center shadow4 tight">
+						<div class="targetNameAnchor">
+							<img id="targetFlag" class="targetFlag" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
+							<div id="targetNameSpan" class="nowrap">
+								<span id="targetCapStar" class="no-select shadow4" title="Capital Palace Boosts tile defense">
+									<i class="glyphicon glyphicon-star capitalStar"></i>
+								</span>
+								<span id="targetNameWrap"></span>
+							</div>
+							<svg id="targetBarsWrap" class="targetBarsWrap"></svg>
+						</div>
+						
+						<div id="targetTargetWrap" class="targetNameAnchor">
+							<img id="targetTargetFlag" class="targetFlag" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
+							<div id="targetTargetNameSpan" class="nowrap">
+								<span id="targetTargetCapStar" class="no-select shadow4" title="Capital Palace Boosts tile defense">
+									<i class="glyphicon glyphicon-star capitalStar"></i>
+								</span>
+								<span id="targetTargetNameWrap"></span>
+							</div>
+							<svg id="targetTargetBarsWrap" class="targetBarsWrap"></svg>
+						</div>
+					</td>
 				</tr>
 			</table>
 		</div>
@@ -1193,7 +1244,7 @@
 				'ws',
 				'audio',
 				'map',
-				'game',
+				'ui',
 				'actions',
 				'events'
 			]

@@ -114,7 +114,9 @@ var socket = {
 				}
 			}
 		});
-		setInterval(console.clear, 600000); // 10 min
+		if (location.host !== 'localhost'){
+			setInterval(console.clear, 600000); // 10 min
+		}
 		(function keepAliveWs(){
 			socket.zmq.publish(channel, {type: "keepAlive"});
 			setTimeout(keepAliveWs, 180000);

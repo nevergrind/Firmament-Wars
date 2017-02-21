@@ -17,7 +17,7 @@ var action = {
 		}
 		Msg(msg, 1.5);
 		my.clearHud();
-		showTarget(DOM['land' + my.tgt]);
+		ui.showTarget(DOM['land' + my.tgt]);
 	},
 	target: function(o){
 		my.targetData = o;
@@ -29,7 +29,7 @@ var action = {
 			my.attackOn = false;
 			my.attackName = '';
 			my.clearHud();
-			showTarget(DOM['land' + my.tgt]);
+			ui.showTarget(DOM['land' + my.tgt]);
 			return;
 		}
 		if (my.moves < o.cost){
@@ -51,7 +51,7 @@ var action = {
 			// set target line
 			my.targetLine[0] = DOM['unit' + my.tgt].getAttribute('x')*1 - 10;
 			my.targetLine[1] = DOM['unit' + my.tgt].getAttribute('y')*1 - 10;
-			showTarget(my.lastTarget, true);
+			ui.showTarget(my.lastTarget, true);
 		}
 	},
 	attack: function(that){
@@ -80,7 +80,7 @@ var action = {
 			action.error('Not enough energy!');
 			return;
 		}
-		showTarget(that);
+		ui.showTarget(that);
 		my.clearHud();
 		// send attack to server
 		$.ajax({
@@ -94,13 +94,11 @@ var action = {
 			//console.info('attackTile', data);
 			// animate attack
 			if (game.tiles[defender].player !== my.player){
-				/*
 				if (!game.tiles[defender].units){
 					audio.move();
 				}
-				*/
 			} else {
-				//audio.move();
+				audio.move();
 			}
 			// barbarian message
 			if (data.rewardMsg){
@@ -126,7 +124,7 @@ var action = {
 			setMoves(data); 
 			// reset target if lost
 			if (!data.victory){
-				showTarget(DOM['land' + attacker]);
+				ui.showTarget(DOM['land' + attacker]);
 			}
 			// process barbarian reward messages
 			game.reportMilestones(data);
@@ -135,7 +133,7 @@ var action = {
 			audio.play('error');
 			Msg(data.statusText, 1.5);
 			// set target attacker
-			showTarget(DOM['land' + attacker]);
+			ui.showTarget(DOM['land' + attacker]);
 		});
 	},
 	deploy: function(){
@@ -160,12 +158,7 @@ var action = {
 					target: my.tgt
 				}
 			}).done(function(data) {
-				//console.info("deploy: ", data);
-				/*
-				if (data.production !== undefined){
-					audio.move();
-				}
-				*/
+				audio.deploy();
 			}).fail(function(e){
 				audio.play('error');
 			}).always(function(data){
@@ -200,11 +193,7 @@ var action = {
 					target: tgt
 				}
 			}).done(function(data) {
-				/*
-				if (data.production !== undefined){
-					audio.move();
-				}
-				*/
+				audio.deploy();
 			}).fail(function(e){
 				audio.play('error');
 			}).always(function(data){
@@ -261,7 +250,7 @@ var action = {
 			return;
 		}
 		my.clearHud();
-		showTarget(DOM['land' + attacker]);
+		ui.showTarget(DOM['land' + attacker]);
 		// send attack to server
 		$.ajax({
 			url: 'php/fireCannons.php',
@@ -297,7 +286,7 @@ var action = {
 			return;
 		}
 		my.clearHud();
-		showTarget(DOM['land' + attacker]);
+		ui.showTarget(DOM['land' + attacker]);
 		// send attack to server
 		$.ajax({
 			url: 'php/launchMissile.php',
@@ -350,7 +339,7 @@ var action = {
 			return;
 		}
 		my.clearHud();
-		showTarget(DOM['land' + attacker]);
+		ui.showTarget(DOM['land' + attacker]);
 		// send attack to server
 		$.ajax({
 			url: 'php/launchNuke.php',

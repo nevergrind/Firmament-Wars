@@ -636,7 +636,7 @@ var game = {
 				}
 				if (updateTargetStatus){
 					// update this tile within loop cycle?
-					showTarget(DOM['land' + i]);
+					ui.showTarget(DOM['land' + i]);
 					//game.updateTopTile(i);
 				}
 			}
@@ -649,7 +649,7 @@ var game = {
 		game.tiles[i].defense = data.defense;
 		animate.updateMapBars(i);
 		if (my.tgt === i){
-			showTarget(DOM['land' + my.tgt]);
+			ui.showTarget(DOM['land' + my.tgt]);
 		}
 	},
 	updateTile: function(d){
@@ -702,7 +702,7 @@ var game = {
 		
 		if (my.tgt === i){
 			// update this tile within loop cycle?
-			showTarget(DOM['land' + i]);
+			ui.showTarget(DOM['land' + i]);
 			//game.updateTopTile(i);
 		}
 	},
@@ -745,7 +745,7 @@ var game = {
 					message: data.cultureMsg
 				};
 				game.chat(o);
-				audio.play('culture');
+				audio.play('cheer3');
 				// rush bonus changes
 				initOffensiveTooltips();
 			}
@@ -882,7 +882,7 @@ var my = {
 				x: x * g.resizeX,
 				y: y * g.resizeY
 			});
-			showTarget(DOM['land' + tile], false, 1);
+			ui.showTarget(DOM['land' + tile], false, 1);
 			my.flashTile(tile);
 		}
 	},
@@ -918,6 +918,15 @@ var DOM;
 function initDom(){
 	var d = document;
 	DOM = {
+		targetTargetWrap: d.getElementById('targetTargetWrap'),
+		targetFlag: d.getElementById('targetFlag'),
+		targetCapStar: d.getElementById('targetCapStar'),
+		targetNameWrap: d.getElementById('targetNameWrap'),
+		targetBarsWrap: d.getElementById('targetBarsWrap'),
+		targetTargetFlag: d.getElementById('targetTargetFlag'),
+		targetTargetCapStar: d.getElementById('targetTargetCapStar'),
+		targetTargetNameWrap: d.getElementById('targetTargetNameWrap'),
+		targetTargetBarsWrap: d.getElementById('targetTargetBarsWrap'),
 		landWrap: d.getElementById('landWrap'),
 		gameWindows: d.getElementsByClassName('gameWindow'),
 		sumMoves: d.getElementById('sumMoves'),

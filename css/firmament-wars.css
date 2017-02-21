@@ -285,7 +285,7 @@ a:hover{
 	margin-top: .5vh;
 	background: rgba(0,0,0,.5);
 	overflow-y: auto;
-	height: 65vh;
+	height: 69vh;
 }
 #gameTable{
 	table-layout: fixed;
@@ -516,7 +516,7 @@ tbody{
 .ui2-flag{
 	position: absolute;
 	top: 0;
-	right: -140px;
+	right: -135px;
 	width: 480px;
 	-webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
@@ -528,7 +528,7 @@ tbody{
 }
 .targetFlag{
 	position: absolute;
-	top: -40%;
+	top: -50%;
 	left: 0;
 	width: 100%;
 	height: auto;
@@ -545,9 +545,11 @@ tbody{
 	z-index: 9999;
 	background: rgba(0,0,0,0);
 }
-#targetNameSpan{
+#targetNameWrap, #targetTargetNameWrap{
 	position: relative;
 	z-index: 1;
+	font-size: 15px;
+	line-height: 21px;
 }
 #ribbonBackdrop{
 	visibility: hidden;
@@ -581,6 +583,11 @@ tbody{
 	width: 325px;
 	height: 120px;
 	background: #000;
+}
+.targetNameAnchor{
+	position: relative;
+	overflow: hidden;
+	height: 60px;
 }
 .ribbonName{
 	font-size: 1.5em;
@@ -1143,18 +1150,17 @@ table td, .table th, .table td {
 	stroke-dasharray:2,1;
 	overflow: hidden;
 }
-#targetBarsWrap{
+.targetBarsWrap{
 	position: relative;
 	margin: 0 auto;
 	left: 0;
 	right: 0;
 	width: 98%;
-	height: 43px;
-	background: #222;
-	border: 1px solid #000;
+	height: 39px;
+	background: rgba(0,0,0,.8);
 }
 .targetBars{
-	stroke-width: 8px;
+	stroke-width: 7px;
 	stroke-dasharray: 3,2;
 }
 .targetBarsFood{
@@ -1168,6 +1174,10 @@ table td, .table th, .table td {
 }
 .targetBarsDefense{
 	stroke: #ff0;
+}
+#targetTargetWrap{
+	position: relative;
+	
 }
 text{
 	fill: rgba(255,255,255,1);
@@ -1253,12 +1263,8 @@ circle{
 	text-align: center;
 	overflow: hidden;
 }
-#tileName{
-	font-family: Times New Roman, serif;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	text-align: center;
-	overflow: hidden;
+#targetCapStar, #targetTargetCapStar{
+	display: none;
 }
 .fw-primary{
 	background: rgba(0,0,0,.7);
@@ -1422,9 +1428,20 @@ circle{
 	margin: 0;
 	padding: .25em .5em;
 	border-radius: 4px;
-	width: 33%;
+	width: 100%;
+}
+.privateRow{
+	margin: 0 2.5em;
+}
+.privateLabel{
+	text-align: right;
+	line-height: 2em;
+}
+#joinPrivateGameModal{
+	background: #000;
 }
 #createGameBtn, #autoJoinBtn{
+	height: 2em;
 	background: rgba(16,56,96,1) !important;
 }
 .fwBlueInput{
@@ -2870,12 +2887,12 @@ input[type=number]::-webkit-outer-spin-button {
 }
 @media all and (min-height: 868px) and (max-height: 967px){
 	#refreshGameWrap{
-		height: 62vh;
+		height: 66vh;
 	}
 }
 @media all and (min-height: 768px) and (max-height: 867px){
 	#refreshGameWrap{
-		height: 59vh;
+		height: 63vh;
 	}
 }
 @media all and (min-height: 668px) and (max-height: 767px){
@@ -2883,7 +2900,7 @@ input[type=number]::-webkit-outer-spin-button {
 		height: 86vh;
 	}
 	#refreshGameWrap{
-		height: 56vh;
+		height: 60vh;
 	}
 	#leaderboardBody{
 		height: 83vh;
@@ -2894,7 +2911,7 @@ input[type=number]::-webkit-outer-spin-button {
 		height: 85vh;
 	}
 	#refreshGameWrap{
-		height: 50vh;
+		height: 54vh;
 	}
 	#leaderboardBody{
 		height: 82vh;
@@ -2905,7 +2922,7 @@ input[type=number]::-webkit-outer-spin-button {
 		height: 84vh;
 	}
 	#refreshGameWrap{
-		height: 42vh;
+		height: 46vh;
 	}
 	#leaderboardBody{
 		height: 79vh;
@@ -2916,7 +2933,7 @@ input[type=number]::-webkit-outer-spin-button {
 		height: 82vh;
 	}
 	#refreshGameWrap{
-		height: 34vh;
+		height: 38vh;
 	}
 	#leaderboardBody{
 		height: 74vh;
@@ -2927,7 +2944,7 @@ input[type=number]::-webkit-outer-spin-button {
 		height: 80vh;
 	}
 	#refreshGameWrap{
-		height: 25vh;
+		height: 29vh;
 	}
 	#leaderboardBody{
 		height: 70vh;

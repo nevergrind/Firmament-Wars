@@ -55,6 +55,7 @@ var audio = {
 	gameMusicInit: function(){
 		if (g.config.audio.musicVolume){
 			audio.pause();
+			DOM.bgmusic.loop = false;
 			audio.gameMusicPlayNext();
 		}
 	},
@@ -74,7 +75,6 @@ var audio = {
 		// FIX IT SO IT USES BGAUDIO
 		audio.totalTracks = audio.tracks.length;
 		var nowPlaying = audio.tracks[++audio.trackIndex % audio.totalTracks];
-		console.info("Now playing: ", nowPlaying);
 		DOM.bgmusic.pause();
 		if (fwpaid){
 			DOM.bgmusic.src = "music/" + nowPlaying +".mp3";
@@ -97,7 +97,10 @@ var audio = {
 		});
 	},
 	move: function(){
-		audio.play('boots' + ~~(Math.random()*3));
+		audio.play('march' + ~~(Math.random()*3));
+	},
+	deploy: function(){
+		audio.play('deploy' + ~~(Math.random()*3));
 	},
 	cache: {},
 	load: {
@@ -123,9 +126,15 @@ var audio = {
 				'machine7',
 				'machine8',
 				'machine9',
+				'march0',
+				'march1',
+				'march2',
+				'deploy0',
+				'deploy1',
+				'deploy2',
 				'chat', 
 				'food', 
-				'culture',
+				'cheer3',
 				'error',
 				'build',
 				'grenade5',
