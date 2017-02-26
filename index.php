@@ -43,13 +43,13 @@
 	<meta name="mobile-web-app-capable" content="yes">
 	
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Cinzel">
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-33">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-34">
 	<script>
-		version = '0-0-33'; 
+		version = '0-0-34'; 
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -59,7 +59,8 @@
 	<div id="titleViewBackdrop"></div>
 
 	<div id="firmamentWarsLogoWrap">
-		<img src="images/title/firmament_wars_title_screen_1920_50.jpg" id="firmamentWarsLogo" title="Firmament Wars Logo">
+		<img src="images/title/firmament-wars-background-2-75.jpg" id="firmamentWarsBG" title="Firmament Wars Background">
+		<img src="images/title/firmament-wars-logo-1280.png" id="firmamentWarsLogo" title="Firmament Wars Logo">
 	</div>
 	
 	<div id="mainWrap" class="portal">
@@ -280,7 +281,7 @@
 								</li>
 							</ul>
 						</div>
-						<button id="joinGameBtn" type="button" class="btn fwBlue btn-responsive shadow4">Join Private Game</button>
+						<button id="joinPrivateGameBtn" type="button" class="btn fwBlue btn-responsive shadow4">Join Private Game</button>
 					</div>
 					
 					<hr class="fancyhr">
@@ -433,7 +434,7 @@
 				
 				<div id="createGamePasswordWrap">
 					<div class='buffer2'>
-						<label>Password (Optional)</label>
+						<label>Password (Private Game)</label>
 					</div>
 					
 					<div class='buffer'>
@@ -540,7 +541,7 @@
 					<label class="control-label">Password</label>
 				</div>
 				<div class='col-xs-8'>
-					<input type="text" class="joinGameInputs fwBlueInput" id="joinGamePassword" maxlength="16" placeholder="Password (Optional)">
+					<input type="text" class="joinGameInputs fwBlueInput" id="joinGamePassword" maxlength="16" placeholder="Password (Private Game)">
 				</div>
 			</div>
 			
@@ -548,6 +549,7 @@
 				<div class='col-xs-12'>
 					<hr class="fancyhr">
 					<button id="joinPrivateGameBtn" type="button" class="btn btn-md fwGreen btn-responsive shadow4">Join Game</button>
+					<button id='cancelCreateGame' type='button' class='btn btn-md fwGreen btn-responsive shadow4'>Cancel</button>
 				</div>
 			</div>
 		</div>
@@ -666,14 +668,13 @@
 				</div>
 				<div class="row buffer">
 					<div class="col-xs-12">
-						<h4>Paid Features:</h4>
 						<ul>
-							<li>Unlock 7 maps: Flat Earth, United States, France, Italy, Japan, Turkey, United Kingdom</li>
+							<li>More Maps: Flat Earth, UK, USA, France, Italy, Japan, and Turkey!</li>
 							<li>Rename your nation</li>
-							<li>Unlock ability to display and change your dictator\'s avatar</li>
+							<li>Display your dictator\'s avatar</li>
 							<li>Display your military ribbons in game</li>
-							<li>Unlock ability to select from 20 player colors</li>
-							<li>Enable the game\'s music</li>
+							<li>Select from 20 player colors</li>
+							<li>Enable the game\'s awesome music</li>
 						</ul>
 					</div>
 				</div>
@@ -963,6 +964,12 @@
 			</div>
 			
 			<div class="row">
+				<div id="currentYear" class="col-xs-12 no-padding chat-rating">
+					4000 B.C.
+				</div>
+			</div>
+			
+			<div class="row">
 				<div class="col-xs-12 no-padding moves">
 					<span title="Energy is used to move and rush troops.">
 						Energy <i class="fa fa-bolt"></i>
@@ -971,11 +978,13 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12 no-padding">
-					<div class="resourceIndicator">
-						<span id="moves">2</span> 
-						<span  title="Energy per turn">
-							(+<span id="sumMoves">4</span>)
-						</span>
+					<div class="barWrap resourceBar resourceBarParent">
+						<div id="energyBar" class="resourceBar"></div>
+						<div id="energyIndicator"></div>
+						<div class="resourceIndicator resourceRight abs">
+							<span id="moves">2</span> 
+							+<span id="sumMoves">4</span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -995,7 +1004,7 @@
 					<div class="resourceIndicator">
 						<span id="production">0</span> 
 						<span  title="Production per turn">
-							(+<span id="sumProduction">0</span>)
+							+<span id="sumProduction">0</span>
 						</span>
 					</div>
 				</div>
@@ -1014,19 +1023,12 @@
 			
 			<div class="row">
 				<div class="col-xs-12 no-padding">
-					<div class="resourceIndicator">
-						<span id="food">0</span>/<span id="foodMax">25</span> 
-						<span  title="Food per turn">
-							(+<span id="sumFood">0</span>)
-						</span>
-					</div>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-xs-12 no-padding">
-					<div id="foodBarWrap" class="barWrap resourceBar">
+					<div id="foodBarWrap" class="barWrap resourceBar resourceBarParent">
 						<div id="foodBar" class="resourceBar"></div>
+						<div class="resourceIndicator resourceCenter abs">
+							<span id="food">0</span>/<span id="foodMax">25</span> 
+							+<span id="sumFood">0</span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -1044,19 +1046,12 @@
 			
 			<div class="row">
 				<div class="col-xs-12 no-padding">
-					<div class="resourceIndicator">
-						<span id="culture">0</span>/<span id="cultureMax">300</span> 
-						<span  title="Culture per turn">
-							(+<span id="sumCulture">0</span>)
-						</span>
-					</div>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-xs-12 no-padding">
-					<div id="cultureBarWrap" class="barWrap resourceBar">
+					<div id="cultureBarWrap" class="barWrap resourceBar resourceBarParent">
 						<div id="cultureBar" class="resourceBar"></div>
+						<div class="resourceIndicator resourceCenter abs">
+							<span id="culture">0</span>/<span id="cultureMax">300</span> 
+							+<span id="sumCulture">0</span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -1171,7 +1166,13 @@
 					Music Volume
 				</div>
 				<div class='col-xs-8 text-right'>
-					<input id="musicSlider" class="sliders" type="text"/>
+					<?php
+						if ($_SESSION['fwpaid']){
+							echo '<input id="musicSlider" class="sliders" type="text"/>';
+						} else {
+							echo '<span class="text-warning">Unlock the complete game to enable the music</span>';
+						}
+					?>
 				</div>
 			</div>
 			

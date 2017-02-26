@@ -15,7 +15,8 @@ var socket = {
 		var o = {
 			type: 'add',
 			account: my.account,
-			flag: my.flag
+			flag: my.flag,
+			rating: my.rating
 		}
 		socket.zmq.publish('title:' + my.channel, o);
 		title.players[account] = {
@@ -59,8 +60,9 @@ var socket = {
 						delete title.players[key];
 					}
 					data.skip = true;
-					data.msg = "You have joined channel: " + data.channel + ".";
+					data.message = "You have joined channel: " + data.channel;
 					data.type = "chat-warning";
+					DOM.titleChatLog.innerHTML = '';
 					title.chat(data);
 					socket.zmq.subscribe('title:' + data.channel, function(topic, data) {
 						if (g.ignore.indexOf(data.account) === -1){
@@ -68,7 +70,7 @@ var socket = {
 						}
 					});
 					// add id
-					socket.addPlayer(my.account, my.flag);
+					socket.addPlayer(my.account, my.flag, my.rating);
 					// update display of channel
 					if (g.view === 'title'){
 						document.getElementById('titleChatHeaderChannel').textContent = data.channel;

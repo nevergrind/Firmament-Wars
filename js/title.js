@@ -30,7 +30,9 @@ var title = {
 			}).done(function(data){
 				my.account = data.account;
 				my.flag = data.flag;
+				my.rating = data.rating;
 				title.updatePlayers();
+				$("#title-chat-input").focus();
 			});
 			// init game refresh
 			if (typeof Notification === 'function'){
@@ -62,7 +64,6 @@ var title = {
 					
 				}
 				e.innerHTML = str;
-				$(".wars").filter(":first").trigger("click");
 			}).fail(function(e){
 				console.info(e.responseText);
 				//Msg("Server error.");
@@ -95,10 +96,11 @@ var title = {
 							for (var i=0, len=p.length; i<len; i++){
 								// add new players
 								var account = p[i].account,
-									flag = p[i].flag;
+									flag = p[i].flag,
+									rating = p[i].rating;
 								if (title.players[account] === undefined){
-									// console.info("ADDING PLAYER: " + account);
-									title.addPlayer(account, flag);
+									//console.info("ADDING PLAYER: ", p[i]);
+									title.addPlayer(account, flag, rating);
 								} else if (title.players[account].flag !== flag){
 									// replace player flag
 									var flagElement = document.getElementById("titlePlayerFlag_" + account);
@@ -171,7 +173,7 @@ var title = {
 		}
 	},
 	// adds player to chat room
-	addPlayer: function(account, flag){
+	addPlayer: function(account, flag, rating){
 		title.players[account] = {
 			flag: flag
 		}
@@ -184,7 +186,7 @@ var title = {
 		e.id = "titlePlayer" + account;
 		var flagClass = flag.split(".");
 		flagClass = flagClass[0].replace(/ /g, "-");
-		e.innerHTML = '<div id="titlePlayerFlag_'+ account +'" class="flag ' + flagClass +'"></div><span class="titlePlayerAccount">'+ account +'</span>';
+		e.innerHTML = '<div id="titlePlayerFlag_'+ account +'" class="flag ' + flagClass +'"></div><span class="chat-rating">['+ rating +']</span> <span class="titlePlayerAccount">'+ account +'</span>';
 		if (title.titleUpdate){
 			DOM.titleChatBody.appendChild(e);
 		}
@@ -223,7 +225,7 @@ var title = {
 	},
 	addToGame: function(data){
 		// player joined or left
-		// console.info("addToGame", data);
+		//console.info("addToGame", data);
 		var id = data.id;
 		if (title.games[id] !== undefined){
 			if (title.games[id] + 1 > data.max){
@@ -238,7 +240,7 @@ var title = {
 	},
 	removeFromGame: function(data){
 		// player joined or left
-		// console.info("removeFromGame", data);
+		//console.info("removeFromGame", data);
 		var id = data.id;
 		if (title.games[id] !== undefined){
 			if (title.games[id] - 1 < 1){
@@ -385,7 +387,7 @@ var title = {
 			});
 		} else {
 			if (fwpaid){
-				g.chat("You don't have any friends!<img src='images/chat/random/feelsbad.png'>", 'chat-muted');
+				g.chat("<img src='images/chat/random/feelsbad.png'><div>You don't have any friends!</div>", 'chat-muted');
 			} else {
 				g.chat("This is a paid feature. <span class='unlockGameBtn'>Unlock the complete game</span> to check your friend's status.", 'chat-muted');
 			}
@@ -470,8 +472,8 @@ var title = {
 			if (data.type === 'remove'){
 				title.removePlayer(data);
 			} else if (data.type === 'add'){
-				// console.info(data);
-				title.addPlayer(data.account, data.flag);
+				//console.info('chatReceive ', data);
+				title.addPlayer(data.account, data.flag, data.rating);
 			} else {
 				if (data.message !== undefined){
 					title.chat(data);
@@ -614,12 +616,12 @@ var title = {
 			<div>/ignore account: ignore account</div>\
 			<div>/unignore account: stop ignoring account</div>\
 			<div>/friend: show friend list</div>\
-			<div>/friend account: add friend</div>\
+			<div>/friend account: add/remove friend</div>\
 			<div>/unfriend account: remove friend</div>\
 			<div>/who account: check account info</div>\
 			';
 		var o = {
-			msg: str,
+			message: str,
 			type: 'chat-muted'
 		};
 		title.chat(o);
@@ -631,6 +633,14 @@ var title = {
 							message: msg
 						}
 					});
+	},
+	toggleFriend: function(account){
+		console.info(g.friends.indexOf(account));
+		if (g.friends.indexOf(account) > -1){
+			title.removeFriend(account);
+		} else {
+			title.addFriend(account);
+		}
 	},
 	sendMsg: function(bypass){
 		var msg = $DOM.titleChatInput.val().trim();
@@ -644,8 +654,7 @@ var title = {
 				} else if (msg === '/friend'){
 					title.listFriends();
 				} else if (msg.indexOf('/friend ') === 0){
-					var account = msg.slice(8);
-					title.addFriend(account);
+					title.toggleFriend(msg.slice(8));
 				} else if (msg.indexOf('/unignore ') === 0){
 					var account = msg.slice(10);
 					title.removeIgnore(account);

@@ -44,10 +44,6 @@ var events = {
 			var gameName = $(this).data("name");
 			$("#joinGame").val(gameName);
 			$("#joinGamePassword").val('');
-		}).on("dblclick", ".wars", function(){
-			var gameName = $(this).data("name");
-			$("#joinGame").val(gameName);
-			$("#joinGamePassword").val('');
 			title.joinGame();
 		});
 		
@@ -153,10 +149,10 @@ var events = {
 			lobby.startGame();
 		});
 		$("#toggleNation").on("click", function(){
-			var foo = new Image();
-			foo.src = 'php/avatars/'+ ~~(nationRow / 10000) +'/'+ nationRow +'.jpg';
-			foo.onload = function(){
-				document.getElementById('configureAvatarImage').src = 'php/avatars/'+ ~~(nationRow / 10000) +'/'+ nationRow +'.jpg';
+			var img = new Image();
+			img.src = 'php/avatars/'+ ~~(nationRow / 10000) +'/'+ nationRow +'.jpg?v='+ Date.now();
+			img.onload = function(){
+				document.getElementById('configureAvatarImage').src = 'php/avatars/'+ ~~(nationRow / 10000) +'/'+ nationRow +'.jpg?v='+ Date.now();
 			};
 			TweenMax.to('#configureNation', g.modalSpeed, {
 				startAt: {
@@ -169,7 +165,7 @@ var events = {
 			});
 			title.showBackdrop();
 		});
-		$("#joinGameBtn").on("click", function(){
+		$("#joinPrivateGameBtn").on("click", function(){
 			var e = $("#joinGame");
 			e.val('');
 			TweenMax.to('#joinPrivateGameModal', g.modalSpeed, {
@@ -286,7 +282,6 @@ var events = {
 			audio.play('click');
 			$("#joinGamePassword").val();
 			$(".wars-FFA").filter(":first").trigger("click"); 
-			console.info($(".wars-FFA"));
 			if (!$("#joinGame").val()){
 				Msg("No FFA games found!", 1.5);
 			} else {
@@ -298,7 +293,6 @@ var events = {
 			audio.play('click');
 			$("#joinGamePassword").val();
 			$(".wars-Team").filter(":first").trigger("click"); 
-			console.info($(".wars-Team"));
 			if (!$("#joinGame").val()){
 				Msg("No team games found!", 1.5);
 			} else {

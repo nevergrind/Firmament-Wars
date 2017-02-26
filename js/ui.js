@@ -82,6 +82,28 @@ var ui = {
 			o.yPos += spacing;
 			str += '<line class="targetBars targetBarsDefense" opacity="'+ (o.defense ? 1 : 0) +'"x1="1%" x2="'+ o.defense +'%" y1="'+ o.yPos +'" y2="'+ o.yPos +'" />';
 		return str;
+	},
+	setCurrentYear: function(tick){
+		function translateYear(tick){
+			var year;
+			if (tick <= 40){
+				year = 4000 - (tick * 100);
+			} else if (tick <= 60){
+				year = 0 + ((tick - 40) * 50);
+			} else if (tick <= 80){
+				year = 1000 + ((tick - 60) * 25);
+			} else if (tick <= 120){
+				year = 1500 + ((tick - 80) * 10);
+			} else if (tick <= 170){
+				year = 1900 + ((tick - 120) * 2);
+			} else {
+				year = 2000 + ((tick - 170) * 1);
+			}
+			return year;
+		}
+		var foo = tick >= 40 ? ' A.D.' : ' B.C.';
+		tick = translateYear(tick);
+		DOM.currentYear.textContent = tick + foo;
 	}
 };
 function updateTileInfo(tileId){

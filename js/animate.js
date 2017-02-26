@@ -174,7 +174,7 @@ var animate = {
 			svg.setAttributeNS(null,"y1",y);
 			svg.setAttributeNS(null,"x2",x + productionWidth);
 			svg.setAttributeNS(null,"y2",y);
-			svg.setAttributeNS(null,"stroke","#dd6600");
+			svg.setAttributeNS(null,"stroke","#ffa500");
 			svg.setAttributeNS(null,"stroke-width","3");
 			svg.setAttributeNS(null,"opacity",1);
 			svg.setAttributeNS(null,"class","mapBars mapBars" + i);
@@ -613,7 +613,6 @@ var animate = {
 		});
 	},
 	logo: function(linear){
-		$("#title-chat-input").focus();
 		resizeWindow();
 	},
 	smoke: function(tile, x, y, scale){
@@ -737,6 +736,15 @@ var animate = {
 			},
 			strokeDashoffset: 10,
 			repeat: -1,
+			ease: Linear.easeNone
+		});
+	},
+	energyBar: function(){
+		TweenMax.to(DOM.energyIndicator, g.speed / 1000, {
+			startAt: {
+				x: -5
+			},
+			x: 150,
 			ease: Linear.easeNone
 		});
 	}

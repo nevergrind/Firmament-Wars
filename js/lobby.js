@@ -115,8 +115,7 @@ var lobby = {
 				} else if (msg === '/friend'){
 					title.listFriends();
 				} else if (msg.indexOf('/friend ') === 0){
-					var account = msg.slice(8);
-					title.addFriend(account);
+					title.toggleFriend(msg.slice(8));
 				} else if (msg.indexOf('/unignore ') === 0){
 					var account = msg.slice(10);
 					title.removeIgnore(account);
@@ -252,35 +251,42 @@ var lobby = {
 		delete lobby.init;
 	},
 	join: function(d){
-		// console.info("Joining lobby...");
+		// transition to game lobby
 		var loadTime = Date.now() - g.startTime;
 		if (loadTime < 1000){
 			d = 0;
 		}
 		if (d === undefined){
-			d = 1;
+			d = .5;
 		}
+		g.lock(1);
 		g.view = "lobby";
 		var titleMain = document.getElementById('titleMain'),
 			titleMenu = document.getElementById ('titleMenu'),
-			titleChat = document.getElementById ('titleChat');
+			titleChat = document.getElementById ('titleChat'),
+			logoWrap = document.getElementById('firmamentWarsLogoWrap');
 		title.closeModal();
 		TweenMax.to(titleChat, d, {
 			x: '100%',
 			ease: Quad.easeIn
 		});
-		document.getElementById('lobbyFirmamentWarsLogo').src = 'images/title/firmamentWarsTitle_logo_cropped_640x206.png';
+		document.getElementById('lobbyFirmamentWarsLogo').src = 'images/title/firmament-wars-logo-1280.png';
 		document.getElementById('worldTitle').src = 'images/FlatWorld50-2.jpg';
 		TweenMax.to(titleMenu, d, {
 			x: '-100%',
 			ease: Quad.easeIn,
 			onComplete: function(){
-				titleMain.parentNode.removeChild(titleMain);
-				g.unlock(1);
-				TweenMax.fromTo('#joinGameLobby', d, {
-					autoAlpha: 0
-				}, {
-					autoAlpha: 1
+				TweenMax.to([titleMain, logoWrap], .5, {
+					alpha: 0,
+					onComplete: function(){
+						titleMain.parentNode.removeChild(titleMain);
+						g.unlock(1);
+						TweenMax.fromTo('#joinGameLobby', d, {
+							autoAlpha: 0
+						}, {
+							autoAlpha: 1
+						});
+					}
 				});
 			}
 		});
@@ -484,9 +490,9 @@ var lobby = {
 		data.players.forEach(function(e, i){
 			(function(i){
 				var img = new Image();
-				img.src =  'php/avatars/'+ ~~(e.nationRow / 10000) +'/'+ e.nationRow +'.jpg';
+				img.src =  'php/avatars/'+ ~~(e.nationRow / 10000) +'/'+ e.nationRow +'.jpg?v='+ Date.now();
 				img.onload = function(){
-					game.player[++i].avatar = 'php/avatars/'+ ~~(e.nationRow / 10000) +'/'+ e.nationRow +'.jpg';
+					game.player[++i].avatar = 'php/avatars/'+ ~~(e.nationRow / 10000) +'/'+ e.nationRow +'.jpg?v='+ Date.now();
 				}
 			})(i);
 		});
@@ -1070,6 +1076,7 @@ function loadGameState(){
 					}
 				}
 				game.startGameState();
+				ui.setCurrentYear(data.resourceTick);
 			}, 250);
 		}).fail(function(data){
 			serverError(data);

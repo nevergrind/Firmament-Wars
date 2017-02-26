@@ -427,8 +427,7 @@ function toggleChatMode(bypass){
 			} else if (msg === '/friend'){
 				title.listFriends();
 			} else if (msg.indexOf('/friend ') === 0){
-				var account = msg.slice(8);
-				title.addFriend(account);
+				title.toggleFriend(msg.slice(8));
 			} else if (msg.indexOf('/unignore ') === 0){
 				var account = msg.slice(10);
 				title.removeIgnore(account);

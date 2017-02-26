@@ -574,6 +574,7 @@ var game = {
 		// add function to get player data list?
 		game.getGameState();
 		setInterval(game.updateResources, g.speed);
+		animate.energyBar();
 		delete game.startGameState;
 	},
 	getGameState: function(){
@@ -729,13 +730,15 @@ var game = {
 				type: "GET",
 				url: "php/updateResources.php"
 			}).done(function(data){
-				// console.info('resource: ', data);
+				console.info('resource: ', data.resourceTick);
 				setResources(data);
+				ui.setCurrentYear(data.resourceTick);
 				game.reportMilestones(data);
 			}).fail(function(data){
 				console.info(data.responseText);
 				serverError(data);
 			});
+			animate.energyBar();
 		}
 	},
 	reportMilestones: function(data){
@@ -745,6 +748,7 @@ var game = {
 					message: data.cultureMsg
 				};
 				game.chat(o);
+				audio.play('culture');
 				audio.play('cheer3');
 				// rush bonus changes
 				initOffensiveTooltips();
@@ -918,6 +922,8 @@ var DOM;
 function initDom(){
 	var d = document;
 	DOM = {
+		energyIndicator: d.getElementById('energyIndicator'),
+		currentYear: d.getElementById('currentYear'),
 		targetTargetWrap: d.getElementById('targetTargetWrap'),
 		targetFlag: d.getElementById('targetFlag'),
 		targetCapStar: d.getElementById('targetCapStar'),
@@ -1090,6 +1096,10 @@ function resizeWindow() {
 	TweenMax.set("#worldTitle", {
 		xPercent: -50,
 		yPercent: -50
+	});
+	TweenMax.set("#firmamentWarsLogo", {
+		yPercent: -50,
+		top: '40%'
 	});
 }
 

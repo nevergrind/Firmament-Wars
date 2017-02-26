@@ -123,15 +123,26 @@ a:hover{
 #firmamentWarsLogoWrap{
 	background: #000;
 	position: absolute;
+	height: 100%;
+	width: 100%;
+	left: 0;
 	top: 0;
-	right: 0;
+}
+#firmamentWarsBG{
+	position: absolute;
+	width: 1920px;
+	height: 1280px;
 	left: 0;
 	bottom: 0;
 }
 #firmamentWarsLogo{
 	position: absolute;
-	width: 100%;
-	height: 100%;
+	width: 80%;
+	max-width: 1280px;
+	top: -100%;
+	left: 10%;
+	right: 10%;
+	margin: 0 auto;
 }
 #comingSoon{
 	position: absolute;
@@ -226,6 +237,12 @@ a:hover{
 	color: #ffff1a;
 	text-shadow: .5px .5px #550, 1px 1px #550;
 }
+.chat-rating{
+	display: inline-block;
+	color: #ffff1a;
+	text-shadow: .5px .5px #550, 1px 1px #550;
+	font-size: .75em;
+}
 .chat-online{
 	color: #ffd700;
 	text-shadow: .5px .5px #550, 1px 1px #550;
@@ -242,11 +259,11 @@ a:hover{
 	text-shadow: .5px .5px #222, 1px 1px #222;
 }
 .chat-moves{
-	color: #33e5e5;
-	text-shadow: .5px .5px #044, 1px 1px #044;
+	color: #faf2a5;
+	text-shadow: .5px .5px #443, 1px 1px #443;
 }
 .chat-production{
-	color: #dd6600;
+	color: #ffa500;
 	text-shadow: .5px .5px #420, 1px 1px #420;
 }
 .chat-food{
@@ -757,7 +774,7 @@ tbody{
 	position: absolute;
 	bottom: 0;
 	right: 0;
-	width: 160px;
+	width: 170px;
 	padding: 8px 0;
 	border-right: none;
 	border-bottom:none;
@@ -803,7 +820,7 @@ tbody{
 	top: -60%;
 	left: 0;
 	width: 100%;
-	opacity: .3;
+	opacity: .15;
 	background-size: 100% !important;
 	background-position: -50% !important;
 	z-index: -1;
@@ -910,7 +927,12 @@ tbody{
 	opacity: 1;
 	width: 100%;
 }
+.abs{
+	position: absolute;
+}
 .resourceIndicator{
+	top: 0;
+	left: 0;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -920,13 +942,13 @@ tbody{
 	color: #ffff00;;
 }
 .moves{
-	color: #33e5e5;
+	color: #faf2a5; 
 }
 .food{
 	color: #8d0;
 }
 .production{
-	color: #dd6600;
+	color: #ffa500;
 }
 .culture{
 	color: #d2d;
@@ -2002,10 +2024,54 @@ table {
 	overflow: hidden;
 	margin: .25em;
 }
+#currentYear{
+	font-family: Cinzel, Palatino Linotype, serif;
+	font-size: 1.125em;
+	letter-spacing: .125em;
+}
 .resourceBar{
-	height: .5em;
+	position: relative;
+	height: 1.5em;
+	line-height: 1.5em;
 	background: #777;
-	border-radius: 6px;
+}
+.resourceBarParent{
+	border-radius: 4px;
+	border: 1px solid #014;
+	box-shadow: 
+		2px 2px #357, 
+		1px -2px #357,
+		-1px -2px #357,
+		-2px 2px #357,
+		2px 2px #014, 
+		2px -2px #014,
+		-2px -2px #014,
+		-2px 2px #014;
+}
+.resourceCenter{
+	text-align: right;
+	left: 0; 
+	right: 0;
+	padding: 0 .25em 0 0;
+}
+#energyBar{
+	background: #774;
+}
+#energyIndicator{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 5px;
+	height: 100%;
+	background: #ffa;
+	border: 1px solid #ffd700;
+	box-shadow: 0 0 2px #ffa, 0 0 5px #ffa, 0 0 16px #ffa;
+}
+.resourceRight{
+	text-align: right;
+	left: 0; 
+	right: 0;
+	padding: 0 .25em 0 0;
 }
 #foodBar{
 	margin: 0;
@@ -2165,7 +2231,7 @@ table {
 	top: -50px;
 	left: 0;
 	width: 100%;
-	opacity: .25;
+	opacity: .2;
 }
 .statRow{
 	border: 1px solid #037;

@@ -124,13 +124,14 @@ var stats = {
 	},
 	show: function(){
 		DOM.bgmusic.loop = true;
-		audio.play("HeartOfChampions", 1);
 		stats.setView('statOverview');
 		if (g.victory){
 			audio.play('bell-8');
+			audio.play('TheAssault', 1);
 			document.getElementById('statGameResult').textContent = "Victory";
 		} else {
 			audio.play('defeat');
+			audio.play("JourneyOfForgottenSoldiers", 1);
 		}
 		document.getElementById('statWrap').style.visibility = 'visible';
 		TweenMax.to('#gameWrap', .5, {

@@ -65,7 +65,7 @@ var audio = {
 		'BehindTheShield',
 		'DeceptionPoint',
 		'HeroicReturn',
-		'JourneyOfForgottenSoldiers',
+		'HeartOfChampions',
 		'LeadingTheCharge',
 		'RiseAgainstTheMachine',
 		'TheAssault',
@@ -133,8 +133,9 @@ var audio = {
 				'deploy1',
 				'deploy2',
 				'chat', 
-				'food', 
+				'hup2', 
 				'cheer3',
+				'culture',
 				'error',
 				'build',
 				'grenade5',
@@ -181,19 +182,22 @@ audio.init = (function(){
 	}
 	g.checkPlayerData();
 	var initComplete = false;
-	$("#musicSlider").slider({
-		min  : 0, 
-		max  : 100, 
-		value: g.config.audio.musicVolume, 
-		formatter: function(value) {
-			if (initComplete){
-				audio.setMusicVolume(value);
-				return value;
-			} else {
-				return g.config.audio.musicVolume;
+	var e = $("#musicSlider");
+	if (e.length){
+		e.slider({
+			min  : 0, 
+			max  : 100, 
+			value: g.config.audio.musicVolume, 
+			formatter: function(value) {
+				if (initComplete){
+					audio.setMusicVolume(value);
+					return value;
+				} else {
+					return g.config.audio.musicVolume;
+				}
 			}
-		}
-	}).slider('setValue', g.config.audio.musicVolume);
+		}).slider('setValue', g.config.audio.musicVolume);
+	}
 	$("#soundSlider").slider({
 		min  : 0, 
 		max  : 100, 
