@@ -581,12 +581,12 @@ tbody{
 	text-align: center;
 }
 #ribbonWrap{
+	visibility: hidden;
 	position: absolute;
-	line-height: 4px;
-	right: -1px;
-	bottom: -1px;
+	line-height: 3px;
+	right: -2px;
+	bottom: 0;
 	text-align: center;
-	background: #000;
 }
 .narrowRack{
 	width: 72px;
@@ -622,14 +622,13 @@ tbody{
 	width: 184px;
 }
 .ribbon{
-	position: relative;
 	display: inline-block;
 	background-image: url('../images/ribbons/ribbonMap2.jpg');
 	background-size: 600% 600%;
 	height: 6px;
 	width: 23px;
 	background-position: 0 0;
-	margin: 0 0 1px 0;
+	margin: 0;
 	padding: 0;
 }
 .ribbon1{
@@ -2065,7 +2064,7 @@ table {
 	height: 100%;
 	background: #ffa;
 	border: 1px solid #ffd700;
-	box-shadow: 0 0 2px #ffa, 0 0 5px #ffa, 0 0 16px #ffa;
+	box-shadow: -3px 0 8px #ffa, 0 0 2px #ffa, 0 0 5px #ffa, 0 0 16px #ffa;
 }
 .resourceRight{
 	text-align: right;

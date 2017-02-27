@@ -165,6 +165,11 @@ var events = {
 			});
 			title.showBackdrop();
 		});
+		$("#avatarWrap").on('mouseenter click', function(){
+			DOM.ribbonWrap.style.visibility = 'visible';
+		}).on('mouseleave', function(){
+			DOM.ribbonWrap.style.visibility = 'hidden';
+		});
 		$("#joinPrivateGameBtn").on("click", function(){
 			var e = $("#joinGame");
 			e.val('');

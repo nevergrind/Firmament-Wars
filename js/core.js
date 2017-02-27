@@ -141,28 +141,27 @@ var g = {
 				data.latitude += '';
 				data.longitude += '';
 				g.geo = data;
-				localStorage.setItem('geo', JSON.stringify(g.geo));
-				localStorage.setItem('geoTime', Date.now());
 				$.ajax({
 					url: 'php/updateUserInfo.php',
 					data: {
 						location: g.geo
 					}
+				}).done(function(){
+					localStorage.setItem('geo', JSON.stringify(g.geo));
+					localStorage.setItem('geoSeason', 1);
+					localStorage.setItem('geoTime', Date.now());
 				});
-				
-				
-			var foo = JSON.parse(geo);
-			g.config.location = foo.location;
-			console.info('loc: ', g.config.location);
+				console.info('loc: ', g.geo);
 			});
 		}
 	},
 	checkPlayerData: function(){
 		var geo = localStorage.getItem('geo');
 		var geoTime = localStorage.getItem('geoTime');
-		if (geoTime !== null){
+		var geoSeason = localStorage.getItem('geoSeason');
+		if (geoTime !== null || geoSeason === null){
 			// longer than 90 days?
-			if ((Date.now() - geoTime) > 7776000){
+			if ((Date.now() - geoTime) > 7776000 || geoSeason === null){
 				g.updateUserInfo();
 			}
 		} else if (geo === null){
@@ -730,7 +729,6 @@ var game = {
 				type: "GET",
 				url: "php/updateResources.php"
 			}).done(function(data){
-				console.info('resource: ', data.resourceTick);
 				setResources(data);
 				ui.setCurrentYear(data.resourceTick);
 				game.reportMilestones(data);

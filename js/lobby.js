@@ -490,9 +490,9 @@ var lobby = {
 		data.players.forEach(function(e, i){
 			(function(i){
 				var img = new Image();
-				img.src =  'php/avatars/'+ ~~(e.nationRow / 10000) +'/'+ e.nationRow +'.jpg?v='+ Date.now();
+				img.src =  'php/avatars/'+ ~~(e.nationRow / 10000) +'/'+ e.nationRow +'.jpg';
 				img.onload = function(){
-					game.player[++i].avatar = 'php/avatars/'+ ~~(e.nationRow / 10000) +'/'+ e.nationRow +'.jpg?v='+ Date.now();
+					game.player[++i].avatar = 'php/avatars/'+ ~~(e.nationRow / 10000) +'/'+ e.nationRow +'.jpg';
 				}
 			})(i);
 		});
@@ -935,10 +935,11 @@ function loadGameState(){
 			}
 			// init map DOM elements
 			game.initMap();
-				// food, culture, def bars
+			// food, culture, def bars
 			for (var i=0; i<len; i++){
 				animate.initMapBars(i);
 			}
+			lobby.initRibbons(data.ribbons);
 			var str = '';
 			// init diplomacyPlayers
 			function diploRow(p){
@@ -951,7 +952,8 @@ function loadGameState(){
 					// bg
 					'<div class="flagWrapper">'+
 						'<img class="diploFlag" src="images/flags/'+ p.flag + '">'+
-					'</div><div>'+
+					'</div>'+
+					'<div>'+
 					// row 1
 					'<div class="flag '+ p.flagClass +'" data-placement="right" title="'+ p.flagShort + '"></div>'+ p.account + '</div>'+
 					// row 2
@@ -993,7 +995,6 @@ function loadGameState(){
 				animation: false
 			});
 			initResources(data);
-			lobby.initRibbons(data.ribbons);
 			// set images
 			lobby.initAvatars(data);
 			setTimeout(function(){

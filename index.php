@@ -47,9 +47,9 @@
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Cinzel">
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-34">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-35">
 	<script>
-		version = '0-0-34'; 
+		version = '0-0-35'; 
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
