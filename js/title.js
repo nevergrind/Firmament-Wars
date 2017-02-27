@@ -624,12 +624,20 @@ var title = {
 		title.chat(o);
 	},
 	broadcast: function(msg){
-					$.ajax({
-						url: 'php/insertBroadcast.php',
-						data: {
-							message: msg
-						}
-					});
+		$.ajax({
+			url: 'php/insertBroadcast.php',
+			data: {
+				message: msg
+			}
+		});
+	},
+	fwpaid: function(msg){
+		$.ajax({
+			url: 'php/fwpaid.php',
+			data: {
+				message: msg
+			}
+		});
 	},
 	toggleFriend: function(account){
 		console.info(g.friends.indexOf(account));
@@ -676,7 +684,10 @@ var title = {
 					title.who(msg);
 				} else if (msg.indexOf('/broadcast ') === 0){
 					title.broadcast(msg);
-				} else {
+				} else if (msg.indexOf('/fwpaid ') === 0){
+					var account = msg.slice(8);
+					title.fwpaid(account);
+				}else {
 					$.ajax({
 						url: 'php/insertTitleChat.php',
 						data: {
