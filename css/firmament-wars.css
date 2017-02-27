@@ -581,7 +581,6 @@ tbody{
 	text-align: center;
 }
 #ribbonWrap{
-	visibility: hidden;
 	position: absolute;
 	line-height: 3px;
 	right: -2px;

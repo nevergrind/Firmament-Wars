@@ -43,7 +43,7 @@ var animate = {
 		energy: {
 			audio: '',
 			text: '\uf0e7',
-			color: '#33e5e5'
+			color: '#ffa'
 		},
 		food: {
 			audio: '',

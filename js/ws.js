@@ -62,7 +62,6 @@ var socket = {
 					data.skip = true;
 					data.message = "You have joined channel: " + data.channel;
 					data.type = "chat-warning";
-					DOM.titleChatLog.innerHTML = '';
 					title.chat(data);
 					socket.zmq.subscribe('title:' + data.channel, function(topic, data) {
 						if (g.ignore.indexOf(data.account) === -1){

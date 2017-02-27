@@ -11,20 +11,12 @@
 	}
 	require('php/connect1.php');
 	require('php/values.php');
-	$whitelisted = 0;
-	
-	if($_SERVER["SERVER_NAME"] !== "localhost"){
-		unset($_SESSION['gameId']);
-		$query = 'select count(email) from fwwhitelist where email=?';
-		$stmt = $link->prepare($query);
-		$stmt->bind_param('s', $_SESSION['email']);
-		$stmt->execute();
-		$stmt->bind_result($email);
-		while ($stmt->fetch()){
-			$whitelisted = $email;
-		}
+	if (!isset($_SESSION['email'])){
+		$_SESSION['guest'] = 1;
+		$timeId = floor(microtime(true));
+		$_SESSION['account'] = 'guest'. $timeId;
 	} else {
-		$whitelisted = 1;
+		$_SESSION['guest'] = 0;
 	}
 ?>
 <!DOCTYPE html>
@@ -222,7 +214,7 @@
 			
 			<?php
 			$currentPlayers = 0;
-			if (isset($_SESSION['email']) && $whitelisted){
+			if (isset($_SESSION['email'])){
 				echo '<div id="titleMenu" class="fw-primary">
 					<div id="menuOnline">
 						<div>';
@@ -316,9 +308,6 @@
 					
 					<div id="titleChatLog" class="titlePanelLeft">';
 					/* right chat window */
-					if (!$whitelisted){
-						echo '<div class="chat-alert">You currently do not have access to play Firmament Wars. You must get beta access from the administrator.</div>';
-					}
 					/* count from title screen */
 					$result = mysqli_query($link, 'select count(row) count from `fwtitle` where timestamp > date_sub(now(), interval 20 second)');
 					while ($row = mysqli_fetch_assoc($result)){
@@ -338,7 +327,7 @@
 				<div id="titleChatWrap">
 						
 					<?php
-					if (isset($_SESSION['email']) && $whitelisted){
+					if (isset($_SESSION['email'])){
 						echo '
 						<div class="input-group">
 							<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" autocomplete="off" spellcheck="false" />
@@ -351,7 +340,7 @@
 				</div>
 			<?php
 			} else {
-				echo '<div id="comingSoon" class="shadow4">Coming March 14th</div>';
+				echo '<div id="comingSoon" class="shadow4"><a href="/login.php?back=/games/firmament-wars">Login to play</a></div>';
 			}
 			?>
 			</div>

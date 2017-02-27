@@ -165,11 +165,13 @@ var events = {
 			});
 			title.showBackdrop();
 		});
+		/*
 		$("#avatarWrap").on('mouseenter click', function(){
 			DOM.ribbonWrap.style.visibility = 'visible';
 		}).on('mouseleave', function(){
 			DOM.ribbonWrap.style.visibility = 'hidden';
 		});
+		*/
 		$("#joinPrivateGameBtn").on("click", function(){
 			var e = $("#joinGame");
 			e.val('');
@@ -661,7 +663,6 @@ $(document).on('keyup', function(e) {
 
  $("#uploadDictator").on('submit', function(e){
 	e.preventDefault();
-	console.info("UPLOAD IMAGE");
 	$.ajax({
 		url: "php/uploadDictator.php",
 		type: "POST",
