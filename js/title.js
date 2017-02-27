@@ -33,6 +33,7 @@ var title = {
 				my.rating = data.rating;
 				title.updatePlayers();
 				$("#title-chat-input").focus();
+				g.checkPlayerData();
 			});
 			// init game refresh
 			if (typeof Notification === 'function'){
@@ -386,11 +387,7 @@ var title = {
 				g.chat(str);
 			});
 		} else {
-			if (fwpaid){
-				g.chat("<img src='images/chat/random/feelsbad.png'><div>You don't have any friends!</div>", 'chat-muted');
-			} else {
-				g.chat("This is a paid feature. <span class='unlockGameBtn'>Unlock the complete game</span> to check your friend's status.", 'chat-muted');
-			}
+			g.chat("<img src='images/chat/random/feelsbad.png'><div>You don't have any friends!</div>", 'chat-muted');
 		}
 	},
 	addFriend: function(account){
@@ -751,7 +748,7 @@ var title = {
 					speed: speed
 				}
 			}).done(function(data) {
-				// console.info(data);
+				console.info(data);
 				socket.removePlayer(my.account);
 				my.player = data.player;
 				my.playerColor = data.playerColor;
@@ -764,7 +761,7 @@ var title = {
 				socket.joinGame();
 				lobby.styleStartGame();
 			}).fail(function(e){
-				console.info(e.responseText);
+				console.info(e);
 				Msg(e.statusText);
 				g.unlock(1);
 			});

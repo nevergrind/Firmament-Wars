@@ -11,13 +11,7 @@
 	}
 	require('php/connect1.php');
 	require('php/values.php');
-	if (!isset($_SESSION['email'])){
-		$_SESSION['guest'] = 1;
-		$timeId = floor(microtime(true));
-		$_SESSION['account'] = 'guest'. $timeId;
-	} else {
-		$_SESSION['guest'] = 0;
-	}
+	
 ?>
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
@@ -34,14 +28,12 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
 	
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Cinzel">
-	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-35">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-39">
 	<script>
-		version = '0-0-35'; 
+		version = '0-0-39'; 
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -98,7 +90,7 @@
 				$_SESSION['disconnects'] = 0;
 				$_SESSION['disconnectRate'] = 0;
 				$nation = 'Kingdom of '. ucfirst($_SESSION['account']);
-				$flag = 'Default.jpg';
+				$flag = 'Algeria.jpg';
 				if($count > 0){
 					$query = "select row, nation, flag, rating, wins, losses, teamWins, teamLosses, rankedWins, rankedLosses, disconnects from fwnations where account=?";
 					$stmt = $link->prepare($query);
@@ -167,15 +159,22 @@
 					
 					echo 
 					'<a href="/account" class="btn fwBlue btn-responsive shadow4" title="Manage Account">'. $_SESSION['account'] .'</a>&ensp;';
+				} else {
+					$_SESSION['rating'] = 1500;
+					$_SESSION['totalGames'] = 0;
+					$_SESSION['wins'] = 0;
+					$_SESSION['losses'] = 0;
+					$_SESSION['teamWins'] = 0;
+					$_SESSION['teamLosses'] = 0;
+					$_SESSION['rankedWins'] = 0;
+					$_SESSION['rankedLosses'] = 0;
+					$_SESSION['disconnects'] = 0;
+					$_SESSION['disconnectRate'] = 0;
 				}
 				?>
 					<a href="/forums" title="Nevergrind Browser Game Forums">Forums</a>&ensp; 
 					<a href="/blog" title="Nevergrind Browser Game Development News and Articles">Blog</a>&ensp;
-				<?php
-				if (isset($_SESSION['email'])){
-					echo '<i id="options" class="pointer options fa fa-volume-up"></i>';
-				}
-				?>
+					<i id="options" class="pointer options fa fa-volume-up"></i>
 				<div class="pull-right text-primary">
 					<a href="//www.youtube.com/user/Maelfyn">
 						<i class="fa fa-youtube text-primary pointer"></i>
@@ -214,7 +213,7 @@
 			
 			<?php
 			$currentPlayers = 0;
-			if (isset($_SESSION['email'])){
+			if (isset($_SESSION['account'])){
 				echo '<div id="titleMenu" class="fw-primary">
 					<div id="menuOnline">
 						<div>';
@@ -225,7 +224,7 @@
 					<div id="menuHead">
 						<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>
 						<button id="leaderboardBtn" type="button" class="btn fwBlue btn-responsive shadow4">Leaderboard</button>';
-						if (!$_SESSION['fwpaid']){
+						if (!$_SESSION['fwpaid'] && isset($_SESSION['account'])){
 							echo '
 							<button type="button" class="unlockGameBtn btn fwGreen btn-responsive shadow4">Unlock Complete Game</button>';
 						}
@@ -247,11 +246,13 @@
 							<ul class="dropdown-menu fwDropdown">
 								<li id="create" class="gameSelect">
 									<a href="#">Free For All</a>
-								</li>
-								<li id="createRankedBtn" class="gameSelect">
-									<a href="#">Ranked Match</a>
-								</li>
-								<li id="createTeamBtn" class="gameSelect">
+								</li>';
+								if (isset($_SESSION['email'])){
+									echo '<li id="createRankedBtn" class="gameSelect">
+										<a href="#">Ranked Match</a>
+									</li>';
+								}
+								echo '<li id="createTeamBtn" class="gameSelect">
 									<a href="#">Team Game</a>
 								</li>
 							</ul>
@@ -264,11 +265,13 @@
 							<ul class="dropdown-menu fwDropdown">
 								<li id="autoJoinGame" class="gameSelect">
 									<a href="#">Free For All</a>
-								</li>
-								<li id="joinRankedGame" class="gameSelect">
-									<a href="#">Ranked Match</a>
-								</li>
-								<li id="joinTeamGame" class="gameSelect">
+								</li>';
+								if (isset($_SESSION['email'])){
+									echo '<li id="joinRankedGame" class="gameSelect">
+										<a href="#">Ranked Match</a>
+									</li>';
+								}
+								echo '<li id="joinTeamGame" class="gameSelect">
 									<a href="#">Team Game</a>
 								</li>
 							</ul>
@@ -295,8 +298,7 @@
 			</div>
 			
 			<div id="titleChat" class="fw-primary text-center">';
-				/* left flag window */
-				if (isset($_SESSION['email'])){
+			/* right flag window */
 					echo '
 					<div id="titleChatPlayers" class="titlePanelLeft">
 						<div id="titleChatHeader" class="chat-warning nowrap">
@@ -322,12 +324,10 @@
 					}
 					echo 
 					'</div>';
-				}
 				?>
 				<div id="titleChatWrap">
 						
 					<?php
-					if (isset($_SESSION['email'])){
 						echo '
 						<div class="input-group">
 							<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" autocomplete="off" spellcheck="false" />
@@ -335,15 +335,18 @@
 								<button id="titleChatSendBtn" class="btn shadow4 fwBlue">Send</button>
 							</div>
 						</div>';
-					}
 					?>
 				</div>
+			</div>
+			
 			<?php
 			} else {
-				echo '<div id="comingSoon" class="shadow4"><a href="/login.php?back=/games/firmament-wars">Login to play</a></div>';
+				echo '<div id="comingSoon">
+					<a class="btn btn-responsive fwBlue shadow4" href="/createAccount.php?back=/games/firmament-wars">Create Account</a>
+					 or <a class="btn btn-responsive fwBlue shadow4" href="/login.php?back=/games/firmament-wars">Login</a><br>with your Nevergrind account<br>to Play Firmament Wars!
+					</div>';
 			}
 			?>
-			</div>
 				
 		</div>
 	
@@ -663,7 +666,6 @@
 							<li>Display your dictator\'s avatar</li>
 							<li>Display your military ribbons in game</li>
 							<li>Select from 20 player colors</li>
-							<li>Enable the game\'s awesome music</li>
 						</ul>
 					</div>
 				</div>
@@ -1189,9 +1191,9 @@
 	<div id="Msg" class="shadow4"></div>
 </body>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/utils/Draggable.min.js"></script>
+<script src="js/libs/TweenMax.min.js"></script>
+<script src="js/libs/jquery.min.js"></script>
+<script src="js/libs/Draggable.min.js"></script>
 <script src="js/libs/DrawSVGPlugin.min.js"></script>
 <script src="js/libs/SplitText.min.js"></script>
 <script src="js/libs/autobahn.min.js"></script>
@@ -1205,8 +1207,8 @@
 			</script>';
 	}
 ?>
-<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/bootstrap-slider.min.js"></script>
+<script src="js/libs/bootstrap.min.js"></script>
+<script src="js/libs/bootstrap-slider.min.js"></script>
 <?php
 	require $_SERVER['DOCUMENT_ROOT'] . '/includes/ga.php';
 	echo '<script>

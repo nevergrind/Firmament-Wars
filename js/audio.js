@@ -12,10 +12,8 @@ var audio = {
 				// music
 				if (g.config.audio.musicVolume){
 					DOM.bgmusic.pause();
-					if (fwpaid){
-						DOM.bgmusic.src = "music/" + foo + ".mp3";
-						DOM.bgmusic.volume = g.config.audio.musicVolume / 100;
-					}
+					DOM.bgmusic.src = "music/" + foo + ".mp3";
+					DOM.bgmusic.volume = g.config.audio.musicVolume / 100;
 				}
 			} else {
 				// sfx
@@ -76,12 +74,10 @@ var audio = {
 		audio.totalTracks = audio.tracks.length;
 		var nowPlaying = audio.tracks[++audio.trackIndex % audio.totalTracks];
 		DOM.bgmusic.pause();
-		if (fwpaid){
-			DOM.bgmusic.src = "music/" + nowPlaying +".mp3";
-			DOM.bgmusic.volume = g.config.audio.musicVolume / 100;
-			DOM.bgmusic.onended = function(){
-				audio.gameMusicPlayNext();
-			}
+		DOM.bgmusic.src = "music/" + nowPlaying +".mp3";
+		DOM.bgmusic.volume = g.config.audio.musicVolume / 100;
+		DOM.bgmusic.onended = function(){
+			audio.gameMusicPlayNext();
 		}
 	},
 	fade: function(){
@@ -180,7 +176,6 @@ audio.init = (function(){
 	} else {
 		audio.musicStart();
 	}
-	g.checkPlayerData();
 	var initComplete = false;
 	var e = $("#musicSlider");
 	if (e.length){

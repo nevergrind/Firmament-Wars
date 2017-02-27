@@ -518,7 +518,7 @@ $(document).on('keydown', function(e){
 				e.preventDefault();
 			}
 		} else if (x === 86){
-			if (g.view === 'game'){
+			if (g.view === 'game' && !g.chatOn){
 				game.toggleGameWindows(1);
 			}
 		}
@@ -526,7 +526,6 @@ $(document).on('keydown', function(e){
 });
 $(document).on('keyup', function(e) {
 	var x = e.keyCode;
-	//console.info(g.view, x);
 	if (g.view === 'title'){
 		if (x === 13){
 			if (g.focusUpdateNationName){

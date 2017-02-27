@@ -469,7 +469,6 @@ var lobby = {
 					audio.fade();
 				}
 			})(5);
-			$('[title]').tooltip('disable');
 			cancelGame.style.display = 'none';
 			$("#teamDropdown").css('display', 'none');
 		}
@@ -991,9 +990,6 @@ function loadGameState(){
 			} else {
 				document.getElementById('diplomacy-ui').innerHTML = str;
 			}
-			$('[title]').tooltip({
-				animation: false
-			});
 			initResources(data);
 			// set images
 			lobby.initAvatars(data);
@@ -1078,7 +1074,10 @@ function loadGameState(){
 				}
 				game.startGameState();
 				ui.setCurrentYear(data.resourceTick);
-			}, 250);
+				$('[title]').tooltip({
+					animation: false
+				});
+			}, 350);
 		}).fail(function(data){
 			serverError(data);
 		}).always(function(){

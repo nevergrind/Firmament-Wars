@@ -262,7 +262,8 @@ g.init = (function(){
 		animation: false
 	});
 	// build map drop-down 
-	var s = "<li><a class='flagSelect'>Default</a></li>";
+	// <li><a class='flagSelect'>Default</a></li>
+	var s = "";
 	var flagData = {
 		Africa: {
 			group: "Africa",
@@ -435,12 +436,7 @@ var game = {
 				opacity: 1,
 				visibility: x ? 'visible' : 'hidden'
 			},
-			opacity: 1,
-			onComplete: function(){
-				TweenMax.to('#hotkey-ui', .5, {
-					opacity: 0
-				});
-			}
+			opacity: 1
 		});
 	},
 	player: [0,0,0,0,0,0,0,0,0], // cached values on client to reduce DB load
