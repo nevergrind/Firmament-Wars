@@ -469,9 +469,9 @@ var title = {
 			if (data.type === 'remove'){
 				title.removePlayer(data);
 			} else if (data.type === 'add'){
-				//console.info('chatReceive ', data);
 				title.addPlayer(data.account, data.flag, data.rating);
 			} else {
+				console.info('chatReceive ', data);
 				if (data.message !== undefined){
 					title.chat(data);
 				}
@@ -577,7 +577,13 @@ var title = {
 			}
 		});
 	},
+	lastWhisper: {
+		account: '',
+		message: '',
+		timestamp: 0
+	},
 	receiveWhisper: function(data){
+		//console.info('receiveWhisper ', data);
 		if (g.view === 'title'){
 			title.chat(data);
 		} else if (g.view === 'lobby'){

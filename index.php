@@ -31,9 +31,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-39">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-40">
 	<script>
-		version = '0-0-39'; 
+		version = '0-0-40'; 
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -127,9 +127,9 @@
 					$_SESSION['flag'] = $flag;
 					$_SESSION['nationRow'] = $stmt->insert_id;
 					// add ribbon
-					require $_SERVER['DOCUMENT_ROOT']. '/games/firmament-wars/php/addRibbon.php';
-					addRibbon(1);
 				}
+				require $_SERVER['DOCUMENT_ROOT']. '/games/firmament-wars/php/addRibbon.php';
+				addRibbon(1);
 				$arr = explode(".", $_SESSION['flag']);
 				$_SESSION['flagShort'] = $arr[0];
 				$_SESSION['flagClass'] = str_replace(" ", "-", $arr[0]);
@@ -173,7 +173,7 @@
 				}
 				?>
 					<a href="/forums" title="Nevergrind Browser Game Forums">Forums</a>&ensp; 
-					<a href="/blog" title="Nevergrind Browser Game Development News and Articles">Blog</a>&ensp;
+					<a href="/blog/about-firmament-wars/" target="_blank" title="Nevergrind Browser Game Development News and Articles">How to Play</a>&ensp;
 					<i id="options" class="pointer options fa fa-volume-up"></i>
 				<div class="pull-right text-primary">
 					<a href="//www.youtube.com/user/Maelfyn">
@@ -452,7 +452,7 @@
 					<div class='buffer w33'>
 						<div class='dropdown'>
 							<button id="speedDropdownBtn" class='btn btn-primary dropdown-toggle shadow4 fwDropdownButton' type='button' data-toggle='dropdown'>
-								<span id='createGameSpeed'>Normal</span>
+								<span id='createGameSpeed'>Fastest</span>
 								<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 							</button>
 							<ul id='speedDropdown' class='dropdown-menu fwDropdown createGameInput' value="Normal">

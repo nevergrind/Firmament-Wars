@@ -46,12 +46,12 @@ var g = {
 	password: "",
 	speed: 10,
 	speeds: {
-		Slower: 15000,
-		Slow: 12000,
-		Normal: 10000,
-		Fast: 8000,
-		Faster: 6000,
-		Fastest: 5000
+		Slower: 9000,
+		Slow: 8000,
+		Normal: 7000,
+		Fast: 6000,
+		Faster: 5000,
+		Fastest: 4000
 	},
 	focusUpdateNationName: false,
 	focusGameName: false,
@@ -207,9 +207,6 @@ var g = {
 			// it's a player message
 			var type = ' says: ';
 			if (data.flag && (data.msg || data.message)){
-				console.info(data);
-				console.info(data.message);
-				console.info(data.msg);
 				// sent by a player
 				if (data.type === 'chat-whisper'){
 					type = ' whispers: ';

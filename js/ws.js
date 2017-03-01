@@ -86,7 +86,7 @@ var socket = {
 		socket.zmq.subscribe(channel, function(topic, data) {
 			if (data.message){
 				if (data.action === 'send'){
-					// console.info("RECEIVE: ", data.playerColor, data);
+					//console.info("SENT: ", data.playerColor, data);
 					// message sent to user
 					var flag = my.flag.split(".");
 					flag = flag[0].replace(/ /g, "-");
@@ -107,11 +107,23 @@ var socket = {
 					title.receiveWhisper(data);
 				} else {
 					// message receive confirmation to original sender
-					// console.info("SEND: ", data.playerColor, data);
-					data.msg = data.message;
-					data.message = data.chatFlag + 'To ' + data.account + ': ' + data.message;
-					data.type = 'chat-whisper';
-					title.receiveWhisper(data);
+					// console.info("CALLBACK: ", data);
+					if (data.timestamp - title.lastWhisper.timestamp < 500 &&
+						data.account === title.lastWhisper.account &&
+						data.message === title.lastWhisper.message){
+						// skip message
+					} else {
+						// reference values to avoid receiving double messages when a player is in the lobby multiple times
+						// this causes multiple response callbacks
+						title.lastWhisper.account = data.account;
+						title.lastWhisper.timestamp = data.timestamp;
+						title.lastWhisper.message = data.message;
+						// send message
+						data.msg = data.message;
+						data.message = data.chatFlag + 'To ' + data.account + ': ' + data.message;
+						data.type = 'chat-whisper';
+						title.receiveWhisper(data);
+					}
 				}
 			}
 		});
