@@ -12,6 +12,28 @@
 	require('php/connect1.php');
 	require('php/values.php');
 	
+	if (!isset($_SESSION['guest'])){
+		// first visit
+		if ( !isset($_SESSION['email']) && !isset($_SESSION['account']) ){
+			// guests
+			mysqli_query($link, "insert into fwguests (`row`) VALUES (null)");
+			$guestId = mysqli_insert_id($link);
+			$_SESSION['guest'] = 1;
+			$_SESSION['account'] = 'anonymous_'. $guestId;
+			$_SESSION['nationRow'] = 0;
+		} else {
+			// logged in - not a guest
+			$_SESSION['guest'] = 0;
+		}
+	} else {
+		// guest already determined
+		if (strpos($_SESSION['account'], '_') !== FALSE){
+			$_SESSION['guest'] = 1;
+			$_SESSION['nationRow'] = 0;
+		} else {
+			$_SESSION['guest'] = 0;
+		}
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
@@ -31,9 +53,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-40">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-41">
 	<script>
-		version = '0-0-40'; 
+		version = '0-0-41'; 
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -53,9 +75,8 @@
 			
 			<header id="document" class="shadow4 text-primary">
 				<?php
-				require('php/connect1.php');
-				// check if paid
 				if (!$_SESSION['fwpaid']){
+					// check if paid
 					$stmt = $link->prepare("select account from fwpaid where account=? limit 1");
 					$stmt->bind_param('s', $_SESSION['account']);
 					$stmt->execute();
@@ -90,8 +111,10 @@
 				$_SESSION['disconnects'] = 0;
 				$_SESSION['disconnectRate'] = 0;
 				$nation = 'Kingdom of '. ucfirst($_SESSION['account']);
-				$flag = 'Algeria.jpg';
+				$flag = !isset($_SESSION['flag']) ? 'Algeria.jpg' : $_SESSION['flag'];
+				
 				if($count > 0){
+					// nation exists
 					$query = "select row, nation, flag, rating, wins, losses, teamWins, teamLosses, rankedWins, rankedLosses, disconnects from fwnations where account=?";
 					$stmt = $link->prepare($query);
 					$stmt->bind_param('s', $_SESSION['account']);
@@ -117,63 +140,38 @@
 					$_SESSION['nation'] = $nation;
 					$_SESSION['flag'] = $flag;
 				} else {
-					$query = "insert into fwnations (`account`, `nation`, `flag`) VALUES (?, '$nation', '$flag')";
-					$stmt = $link->prepare($query);
-					$stmt->bind_param('s', $_SESSION['account']);
-					$stmt->store_result();
-					$stmt->execute();
-					// init nation values
+					if (!$_SESSION['guest']){
+						// create nation
+						$query = "insert into fwnations (`account`, `nation`, `flag`) VALUES (?, '$nation', '$flag')";
+						$stmt = $link->prepare($query);
+						$stmt->bind_param('s', $_SESSION['account']);
+						$stmt->store_result();
+						$stmt->execute();
+						// init nation values
+						$_SESSION['nationRow'] = $stmt->insert_id;
+					} else {
+						$_SESSION['nationRow'] = 0;
+					}
 					$_SESSION['nation'] = $nation;
 					$_SESSION['flag'] = $flag;
-					$_SESSION['nationRow'] = $stmt->insert_id;
-					// add ribbon
 				}
-				require $_SERVER['DOCUMENT_ROOT']. '/games/firmament-wars/php/addRibbon.php';
-				addRibbon(1);
+				if (!$_SESSION['guest']){
+					// add ribbon
+					require $_SERVER['DOCUMENT_ROOT']. '/games/firmament-wars/php/addRibbon.php';
+					addRibbon(1);
+				}
 				$arr = explode(".", $_SESSION['flag']);
 				$_SESSION['flagShort'] = $arr[0];
 				$_SESSION['flagClass'] = str_replace(" ", "-", $arr[0]);
 				
 				
 				if (isset($_SESSION['email'])){
-					// fwnation data
-					$query = "select nation, flag, rating, wins, losses, teamWins, teamLosses, rankedWins, rankedLosses, disconnects from fwnations where account=?";
-					$stmt = $link->prepare($query);
-					$stmt->bind_param('s', $_SESSION['account']);
-					$stmt->execute();
-					$stmt->bind_result($dName, $dFlag, $rating, $wins, $losses, $teamWins, $teamLosses, $rankedWins, $rankedLosses, $disconnects);
-					while ($stmt->fetch()){
-						$nation = $dName;
-						$flag = $dFlag;
-						$_SESSION['rating'] = $rating;
-						$_SESSION['totalGames'] = $wins + $losses + $rankedWins + $rankedLosses + $disconnects;
-						$_SESSION['wins'] = $wins;
-						$_SESSION['losses'] = $losses;
-						$_SESSION['teamWins'] = $teamWins;
-						$_SESSION['teamLosses'] = $teamLosses;
-						$_SESSION['rankedWins'] = $rankedWins;
-						$_SESSION['rankedLosses'] = $rankedLosses;
-						$_SESSION['disconnects'] = $disconnects;
-						$_SESSION['disconnectRate'] = $_SESSION['totalGames'] === 0 ? 0 : round(($_SESSION['disconnects'] / $_SESSION['totalGames']) * 100) ;
-					}
-					
 					echo 
 					'<a href="/account" class="btn fwBlue btn-responsive shadow4" title="Manage Account">'. $_SESSION['account'] .'</a>&ensp;';
-				} else {
-					$_SESSION['rating'] = 1500;
-					$_SESSION['totalGames'] = 0;
-					$_SESSION['wins'] = 0;
-					$_SESSION['losses'] = 0;
-					$_SESSION['teamWins'] = 0;
-					$_SESSION['teamLosses'] = 0;
-					$_SESSION['rankedWins'] = 0;
-					$_SESSION['rankedLosses'] = 0;
-					$_SESSION['disconnects'] = 0;
-					$_SESSION['disconnectRate'] = 0;
 				}
 				?>
 					<a href="/forums" title="Nevergrind Browser Game Forums">Forums</a>&ensp; 
-					<a href="/blog/about-firmament-wars/" target="_blank" title="Nevergrind Browser Game Development News and Articles">How to Play</a>&ensp;
+					<a href="/blog/how-to-play-firmament-wars/" target="_blank" title="Nevergrind Browser Game Development News and Articles">How to Play</a>&ensp;
 					<i id="options" class="pointer options fa fa-volume-up"></i>
 				<div class="pull-right text-primary">
 					<a href="//www.youtube.com/user/Maelfyn">
@@ -213,8 +211,8 @@
 			
 			<?php
 			$currentPlayers = 0;
-			if (isset($_SESSION['account'])){
-				echo '<div id="titleMenu" class="fw-primary">
+				echo 
+				'<div id="titleMenu" class="fw-primary">
 					<div id="menuOnline">
 						<div>';
 						echo
@@ -224,7 +222,7 @@
 					<div id="menuHead">
 						<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>
 						<button id="leaderboardBtn" type="button" class="btn fwBlue btn-responsive shadow4">Leaderboard</button>';
-						if (!$_SESSION['fwpaid'] && isset($_SESSION['account'])){
+						if (!$_SESSION['guest'] && isset($_SESSION['email']) && !$_SESSION['fwpaid']){
 							echo '
 							<button type="button" class="unlockGameBtn btn fwGreen btn-responsive shadow4">Unlock Complete Game</button>';
 						}
@@ -247,7 +245,7 @@
 								<li id="create" class="gameSelect">
 									<a href="#">Free For All</a>
 								</li>';
-								if (isset($_SESSION['email'])){
+								if (!$_SESSION['guest'] && isset($_SESSION['email'])){
 									echo '<li id="createRankedBtn" class="gameSelect">
 										<a href="#">Ranked Match</a>
 									</li>';
@@ -266,7 +264,7 @@
 								<li id="autoJoinGame" class="gameSelect">
 									<a href="#">Free For All</a>
 								</li>';
-								if (isset($_SESSION['email'])){
+								if (!$_SESSION['guest'] && isset($_SESSION['email'])){
 									echo '<li id="joinRankedGame" class="gameSelect">
 										<a href="#">Ranked Match</a>
 									</li>';
@@ -297,36 +295,33 @@
 				</div>
 			</div>
 			
-			<div id="titleChat" class="fw-primary text-center">';
-			/* right flag window */
-					echo '
-					<div id="titleChatPlayers" class="titlePanelLeft">
-						<div id="titleChatHeader" class="chat-warning nowrap">
-							<span id="titleChatHeaderChannel"></span> 
-							<span id="titleChatHeaderCount"></span>
-						</div>
-						<div id="titleChatBody"></div>
+			<div id="titleChat" class="fw-primary text-center">
+				<div id="titleChatPlayers" class="titlePanelLeft">
+					<div id="titleChatHeader" class="chat-warning nowrap">
+						<span id="titleChatHeaderChannel"></span> 
+						<span id="titleChatHeaderCount"></span>
 					</div>
+					<div id="titleChatBody"></div>
+				</div>
 					
-					<div id="titleChatLog" class="titlePanelLeft">';
-					/* right chat window */
-					/* count from title screen */
-					$result = mysqli_query($link, 'select count(row) count from `fwtitle` where timestamp > date_sub(now(), interval 20 second)');
-					while ($row = mysqli_fetch_assoc($result)){
-						$currentPlayers += $row['count'];
-					}
-					/* count playing game */
-					$result = mysqli_query($link, 'select count(row) count from `fwplayers` where timestamp > date_sub(now(), interval 20 second)');
-					// Associative array
-					while ($row = mysqli_fetch_assoc($result)){
-						$currentPlayers += $row['count'];
-						echo '<div>There '. ($currentPlayers === 1 ? 'is' : 'are') .' '. $currentPlayers . ' '. ($currentPlayers === 1 ? 'person' : 'people') .' playing Firmament Wars</div><div class="chat-muted">Type /help for chat commands</div>';
-					}
-					echo 
-					'</div>';
+				<div id="titleChatLog" class="titlePanelLeft">';
+				/* right chat window */
+				/* count from title screen */
+				$result = mysqli_query($link, 'select count(row) count from `fwtitle` where timestamp > date_sub(now(), interval 20 second)');
+				while ($row = mysqli_fetch_assoc($result)){
+					$currentPlayers += $row['count'];
+				}
+				/* count playing game */
+				$result = mysqli_query($link, 'select count(row) count from `fwplayers` where timestamp > date_sub(now(), interval 20 second)');
+				// Associative array
+				while ($row = mysqli_fetch_assoc($result)){
+					$currentPlayers += $row['count'];
+					echo '<div>There '. ($currentPlayers === 1 ? 'is' : 'are') .' '. $currentPlayers . ' '. ($currentPlayers === 1 ? 'person' : 'people') .' playing Firmament Wars</div><div class="chat-muted">Type /help for chat commands</div>';
+				}
+				echo 
+				'</div>';
 				?>
 				<div id="titleChatWrap">
-						
 					<?php
 						echo '
 						<div class="input-group">
@@ -338,15 +333,6 @@
 					?>
 				</div>
 			</div>
-			
-			<?php
-			} else {
-				echo '<div id="comingSoon">
-					<a class="btn btn-responsive fwBlue shadow4" href="/createAccount.php?back=/games/firmament-wars">Create Account</a>
-					 or <a class="btn btn-responsive fwBlue shadow4" href="/login.php?back=/games/firmament-wars">Login</a><br>with your Nevergrind account<br>to Play Firmament Wars!
-					</div>';
-			}
-			?>
 				
 		</div>
 	
@@ -469,12 +455,7 @@
 				
 				<div>
 					<div class='buffer2'>
-						<label class='control-label'>Map <?php 
-						if (!$_SESSION['fwpaid']){
-								echo '| <span class="unlockGameBtn text-warning">Unlock the complete game to select all maps</span>'; 
-							}
-						?>
-						</label>
+						<label class='control-label'>Map</label>
 					</div>
 					
 					<div class='buffer w33'>
@@ -661,7 +642,6 @@
 				<div class="row buffer">
 					<div class="col-xs-12">
 						<ul>
-							<li>More Maps: Flat Earth, UK, USA, France, Italy, Japan, and Turkey!</li>
 							<li>Rename your nation</li>
 							<li>Display your dictator\'s avatar</li>
 							<li>Display your military ribbons in game</li>
@@ -1212,8 +1192,9 @@
 <?php
 	require $_SERVER['DOCUMENT_ROOT'] . '/includes/ga.php';
 	echo '<script>
-		var fwpaid = '. $_SESSION['fwpaid'] .';
-		var nationRow = '. $_SESSION['nationRow'] .';
+		var fwpaid = '. $_SESSION['fwpaid'] .',
+			nationRow = '. $_SESSION['nationRow'] .',
+			guest = '. $_SESSION['guest'] .';
 		// set channel
 		if (location.hash.length > 1){
 			initChannel = location.hash.slice(1);

@@ -352,35 +352,35 @@ var title = {
 	listFriends: function(){
 		var len = g.friends.length;
 		g.chat('<div>Checking friends list...</div>');
-		if (len){
+		if (g.friends.length){
 			$.ajax({
 				url: 'php/getFriends.php',
 				data: {
 					friends: g.friends
 				}
 			}).done(function(data){
-				console.info(data);
 				var str = '<div>Friend List ('+ len +')</div>';
 				for (var i=0; i<len; i++){
-					if (g.friends.indexOf(data.players[i]) > -1){
+					var index = data.players.indexOf(g.friends[i]);
+					if (index > -1){
 						// online
 						str += '<div><span class="chat-online titlePlayerAccount">' + g.friends[i] + '</span>';
-						console.info(data.players[i], data.locations[i], typeof data.locations[i]);
-						if (typeof data.locations[i] === 'number'){
-							str += ' playing in game: ' + data.locations[i];
+						if (typeof data.locations[index] === 'number'){
+							str += ' playing in game: ' + data.locations[index];
 						} else {
 							str += ' in chat channel: ';
 							if (g.view === 'title'){
 								// enable clicking to change channel
-								str += '<span class="chat-online chat-join">' + data.locations[i] + '</span>';
+								str += '<span class="chat-online chat-join">' + data.locations[index] + '</span>';
 							} else {
-								// not in a game
-								str += data.locations[i];
+								// not in a game ?
+								str += data.locations[index];
 							}
 						}
 						
 						str += '</div>';
 					} else {
+						// offline
 						str += '<div><span class="chat-muted titlePlayerAccount">' + g.friends[i] +'</span></div>';
 					}
 				}
@@ -721,14 +721,14 @@ var title = {
 		g.isModalOpen = true;
 	},
 	modalElements: [
-		document.getElementById("configureNation"),
-		document.getElementById("titleViewBackdrop"),
-		document.getElementById('createGameWrap'),
-		document.getElementById('optionsModal'),
-		document.getElementById('leaderboard'),
-		document.getElementById('unlockGame'),
-		document.getElementById('hotkeysModal'),
-		document.getElementById('joinPrivateGameModal')
+		"#configureNation",
+		"#titleViewBackdrop",
+		'#createGameWrap',
+		'#optionsModal',
+		'#leaderboard',
+		'#unlockGame',
+		'#hotkeysModal',
+		'#joinPrivateGameModal'
 	],
 	closeModal: function(){
 		TweenMax.set(title.modalElements, {

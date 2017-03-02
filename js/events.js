@@ -189,10 +189,9 @@ var events = {
 			});
 			title.showBackdrop();
 		});
-		$("#mainWrap").on("click", ".unlockGameBtn", function(){
+		$("#mainWrap").on("click", ".unlockGameBtn", function(){ 
 			title.closeModal();
-			var e = document.getElementById("unlockGame");
-			TweenMax.to(e, g.modalSpeed, {
+			TweenMax.to('#unlockGame', g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
 					y: 0,
@@ -446,17 +445,13 @@ var events = {
 			var key = x.replace(/ /g,'');
 			g.map.name = x;
 			g.map.key = key;
-			if (fwpaid){
-				document.getElementById('createGameMap').innerHTML = x;
-				document.getElementById('createGameTiles').innerHTML = title.mapData[key].tiles;
-				document.getElementById('createGamePlayers').innerHTML = title.mapData[key].players;
-				var e1 = $("#gamePlayers");
-				e1.attr("max", title.mapData[key].players);
-				if (e1.val() * 1 > title.mapData[key].players){
-					e1.val(title.mapData[key].players);
-				}
-			} else {
-				Msg("Unlock the complete game for access to all maps.");
+			document.getElementById('createGameMap').innerHTML = x;
+			document.getElementById('createGameTiles').innerHTML = title.mapData[key].tiles;
+			document.getElementById('createGamePlayers').innerHTML = title.mapData[key].players;
+			var e1 = $("#gamePlayers");
+			e1.attr("max", title.mapData[key].players);
+			if (e1.val() * 1 > title.mapData[key].players){
+				e1.val(title.mapData[key].players);
 			}
 			e.preventDefault();
 		});

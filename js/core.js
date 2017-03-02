@@ -131,7 +131,7 @@ var g = {
 		tiles: 85
 	},
 	updateUserInfo: function(){
-		if (location.host !== 'localhost'){
+		if (location.host !== 'localhost' && !guest){
 			$.ajax({
 				async: true,
 				type: 'GET',

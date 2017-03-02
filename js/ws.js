@@ -36,11 +36,13 @@ var socket = {
 			// remove from channel
 			channel = channel.trim();
 			if (channel === my.channel){
+				/* fail silently
 				var o = {
 					message: "You're already in that channel.",
 					type: 'chat-muted'
 				};
 				title.chat(o);
+				*/
 			} else {
 				$.ajax({
 					type: "POST",
@@ -132,7 +134,7 @@ var socket = {
 		}
 		(function keepAliveWs(){
 			socket.zmq.publish(channel, {type: "keepAlive"});
-			setTimeout(keepAliveWs, 180000);
+			setTimeout(keepAliveWs, 30000);
 		})();
 	},
 	joinGame: function(){

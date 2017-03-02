@@ -152,15 +152,6 @@ a:hover{
 	right: 10%;
 	margin: 0 auto;
 }
-#comingSoon{
-	position: absolute;
-	top: 10%;
-	width: 100%;
-	text-align: center;
-	color: #8bf;
-	font-size: 2em;
-	font-family: Cinzel, Times New Roman, serif;
-}
 /* Firmament Wars */
 #gameWrap{
 	visibility: hidden;
