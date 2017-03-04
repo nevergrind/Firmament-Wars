@@ -471,7 +471,6 @@ var title = {
 			} else if (data.type === 'add'){
 				title.addPlayer(data.account, data.flag, data.rating);
 			} else {
-				console.info('chatReceive ', data);
 				if (data.message !== undefined){
 					title.chat(data);
 				}
@@ -694,12 +693,14 @@ var title = {
 					var account = msg.slice(8);
 					title.fwpaid(account);
 				}else {
-					$.ajax({
-						url: 'php/insertTitleChat.php',
-						data: {
-							message: msg
-						}
-					});
+					if (msg.charAt(0) !== '/'){
+						$.ajax({
+							url: 'php/insertTitleChat.php',
+							data: {
+								message: msg
+							}
+						});
+					}
 				}
 			}
 			$DOM.titleChatInput.val('');

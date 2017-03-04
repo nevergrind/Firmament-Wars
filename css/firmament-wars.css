@@ -771,7 +771,7 @@ tbody{
 	bottom: 0;
 	right: 0;
 	width: 170px;
-	padding: 8px 0;
+	padding-top: 8px;
 	border-right: none;
 	border-bottom:none;
 	border-radius: 4px 0 0 0;
@@ -798,11 +798,12 @@ tbody{
 }
 #resourceHead{
 	color: #fff;
-	padding: 0 6px;
-	padding-bottom: 2px;
+	padding: 0 8px;
 	letter-spacing: 2px;
-	margin-bottom: 4px;
 	border-bottom: 1px solid #357;
+}
+#resourceBody{
+	padding: 0 5px 8px;
 }
 .diplomacyPlayers{
 	position: relative;
@@ -816,7 +817,7 @@ tbody{
 	top: -60%;
 	left: 0;
 	width: 100%;
-	opacity: .15;
+	opacity: .25;
 	background-size: 100% !important;
 	background-position: -50% !important;
 	z-index: -1;

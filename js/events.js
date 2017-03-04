@@ -574,9 +574,10 @@ $(document).on('keyup', function(e) {
 			} else if (x === 83){
 				// s
 				var o = new Target({
-					cost: 3, 
+					cost: 1, 
 					splitAttack: true
 				});
+				console.info(o.cost);
 				action.target(o);
 			} else if (x === 68){
 				// d

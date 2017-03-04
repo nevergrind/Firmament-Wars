@@ -53,9 +53,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-41">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-46">
 	<script>
-		version = '0-0-41'; 
+		version = '0-0-46'; 
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -111,7 +111,7 @@
 				$_SESSION['disconnects'] = 0;
 				$_SESSION['disconnectRate'] = 0;
 				$nation = 'Kingdom of '. ucfirst($_SESSION['account']);
-				$flag = !isset($_SESSION['flag']) ? 'Algeria.jpg' : $_SESSION['flag'];
+				$flag = !isset($_SESSION['flag']) ? 'United States.jpg' : $_SESSION['flag'];
 				
 				if($count > 0){
 					// nation exists
@@ -170,10 +170,13 @@
 					'<a href="/account" class="btn fwBlue btn-responsive shadow4" title="Manage Account">'. $_SESSION['account'] .'</a>&ensp;';
 				}
 				?>
-					<a href="/forums" title="Nevergrind Browser Game Forums">Forums</a>&ensp; 
+					<a href="/forums" target="_blank" title="Nevergrind Browser Game Forums">Forums</a>&ensp; 
 					<a href="/blog/how-to-play-firmament-wars/" target="_blank" title="Nevergrind Browser Game Development News and Articles">How to Play</a>&ensp;
 					<i id="options" class="pointer options fa fa-volume-up"></i>
 				<div class="pull-right text-primary">
+					<a href="//discord.gg/D4suK8b">
+						<i class="fa fa-wechat text-primary pointer"></i>
+					</a>
 					<a href="//www.youtube.com/user/Maelfyn">
 						<i class="fa fa-youtube text-primary pointer"></i>
 					</a>
@@ -308,15 +311,19 @@
 				/* right chat window */
 				/* count from title screen */
 				$result = mysqli_query($link, 'select count(row) count from `fwtitle` where timestamp > date_sub(now(), interval 20 second)');
-				while ($row = mysqli_fetch_assoc($result)){
-					$currentPlayers += $row['count'];
+				if (mysqli_num_rows($result)){
+					while ($row = mysqli_fetch_assoc($result)){
+						$currentPlayers += $row['count'];
+					}
 				}
 				/* count playing game */
 				$result = mysqli_query($link, 'select count(row) count from `fwplayers` where timestamp > date_sub(now(), interval 20 second)');
 				// Associative array
-				while ($row = mysqli_fetch_assoc($result)){
-					$currentPlayers += $row['count'];
-					echo '<div>There '. ($currentPlayers === 1 ? 'is' : 'are') .' '. $currentPlayers . ' '. ($currentPlayers === 1 ? 'person' : 'people') .' playing Firmament Wars</div><div class="chat-muted">Type /help for chat commands</div>';
+				if (mysqli_num_rows($result)){
+					while ($row = mysqli_fetch_assoc($result)){
+						$currentPlayers += $row['count'];
+						echo '<div>There '. ($currentPlayers === 1 ? 'is' : 'are') .' '. $currentPlayers . ' '. ($currentPlayers === 1 ? 'person' : 'people') .' playing Firmament Wars</div><div class="chat-muted">Type /help for chat commands</div>';
+					}
 				}
 				echo 
 				'</div>';
@@ -556,7 +563,11 @@
 							</span>
 						</div>';
 					} else {
-						echo "<div class='text-center'><span class='unlockGameBtn text-warning'>Unlock the complete game to update your nation's name</span></div>";
+						if (!$_SESSION['guest']){
+							echo "<div class='text-center'><span class='unlockGameBtn text-warning'>Unlock the complete game to update your nation's name</span></div>";
+						} else {
+							echo "<div class='text-center'><span class='text-warning'>Sign up and unlock the complete game to update your nation's name</span></div>";
+						}
 					}
 					?>
 				</div>
@@ -598,9 +609,13 @@
 				<?php
 					if (!$_SESSION['fwpaid']){
 						echo 
-						'<div class="col-xs-12 text-warning text-center">
-							<span class="unlockGameBtn">Unlock the complete game to update your dictator\'s avatar</span>
-						</div>';
+						'<div class="col-xs-12 text-warning text-center">';
+							if (!$_SESSION['guest']){
+								echo '<span class="unlockGameBtn">Unlock the complete game to update your dictator\'s avatar</span>';
+							} else {
+								echo '<span>Sign up and unlock the complete game to update your dictator\'s avatar</span>';
+							}
+						echo '</div>';
 					} else {
 						echo
 						'<div class="col-xs-8">
@@ -795,7 +810,7 @@
 					</div>
 					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-bolt moves pointer actionBolt">
-						</i><span id="rushCost">4</span>
+						</i><span id="rushCost">2</span>
 					</div>
 				</div>
 				
@@ -808,7 +823,7 @@
 					</div>
 					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
-						<span id='deployCost'>20</cost>
+						<span id='deployCost'>10</cost>
 					</div>
 				</div>
 				
@@ -926,29 +941,26 @@
 		</div>
 		
 			
-		<div id="resources-ui" class="container shadow4 blueBg gameWindow">
+		<div id="resources-ui" class="shadow4 blueBg gameWindow">
 			<div id="resourceHead">
 				<i id="hotkeys" class="pointer options fa fa-keyboard-o" title="Hotkeys"></i>
 				<i id="options" class="pointer options fa fa-volume-up" title="Audio"></i>
 				<i id="surrender" class="pointer fa fa-flag" title="Surrender"></i>
-				<i id="exitSpectate" class="pointer fa-times-circle">Exit Game</i>
+				<i id="exitSpectate" class="pointer fa fa-times-circle"></i>
 			</div>
+			<div id="resourceBody">
 			
-			<div class="row">
-				<div id="currentYear" class="col-xs-12 no-padding chat-rating">
+				<div id="currentYear" class="chat-rating">
 					4000 B.C.
 				</div>
-			</div>
 			
-			<div class="row">
-				<div class="col-xs-12 no-padding moves">
+				<div class="no-padding moves">
 					<span title="Energy is used to move and rush troops.">
 						Energy <i class="fa fa-bolt"></i>
 					</span>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 no-padding">
+				
+				<div class="no-padding">
 					<div class="barWrap resourceBar resourceBarParent">
 						<div id="energyBar" class="resourceBar"></div>
 						<div id="energyIndicator"></div>
@@ -958,10 +970,8 @@
 						</div>
 					</div>
 				</div>
-			</div>
 			
-			<div class="row">
-				<div class="col-xs-12 no-padding production">
+				<div class="no-padding production">
 					<span  title="Productions Bonus">
 						+<span id="productionBonus">0</span>%
 					</span>
@@ -969,9 +979,8 @@
 						Production <i class="fa fa-gavel"></i>
 					</span>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 no-padding">
+				
+				<div class="no-padding">
 					<div class="resourceIndicator">
 						<span id="production">0</span> 
 						<span  title="Production per turn">
@@ -979,10 +988,8 @@
 						</span>
 					</div>
 				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-xs-12 no-padding food">
+				
+				<div class="no-padding food">
 					<span  title="Food Bonus">
 						+<span id="foodBonus">0</span>%
 					</span>
@@ -990,10 +997,8 @@
 						Food <i class="glyphicon glyphicon-apple"></i> 
 					</span>
 				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-xs-12 no-padding">
+				
+				<div class="no-padding">
 					<div id="foodBarWrap" class="barWrap resourceBar resourceBarParent">
 						<div id="foodBar" class="resourceBar"></div>
 						<div class="resourceIndicator resourceCenter abs">
@@ -1002,10 +1007,8 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-xs-12 no-padding culture">
+				
+				<div class="no-padding culture">
 					<span  title="Culture Bonus">
 						+<span id="cultureBonus">0</span>%
 					</span>
@@ -1013,10 +1016,8 @@
 						Culture <i class="fa fa-flag"></i>
 					</span>
 				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-xs-12 no-padding">
+				
+				<div class="no-padding">
 					<div id="cultureBarWrap" class="barWrap resourceBar resourceBarParent">
 						<div id="cultureBar" class="resourceBar"></div>
 						<div class="resourceIndicator resourceCenter abs">
@@ -1026,6 +1027,7 @@
 					</div>
 				</div>
 			</div>
+			
 		</div>
 		
 		<div id="hotkey-ui" class="shadow4">Press V to toggle the UI</div>
@@ -1137,13 +1139,7 @@
 					Music Volume
 				</div>
 				<div class='col-xs-8 text-right'>
-					<?php
-						if ($_SESSION['fwpaid']){
-							echo '<input id="musicSlider" class="sliders" type="text"/>';
-						} else {
-							echo '<span class="text-warning">Unlock the complete game to enable the music</span>';
-						}
-					?>
+					<input id="musicSlider" class="sliders" type="text"/>
 				</div>
 			</div>
 			

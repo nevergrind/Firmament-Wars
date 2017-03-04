@@ -68,7 +68,7 @@ var g = {
 	startTime: Date.now(),
 	keyLock: false,
 	loadAttempts: 0,
-	upgradeCost: [80, 140, 200],
+	upgradeCost: [40, 80, 120],
 	isModalOpen: false,
 	lock: function(clear){
 		g.overlay.style.display = "block";
@@ -310,7 +310,7 @@ g.init = (function(){
 		});
 	}
 	document.getElementById("flagDropdown").innerHTML = s;
-	if (location.hostname === 'localhost'){
+	if (location.hostname === 'localhost' && location.hash !== '#stop'){
 		$.ajax({
 			type: "GET",
 			url: 'php/rejoinGame.php' // check if already in a game
@@ -462,7 +462,9 @@ var game = {
 					TweenMax.to(z, .125, {
 						alpha: 0,
 						onComplete: function(){
-							z.parentNode.removeChild(z);
+							if (z.parentNode !== null){
+								z.parentNode.removeChild(z);
+							}
 						}
 					});
 				}
@@ -785,8 +787,8 @@ var my = {
 	splitAttack: false,
 	splitAttackCost: 1,
 	attackCost: 2,
-	deployCost: 20,
-	rushCost: 4,
+	deployCost: 10,
+	rushCost: 2,
 	weaponCost: 1,
 	maxDeployment: 24,
 	buildCost: 1,

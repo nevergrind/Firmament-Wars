@@ -3,7 +3,7 @@ function Target(o){
 	if (o === undefined){
 		o = {};
 	}
-	this.cost = 2;
+	this.cost = o.cost !== undefined ? o.cost : 2;
 	this.minimum = o.minimum !== undefined ? o.minimum : 2;
 	this.attackName = o.attackName ? o.attackName : 'attack';
 	this.splitAttack = o.splitAttack ? o.splitAttack : false;
@@ -32,6 +32,7 @@ var action = {
 			ui.showTarget(DOM['land' + my.tgt]);
 			return;
 		}
+		console.info('target: ', o.cost);
 		if (my.moves < o.cost){
 			action.error('Not enough energy!');
 			return;
@@ -75,6 +76,7 @@ var action = {
 			my.clearHud();
 			return;
 		}
+		console.info(my.moves, my.splitAttack);
 		if ((my.moves < 2 && !my.splitAttack) ||
 			(my.moves < 1 && my.splitAttack) ){
 			action.error('Not enough energy!');
@@ -159,12 +161,12 @@ var action = {
 				}
 			}).done(function(data) {
 				audio.deploy();
-			}).fail(function(e){
-				audio.play('error');
-			}).always(function(data){
 				game.tiles[tgt].units = data.units;
 				my.manpower = data.manpower;
 				setResources(data);
+			}).fail(function(e){
+				audio.play('error');
+			}).always(function(data){
 				setTileUnits(tgt, '#00ff00');
 			});
 			TweenMax.set('#manpower', {
@@ -194,13 +196,13 @@ var action = {
 				}
 			}).done(function(data) {
 				audio.deploy();
-			}).fail(function(e){
-				audio.play('error');
-			}).always(function(data){
 				setMoves(data);
 				game.tiles[tgt].units = data.units;
 				//setProduction(data);
 				setTileUnits(tgt, '#00ff00');
+			}).fail(function(e){
+				audio.play('error');
+			}).always(function(data){
 				
 				// my.manpower = data.manpower;
 				setResources(data);
@@ -445,12 +447,14 @@ function toggleChatMode(bypass){
 			} else if (msg.indexOf('/who ') === 0){
 				title.who(msg);
 			} else {
-				$.ajax({
-					url: 'php/insertChat.php',
-					data: {
-						message: msg
-					}
-				});
+				if (msg.charAt(0) !== '/'){
+					$.ajax({
+						url: 'php/insertChat.php',
+						data: {
+							message: msg
+						}
+					});
+				}
 			}
 		}
 		$DOM.chatInput.val('').blur();

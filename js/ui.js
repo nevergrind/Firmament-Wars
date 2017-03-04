@@ -347,12 +347,13 @@ function triggerEndGame(msg, victory){
 			location.reload();
 		});
 		$("#spectate").on('click', function(e){
-			$("#victoryScreen, #ui2, #resources-ui, #targetWrap").remove();
+			$("#victoryScreen, #ui2, #resourceBody, #targetWrap").remove();
 			document.getElementById('surrender').style.display = "none";
 			document.getElementById('exitSpectate').style.display = "inline";
 			g.spectateStatus = 1;
 		});
 		$("#exitSpectate").on('click', function(){
+			$(this).off('click');
 			stats.get();
 			TweenMax.to('#diplomacy-ui', 1, {
 				alpha: 0,

@@ -141,6 +141,7 @@ var socket = {
 		(function repeat(){
 			if (socket.enabled){
 				socket.unsubscribe('title:' + my.channel);
+				socket.unsubscribe('game:' + game.id);
 				// game updates
 				// console.info("Subscribing to game:" + game.id);
 				socket.zmq.subscribe('game:' + game.id, function(topic, data) {
@@ -154,54 +155,53 @@ var socket = {
 		})();
 	},
 	enabled: false,
-	connectionTries: 0,
-	connectionRetryDuration: 250,
 	init: function(){
 		// is player logged in?
-		var e = document.getElementById('titleMenu');
-		if (e !== null){
-			socket.zmq = new ab.Session('wss://' + location.hostname + '/wss2/', function(){
-				socket.connectionSuccess();
-			}, function(){
-				socket.connectionFailure();
-			}, {
-				'skipSubprotocolCheck': true
-			});
-		}
+		socket.zmq = new ab.Session('wss://' + location.hostname + '/wss2/', function(){
+			// on open
+			socket.connectionSuccess();
+		}, function(){
+			// on close/fail
+			socket.connectionFailure();
+		}, {
+			// options
+			'skipSubprotocolCheck': true
+		});
 	},
 	connectionSuccess: function(){
 		socket.enabled = true;
 		console.info("Socket connection established with server");
 		// chat updates
-		if (g.view === 'title' && socket.initialConnection){
+		if (g.view === 'title'){
+			if (socket.initialConnection){
+				socket.zmq.subscribe('title:refreshGames', function(topic, data) {
+					title.updateGame(data);
+				});
+				socket.zmq.subscribe('admin:broadcast', function(topic, data) {
+					g.chat(data.msg, data.type);
+				});
+				(function repeat(){
+					if (my.account){
+						socket.enableWhisper();
+					} else {
+						setTimeout(repeat, 200);
+					}
+				})();
+			}
 			socket.initialConnection = false;
 			document.getElementById('titleChatHeaderChannel').innerHTML = my.channel;
 			socket.setChannel(initChannel);
-			socket.zmq.subscribe('title:refreshGames', function(topic, data) {
-				title.updateGame(data);
-			});
 		}
 		if (g.view === 'game'){
 			game.getGameState();
 		}
-		socket.zmq.subscribe('admin:broadcast', function(topic, data) {
-			console.info('BROADCAST: ', data);
-			g.chat(data.msg, data.type);
-		});
-		(function repeat(){
-			if (my.account){
-				socket.enableWhisper();
-			} else {
-				setTimeout(repeat, 200);
-			}
-		})();
 	},
+	connectionTries: 0,
+	connectionRetryDuration: 100,
 	connectionFailure: function(){
 		console.warn('WebSocket connection failed. Retrying...');
 		socket.enabled = false;
-		if (++socket.connectionTries * socket.connectionRetryDuration < 60000){
-			setTimeout(socket.init, socket.connectionRetryDuration);
-		}
+		setTimeout(socket.init, socket.connectionRetryDuration);
 	}
 }
 socket.init();

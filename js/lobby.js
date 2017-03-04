@@ -134,12 +134,14 @@ var lobby = {
 					title.who(msg);
 				} else {
 					// send ajax chat msg
-					$.ajax({
-						url: 'php/insertLobbyChat.php',
-						data: {
-							message: msg
-						}
-					});
+					if (msg.charAt(0) !== '/'){
+						$.ajax({
+							url: 'php/insertLobbyChat.php',
+							data: {
+								message: msg
+							}
+						});
+					}
 				}
 			}
 			$DOM.lobbyChatInput.val('');
@@ -175,7 +177,7 @@ var lobby = {
 						<div class="lobbyAccounts">';
 							if (g.teamMode){
 								// yes, the span is necessary to group the dropdown
-								str += '<span><div id="lobbyTeam'+ i +'" class="lobbyTeams dropdown-toggle';
+								str += '<span><div id="lobbyTeam'+ i +'" data-placement="right" class="lobbyTeams dropdown-toggle';
 								if (i === my.player){
 									str += ' pointer2';
 								}
@@ -790,11 +792,11 @@ function loadGameState(){
 			} else if (my.government === 'Democracy'){
 				my.maxDeployment = 254;
 			} else if (my.government === 'Fundamentalism'){
-				my.rushCost = 2;
+				my.rushCost = 1;
 				document.getElementById('rushCost').textContent = my.rushCost;
 			} else if (my.government === 'Fascism'){
 				document.getElementById('moves').textContent = 12;
-				my.deployCost = 10;
+				my.deployCost = 5;
 				document.getElementById('deployCost').textContent = my.deployCost;
 			} else if (my.government === 'Communism'){
 				// research
