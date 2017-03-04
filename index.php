@@ -53,9 +53,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-46">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-47">
 	<script>
-		version = '0-0-46'; 
+		version = '0-0-47'; 
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -834,7 +834,7 @@
 					</div>
 					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
-						<span id='cannonsCost'>40</span>
+						<span id='cannonsCost'>24</span>
 					</div>
 				</div>
 			
@@ -846,7 +846,7 @@
 					</div>
 					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
-						<span id="buildCost">80</span>
+						<span id="buildCost"></span>
 					</div>
 				</div>
 				
@@ -857,7 +857,7 @@
 					</div>
 					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
-						<span id='missileCost'>60</span>
+						<span id='missileCost'>40</span>
 					</div>
 				</div>
 				
@@ -866,7 +866,7 @@
 					<div class="col-xs-8">Launch <span class='text-hotkey'>N</span>uke</div>
 					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
-						<span id='nukeCost'>400</span>
+						<span id='nukeCost'>150</span>
 					</div>
 				</div>
 				
@@ -885,7 +885,7 @@
 					</div>
 					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
-						<span id='gunpowderCost'>80</span>
+						<span id='gunpowderCost'>40</span>
 					</div>
 				</div>
 				
@@ -897,7 +897,7 @@
 					</div>
 					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
-						<span id='engineeringCost'>120</span>
+						<span id='engineeringCost'>60</span>
 					</div>
 				</div>
 				
@@ -909,7 +909,7 @@
 					</div>
 					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
-						<span id='rocketryCost'>200</span>
+						<span id='rocketryCost'>80</span>
 					</div>
 				</div>
 				
@@ -921,7 +921,7 @@
 					</div>
 					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
-						<span id='atomicTheoryCost'>250</span>
+						<span id='atomicTheoryCost'>100</span>
 					</div>
 				</div>
 				
@@ -933,7 +933,7 @@
 					</div>
 					<div class="col-xs-4 tight2 text-right productionCost">
 						<i class="fa fa-gavel production pointer actionBolt"></i>
-						<span id='futureTechCost'>1000</span>
+						<span id='futureTechCost'>500</span>
 					</div>
 				</div>
 			</div>

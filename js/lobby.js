@@ -30,22 +30,22 @@ var lobby = {
 				<div id="lobbyGovPerks">\
 					<div>3x starting production</div>\
 					<div>+50% starting troops</div>\
-					<div>Start With a Bunker</div>\
-					<div>Free Split Attack</div>\
+					<div>Start with a Bunker</div>\
+					<div>Free split attack</div>\
 				</div>';
 		} else if (government === "Monarchy"){
 			str = '<div id="lobbyGovName" class="text-primary">Monarchy</div>\
 				<div id="lobbyGovPerks">\
 					<div>3x starting culture</div>\
-					<div>+50% culture bonus</div>\
-					<div>Start with two Great Tacticians</div>\
+					<div>150% starting culture bonus</div>\
+					<div>Start with two great tacticians</div>\
 					<div>1/2 cost structures</div>\
 				</div>';
 		} else if (government === "Democracy"){
 			str = '<div id="lobbyGovName" class="text-primary">Democracy</div>\
 				<div id="lobbyGovPerks">\
-					<div>4x Maximum Troop Deployment</div>\
-					<div>+50% production bonus</div>\
+					<div>4x maximum troop deployment</div>\
+					<div>100% starting production bonus</div>\
 					<div>More great people</div>\
 					<div>Start with a wall</div>\
 				</div>';
@@ -55,28 +55,28 @@ var lobby = {
 					<div>Overrun ability</div>\
 					<div>Infiltration</div>\
 					<div>Faster growth</div>\
-					<div>1/2 cost Rush</div>\
+					<div>1/2 cost rush</div>\
 				</div>';
 		} else if (government === "Fascism"){
 			str = '<div id="lobbyGovName" class="text-primary">Fascism</div>\
 				<div id="lobbyGovPerks">\
-					<div>Fervor doubles bonus troops</div>\
-					<div>2x Starting Energy</div>\
-					<div>Start with Great General</div>\
-					<div>1/2 cost Deploy</div>\
+					<div>Double bonus production rewards</div>\
+					<div>2x starting energy</div>\
+					<div>Start with great general</div>\
+					<div>1/2 cost deploy</div>\
 				</div>';
 		} else if (government === "Republic"){
 			str = '<div id="lobbyGovName" class="text-primary">Republic</div>\
 				<div id="lobbyGovPerks">\
-					<div>+50% plunder bonus</div>\
+					<div>+50% plunder bonus rewards</div>\
 					<div>2x starting food</div>\
-					<div>+50% food bonus</div>\
+					<div>50% starting food bonus</div>\
 					<div>Combat medics</div>\
 				</div>';
 		} else if (government === "Communism"){
 			str = '<div id="lobbyGovName" class="text-primary">Communism</div>\
 				<div id="lobbyGovPerks">\
-					<div>2x discovery bonus</div>\
+					<div>2x discovery bonus rewards</div>\
 					<div>1/2 cost research</div>\
 					<div>1/2 cost weapons</div>\
 					<div>Start with a great person</div>\
@@ -790,7 +790,7 @@ function loadGameState(){
 			} else if (my.government === 'Monarchy'){
 				my.buildCost = .5;
 			} else if (my.government === 'Democracy'){
-				my.maxDeployment = 254;
+				my.maxDeployment = 48;
 			} else if (my.government === 'Fundamentalism'){
 				my.rushCost = 1;
 				document.getElementById('rushCost').textContent = my.rushCost;
@@ -800,15 +800,15 @@ function loadGameState(){
 				document.getElementById('deployCost').textContent = my.deployCost;
 			} else if (my.government === 'Communism'){
 				// research
-				DOM.gunpowderCost.textContent = 40;
-				DOM.engineeringCost.textContent = 60;
-				DOM.rocketryCost.textContent = 100;
-				DOM.atomicTheoryCost.textContent = 125;
-				DOM.futureTechCost.textContent = 500;
+				DOM.gunpowderCost.textContent = 20;
+				DOM.engineeringCost.textContent = 30;
+				DOM.rocketryCost.textContent = 40;
+				DOM.atomicTheoryCost.textContent = 50;
+				DOM.futureTechCost.textContent = 250;
 				// weapons
-				DOM.cannonsCost.textContent = 20;
-				DOM.missileCost.textContent = 30;
-				DOM.nukeCost.textContent = 200;
+				DOM.cannonsCost.textContent = 12;
+				DOM.missileCost.textContent = 20;
+				DOM.nukeCost.textContent = 75;
 				my.weaponCost = .5;
 			}
 			// initialize player data

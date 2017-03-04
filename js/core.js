@@ -33,7 +33,7 @@ var g = {
 		"#ff00ff",
 		'#e4e4e4',
 		'#220088',
-		'#707000',
+		'#404000',
 		'#888888'
 	],
 	rankedMode: 0,
@@ -44,14 +44,14 @@ var g = {
 	titleFlashing: false,
 	name: "",
 	password: "",
-	speed: 10,
+	speed: 5,
 	speeds: {
-		Slower: 9000,
-		Slow: 8000,
-		Normal: 7000,
-		Fast: 6000,
-		Faster: 5000,
-		Fastest: 4000
+		Slower: 10000,
+		Slow: 9000,
+		Normal: 8000,
+		Fast: 7000,
+		Faster: 6000,
+		Fastest: 5000
 	},
 	focusUpdateNationName: false,
 	focusGameName: false,
@@ -410,7 +410,7 @@ var game = {
 		'Scored glorious pents',
 		'Scored wicked sexts',
 		'Scored a triple double',
-		'Scored righteous septs',
+		'Scored righteous septs',//25
 		'Scored almighty octs',
 		'Scored sick quad dubs',
 		"Hit #1 on the leaderboard",
@@ -790,7 +790,7 @@ var my = {
 	deployCost: 10,
 	rushCost: 2,
 	weaponCost: 1,
-	maxDeployment: 24,
+	maxDeployment: 12,
 	buildCost: 1,
 	targetData: {},
 	selectedFlag: "Default",

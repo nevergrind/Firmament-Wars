@@ -627,7 +627,7 @@ $(document).on('keyup', function(e) {
 			} else if (x === 67){
 				// c
 				var o = new Target({
-					cost: 40 * my.weaponCost,
+					cost: 24 * my.weaponCost,
 					minimum: 0,
 					attackName: 'cannons',
 					hudMsg: 'Fire Cannons'
@@ -636,7 +636,7 @@ $(document).on('keyup', function(e) {
 			} else if (x === 77){
 				// m
 				var o = new Target({
-					cost: 60 * my.weaponCost,
+					cost: 40 * my.weaponCost,
 					minimum: 0,
 					attackName: 'missile',
 					hudMsg: 'Launch Missile'
@@ -645,7 +645,7 @@ $(document).on('keyup', function(e) {
 			} else if (x === 78){
 				// n
 				var o = new Target({
-					cost: 400 * my.weaponCost,
+					cost: 150 * my.weaponCost,
 					minimum: 0,
 					attackName: 'nuke',
 					hudMsg: 'Launch Nuclear Weapon'
