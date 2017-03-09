@@ -510,7 +510,7 @@ $("#gameWrap").on("mousedown", '#attack', function(e){
 }).on('mousedown', '#fireCannons', function(e){
 	if (e.which === 1){
 		var o = new Target({
-			cost: 60,
+			cost: 24,
 			minimum: 0,
 			attackName: 'cannons',
 			hudMsg: 'Fire Cannons'
@@ -520,7 +520,7 @@ $("#gameWrap").on("mousedown", '#attack', function(e){
 }).on('mousedown', '#launchMissile', function(e){
 	if (e.which === 1){
 		var o = new Target({
-			cost: 120,
+			cost: 40,
 			minimum: 0,
 			attackName: 'missile',
 			hudMsg: 'Launch Missile'
@@ -530,7 +530,7 @@ $("#gameWrap").on("mousedown", '#attack', function(e){
 }).on('mousedown', '#launchNuke', function(e){
 	if (e.which === 1){
 		var o = new Target({
-			cost: 600,
+			cost: 150,
 			minimum: 0,
 			attackName: 'nuke',
 			hudMsg: 'Launch Nuclear Weapon'

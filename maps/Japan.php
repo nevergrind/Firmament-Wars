@@ -199,8 +199,8 @@ echo '
 		<text x="1234" y="1043" class="unit" id="unit25">0</text>
 		<text x="1166" y="1159" class="unit" id="unit26">0</text>
 		<text x="983" y="1352" class="unit" id="unit27">0</text>
-		<text x="322" y="1782" class="unit" id="unit29">0</text>
 		<text x="472" y="1502" class="unit" id="unit28">0</text>
+		<text x="322" y="1782" class="unit" id="unit29">0</text>
 		<text x="950" y="1327" class="unit" id="unit30">0</text>
 		<text x="807" y="1294" class="unit" id="unit31">0</text>
 		<text x="608" y="1478" class="unit" id="unit32">0</text>

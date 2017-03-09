@@ -29,14 +29,14 @@ var lobby = {
 			str = '<div id="lobbyGovName" class="text-primary">Despotism</div>\
 				<div id="lobbyGovPerks">\
 					<div>3x starting production</div>\
-					<div>+50% starting troops</div>\
-					<div>Start with a Bunker</div>\
+					<div>Start with gunpowder</div>\
+					<div>Start with a wall</div>\
 					<div>Free split attack</div>\
 				</div>';
 		} else if (government === "Monarchy"){
 			str = '<div id="lobbyGovName" class="text-primary">Monarchy</div>\
 				<div id="lobbyGovPerks">\
-					<div>3x starting culture</div>\
+					<div>3x capital culture</div>\
 					<div>150% starting culture bonus</div>\
 					<div>Start with two great tacticians</div>\
 					<div>1/2 cost structures</div>\
@@ -47,7 +47,7 @@ var lobby = {
 					<div>4x maximum troop deployment</div>\
 					<div>100% starting production bonus</div>\
 					<div>More great people</div>\
-					<div>Start with a wall</div>\
+					<div>Start with a fortress</div>\
 				</div>';
 		} else if (government === "Fundamentalism"){
 			str = '<div id="lobbyGovName" class="text-primary">Fundamentalism</div>\
@@ -69,8 +69,8 @@ var lobby = {
 			str = '<div id="lobbyGovName" class="text-primary">Republic</div>\
 				<div id="lobbyGovPerks">\
 					<div>+50% plunder bonus rewards</div>\
-					<div>2x starting food</div>\
-					<div>50% starting food bonus</div>\
+					<div>Start with engineering</div>\
+					<div>Start with a bunker</div>\
 					<div>Combat medics</div>\
 				</div>';
 		} else if (government === "Communism"){
@@ -158,6 +158,10 @@ var lobby = {
 			}
 			e1.innerHTML = x.name;
 			document.getElementById('lobbyGameMode').textContent = x.gameMode;
+			if (x.password){
+				document.getElementById('lobbyGamePasswordWrap').style.display = 'block';
+				document.getElementById('lobbyGamePassword').innerHTML = x.password;
+			}
 			g.speed = g.speeds[x.speed];
 			document.getElementById("lobbyGameSpeed").innerHTML = x.speed;
 			document.getElementById("lobbyGameMap").innerHTML = x.map;
@@ -706,6 +710,7 @@ function Nation(){
 	this.nation = "";
 	this.flag = "";
 	this.playerColor = 0;
+	this.team = 1;
 	this.alive = true;
 	this.avatar = '';
 	return this;
@@ -727,7 +732,7 @@ function loadGameState(){
 	}).done(function(data){
 		DOM.worldWrap.innerHTML = data;
 		
-		var loadGameDelay = location.host === 'localhost' ? 0 : 1000;
+		var loadGameDelay = location.host === 'localhost' ? 0 : 2000;
 		setTimeout(function(){
 			
 		$.ajax({

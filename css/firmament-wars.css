@@ -598,10 +598,16 @@ tbody{
 	height: 120px;
 	background: #000;
 }
-.targetNameAnchor{
+#targetNameAnchor{
 	position: relative;
 	overflow: hidden;
 	height: 60px;
+}
+#targetTargetWrap{
+	position: absolute;
+	top: 60px;
+	overflow: hidden;
+	width: 100%;
 }
 .ribbonName{
 	font-size: 1.5em;
@@ -1176,11 +1182,10 @@ table td, .table th, .table td {
 	right: 0;
 	width: 98%;
 	height: 39px;
-	background: rgba(0,0,0,.8);
 }
 .targetBars{
-	stroke-width: 7px;
-	stroke-dasharray: 3,2;
+	stroke-width: 6px;
+	stroke-dasharray: 5,1;
 }
 .targetBarsFood{
 	stroke: #8d0;
@@ -1193,10 +1198,6 @@ table td, .table th, .table td {
 }
 .targetBarsDefense{
 	stroke: #ff0;
-}
-#targetTargetWrap{
-	position: relative;
-	
 }
 text{
 	fill: rgba(255,255,255,1);
@@ -1335,6 +1336,9 @@ circle{
 	top: 0%;
 	height: 59%;
 	left: 0%;
+}
+#lobbyGamePasswordWrap{
+	display: none;
 }
 #lobbyGame{
 	position: relative;
@@ -2365,6 +2369,7 @@ table {
 }
 .text-hotkey{
 	color: #ff0;
+	font-weight: bold;
 }
 .text-small{
 	font-size: 85%;
@@ -2465,7 +2470,7 @@ input[type=number]::-webkit-outer-spin-button {
 	position: relative;
 	display: inline-block;
 	top: .125em;
-	background-image: url('../images/flags/flagMap2.png');
+	background-image: url('../images/flags/flagMap4.jpg');
 	background-size: 480px 120px;
 	margin: .125em .5em 0 0;
 	height: 15px;
@@ -2715,7 +2720,6 @@ input[type=number]::-webkit-outer-spin-button {
 .Myanmar{
 	background-position: -1900% -300%;
 }
-
 .Namibia{
 	background-position: 0 -400%;
 }
@@ -2764,28 +2768,28 @@ input[type=number]::-webkit-outer-spin-button {
 .Philippines{
 	background-position: -1500% -400%;
 }
-.player1{
+.Anarcho-Syndicalist{
 	background-position: -1600% -400%;
 }
-.player2{
+.Veneto{
 	background-position: -1700% -400%;
 }
-.player3{
+.Jolly-Roger{
 	background-position: -1800% -400%;
 }
-.player4{
+.Rhodesia{
 	background-position: -1900% -400%;
 }
-.player5{
+.Virginia{
 	background-position: 0 -500%;
 }
-.player6{
+.South-Carolina{
 	background-position: -100% -500%;
 }
-.player7{
+.Alabama{
 	background-position: -200% -500%;
 }
-.player8{
+.Montana{
 	background-position: -300% -500%;
 }
 .pol{
@@ -2905,44 +2909,56 @@ input[type=number]::-webkit-outer-spin-button {
 .Welsh{
 	background-position: -200% -700%;
 }
-.player9{
+.Jerusalem{
 	background-position: -300% -700%;
 }
-.player10{
+.Vatican-City{
 	background-position: -400% -700%;
 }
-.player11{
+.Benin-Empire{
 	background-position: -500% -700%;
 }
-.player12{
+.Cascadia{
 	background-position: -600% -700%;
 }
-.player13{
+.Byzantine-Empire{
 	background-position: -700% -700%;
 }
-.player14{
+.Ottoman-Empire{
 	background-position: -800% -700%;
 }
-.player15{
+.Holy-Roman-Empire{
 	background-position: -900% -700%;
 }
-.player16{
+.Jefferson-State{
 	background-position: -1000% -700%;
 }
-.player17{
+.Sicily{
 	background-position: -1100% -700%;
 }
-.player18{
+.Maryland{
 	background-position: -1200% -700%;
 }
-.player19{
+.California{
 	background-position: -1300% -700%;
 }
-.player20{
+.Texas{
 	background-position: -1400% -700%;
 }
 .Kekistan{
 	background-position: -1500% -700%;
+}
+.Arkansas{
+	background-position: -1600% -700%;
+}
+.Mississippi{
+	background-position: -1700% -700%;
+}
+.Alaska{
+	background-position: -1800% -700%;
+}
+.Arizona{
+	background-position: -1900% -700%;
 }
 
 /* responsive height */

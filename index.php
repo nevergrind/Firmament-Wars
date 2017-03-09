@@ -38,10 +38,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head id='head'>
-	<title>Firmament Wars | Multiplayer Strategy | Realtime Risk-Like Warfare</title>
+	<title>Firmament Wars | Free Online Multiplayer Strategy | Risk-Like Warfare</title>
 	<meta charset="utf-8">
 	<meta name="keywords" content="risk, civilization, starcraft, multiplayer, pol, strategy, gaming">
-	<meta name="description" content="Firmament Wars is a browser-based politically incorrect Risk-like strategy game with realtime combat in FFA, ranked, and team modes!">
+	<meta name="description" content="Firmament Wars is a free multiplayer Risk-like strategy game with realtime combat in FFA, ranked, and team modes!">
 	<meta name="author" content="Joe Leonard">
 	<meta name="referrer" content="always">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -53,9 +53,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-47">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-51">
 	<script>
-		version = '0-0-47'; 
+		version = '0-0-51'; 
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -174,9 +174,6 @@
 					<a href="/blog/how-to-play-firmament-wars/" target="_blank" title="Nevergrind Browser Game Development News and Articles">How to Play</a>&ensp;
 					<i id="options" class="pointer options fa fa-volume-up"></i>
 				<div class="pull-right text-primary">
-					<a href="//discord.gg/D4suK8b">
-						<i class="fa fa-wechat text-primary pointer"></i>
-					</a>
 					<a href="//www.youtube.com/user/Maelfyn">
 						<i class="fa fa-youtube text-primary pointer"></i>
 					</a>
@@ -185,6 +182,9 @@
 					</a>
 					<a href="//twitter.com/maelfyn">
 						<i class="fa fa-twitter text-primary pointer"></i>
+					</a>
+					<a href="//discord.gg/D4suK8b">
+						<i class="fa fa-wechat text-primary pointer"></i>
 					</a>
 					<a href="//plus.google.com/118162473590412052664">
 						<i class="fa fa-google-plus text-primary pointer"></i>
@@ -290,7 +290,7 @@
 								<th class="gameTableCol1 warCells">Game Name</th>
 								<th class="gameTableCol2 warCells">Map</th>
 								<th class="gameTableCol3 warCells">Speed</th>
-								<th class="gameTableCol4 warCells">Players</th>
+								<th class="gameTableCol4 warCells">Game Type</th>
 							</tr>
 						</thead>
 						<tbody id="gameTableBody"></tbody>
@@ -311,7 +311,7 @@
 				/* right chat window */
 				/* count from title screen */
 				$result = mysqli_query($link, 'select count(row) count from `fwtitle` where timestamp > date_sub(now(), interval 20 second)');
-				if (mysqli_num_rows($result)){
+				if ($result->num_rows){
 					while ($row = mysqli_fetch_assoc($result)){
 						$currentPlayers += $row['count'];
 					}
@@ -319,7 +319,7 @@
 				/* count playing game */
 				$result = mysqli_query($link, 'select count(row) count from `fwplayers` where timestamp > date_sub(now(), interval 20 second)');
 				// Associative array
-				if (mysqli_num_rows($result)){
+				if ($result->num_rows){
 					while ($row = mysqli_fetch_assoc($result)){
 						$currentPlayers += $row['count'];
 						echo '<div>There '. ($currentPlayers === 1 ? 'is' : 'are') .' '. $currentPlayers . ' '. ($currentPlayers === 1 ? 'person' : 'people') .' playing Firmament Wars</div><div class="chat-muted">Type /help for chat commands</div>';
@@ -371,6 +371,10 @@
 						<div class='text-primary margin-top'>Game Name:</div> 
 						<div id='lobbyGameName'></div>
 					</div>
+					<div id="lobbyGamePasswordWrap">
+						<div class='text-primary margin-top'>Password:</div> 
+						<div id='lobbyGamePassword'></div>
+					</div>
 					<div class='text-primary margin-top'>Game Mode:</div> 
 					<div id='lobbyGameMode'></div>
 					<div class='text-primary margin-top'>Map:</div>
@@ -385,8 +389,8 @@
 					<div id="lobbyGovName" class='text-primary'>Despotism</div>
 					<div id="lobbyGovPerks">
 						<div>3x starting production</div>
-						<div>+50% starting troops</div>
-						<div>Start With a Bunker</div>
+						<div>Start with gunpowder</div>
+						<div>Start with a wall</div>
 						<div>Free Split Attack</div>
 					</div>
 				</div>
@@ -723,7 +727,7 @@
 						<img id="avatar" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 					</td>
 					<td id="targetName" class="text-center shadow4 tight">
-						<div class="targetNameAnchor">
+						<div id="targetNameAnchor">
 							<img id="targetFlag" class="targetFlag" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 							<div id="targetNameSpan" class="nowrap">
 								<span id="targetCapStar" class="no-select shadow4" title="Capital Palace Boosts tile defense">

@@ -272,7 +272,7 @@ g.init = (function(){
 		},
 		Europe: {
 			group: "Europe",
-			name: ['Albania', 'Austria', 'Belgium', 'Bosnia and Herzegovina', 'Bulgaria', 'Croatia', 'Czech Republic', 'Denmark', 'England', 'Estonia', 'Finland', 'France', 'Germany', 'Greece', 'Hungary', 'Iceland', 'Ireland', 'Italy', 'Kosovo', 'Latvia', 'Lithuania', 'Macedonia', 'Montenegro', 'Netherlands', 'Norway', 'Poland', 'Portugal', 'Romania', 'Russia', 'Scotland', 'Serbia', 'Slovakia', 'Slovenia', 'Spain', 'Sweden', 'Switzerland', 'Ukraine', 'United Kingdom']
+			name: ['Albania', 'Austria', 'Belgium', 'Bosnia and Herzegovina', 'Bulgaria', 'Croatia', 'Czech Republic', 'Denmark', 'England', 'Estonia', 'Finland', 'France', 'Germany', 'Greece', 'Hungary', 'Iceland', 'Ireland', 'Italy', 'Kosovo', 'Latvia', 'Lithuania', 'Macedonia', 'Montenegro', 'Netherlands', 'Norway', 'Poland', 'Portugal', 'Romania', 'Russia', 'Scotland', 'Serbia', 'Slovakia', 'Slovenia', 'Spain', 'Sweden', 'Switzerland', 'Ukraine', 'United Kingdom', 'Vatican City']
 		},
 		Eurasia: {
 			group: "Eurasia",
@@ -280,11 +280,11 @@ g.init = (function(){
 		},
 		Historic: {
 			group: "Historic",
-			name: ['Confederate Flag', 'Flanders', 'Gadsden Flag', 'Isle of Man', 'Rising Sun Flag', 'NSDAP Flag', 'NSDAP War Ensign', 'Shahanshahi', 'USSR', 'Welsh']
+			name: ['Benin Empire', 'Byzantine Empire', 'Confederate Flag', 'Flanders', 'Gadsden Flag', 'Holy Roman Empire', 'Isle of Man', 'Rising Sun Flag', 'NSDAP Flag', 'NSDAP War Ensign', 'Ottoman Empire', 'Rhodesia', 'Shahanshahi', 'USSR', 'Veneto', 'Welsh']
 		},
 		MiddleEast: {
 			group: "Middle East",
-			name: ['Israel', 'Jordan', 'Kurdistan', 'Lebanon', 'Palestine', 'Qatar', 'Saudi Arabia', 'Syria', 'Turkey']
+			name: ['Israel', 'Jerusalem', 'Jordan', 'Kurdistan', 'Lebanon', 'Palestine', 'Qatar', 'Saudi Arabia', 'Syria', 'Turkey']
 		},
 		NorthAmerica: {
 			group: "North America",
@@ -294,9 +294,13 @@ g.init = (function(){
 			group: "Oceania",
 			name: ['Australia', 'New Zealand']
 		},
+		US_States: {
+			group: "US States",
+			name: ['Alaska', 'Alabama', 'Arkansas', 'Arizona', 'California', 'Maryland', 'Mississippi', 'Montana', 'South Carolina', 'Texas', 'Virginia']
+		},
 		Miscellaneous: {
 			group: "Miscellaneous",
-			name: ['Anarcho-Capitalist', 'Christian', 'Edgemaster', 'European Union', 'High Energy', 'ISIS', 'Kekistan', 'Northwest Front', 'Pan-African Flag', 'pol', 'Rainbow Flag', 'United Nations']
+			name: ['Anarcho-Capitalist', 'Anarcho-Syndicalist', 'Cascadia', 'Christian', 'Edgemaster', 'European Union', 'High Energy', 'ISIS', 'Jefferson State', 'Jolly Roger', 'Kekistan', 'Northwest Front', 'Pan-African Flag', 'pol', 'Rainbow Flag', 'Sicily', 'United Nations']
 		},
 		SouthAmerica: {
 			group: "South America",
