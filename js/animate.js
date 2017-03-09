@@ -747,5 +747,11 @@ var animate = {
 			x: 150,
 			ease: Linear.easeNone
 		});
+		TweenMax.to(DOM.currentYearBG, 2, {
+			startAt: {
+				alpha: 1
+			},
+			alpha: 0
+		});
 	}
 }

@@ -46,6 +46,9 @@ var g = {
 	password: "",
 	speed: 5,
 	speeds: {
+		Turns15Seconds: 15000,
+		Turns20Seconds: 20000,
+		Turns30Seconds: 30000,
 		Slower: 10000,
 		Slow: 9000,
 		Normal: 8000,
@@ -329,6 +332,7 @@ g.init = (function(){
 				my.team = data.team;
 				game.id = data.gameId;
 				g.map = data.mapData;
+				console.info("SPEEDS: ", data.speed);
 				g.speed = g.speeds[data.speed];
 				// join lobby in progress
 				setTimeout(function(){
@@ -568,13 +572,6 @@ var game = {
 			}
 		}
 	},
-	startGameState: function(){
-		// add function to get player data list?
-		game.getGameState();
-		setInterval(game.updateResources, g.speed);
-		animate.energyBar();
-		delete game.startGameState;
-	},
 	getGameState: function(){
 		// this is now a reality check in case zmq messes up?
 		// or check that players are still online?
@@ -722,8 +719,32 @@ var game = {
 		DOM.sumProduction.textContent = o.production;
 		DOM.sumCulture.textContent = o.culture;
 	},
+	energyTimer: 0,
+	startGameState: function(){
+		// add function to get player data list?
+		game.getGameState();
+		game.energyTimer = setTimeout(game.updateResources, g.speed);
+		animate.energyBar();
+		delete game.startGameState;
+	},
+	countAlivePlayers: function(){
+		// count alive players remaining
+		var x = 0;
+		game.player.forEach(function(e){
+			if (e.alive && e.account){ 
+				x++;
+			}
+		});
+		return x;
+	},
+	triggerNextTurn: function(data){ 
+		console.info("TRIGGERING NEXT TURN!", data);
+		game.updateResources();
+	},
 	updateResources: function(){
 		if (!g.over){
+			clearTimeout(game.energyTimer);
+			animate.energyBar();
 			$.ajax({
 				type: "GET",
 				url: "php/updateResources.php"
@@ -731,11 +752,12 @@ var game = {
 				setResources(data);
 				ui.setCurrentYear(data.resourceTick);
 				game.reportMilestones(data);
+				game.energyTimer = setTimeout(game.updateResources, g.speed);
 			}).fail(function(data){
 				console.info(data.responseText);
 				serverError(data);
+				game.energyTimer = setTimeout(game.updateResources, g.speed);
 			});
-			animate.energyBar();
 		}
 	},
 	reportMilestones: function(data){
@@ -921,6 +943,7 @@ function initDom(){
 	DOM = {
 		energyIndicator: d.getElementById('energyIndicator'),
 		currentYear: d.getElementById('currentYear'),
+		currentYearBG: d.getElementById('currentYearBG'),
 		targetTargetWrap: d.getElementById('targetTargetWrap'),
 		targetFlag: d.getElementById('targetFlag'),
 		targetCapStar: d.getElementById('targetCapStar'),

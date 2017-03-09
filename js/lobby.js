@@ -162,6 +162,7 @@ var lobby = {
 				document.getElementById('lobbyGamePasswordWrap').style.display = 'block';
 				document.getElementById('lobbyGamePassword').innerHTML = x.password;
 			}
+			console.info("SPEEDS: ", x.speed);
 			g.speed = g.speeds[x.speed];
 			document.getElementById("lobbyGameSpeed").innerHTML = x.speed;
 			document.getElementById("lobbyGameMap").innerHTML = x.map;
@@ -745,6 +746,7 @@ function loadGameState(){
 			g.map.sizeY = data.mapData.sizeY;
 			g.map.name = data.mapData.name;
 			g.map.tiles = data.mapData.tiles;
+			g.turnMode = data.turnMode; 
 			//console.warn(data.tiles.length, g.map.tiles);
 			if (data.tiles.length < g.map.tiles){
 				if (g.loadAttempts < 10){

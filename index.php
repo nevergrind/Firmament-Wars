@@ -453,6 +453,9 @@
 								<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 							</button>
 							<ul id='speedDropdown' class='dropdown-menu fwDropdown createGameInput' value="Normal">
+								<li><a class='speedSelect' href='#'>Turns: 15 Seconds</a></li>
+								<li><a class='speedSelect' href='#'>Turns: 20 Seconds</a></li>
+								<li><a class='speedSelect' href='#'>Turns: 30 Seconds</a></li>
 								<li><a class='speedSelect' href='#'>Slower</a></li>
 								<li><a class='speedSelect' href='#'>Slow</a></li>
 								<li><a class='speedSelect' href='#'>Normal</a></li>
@@ -954,8 +957,9 @@
 			</div>
 			<div id="resourceBody">
 			
-				<div id="currentYear" class="chat-rating">
-					4000 B.C.
+				<div id="currentYearWrap" class="chat-rating">
+					<div id="currentYearBG"></div>
+					<span id="currentYear">4000 B.C.</span>
 				</div>
 			
 				<div class="no-padding moves">

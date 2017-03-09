@@ -534,6 +534,8 @@ var title = {
 				animate.upgrade(data.tile, 'shield');
 			} else if (data.type === 'eliminated'){
 				game.eliminatePlayer(data);
+			} else if (data.type === 'endTurnCheck'){
+				game.triggerNextTurn(data);
 			} else if (data.type === 'disconnect'){
 				game.eliminatePlayer(data);
 			}
@@ -743,7 +745,8 @@ var title = {
 		var name = $("#gameName").val(),
 			pw = $("#gamePassword").val(),
 			max = $("#gamePlayers").val() * 1,
-			speed = $("#createGameSpeed").text();
+			speed = $("#createGameSpeed").text().replace(/:/g, '').replace(/ /g, '');
+			
 		if (!g.rankedMode && (name.length < 4 || name.length > 32)){
 			Msg("Game name must be at least 4-32 characters.", 1);
 			setTimeout(function(){
@@ -821,6 +824,7 @@ var title = {
 		game.id = data.id;
 		game.name = data.gameName;
 		g.map = data.mapData;
+		console.info("SPEEDS: ", data.speed);
 		g.speed = g.speeds[data.speed];
 		lobby.init(data);
 		lobby.join(); // normal join
