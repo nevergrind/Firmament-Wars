@@ -44,7 +44,8 @@ var g = {
 	titleFlashing: false,
 	name: "",
 	password: "",
-	speed: 5,
+	speed: 20,
+	/*
 	speeds: {
 		Turns15Seconds: 15000,
 		Turns20Seconds: 20000,
@@ -56,6 +57,7 @@ var g = {
 		Faster: 6000,
 		Fastest: 5000
 	},
+	*/
 	focusUpdateNationName: false,
 	focusGameName: false,
 	view: "title",
@@ -333,7 +335,7 @@ g.init = (function(){
 				game.id = data.gameId;
 				g.map = data.mapData;
 				console.info("SPEEDS: ", data.speed);
-				g.speed = g.speeds[data.speed];
+				g.speed = data.speed;
 				// join lobby in progress
 				setTimeout(function(){
 					lobby.init(data);
@@ -723,7 +725,7 @@ var game = {
 	startGameState: function(){
 		// add function to get player data list?
 		game.getGameState();
-		game.energyTimer = setTimeout(game.updateResources, g.speed);
+		game.energyTimer = setInterval(game.updateResources, g.speed * 1000);
 		animate.energyBar();
 		delete game.startGameState;
 	},
@@ -739,12 +741,13 @@ var game = {
 	},
 	triggerNextTurn: function(data){ 
 		console.info("TRIGGERING NEXT TURN!", data);
+		clearInterval(game.energyTimer);
+		game.energyTimer = setInterval(game.updateResources, g.speed * 1000);
 		game.updateResources();
+		animate.energyBar();
 	},
 	updateResources: function(){
 		if (!g.over){
-			clearTimeout(game.energyTimer);
-			animate.energyBar();
 			$.ajax({
 				type: "GET",
 				url: "php/updateResources.php"
@@ -752,11 +755,10 @@ var game = {
 				setResources(data);
 				ui.setCurrentYear(data.resourceTick);
 				game.reportMilestones(data);
-				game.energyTimer = setTimeout(game.updateResources, g.speed);
+				animate.energyBar();
 			}).fail(function(data){
 				console.info(data.responseText);
 				serverError(data);
-				game.energyTimer = setTimeout(game.updateResources, g.speed);
 			});
 		}
 	},

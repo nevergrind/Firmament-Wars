@@ -145,7 +145,7 @@ var title = {
 								var o = {
 									id: ind
 								}
-								// console.info("REMOVING: ", o);
+								console.info("REMOVING: ", o);
 								title.removeGame(o);
 							} else {
 								// found game
@@ -745,7 +745,7 @@ var title = {
 		var name = $("#gameName").val(),
 			pw = $("#gamePassword").val(),
 			max = $("#gamePlayers").val() * 1,
-			speed = $("#createGameSpeed").text().replace(/:/g, '').replace(/ /g, '');
+			speed = g.speed;
 			
 		if (!g.rankedMode && (name.length < 4 || name.length > 32)){
 			Msg("Game name must be at least 4-32 characters.", 1);
@@ -825,7 +825,7 @@ var title = {
 		game.name = data.gameName;
 		g.map = data.mapData;
 		console.info("SPEEDS: ", data.speed);
-		g.speed = g.speeds[data.speed];
+		g.speed = data.speed;
 		lobby.init(data);
 		lobby.join(); // normal join
 		socket.joinGame();

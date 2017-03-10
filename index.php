@@ -53,9 +53,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-51">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-52">
 	<script>
-		version = '0-0-51'; 
+		version = '0-0-52'; 
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -443,25 +443,28 @@
 				
 				<div id="createGameSpeedWrap">
 					<div class='buffer2'>
-						<label class='control-label'>Game Speed</label>
+						<label class='control-label'>Turn Duration</label>
 					</div>
 					
 					<div class='buffer w33'>
 						<div class='dropdown'>
 							<button id="speedDropdownBtn" class='btn btn-primary dropdown-toggle shadow4 fwDropdownButton' type='button' data-toggle='dropdown'>
-								<span id='createGameSpeed'>Fastest</span>
+								<span id='createGameSpeed'>20</span>
 								<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 							</button>
-							<ul id='speedDropdown' class='dropdown-menu fwDropdown createGameInput' value="Normal">
-								<li><a class='speedSelect' href='#'>Turns: 15 Seconds</a></li>
-								<li><a class='speedSelect' href='#'>Turns: 20 Seconds</a></li>
-								<li><a class='speedSelect' href='#'>Turns: 30 Seconds</a></li>
+							<ul id='speedDropdown' class='dropdown-menu fwDropdown createGameInput' value="20">
+								<li><a class='speedSelect' href='#'>15</a></li>
+								<li><a class='speedSelect' href='#'>20</a></li>
+								<li><a class='speedSelect' href='#'>25</a></li>
+								<li><a class='speedSelect' href='#'>30</a></li>
+								<!--
 								<li><a class='speedSelect' href='#'>Slower</a></li>
 								<li><a class='speedSelect' href='#'>Slow</a></li>
 								<li><a class='speedSelect' href='#'>Normal</a></li>
 								<li><a class='speedSelect' href='#'>Fast</a></li>
 								<li><a class='speedSelect' href='#'>Faster</a></li>
 								<li><a class='speedSelect' href='#'>Fastest</a></li>
+								-->
 							</ul>
 						</div>
 					</div>

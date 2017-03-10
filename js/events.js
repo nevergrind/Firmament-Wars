@@ -85,13 +85,10 @@ var events = {
 			});
 			title.showBackdrop(e3);
 			
-			var speed = localStorage.getItem('gameSpeed');
-			newSpeed = g.speeds[speed];
-			if (newSpeed >= 5000){
-				g.speed = newSpeed;
-				$("#createGameSpeed").text(speed);
-			}
-			
+			var speed = localStorage.getItem('gameSpeed2') === null ? 20 : localStorage.getItem('gameSpeed2');
+			g.speed = speed;
+			console.info(speed);
+			$("#createGameSpeed").text(speed);
 		}
 		$("#mainWrap").on('click', '.chat-join', function(){
 			socket.setChannel($(this).text());
@@ -459,10 +456,10 @@ var events = {
 			e.preventDefault();
 		});
 		$("#mainWrap").on('click', '.speedSelect', function(e){
-			var x = $(this).text();
-			g.speed = g.speeds[x];
+			var x = $(this).text()*1;
+			g.speed = x;
 			$("#createGameSpeed").text(x);
-			localStorage.setItem('gameSpeed', x);
+			localStorage.setItem('gameSpeed2', x);
 			e.preventDefault();
 		});
 	})(),

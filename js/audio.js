@@ -58,7 +58,7 @@ var audio = {
 		}
 	},
 	// rotating music tracks in game
-	trackIndex: ~~(Math.random() * 8),
+	trackIndex: ~~(Math.random() * 9),
 	tracks: [
 		'BehindTheShield',
 		'DeceptionPoint',
@@ -67,7 +67,8 @@ var audio = {
 		'LeadingTheCharge',
 		'RiseAgainstTheMachine',
 		'TheAssault',
-		'WithGreatPower'
+		'WithGreatPower',
+		'WaitingBetweenWorlds'
 	],
 	gameMusicPlayNext: function(){
 		// FIX IT SO IT USES BGAUDIO

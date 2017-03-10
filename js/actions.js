@@ -32,7 +32,6 @@ var action = {
 			ui.showTarget(DOM['land' + my.tgt]);
 			return;
 		}
-		console.info('target: ', o.cost);
 		if (my.moves < o.cost){
 			action.error('Not enough energy!');
 			return;
@@ -76,7 +75,6 @@ var action = {
 			my.clearHud();
 			return;
 		}
-		console.info(my.moves, my.splitAttack);
 		if ((my.moves < 2 && !my.splitAttack) ||
 			(my.moves < 1 && my.splitAttack) ){
 			action.error('Not enough energy!');

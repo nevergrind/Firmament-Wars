@@ -740,7 +740,7 @@ var animate = {
 		});
 	},
 	energyBar: function(){
-		TweenMax.to(DOM.energyIndicator, g.speed / 1000, {
+		TweenMax.to(DOM.energyIndicator, g.speed, {
 			startAt: {
 				x: -5
 			},
