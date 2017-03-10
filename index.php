@@ -46,16 +46,15 @@
 	<meta name="referrer" content="always">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<meta name="viewport" content="width=1024,user-scalable=no">
-	<meta name="twitter:widgets:csp" content="on">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
 	
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-52">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-54">
 	<script>
-		version = '0-0-52'; 
+		version = '0-0-54'; 
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -172,6 +171,7 @@
 				?>
 					<a href="/forums" target="_blank" title="Nevergrind Browser Game Forums">Forums</a>&ensp; 
 					<a href="/blog/how-to-play-firmament-wars/" target="_blank" title="Nevergrind Browser Game Development News and Articles">How to Play</a>&ensp;
+					<a href="//discord.gg/D4suK8b" target="_blank" title="Discord Server">Discord</a>&ensp;
 					<i id="options" class="pointer options fa fa-volume-up"></i>
 				<div class="pull-right text-primary">
 					<a href="//www.youtube.com/user/Maelfyn">
@@ -183,23 +183,11 @@
 					<a href="//twitter.com/maelfyn">
 						<i class="fa fa-twitter text-primary pointer"></i>
 					</a>
-					<a href="//discord.gg/D4suK8b">
-						<i class="fa fa-wechat text-primary pointer"></i>
-					</a>
-					<a href="//plus.google.com/118162473590412052664">
-						<i class="fa fa-google-plus text-primary pointer"></i>
-					</a>
 					<a href="//github.com/Maelfyn/Nevergrind">
 						<i class="fa fa-github text-primary pointer"></i>
 					</a>
 					<a href="//reddit.com/r/firmamentwars">
 						<i class="fa fa-reddit text-primary pointer"></i>
-					</a>
-					<a href="//goo.gl/BFsmf2">
-						<i class="fa fa-linkedin text-primary pointer"></i>
-					</a>
-					<a href="http://www.indiedb.com/games/firmament-wars">
-						<i class="fa fa-gamepad text-primary pointer"></i>
 					</a>
 				<?php
 				if (isset($_SESSION['email'])){
@@ -289,7 +277,7 @@
 							<tr>
 								<th class="gameTableCol1 warCells">Game Name</th>
 								<th class="gameTableCol2 warCells">Map</th>
-								<th class="gameTableCol3 warCells">Speed</th>
+								<th class="gameTableCol3 warCells">Turn Duration</th>
 								<th class="gameTableCol4 warCells">Game Type</th>
 							</tr>
 						</thead>
@@ -453,6 +441,7 @@
 								<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 							</button>
 							<ul id='speedDropdown' class='dropdown-menu fwDropdown createGameInput' value="20">
+								<li><a class='speedSelect' href='#'>10</a></li>
 								<li><a class='speedSelect' href='#'>15</a></li>
 								<li><a class='speedSelect' href='#'>20</a></li>
 								<li><a class='speedSelect' href='#'>25</a></li>
@@ -630,7 +619,7 @@
 						echo
 						'<div class="col-xs-8">
 							<form id="uploadDictator" action="php/uploadDictator.php" method="post" enctype="multipart/form-data">
-								<p>Upload your dictator avatar. A 120x120 image is recommended. Image must be a jpg < 30 kb:</p>
+								<p>Upload your dictator avatar. A 120x120 image is recommended. Image must be a jpg < 50 kb:</p>
 								<p>
 									<input id="dictatorAvatar" class="btn btn-primary fwBlue shadow4" type="file" accept=".jpg" name="image">
 								</p>
@@ -814,7 +803,7 @@
 				</div>
 				
 				<div id="rush" class="actionButtons row" 
-					title="Deploy 3 troops using energy instead of production. Boosted by culture.">
+					title="Deploy 2 troops using energy instead of production. Boosted by culture.">
 					<div class="col-xs-8">
 						<span class='text-hotkey'>R</span>ush Troops
 					</div>

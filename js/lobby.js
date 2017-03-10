@@ -37,7 +37,7 @@ var lobby = {
 			str = '<div id="lobbyGovName" class="text-primary">Monarchy</div>\
 				<div id="lobbyGovPerks">\
 					<div>3x capital culture</div>\
-					<div>150% starting culture bonus</div>\
+					<div>50% starting culture bonus</div>\
 					<div>Start with two great tacticians</div>\
 					<div>1/2 cost structures</div>\
 				</div>';
@@ -45,7 +45,7 @@ var lobby = {
 			str = '<div id="lobbyGovName" class="text-primary">Democracy</div>\
 				<div id="lobbyGovPerks">\
 					<div>4x maximum troop deployment</div>\
-					<div>100% starting production bonus</div>\
+					<div>50% starting production bonus</div>\
 					<div>More great people</div>\
 					<div>Start with a fortress</div>\
 				</div>';
@@ -545,7 +545,7 @@ function initOffensiveTooltips(){
 		.attr('title', 'Launch a missile at any enemy territory. Kills ' + (5 + (my.oBonus * 2)) + ' + 15% of troops.').tooltip('fixTitle')
 		.tooltip({ animation: false });
 	$('#rush')
-		.attr('title', 'Deploy ' + (3 + ~~(my.cultureBonus / 30)) + ' troops using energy instead of production. Boosted by culture.')
+		.attr('title', 'Deploy ' + (2 + ~~(my.cultureBonus / 50)) + ' troops using energy instead of production. Boosted by culture.')
 		.tooltip('fixTitle')
 		.tooltip({ animation: false });
 }
@@ -1069,11 +1069,6 @@ function loadGameState(){
 				
 				// focus on player home
 				my.focusTile(my.capital);
-				if (game.tiles[my.tgt].units > 1){
-					// activate targeting
-					var o = new Target({});
-					action.target(o);
-				}
 				// add warning for players
 				if (location.host !== 'localhost'){
 					window.onbeforeunload = function(){

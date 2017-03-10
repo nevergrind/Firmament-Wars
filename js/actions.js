@@ -182,10 +182,6 @@ var action = {
 			action.error('Not enough energy!');
 			return;
 		}
-		if (!my.manpower){
-			action.error("No troops available to rush!");
-			return;
-		}
 		if (t.units <= 254){
 			$.ajax({
 				url: 'php/rush.php',
@@ -508,7 +504,7 @@ $("#gameWrap").on("mousedown", '#attack', function(e){
 }).on('mousedown', '#fireCannons', function(e){
 	if (e.which === 1){
 		var o = new Target({
-			cost: 24,
+			cost: 0,
 			minimum: 0,
 			attackName: 'cannons',
 			hudMsg: 'Fire Cannons'
@@ -518,7 +514,7 @@ $("#gameWrap").on("mousedown", '#attack', function(e){
 }).on('mousedown', '#launchMissile', function(e){
 	if (e.which === 1){
 		var o = new Target({
-			cost: 40,
+			cost: 0,
 			minimum: 0,
 			attackName: 'missile',
 			hudMsg: 'Launch Missile'
@@ -528,7 +524,7 @@ $("#gameWrap").on("mousedown", '#attack', function(e){
 }).on('mousedown', '#launchNuke', function(e){
 	if (e.which === 1){
 		var o = new Target({
-			cost: 150,
+			cost: 0,
 			minimum: 0,
 			attackName: 'nuke',
 			hudMsg: 'Launch Nuclear Weapon'
