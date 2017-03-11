@@ -2,6 +2,20 @@
 var title = {
 	players: [],
 	games: [],
+	getLeaderboard: function(type){
+		var e = document.getElementById('leaderboardBody');
+		e.innerHTML = '';
+		g.lock();
+		$.ajax({
+			url: 'php/leaderboard.php',
+			data: {
+				type: type
+			}
+		}).done(function(data) {
+			e.innerHTML = data.str;
+			g.unlock();
+		});
+	},
 	init: (function(){
 		$(document).ready(function(){
 			// console.info("Initializing title screen...");

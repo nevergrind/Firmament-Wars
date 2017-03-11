@@ -52,9 +52,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-54">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-55">
 	<script>
-		version = '0-0-54'; 
+		version = '0-0-55'; 
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -694,8 +694,11 @@
 		
 		<div id="leaderboard" class="fw-primary container titleModal">
 			<div class="row">
-				<div class='col-xs-12 text-center'>
-					<h2 class='header'>Leaderboard</h2>
+				<div class='col-xs-12'>
+					<h2 class="pull-right header buff25">Firmament Wars | Leaderboards</h2>
+					<button id="leaderboardFFABtn" type="button" class="btn fwGreen btn-responsive shadow4">FFA</button>
+					<button id="leaderboardRankedBtn" type="button" class="btn fwGreen btn-responsive shadow4">Ranked</button>
+					<button id="leaderboardTeamBtn" type="button" class="btn fwGreen btn-responsive shadow4">Team</button>
 					<hr class="fancyhr">
 				</div>
 			</div>

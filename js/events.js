@@ -213,12 +213,16 @@ var events = {
 				alpha: 1
 			});
 			title.showBackdrop();
-			var e3 = document.getElementById('leaderboardBody');
-			$.ajax({
-				url: 'php/leaderboard.php'
-			}).done(function(data) {
-				e3.innerHTML = data.str;
-			});
+			title.getLeaderboard('FFA');
+		});
+		$("#leaderboardFFABtn").on('click', function(){
+			title.getLeaderboard('FFA');
+		});
+		$("#leaderboardRankedBtn").on('click', function(){
+			title.getLeaderboard('Ranked');
+		});
+		$("#leaderboardTeamBtn").on('click', function(){
+			title.getLeaderboard('Team');
 		});
 
 		$("#flagDropdown").on('click', '.flagSelect', function(e){
