@@ -87,8 +87,8 @@
 		'name' => 'United States',
 		'key' => 'UnitedStates',
 		'tiles' => 48,
-		'maxPlayers' => 4,
-		'startTiles' => [7, 1, 28, 46], 
+		'maxPlayers' => 3,
+		'startTiles' => [7, 28, 46], 
 		'sizeX' => 1920,
 		'sizeY' => 1391,
 		'tileNames' => array(
@@ -164,8 +164,8 @@
 		'name' => 'Japan',
 		'key' => 'Japan',
 		'tiles' => 47,
-		'maxPlayers' => 6,
-		'startTiles' => [29, 11, 3, 16, 31, 14], 
+		'maxPlayers' => 4,
+		'startTiles' => [11, 37, 31, 29], 
 		'sizeX' => 1920,
 		'sizeY' => 1920,
 		'tileNames' => array(

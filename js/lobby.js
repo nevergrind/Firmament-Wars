@@ -875,11 +875,13 @@ function loadGameState(){
 					TweenMax.set('#land' + i, {
 						fill: g.color[game.player[d.player].playerColor],
 						stroke: g.color[game.player[d.player].playerColor],
-						strokeWidth: 1.5,
+						strokeWidth: 1,
 						onComplete: function(){
-							TweenMax.set(this.target, {
-								stroke: "hsl(+=0%, +=0%, -=30%)"
-							});
+							if (d.player){
+								TweenMax.set(this.target, {
+									stroke: "hsl(+=0%, +=0%, -=30%)"
+								});
+							}
 						}
 					});
 				}

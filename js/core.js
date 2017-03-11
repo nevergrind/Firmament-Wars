@@ -614,11 +614,13 @@ var game = {
 					TweenMax.set(DOM['land' + i], { 
 						fill: g.color[game.player[d.player].playerColor],
 						stroke: d.player ? g.color[game.player[d.player].playerColor] : '#aaa',
-						strokeWidth: 1.5,
+						strokeWidth: 1,
 						onComplete: function(){
-							TweenMax.set(this.target, {
-								stroke: "hsl(+=0%, +=0%, -=30%)"
-							});
+							if (d.player){
+								TweenMax.set(this.target, {
+									stroke: "hsl(+=0%, +=0%, -=30%)"
+								});
+							}
 						}
 					});
 				}
@@ -670,11 +672,13 @@ var game = {
 		TweenMax.set(DOM['land' + i], {
 			fill: g.color[game.player[p].playerColor],
 			stroke: p ? g.color[game.player[p].playerColor] : '#aaa',
-			strokeWidth: 1.5,
+			strokeWidth: 1,
 			onComplete: function(){
-				TweenMax.set(this.target, {
-					stroke: "hsl(+=0%, +=0%, "+ (my.tgt === i ? "+=15%)" : "-=30%)")
-				});
+				if (p){
+					TweenMax.set(this.target, {
+						stroke: "hsl(+=0%, +=0%, "+ (my.tgt === i ? "+=15%)" : "-=30%)")
+					});
+				}
 			}
 		});
 		

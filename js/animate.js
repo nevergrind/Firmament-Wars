@@ -700,12 +700,14 @@ var animate = {
 			stroke: game.tiles[oldTgt].player ? g.color[game.player[game.tiles[oldTgt].player].playerColor] : '#aaa',
 			strokeDasharray: 'none',
 			strokeDashoffset: 0,
-			strokeWidth: 1.5,
+			strokeWidth: 1,
 			onComplete: function(){
-				TweenMax.set(this.target, {
-					strokeWidth: 1.5,
-					stroke: "hsl(+=0%, +=0%, -=30%)"
-				});
+				if (game.tiles[oldTgt].player){
+					TweenMax.set(this.target, {
+						strokeWidth: 1,
+						stroke: "hsl(+=0%, +=0%, -=30%)"
+					});
+				}
 			}
 		});
 		// move to top
