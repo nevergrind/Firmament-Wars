@@ -552,7 +552,7 @@ var stats = {
 				<div class="statsAccount chat-warning nowrap">\
 					<i class="'+ lobby.governmentIcon(game.player[i].government) +' diploSquare statsGov player'+ color +'"></i>';
 					if (g.teamMode){
-						str += '<span class="diploTeam">'+ game.player[color].team +'</span>';
+						str += '<span class="diploTeam">'+ game.player[i].team +'</span>';
 					}
 					str += p.account +
 				'</div>\

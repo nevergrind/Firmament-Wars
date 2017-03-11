@@ -52,9 +52,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=0-0-55">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-0">
 	<script>
-		version = '0-0-55'; 
+		version = '1-0-0'; 
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -968,7 +968,7 @@
 						<div id="energyBar" class="resourceBar"></div>
 						<div id="energyIndicator"></div>
 						<div class="resourceIndicator resourceRight abs">
-							<span id="moves">2</span> 
+							<span id="moves">4</span> 
 							+<span id="sumMoves">4</span>
 						</div>
 					</div>

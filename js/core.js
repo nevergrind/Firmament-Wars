@@ -809,6 +809,8 @@ var my = {
 	cultureMax: 300,
 	manpower: 0,
 	focusTile: 0,
+	moves: 4,
+	sumMoves: 4,
 	sumFood: 0,
 	sumProduction: 0,
 	sumCulture: 0,

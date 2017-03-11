@@ -70,7 +70,7 @@ var lobby = {
 				<div id="lobbyGovPerks">\
 					<div>+50% plunder bonus rewards</div>\
 					<div>Start with engineering</div>\
-					<div>Start with a bunker</div>\
+					<div>+1 energy per turn</div>\
 					<div>Combat medics</div>\
 				</div>';
 		} else if (government === "Communism"){
@@ -554,7 +554,7 @@ function initResources(d){
 	my.production = d.production;
 	my.culture = d.culture;
 	// current
-	DOM.moves.textContent = d.moves;
+	DOM.moves.textContent = d.sumMoves;
 	DOM.production.textContent = d.production;
 	DOM.food.textContent = d.food;
 	DOM.culture.textContent = d.culture;
@@ -800,6 +800,11 @@ function loadGameState(){
 			} else if (my.government === 'Fundamentalism'){
 				my.rushCost = 1;
 				document.getElementById('rushCost').textContent = my.rushCost;
+			} else if (my.government === 'Republic'){
+				my.sumMoves = data.sumMoves;
+				document.getElementById('moves').textContent = my.sumMoves;
+				document.getElementById('sumMoves').textContent = my.sumMoves;
+				console.info('sumMoves ', my.government, my.sumMoves, data.sumMoves);
 			} else if (my.government === 'Fascism'){
 				document.getElementById('moves').textContent = 12;
 				my.deployCost = 5;
