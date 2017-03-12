@@ -70,7 +70,7 @@ var stats = {
 		var flag = my.flag === 'Default.jpg' ? 'Player'+ game.player[my.player].playerColor +'.jpg' : my.flag;
 		var str = '<img id="statWorld" src="images/FlatWorld50-2.jpg">\
 		<div id="statResult" class="no-select">\
-			<span id="statGameResult">Defeat</span>!\
+			<span id="statGameResult">Defeat in '+ ui.transformYear(data.resourceTick) +'</span>!\
 			<img class="statResultFlag pull-left" src="images/flags/'+ flag +'">\
 			<img class="statResultFlag pull-right" src="images/flags/'+ flag +'">\
 		</div>\
@@ -122,13 +122,13 @@ var stats = {
 		});
 		stats.setLeaderValues();
 	},
-	show: function(){
+	show: function(data){
 		DOM.bgmusic.loop = true;
 		stats.setView('statOverview');
 		if (g.victory){
 			audio.play('bell-8');
 			audio.play('TheAssault', 1);
-			document.getElementById('statGameResult').textContent = "Victory";
+			document.getElementById('statGameResult').textContent = "Victory in "+ ui.transformYear(stats.data.resourceTick);
 		} else {
 			audio.play('defeat');
 			audio.play("JourneyOfForgottenSoldiers", 1);

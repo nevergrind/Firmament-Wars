@@ -421,7 +421,12 @@ tbody{
 #leaderboardFoot{
 	position: relative;
 	width: 100%;
-	
+}
+#endTurn{
+	float: left;
+	margin: .25em .25em 0;
+	font-size: .75em;
+	padding: 0em .25em;
 }
 .fwGameLabel{
 	background: rgba(16,56,96,1);

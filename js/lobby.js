@@ -109,10 +109,7 @@ var lobby = {
 			// bypass via ENTER or chat has focus
 			if (msg){
 				// is it a command?
-				if (msg.indexOf('/unfriend ') === 0){
-					var account = msg.slice(10);
-					title.removeFriend(account);
-				} else if (msg === '/friend'){
+				if (msg === '/friend'){
 					title.listFriends();
 				} else if (msg.indexOf('/friend ') === 0){
 					title.toggleFriend(msg.slice(8));
@@ -554,7 +551,7 @@ function initResources(d){
 	my.production = d.production;
 	my.culture = d.culture;
 	// current
-	DOM.moves.textContent = d.sumMoves;
+	DOM.moves.textContent = d.moves;
 	DOM.production.textContent = d.production;
 	DOM.food.textContent = d.food;
 	DOM.culture.textContent = d.culture;
@@ -583,6 +580,7 @@ function setMoves(d){
 		if (d.sumMoves){
 			DOM.sumMoves.textContent = d.sumMoves;
 		}
+		DOM.endTurn.style.visibility = my.moves ? 'visible' : 'hidden';
 	}
 }
 function setProduction(d){

@@ -404,6 +404,17 @@ var action = {
 		DOM.fireCannons.style.display = my.tech.gunpowder ? 'block' : 'none';
 		DOM.launchMissile.style.display = my.tech.rocketry ? 'block' : 'none';
 		DOM.launchNuke.style.display = my.tech.atomicTheory ? 'block' : 'none';
+	},
+	endTurn: function(){
+		if (my.moves){
+			audio.play('click');
+			$.ajax({
+				type: 'GET',
+				url: 'php/endTurn.php',
+			}).done(function(data){
+				setMoves(data);
+			});
+		}
 	}
 }
 
@@ -417,10 +428,7 @@ function toggleChatMode(bypass){
 		var msg = $DOM.chatInput.val().trim();
 		if (bypass && msg){
 			// send ajax chat msg
-			if (msg.indexOf('/unfriend ') === 0){
-				var account = msg.slice(10);
-				title.removeFriend(account);
-			} else if (msg === '/friend'){
+			if (msg === '/friend'){
 				title.listFriends();
 			} else if (msg.indexOf('/friend ') === 0){
 				title.toggleFriend(msg.slice(8));

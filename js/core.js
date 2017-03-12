@@ -177,16 +177,10 @@ var g = {
 		if (ignore !== null){
 			g.ignore = JSON.parse(ignore);
 		} else {
-			var foo = [];
+			var foo = []; 
 			localStorage.setItem('ignore', JSON.stringify(foo));
 		}
-		var friends = localStorage.getItem('friends');
-		if (friends !== null){
-			g.friends = JSON.parse(friends);
-		} else {
-			var friends = [];
-			localStorage.setItem('friends', JSON.stringify(friends));
-		}
+		title.friendGet();
 	},
 	config: {
 		audio: {
@@ -743,8 +737,9 @@ var game = {
 		});
 		return x;
 	},
+	
 	triggerNextTurn: function(data){ 
-		console.info("TRIGGERING NEXT TURN!", data);
+		//console.info("TRIGGERING NEXT TURN!", data);
 		clearInterval(game.energyTimer);
 		game.energyTimer = setInterval(game.updateResources, g.speed * 1000);
 		game.updateResources();
@@ -922,18 +917,6 @@ var my = {
 		if (!my.attackOn){
 			// flag unit text
 			if (game.tiles[tile].units){
-				/*
-				TweenMax.to(DOM['unit' + tile], .05, {
-					startAt: {
-						transformOrigin: '50% 50%',
-						fill: '#0ff'
-					},
-					fill: '#ffffff',
-					ease: SteppedEase.config(1),
-					repeat: 6,
-					yoyo: true
-				});
-				*/
 				TweenMax.set(DOM['unit' + tile], {
 					visibility: 'visible'
 				});
@@ -949,6 +932,7 @@ var DOM;
 function initDom(){
 	var d = document;
 	DOM = {
+		endTurn: d.getElementById('endTurn'),
 		energyIndicator: d.getElementById('energyIndicator'),
 		currentYear: d.getElementById('currentYear'),
 		currentYearBG: d.getElementById('currentYearBG'),
@@ -1229,6 +1213,7 @@ function surrender(){
 	audio.play('click');
 	document.getElementById('surrenderScreen').style.display = 'none';
 	$.ajax({
+		type: 'GET',
 		url: 'php/surrender.php',
 	});
 	

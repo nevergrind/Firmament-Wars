@@ -368,7 +368,7 @@ var title = {
 		g.chat('<div>Checking friends list...</div>');
 		if (g.friends.length){
 			$.ajax({
-				url: 'php/getFriends.php',
+				url: 'php/friendStatus.php',
 				data: {
 					friends: g.friends
 				}
@@ -404,37 +404,44 @@ var title = {
 			g.chat("<img src='images/chat/random/feelsbad.png'><div>You don't have any friends!</div>", 'chat-muted');
 		}
 	},
-	addFriend: function(account){
+	friendGet: function(){
+		// friend list
+		g.friends = [];
+		$.ajax({
+			type: 'GET',
+			url: 'php/friendGet.php',
+		}).done(function(data){
+			console.info(data);
+			data.friends.forEach(function(friend){
+				g.friends.push(friend);
+			});
+		});
+	},
+	toggleFriend: function(account){
 		account = account.trim();
-		g.chat('<div>Adding friend: '+ account +'</div>');
-		if (g.friends.indexOf(account) === -1 && account){
-			if (g.friends.length < 20){
-				if (account !== my.account){
-					g.friends.push(account);
-					localStorage.setItem('friends', JSON.stringify(g.friends));
-					g.chat('Added friend: ' + account, 'chat-muted');
-				} else {
-					g.chat("<img src='images/chat/random/hangfrog.jpg'><div>You can't be friends with yourself!</div>", 'chat-muted');
-				}
+		if (g.friends.length < 20){
+			if (account !== my.account){
+				console.info('toggle: ', account, account.length);
+				$.ajax({
+					url: 'php/friendToggle.php',
+					data: {
+						account: account
+					}
+				}).done(function(data){
+					if (data.action === 'remove'){
+						g.chat('Removed '+ account +' from your friend list');
+					} else {
+						g.chat('Added '+ account +' to your friend list');
+					}
+					title.friendGet();
+				});
 			} else {
-				// add image
-				g.chat('You cannot have more than 20 friends!', 'chat-muted');
+				// cannot add yourself
+				g.chat("You can't be friends with yourself!", 'chat-muted');
 			}
 		} else {
-			g.chat('You are already friends with ' + account +'!<img src="images/chat/random/forget.jpg">', 'chat-muted');
-		}
-	},
-	removeFriend: function(account){
-		account = account.trim();
-		g.chat('<div>Removing friend: '+ account +'</div>');
-		if (g.friends.indexOf(account) > -1 && account){
-			// found account
-			var index = g.friends.indexOf(account);
-			g.friends.splice(index, 1);
-			localStorage.setItem('friends', JSON.stringify(g.friends));
-			g.chat('Removed friend: ' + account, 'chat-muted');
-		} else {
-			g.chat('That account is not on your friend list.', 'chat-muted');
+			// can't have more than 20 friends
+			g.chat('You cannot have more than 20 friends!', 'chat-muted');
 		}
 	},
 	listIgnore: function(){
@@ -635,7 +642,6 @@ var title = {
 			<div>/unignore account: stop ignoring account</div>\
 			<div>/friend: show friend list</div>\
 			<div>/friend account: add/remove friend</div>\
-			<div>/unfriend account: remove friend</div>\
 			<div>/who account: check account info</div>\
 			';
 		var o = {
@@ -660,24 +666,13 @@ var title = {
 			}
 		});
 	},
-	toggleFriend: function(account){
-		console.info(g.friends.indexOf(account));
-		if (g.friends.indexOf(account) > -1){
-			title.removeFriend(account);
-		} else {
-			title.addFriend(account);
-		}
-	},
 	sendMsg: function(bypass){
 		var msg = $DOM.titleChatInput.val().trim();
 		// bypass via ENTER or chat has focus
 		if (bypass || title.chatOn){
 			if (msg){
 				// is it a command?
-				if (msg.indexOf('/unfriend ') === 0){
-					var account = msg.slice(10);
-					title.removeFriend(account);
-				} else if (msg === '/friend'){
+				if (msg === '/friend'){
 					title.listFriends();
 				} else if (msg.indexOf('/friend ') === 0){
 					title.toggleFriend(msg.slice(8));

@@ -52,9 +52,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-0">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-4">
 	<script>
-		version = '1-0-0'; 
+		version = '1-0-4'; 
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -441,19 +441,10 @@
 								<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 							</button>
 							<ul id='speedDropdown' class='dropdown-menu fwDropdown createGameInput' value="20">
-								<li><a class='speedSelect' href='#'>10</a></li>
 								<li><a class='speedSelect' href='#'>15</a></li>
 								<li><a class='speedSelect' href='#'>20</a></li>
 								<li><a class='speedSelect' href='#'>25</a></li>
 								<li><a class='speedSelect' href='#'>30</a></li>
-								<!--
-								<li><a class='speedSelect' href='#'>Slower</a></li>
-								<li><a class='speedSelect' href='#'>Slow</a></li>
-								<li><a class='speedSelect' href='#'>Normal</a></li>
-								<li><a class='speedSelect' href='#'>Fast</a></li>
-								<li><a class='speedSelect' href='#'>Faster</a></li>
-								<li><a class='speedSelect' href='#'>Fastest</a></li>
-								-->
 							</ul>
 						</div>
 					</div>
@@ -953,11 +944,12 @@
 			<div id="resourceBody">
 			
 				<div id="currentYearWrap" class="chat-rating">
-					<div id="currentYearBG"></div>
+					<div id="currentYearBG">&emsp;&emsp;</div>
 					<span id="currentYear">4000 B.C.</span>
 				</div>
 			
 				<div class="no-padding moves">
+					<button id="endTurn" class="btn btn-xs btn-responsive fwBlue">End Turn</button>
 					<span title="Energy is used to move and rush troops.">
 						Energy <i class="fa fa-bolt"></i>
 					</span>

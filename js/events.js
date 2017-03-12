@@ -224,6 +224,9 @@ var events = {
 		$("#leaderboardTeamBtn").on('click', function(){
 			title.getLeaderboard('Team');
 		});
+		$("#endTurn").on('click', function(){
+			action.endTurn();
+		});
 
 		$("#flagDropdown").on('click', '.flagSelect', function(e){
 			my.selectedFlag = $(this).text();
