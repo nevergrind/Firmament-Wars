@@ -559,7 +559,7 @@ tbody{
 #targetWrap{
 	position: absolute;
 	top: 0;
-	right: 220px;
+	right: 180px;
 	border-top: none;
 	border-right: none;
 	border-radius: 0 0 0 4px;
@@ -765,7 +765,7 @@ tbody{
 	top: 0;
 	right: 0;
 	padding: 4px;
-	width: 220px;
+	width: 180px;
 	z-index: 9999;
 }
 #ui2-head{
@@ -776,6 +776,7 @@ tbody{
 	text-align: right;
 	border-radius: 4px;
 	margin-bottom: .5em;
+	white-space: nowrap;
 }
 #resources-ui{
 	position: absolute;
@@ -1005,9 +1006,8 @@ table td, .table th, .table td {
 	outline: none;
     border-top: none !important;
 }
-.actionBolt{
-	float: left;
-	line-height: 1.75em;
+.resourceIcon{
+	margin-right: .5em;
 }
 .actionButtons{
 	font-size: 1.5em;

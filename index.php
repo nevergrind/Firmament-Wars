@@ -52,9 +52,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-4">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-6">
 	<script>
-		version = '1-0-4'; 
+		version = '1-0-6'; 
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -753,80 +753,78 @@
 						title="Great Generals boost troop attack">
 						<i class="glyphicon glyphicon-star"></i>
 						<span id="oBonus">0</span> 
-					</span>&nbsp;
+					</span>
 					<span   
 						data-placement="bottom"
-						title="Great Tacticians boost troop defense" class="marginLeft">
+						title="Great Tacticians boost troop defense">
 						<i class="glyphicon glyphicon-star-empty"></i>
 						<span id="dBonus">0</span>
 					</span>
 				</span>
 				<span class="marginLeft">
-					<span
-						data-placement="bottom"
+					<span data-placement="bottom"
 						title="Deploy troops to conquered territories">
-						<i class="fa fa-angle-double-up manpower"></i> Troops <span id="manpower">0</span>
+						Troops <span id="manpower">0</span>
 					</span>
 				</span>
 			</div>
 						
 			<div id="tileActions" class="container w100">
-				<div class="actionHead shadow4">Command</div>
+				<div class="actionHead shadow4">
+					<i class="fa fa-bolt moves resourceIcon"></i>Command
+				</div>
 				
 				<div id="attack" class="actionButtons row" 
 					data-placement="bottom"
 					title="Move/attack with all troops">
-					<div class="col-xs-8">
+					<div class="col-xs-9">
 						<span class='text-hotkey'>A</span>ttack
 					</div>
-					<div class="col-xs-4 tight2 text-right productionCost">
-						<i class="fa fa-bolt moves pointer actionBolt">
-						</i><span id='attackCost'>2</span>
+					<div class="col-xs-3 tight2 text-right productionCost">
+						<span id='attackCost'>2</span>
 					</div>
 				</div>
 				
 				<div id="splitAttack" class="actionButtons row" 
 					title="Move/attack with half of your troops">
-					<div class="col-xs-8">
+					<div class="col-xs-9">
 						<span class='text-hotkey'>S</span>plit Attack
 					</div>
-					<div class="col-xs-4 tight2 text-right productionCost">
-						<i class="fa fa-bolt moves pointer actionBolt">
+					<div class="col-xs-3 tight2 text-right productionCost">
 						</i><span id="splitAttackCost">1</span>
 					</div>
 				</div>
 				
 				<div id="rush" class="actionButtons row" 
 					title="Deploy 2 troops using energy instead of production. Boosted by culture.">
-					<div class="col-xs-8">
+					<div class="col-xs-9">
 						<span class='text-hotkey'>R</span>ush Troops
 					</div>
-					<div class="col-xs-4 tight2 text-right productionCost">
-						<i class="fa fa-bolt moves pointer actionBolt">
+					<div class="col-xs-3 tight2 text-right productionCost">
 						</i><span id="rushCost">2</span>
 					</div>
 				</div>
 				
-				<div class="actionHead shadow4">Build</div>
+				<div class="actionHead shadow4">
+					<i class="fa fa-gavel production resourceIcon"></i>Build
+				</div>
 				
 				<div id="deploy" class="actionButtons row" 
 					title="Deploy troops to a tile">
-					<div class="col-xs-8">
+					<div class="col-xs-9">
 						<span class='text-hotkey'>D</span>eploy Troops
 					</div>
-					<div class="col-xs-4 tight2 text-right productionCost">
-						<i class="fa fa-gavel production pointer actionBolt"></i>
+					<div class="col-xs-3 tight2 text-right productionCost">
 						<span id='deployCost'>10</cost>
 					</div>
 				</div>
 				
 				<div id="fireCannons" class="actionButtons row"
 					title="Fire cannons at an adjacent enemy tile. Kills 2 + 4% of troops.">
-					<div class="col-xs-8">
+					<div class="col-xs-9">
 						Fire <span class='text-hotkey'>C</span>annons
 					</div>
-					<div class="col-xs-4 tight2 text-right productionCost">
-						<i class="fa fa-gavel production pointer actionBolt"></i>
+					<div class="col-xs-3 tight2 text-right productionCost">
 						<span id='cannonsCost'>24</span>
 					</div>
 				</div>
@@ -834,31 +832,28 @@
 				<div id="upgradeTileDefense" class="actionButtons row" 
 					 
 					title="Bunkers upgrade the structural defense of a territory">
-					<div class="col-xs-8">
+					<div class="col-xs-9">
 						<span class='text-hotkey'>B</span>uild <span id="buildWord">Bunker</span>
 					</div>
-					<div class="col-xs-4 tight2 text-right productionCost">
-						<i class="fa fa-gavel production pointer actionBolt"></i>
+					<div class="col-xs-3 tight2 text-right productionCost">
 						<span id="buildCost"></span>
 					</div>
 				</div>
 				
 				<div id="launchMissile" class="actionButtons row"
 					title="Launch a missile at any enemy territory. Kills 5 + 15% of troops.">
-					<div class="col-xs-8">
+					<div class="col-xs-9">
 						Launch <span class='text-hotkey'>M</span>issile
 					</div>
-					<div class="col-xs-4 tight2 text-right productionCost">
-						<i class="fa fa-gavel production pointer actionBolt"></i>
+					<div class="col-xs-3 tight2 text-right productionCost">
 						<span id='missileCost'>40</span>
 					</div>
 				</div>
 				
 				<div id="launchNuke" class="actionButtons row" 
 					title="Launch a nuclear weapon at any enemy territory. Kills 80-99% of troops and destroys all structures.">
-					<div class="col-xs-8">Launch <span class='text-hotkey'>N</span>uke</div>
-					<div class="col-xs-4 tight2 text-right productionCost">
-						<i class="fa fa-gavel production pointer actionBolt"></i>
+					<div class="col-xs-9">Launch <span class='text-hotkey'>N</span>uke</div>
+					<div class="col-xs-3 tight2 text-right productionCost">
 						<span id='nukeCost'>150</span>
 					</div>
 				</div>
@@ -868,16 +863,17 @@
 			</div>
 			
 			<div id="tileResearch" class="container w100">
-				<div class="actionHead shadow4">Research</div>
+				<div class="actionHead shadow4">
+					<i class="fa fa-gavel production resourceIcon"></i>Research
+				</div>
 				
 				<div id="researchGunpowder" class="actionButtons row" 
 					 
 					title="Research gunpowder to unlock cannons.">
-					<div class="col-xs-8">
+					<div class="col-xs-9">
 						<span class='text-hotkey'>G</span>unpowder
 					</div>
-					<div class="col-xs-4 tight2 text-right productionCost">
-						<i class="fa fa-gavel production pointer actionBolt"></i>
+					<div class="col-xs-3 tight2 text-right productionCost">
 						<span id='gunpowderCost'>40</span>
 					</div>
 				</div>
@@ -885,11 +881,10 @@
 				<div id="researchEngineering" class="actionButtons row" 
 					 
 					title="Research engineering to unlock walls and fortresses.">
-					<div class="col-xs-8">
+					<div class="col-xs-9">
 						<span class='text-hotkey'>E</span>ngineering
 					</div>
-					<div class="col-xs-4 tight2 text-right productionCost">
-						<i class="fa fa-gavel production pointer actionBolt"></i>
+					<div class="col-xs-3 tight2 text-right productionCost">
 						<span id='engineeringCost'>60</span>
 					</div>
 				</div>
@@ -897,11 +892,10 @@
 				<div id="researchRocketry" class="actionButtons row" 
 					 
 					title="Research rocketry to unlock missiles.">
-					<div class="col-xs-8">
+					<div class="col-xs-9">
 						Roc<span class='text-hotkey'>k</span>etry
 					</div>
-					<div class="col-xs-4 tight2 text-right productionCost">
-						<i class="fa fa-gavel production pointer actionBolt"></i>
+					<div class="col-xs-3 tight2 text-right productionCost">
 						<span id='rocketryCost'>80</span>
 					</div>
 				</div>
@@ -909,11 +903,10 @@
 				<div id="researchAtomicTheory" class="actionButtons row" 
 					 
 					title="Research atomic theory to unlock nuclear weapons.">
-					<div class="col-xs-8">
+					<div class="col-xs-9">
 						A<span class='text-hotkey'>t</span>omic Theory
 					</div>
-					<div class="col-xs-4 tight2 text-right productionCost">
-						<i class="fa fa-gavel production pointer actionBolt"></i>
+					<div class="col-xs-3 tight2 text-right productionCost">
 						<span id='atomicTheoryCost'>100</span>
 					</div>
 				</div>
@@ -921,11 +914,10 @@
 				<div id="researchFutureTech" class="actionButtons row" 
 					 
 					title="Research future technology.">
-					<div class="col-xs-8">
+					<div class="col-xs-9">
 						<span class='text-hotkey'>F</span>uture Tech
 					</div>
-					<div class="col-xs-4 tight2 text-right productionCost">
-						<i class="fa fa-gavel production pointer actionBolt"></i>
+					<div class="col-xs-3 tight2 text-right productionCost">
 						<span id='futureTechCost'>500</span>
 					</div>
 				</div>

@@ -104,7 +104,16 @@ var action = {
 			if (data.rewardMsg){
 				game.chat({ message: '<span class="chat-news">' + data.rewardMsg + '</span>' });
 				setResources(data);
-				if (data.sumFood){
+				if (data.foodReward && data.productionReward && data.cultureReward){
+					// all +%
+					animate.upgrade(defender, 'food', data.foodReward +'%');
+					setTimeout(function(){
+						animate.upgrade(defender, 'production', data.productionReward +'%');
+					}, 500);
+					setTimeout(function(){
+						animate.upgrade(defender, 'culture', data.cultureReward +'%');
+					}, 1000);
+				} else if (data.sumFood){
 					animate.upgrade(defender, 'food', data.sumFood);
 				} else if (data.sumProduction){
 					animate.upgrade(defender, 'production', data.sumProduction);
@@ -116,8 +125,10 @@ var action = {
 					// food %
 					animate.upgrade(defender, 'food', data.foodReward +'%');
 				} else if (data.productionReward){
+					// production %
 					animate.upgrade(defender, 'production', data.productionReward +'%');
 				} else if (data.cultureReward){
+					// culture %
 					animate.upgrade(defender, 'culture', data.cultureReward +'%');
 				}
 			}
