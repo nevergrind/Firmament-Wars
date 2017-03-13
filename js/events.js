@@ -503,27 +503,34 @@ $(document).on('keydown', function(e){
 	var x = e.keyCode;
 	if (e.ctrlKey){
 		if (x === 82){
+			// ctrl+r refresh
 			return false;
 		}
 	} else {
-		if (x === 9){
-			// tab
-			if (g.view === 'game'){
+		if (g.view === 'title'){
+			if (!g.isModalOpen){
+				$("#title-chat-input").focus();
+			}
+		} else if (g.view === 'lobby'){
+			$("#lobby-chat-input").focus();
+		} else {
+			// game
+			if (x === 9){
+				// tab
 				if (!e.shiftKey){
 					my.nextTarget(false);
 				} else {
 					my.nextTarget(true);
 				}
 				e.preventDefault();
-			}
-		} else if (x === 86){
-			if (g.view === 'game' && !g.chatOn){
-				game.toggleGameWindows(1);
+			} else if (x === 86){
+				if (g.view === 'game' && !g.chatOn){
+					game.toggleGameWindows(1);
+				}
 			}
 		}
 	}
-});
-$(document).on('keyup', function(e) {
+}).on('keyup', function(e) {
 	var x = e.keyCode;
 	if (g.view === 'title'){
 		if (x === 13){
