@@ -144,6 +144,8 @@ var events = {
 			exitGame();
 		}).on("click", "#startGame", function(){
 			lobby.startGame();
+		}).on("click", '.addFriend', function(){
+			title.toggleFriend($(this).data('account'));
 		});
 		$("#toggleNation").on("click", function(){
 			var img = new Image();

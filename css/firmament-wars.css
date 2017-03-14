@@ -1,10 +1,10 @@
 @font-face {
   font-family: Cinzel;
-  src: url(Cinzel-Regular.otf);
+  src: url(../fonts/Cinzel-Regular.otf);
 }
 @font-face {
   font-family: Roboto;
-  src: url(Roboto-Regular.ttf);
+  src: url(../fonts/Roboto-Regular.ttf);
 }
 *{
 	_noFocusLine: expression(this.hideFocus=true);
@@ -29,6 +29,10 @@ html{
 input{
 	cursor: text;
 	background: #059;
+}
+input::-ms-value{
+	color: #000;
+	text-shadow: 0 !important;
 }
 body{
 	font-family: Roboto, Verdana, Arial, sans-serif;
@@ -422,6 +426,10 @@ tbody{
 	position: relative;
 	width: 100%;
 }
+.addFriend{
+	margin: .25em 0;
+	padding: .25em .5em;
+}
 #endTurn{
 	float: left;
 	margin: .25em .25em 0;
@@ -584,17 +592,33 @@ tbody{
 	font-family: Cinzel, Palatino Linotype, serif;
 	text-align: center;
 }
+.ribbonWrapChat{
+	position: relative;
+	text-align: center;
+	line-height: 0;
+}
+.ribbon{
+	display: inline-block;
+	background-image: url('../images/ribbons/ribbonMap2.jpg');
+	background-size: 135px 36px;
+	height: 6px;
+	width: 23px;
+	background-position: 0 0;
+	margin: 0;
+	padding: 0;
+}
 #ribbonWrap{
 	position: absolute;
 	right: -2px;
 	bottom: 0;
 	text-align: center;
+	line-height: 0;
 }
 .narrowRack{
-	width: 72px;
+	width: 69px;
 }
 .wideRack{
-	width: 96px;
+	width: 92px;
 }
 #targetName{
 	position: relative;
@@ -628,16 +652,6 @@ tbody{
 .giantRibbon{
 	margin: 0 auto .5em;
 	width: 184px;
-}
-.ribbon{
-	float: right;
-	background-image: url('../images/ribbons/ribbonMap2.jpg');
-	background-size: 135px 36px;
-	height: 6px;
-	width: 23px;
-	background-position: 0 0;
-	margin: 0;
-	padding: 0;
 }
 .ribbon1{
 	background-position: 0 0;
@@ -1166,6 +1180,8 @@ table td, .table th, .table td {
 	fill: #666;
 	stroke: #111;
 }
+text{
+}
 .unit{
 	visibility: hidden;
 	margin-left: 1em;
@@ -1203,13 +1219,6 @@ table td, .table th, .table td {
 }
 .targetBarsDefense{
 	stroke: #ff0;
-}
-text{
-	fill: rgba(255,255,255,1);
-	stroke: rgba(0,0,0,1);
-	stroke-width: 3;
-	stroke-linejoin: round;
-	paint-order: stroke;
 }
 #motionPath{
 	visibility: hidden;
@@ -1581,6 +1590,10 @@ span.unlockGameBtn{
 	cursor: pointer;
 }
 #avatar{
+	width: 120px;
+	height: 120px;
+}
+.avatarChat{
 	width: 120px;
 	height: 120px;
 }

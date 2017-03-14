@@ -45,16 +45,16 @@
 	<meta name="author" content="Joe Leonard">
 	<meta name="referrer" content="always">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-	<meta name="viewport" content="width=1024,user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1,">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
 	
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-7">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-9">
 	<script>
-		version = '1-0-7'; 
+		version = '1-0-9'; 
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -1062,45 +1062,30 @@
 				<div class='col-xs-8'>
 					Next Target
 				</div>
-			</div>
-			
-			<div class='row'>
 				<div class='col-xs-4'>
 					SHIFT+TAB
 				</div>
 				<div class='col-xs-8'>
 					Previous Target
 				</div>
-			</div>
-			
-			<div class='row'>
 				<div class='col-xs-4'>
 					ENTER
 				</div>
 				<div class='col-xs-8'>
 					Open Chat
 				</div>
-			</div>
-			
-			<div class='row'>
 				<div class='col-xs-4'>
 					ESC
 				</div>
 				<div class='col-xs-8'>
 					Clear Chat/Target
 				</div>
-			</div>
-			
-			<div class='row'>
 				<div class='col-xs-4'>
 					V
 				</div>
 				<div class='col-xs-8'>
 					Toggle UI
 				</div>
-			</div>
-			
-			<div class='row'>
 				<div class='col-xs-4'>
 					CTRL+R
 				</div>
@@ -1128,13 +1113,10 @@
 				<div class='col-xs-8 text-right'>
 					<input id="musicSlider" class="sliders" type="text"/>
 				</div>
-			</div>
-			
-			<div class='row buffer2'>
-				<div class='col-xs-4'>
+				<div class='col-xs-4 buffer2'>
 					Sound Effect Volume
 				</div>
-				<div class='col-xs-8 text-right'>
+				<div class='col-xs-8 text-right buffer2'>
 					<input id="soundSlider" class="sliders" type="text"/>
 				</div>
 			</div>

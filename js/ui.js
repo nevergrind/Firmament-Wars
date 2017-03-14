@@ -319,7 +319,9 @@ function triggerEndGame(msg, victory){
 		g.over = 1;
 	}, 1500);
 	stats.get();
-	new Image('images/FlatWorld50-2.jpg');
+	if (!isMSIE && !isMSIE11){
+		new Image('images/FlatWorld50-2.jpg');
+	}
 	setTimeout(function(){
 		var e = document.getElementById('victoryScreen');
 		e.innerHTML = msg;

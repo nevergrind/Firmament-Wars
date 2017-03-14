@@ -228,41 +228,42 @@ var animate = {
 			h1 = 50,
 			w2 = w1/2,
 			h2 = h1/2 - 10;
-		
-		for (var i=0; i<shots; i++){
-			(function(){
-				var path = document.createElementNS("http://www.w3.org/2000/svg","path"),
-					x2 = box2.x + (Math.random() * w1) - w2;
-					y2 = box2.y + (Math.random() * h1) - h2;
-				var x1 = box1.x + ~~(Math.random()*16)-8,
-					y1 = box1.y + ~~(Math.random()*16)-8;
-				var drawPath = Math.random() > .5 ? 
-					"M "+ x1 +","+ y1 + ' '+ x2 +","+ y2 :
-					"M "+ x2 +","+ y2 +' ' + x1 +","+ y1
-				path.setAttributeNS(null,"stroke",animate.randomColor());
-				path.setAttributeNS(null,"stroke-width",1);
-				DOM.world.appendChild(path);
-				TweenMax.to(path, .075, {
-					delay: (i / shots) * delay[sfx],
-					startAt: {
-						attr: {
-							d: drawPath
+		if (!isMSIE && !isMSIE11){
+			for (var i=0; i<shots; i++){
+				(function(){
+					var path = document.createElementNS("http://www.w3.org/2000/svg","path"),
+						x2 = box2.x + (Math.random() * w1) - w2;
+						y2 = box2.y + (Math.random() * h1) - h2;
+					var x1 = box1.x + ~~(Math.random()*16)-8,
+						y1 = box1.y + ~~(Math.random()*16)-8;
+					var drawPath = Math.random() > .5 ? 
+						"M "+ x1 +","+ y1 + ' '+ x2 +","+ y2 :
+						"M "+ x2 +","+ y2 +' ' + x1 +","+ y1
+					path.setAttributeNS(null,"stroke",animate.randomColor());
+					path.setAttributeNS(null,"stroke-width",1);
+					DOM.world.appendChild(path);
+					TweenMax.to(path, .075, {
+						delay: (i / shots) * delay[sfx],
+						startAt: {
+							attr: {
+								d: drawPath
+							},
+							drawSVG: '0%'
 						},
-						drawSVG: '0%'
-					},
-					drawSVG: '0% 100%',
-					ease: Power2.easeIn,
-					onComplete: function(){
-						TweenMax.to(path, .125, {
-							drawSVG: '100% 100%',
-							ease: Power2.easeOut,
-							onComplete: function(){
-								this.target.parentNode.removeChild(this.target);
-							}
-						});
-					}
-				});
-			})();
+						drawSVG: '0% 100%',
+						ease: Power2.easeIn,
+						onComplete: function(){
+							TweenMax.to(path, .125, {
+								drawSVG: '100% 100%',
+								ease: Power2.easeOut,
+								onComplete: function(){
+									this.target.parentNode.removeChild(this.target);
+								}
+							});
+						}
+					});
+				})();
+			}
 		}
 	},
 	cannons: function(atkTile, defTile, playSound){
@@ -550,7 +551,6 @@ var animate = {
 				this.target.parentNode.removeChild(bomb);
 			}
 		});
-		new Image('images/smoke.png');
 		// start bomb explosion sequence
 		TweenMax.to(g, 1, {
 			onComplete: function(){

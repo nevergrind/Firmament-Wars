@@ -419,29 +419,26 @@ var title = {
 	},
 	toggleFriend: function(account){
 		account = account.trim();
-		if (g.friends.length < 20){
-			if (account !== my.account){
-				console.info('toggle: ', account, account.length);
-				$.ajax({
-					url: 'php/friendToggle.php',
-					data: {
-						account: account
-					}
-				}).done(function(data){
-					if (data.action === 'remove'){
-						g.chat('Removed '+ account +' from your friend list');
-					} else {
-						g.chat('Added '+ account +' to your friend list');
-					}
-					title.friendGet();
-				});
-			} else {
-				// cannot add yourself
-				g.chat("You can't be friends with yourself!", 'chat-muted');
-			}
+		if (account !== my.account){
+			console.info('toggle: ', account, account.length);
+			$.ajax({
+				url: 'php/friendToggle.php',
+				data: {
+					account: account
+				}
+			}).done(function(data){
+				if (data.action === 'fail'){
+					g.chat('You cannot have more than 20 friends!');
+				} else if (data.action === 'remove'){
+					g.chat('Removed '+ account +' from your friend list');
+				} else {
+					g.chat('Added '+ account +' to your friend list');
+				}
+				title.friendGet();
+			});
 		} else {
-			// can't have more than 20 friends
-			g.chat('You cannot have more than 20 friends!', 'chat-muted');
+			// cannot add yourself
+			g.chat("You can't be friends with yourself!", 'chat-muted');
 		}
 	},
 	listIgnore: function(){
@@ -626,7 +623,36 @@ var title = {
 				account: a[1]
 			}
 		}).done(function(data){
-			g.chat(data);
+			var str = '';
+				
+			var img = new Image();
+			img.onload = function(){
+				getProfile('<hr class="fancyhr"><img src="php/avatars/'+ ~~(data.nationRow / 10000) +'/'+ data.nationRow +'.jpg?v=' + Date.now() +'" class="avatarChat">');
+			}
+			img.onerror = function(){
+				getProfile('<hr class="fancyhr">');
+			}
+			img.src = 'php/avatars/'+ ~~(data.nationRow / 10000) +'/'+ data.nationRow +'.jpg?v=' + Date.now();
+			
+			function getProfile(str){
+				var len = data.ribbons.length;
+				str += data.str;
+				if (len){
+					str += '<div class="ribbonWrapChat '+ (len >= 24 ? 'wideRack' : 'narrowRack') +'">';
+				}
+				for (var i=0, len=data.ribbons.length; i<len; i++){
+					var z = data.ribbons[i];
+					str += '<div class="ribbon ribbon'+ z +'" title="'+ game.ribbonTitle[i] +'"></div>';
+				}
+				if (len){
+					str += '</div>';
+				}
+				if (data.account !== my.account){
+					str += '<button class="addFriend btn btn-xs fwBlue" data-account="'+ data.account +'">Add Friend</button>';
+				}
+				str += '<hr class="fancyhr">';
+				g.chat(str);
+			}
 		});
 	},
 	help: function(){

@@ -550,13 +550,6 @@ var game = {
 		game.tiles[p].flag = '';
 		for (var i=0, len=game.tiles.length; i<len; i++){
 			if (game.tiles[i].player === p){
-				if (game.tiles[i].capital){
-					var e1 = document.getElementById('mapCapital' + i);
-					if (e1 !== null){
-						e1.remove();
-					}
-				}
-				game.tiles[i].capital = false;
 				game.tiles[i].account = '';
 				game.tiles[i].defense = '';
 				game.tiles[i].flag = '';
@@ -1045,26 +1038,29 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
     isMSIE = /*@cc_on!@*/ false,
     isMSIE11 = !!navigator.userAgent.match(/Trident\/7\./);
 // browser dependent
-(function($){
-	if (typeof Notification !== 'function'){
+(function(){
+	if (typeof WebSocket !== 'function'){
 		alert("This browser does not support websockets. We recommend the latest version of Chrome or Firefox");
 		window.stop();
 	}
-	if (isMSIE || isMSIE11 && location.host === 'nevergrind.com'){
-		alert("Firmament Wars does not support Internet Explorer. Consider using Chrome or Firefox for an enjoyable experience.");
-		window.stop();
-		// $("head").append('<style> text { fill: #ffffff; stroke-width: 0px; } </style>');
+	if (isMSIE || isMSIE11){
+		//alert("Firmament Wars does not support Internet Explorer. Consider using Chrome or Firefox for an enjoyable experience.");
+		//window.stop();
+		console.info("isMSIE");
+		$("head").append('<style> text { font-family: Verdana; stroke-width: 0; stroke: #000; fill: #fff; } .unit{ font-size: 26px; } </style>');
 	} else if (isSafari){
-		alert("Firmament Wars does not support Safari. Consider using Chrome or Firefox for an enjoyable experience.");
-		window.stop();
-		// $("head").append('<style> text { fill: #ffffff; stroke: #ffffff; stroke-width: 0px; } </style>');
+		//alert("Firmament Wars does not support Safari. Consider using Chrome or Firefox for an enjoyable experience.");
+		//window.stop();
+		$("head").append('<style> text { fill: #ffffff; stroke: none; stroke-width: 0px; } </style>');
+	} else {
+		$("head").append('<style> text { fill: rgba(255,255,255,1); stroke: rgba(0,0,0,1); stroke-width: 3; stroke-linejoin: round; paint-order: stroke; } </style>');
 	}
 	if (isMobile){
-		window.stop();
-		// $("head").append('<style> *{ box-shadow: none !important; } </style>');
-		alert("Firmament Wars is currently not available on mobile devices. Sorry about that! It runs like trash on mobile, so I'm probably doing you a favor.");
+		//window.stop();
+		//alert("Firmament Wars is currently not available on mobile devices. Sorry about that! It runs like trash on mobile, so I'm probably doing you a favor.");
+		 $("head").append('<style> *{ box-shadow: none !important; } </style>');
 	}
-})($);
+})();
 
 function resizeWindow() {
     var winWidth = window.innerWidth,
