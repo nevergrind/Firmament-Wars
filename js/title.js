@@ -35,7 +35,7 @@ var title = {
 			}).on('blur', function(){
 				title.createGameFocus = false;
 			});
-			$("#titleChatSend").on('click', function(){
+			$("#titleChatSend").on(ui.click, function(){
 				title.sendMsg(true);
 			});
 			$.ajax({
@@ -46,7 +46,6 @@ var title = {
 				my.flag = data.flag;
 				my.rating = data.rating;
 				title.updatePlayers();
-				$("#title-chat-input").focus();
 				g.checkPlayerData();
 			});
 			// init game refresh
@@ -744,7 +743,7 @@ var title = {
 		}
 	},
 	showBackdrop: function(e){
-		TweenMax.to(document.getElementById("titleViewBackdrop"), .3, {
+		TweenMax.to(document.getElementById("titleViewBackdrop"), ui.delay(.3), {
 			startAt: {
 				visibility: 'visible',
 				alpha: 0
@@ -859,7 +858,6 @@ var title = {
 		game.id = data.id;
 		game.name = data.gameName;
 		g.map = data.mapData;
-		console.info("SPEEDS: ", data.speed);
 		g.speed = data.speed;
 		lobby.init(data);
 		lobby.join(); // normal join
@@ -893,8 +891,10 @@ var title = {
 	if (e1 !== null){
 		e1.innerHTML = str;
 	}
-	$('[title]').tooltip({
-		animation: false
-	});
+	if (!isMobile){
+		$('[title]').tooltip({
+			animation: false
+		});
+	}
 	animate.logo();
 })();

@@ -22,17 +22,13 @@ html{
 	font-family: Roboto, Verdana, Arial, sans-serif;
 	-ms-touch-action: manipulation;
 	touch-action: manipulation;
-	overflow: hidden;
 	display: block;
 	background: #000;
+	overflow: hidden;
 }
 input{
 	cursor: text;
 	background: #059;
-}
-input::-ms-value{
-	color: #000;
-	text-shadow: 0 !important;
 }
 body{
 	font-family: Roboto, Verdana, Arial, sans-serif;
@@ -40,6 +36,9 @@ body{
 	position: absolute;
 	visibility: hidden;
 	background: #000;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
 }
 header{
 	position: absolute;
@@ -139,6 +138,7 @@ a:hover{
 	width: 100%;
 	left: 0;
 	top: 0;
+	overflow: hidden;
 }
 #firmamentWarsBG{
 	position: absolute;
@@ -1398,7 +1398,7 @@ circle{
 .lobbyRelWrap{
 	position: relative;
 	top: 0%;
-	margin-top: 4%;
+	margin-top: 1vh;
 }
 .lobbyAccounts{
 	margin-top: .25em;
@@ -2166,13 +2166,14 @@ table {
 	z-index: 9999;
 	padding: 0;
 	background: #000;
+	overflow: hidden;
 }
 #statWorld{
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	width: 200%;
-	max-width: 4400px;
+	max-width: 3840px;
 	height: auto;
 	z-index: -1;
 }

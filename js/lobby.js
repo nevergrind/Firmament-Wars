@@ -274,18 +274,24 @@ var lobby = {
 			x: '100%',
 			ease: Quad.easeIn
 		});
-		document.getElementById('lobbyFirmamentWarsLogo').src = 'images/title/firmament-wars-logo-1280.png';
-		document.getElementById('worldTitle').src = 'images/FlatWorld50-2.jpg';
+		if (isMobile){
+			document.getElementById('lobbyFirmamentWarsLogo').style.display = 'none';
+			document.getElementById('worldTitle').style.display = 'none';
+		} else {
+			document.getElementById('lobbyFirmamentWarsLogo').src = 'images/title/firmament-wars-logo-1280.png';
+			document.getElementById('worldTitle').src = 'images/FlatWorld50-2.jpg';
+		}
+		
 		TweenMax.to(titleMenu, d, {
 			x: '-100%',
 			ease: Quad.easeIn,
 			onComplete: function(){
-				TweenMax.to([titleMain, logoWrap], .5, {
+				TweenMax.to([titleMain, logoWrap], ui.delay(.5), {
 					alpha: 0,
 					onComplete: function(){
 						titleMain.parentNode.removeChild(titleMain);
 						g.unlock(1);
-						TweenMax.fromTo('#joinGameLobby', d, {
+						TweenMax.fromTo('#joinGameLobby', ui.delay(d), {
 							autoAlpha: 0
 						}, {
 							autoAlpha: 1
@@ -370,26 +376,30 @@ var lobby = {
 				'Player'+ i +'.jpg' : 
 				data.flag;
 			document.getElementById("lobbyFlag" + i).src = 'images/flags/'+ flag;
-			$('#lobbyFlag' + i)
-				.attr('title', data.flag.split(".").shift())
-				.tooltip({
-					animation: false,
-					placement: 'right',
-					container: 'body'
-				});
+			if (!isMobile){
+				$('#lobbyFlag' + i)
+					.attr('title', data.flag.split(".").shift())
+					.tooltip({
+						animation: false,
+						placement: 'right',
+						container: 'body'
+					});
+			}
 			if (my.player === i){
-				$("#lobbyPlayerColor" + i).attr('title', fwpaid ? 
-					'Select Player Color' : 
-					'Unlock the complete game to choose player color')
-					.tooltip({
-						container: 'body',
-						animation: false
-					});
-				$("#lobbyTeam" + i).attr('title', 'Select Team')
-					.tooltip({
-						container: 'body',
-						animation: false
-					});
+				if (!isMobile){
+					$("#lobbyPlayerColor" + i).attr('title', fwpaid ? 
+						'Select Player Color' : 
+						'Unlock the complete game to choose player color')
+						.tooltip({
+							container: 'body',
+							animation: false
+						});
+					$("#lobbyTeam" + i).attr('title', 'Select Team')
+						.tooltip({
+							container: 'body',
+							animation: false
+						});
+				}
 			}
 			lobby.updateGovernment(data);
 			lobby.data[i] = data;
@@ -534,17 +544,19 @@ var lobby = {
 };
 
 function initOffensiveTooltips(){
-	$('#fireCannons')
-		.attr('title', 'Fire cannons at an adjacent enemy tile. Kills ' + (2 + my.oBonus) + ' + 4% of troops.')
-		.tooltip('fixTitle')
-		.tooltip({ animation: false });
-	$('#launchMissile')
-		.attr('title', 'Launch a missile at any enemy territory. Kills ' + (5 + (my.oBonus * 2)) + ' + 15% of troops.').tooltip('fixTitle')
-		.tooltip({ animation: false });
-	$('#rush')
-		.attr('title', 'Deploy ' + (2 + ~~(my.cultureBonus / 50)) + ' troops using energy instead of production. Boosted by culture.')
-		.tooltip('fixTitle')
-		.tooltip({ animation: false });
+	if (!isMobile){
+		$('#fireCannons')
+			.attr('title', 'Fire cannons at an adjacent enemy tile. Kills ' + (2 + my.oBonus) + ' + 4% of troops.')
+			.tooltip('fixTitle')
+			.tooltip({ animation: false });
+		$('#launchMissile')
+			.attr('title', 'Launch a missile at any enemy territory. Kills ' + (5 + (my.oBonus * 2)) + ' + 15% of troops.').tooltip('fixTitle')
+			.tooltip({ animation: false });
+		$('#rush')
+			.attr('title', 'Deploy ' + (2 + ~~(my.cultureBonus / 50)) + ' troops using energy instead of production. Boosted by culture.')
+			.tooltip('fixTitle')
+			.tooltip({ animation: false });
+	}
 }
 function initResources(d){
 	my.food = d.food;
@@ -585,7 +597,7 @@ function setMoves(d){
 }
 function setProduction(d){
 	if (d.production !== undefined){
-		TweenMax.to(my, .3, {
+		TweenMax.to(my, ui.delay(.3), {
 			production: d.production,
 			ease: Quad.easeIn,
 			onUpdate: function(){
@@ -598,7 +610,7 @@ function setResources(d){
 	//console.info(d);
 	setMoves(d);
 	setProduction(d);
-	TweenMax.to(my, .3, {
+	TweenMax.to(my, ui.delay(.3), {
 		food: d.food === undefined ? my.food : d.food,
 		culture: d.culture === undefined ? my.culture : d.culture,
 		ease: Quad.easeIn,
@@ -617,7 +629,7 @@ function setResources(d){
 				yoyo: true
 				
 			});
-			TweenMax.to(my, .5, {
+			TweenMax.to(my, ui.delay(.5), {
 				manpower: d.manpower,
 				onUpdate: function(){
 					DOM.manpower.textContent = ~~my.manpower;
@@ -696,10 +708,10 @@ function setResources(d){
 }
 function setBars(d){
 	// animate bars
-	TweenMax.to(DOM.foodBar, .3, {
+	TweenMax.to(DOM.foodBar, ui.delay(.3), {
 		width: ((d.food / d.foodMax) * 100) + '%'
 	});
-	TweenMax.to(DOM.cultureBar, .3, {
+	TweenMax.to(DOM.cultureBar, ui.delay(.3), {
 		width: ((d.culture / d.cultureMax) * 100) + '%'
 	});
 }
@@ -937,13 +949,15 @@ function loadGameState(){
 				} else {
 					console.warn("COULD NOT FIND: ", i);
 				}
-				var svgTgt = document.getElementById('targetCrosshair');
-				TweenMax.to(svgTgt, 10, {
-					transformOrigin: '50% 50%',
-					rotation: 360,
-					repeat: -1,
-					ease: Linear.easeNone
-				});
+				if (!isMobile){
+					var svgTgt = document.getElementById('targetCrosshair');
+					TweenMax.to(svgTgt, 10, {
+						transformOrigin: '50% 50%',
+						rotation: 360,
+						repeat: -1,
+						ease: Linear.easeNone
+					});
+				}
 			}
 			// init map DOM elements
 			game.initMap();
@@ -1015,9 +1029,11 @@ function loadGameState(){
 				});
 				
 				initOffensiveTooltips();
-				TweenMax.set(DOM.targetLine, {
-					stroke: g.color[game.player[my.player].playerColor]
-				});
+				if (!isMobile){
+					TweenMax.set(DOM.targetLine, {
+						stroke: g.color[game.player[my.player].playerColor]
+					});
+				}
 				TweenMax.set(DOM.targetLine, {
 					stroke: "hsl(+=0%, +=0%, +=15%)"
 				});
@@ -1025,7 +1041,7 @@ function loadGameState(){
 				function triggerAction(that){
 					if (my.attackOn){
 						var o = my.targetData;
-						if (o.attackName === 'attack'){
+						if (o.attackName === 'attack' || o.attackName === 'splitAttack'){
 							action.attack(that);
 						} else if (o.attackName === 'cannons'){
 							action.fireCannons(that);
@@ -1041,14 +1057,14 @@ function loadGameState(){
 				var zug = $("#gameWrap");
 				// map events
 				if (isMSIE || isMSIE11){
-					zug.on("click", ".land", function(){
+					zug.on('mousedown', ".land", function(){
 						triggerAction(this);
 						TweenMax.set(this, {
 							fill: "hsl(+=0%, +=0%, -=5%)"
 						});
 					});
 				} else {
-					zug.on("click", ".land", function(e){
+					zug.on('click', ".land", function(e){
 						console.info(this.id, e.offsetX, e.offsetY);
 						triggerAction(this);
 					});
@@ -1082,9 +1098,11 @@ function loadGameState(){
 				}
 				game.startGameState();
 				ui.setCurrentYear(data.resourceTick);
-				$('[title]').tooltip({
-					animation: false
-				});
+				if (!isMobile){
+					$('[title]').tooltip({
+						animation: false
+					});
+				}
 			}, 350);
 		}).fail(function(data){
 			serverError(data);

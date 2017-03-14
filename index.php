@@ -45,16 +45,17 @@
 	<meta name="author" content="Joe Leonard">
 	<meta name="referrer" content="always">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1,">
-	<meta name="apple-mobile-web-app-capable" content="yes">
+	
 	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 	
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-9">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-33">
 	<script>
-		version = '1-0-9'; 
+		version = '1-0-33'; 
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -742,6 +743,96 @@
 			</table>
 		</div>
 		
+		<div id="resources-ui" class="shadow4 blueBg gameWindow">
+			<div id="resourceHead">
+				<i id="hotkeys" class="pointer options fa fa-keyboard-o" title="Hotkeys"></i>
+				<i id="options" class="pointer options fa fa-volume-up" title="Audio"></i>
+				<i id="surrender" class="pointer fa fa-flag" title="Surrender"></i>
+				<i id="exitSpectate" class="pointer fa fa-times-circle"></i>
+			</div>
+			<div id="resourceBody">
+			
+				<div id="currentYearWrap" class="chat-rating">
+					<div id="currentYearBG"></div>
+					<span id="currentYear">4000 B.C.</span>
+				</div>
+			
+				<div class="no-padding moves">
+					<button id="endTurn" class="btn btn-xs btn-responsive fwBlue">End Turn</button>
+					<span title="Energy is used to move and rush troops.">
+						Energy <i class="fa fa-bolt"></i>
+					</span>
+				</div>
+				
+				<div class="no-padding">
+					<div class="barWrap resourceBar resourceBarParent">
+						<div id="energyBar" class="resourceBar"></div>
+						<div id="energyIndicator"></div>
+						<div class="resourceIndicator resourceRight abs">
+							<span id="moves">4</span> 
+							+<span id="sumMoves">4</span>
+						</div>
+					</div>
+				</div>
+			
+				<div class="no-padding production">
+					<span  title="Productions Bonus">
+						+<span id="productionBonus">0</span>%
+					</span>
+					<span  title="Production is used to deploy troops, build structures, and research technology.">
+						Production <i class="fa fa-gavel"></i>
+					</span>
+				</div>
+				
+				<div class="no-padding">
+					<div class="resourceIndicator">
+						<span id="production">0</span> 
+						<span  title="Production per turn">
+							+<span id="sumProduction">0</span>
+						</span>
+					</div>
+				</div>
+				
+				<div class="no-padding food">
+					<span  title="Food Bonus">
+						+<span id="foodBonus">0</span>%
+					</span>
+					<span  title="Food milestones produce additional troops">
+						Food <i class="glyphicon glyphicon-apple"></i> 
+					</span>
+				</div>
+				
+				<div class="no-padding">
+					<div id="foodBarWrap" class="barWrap resourceBar resourceBarParent">
+						<div id="foodBar" class="resourceBar"></div>
+						<div class="resourceIndicator resourceCenter abs">
+							<span id="food">0</span>/<span id="foodMax">25</span> 
+							+<span id="sumFood">0</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="no-padding culture">
+					<span  title="Culture Bonus">
+						+<span id="cultureBonus">0</span>%
+					</span>
+					<span  title="Culture milestones produce special rewards">
+						Culture <i class="fa fa-flag"></i>
+					</span>
+				</div>
+				
+				<div class="no-padding">
+					<div id="cultureBarWrap" class="barWrap resourceBar resourceBarParent">
+						<div id="cultureBar" class="resourceBar"></div>
+						<div class="resourceIndicator resourceCenter abs">
+							<span id="culture">0</span>/<span id="cultureMax">300</span> 
+							+<span id="sumCulture">0</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
 		<div id="ui2" class="blueBg gameWindow">
 			<div class="flagWrapper">
 				<img id="ui2-flag" class="ui2-flag">
@@ -925,98 +1016,6 @@
 			
 		</div>
 		
-			
-		<div id="resources-ui" class="shadow4 blueBg gameWindow">
-			<div id="resourceHead">
-				<i id="hotkeys" class="pointer options fa fa-keyboard-o" title="Hotkeys"></i>
-				<i id="options" class="pointer options fa fa-volume-up" title="Audio"></i>
-				<i id="surrender" class="pointer fa fa-flag" title="Surrender"></i>
-				<i id="exitSpectate" class="pointer fa fa-times-circle"></i>
-			</div>
-			<div id="resourceBody">
-			
-				<div id="currentYearWrap" class="chat-rating">
-					<div id="currentYearBG">&emsp;&emsp;</div>
-					<span id="currentYear">4000 B.C.</span>
-				</div>
-			
-				<div class="no-padding moves">
-					<button id="endTurn" class="btn btn-xs btn-responsive fwBlue">End Turn</button>
-					<span title="Energy is used to move and rush troops.">
-						Energy <i class="fa fa-bolt"></i>
-					</span>
-				</div>
-				
-				<div class="no-padding">
-					<div class="barWrap resourceBar resourceBarParent">
-						<div id="energyBar" class="resourceBar"></div>
-						<div id="energyIndicator"></div>
-						<div class="resourceIndicator resourceRight abs">
-							<span id="moves">4</span> 
-							+<span id="sumMoves">4</span>
-						</div>
-					</div>
-				</div>
-			
-				<div class="no-padding production">
-					<span  title="Productions Bonus">
-						+<span id="productionBonus">0</span>%
-					</span>
-					<span  title="Production is used to deploy troops, build structures, and research technology.">
-						Production <i class="fa fa-gavel"></i>
-					</span>
-				</div>
-				
-				<div class="no-padding">
-					<div class="resourceIndicator">
-						<span id="production">0</span> 
-						<span  title="Production per turn">
-							+<span id="sumProduction">0</span>
-						</span>
-					</div>
-				</div>
-				
-				<div class="no-padding food">
-					<span  title="Food Bonus">
-						+<span id="foodBonus">0</span>%
-					</span>
-					<span  title="Food milestones produce additional troops">
-						Food <i class="glyphicon glyphicon-apple"></i> 
-					</span>
-				</div>
-				
-				<div class="no-padding">
-					<div id="foodBarWrap" class="barWrap resourceBar resourceBarParent">
-						<div id="foodBar" class="resourceBar"></div>
-						<div class="resourceIndicator resourceCenter abs">
-							<span id="food">0</span>/<span id="foodMax">25</span> 
-							+<span id="sumFood">0</span>
-						</div>
-					</div>
-				</div>
-				
-				<div class="no-padding culture">
-					<span  title="Culture Bonus">
-						+<span id="cultureBonus">0</span>%
-					</span>
-					<span  title="Culture milestones produce special rewards">
-						Culture <i class="fa fa-flag"></i>
-					</span>
-				</div>
-				
-				<div class="no-padding">
-					<div id="cultureBarWrap" class="barWrap resourceBar resourceBarParent">
-						<div id="cultureBar" class="resourceBar"></div>
-						<div class="resourceIndicator resourceCenter abs">
-							<span id="culture">0</span>/<span id="cultureMax">300</span> 
-							+<span id="sumCulture">0</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-		</div>
-		
 		<div id="hotkey-ui" class="shadow4">Press V to toggle the UI</div>
 		<div id="diplomacy-ui" class="shadow4 blueBg gameWindow"></div>
 		
@@ -1173,6 +1172,7 @@
 			]
 		} else {
 			var scripts = [
+				'ui',
 				'payment',
 				'stats',
 				'animate',
@@ -1182,7 +1182,6 @@
 				'ws',
 				'audio',
 				'map',
-				'ui',
 				'actions',
 				'events'
 			]

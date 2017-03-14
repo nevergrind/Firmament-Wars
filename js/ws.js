@@ -36,13 +36,7 @@ var socket = {
 			// remove from channel
 			channel = channel.trim();
 			if (channel === my.channel){
-				/* fail silently
-				var o = {
-					message: "You're already in that channel.",
-					type: 'chat-muted'
-				};
-				title.chat(o);
-				*/
+				// fail silently 
 			} else {
 				$.ajax({
 					type: "POST",

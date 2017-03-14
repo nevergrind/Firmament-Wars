@@ -68,8 +68,12 @@
 var stats = {
 	init: function(data){
 		var flag = my.flag === 'Default.jpg' ? 'Player'+ game.player[my.player].playerColor +'.jpg' : my.flag;
-		var str = '<img id="statWorld" src="images/FlatWorld50-2.jpg">\
-		<div id="statResult" class="no-select">\
+		if (isMobile){
+			var str = '<img id="statWorld" style="display: none">';
+		} else {
+			var str = '<img id="statWorld" src="images/FlatWorld50-2.jpg">';
+		}
+		str += <div id="statResult" class="no-select">\
 			<span id="statGameResult">Defeat in '+ ui.transformYear(data.resourceTick) +'</span>!\
 			<img class="statResultFlag pull-left" src="images/flags/'+ flag +'">\
 			<img class="statResultFlag pull-right" src="images/flags/'+ flag +'">\
@@ -110,16 +114,28 @@ var stats = {
 		</div>';
 		document.getElementById('statWrap').innerHTML = str;
 		stats.events();
-		TweenMax.to("#statWorld", 300, {
-			startAt: {
+		if (isMobile){
+			document.getElementById('statWorld').style.display = 'none';
+			TweenMax.set('#statWorld', {
 				xPercent: -50,
 				yPercent: -50,
-				rotation: -360
-			},
-			rotation: 0,
-			repeat: -1,
-			ease: Linear.easeNone
-		});
+				top: '50%',
+				left: '50%',
+				width: '1600px',
+				height: '1600px'
+			});
+		} else {
+			TweenMax.to("#statWorld", 300, {
+				startAt: {
+					xPercent: -50,
+					yPercent: -50,
+					rotation: -360
+				},
+				rotation: 0,
+				repeat: -1,
+				ease: Linear.easeNone
+			});
+		}
 		stats.setLeaderValues();
 	},
 	show: function(data){
@@ -163,16 +179,16 @@ var stats = {
 		$("#worldWrap, #targetWrap, #ui2, #resources-ui, #diplomacy-ui, #chat-ui, #chat-input, #surrenderScreen").remove();
 	},
 	events: function(){
-		$("#statWrap").on('click', '.statTabs', function(){
+		$("#statWrap").on(ui.click, '.statTabs', function(){
 			$(".statTabs").removeClass('active');
 			$(this).addClass('active');
 			audio.play('switch13');
 			// load data
 			var id = $(this).attr('id');
 			stats.setView(id);
-		}).on('click', '#statsEndGame', function(){
+		}).on(ui.click, '#statsEndGame', function(){
 			location.reload();
-		}).on('click', '#ribbonBackdrop', function(){
+		}).on(ui.click, '#ribbonBackdrop', function(){
 			TweenMax.to('#ribbonBackdrop, #ribbonReward', .25, {
 				alpha: 0,
 				onComplete: function(){

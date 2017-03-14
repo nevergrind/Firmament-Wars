@@ -5,7 +5,7 @@ var payment = {
 		$("#payment-errors").text(msg);
 	},
 	init: (function(){
-		$("#payment-confirm").on('click', function(e) {
+		$("#payment-confirm").on(ui.click, function(e) {
 			
 			g.lock();
 			var response = {};

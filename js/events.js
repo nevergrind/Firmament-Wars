@@ -12,20 +12,32 @@ var events = {
 		}).on('load', function(){
 			resizeWindow();
 			// background map
-			TweenMax.to("#worldTitle", 600, {
-				startAt: {
+			if (isMobile){
+				document.getElementById('worldTitle').style.display = 'none';
+				TweenMax.set('#worldTitle', {
 					xPercent: -50,
 					yPercent: -50,
-					rotation: -360
-				},
-				rotation: 0,
-				repeat: -1,
-				ease: Linear.easeNone
-			});
+					top: '50%',
+					left: '50%',
+					width: '1600px',
+					height: '1600px'
+				});
+			} else {
+				TweenMax.to("#worldTitle", 600, {
+					startAt: {
+						xPercent: -50,
+						yPercent: -50,
+						rotation: -360
+					},
+					rotation: 0,
+					repeat: -1,
+					ease: Linear.easeNone
+				});
+			}
 		});
 	})(),
 	title: (function(){
-		$("#mainWrap").on('click', '.titlePlayerAccount, .lobbyAccountName', function(){
+		$("#mainWrap").on(ui.click, '.titlePlayerAccount, .lobbyAccountName', function(){
 			title.who('/who '+ $(this).text());
 		});
 		$("#gameView").on('dragstart', 'img', function(e) {
@@ -35,12 +47,12 @@ var events = {
 			event.preventDefault();
 		});
 
-		$("#logout").on('click', function() {
+		$("#logout").on(ui.click, function() {
 			playerLogout();
 			return false;
 		});
 
-		$("#titleMenu").on("click", ".wars", function(){
+		$("#titleMenu").on(ui.click, ".wars", function(){
 			var gameName = $(this).data("name");
 			$("#joinGame").val(gameName);
 			$("#joinGamePassword").val('');
@@ -90,23 +102,23 @@ var events = {
 			console.info(speed);
 			$("#createGameSpeed").text(speed);
 		}
-		$("#mainWrap").on('click', '.chat-join', function(){
+		$("#mainWrap").on(ui.click, '.chat-join', function(){
 			socket.setChannel($(this).text());
 		});
-		$("#create").on("click", function(){
+		$("#create").on(ui.click, function(){
 			openCreateGameModal('ffa');
 		});
-		$("#createRankedBtn").on("click", function(){
+		$("#createRankedBtn").on(ui.click, function(){
 			openCreateGameModal('ranked');
 		});
-		$("#createTeamBtn").on("click", function(){
+		$("#createTeamBtn").on(ui.click, function(){
 			openCreateGameModal('team');
 		});
 
-		$("#createGame").on("click", function(e){
+		$("#createGame").on(ui.click, function(e){
 			title.createGame();
 		});
-		$("body").on("click", '#options', function(){
+		$("body").on(ui.click, '#options', function(){
 			TweenMax.to(document.getElementById("optionsModal"), g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
@@ -117,7 +129,7 @@ var events = {
 				alpha: 1
 			});
 			title.showBackdrop();
-		}).on("click", '#hotkeys', function(){
+		}).on(ui.click, '#hotkeys', function(){
 			TweenMax.to(document.getElementById("hotkeysModal"), g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
@@ -129,25 +141,25 @@ var events = {
 			});
 			title.showBackdrop();
 		});
-		$("#hotkeysDone, #optionsDone, #cancelCreateGame").on("click", function(){
+		$("#hotkeysDone, #optionsDone, #cancelCreateGame").on(ui.click, function(){
 			title.closeModal();
 		});
 
 
 		// cached values on client to reduce DB load
 
-		$("#joinPrivateGameModal").on("click", "#joinPrivateGameBtn", function(){
+		$("#joinPrivateGameModal").on(ui.click, "#joinPrivateGameBtn", function(){
 			title.joinGame();
 		});
 
-		$("#mainWrap").on("click", "#cancelGame", function(){
+		$("#mainWrap").on(ui.click, "#cancelGame", function(){
 			exitGame();
-		}).on("click", "#startGame", function(){
+		}).on(ui.click, "#startGame", function(){
 			lobby.startGame();
-		}).on("click", '.addFriend', function(){
+		}).on(ui.click, '.addFriend', function(){
 			title.toggleFriend($(this).data('account'));
 		});
-		$("#toggleNation").on("click", function(){
+		$("#toggleNation").on(ui.click, function(){
 			var img = new Image();
 			img.src = 'php/avatars/'+ ~~(nationRow / 10000) +'/'+ nationRow +'.jpg?v='+ Date.now();
 			img.onload = function(){
@@ -171,7 +183,7 @@ var events = {
 			DOM.ribbonWrap.style.visibility = 'hidden';
 		});
 		*/
-		$("#joinPrivateGameBtn").on("click", function(){
+		$("#joinPrivateGameBtn").on(ui.click, function(){
 			var e = $("#joinGame");
 			e.val('');
 			TweenMax.to('#joinPrivateGameModal', g.modalSpeed, {
@@ -188,7 +200,7 @@ var events = {
 			});
 			title.showBackdrop();
 		});
-		$("#mainWrap").on("click", ".unlockGameBtn", function(){ 
+		$("#mainWrap").on(ui.click, ".unlockGameBtn", function(){ 
 			title.closeModal();
 			TweenMax.to('#unlockGame', g.modalSpeed, {
 				startAt: {
@@ -204,7 +216,7 @@ var events = {
 			}, 100);
 			title.showBackdrop();
 		});
-		$("#leaderboardBtn").on('click', function(){
+		$("#leaderboardBtn").on(ui.click, function(){
 			TweenMax.to(document.getElementById('leaderboard'), g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
@@ -217,20 +229,20 @@ var events = {
 			title.showBackdrop();
 			title.getLeaderboard('FFA');
 		});
-		$("#leaderboardFFABtn").on('click', function(){
+		$("#leaderboardFFABtn").on(ui.click, function(){
 			title.getLeaderboard('FFA');
 		});
-		$("#leaderboardRankedBtn").on('click', function(){
+		$("#leaderboardRankedBtn").on(ui.click, function(){
 			title.getLeaderboard('Ranked');
 		});
-		$("#leaderboardTeamBtn").on('click', function(){
+		$("#leaderboardTeamBtn").on(ui.click, function(){
 			title.getLeaderboard('Team');
 		});
-		$("#endTurn").on('click', function(){
+		$("#endTurn").on(ui.click, function(){
 			action.endTurn();
 		});
 
-		$("#flagDropdown").on('click', '.flagSelect', function(e){
+		$("#flagDropdown").on(ui.click, '.flagSelect', function(e){
 			my.selectedFlag = $(this).text();
 			my.selectedFlagFull = my.selectedFlag === "Nepal" ? my.selectedFlag+".png" : my.selectedFlag+".jpg";
 			$(".flagPurchaseStatus").css("display", "none");
@@ -251,11 +263,13 @@ var events = {
 				});
 				Msg("Your nation's flag is now: " + my.selectedFlag);
 				document.getElementById('selectedFlag').textContent = my.selectedFlag;
-				$("[title]")
-					.tooltip('fixTitle')
-					.tooltip({
-						animation: false
-					});
+				if (!isMobile){
+					$("[title]")
+						.tooltip('fixTitle')
+						.tooltip({
+							animation: false
+						});
+				}
 			}).always(function(){
 				g.unlock(1);
 				TweenMax.to("#updateNationFlag", 1, {
@@ -282,43 +296,43 @@ var events = {
 		$("#refreshGameWrap").on("blur", "#gameName", function(){
 			g.focusGameName = false;
 		});
-		$("#titleViewBackdrop").on('click', function(){
+		$("#titleViewBackdrop").on(ui.click, function(){
 			title.closeModal();
 		});
-		$("#mainWrap").on('click', '#unlockGameDone, #configureNationDone, #leaderboardDone', function(){
+		$("#mainWrap").on(ui.click, '#unlockGameDone, #configureNationDone, #leaderboardDone', function(){
 			audio.play('click');
 			title.closeModal();
 		});
-		$("#autoJoinGame").on('click', function(){
+		$("#autoJoinGame").on(ui.click, function(){
 			$("#joinGame").val('');
 			audio.play('click');
 			$("#joinGamePassword").val();
-			$(".wars-FFA").filter(":first").trigger("click"); 
+			$(".wars-FFA").filter(":first").trigger(ui.click); 
 			if (!$("#joinGame").val()){
 				Msg("No FFA games found!", 1.5);
 			} else {
 				title.joinGame();
 			}
 		});
-		$("#joinTeamGame").on('click', function(){
+		$("#joinTeamGame").on(ui.click, function(){
 			$("#joinGame").val('');
 			audio.play('click');
 			$("#joinGamePassword").val();
-			$(".wars-Team").filter(":first").trigger("click"); 
+			$(".wars-Team").filter(":first").trigger(ui.click); 
 			if (!$("#joinGame").val()){
 				Msg("No team games found!", 1.5);
 			} else {
 				title.joinGame();
 			}
 		});
-		$("#overlay").on('click', function(){
+		$("#overlay").on(ui.click, function(){
 			g.searchingGame = false;
 			TweenMax.set(DOM.Msg, {
 				opacity: 0
 			});
 			g.unlock();
 		});
-		$("#joinRankedGame").on('click', function(){
+		$("#joinRankedGame").on(ui.click, function(){
 			audio.play('click');
 			g.lock();
 			g.searchingGame = true;
@@ -362,7 +376,7 @@ var events = {
 		}).on('blur', function(){
 			lobby.chatOn = false;
 		});
-		$("#lobbyChatSend").on('click', function(){
+		$("#lobbyChatSend").on(ui.click, function(){
 			lobby.sendMsg(true);
 		});
 		// prevents auto scroll while scrolling
@@ -371,7 +385,7 @@ var events = {
 		}).on('mouseup', function(){
 			lobby.chatDrag = false;
 		});
-		$("#joinGameLobby").on('click', '.governmentChoice', function(e){
+		$("#joinGameLobby").on(ui.click, '.governmentChoice', function(e){
 			// changes player's own government only
 			var government = $(this).text();
 			lobby.updateGovernmentWindow(government);
@@ -382,7 +396,7 @@ var events = {
 				}
 			});
 			e.preventDefault();
-		}).on('click', '.playerColorChoice', function(e){
+		}).on(ui.click, '.playerColorChoice', function(e){
 			var playerColor = $(this).data('playercolor');
 			$.ajax({
 				url: 'php/changePlayerColor.php',
@@ -394,7 +408,7 @@ var events = {
 			}).fail(function(data){
 				Msg(data.statusText, 1.5);
 			});
-		}).on('click', '.teamChoice', function(e){
+		}).on(ui.click, '.teamChoice', function(e){
 			var team = $(this).text().slice(5);
 			console.info("TEAM: ", team);
 			$.ajax({
@@ -443,10 +457,10 @@ var events = {
 				//console.info(e.offsetX, e.offsetY);
 			}
 		});
-		$("#resources-ui").on('click', '#surrender', function(e){
+		$("#resources-ui").on(ui.click, '#surrender', function(e){
 			surrenderMenu(); 
 		});
-		$("#createGameWrap").on('click', '.mapSelect', function(e){
+		$("#createGameWrap").on(ui.click, '.mapSelect', function(e){
 			var x = $(this).text();
 			var key = x.replace(/ /g,'');
 			g.map.name = x;
@@ -461,10 +475,10 @@ var events = {
 			}
 			e.preventDefault();
 		});
-		$("#mainWrap").on('click', '.gameSelect', function(e){
+		$("#mainWrap").on(ui.click, '.gameSelect', function(e){
 			e.preventDefault();
 		});
-		$("#mainWrap").on('click', '.speedSelect', function(e){
+		$("#mainWrap").on(ui.click, '.speedSelect', function(e){
 			var x = $(this).text()*1;
 			g.speed = x;
 			$("#createGameSpeed").text(x);
@@ -490,11 +504,11 @@ var events = {
 		});
 	})(),
 	game: (function(){
-		$("#cancelSurrenderButton").on('click', function(){
+		$("#cancelSurrenderButton").on(ui.click, function(){
 			audio.play('click');
 			document.getElementById('surrenderScreen').style.display = 'none';
 		});
-		$("#surrenderButton").on('click', function(){
+		$("#surrenderButton").on(ui.click, function(){
 			surrender();
 		});
 	})()
@@ -588,6 +602,8 @@ $(document).on('keydown', function(e){
 				// s
 				var o = new Target({
 					cost: 1, 
+					attackName: 'splitAttack',
+					hudMsg: 'Split Attack: Select Target',
 					splitAttack: true
 				});
 				console.info(o.cost);

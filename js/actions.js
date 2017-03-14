@@ -7,7 +7,7 @@ function Target(o){
 	this.minimum = o.minimum !== undefined ? o.minimum : 2;
 	this.attackName = o.attackName ? o.attackName : 'attack';
 	this.splitAttack = o.splitAttack ? o.splitAttack : false;
-	this.hudMsg = o.hudMsg ? o.hudMsg : 'Select Target';
+	this.hudMsg = o.hudMsg ? o.hudMsg : 'Attack: Select Target';
 }
 
 var action = {
@@ -68,6 +68,7 @@ var action = {
 				return;
 			}
 		}
+		
 		my.attackOn = false;
 		my.attackName = '';
 		if (game.tiles[my.tgt].units === 1){
@@ -488,6 +489,8 @@ $("#gameWrap").on("mousedown", '#attack', function(e){
 	if (e.which === 1){
 		var o = new Target({
 			cost: 1,
+			attackName: 'splitAttack',
+			hudMsg: 'Split Attack: Select Target',
 			splitAttack: true
 		});
 		action.target(o);

@@ -228,7 +228,7 @@ var animate = {
 			h1 = 50,
 			w2 = w1/2,
 			h2 = h1/2 - 10;
-		if (!isMSIE && !isMSIE11){
+		if (!isMSIE && !isMSIE11 && !isMobile){
 			for (var i=0; i<shots; i++){
 				(function(){
 					var path = document.createElementNS("http://www.w3.org/2000/svg","path"),
@@ -525,7 +525,7 @@ var animate = {
 		// drop bomb svg
 		var bomb = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 		bomb.setAttributeNS(null, "cx", x);
-		bomb.setAttributeNS(null, "cy", y - g.screen.height);
+		bomb.setAttributeNS(null, "cy", y - window.innerHeight);
 		bomb.setAttributeNS(null, "r", 15);
 		bomb.setAttributeNS(null,"fill",g.color[game.player[attacker].playerColor]);
 		bomb.setAttributeNS(null,"stroke","#ffddaa");

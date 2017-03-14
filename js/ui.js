@@ -1,5 +1,115 @@
 // ui.js
+
+function checkMobile(){
+	var x = false;
+	if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent) 
+    || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0,4))) x = true;
+	return x;
+};
+// browser/environment checks
+var isXbox = /Xbox/i.test(navigator.userAgent),
+    isPlaystation = navigator.userAgent.toLowerCase().indexOf("playstation") >= 0,
+    isNintendo = /Nintendo/i.test(navigator.userAgent),
+    isMobile = checkMobile(),
+    isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0,
+    isFirefox = typeof InstallTrigger !== 'undefined',
+    isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0,
+    isChrome = !!window.chrome && !isOpera,
+    isMSIE = /*@cc_on!@*/ false,
+    isMSIE11 = !!navigator.userAgent.match(/Trident\/7\./);
+// browser dependent
+(function(){
+	var x = localStorage.getItem('isMobile');
+	if (isMSIE || isMSIE11){
+		//alert("Firmament Wars does not support Internet Explorer. Consider using Chrome or Firefox for an enjoyable experience.");
+		//window.stop();
+		if (x === null){
+			alert("Oh no! It looks like you're using Internet Explorer! Please consider using Chrome or Firefox for a better experience!");
+		}
+		$("head").append('<style> text { font-family: Verdana; stroke-width: 0; stroke: #000; fill: #fff; } .unit{ font-size: 26px; } </style>');
+	} else if (isSafari){
+		//alert("Firmament Wars does not support Safari. Consider using Chrome or Firefox for an enjoyable experience.");
+		//window.stop();
+		if (x === null){
+			alert("Oh no! It looks like you're using Safari! Please consider using Chrome or Firefox for a better experience!");
+		}
+		$("head").append('<style> text { fill: #ffffff; stroke: none; stroke-width: 0px; } </style>');
+	} else {
+		$("head").append('<style> text { fill: rgba(255,255,255,1); stroke: rgba(0,0,0,1); stroke-width: 3; stroke-linejoin: round; paint-order: stroke; } </style>');
+	}
+	
+	if (isMobile){
+		//window.stop();
+		//alert("Firmament Wars is currently not available on mobile devices. Sorry about that! It runs like trash on mobile, so I'm probably doing you a favor.");
+		 $("head").append('<style>'+
+			'*{ box-shadow: none !important; border-radius: 0 !important; } '+
+			'.fw-primary{ background: #04061a; border: 1px solid #357; } '+
+			'#titleChatPlayers,#statWrap, #joinGameLobby{ background: rgba(0,12,32,1); } '+
+			'#refreshGameWrap{ background: none; } '+
+			'#hud{ top: 60px; }'+
+			'#target-ui, #targetLineShadow, .chat-img{ display: none; }'+
+			'</style>');
+	}
+	localStorage.setItem('isMobile', isMobile);
+})();
+
+function resizeWindow() {
+    var winWidth = window.innerWidth,
+		winHeight = window.innerHeight
+		b = document.getElementById('body'),
+		ht = document.getElementsByTagName('html'),
+		ht = ht[0];
+    // game ratio
+    var widthToHeight = window.innerWidth / window.innerHeight;
+    // current window size
+    var w = winWidth > window.innerWidth ? window.innerWidth : winWidth;
+    var h = winHeight > window.innerHeight ? window.innerHeight : winHeight;
+    if(w / h > widthToHeight){
+    	// too tall
+    	w = ~~(h * widthToHeight);
+    } else {
+    	// too wide
+    	h = ~~(w / widthToHeight);
+    }
+	ht.style.height = h + 'px';
+	ht.style.width = w + 'px';
+	b.style.width = w + 'px';
+	b.style.height = h + 'px';
+	TweenMax.set([b, ht], {
+		x: ~~(w/2 + ((winWidth - w) / 2)),
+		y: ~~(h/2 + ((winHeight - h) / 2)),
+		opacity: 1,
+		visibility: 'visible',
+		yPercent: -50,
+		xPercent: -50,
+		force3D: true
+	});
+	g.resizeX = w / window.innerWidth;
+	g.resizeY = h / window.innerHeight;
+	TweenMax.set("#worldTitle", {
+		xPercent: -50,
+		yPercent: -50
+	});
+	if (g.view === 'title'){
+		TweenMax.set("#firmamentWarsLogo", {
+			yPercent: -50,
+			top: '40%'
+		});
+		g.chat('Resized viewport to '+ w +' x '+ h, 'chat-muted');
+	}
+	if (g.view === 'game'){
+		g.screen.resizeMap();
+		if (typeof worldMap[0] !== 'undefined'){
+			worldMap[0].applyBounds();
+		}
+	}
+}
+
 var ui = {
+	click: isMobile ? 'mousedown' : 'click',
+	delay: function(d){
+		return isMobile ? 0 : d;
+	},
 	showTarget: function(e, hover, skipOldTgtUpdate){
 		if (e.id === undefined){
 			e.id = 'land0';
@@ -27,38 +137,42 @@ var ui = {
 								+ my.targetLine[4] +","+ my.targetLine[5]
 					}
 				});
-				TweenMax.set(DOM.targetLine, {
-					visibility: 'visible',
-					attr: {
-						d: "M " + my.targetLine[0] +","+ my.targetLine[1] + 
-							" Q " + my.targetLine[2] +" "+ my.targetLine[3] + " " 
-							+ my.targetLine[4] +" "+ my.targetLine[5]
-					}
-				});
+				if (!isMobile){
+					TweenMax.set(DOM.targetLine, {
+						visibility: 'visible',
+						attr: {
+							d: "M " + my.targetLine[0] +","+ my.targetLine[1] + 
+								" Q " + my.targetLine[2] +" "+ my.targetLine[3] + " " 
+								+ my.targetLine[4] +" "+ my.targetLine[5]
+						}
+					});
 				
-				TweenMax.to([DOM.targetLine, DOM.targetLineShadow], .2, {
-					startAt: {
-						strokeDashoffset: 0
-					},
-					strokeDashoffset: -12,
-					repeat: -1,
-					ease: Linear.easeNone
-				});
+					TweenMax.to([DOM.targetLine, DOM.targetLineShadow], .2, {
+						startAt: {
+							strokeDashoffset: 0
+						},
+						strokeDashoffset: -12,
+						repeat: -1,
+						ease: Linear.easeNone
+					});
+				}
 				// crosshair game.tiles[tileId].player === my.player ? '#aa0000' : '#00cc00',
-				TweenMax.set(DOM.targetCrosshair, {
-					fill: '#00dd00',
-					visibility: 'visible',
-					x: my.targetLine[4] - 255,
-					y: my.targetLine[5] - 257,
-					transformOrigin: '50% 50%'
-				})
-				TweenMax.fromTo(DOM.targetCrosshair, .2, {
-					scale: .1
-				}, {
-					repeat: -1,
-					yoyo: true,
-					scale: .08
-				});
+				if (!isMobile){
+					TweenMax.set(DOM.targetCrosshair, {
+						fill: '#00dd00',
+						visibility: 'visible',
+						x: my.targetLine[4] - 255,
+						y: my.targetLine[5] - 257,
+						transformOrigin: '50% 50%'
+					})
+					TweenMax.fromTo(DOM.targetCrosshair, .2, {
+						scale: .1
+					}, {
+						repeat: -1,
+						yoyo: true,
+						scale: .08
+					});
+				}
 			}
 			// tile data
 			if (!skipOldTgtUpdate){
@@ -129,24 +243,26 @@ function updateTileInfo(tileId){
 		name = t.name;
 		account = t.account;
 	}
-	if (game.player[t.player].avatar){
-		DOM.avatarWrap.style.display = 'table-cell';
-		DOM.avatar.src = game.player[t.player].avatar;
-	} else {
-		DOM.avatarWrap.style.display = 'none';
-	}
-	if (game.player[t.player].ribbons === undefined){
-		DOM.ribbonWrap.style.display = 'none';
-	} else {
-		DOM.ribbonWrap.style.display = 'table-cell';
-		if (game.player[t.player].ribbonArray.length >= 24){
-			DOM.ribbonWrap.className = 'tight wideRack';
+	if (!isMobile){
+		if (game.player[t.player].avatar){
+			DOM.avatarWrap.style.display = 'table-cell';
+			DOM.avatar.src = game.player[t.player].avatar;
 		} else {
-			DOM.ribbonWrap.className = 'tight narrowRack';
+			DOM.avatarWrap.style.display = 'none';
 		}
+		if (game.player[t.player].ribbons === undefined){
+			DOM.ribbonWrap.style.display = 'none';
+		} else {
+			DOM.ribbonWrap.style.display = 'table-cell';
+			if (game.player[t.player].ribbonArray.length >= 24){
+				DOM.ribbonWrap.className = 'tight wideRack';
+			} else {
+				DOM.ribbonWrap.className = 'tight narrowRack';
+			}
+		}
+		DOM.ribbonWrap.innerHTML = game.player[t.player].ribbons === undefined ? 
+			'' : game.player[t.player].ribbons;
 	}
-	DOM.ribbonWrap.innerHTML = game.player[t.player].ribbons === undefined ? 
-		'' : game.player[t.player].ribbons;
 	// tileName and bars
 	var o = {
 		food: 0,
@@ -161,18 +277,20 @@ function updateTileInfo(tileId){
 		o.culture = ~~(((t.culture > 8 ? 8 : t.culture) / 8) * 99);
 		o.defense = ~~((t.defense / 4) * 99);
 	}
-	if (my.attackOn){
-		DOM.targetTargetFlag.src = 'images/flags/' + flag;
-		DOM.targetTargetCapStar.style.display = t.capital ? 'display' : 'none';
-		DOM.targetTargetNameWrap.textContent = name;
-		DOM.targetTargetBarsWrap.innerHTML = ui.targetBars(o);
-		DOM.targetTargetWrap.style.visibility = 'visible';
-	} else {
-		DOM.targetFlag.src = 'images/flags/' + flag;
-		DOM.targetCapStar.style.display = t.capital ? 'display' : 'none';
-		DOM.targetNameWrap.textContent = name;
-		DOM.targetBarsWrap.innerHTML = ui.targetBars(o);
-		DOM.targetTargetWrap.style.visibility = 'hidden';
+	if (!isMobile){
+		if (my.attackOn){
+			DOM.targetTargetFlag.src = 'images/flags/' + flag;
+			DOM.targetTargetCapStar.style.display = t.capital ? 'display' : 'none';
+			DOM.targetTargetNameWrap.textContent = name;
+			DOM.targetTargetBarsWrap.innerHTML = ui.targetBars(o);
+			DOM.targetTargetWrap.style.visibility = 'visible';
+		} else {
+			DOM.targetFlag.src = 'images/flags/' + flag;
+			DOM.targetCapStar.style.display = t.capital ? 'display' : 'none';
+			DOM.targetNameWrap.textContent = name;
+			DOM.targetBarsWrap.innerHTML = ui.targetBars(o);
+			DOM.targetTargetWrap.style.visibility = 'hidden';
+		}
 	}
 	
 	var defWord = ['Bunker', 'Wall', 'Fortress'],
@@ -191,19 +309,21 @@ function updateTileInfo(tileId){
 		if (ind === 2){
 			defWord[2] = 'Fortresse';
 		}
-		var tooltip = defWord[ind] + 's upgrade the defense of a territory.' + defTooltip[ind];
-		$('#upgradeTileDefense')
-			.attr('title', tooltip)
-			.tooltip('fixTitle')
-			.tooltip('hide')
-			.tooltip({
-				animation: false
-			});
+		if (!isMobile){
+			var tooltip = defWord[ind] + 's upgrade the defense of a territory.' + defTooltip[ind];
+			$('#upgradeTileDefense')
+				.attr('title', tooltip)
+				.tooltip('fixTitle')
+				.tooltip('hide')
+				.tooltip({
+					animation: false
+				});
+		}
 	}
 	// actions panel
 	my.player === t.player ? 
 		DOM.tileActionsOverlay.style.display = 'none' : 
-		DOM.tileActionsOverlay.style.display = 'block';
+		DOM.tileActionsOverlay.style.display = 'none';
 	action.setMenu();
 }
 function setTileUnits(i, unitColor){
@@ -222,7 +342,7 @@ function setTileUnits(i, unitColor){
 		});
 		*/
 	} else {
-		TweenMax.to(DOM['unit' + i], .5, {
+		TweenMax.to(DOM['unit' + i], ui.delay(.5), {
 			startAt: {
 				fill: '#ff0000'
 			},
@@ -319,7 +439,7 @@ function triggerEndGame(msg, victory){
 		g.over = 1;
 	}, 1500);
 	stats.get();
-	if (!isMSIE && !isMSIE11){
+	if (!isMSIE && !isMSIE11 && !isMobile){
 		new Image('images/FlatWorld50-2.jpg');
 	}
 	setTimeout(function(){
@@ -344,17 +464,17 @@ function triggerEndGame(msg, victory){
 				});
 			}
 		});
-		$("#ceaseFire").on('click', function(){
+		$("#ceaseFire").on(ui.click, function(){
 			location.reload();
 		});
-		$("#spectate").on('click', function(e){
+		$("#spectate").on(ui.click, function(e){
 			$("#victoryScreen, #ui2, #resourceBody, #targetWrap").remove();
 			document.getElementById('surrender').style.display = "none";
 			document.getElementById('exitSpectate').style.display = "inline";
 			g.spectateStatus = 1;
 		});
-		$("#exitSpectate").on('click', function(){
-			$(this).off('click');
+		$("#exitSpectate").on(ui.click, function(){
+			$(this).off(ui.click);
 			stats.get();
 			TweenMax.to('#diplomacy-ui', 1, {
 				alpha: 0,
