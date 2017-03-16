@@ -46,7 +46,13 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
 			'.fw-primary{ background: #04061a; border: 1px solid #357; } '+
 			'#titleChatPlayers,#statWrap, #joinGameLobby{ background: rgba(0,12,32,1); } '+
 			'#refreshGameWrap{ background: none; } '+
-			'#hud{ top: 60px; }'+
+			'#hud{ top: 40px; }'+
+			'#diplomacy-ui, #ui2{ top: .25vh; }'+
+			'#resources-ui{ bottom: .5vh; }'+
+			'#lobbyLeftCol, #lobbyRightCol{ top: 1vh; }'+
+			'#chat-input{ bottom: 3vh; }'+
+			'#chat-ui{ bottom: 7vh; }'+
+			'.lobbyButtons, .fwDropdown, .govDropdown{ font-size: 1.25em; }'+
 			'#target-ui, #targetLineShadow, .chat-img{ display: none; }'+
 			'</style>');
 	}
@@ -56,9 +62,10 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
 function resizeWindow() {
     var winWidth = window.innerWidth,
 		winHeight = window.innerHeight
-		b = document.getElementById('body'),
-		ht = document.getElementsByTagName('html'),
-		ht = ht[0];
+		b = document.getElementById('body');
+	if (isMobile){
+		winHeight = ~~(winHeight * 1.1);
+	}
     // game ratio
     var widthToHeight = window.innerWidth / window.innerHeight;
     // current window size
@@ -71,11 +78,9 @@ function resizeWindow() {
     	// too wide
     	h = ~~(w / widthToHeight);
     }
-	ht.style.height = h + 'px';
-	ht.style.width = w + 'px';
 	b.style.width = w + 'px';
 	b.style.height = h + 'px';
-	TweenMax.set([b, ht], {
+	TweenMax.set(b, {
 		x: ~~(w/2 + ((winWidth - w) / 2)),
 		y: ~~(h/2 + ((winHeight - h) / 2)),
 		opacity: 1,
@@ -95,7 +100,6 @@ function resizeWindow() {
 			yPercent: -50,
 			top: '40%'
 		});
-		g.chat('Resized viewport to '+ w +' x '+ h, 'chat-muted');
 	}
 	if (g.view === 'game'){
 		g.screen.resizeMap();

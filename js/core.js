@@ -1061,18 +1061,20 @@ function Msg(msg, d) {
 		});
 	}
 	// split text animation
-	var tl = new TimelineMax();
-	var split = new SplitText(DOM.Msg, {
-		type: "words,chars"
-	});
-	var chars = split.chars;
-	tl.staggerFromTo(chars, .01, {
-		immediateRender: true,
-		alpha: 0
-	}, {
-		delay: .1,
-		alpha: 1
-	}, .01);
+	if (!isMobile){
+		var tl = new TimelineMax();
+		var split = new SplitText(DOM.Msg, {
+			type: "words,chars"
+		});
+		var chars = split.chars;
+		tl.staggerFromTo(chars, .01, {
+			immediateRender: true,
+			alpha: 0
+		}, {
+			delay: .1,
+			alpha: 1
+		}, .01);
+	}
 }
 
 function playerLogout(){

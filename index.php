@@ -48,14 +48,14 @@
 	
 	<meta name="mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
 	
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-33">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-46">
 	<script>
-		version = '1-0-33'; 
+		version = '1-0-46'; 
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>

@@ -1,10 +1,11 @@
 (function($,Math,document,location,TweenMax,TimelineMax,Power0,Power1,Power2,Power3,Power4,Back,Elastic,Bounce,SteppedEase,Circ,Expo,Sine,setTimeout,setInterval){function checkMobile(){var x=!1;if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0,4)))x=!0;return x};var isXbox=/Xbox/i.test(navigator.userAgent),isPlaystation=navigator.userAgent.toLowerCase().indexOf("playstation")>=0,isNintendo=/Nintendo/i.test(navigator.userAgent),isMobile=checkMobile(),isOpera=!!window.opera||navigator.userAgent.indexOf(' OPR/')>=0,isFirefox=typeof InstallTrigger!=='undefined',isSafari=Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor')>0,isChrome=!!window.chrome&&!isOpera,isMSIE=!1,isMSIE11=!!navigator.userAgent.match(/Trident\/7\./);(function(){var x=localStorage.getItem('isMobile');if(isMSIE||isMSIE11){if(x===null){alert("Oh no! It looks like you're using Internet Explorer! Please consider using Chrome or Firefox for a better experience!")}
 $("head").append('<style> text { font-family: Verdana; stroke-width: 0; stroke: #000; fill: #fff; } .unit{ font-size: 26px; } </style>')}else if(isSafari){if(x===null){alert("Oh no! It looks like you're using Safari! Please consider using Chrome or Firefox for a better experience!")}
 $("head").append('<style> text { fill: #ffffff; stroke: none; stroke-width: 0px; } </style>')}else{$("head").append('<style> text { fill: rgba(255,255,255,1); stroke: rgba(0,0,0,1); stroke-width: 3; stroke-linejoin: round; paint-order: stroke; } </style>')}
-if(isMobile){$("head").append('<style>'+'*{ box-shadow: none !important; border-radius: 0 !important; } '+'.fw-primary{ background: #04061a; border: 1px solid #357; } '+'#titleChatPlayers,#statWrap, #joinGameLobby{ background: rgba(0,12,32,1); } '+'#refreshGameWrap{ background: none; } '+'#hud{ top: 60px; }'+'#target-ui, #targetLineShadow, .chat-img{ display: none; }'+'</style>')}
+if(isMobile){$("head").append('<style>'+'*{ box-shadow: none !important; border-radius: 0 !important; } '+'.fw-primary{ background: #04061a; border: 1px solid #357; } '+'#titleChatPlayers,#statWrap, #joinGameLobby{ background: rgba(0,12,32,1); } '+'#refreshGameWrap{ background: none; } '+'#hud{ top: 40px; }'+'#diplomacy-ui, #ui2{ top: .25vh; }'+'#resources-ui{ bottom: .5vh; }'+'#lobbyLeftCol, #lobbyRightCol{ top: 1vh; }'+'#chat-input{ bottom: 3vh; }'+'#chat-ui{ bottom: 7vh; }'+'.lobbyButtons, .fwDropdown, .govDropdown{ font-size: 1.25em; }'+'#target-ui, #targetLineShadow, .chat-img{ display: none; }'+'</style>')}
 localStorage.setItem('isMobile',isMobile)})();function resizeWindow(){var winWidth=window.innerWidth,winHeight=window.innerHeight
-b=document.getElementById('body'),ht=document.getElementsByTagName('html'),ht=ht[0];var widthToHeight=window.innerWidth/window.innerHeight;var w=winWidth>window.innerWidth?window.innerWidth:winWidth;var h=winHeight>window.innerHeight?window.innerHeight:winHeight;if(w/h>widthToHeight){w=~~(h*widthToHeight)}else{h=~~(w/widthToHeight)}
-ht.style.height=h+'px';ht.style.width=w+'px';b.style.width=w+'px';b.style.height=h+'px';TweenMax.set([b,ht],{x:~~(w/2+((winWidth-w)/2)),y:~~(h/2+((winHeight-h)/2)),opacity:1,visibility:'visible',yPercent:-50,xPercent:-50,force3D:!0});g.resizeX=w/window.innerWidth;g.resizeY=h/window.innerHeight;TweenMax.set("#worldTitle",{xPercent:-50,yPercent:-50});if(g.view==='title'){TweenMax.set("#firmamentWarsLogo",{yPercent:-50,top:'40%'});g.chat('Resized viewport to '+w+' x '+h,'chat-muted')}
+b=document.getElementById('body');if(isMobile){winHeight=~~(winHeight*1.1)}
+var widthToHeight=window.innerWidth/window.innerHeight;var w=winWidth>window.innerWidth?window.innerWidth:winWidth;var h=winHeight>window.innerHeight?window.innerHeight:winHeight;if(w/h>widthToHeight){w=~~(h*widthToHeight)}else{h=~~(w/widthToHeight)}
+b.style.width=w+'px';b.style.height=h+'px';TweenMax.set(b,{x:~~(w/2+((winWidth-w)/2)),y:~~(h/2+((winHeight-h)/2)),opacity:1,visibility:'visible',yPercent:-50,xPercent:-50,force3D:!0});g.resizeX=w/window.innerWidth;g.resizeY=h/window.innerHeight;TweenMax.set("#worldTitle",{xPercent:-50,yPercent:-50});if(g.view==='title'){TweenMax.set("#firmamentWarsLogo",{yPercent:-50,top:'40%'})}
 if(g.view==='game'){g.screen.resizeMap();if(typeof worldMap[0]!=='undefined'){worldMap[0].applyBounds()}}}
 var ui={click:isMobile?'mousedown':'click',delay:function(d){return isMobile?0:d},showTarget:function(e,hover,skipOldTgtUpdate){if(e.id===undefined){e.id='land0'}
 if(typeof e==='object'){var tileId=e.id.slice(4)*1;var d=game.tiles[tileId];var cacheOldTgt=my.tgt;if(!hover){if(cacheOldTgt!==tileId){my.tgt=tileId;animate.selectTile(cacheOldTgt,tileId)}}
@@ -54,571 +55,135 @@ if(!Stripe.validateCVC(cvcNum)){error=!0;Msg('The CVC number is invalid.')}
 if(!Stripe.validateExpiry(expMonth,expYear)){error=!0;Msg('The expiration date is invalid.')}
 if(!error){$('#payment-errors').text('');Stripe.createToken({number:ccNum,cvc:cvcNum,exp_month:expMonth,exp_year:expYear},stripeResponseHandler)}else{g.unlock()}
 function stripeResponseHandler(status,response){if(response.error){console.info("ERROR!");Msg(response.error.message);g.unlock()}else{Msg("Communicating with the server...");$.ajax({url:"php/purchaseFw.php",data:{stripeToken:response.id}}).done(function(data){Msg("Thank you for your purchase!<br>Firmament Wars - Complete Game Unlocked!",8);setTimeout(function(){location.reload()},3000)}).fail(function(data){document.getElementById('payment-errors').textContent=data.error}).always(function(){g.unlock()})}}})})()};(function(){var isLoggedIn=$("#titleMenu").length;if(!isLoggedIn){var email=localStorage.getItem('email');var token=localStorage.getItem('token');if(email){if(token){$.ajax({type:'POST',url:'/php/master1.php',data:{run:"authenticate",email:email,token:token}}).done(function(data){if(data==="Login successful!"){$.ajax({type:'POST',url:'/php/master1.php',data:{run:"getToken",email:email}}).done(function(data){token=data;$.ajax({type:'POST',url:'/php/master1.php',data:{run:"authenticate",email:email,token:token}}).done(function(data){console.info(data);localStorage.setItem('token',token);location.reload()}).fail(function(data){console.warn(data)})})}else{console.warn("Persistent login failed! ",data)}})}else{$.ajax({type:'POST',url:'/php/master1.php',data:{run:"getToken",email:email}}).done(function(data){token=data})}}}})();var stats={init:function(data){var flag=my.flag==='Default.jpg'?'Player'+game.player[my.player].playerColor+'.jpg':my.flag;if(isMobile){var str='<img id="statWorld" style="display: none">'}else{var str='<img id="statWorld" src="images/FlatWorld50-2.jpg">'}
-str+=<div id="statResult" class="no-select">\<span id="statGameResult">Defeat in '+ ui.transformYear(data.resourceTick) +'</span>!\<img class="statResultFlag pull-left" src="images/flags/'+ flag +'">\<img class="statResultFlag pull-right" src="images/flags/'+ flag +'">\</div>\<div id="statTabWrap" class="no-select">\<div id="statOverview" class="statTabs active">\
-Overview\</div><div id="statUnits" class="statTabs">\
-Units\</div><div id="statStructures" class="statTabs">\
-Structures\</div><div id="statWeapons" class="statTabs">\
-Weapons\</div><div id="statResources" class="statTabs">\
-Resources\</div>\</div>\<table id="gameStatsTable" class="table"></table>\<div id="statFooter" class="container-fluid">\<div class="row">\<div id="statQuote" class="col-xs-7 stagBlue">\<div>'+ stats.data.quote +'</div>\<div id="statVerse" class="text-right">'+ stats.data.verse +'</div>\</div>\<div id="statDuration" class="col-xs-4 stagBlue text-center">\<div id="gameDuration">Game Duration '+ stats.gameDuration(data.gameDuration) +'</div>\<button id="statsEndGame" class="btn btn-responsive fwBlue shadow4">End Game</button>\</div>\</div>\</div>\<div id="ribbonBackdrop"></div>\<div id="ribbonReward" class="fw-primary titleModal">\<div class="header text-center">\<h2 class="header">Achievement Unlocked!</h2>\</div>\<hr class="fancyhr">\<div id="ribbonBody"></div>\</div>';
-		document.getElementById('statWrap').innerHTML = str;
-		stats.events();
-		if (isMobile){
-			document.getElementById('statWorld').style.display = 'none';
-			TweenMax.set('#statWorld', {
-				xPercent: -50,
-				yPercent: -50,
-				top: '50%',
-				left: '50%',
-				width: '1600px',
-				height: '1600px'
-			});
-		} else {
-			TweenMax.to("#statWorld", 300, {
-				startAt: {
-					xPercent: -50,
-					yPercent: -50,
-					rotation: -360
-				},
-				rotation: 0,
-				repeat: -1,
-				ease: Linear.easeNone
-			});
-		}
-		stats.setLeaderValues();
-	},
-	show: function(data){
-		DOM.bgmusic.loop = true;
-		stats.setView('statOverview');
-		if (g.victory){
-			audio.play('bell-8');
-			audio.play('TheAssault', 1);
-			document.getElementById('statGameResult').textContent = "Victory in "+ ui.transformYear(stats.data.resourceTick);
-		} else {
-			audio.play('defeat');
-			audio.play("JourneyOfForgottenSoldiers", 1);
-		}
-		document.getElementById('statWrap').style.visibility = 'visible';
-		TweenMax.to('#gameWrap', .5, {
-			startAt: {
-				alpha: 0
-			},
-			alpha: 1
-		});
-		if (stats.achievements.length){
-			audio.play('ding3');
-			TweenMax.to('#ribbonBackdrop', .5, {
-				startAt: {
-					visibility: 'visible',
-					alpha: 0
-				},
-				alpha: 1
-			});
-			TweenMax.to('#ribbonReward', 1, {
-				startAt: {
-					visibility: 'visible',
-					alpha: 0,
-					top: 0,
-					y: 0
-				},
-				alpha: 1,
-				y: 30
-			});
-		}
-		$("#worldWrap, #targetWrap, #ui2, #resources-ui, #diplomacy-ui, #chat-ui, #chat-input, #surrenderScreen").remove();
-	},
-	events: function(){
-		$("#statWrap").on(ui.click, '.statTabs', function(){
-			$(".statTabs").removeClass('active');
-			$(this).addClass('active');
-			audio.play('switch13');
-			// load data
-			var id = $(this).attr('id');
-			stats.setView(id);
-		}).on(ui.click, '#statsEndGame', function(){
-			location.reload();
-		}).on(ui.click, '#ribbonBackdrop', function(){
-			TweenMax.to('#ribbonBackdrop,#ribbonReward', .25, {
-				alpha: 0,
-				onComplete: function(){
-					TweenMax.set('#ribbonBackdrop,#ribbonReward', {
-						visibility: 'hidden'
-					});
-				}
-			});
-		});
-		
-	},
-	maxValue: {
-		unitsTotal: 0,
-		structuresTotal: 0,
-		weaponsTotal: 0,
-		resourcesTotal: 0,
-		overviewTotal: 0
-	},
-	setLeaderValues: function(){
-		for (var i=1; i<=8; i++){
-			var d = stats.data[i];
-			if (d !== undefined){
-				for (var key in d){
-					if (i === 1){
-						stats.maxValue[key] = d[key];
-					} else {
-						if (d[key] > stats.maxValue[key]){
-							stats.maxValue[key] = d[key];
-						}
-					}
-				}
-				var units = stats.unitsTotal(i),
-					structures = stats.structuresTotal(i),
-					weapons = stats.weaponsTotal(i),
-					resources = stats.resourcesTotal(i),
-					overview = stats.overviewTotal(i);
-				
-				if (units > stats.maxValue.unitsTotal){
-					stats.maxValue.unitsTotal = stats.unitsTotal(i);
-				}
-				if (structures > stats.maxValue.structuresTotal){
-					stats.maxValue.structuresTotal = structures;
-				}
-				if (weapons > stats.maxValue.weaponsTotal){
-					stats.maxValue.weaponsTotal = weapons;
-				}
-				if (resources > stats.maxValue.resourcesTotal){
-					stats.maxValue.resourcesTotal = resources;
-				}
-				if (overview > stats.maxValue.overviewTotal){
-					stats.maxValue.overviewTotal = overview;
-				}
-			}
-		}
-	},
-	currentTabId: '',
-	setView: function(id){
-		if (id !== stats.currentTabId){
-			stats.currentTabId = id;
-			var str = stats[id]();
-			document.getElementById('gameStatsTable').innerHTML = str;
-		}
-	},
-	barAnimate: new TweenMax.delayedCall(0, ''),
-	animate: function(a, delay){
-		setTimeout(function(){
-			var x = {
-				max: 100,
-				lastVal: 0
-			};
-			stats.barAnimate.kill();
-			stats.barAnimate = TweenMax.to(x, delay, {
-				startAt: {
-					max: 0
-				},
-				max: 100,
-				onUpdate: function(){
-					if (~~x.lastVal !== ~~x.max){
-						x.lastVal = x.max;
-						audio.play('rollover5');
-					}
-				},
-				onComplete: function(){
-					audio.play('switch11');
-				},
-				ease: Sine.easeOut
-			});
-			for (var i=1, len=a.length; i<len; i++){
-				var d = a[i];
-				(function(d, e, bar, Sine){
-					TweenMax.to(d, delay, {
-						startAt: {
-							max: 0
-						},
-						max: d.max,
-						onUpdate: function(){
-							e.textContent = ~~d.max;
-						},
-						ease: Sine.easeOut
-					});
-					TweenMax.to(bar, delay, {
-						startAt: {
-							width: 0
-						},
-						width : ((d.max / stats.maxValue[d.key]) * 100) + '%',
-						ease: Sine.easeOut
-					});
-				})(d, document.getElementById(d.id), document.getElementById(d.id + '-bar'), Sine);
-			}
-		});
-	},
-	statOverview: function(){
-		// head
-		var str = stats.playerHead(['Units', 'Structures', 'Weapons', 'Resources', 'Total Score']);
-		// player rows
-		var animate = [];
-		for (var i=1; i<=8; i++){
-			var d = stats.data[i];
-			if (stats.data[i] !== undefined){
-				// player data exists
-				var a = [{}, {
-						id: 'p'+ i +'-units',
-						max: stats.unitsTotal(i),
-						key: 'unitsTotal'
-					}, {
-						id: 'p'+ i +'-structures',
-						max: stats.structuresTotal(i),
-						key: 'structuresTotal'
-					}, {
-						id: 'p'+ i +'-weapons',
-						max: stats.weaponsTotal(i),
-						key: 'weaponsTotal'
-					}, {
-						id: 'p'+ i +'-resources',
-						max: stats.resourcesTotal(i),
-						key: 'resourcesTotal'
-					}, {
-						id: 'p'+ i +'-total',
-						max: stats.overviewTotal(i),
-						key: 'overviewTotal'
-					},
-				]
-				stats.animate(a, 1.5);
-				str += '<tr class="statRow">' +
-					stats.playerCell(d, i);
-					var color = game.player[i].playerColor,
-						a = ['units', 'structures', 'weapons', 'resources', 'total'],
-						len = a.length;
-					for (var j=0; j<len; j++){
-						var sumRow = (j+1 === len) ? ' statSum' : '';
-						str += 
-						'<td class="stagBlue statTD">\<div class="statBar pb'+ color +'">\<div id="p'+ i +'-'+ a[j] +'-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\<div id="p'+ i +'-'+ a[j] +'" class="statVal'+ sumRow +'">0</div>\</div>\</td>';
-					}
-				str += '</tr>\<tr class="statSpacer"></tr>';
-			}
-		}
-		return str;
-	},
-	statUnits: function(){
-		// head
-		var str = stats.playerHead(['Earned', 'Deployed', 'Killed', 'Lost']);
-		// player rows
-		for (var i=1; i<=8; i++){
-			var d = stats.data[i];
-			if (d !== undefined){
-				// player data exists
-				var a = [{}, {
-						id: 'p'+ i +'-earned',
-						max: d.earned,
-						key: 'earned'
-					}, {
-						id: 'p'+ i +'-deployed',
-						max: d.deployed,
-						key: 'deployed'
-					}, {
-						id: 'p'+ i +'-killed',
-						max: d.killed,
-						key: 'killed'
-					}, {
-						id: 'p'+ i +'-lost',
-						max: d.lost,
-						key: 'lost'
-					},
-				]
-				stats.animate(a, 1.5);
-				str += '<tr class="stagBlue statRow">' +
-					stats.playerCell(d, i);
-					var color = game.player[i].playerColor,
-						a = ['earned', 'deployed', 'killed', 'lost'],
-						len = a.length;
-					for (var j=0; j<len; j++){
-						str += 
-						'<td class="stagBlue statTD">\<div class="statBar pb'+ color +'">\<div id="p'+ i +'-'+ a[j] +'-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\<div id="p'+ i +'-'+ a[j] +'" class="statVal">0</div>\</div>\</td>';
-					}
-				str += '</tr>\<tr class="statSpacer"></tr>';
-			}
-		}
-		return str;
-	},
-	statStructures: function(){
-		// head
-		var str = stats.playerHead(['Bunkers', 'Walls', 'Fortresses']);
-		// player rows
-		for (var i=1; i<=8; i++){
-			var d = stats.data[i];
-			if (d !== undefined){
-				// player data exists
-				var a = [{}, {
-						id: 'p'+ i +'-bunkers',
-						max: d.bunkers,
-						key: 'bunkers'
-					}, {
-						id: 'p'+ i +'-walls',
-						max: d.walls,
-						key: 'walls'
-					}, {
-						id: 'p'+ i +'-fortresses',
-						max: d.fortresses,
-						key: 'fortresses'
-					}
-				]
-				stats.animate(a, 1);
-				str += '<tr class="stagBlue statRow">' +
-					stats.playerCell(d, i);
-					var color = game.player[i].playerColor,
-						a = ['bunkers', 'walls', 'fortresses'],
-						len = a.length;
-					for (var j=0; j<len; j++){
-						str += 
-						'<td class="stagBlue statTD">\<div class="statBar pb'+ color +'">\<div id="p'+ i +'-'+ a[j] +'-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\<div id="p'+ i +'-'+ a[j] +'" class="statVal">0</div>\</div>\</td>';
-					}
-					str += '</tr>\<tr class="statSpacer"></tr>';
-			}
-		}
-		return str;
-	},
-	statWeapons: function(){
-		// head
-		var str = stats.playerHead(['Cannons', 'Missiles', 'Nukes']);
-		// player rows
-		for (var i=1; i<=8; i++){
-			var d = stats.data[i];
-			if (d !== undefined){
-				// player data exists
-				var a = [{}, {
-						id: 'p'+ i +'-cannons',
-						max: d.cannons,
-						key: 'cannons'
-					}, {
-						id: 'p'+ i +'-missiles',
-						max: d.missiles,
-						key: 'missiles'
-					}, {
-						id: 'p'+ i +'-nukes',
-						max: d.nukes,
-						key: 'nukes'
-					}
-				]
-				stats.animate(a, 1);
-				str += '<tr class="stagBlue statRow">'+
-					stats.playerCell(d, i);
-					var color = game.player[i].playerColor,
-						a = ['cannons', 'missiles', 'nukes'],
-						len = a.length;
-					for (var j=0; j<len; j++){
-						str += 
-						'<td class="stagBlue statTD">\<div class="statBar pb'+ color +'">\<div id="p'+ i +'-'+ a[j] +'-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\<div id="p'+ i +'-'+ a[j] +'" class="statVal">0</div>\</div>\</td>';
-					}
-					str += '</tr>\<tr class="statSpacer"></tr>';
-			}
-		}
-		return str;
-	},
-	statResources: function(){
-		// head
-		var str = stats.playerHead(['Energy', 'Production', 'Food', 'Culture']);
-		// player rows
-		for (var i=1; i<=8; i++){
-			var d = stats.data[i];
-			if (d !== undefined){
-				// player data exists
-				var a = [{}, {
-						id: 'p'+ i +'-moves',
-						max: d.moves,
-						key: 'moves'
-					}, {
-						id: 'p'+ i +'-production',
-						max: d.production,
-						key: 'production'
-					}, {
-						id: 'p'+ i +'-food',
-						max: d.food,
-						key: 'food'
-					}, {
-						id: 'p'+ i +'-culture',
-						max: d.culture,
-						key: 'culture'
-					}
-				]
-				stats.animate(a, 1.5);
-				str += '<tr class="stagBlue statRow">' +
-					stats.playerCell(d, i);
-					var color = game.player[i].playerColor;
-					str += '<td class="stagBlue statTD">\<div class="statBar pb'+ color +'">\<div id="p'+ i +'-moves-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\<div id="p'+ i +'-moves" class="statVal">0</div>\</div>\</td>\<td class="stagBlue statTD">\<div class="statBar pb'+ color +'">\<div id="p'+ i +'-production-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\<div id="p'+ i +'-production" class="statVal">0</div>\</div>\</td>\<td class="stagBlue statTD">\<div class="statBar pb'+ color +'">\<div id="p'+ i +'-food-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\<div id="p'+ i +'-food" class="statVal">0</div>\</div>\</td>\<td class="stagBlue statTD">\<div class="statBar pb'+ color +'">\<div id="p'+ i +'-culture-bar" class="statBarBg pbar'+ color +'">&nbsp</div>\<div id="p'+ i +'-culture" class="statVal">0</div>\</div>\</td>\</tr>\<tr class="statSpacer"></tr>';
-			}
-		}
-		return str;
-	},
-	playerHead: function(column){
-		var str = '<tr><th style="width: 420px"></th>';
-		for (var i=0, len=column.length; i<len; i++){
-			if (i === 4){
-				str += '<th class="text-center statHead chat-warning">'+ column[i] +'</th>';
-			} else {
-				str += '<th class="text-center statHead">'+ column[i] +'</th>';
-			}
-		}
-		str += '</tr><tr class="statSpacer2"></tr>';
-		return str;
-	},
-	playerCell: function(p, i){
-		var color = game.player[i].playerColor,
-			flag = p.flag === 'Default.jpg' ? 'Player'+ color +'.jpg' : p.flag;
-		var str = '<td style="position: relative">\<div class="statWrapper"><img class="statFlagBG" src="images/flags/'+ flag +'"></div>\<img class="statsFlags" src="images/flags/'+ flag +'">\<div class="statsPlayerWrap">\<div class="statsAccount chat-warning nowrap">\<i class="'+ lobby.governmentIcon(game.player[i].government) +' diploSquare statsGov player'+ color +'"></i>';
-					if (g.teamMode){
-						str += '<span class="diploTeam">'+ game.player[i].team +'</span>';
-					}
-					str += p.account +
-				'</div>\<div class="statsNation nowrap">'+ p.nation +'</div>\</div>\</td>'
-		return str;
-	},
-	data: {},
-	gameDuration: function(data){
-		return stats.hours(data) + stats.minutes(data) +':'+ stats.seconds(data)
-	},
-	hours: function(data){
-		var hours = '';
-		if (data >= 3600){
-			hours = ~~(data / 3600) + ':';
-		}
-		return hours;
-	},
-	minutes: function(data){
-		var min = '';
-		if (data < 60){
-			if (data >= 3600){
-				min = '00:';
-			}
-		} else {
-			min = ~~(data / 60 % 60);
-			if (min < 10){
-				min = '0' + min + '';
-			}
-		}
-		return min;
-	},
-	seconds: function(data){
-		var sec = ~~(data % 60);
-		if (sec < 10){
-			return '0' + sec + '';
-		}
-		return sec;
-	},
-	get: function(){
-		$.ajax({
-			url: 'php/stats.php',
-		}).done(function(data){
-			stats.data = data;
-			stats.init(data);
-			stats.notifyRibbons(data.ribbons);
-		});
-	},
-	achievements: [],
-	notifyRibbons: function(data){
-		var str = '';
-		data.forEach(function(e){
-			str += 
-			'<div class="ribbonName ranked">'+ game.ribbonTitle[e] +'</div>\<div class="ribbonDescription ranked">'+ game.ribbonDescription[e] +'</div>\<img class="giantRibbon block" src="images/ribbons/ribbon'+ e +'.jpg">';  
-		});
-		document.getElementById('ribbonBody').innerHTML = str;
-		stats.achievements = data;
-		if (stats.achievements.length){
-			new Audio('sound/ding3.mp3');
-		}
-	},
-	overviewTotal: function(i){
-		var x = stats.data[i];
-		return this.unitsTotal(i) + this.structuresTotal(i) + this.weaponsTotal(i) + this.resourcesTotal(i);
-	},
-	unitsTotal: function(i){
-		var x = stats.data[i];
-		return (x.deployed * 100) + (x.killed * 3);
-	},
-	structuresTotal: function(i){
-		var x = stats.data[i];
-		return (x.bunkers * 80) + (x.walls * 140) + (x.fortresses * 200);
-	},
-	weaponsTotal: function(i){
-		var x = stats.data[i];
-		return (x.cannons * 40) + (x.missiles * 60) + (x.nukes * 400);
-	},
-	resourcesTotal: function(i){
-		var x = stats.data[i];
-		return ~~( (x.food / 20) + (x.culture / 60) + (x.production / 20) );
-	}
-}// animate.js
-var animate = {
-	nationName: function(){
-		var tl = new TimelineMax();
-		var split = new SplitText(".configureNationName", {
-			type: "words,chars"
-		});
-		var chars = split.chars;
-		tl.staggerFromTo(chars, .05, {
-			immediateRender: true,
-			alpha: 0
-		}, {
-			delay: .25,
-			alpha: 1
-		}, .016);
-	},
-	colors: [
-		'#ffffff',
-		'#ffaa66',
-		'#ffcc99',
-		'#ffddaa',
-		'#ffff99',
-		'#ff5555',
-		'#ffff55'
-	],
-	randomColor: function(){
-		return animate.colors[~~(Math.random()*6)];
-	},
-	getXY: function(tile){
-		var box = DOM['unit' + tile].getBBox(),
-			o = {
-				x: box.x,
-				y: box.y
-			}
-		return o;
-	},
-	icon: {
-		troops: {
-			audio: '',
-			text: '\uf102',
-			color: '#ff0'
-		},
-		energy: {
-			audio: '',
-			text: '\uf0e7',
-			color: '#ffa'
-		},
-		food: {
-			audio: '',
-			text: '\uf179',
-			color: '#8d0'
-		},
-		production: {
-			audio: '',
-			text: '\uf0e3',
-			color: '#d60'
-		},
-		culture: {
-			audio: '',
-			text: '\uf024',
-			color: '#d2d'
-		},
-		shield: {
-			audio: 'build',
-			text: '\uf132',
-			color: '#ff0'
-		}
-	},
-	upgrade: function(tile, type, count){
-		if (animate.icon[type].audio){
-			audio.play(animate.icon[type].audio);
-		}
-		var box = DOM['unit' + tile].getBBox();
-		var x = box.x + box.width/2 - 10;
-		var y = box.y + box.height/2 + 10;
-		// show icon
-		var text = document.createElementNS('http:text.setAttributeNS(null,"x",x);text.setAttributeNS(null,"y",y);text.style.fontFamily='FontAwesome';text.style.fontSize='20px';text.style.fill=animate.icon[type].color;if(count){text.textContent='+'+count+' '+animate.icon[type].text}else{text.textContent=animate.icon[type].text}
+str+='<div id="statResult" class="no-select">\
+			<span id="statGameResult">Defeat in '+ui.transformYear(data.resourceTick)+'</span>!\
+			<img class="statResultFlag pull-left" src="images/flags/'+flag+'">\
+			<img class="statResultFlag pull-right" src="images/flags/'+flag+'">\
+		</div>\
+		<div id="statTabWrap" class="no-select">\
+			<div id="statOverview" class="statTabs active">\
+				Overview\
+			</div><div id="statUnits" class="statTabs">\
+				Units\
+			</div><div id="statStructures" class="statTabs">\
+				Structures\
+			</div><div id="statWeapons" class="statTabs">\
+				Weapons\
+			</div><div id="statResources" class="statTabs">\
+				Resources\
+			</div>\
+		</div>\
+		<table id="gameStatsTable" class="table"></table>\
+		<div id="statFooter" class="container-fluid">\
+			<div class="row">\
+				<div id="statQuote" class="col-xs-7 stagBlue">\
+					<div>'+stats.data.quote+'</div>\
+					<div id="statVerse" class="text-right">'+stats.data.verse+'</div>\
+				</div>\
+				<div id="statDuration" class="col-xs-4 stagBlue text-center">\
+					<div id="gameDuration">Game Duration '+stats.gameDuration(data.gameDuration)+'</div>\
+					<button id="statsEndGame" class="btn btn-responsive fwBlue shadow4">End Game</button>\
+				</div>\
+			</div>\
+		</div>\
+		<div id="ribbonBackdrop"></div>\
+		<div id="ribbonReward" class="fw-primary titleModal">\
+			<div class="header text-center">\
+				<h2 class="header">Achievement Unlocked!</h2>\
+			</div>\
+			<hr class="fancyhr">\
+			<div id="ribbonBody"></div>\
+		</div>';document.getElementById('statWrap').innerHTML=str;stats.events();if(isMobile){document.getElementById('statWorld').style.display='none';TweenMax.set('#statWorld',{xPercent:-50,yPercent:-50,top:'50%',left:'50%',width:'1600px',height:'1600px'})}else{TweenMax.to("#statWorld",300,{startAt:{xPercent:-50,yPercent:-50,rotation:-360},rotation:0,repeat:-1,ease:Linear.easeNone})}
+stats.setLeaderValues()},show:function(data){DOM.bgmusic.loop=!0;stats.setView('statOverview');if(g.victory){audio.play('bell-8');audio.play('TheAssault',1);document.getElementById('statGameResult').textContent="Victory in "+ui.transformYear(stats.data.resourceTick)}else{audio.play('defeat');audio.play("JourneyOfForgottenSoldiers",1)}
+document.getElementById('statWrap').style.visibility='visible';TweenMax.to('#gameWrap',.5,{startAt:{alpha:0},alpha:1});if(stats.achievements.length){audio.play('ding3');TweenMax.to('#ribbonBackdrop',.5,{startAt:{visibility:'visible',alpha:0},alpha:1});TweenMax.to('#ribbonReward',1,{startAt:{visibility:'visible',alpha:0,top:0,y:0},alpha:1,y:30})}
+$("#worldWrap, #targetWrap, #ui2, #resources-ui, #diplomacy-ui, #chat-ui, #chat-input, #surrenderScreen").remove()},events:function(){$("#statWrap").on(ui.click,'.statTabs',function(){$(".statTabs").removeClass('active');$(this).addClass('active');audio.play('switch13');var id=$(this).attr('id');stats.setView(id)}).on(ui.click,'#statsEndGame',function(){location.reload()}).on(ui.click,'#ribbonBackdrop',function(){TweenMax.to('#ribbonBackdrop, #ribbonReward',.25,{alpha:0,onComplete:function(){TweenMax.set('#ribbonBackdrop, #ribbonReward',{visibility:'hidden'})}})})},maxValue:{unitsTotal:0,structuresTotal:0,weaponsTotal:0,resourcesTotal:0,overviewTotal:0},setLeaderValues:function(){for(var i=1;i<=8;i++){var d=stats.data[i];if(d!==undefined){for(var key in d){if(i===1){stats.maxValue[key]=d[key]}else{if(d[key]>stats.maxValue[key]){stats.maxValue[key]=d[key]}}}
+var units=stats.unitsTotal(i),structures=stats.structuresTotal(i),weapons=stats.weaponsTotal(i),resources=stats.resourcesTotal(i),overview=stats.overviewTotal(i);if(units>stats.maxValue.unitsTotal){stats.maxValue.unitsTotal=stats.unitsTotal(i)}
+if(structures>stats.maxValue.structuresTotal){stats.maxValue.structuresTotal=structures}
+if(weapons>stats.maxValue.weaponsTotal){stats.maxValue.weaponsTotal=weapons}
+if(resources>stats.maxValue.resourcesTotal){stats.maxValue.resourcesTotal=resources}
+if(overview>stats.maxValue.overviewTotal){stats.maxValue.overviewTotal=overview}}}},currentTabId:'',setView:function(id){if(id!==stats.currentTabId){stats.currentTabId=id;var str=stats[id]();document.getElementById('gameStatsTable').innerHTML=str}},barAnimate:new TweenMax.delayedCall(0,''),animate:function(a,delay){setTimeout(function(){var x={max:100,lastVal:0};stats.barAnimate.kill();stats.barAnimate=TweenMax.to(x,delay,{startAt:{max:0},max:100,onUpdate:function(){if(~~x.lastVal!==~~x.max){x.lastVal=x.max;audio.play('rollover5')}},onComplete:function(){audio.play('switch11')},ease:Sine.easeOut});for(var i=1,len=a.length;i<len;i++){var d=a[i];(function(d,e,bar,Sine){TweenMax.to(d,delay,{startAt:{max:0},max:d.max,onUpdate:function(){e.textContent=~~d.max},ease:Sine.easeOut});TweenMax.to(bar,delay,{startAt:{width:0},width:((d.max/stats.maxValue[d.key])*100)+'%',ease:Sine.easeOut})})(d,document.getElementById(d.id),document.getElementById(d.id+'-bar'),Sine)}})},statOverview:function(){var str=stats.playerHead(['Units','Structures','Weapons','Resources','Total Score']);var animate=[];for(var i=1;i<=8;i++){var d=stats.data[i];if(stats.data[i]!==undefined){var a=[{},{id:'p'+i+'-units',max:stats.unitsTotal(i),key:'unitsTotal'},{id:'p'+i+'-structures',max:stats.structuresTotal(i),key:'structuresTotal'},{id:'p'+i+'-weapons',max:stats.weaponsTotal(i),key:'weaponsTotal'},{id:'p'+i+'-resources',max:stats.resourcesTotal(i),key:'resourcesTotal'},{id:'p'+i+'-total',max:stats.overviewTotal(i),key:'overviewTotal'},]
+stats.animate(a,1.5);str+='<tr class="statRow">'+stats.playerCell(d,i);var color=game.player[i].playerColor,a=['units','structures','weapons','resources','total'],len=a.length;for(var j=0;j<len;j++){var sumRow=(j+1===len)?' statSum':'';str+='<td class="stagBlue statTD">\
+							<div class="statBar pb'+color+'">\
+								<div id="p'+i+'-'+a[j]+'-bar" class="statBarBg pbar'+color+'">&nbsp</div>\
+								<div id="p'+i+'-'+a[j]+'" class="statVal'+sumRow+'">0</div>\
+							</div>\
+						</td>'}
+str+='</tr>\
+				<tr class="statSpacer"></tr>'}}
+return str},statUnits:function(){var str=stats.playerHead(['Earned','Deployed','Killed','Lost']);for(var i=1;i<=8;i++){var d=stats.data[i];if(d!==undefined){var a=[{},{id:'p'+i+'-earned',max:d.earned,key:'earned'},{id:'p'+i+'-deployed',max:d.deployed,key:'deployed'},{id:'p'+i+'-killed',max:d.killed,key:'killed'},{id:'p'+i+'-lost',max:d.lost,key:'lost'},]
+stats.animate(a,1.5);str+='<tr class="stagBlue statRow">'+stats.playerCell(d,i);var color=game.player[i].playerColor,a=['earned','deployed','killed','lost'],len=a.length;for(var j=0;j<len;j++){str+='<td class="stagBlue statTD">\
+							<div class="statBar pb'+color+'">\
+								<div id="p'+i+'-'+a[j]+'-bar" class="statBarBg pbar'+color+'">&nbsp</div>\
+								<div id="p'+i+'-'+a[j]+'" class="statVal">0</div>\
+							</div>\
+						</td>'}
+str+='</tr>\
+				<tr class="statSpacer"></tr>'}}
+return str},statStructures:function(){var str=stats.playerHead(['Bunkers','Walls','Fortresses']);for(var i=1;i<=8;i++){var d=stats.data[i];if(d!==undefined){var a=[{},{id:'p'+i+'-bunkers',max:d.bunkers,key:'bunkers'},{id:'p'+i+'-walls',max:d.walls,key:'walls'},{id:'p'+i+'-fortresses',max:d.fortresses,key:'fortresses'}]
+stats.animate(a,1);str+='<tr class="stagBlue statRow">'+stats.playerCell(d,i);var color=game.player[i].playerColor,a=['bunkers','walls','fortresses'],len=a.length;for(var j=0;j<len;j++){str+='<td class="stagBlue statTD">\
+							<div class="statBar pb'+color+'">\
+								<div id="p'+i+'-'+a[j]+'-bar" class="statBarBg pbar'+color+'">&nbsp</div>\
+								<div id="p'+i+'-'+a[j]+'" class="statVal">0</div>\
+							</div>\
+						</td>'}
+str+='</tr>\
+				<tr class="statSpacer"></tr>'}}
+return str},statWeapons:function(){var str=stats.playerHead(['Cannons','Missiles','Nukes']);for(var i=1;i<=8;i++){var d=stats.data[i];if(d!==undefined){var a=[{},{id:'p'+i+'-cannons',max:d.cannons,key:'cannons'},{id:'p'+i+'-missiles',max:d.missiles,key:'missiles'},{id:'p'+i+'-nukes',max:d.nukes,key:'nukes'}]
+stats.animate(a,1);str+='<tr class="stagBlue statRow">'+stats.playerCell(d,i);var color=game.player[i].playerColor,a=['cannons','missiles','nukes'],len=a.length;for(var j=0;j<len;j++){str+='<td class="stagBlue statTD">\
+							<div class="statBar pb'+color+'">\
+								<div id="p'+i+'-'+a[j]+'-bar" class="statBarBg pbar'+color+'">&nbsp</div>\
+								<div id="p'+i+'-'+a[j]+'" class="statVal">0</div>\
+							</div>\
+						</td>'}
+str+='</tr>\
+				<tr class="statSpacer"></tr>'}}
+return str},statResources:function(){var str=stats.playerHead(['Energy','Production','Food','Culture']);for(var i=1;i<=8;i++){var d=stats.data[i];if(d!==undefined){var a=[{},{id:'p'+i+'-moves',max:d.moves,key:'moves'},{id:'p'+i+'-production',max:d.production,key:'production'},{id:'p'+i+'-food',max:d.food,key:'food'},{id:'p'+i+'-culture',max:d.culture,key:'culture'}]
+stats.animate(a,1.5);str+='<tr class="stagBlue statRow">'+stats.playerCell(d,i);var color=game.player[i].playerColor;str+='<td class="stagBlue statTD">\
+						<div class="statBar pb'+color+'">\
+							<div id="p'+i+'-moves-bar" class="statBarBg pbar'+color+'">&nbsp</div>\
+							<div id="p'+i+'-moves" class="statVal">0</div>\
+						</div>\
+					</td>\
+					<td class="stagBlue statTD">\
+						<div class="statBar pb'+color+'">\
+							<div id="p'+i+'-production-bar" class="statBarBg pbar'+color+'">&nbsp</div>\
+							<div id="p'+i+'-production" class="statVal">0</div>\
+						</div>\
+					</td>\
+					<td class="stagBlue statTD">\
+						<div class="statBar pb'+color+'">\
+							<div id="p'+i+'-food-bar" class="statBarBg pbar'+color+'">&nbsp</div>\
+							<div id="p'+i+'-food" class="statVal">0</div>\
+						</div>\
+					</td>\
+					<td class="stagBlue statTD">\
+						<div class="statBar pb'+color+'">\
+							<div id="p'+i+'-culture-bar" class="statBarBg pbar'+color+'">&nbsp</div>\
+							<div id="p'+i+'-culture" class="statVal">0</div>\
+						</div>\
+					</td>\
+				</tr>\
+				<tr class="statSpacer"></tr>'}}
+return str},playerHead:function(column){var str='<tr><th style="width: 420px"></th>';for(var i=0,len=column.length;i<len;i++){if(i===4){str+='<th class="text-center statHead chat-warning">'+column[i]+'</th>'}else{str+='<th class="text-center statHead">'+column[i]+'</th>'}}
+str+='</tr><tr class="statSpacer2"></tr>';return str},playerCell:function(p,i){var color=game.player[i].playerColor,flag=p.flag==='Default.jpg'?'Player'+color+'.jpg':p.flag;var str='<td style="position: relative">\
+			<div class="statWrapper"><img class="statFlagBG" src="images/flags/'+flag+'"></div>\
+			<img class="statsFlags" src="images/flags/'+flag+'">\
+			<div class="statsPlayerWrap">\
+				<div class="statsAccount chat-warning nowrap">\
+					<i class="'+lobby.governmentIcon(game.player[i].government)+' diploSquare statsGov player'+color+'"></i>';if(g.teamMode){str+='<span class="diploTeam">'+game.player[i].team+'</span>'}
+str+=p.account+'</div>\
+				<div class="statsNation nowrap">'+p.nation+'</div>\
+			</div>\
+		</td>'
+return str},data:{},gameDuration:function(data){return stats.hours(data)+stats.minutes(data)+':'+stats.seconds(data)},hours:function(data){var hours='';if(data>=3600){hours=~~(data/3600)+':'}
+return hours},minutes:function(data){var min='';if(data<60){if(data>=3600){min='00:'}}else{min=~~(data/60%60);if(min<10){min='0'+min+''}}
+return min},seconds:function(data){var sec=~~(data%60);if(sec<10){return '0'+sec+''}
+return sec},get:function(){$.ajax({url:'php/stats.php',}).done(function(data){stats.data=data;stats.init(data);stats.notifyRibbons(data.ribbons)})},achievements:[],notifyRibbons:function(data){var str='';data.forEach(function(e){str+='<div class="ribbonName ranked">'+game.ribbonTitle[e]+'</div>\
+			<div class="ribbonDescription ranked">'+game.ribbonDescription[e]+'</div>\
+			<img class="giantRibbon block" src="images/ribbons/ribbon'+e+'.jpg">'});document.getElementById('ribbonBody').innerHTML=str;stats.achievements=data;if(stats.achievements.length){new Audio('sound/ding3.mp3')}},overviewTotal:function(i){var x=stats.data[i];return this.unitsTotal(i)+this.structuresTotal(i)+this.weaponsTotal(i)+this.resourcesTotal(i)},unitsTotal:function(i){var x=stats.data[i];return(x.deployed*100)+(x.killed*3)},structuresTotal:function(i){var x=stats.data[i];return(x.bunkers*80)+(x.walls*140)+(x.fortresses*200)},weaponsTotal:function(i){var x=stats.data[i];return(x.cannons*40)+(x.missiles*60)+(x.nukes*400)},resourcesTotal:function(i){var x=stats.data[i];return~~((x.food/20)+(x.culture/60)+(x.production/20))}}
+var animate={nationName:function(){var tl=new TimelineMax();var split=new SplitText(".configureNationName",{type:"words,chars"});var chars=split.chars;tl.staggerFromTo(chars,.05,{immediateRender:!0,alpha:0},{delay:.25,alpha:1},.016)},colors:['#ffffff','#ffaa66','#ffcc99','#ffddaa','#ffff99','#ff5555','#ffff55'],randomColor:function(){return animate.colors[~~(Math.random()*6)]},getXY:function(tile){var box=DOM['unit'+tile].getBBox(),o={x:box.x,y:box.y}
+return o},icon:{troops:{audio:'',text:'\uf102',color:'#ff0'},energy:{audio:'',text:'\uf0e7',color:'#ffa'},food:{audio:'',text:'\uf179',color:'#8d0'},production:{audio:'',text:'\uf0e3',color:'#d60'},culture:{audio:'',text:'\uf024',color:'#d2d'},shield:{audio:'build',text:'\uf132',color:'#ff0'}},upgrade:function(tile,type,count){if(animate.icon[type].audio){audio.play(animate.icon[type].audio)}
+var box=DOM['unit'+tile].getBBox();var x=box.x+box.width/2-10;var y=box.y+box.height/2+10;var text=document.createElementNS('http://www.w3.org/2000/svg','text');text.setAttributeNS(null,"x",x);text.setAttributeNS(null,"y",y);text.style.fontFamily='FontAwesome';text.style.fontSize='20px';text.style.fill=animate.icon[type].color;if(count){text.textContent='+'+count+' '+animate.icon[type].text}else{text.textContent=animate.icon[type].text}
 DOM.mapAnimations.appendChild(text);TweenMax.to(text,.5,{startAt:{xPercent:-50,yPercent:-50,transformOrigin:'50% 50%',alpha:1,scale:.1},scale:1,ease:Back.easeOut.config(3)});TweenMax.to(text,1.5,{y:'-=30'});TweenMax.to(text,.5,{delay:1.5,alpha:0,onComplete:function(){this.target.parentNode.removeChild(this.target)}});this.updateMapBars(tile)},updateMapBars:function(tile){var box=DOM['unit'+tile].getBBox(),x=box.x+box.width/2-10,y=box.y+box.height/2+10;$(".mapBars"+tile).remove();this.initMapBars(tile,x,y)},initMapBars:function(i,x,y){var e=DOM['unit'+i];var x=e.getAttribute('x')-17;var y=e.getAttribute('y')-24;var boxHeight=4;if(game.tiles[i].production){boxHeight+=4}
 if(game.tiles[i].culture){boxHeight+=4}
 if(game.tiles[i].defense){boxHeight+=4}
@@ -682,7 +247,7 @@ var timer={hud:g.TDC()}
 var DOM;function initDom(){var d=document;DOM={endTurn:d.getElementById('endTurn'),energyIndicator:d.getElementById('energyIndicator'),currentYear:d.getElementById('currentYear'),currentYearBG:d.getElementById('currentYearBG'),targetTargetWrap:d.getElementById('targetTargetWrap'),targetFlag:d.getElementById('targetFlag'),targetCapStar:d.getElementById('targetCapStar'),targetNameWrap:d.getElementById('targetNameWrap'),targetBarsWrap:d.getElementById('targetBarsWrap'),targetTargetFlag:d.getElementById('targetTargetFlag'),targetTargetCapStar:d.getElementById('targetTargetCapStar'),targetTargetNameWrap:d.getElementById('targetTargetNameWrap'),targetTargetBarsWrap:d.getElementById('targetTargetBarsWrap'),landWrap:d.getElementById('landWrap'),gameWindows:d.getElementsByClassName('gameWindow'),sumMoves:d.getElementById('sumMoves'),moves:d.getElementById('moves'),gameWrap:d.getElementById('gameWrap'),gameTableBody:d.getElementById('gameTableBody'),food:d.getElementById('food'),production:d.getElementById('production'),culture:d.getElementById('culture'),Msg:d.getElementById('Msg'),hud:d.getElementById("hud"),sumFood:d.getElementById("sumFood"),foodMax:d.getElementById("foodMax"),cultureMax:d.getElementById("cultureMax"),manpower:d.getElementById("manpower"),sumProduction:d.getElementById("sumProduction"),sumCulture:d.getElementById("sumCulture"),chatContent:d.getElementById("chat-content"),chatInput:d.getElementById("chat-input"),lobbyChatInput:d.getElementById("lobby-chat-input"),titleChatInput:d.getElementById("title-chat-input"),worldWrap:d.getElementById('worldWrap'),motionPath:d.getElementById('motionPath'),targetLine:d.getElementById('targetLine'),targetLineShadow:d.getElementById('targetLineShadow'),targetCrosshair:d.getElementById('targetCrosshair'),target:d.getElementById('target'),avatarWrap:d.getElementById('avatarWrap'),avatar:d.getElementById('avatar'),ribbonWrap:d.getElementById('ribbonWrap'),targetName:d.getElementById('targetName'),oBonus:d.getElementById('oBonus'),dBonus:d.getElementById('dBonus'),productionBonus:d.getElementById('productionBonus'),foodBonus:d.getElementById('foodBonus'),cultureBonus:d.getElementById('cultureBonus'),foodBar:d.getElementById('foodBar'),cultureBar:d.getElementById('cultureBar'),world:d.getElementById('world'),bgmusic:d.getElementById('bgmusic'),tileName:d.getElementById('tileName'),tileActions:d.getElementById('tileActions'),tileActionsOverlay:d.getElementById('tileActionsOverlay'),buildWord:d.getElementById('buildWord'),buildCost:d.getElementById('buildCost'),cannonsCost:d.getElementById('cannonsCost'),missileCost:d.getElementById('missileCost'),nukeCost:d.getElementById('nukeCost'),gunpowderCost:d.getElementById('gunpowderCost'),engineeringCost:d.getElementById('engineeringCost'),rocketryCost:d.getElementById('rocketryCost'),atomicTheoryCost:d.getElementById('atomicTheoryCost'),futureTechCost:d.getElementById('futureTechCost'),upgradeTileDefense:d.getElementById('upgradeTileDefense'),screenFlash:d.getElementById('screenFlash'),fireCannons:d.getElementById('fireCannons'),launchMissile:d.getElementById('launchMissile'),launchNuke:d.getElementById('launchNuke'),researchEngineering:d.getElementById('researchEngineering'),researchGunpowder:d.getElementById('researchGunpowder'),researchRocketry:d.getElementById('researchRocketry'),researchAtomicTheory:d.getElementById('researchAtomicTheory'),researchFutureTech:d.getElementById('researchFutureTech'),lobbyChatLog:d.getElementById('lobbyChatLog'),titleChatLog:d.getElementById('titleChatLog'),mapAnimations:d.getElementById('mapAnimations'),mapCapitals:d.getElementById('mapCapitals'),mapUpgrades:d.getElementById('mapUpgrades'),mapBars:d.getElementById('mapBars'),titleChatBody:d.getElementById('titleChatBody')}};initDom();var $DOM={head:$("#head"),chatInput:$("#chat-input"),lobbyChatInput:$("#lobby-chat-input"),titleChatInput:$("#title-chat-input")};var worldMap=[];var video={cache:{},load:{game:function(){var x=['smoke.png'];for(var i=0,len=x.length;i<len;i++){var z=x[i];video.cache[z]=new Image();video.cache[z].src="images/"+z}}}}
 function Msg(msg,d){DOM.Msg.innerHTML=msg;if(d===0){TweenMax.set(DOM.Msg,{overwrite:1,startAt:{opacity:1}})}else{if(!d||d<.5){d=2}
 TweenMax.to(DOM.Msg,ui.delay(d),{overwrite:1,startAt:{opacity:1},onComplete:function(){TweenMax.to(this.target,.2,{opacity:0})}})}
-var tl=new TimelineMax();var split=new SplitText(DOM.Msg,{type:"words,chars"});var chars=split.chars;tl.staggerFromTo(chars,.01,{immediateRender:!0,alpha:0},{delay:.1,alpha:1},.01)}
+if(!isMobile){var tl=new TimelineMax();var split=new SplitText(DOM.Msg,{type:"words,chars"});var chars=split.chars;tl.staggerFromTo(chars,.01,{immediateRender:!0,alpha:0},{delay:.1,alpha:1},.01)}}
 function playerLogout(){g.lock();$.ajax({type:'GET',url:'php/deleteFromFwtitle.php'});$.ajax({type:'GET',url:'php/logout.php'}).done(function(data){localStorage.removeItem('token');location.reload()}).fail(function(){Msg("Logout failed. Is the server on fire?")})}
 function exitGame(bypass){if(g.view==='game'){var r=confirm("Are you sure you want to surrender?")}
 if(r||bypass||g.view!=='game'){g.lock(1);$.ajax({url:'php/exitGame.php',data:{view:g.view}}).always(function(){location.reload()})}}
@@ -721,10 +286,9 @@ g.chat(str)},addIgnore:function(account){account=account.trim();g.chat('<div>Ign
 if(data.message){if(data.type==='gunfire'){if(data.defender===my.account){game.chat(data)}}else{game.chat(data)}}
 if(data.sfx){audio.play(data.sfx)}}},sendWhisper:function(msg,splitter){var arr=msg.split(splitter);var account=arr[1].split(" ").shift();var splitLen=splitter.length;var accountLen=account.length;var msg=msg.substr(splitLen+accountLen+1);var flag=my.flag.split(".");flag=flag[0].replace(/ /g,"-");$.ajax({url:'php/insertWhisper.php',data:{account:account,flag:flag,playerColor:my.playerColor,message:msg,action:'send'}})},lastWhisper:{account:'',message:'',timestamp:0},receiveWhisper:function(data){if(g.view==='title'){title.chat(data)}else if(g.view==='lobby'){lobby.chat(data)}else{game.chat(data)}},changeChannel:function(msg,splitter){var arr=msg.split(splitter);socket.setChannel(arr[1])},who:function(msg){var a=msg.split("/who ");$.ajax({url:'php/whoUser.php',data:{account:a[1]}}).done(function(data){var str='';var img=new Image();img.onload=function(){getProfile('<hr class="fancyhr"><img src="php/avatars/'+~~(data.nationRow/10000)+'/'+data.nationRow+'.jpg?v='+Date.now()+'" class="avatarChat">')}
 img.onerror=function(){getProfile('<hr class="fancyhr">')}
-img.src='php/avatars/'+~~(data.nationRow/10000)+'/'+data.nationRow+'.jpg?v='+Date.now();function getProfile(str){var len=data.ribbons.length;str+=data.str;if(len){str+='<div class="ribbonWrapChat '+(len>=24?'wideRack':'narrowRack')+'">'}
-for(var i=0,len=data.ribbons.length;i<len;i++){var z=data.ribbons[i];str+='<div class="ribbon ribbon'+z+'" title="'+game.ribbonTitle[i]+'"></div>'}
-if(len){str+='</div>'}
-if(data.account!==my.account){str+='<button class="addFriend btn btn-xs fwBlue" data-account="'+data.account+'">Add Friend</button>'}
+img.src='php/avatars/'+~~(data.nationRow/10000)+'/'+data.nationRow+'.jpg?v='+Date.now();function getProfile(str){if(data.ribbons!==undefined){var len=data.ribbons.length;if(len){str+='<div class="ribbonWrapChat '+(len>=24?'wideRack':'narrowRack')+'">';for(var i=0,len=data.ribbons.length;i<len;i++){var z=data.ribbons[i];str+='<div class="ribbon ribbon'+z+'" title="'+game.ribbonTitle[i]+'"></div>'}
+str+='</div>'}}
+str+=data.str;if(data.account!==my.account){str+='<button class="addFriend btn btn-xs fwBlue" data-account="'+data.account+'">Add Friend</button>'}
 str+='<hr class="fancyhr">';g.chat(str)}})},help:function(){var str='<div class="chat-warning">Chat Commands:</div>\
 			<div>/j: change channel</div>\
 			<div>/join: change channel</div>\
@@ -826,7 +390,7 @@ str+='<span id="lobbyAccountName'+i+'" class="lobbyAccountName chat-warning"></s
 								<li class="governmentChoice"><a href="#">Communism</a></li>\
 							</ul>\
 						</div>'}else{str+='<div class="dropdown govDropdown">\
-							<button style="cursor: default" class="btn btn-primary dropdown-toggle shadow4 fwDropdownButton fwDropdownButtonEnemy" type="button">\
+							<button style="cursor: default" class="btn btn-primary btn-responsive dropdown-toggle shadow4 fwDropdownButton fwDropdownButtonEnemy" type="button">\
 								<span id="lobbyGovernment'+i+'" class="pull-left">Despotism</span>\
 								<i class="fa fa-caret-down text-disabled lobbyCaret"></i>\
 							</button>\

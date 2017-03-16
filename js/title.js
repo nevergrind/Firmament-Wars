@@ -634,18 +634,18 @@ var title = {
 			img.src = 'php/avatars/'+ ~~(data.nationRow / 10000) +'/'+ data.nationRow +'.jpg?v=' + Date.now();
 			
 			function getProfile(str){
-				var len = data.ribbons.length;
+				if (data.ribbons !== undefined){
+					var len = data.ribbons.length;
+					if (len){
+						str += '<div class="ribbonWrapChat '+ (len >= 24 ? 'wideRack' : 'narrowRack') +'">';
+						for (var i=0, len=data.ribbons.length; i<len; i++){
+							var z = data.ribbons[i];
+							str += '<div class="ribbon ribbon'+ z +'" title="'+ game.ribbonTitle[i] +'"></div>';
+						}
+						str += '</div>';
+					}
+				}
 				str += data.str;
-				if (len){
-					str += '<div class="ribbonWrapChat '+ (len >= 24 ? 'wideRack' : 'narrowRack') +'">';
-				}
-				for (var i=0, len=data.ribbons.length; i<len; i++){
-					var z = data.ribbons[i];
-					str += '<div class="ribbon ribbon'+ z +'" title="'+ game.ribbonTitle[i] +'"></div>';
-				}
-				if (len){
-					str += '</div>';
-				}
 				if (data.account !== my.account){
 					str += '<button class="addFriend btn btn-xs fwBlue" data-account="'+ data.account +'">Add Friend</button>';
 				}

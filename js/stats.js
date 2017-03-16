@@ -73,7 +73,7 @@ var stats = {
 		} else {
 			var str = '<img id="statWorld" src="images/FlatWorld50-2.jpg">';
 		}
-		str += <div id="statResult" class="no-select">\
+		str += '<div id="statResult" class="no-select">\
 			<span id="statGameResult">Defeat in '+ ui.transformYear(data.resourceTick) +'</span>!\
 			<img class="statResultFlag pull-left" src="images/flags/'+ flag +'">\
 			<img class="statResultFlag pull-right" src="images/flags/'+ flag +'">\
