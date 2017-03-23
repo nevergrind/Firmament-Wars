@@ -48,10 +48,6 @@ var title = {
 				title.updatePlayers();
 				g.checkPlayerData();
 			});
-			// init game refresh
-			if (typeof Notification === 'function'){
-				Notification.requestPermission();
-			}
 			// initial refresh of games
 			$.ajax({
 				type: 'GET',
@@ -430,10 +426,11 @@ var title = {
 					g.chat('You cannot have more than 20 friends!');
 				} else if (data.action === 'remove'){
 					g.chat('Removed '+ account +' from your friend list');
-				} else {
+					title.friendGet();
+				} else if (data.action === 'add'){
 					g.chat('Added '+ account +' to your friend list');
+					title.friendGet();
 				}
-				title.friendGet();
 			});
 		} else {
 			// cannot add yourself
@@ -623,35 +620,25 @@ var title = {
 			}
 		}).done(function(data){
 			var str = '';
-				
-			var img = new Image();
-			img.onload = function(){
-				getProfile('<hr class="fancyhr"><img src="php/avatars/'+ ~~(data.nationRow / 10000) +'/'+ data.nationRow +'.jpg?v=' + Date.now() +'" class="avatarChat">');
-			}
-			img.onerror = function(){
-				getProfile('<hr class="fancyhr">');
-			}
-			img.src = 'php/avatars/'+ ~~(data.nationRow / 10000) +'/'+ data.nationRow +'.jpg?v=' + Date.now();
-			
-			function getProfile(str){
-				if (data.ribbons !== undefined){
-					var len = data.ribbons.length;
-					if (len){
-						str += '<div class="ribbonWrapChat '+ (len >= 24 ? 'wideRack' : 'narrowRack') +'">';
-						for (var i=0, len=data.ribbons.length; i<len; i++){
-							var z = data.ribbons[i];
-							str += '<div class="ribbon ribbon'+ z +'" title="'+ game.ribbonTitle[i] +'"></div>';
-						}
-						str += '</div>';
+			if (data.ribbons !== undefined){
+				var len = data.ribbons.length;
+				if (len){
+					str += '<div class="ribbonWrapChat '+ (len >= 24 ? 'wideRack' : 'narrowRack') +'">';
+					for (var i=0, len=data.ribbons.length; i<len; i++){
+						var z = data.ribbons[i];
+						str += '<div class="ribbon ribbon'+ z +'" title="'+ game.ribbonTitle[i] +'"></div>';
 					}
+					str += '</div>';
 				}
-				str += data.str;
-				if (data.account !== my.account){
-					str += '<button class="addFriend btn btn-xs fwBlue" data-account="'+ data.account +'">Add Friend</button>';
-				}
-				str += '<hr class="fancyhr">';
-				g.chat(str);
 			}
+			str += data.str;
+			if (data.account !== my.account){
+				str += '<button class="addFriend btn btn-xs fwBlue" data-account="'+ data.account +'">Add Friend</button>';
+			}
+			str += '<hr class="fancyhr">';
+			g.chat(str);
+		}).fail(function(){
+			g.chat('No data found.');
 		});
 	},
 	help: function(){

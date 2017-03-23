@@ -1,8 +1,5 @@
 <?php
 	session_start();
-	if (!isset($_SESSION['fwpaid'])){
-		$_SESSION['fwpaid'] = 0;
-	}
 	if($_SERVER["SERVER_NAME"] === "localhost"){
 		error_reporting(E_ALL);
 		ini_set('display_errors', true);
@@ -19,8 +16,7 @@
 			mysqli_query($link, "insert into fwguests (`row`) VALUES (null)");
 			$guestId = mysqli_insert_id($link);
 			$_SESSION['guest'] = 1;
-			$_SESSION['account'] = 'anonymous_'. $guestId;
-			$_SESSION['nationRow'] = 0;
+			$_SESSION['account'] = 'guest_'. $guestId;
 		} else {
 			// logged in - not a guest
 			$_SESSION['guest'] = 0;
@@ -29,7 +25,6 @@
 		// guest already determined
 		if (strpos($_SESSION['account'], '_') !== FALSE){
 			$_SESSION['guest'] = 1;
-			$_SESSION['nationRow'] = 0;
 		} else {
 			$_SESSION['guest'] = 0;
 		}
@@ -53,9 +48,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-46">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-49">
 	<script>
-		version = '1-0-46'; 
+		version = '1-0-49'; 
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -75,18 +70,6 @@
 			
 			<header id="document" class="shadow4 text-primary">
 				<?php
-				if (!$_SESSION['fwpaid']){
-					// check if paid
-					$stmt = $link->prepare("select account from fwpaid where account=? limit 1");
-					$stmt->bind_param('s', $_SESSION['account']);
-					$stmt->execute();
-					$stmt->bind_result($dbAccount);
-					$stmt->store_result();
-					// check if the game exists at all
-					if ($stmt->num_rows){
-						$_SESSION['fwpaid'] = 1;
-					}
-				}
 				// load/init nation data
 				// remove players that left
 				mysqli_query($link, 'delete from fwtitle where timestamp < date_sub(now(), interval 1 minute)');
@@ -115,13 +98,12 @@
 				
 				if($count > 0){
 					// nation exists
-					$query = "select row, nation, flag, rating, wins, losses, teamWins, teamLosses, rankedWins, rankedLosses, disconnects from fwnations where account=?";
+					$query = "select nation, flag, rating, wins, losses, teamWins, teamLosses, rankedWins, rankedLosses, disconnects from fwnations where account=?";
 					$stmt = $link->prepare($query);
 					$stmt->bind_param('s', $_SESSION['account']);
 					$stmt->execute();
-					$stmt->bind_result($dRow, $dName, $dFlag, $rating, $wins, $losses, $teamWins, $teamLosses, $rankedWins, $rankedLosses, $disconnects);
+					$stmt->bind_result($dName, $dFlag, $rating, $wins, $losses, $teamWins, $teamLosses, $rankedWins, $rankedLosses, $disconnects);
 					while($stmt->fetch()){
-						$_SESSION['nationRow'] = $dRow;
 						$nation = $dName;
 						$flag = $dFlag;
 						$_SESSION['rating'] = $rating;
@@ -142,15 +124,10 @@
 				} else {
 					if (!$_SESSION['guest']){
 						// create nation
-						$query = "insert into fwnations (`account`, `nation`, `flag`) VALUES (?, '$nation', '$flag')";
+						$query = "insert into fwnations (`account`, `nation`, `flag`, `avatar`) VALUES (?, '$nation', '$flag', 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDABALDA4MChAODQ4SERAT…OEsLM0OX3oACA43AgSPGlmKvD63MWZ0JxFhTidM2Y2xo5oWpwcUdvWxa72Ng7BC4OgU8f/2Q==')";
 						$stmt = $link->prepare($query);
 						$stmt->bind_param('s', $_SESSION['account']);
-						$stmt->store_result();
 						$stmt->execute();
-						// init nation values
-						$_SESSION['nationRow'] = $stmt->insert_id;
-					} else {
-						$_SESSION['nationRow'] = 0;
 					}
 					$_SESSION['nation'] = $nation;
 					$_SESSION['flag'] = $flag;
@@ -205,27 +182,21 @@
 			$currentPlayers = 0;
 				echo 
 				'<div id="titleMenu" class="fw-primary">
-					<div id="menuOnline">
-						<div>';
-						echo
-						'
-							</div>
-						</div>
 					<div id="menuHead">
-						<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">Configure Nation</button>
-						<button id="leaderboardBtn" type="button" class="btn fwBlue btn-responsive shadow4">Leaderboard</button>';
-						if (!$_SESSION['guest'] && isset($_SESSION['email']) && !$_SESSION['fwpaid']){
-							echo '
-							<button type="button" class="unlockGameBtn btn fwGreen btn-responsive shadow4">Unlock Complete Game</button>';
-						}
-					echo '</div>
-						
-				<hr class="fancyhr">
+						<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">
+							Configure Nation
+						</button>
+						<button id="leaderboardBtn" type="button" class="btn fwBlue btn-responsive shadow4">
+							Leaderboard
+						</button>
+					</div>
+					<hr class="fancyhr">
 			
-				<div id="myNationWrap" class="container tight w100">';
-				require('php/myNation.php'); 
-				echo '</div>
-				<div class="fw-text">
+					<div id="myNationWrap" class="container tight w100">';
+					require('php/myNation.php'); 
+					echo 
+					'</div>
+					<div class="fw-text">
 					<hr class="fancyhr">
 				
 					<div>
@@ -275,7 +246,7 @@
 				<div id="refreshGameWrap" class="buffer2">
 					<table id="gameTable" class="table table-condensed table-borderless">
 						<thead>
-							<tr>
+							<tr id="gameTableHead">
 								<th class="gameTableCol1 warCells">Game Name</th>
 								<th class="gameTableCol2 warCells">Map</th>
 								<th class="gameTableCol3 warCells">Turn Duration</th>
@@ -543,8 +514,12 @@
 			<div class="row">
 				<div class="col-xs-12">
 					<?php
-					if ($_SESSION['fwpaid']){
-						echo '
+					if ($_SESSION['guest']){
+						?> 
+						<div class='text-center text-warning'>Sign up to update your nation's name</div>
+						<?php
+					} else {
+						?> 
 						<div class="input-group">
 							<input id="updateNationName" class="form-control" type="text" maxlength="32" autocomplete="off" size="24" aria-describedby="updateNationNameStatus" placeholder="Enter New Nation Name">
 							<span class="input-group-btn">
@@ -552,13 +527,8 @@
 									Update Nation Name
 								</button>
 							</span>
-						</div>';
-					} else {
-						if (!$_SESSION['guest']){
-							echo "<div class='text-center'><span class='unlockGameBtn text-warning'>Unlock the complete game to update your nation's name</span></div>";
-						} else {
-							echo "<div class='text-center'><span class='text-warning'>Sign up and unlock the complete game to update your nation's name</span></div>";
-						}
+						</div>
+						<?php
 					}
 					?>
 				</div>
@@ -598,91 +568,36 @@
 			</div>
 			<div class="row">
 				<?php
-					if (!$_SESSION['fwpaid']){
-						echo 
-						'<div class="col-xs-12 text-warning text-center">';
-							if (!$_SESSION['guest']){
-								echo '<span class="unlockGameBtn">Unlock the complete game to update your dictator\'s avatar</span>';
-							} else {
-								echo '<span>Sign up and unlock the complete game to update your dictator\'s avatar</span>';
-							}
-						echo '</div>';
-					} else {
-						echo
-						'<div class="col-xs-8">
-							<form id="uploadDictator" action="php/uploadDictator.php" method="post" enctype="multipart/form-data">
-								<p>Upload your dictator avatar. A 120x120 image is recommended. Image must be a jpg < 50 kb:</p>
-								<p>
-									<input id="dictatorAvatar" class="btn btn-primary fwBlue shadow4" type="file" accept=".jpg" name="image">
-								</p>
-								<p id="uploadErr" class="text-warning"></p>
-								<p>
-									<input class="btn btn-primary fwBlue shadow4" type="submit" value="Upload" name="submit">
-								</p>
-							</form>
-						</div>
-						<div class="col-xs-4">
-							<img id="configureAvatarImage" class="dictator">
-						</div>';
-					}
+				if (!$_SESSION['guest']){ 
+				?>
+				<div class="col-xs-8">
+					<p>Upload your dictator avatar. A 120x120 image is recommended. Image must be a jpg < 40 kb:</p>
+					<p>
+						<input id="dictatorAvatar" class="btn btn-primary fwBlue shadow4" type="file" accept=".jpg" name="image">
+					</p>
+					<p id="uploadErr" class="text-warning"></p>
+				</div>
+				<div class="col-xs-4">
+					<img id="configureAvatarImage" class="dictator">
+				</div>
+				<?php
+				} else {
+				?>
+					<div class="col-xs-12 text-warning text-center">
+						Sign up to update your nation's name
+					</div>
+				<?php
+				}
 				?>
 			</div>
 			
-			<div class='row buffer text-center'>
+			<div class='row text-center'>
 				<div class='col-xs-12'>
 					<hr class="fancyhr">
 					<button id="configureNationDone" type="button" class="btn btn-md fwGreen btn-responsive shadow4">Done</button>
 				</div>
 			</div>
 		</div>
-		<?php
-		if (!$_SESSION['fwpaid']){
-			echo 
-			'<div id="unlockGame" class="fw-primary container titleModal">
-				<div class="row text-center">
-					<div class="col-xs-12">
-						<h2 class="header">Unlock Complete Game</h2>
-						<hr class="fancyhr">
-					</div>
-				</div>
-				<div class="row buffer">
-					<div class="col-xs-12">
-						<ul>
-							<li>Rename your nation</li>
-							<li>Display your dictator\'s avatar</li>
-							<li>Display your military ribbons in game</li>
-							<li>Select from 20 player colors</li>
-						</ul>
-					</div>
-				</div>
-				
-				<div>
-					<hr class="fancyhr">
-					<p>
-						<div>Card Number (no spaces or hyphens)</div>
-						<input id="card-number" class="form-control" type="text" maxlength="16" autocomplete="off">
-					</p>
-					<p>
-						<div>CVC (number on the back of your credit card)</div>
-						<input id="card-cvc" class="form-control" type="text" maxlength="4" autocomplete="off">
-					</p>
-					<p>
-						<div>Expiration Month/Year (MM/YY)</div>
-						<input id="card-month" class="form-control" type="text" maxlength="2"> / 
-						<input id="card-year" class="form-control" type="text" maxlength="2">
-					</p>
-				</div>
-				<hr class="fancyhr">
-				<div class="text-center">
-					<p class="text-success">Unlock the complete game for $9.99</p>
-					<p id="payment-errors" class="text-warning"></p>
-					<div class="text-center">
-						<button id="payment-confirm" class="btn fwGreen btn-lg shadow4 shadow4">Unlock Complete Game</button>
-					</div>
-				</div>
-			</div>';
-		};
-		?>
 		
 		<div id="leaderboard" class="fw-primary container titleModal">
 			<div class="row">
@@ -1141,24 +1056,12 @@
 <script src="js/libs/DrawSVGPlugin.min.js"></script>
 <script src="js/libs/SplitText.min.js"></script>
 <script src="js/libs/autobahn.min.js"></script>
-<?php
-	if (!$_SESSION['fwpaid']){
-		echo '<script src="https://js.stripe.com/v2/"></script>
-			<script>
-				location.host === "localhost" ? 
-					Stripe.setPublishableKey("pk_test_GtNfTRB1vYUiMv1GY2kSSRRh") :
-					Stripe.setPublishableKey("pk_live_rPSfoOYjUrmJyQYLnYJw71Zm");
-			</script>';
-	}
-?>
 <script src="js/libs/bootstrap.min.js"></script>
 <script src="js/libs/bootstrap-slider.min.js"></script>
 <?php
 	require $_SERVER['DOCUMENT_ROOT'] . '/includes/ga.php';
 	echo '<script>
-		var fwpaid = '. $_SESSION['fwpaid'] .',
-			nationRow = '. $_SESSION['nationRow'] .',
-			guest = '. $_SESSION['guest'] .';
+		var guest = '. $_SESSION['guest'] .';
 		// set channel
 		if (location.hash.length > 1){
 			initChannel = location.hash.slice(1);

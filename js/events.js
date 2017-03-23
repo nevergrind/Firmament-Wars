@@ -160,11 +160,11 @@ var events = {
 			title.toggleFriend($(this).data('account'));
 		});
 		$("#toggleNation").on(ui.click, function(){
-			var img = new Image();
-			img.src = 'php/avatars/'+ ~~(nationRow / 10000) +'/'+ nationRow +'.jpg?v='+ Date.now();
-			img.onload = function(){
-				document.getElementById('configureAvatarImage').src = 'php/avatars/'+ ~~(nationRow / 10000) +'/'+ nationRow +'.jpg?v='+ Date.now();
-			};
+			$.ajax({
+				url: 'php/loadAvatar.php',
+			}).done(function(data){
+				document.getElementById('configureAvatarImage').src = data.uri;
+			});
 			TweenMax.to('#configureNation', g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
@@ -176,13 +176,6 @@ var events = {
 			});
 			title.showBackdrop();
 		});
-		/*
-		$("#avatarWrap").on('mouseenter click', function(){
-			DOM.ribbonWrap.style.visibility = 'visible';
-		}).on('mouseleave', function(){
-			DOM.ribbonWrap.style.visibility = 'hidden';
-		});
-		*/
 		$("#joinPrivateGameBtn").on(ui.click, function(){
 			var e = $("#joinGame");
 			e.val('');
@@ -685,24 +678,37 @@ $(document).on('keydown', function(e){
 	}
 });
 
- $("#uploadDictator").on('submit', function(e){
-	e.preventDefault();
-	$.ajax({
-		url: "php/uploadDictator.php",
-		type: "POST",
-		data:  new FormData(this),
-		contentType: false,
-		cache: false,
-		processData:false,
-		beforeSend: function(){
-			$("#uploadErr").text('');
-		}
-	}).done(function(data){
-		console.info("IMAGE: ", 'php/'+ data);
-		$("#uploadErr").text("Avatar updated successfully!");
-		document.getElementById('configureAvatarImage').src = 'php/'+ data +'?v='+ Date.now(); 
-	}).fail(function(data){
-		console.info("FAIL: ", data);
-		$("#uploadErr").html(data.statusText);
-	});
+ $("#dictatorAvatar").on('change', function(e){
+	 var e2 = 
+	 function imgError(msg){
+		$("#uploadErr").html(msg);
+		audio.play('error');
+	 }
+	 var file = e.target.files[0];
+	 var reader = new FileReader();
+	 reader.readAsDataURL(file);
+	 if (file.size > 40000){
+		imgError('File size too large! Image must be less than 40 kb.');
+		$("#uploadErr").html();
+	 } else if (file.type !== 'image/jpeg'){
+		imgError('Wrong file type! Image must be in jpg format.');
+	 } else {
+		 reader.addEventListener("load", function(){
+			$.ajax({
+				url: "php/uploadDictator.php",
+				type: "POST",
+				data: {
+					uri: reader.result
+				},
+				beforeSend: function(){
+					$("#uploadErr").text('');
+				}
+			}).done(function(data){
+				$("#uploadErr").text("Avatar updated successfully!");
+				document.getElementById('configureAvatarImage').src = reader.result;
+			}).fail(function(data){
+				imgError(data.statusText);
+			});
+		 }, false);
+	 }
  });

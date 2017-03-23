@@ -205,7 +205,7 @@ var lobby = {
 								str += ' pointer2';
 							}
 							str += '" data-placement="right" data-toggle="dropdown"></i>';
-							if (i === my.player && fwpaid){
+							if (i === my.player){
 								str += 
 								'<ul id="teamColorDropdown" class="dropdown-menu">\
 									<li class="header text-center selectTeamHeader">Player Color</li>';
@@ -387,9 +387,7 @@ var lobby = {
 			}
 			if (my.player === i){
 				if (!isMobile){
-					$("#lobbyPlayerColor" + i).attr('title', fwpaid ? 
-						'Select Player Color' : 
-						'Unlock the complete game to choose player color')
+					$("#lobbyPlayerColor" + i).attr('title', 'Select Player Color')
 						.tooltip({
 							container: 'body',
 							animation: false
@@ -498,17 +496,6 @@ var lobby = {
 			Communism: 'fa fa-globe'
 		};
 		return icon[government];
-	},
-	initAvatars: function(data){
-		data.players.forEach(function(e, i){
-			(function(i){
-				var img = new Image();
-				img.src =  'php/avatars/'+ ~~(e.nationRow / 10000) +'/'+ e.nationRow +'.jpg?v=' + g.startTime;
-				img.onload = function(){
-					game.player[++i].avatar = 'php/avatars/'+ ~~(e.nationRow / 10000) +'/'+ e.nationRow +'.jpg?v=' + g.startTime;
-				}
-			})(i);
-		});
 	},
 	initRibbons: function(data){
 		for (var key in data){
@@ -857,6 +844,7 @@ function loadGameState(){
 				game.player[d.player].playerColor = d.playerColor;
 				game.player[d.player].team = d.team;
 				game.player[d.player].government = d.government;
+				game.player[d.player].avatar = d.avatar;
 			}
 			
 			// initialize client tile data
@@ -1019,7 +1007,6 @@ function loadGameState(){
 			}
 			initResources(data);
 			// set images
-			lobby.initAvatars(data);
 			setTimeout(function(){
 				// init draggable map
 				worldMap = Draggable.create(DOM.worldWrap, {

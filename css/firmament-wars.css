@@ -302,7 +302,6 @@ a:hover{
 #refreshGameWrap{
 	color: #bef;
 	margin-top: .5vh;
-	background: rgba(0,0,0,.5);
 	overflow-y: auto;
 	height: 69vh;
 }
@@ -323,6 +322,9 @@ tbody{
 	border: 0;
 }
 /* title chat */
+#gameTableHead{
+	background: rgba(0,0,0,.7);
+}
 #titleChatHeader{
 	text-align: center;
 	background: rgba(0, 0, 0, .7);
@@ -355,8 +357,8 @@ tbody{
 	position: relative;
 	padding: 0;
 	top: 1vh;
-	left: 3px;
-	right: 3px;
+	left: .25vw;
+	right: .25vw;
 	font-family: Roboto, Verdana, Arial, sans-serif;
 	color: #bef;
 	text-shadow: 1px 1px #357;
@@ -364,8 +366,8 @@ tbody{
 }
 #titleChatPlayers{
 	position: relative;
-	top: 3px;
-	left: 3px;
+	top: .125vw;
+	left: .25vw;
 	width: 40%;
 	padding: 0;
 	background: rgba(0,55,155,.2);
@@ -377,6 +379,7 @@ tbody{
 	right: 3px;
 	background: rgba(0,0,0,.5);
 	overflow-x: hidden;
+	word-break: break-all;
 }
 #login{
 	color: #fff;
@@ -482,7 +485,6 @@ tbody{
 	background: rgba(1,66,1,1);
 }
 #lobbyChatSend, #titleChatSendBtn{
-	padding: .5vw 1vh;
 	border-radius: 0 6px 6px 0;
 }
 #titleChatSendBtn{
@@ -1419,6 +1421,7 @@ circle{
 #lobbyChatLogWrap{
 	padding: .25vh .5vh;
 	border-radius: 6px 6px 0 0;
+	word-break: break-all;
 }
 #lobbyChatLog{
 	position: relative;
@@ -1597,8 +1600,8 @@ span.unlockGameBtn{
 	height: 120px;
 }
 .avatarChat{
-	width: 120px;
-	height: 120px;
+	width: 200px;
+	height: 200px;
 }
 #avatarWrap{
 	position: relative;
@@ -1608,8 +1611,8 @@ span.unlockGameBtn{
 }
 #configureAvatarImage{
 	float: right;
-	width: 200px;
-	height: 200px;
+	width: 120px;
+	height: 120px;
 }
 .fa-stack{
 	width: 1em;
@@ -3001,6 +3004,11 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 /* responsive height */
+@media all and (max-height: 750px){
+	#lobbyFirmamentWarsLogo{
+		display: none;
+	}
+}
 @media all and (min-height: 868px) and (max-height: 967px){
 	#refreshGameWrap{
 		height: 66vh;
