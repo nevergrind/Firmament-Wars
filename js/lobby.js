@@ -146,7 +146,6 @@ var lobby = {
 	},
 	init: function(x){
 		// build the lobby DOM
-		console.info("Initializing lobby...", x.rating);
 		var e1 = document.getElementById("lobbyGameName");
 		if (e1 !== null){
 			if (x.rating){
@@ -159,7 +158,6 @@ var lobby = {
 				document.getElementById('lobbyGamePasswordWrap').style.display = 'block';
 				document.getElementById('lobbyGamePassword').innerHTML = x.password;
 			}
-			console.info("SPEEDS: ", x.speed);
 			g.speed = x.speed;
 			document.getElementById("lobbyGameSpeed").innerHTML = x.speed;
 			document.getElementById("lobbyGameMap").innerHTML = x.map;
@@ -964,9 +962,10 @@ function loadGameState(){
 				}
 				var str = '<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">'+
 					// bg
+					/*
 					'<div class="flagWrapper">'+
 						'<img class="diploFlag" src="images/flags/'+ p.flag + '">'+
-					'</div>'+
+					'</div>'+*/
 					'<div>'+
 					// row 1
 					'<div class="flag '+ p.flagClass +'" data-placement="right" title="'+ p.flagShort + '"></div>'+ p.account + '</div>'+

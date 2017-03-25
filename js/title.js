@@ -80,7 +80,7 @@ var title = {
 			});
 			setTimeout(function(){
 				g.keepAlive();
-			}, 300000);
+			}, 180000);
 		});
 	})(),
 	updatePlayers: function(once){
@@ -89,7 +89,6 @@ var title = {
 			// title chat loop
 			(function repeat(){
 				if (g.view === 'title'){
-					var start = Date.now();
 					$.ajax({
 						type: "POST",
 						url: "php/titleUpdate.php",
@@ -97,8 +96,6 @@ var title = {
 							channel: my.channel
 						}
 					}).done(function(data){
-						// report chat messages
-						console.log("Ping: ", Date.now() - start);
 						// set title players
 						if (data.playerData !== undefined){
 							var p = data.playerData,
@@ -406,7 +403,6 @@ var title = {
 			type: 'GET',
 			url: 'php/friendGet.php',
 		}).done(function(data){
-			console.info(data);
 			data.friends.forEach(function(friend){
 				g.friends.push(friend);
 			});
@@ -730,7 +726,7 @@ var title = {
 		}
 	},
 	showBackdrop: function(e){
-		TweenMax.to(document.getElementById("titleViewBackdrop"), ui.delay(.3), {
+		TweenMax.to('#titleViewBackdrop', ui.delay(.3), {
 			startAt: {
 				visibility: 'visible',
 				alpha: 0
@@ -744,18 +740,8 @@ var title = {
 		});
 		g.isModalOpen = true;
 	},
-	modalElements: [
-		"#configureNation",
-		"#titleViewBackdrop",
-		'#createGameWrap',
-		'#optionsModal',
-		'#leaderboard',
-		'#unlockGame',
-		'#hotkeysModal',
-		'#joinPrivateGameModal'
-	],
 	closeModal: function(){
-		TweenMax.set(title.modalElements, {
+		TweenMax.set('.title-modals, #titleViewBackdrop', {
 			alpha: 0,
 			visibility: 'hidden'
 		});

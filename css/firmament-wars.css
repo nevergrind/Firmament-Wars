@@ -118,9 +118,6 @@ a:hover{
 .fancyhr2{
 	margin: .5% 0;
 }
-.fancyhrNoTop{
-	margin-top: 0;
-}
 .shadow4{
 	text-shadow:
 		1px 1px #000,
@@ -290,12 +287,12 @@ a:hover{
 }
 #titleMenu{
 	position: absolute;
-	top: 7%;
+	top: 7vh;
+	bottom: 0vh;
 	left: 0;
 	width: 52%;
-	bottom: 0vh;
 	overflow: hidden;
-	padding: .5% .75%;
+	padding: .5vh .75vw;
 	z-index: 100;
 	border-radius: 0;
 }
@@ -346,11 +343,11 @@ tbody{
 #titleChat{
 	text-align: left;
 	position: absolute;
+	top: 7vh;
+	bottom: 0vh;
 	padding: 0;
-	top: 7%;
 	right: 0;
 	width: 48%;
-	bottom: 0;
 	border-radius: 0;
 }
 #titleChatWrap{
@@ -366,7 +363,7 @@ tbody{
 }
 #titleChatPlayers{
 	position: relative;
-	top: .125vw;
+	top: .25vh;
 	left: .25vw;
 	width: 40%;
 	padding: 0;
@@ -374,12 +371,12 @@ tbody{
 }
 #titleChatLog{
 	position: absolute;
-	top: 3px;
+	top: .25vh;
 	left: 41%;
-	right: 3px;
+	right: .25vw;
 	background: rgba(0,0,0,.5);
 	overflow-x: hidden;
-	word-break: break-all;
+	word-break: break-word;
 }
 #login{
 	color: #fff;
@@ -402,7 +399,7 @@ tbody{
 .titlePanelLeft{
 	position: absolute;
 	font-family: Roboto, Verdana, Arial, sans-serif;
-	height: 87vh;
+	height: 88vh;
 	text-shadow: .5px .5px #357, 1px 1px #357;
 	color: #bef;
 	border-radius: 4px;
@@ -414,20 +411,14 @@ tbody{
 #leaderboard{
 	width: 85%;
 	max-width: 1024px;
-	height: 96%;
 	background: #000;
 	overflow: hidden;
 }
 #leaderboardBody{
 	overflow: hidden;
 	overflow-y: auto;
-	height: 85vh;
-	width: 100%;
-	margin-left: 0;
-}
-#leaderboardFoot{
-	position: relative;
-	width: 100%;
+	width: 99%;
+	height: 83vh;
 }
 .addFriend{
 	margin: .25em 0;
@@ -837,7 +828,7 @@ tbody{
 }
 .diplomacyPlayers{
 	position: relative;
-	border: 2px ridge #357;
+	border: 1px solid #357;
 	padding: 0 6px;
 	margin: 1px;
 	overflow: hidden;
@@ -882,7 +873,7 @@ tbody{
 	overflow: hidden;
 }
 .blueBg{
-	border: 1px solid #357; /* rgba(176,240,255,1) */
+	border: 2px ridge #357; /* rgba(176,240,255,1) */
 	border-radius: 4px;
 	background: rgba(0, 8, 33, 1);
 }
@@ -1185,6 +1176,11 @@ table td, .table th, .table td {
 	stroke: #111;
 }
 text{
+	fill: rgba(255,255,255,1); 
+	stroke: rgba(0,0,0,1); 
+	stroke-width: 3; 
+	stroke-linejoin: round; 
+	paint-order: stroke; 
 }
 .unit{
 	visibility: hidden;
@@ -1421,7 +1417,7 @@ circle{
 #lobbyChatLogWrap{
 	padding: .25vh .5vh;
 	border-radius: 6px 6px 0 0;
-	word-break: break-all;
+	word-break: break-word;
 }
 #lobbyChatLog{
 	position: relative;
@@ -1619,7 +1615,7 @@ span.unlockGameBtn{
 	height: 1em;
 	line-height: 1em;
 }
-.titleModal{
+.title-modals{
 	visibility: hidden;
 	position: absolute;
 	padding: 8px;
@@ -2414,9 +2410,6 @@ table {
 .input-group-addon{
 	text-shadow: none;
 	color: #1a1a1a;
-}
-.buff25{
-	margin-top: .25em;
 }
 .buffer{
 	margin-top: .5em;

@@ -66,7 +66,9 @@ var events = {
 				e4 = document.getElementById('createGameNameWrap'),
 				e5 = document.getElementById('createGamePasswordWrap'),
 				e6 = document.getElementById('createGameMaxPlayerWrap');
-				
+			
+			g.rankedMode = 0;
+			g.teamMode = 0;
 			if (mode === 'ranked'){
 				g.rankedMode = 1;
 				e1.style.display = 'none';
@@ -679,36 +681,38 @@ $(document).on('keydown', function(e){
 });
 
  $("#dictatorAvatar").on('change', function(e){
-	 var e2 = 
+	 var e2 = $("#uploadErr");
 	 function imgError(msg){
-		$("#uploadErr").html(msg);
+		e2.html(msg);
 		audio.play('error');
 	 }
 	 var file = e.target.files[0];
 	 var reader = new FileReader();
 	 reader.readAsDataURL(file);
-	 if (file.size > 40000){
-		imgError('File size too large! Image must be less than 40 kb.');
-		$("#uploadErr").html();
-	 } else if (file.type !== 'image/jpeg'){
+	 if (file.type !== 'image/jpeg'){
 		imgError('Wrong file type! Image must be in jpg format.');
 	 } else {
 		 reader.addEventListener("load", function(){
-			$.ajax({
-				url: "php/uploadDictator.php",
-				type: "POST",
-				data: {
-					uri: reader.result
-				},
-				beforeSend: function(){
-					$("#uploadErr").text('');
-				}
-			}).done(function(data){
-				$("#uploadErr").text("Avatar updated successfully!");
-				document.getElementById('configureAvatarImage').src = reader.result;
-			}).fail(function(data){
-				imgError(data.statusText);
-			});
+			if (reader.result.length > 64000){
+				$.ajax({
+					url: "php/uploadDictator.php",
+					type: "POST",
+					data: {
+						uri: reader.result
+					},
+					beforeSend: function(){
+						e2.text('');
+					}
+				}).done(function(data){
+					e2.text("Avatar updated successfully!");
+					document.getElementById('configureAvatarImage').src = reader.result;
+				}).fail(function(data){
+					imgError(data.statusText);
+				});
+			} else {
+				imgError('File size too large! Image must be less than 40 kb.');
+				e2.html();
+			}
 		 }, false);
 	 }
  });

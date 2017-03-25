@@ -33,10 +33,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head id='head'>
-	<title>Firmament Wars | Free Online Multiplayer Strategy | Risk-Like Warfare</title>
+	<title>Firmament Wars | Free Multiplayer Risk-Like Strategy | Browser Game</title>
 	<meta charset="utf-8">
-	<meta name="keywords" content="risk, civilization, starcraft, multiplayer, pol, strategy, gaming">
-	<meta name="description" content="Firmament Wars is a free multiplayer Risk-like strategy game with realtime combat in FFA, ranked, and team modes!">
+	<meta name="keywords" content="free, risk, browser, multiplayer, online, strategy, html5">
+	<meta name="description" content="Firmament Wars is a free multiplayer strategy game inspired by Risk and Civilization with fast-paced, real-time combat in FFA, ranked, and team modes!">
 	<meta name="author" content="Joe Leonard">
 	<meta name="referrer" content="always">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -48,9 +48,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-49">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-63">
 	<script>
-		version = '1-0-49'; 
+		version = '1-0-63'; 
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -68,7 +68,7 @@
 	
 		<div id="titleMain" class="portal">
 			
-			<header id="document" class="shadow4 text-primary">
+			<header class="shadow4 text-primary">
 				<?php
 				// load/init nation data
 				// remove players that left
@@ -93,16 +93,17 @@
 				$_SESSION['rankedLosses'] = 0;
 				$_SESSION['disconnects'] = 0;
 				$_SESSION['disconnectRate'] = 0;
+				$_SESSION['avatar'] = $_SESSION['defaultAvatar'];
 				$nation = 'Kingdom of '. ucfirst($_SESSION['account']);
 				$flag = !isset($_SESSION['flag']) ? 'United States.jpg' : $_SESSION['flag'];
 				
 				if($count > 0){
 					// nation exists
-					$query = "select nation, flag, rating, wins, losses, teamWins, teamLosses, rankedWins, rankedLosses, disconnects from fwnations where account=?";
+					$query = "select nation, flag, rating, wins, losses, teamWins, teamLosses, rankedWins, rankedLosses, disconnects, avatar from fwnations where account=?";
 					$stmt = $link->prepare($query);
 					$stmt->bind_param('s', $_SESSION['account']);
 					$stmt->execute();
-					$stmt->bind_result($dName, $dFlag, $rating, $wins, $losses, $teamWins, $teamLosses, $rankedWins, $rankedLosses, $disconnects);
+					$stmt->bind_result($dName, $dFlag, $rating, $wins, $losses, $teamWins, $teamLosses, $rankedWins, $rankedLosses, $disconnects, $avatar);
 					while($stmt->fetch()){
 						$nation = $dName;
 						$flag = $dFlag;
@@ -116,6 +117,7 @@
 						$_SESSION['rankedLosses'] = $rankedLosses;
 						$_SESSION['disconnects'] = $disconnects;
 						$_SESSION['disconnectRate'] = $_SESSION['totalGames'] === 0 ? 0 : round(($_SESSION['disconnects'] / $_SESSION['totalGames']) * 100) ;
+						$_SESSION['avatar'] = $avatar;
 					}
 					// init nation values
 					$_SESSION['rating'] = $rating;
@@ -124,7 +126,7 @@
 				} else {
 					if (!$_SESSION['guest']){
 						// create nation
-						$query = "insert into fwnations (`account`, `nation`, `flag`, `avatar`) VALUES (?, '$nation', '$flag', 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDABALDA4MChAODQ4SERAT…OEsLM0OX3oACA43AgSPGlmKvD63MWZ0JxFhTidM2Y2xo5oWpwcUdvWxa72Ng7BC4OgU8f/2Q==')";
+						$query = "insert into fwnations (`account`, `nation`, `flag`, `avatar`) VALUES (?, '$nation', '$flag', '". $_SESSION['defaultAvatar'] ."')";
 						$stmt = $link->prepare($query);
 						$stmt->bind_param('s', $_SESSION['account']);
 						$stmt->execute();
@@ -364,7 +366,7 @@
 			
 		</div>
 		
-		<div id='createGameWrap' class='fw-primary titleModal'>
+		<div id='createGameWrap' class='fw-primary title-modals'>
 			<div class='header text-center'>
 				<h2 id="createGameHead" class="header">Create FFA Game</h2>
 				<h2 id="createRankedGameHead" class='header ranked'>Create Ranked Game</h2>
@@ -461,7 +463,7 @@
 			</div>
 		</div>
 		
-		<div id="joinPrivateGameModal" class="fw-primary container titleModal">
+		<div id="joinPrivateGameModal" class="fw-primary container title-modals">
 			<div class="row text-center">
 				<div class='col-xs-12'>
 					<h2 class='header'>Join Private Game</h2>
@@ -496,7 +498,7 @@
 			</div>
 		</div>
 		
-		<div id="configureNation" class="fw-primary container titleModal">
+		<div id="configureNation" class="fw-primary container title-modals">
 			<div class="row text-center">
 				<div class='col-xs-12'>
 					<h2 class='header'>Configure Nation</h2>
@@ -571,7 +573,7 @@
 				if (!$_SESSION['guest']){ 
 				?>
 				<div class="col-xs-8">
-					<p>Upload your dictator avatar. A 120x120 image is recommended. Image must be a jpg < 40 kb:</p>
+					<p>Upload your dictator avatar. A 200x200 image is recommended. Image must be a jpg < 40 kb:</p>
 					<p>
 						<input id="dictatorAvatar" class="btn btn-primary fwBlue shadow4" type="file" accept=".jpg" name="image">
 					</p>
@@ -599,24 +601,18 @@
 			</div>
 		</div>
 		
-		<div id="leaderboard" class="fw-primary container titleModal">
+		<div id="leaderboard" class="fw-primary container title-modals">
 			<div class="row">
-				<div class='col-xs-12'>
-					<h2 class="pull-right header buff25">Firmament Wars | Leaderboards</h2>
+				<div class="col-xs-12">
+					<button id="leaderboardDone" type="button" class="btn btn-md fwBlue btn-responsive shadow4 pull-right">Done</button>
 					<button id="leaderboardFFABtn" type="button" class="btn fwGreen btn-responsive shadow4">FFA</button>
 					<button id="leaderboardRankedBtn" type="button" class="btn fwGreen btn-responsive shadow4">Ranked</button>
 					<button id="leaderboardTeamBtn" type="button" class="btn fwGreen btn-responsive shadow4">Team</button>
 					<hr class="fancyhr">
 				</div>
-			</div>
-			<div id="leaderboardBody" class="row">
-				<div class="text-center">Loading...</div>
-			</div>
-			
-			<div id="leaderboardFoot" class='row'>
-				<div class='col-xs-12 text-center'>
-					<hr class="fancyhr fancyhrNoTop">
-					<button id="leaderboardDone" type="button" class="btn btn-md fwGreen btn-responsive shadow4">Done</button>
+				
+				<div id="leaderboardBody" class="col-xs-12">
+					<div class="text-center">Loading...</div>
 				</div>
 			</div>
 		</div>
@@ -964,7 +960,7 @@
 
 	<audio id="bgmusic" autoplay loop preload="auto"></audio>
 	
-	<div id="hotkeysModal" class='fw-primary titleModal'>
+	<div id="hotkeysModal" class='fw-primary title-modals'>
 		<h2 class='header text-center'>Hotkeys</h2>
 		<hr class="fancyhr">
 		
@@ -1015,7 +1011,7 @@
 		</div>
 	</div>
 	
-	<div id="optionsModal" class='fw-primary titleModal'>
+	<div id="optionsModal" class='fw-primary title-modals'>
 		<h2 class='header text-center'>Audio</h2>
 		<hr class="fancyhr">
 		<div id="optionsFormWrap" class="container w100">

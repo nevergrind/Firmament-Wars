@@ -6,7 +6,7 @@ $.ajaxSetup({
 if (location.host !== 'localhost'){
 	console.log = function(){};
 	console.info = function(){};
-}
+};
 TweenMax.defaultEase = Quad.easeOut;
 var g = {
 	spectateStatus: 0,
@@ -251,7 +251,7 @@ var g = {
 			game.chat(o);
 		}
 	}
-}
+};
 g.init = (function(){
 	// console.info("Initializing game...");
 	if (!isMobile){
@@ -322,7 +322,6 @@ g.init = (function(){
 		}).done(function(data) {
 			//console.info('rejoin ', data.gameId, data.team);
 			if (data.gameId > 0){
-				console.info("Auto joined game: " + data.team);
 				my.player = data.player;
 				my.playerColor = data.player;
 				g.teamMode = data.teamMode;
@@ -330,7 +329,6 @@ g.init = (function(){
 				my.team = data.team;
 				game.id = data.gameId;
 				g.map = data.mapData;
-				console.info("SPEEDS: ", data.speed);
 				g.speed = data.speed;
 				// join lobby in progress
 				setTimeout(function(){
@@ -770,7 +768,7 @@ var game = {
 			}
 		}
 	}
-}
+};
 // player data values
 var my = {
 	lastReceivedWhisper: '',
@@ -845,7 +843,8 @@ var my = {
 			visibility: 'hidden',
 			strokeDashoffset: 0
 		});
-		$DOM.head.append('<style>.land{ cursor: pointer; }</style>');
+		$("#style-land-pointer").remove();
+		$DOM.head.append('<style id="style-land-pointer">.land{ cursor: pointer; }</style>');
 	},
 	nextTarget: function(backwards){
 		if (!g.spectateStatus){
@@ -918,10 +917,10 @@ var my = {
 			}
 		}
 	}
-}
+};
 var timer = {
 	hud: g.TDC()
-}
+};
 // DOM caching
 var DOM;
 function initDom(){
@@ -936,6 +935,7 @@ function initDom(){
 		targetCapStar: d.getElementById('targetCapStar'),
 		targetNameWrap: d.getElementById('targetNameWrap'),
 		targetBarsWrap: d.getElementById('targetBarsWrap'),
+		targetNameAnchor: d.getElementById('targetNameAnchor'),
 		targetTargetFlag: d.getElementById('targetTargetFlag'),
 		targetTargetCapStar: d.getElementById('targetTargetCapStar'),
 		targetTargetNameWrap: d.getElementById('targetTargetNameWrap'),

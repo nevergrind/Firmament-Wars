@@ -27,7 +27,7 @@ var socket = {
 		try {
 			socket.zmq.unsubscribe(channel);
 		} catch(err){
-			console.warn(err);
+			console.info(err);
 		}
 	},
 	setChannel: function(channel){
@@ -127,8 +127,8 @@ var socket = {
 			setInterval(console.clear, 600000); // 10 min
 		}
 		(function keepAliveWs(){
-			socket.zmq.publish(channel, {type: "keepAlive"});
-			setTimeout(keepAliveWs, 30000);
+			socket.zmq.publish('admin:broadcast', {});
+			setTimeout(keepAliveWs, 20000);
 		})();
 	},
 	joinGame: function(){
@@ -172,7 +172,9 @@ var socket = {
 					title.updateGame(data);
 				});
 				socket.zmq.subscribe('admin:broadcast', function(topic, data) {
-					g.chat(data.msg, data.type);
+					if (data.msg){
+						g.chat(data.msg, data.type);
+					}
 				});
 				(function repeat(){
 					if (my.account){

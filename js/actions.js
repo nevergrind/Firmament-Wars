@@ -47,7 +47,8 @@ var action = {
 			my.splitAttack = o.splitAttack;
 			my.hud(o.hudMsg);
 			// set cursor
-			$DOM.head.append('<style>.land{ cursor: crosshair; }</style>');
+			$("#style-land-crosshair").remove();
+			$DOM.head.append('<style id="style-land-crosshair">.land{ cursor: crosshair; }</style>');
 			// set target line
 			my.targetLine[0] = DOM['unit' + my.tgt].getAttribute('x')*1 - 10;
 			my.targetLine[1] = DOM['unit' + my.tgt].getAttribute('y')*1 - 10;
