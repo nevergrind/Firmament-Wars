@@ -33,7 +33,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head id='head'>
-	<title>Firmament Wars | Free Multiplayer Risk-Like Strategy | Browser Game</title>
+	<title>Firmament Wars | Free Multiplayer Risk-Like Strategy | HTML5 Browser Game</title>
 	<meta charset="utf-8">
 	<meta name="keywords" content="free, risk, browser, multiplayer, online, strategy, html5">
 	<meta name="description" content="Firmament Wars is a free multiplayer strategy game inspired by Risk and Civilization with fast-paced, real-time combat in FFA, ranked, and team modes!">
@@ -48,9 +48,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-63">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-64">
 	<script>
-		version = '1-0-63'; 
+		version = '1-0-64';
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -604,10 +604,10 @@
 		<div id="leaderboard" class="fw-primary container title-modals">
 			<div class="row">
 				<div class="col-xs-12">
-					<button id="leaderboardDone" type="button" class="btn btn-md fwBlue btn-responsive shadow4 pull-right">Done</button>
-					<button id="leaderboardFFABtn" type="button" class="btn fwGreen btn-responsive shadow4">FFA</button>
-					<button id="leaderboardRankedBtn" type="button" class="btn fwGreen btn-responsive shadow4">Ranked</button>
-					<button id="leaderboardTeamBtn" type="button" class="btn fwGreen btn-responsive shadow4">Team</button>
+					<button id="leaderboardDone" type="button" class="btn btn-md fwGreen btn-responsive shadow4 pull-right">Done</button>
+					<button id="leaderboardFFABtn" type="button" class="btn fwBlue btn-responsive shadow4">FFA</button>
+					<button id="leaderboardRankedBtn" type="button" class="btn fwBlue btn-responsive shadow4">Ranked</button>
+					<button id="leaderboardTeamBtn" type="button" class="btn fwBlue btn-responsive shadow4">Team</button>
 					<hr class="fancyhr">
 				</div>
 				
@@ -876,7 +876,7 @@
 						<span class='text-hotkey'>G</span>unpowder
 					</div>
 					<div class="col-xs-3 tight2 text-right productionCost">
-						<span id='gunpowderCost'>40</span>
+						<span id='gunpowderCost'>60</span>
 					</div>
 				</div>
 				
@@ -887,7 +887,7 @@
 						<span class='text-hotkey'>E</span>ngineering
 					</div>
 					<div class="col-xs-3 tight2 text-right productionCost">
-						<span id='engineeringCost'>60</span>
+						<span id='engineeringCost'>80</span>
 					</div>
 				</div>
 				
@@ -898,7 +898,7 @@
 						Roc<span class='text-hotkey'>k</span>etry
 					</div>
 					<div class="col-xs-3 tight2 text-right productionCost">
-						<span id='rocketryCost'>80</span>
+						<span id='rocketryCost'>120</span>
 					</div>
 				</div>
 				
@@ -909,7 +909,7 @@
 						A<span class='text-hotkey'>t</span>omic Theory
 					</div>
 					<div class="col-xs-3 tight2 text-right productionCost">
-						<span id='atomicTheoryCost'>100</span>
+						<span id='atomicTheoryCost'>200</span>
 					</div>
 				</div>
 				
@@ -920,7 +920,7 @@
 						<span class='text-hotkey'>F</span>uture Tech
 					</div>
 					<div class="col-xs-3 tight2 text-right productionCost">
-						<span id='futureTechCost'>500</span>
+						<span id='futureTechCost'>800</span>
 					</div>
 				</div>
 			</div>

@@ -23,6 +23,7 @@ var ui = {
 	setWorkSafe: function(){
 		 $("head").append('<style>'+
 			'.chat-img{ display: none; } '+
+			'#statQuote{ visibility: hidden; } '+
 		'</style>');
 	},
 	click: isMobile ? 'mousedown' : 'click',

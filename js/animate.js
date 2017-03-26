@@ -144,7 +144,7 @@ var animate = {
 		svg.setAttributeNS(null, 'height', boxHeight);
 		svg.setAttributeNS(null,"x",x);
 		svg.setAttributeNS(null,"y",y + 26);
-		svg.setAttributeNS(null,"fill","#2a2a2a");
+		svg.setAttributeNS(null,"fill","#151515");
 		svg.setAttributeNS(null,"stroke","#000000");
 		svg.setAttributeNS(null,"opacity",1);
 		svg.setAttributeNS(null,"class","mapBars" + i);
@@ -177,7 +177,7 @@ var animate = {
 			svg.setAttributeNS(null,"stroke","#ffa500");
 			svg.setAttributeNS(null,"stroke-width","3");
 			svg.setAttributeNS(null,"opacity",1);
-			svg.setAttributeNS(null,"class","mapBars mapBars" + i);
+			svg.setAttributeNS(null,"class","mapBars mapBars2x mapBars" + i);
 			DOM.mapBars.appendChild(svg);
 		}
 		// culture
@@ -210,7 +210,7 @@ var animate = {
 			svg.setAttributeNS(null,"stroke","#ffff00");
 			svg.setAttributeNS(null,"stroke-width","3");
 			svg.setAttributeNS(null,"opacity",1);
-			svg.setAttributeNS(null,"class","mapBars mapBars" + i);
+			svg.setAttributeNS(null,"class","mapBars mapBars2x mapBars" + i);
 			DOM.mapBars.appendChild(svg);
 		}
 	},

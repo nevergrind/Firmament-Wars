@@ -801,16 +801,16 @@ function loadGameState(){
 				document.getElementById('sumMoves').textContent = my.sumMoves;
 				console.info('sumMoves ', my.government, my.sumMoves, data.sumMoves);
 			} else if (my.government === 'Fascism'){
-				document.getElementById('moves').textContent = 12;
+				document.getElementById('moves').textContent = 8;
 				my.deployCost = 5;
 				document.getElementById('deployCost').textContent = my.deployCost;
 			} else if (my.government === 'Communism'){
 				// research
-				DOM.gunpowderCost.textContent = 20;
-				DOM.engineeringCost.textContent = 30;
-				DOM.rocketryCost.textContent = 40;
-				DOM.atomicTheoryCost.textContent = 50;
-				DOM.futureTechCost.textContent = 250;
+				DOM.gunpowderCost.textContent = 30;
+				DOM.engineeringCost.textContent = 40;
+				DOM.rocketryCost.textContent = 60;
+				DOM.atomicTheoryCost.textContent = 100;
+				DOM.futureTechCost.textContent = 400;
 				// weapons
 				DOM.cannonsCost.textContent = 12;
 				DOM.missileCost.textContent = 20;
