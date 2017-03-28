@@ -531,11 +531,11 @@ var lobby = {
 function initOffensiveTooltips(){
 	if (!isMobile){
 		$('#fireCannons')
-			.attr('title', 'Fire cannons at an adjacent enemy tile. Kills ' + (2 + my.oBonus) + ' + 4% of troops.')
+			.attr('title', 'Fire cannons at an adjacent tile. Kills ' + (2 + my.oBonus) +'-'+ (4 + my.oBonus) +' troops.')
 			.tooltip('fixTitle')
 			.tooltip({ animation: false });
 		$('#launchMissile')
-			.attr('title', 'Launch a missile at any enemy territory. Kills ' + (5 + (my.oBonus * 2)) + ' + 15% of troops.').tooltip('fixTitle')
+			.attr('title', 'Launch a missile at any territory. Kills '+ (8 + (my.oBonus * 2)) +'-'+ (16 + (my.oBonus * 2)) +' troops.').tooltip('fixTitle')
 			.tooltip({ animation: false });
 		$('#rush')
 			.attr('title', 'Deploy ' + (2 + ~~(my.cultureBonus / 50)) + ' troops using energy instead of production. Boosted by culture.')
@@ -727,14 +727,12 @@ function loadGameState(){
 		url: 'maps/' + g.map.key + '.php'
 	}).done(function(data){
 		DOM.worldWrap.innerHTML = data;
-		
-		var loadGameDelay = location.host === 'localhost' ? 0 : 2000;
-		setTimeout(function(){
 			
 		$.ajax({
 			type: "GET",
 			url: "php/loadGameState.php"
 		}).done(function(data){
+			g.startGame = data.startGame * 1;
 			g.teamMode = data.teamMode;
 			// set map data
 			g.map.sizeX = data.mapData.sizeX;
@@ -743,11 +741,11 @@ function loadGameState(){
 			g.map.tiles = data.mapData.tiles;
 			//console.warn(data.tiles.length, g.map.tiles);
 			if (data.tiles.length < g.map.tiles){
-				if (g.loadAttempts < 10){
+				if (g.loadAttempts < 20){
 					setTimeout(function(){
 						g.loadAttempts++;
 						loadGameState();
-					}, 1000);
+					}, 500);
 				} else {
 					Msg("Failed to load game data");
 					setTimeout(function(){
@@ -1095,7 +1093,5 @@ function loadGameState(){
 		}).always(function(){
 			g.unlock();
 		});
-		
-		}, loadGameDelay);
 	});
 };

@@ -183,7 +183,7 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
 	}
 	localStorage.setItem('isMobile', isMobile);
 	setTimeout(function(){
-		$("title, meta, script").remove();
+		$("meta, script").remove();
 	}, 1000);
 })();
 
@@ -299,14 +299,14 @@ function updateTileInfo(tileId){
 		if (my.attackOn){
 			DOM.targetNameAnchor.style.height = '60px';
 			DOM.targetTargetFlag.src = 'images/flags/' + flag;
-			DOM.targetTargetCapStar.style.display = t.capital ? 'display' : 'none';
+			DOM.targetTargetCapStar.style.display = t.capital ? 'inline' : 'none';
 			DOM.targetTargetNameWrap.textContent = name;
 			DOM.targetTargetBarsWrap.innerHTML = ui.targetBars(o);
 			DOM.targetTargetWrap.style.visibility = 'visible';
 		} else {
 			DOM.targetNameAnchor.style.height = '120px';
 			DOM.targetFlag.src = 'images/flags/' + flag;
-			DOM.targetCapStar.style.display = t.capital ? 'display' : 'none';
+			DOM.targetCapStar.style.display = t.capital ? 'inline' : 'none';
 			DOM.targetNameWrap.textContent = name;
 			DOM.targetBarsWrap.innerHTML = ui.targetBars(o);
 			DOM.targetTargetWrap.style.visibility = 'hidden';
@@ -314,6 +314,7 @@ function updateTileInfo(tileId){
 	}
 	
 	var defWord = ['Bunker', 'Wall', 'Fortress'],
+		defBonus = [5, 15, 30],
 		ind = t.defense - (t.capital ? 1 : 0);
 		var defTooltip = [
 			'',
@@ -330,7 +331,7 @@ function updateTileInfo(tileId){
 			defWord[2] = 'Fortresse';
 		}
 		if (!isMobile){
-			var tooltip = defWord[ind] + 's upgrade the defense of a territory.' + defTooltip[ind];
+			var tooltip = defWord[ind] + 's boost tile defense +'+ defBonus[ind] +'.' + defTooltip[ind];
 			$('#upgradeTileDefense')
 				.attr('title', tooltip)
 				.tooltip('fixTitle')

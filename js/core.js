@@ -40,24 +40,11 @@ var g = {
 	teamMode: 0,
 	joinedGame: false,
 	searchingGame: false,
-	defaultTitle: 'Firmament Wars | Multiplayer Grand Strategy Warfare',
+	defaultTitle: 'Firmament Wars',
 	titleFlashing: false,
 	name: "",
 	password: "",
-	speed: 20,
-	/*
-	speeds: {
-		Turns15Seconds: 15000,
-		Turns20Seconds: 20000,
-		Turns30Seconds: 30000,
-		Slower: 10000,
-		Slow: 9000,
-		Normal: 8000,
-		Fast: 7000,
-		Faster: 6000,
-		Fastest: 5000
-	},
-	*/
+	speed: 15,
 	focusUpdateNationName: false,
 	focusGameName: false,
 	view: "title",
@@ -846,12 +833,27 @@ var my = {
 		$("#style-land-pointer").remove();
 		$DOM.head.append('<style id="style-land-pointer">.land{ cursor: pointer; }</style>');
 	},
-	nextTarget: function(backwards){
+	checkSelectLastTarget: function(){
+		if (game.tiles[my.tgt].player !== my.player){
+			if (game.tiles[my.lastTgt].player === my.player){
+				my.nextTarget(false, my.lastTgt);
+			} else {
+				my.nextTarget(false);
+			}
+		}
+		
+	},
+	nextTarget: function(backwards, setTgt){
 		if (!g.spectateStatus){
 			my.lastTgt = my.tgt;
 			var count = 0,
 				len = game.tiles.length;
-			backwards ? my.tgt-- : my.tgt++;
+			if (setTgt === undefined){
+				// TAB targeting
+				backwards ? my.tgt-- : my.tgt++;
+			} else {
+				my.tgt = setTgt;
+			}
 			if (my.tgt < 0){
 				my.tgt = len-1;
 			}
@@ -862,10 +864,15 @@ var my = {
 				}
 				count++;
 			}
-			if (!backwards){
-				my.tgt = my.tgt % len;
+			if (setTgt === undefined){
+				// TAB targeting
+				if (!backwards){
+					my.tgt = my.tgt % len;
+				} else {
+					my.tgt = Math.abs(my.tgt);
+				}
 			} else {
-				my.tgt = Math.abs(my.tgt);
+				my.tgt = setTgt;
 			}
 			my.focusTile(my.tgt, .1);
 			animate.selectTile(my.lastTgt, my.tgt);
@@ -1131,5 +1138,5 @@ function surrender(){
 
 function serverError(data){
 	// Msg('The server reported an error.');
-	console.error('The server reported an error.');
+	console.error('The server reported an error.', data);
 }

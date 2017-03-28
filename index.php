@@ -48,9 +48,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-64">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-67">
 	<script>
-		version = '1-0-64';
+		version = '1-0-67';
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -209,16 +209,16 @@
 							<ul class="dropdown-menu fwDropdown">
 								<li id="create" class="gameSelect">
 									<a href="#">Free For All</a>
+								</li>
+								<li id="createTeamBtn" class="gameSelect">
+									<a href="#">Team Game</a>
 								</li>';
 								if (!$_SESSION['guest'] && isset($_SESSION['email'])){
 									echo '<li id="createRankedBtn" class="gameSelect">
 										<a href="#">Ranked Match</a>
 									</li>';
 								}
-								echo '<li id="createTeamBtn" class="gameSelect">
-									<a href="#">Team Game</a>
-								</li>
-							</ul>
+							echo '</ul>
 						</div>
 						
 						<div class="btn-group" class="fwBlue">
@@ -228,16 +228,16 @@
 							<ul class="dropdown-menu fwDropdown">
 								<li id="autoJoinGame" class="gameSelect">
 									<a href="#">Free For All</a>
+								</li>
+								<li id="joinTeamGame" class="gameSelect">
+									<a href="#">Team Game</a>
 								</li>';
 								if (!$_SESSION['guest'] && isset($_SESSION['email'])){
 									echo '<li id="joinRankedGame" class="gameSelect">
 										<a href="#">Ranked Match</a>
 									</li>';
 								}
-								echo '<li id="joinTeamGame" class="gameSelect">
-									<a href="#">Team Game</a>
-								</li>
-							</ul>
+							echo '</ul>
 						</div>
 						<button id="joinPrivateGameBtn" type="button" class="btn fwBlue btn-responsive shadow4">Join Private Game</button>
 					</div>
@@ -288,7 +288,8 @@
 					}
 				}
 				echo 
-				'</div>';
+				'<button class="friend-status btn btn-xs fwBlue">Check Friend Status</button>
+				</div>';
 				?>
 				<div id="titleChatWrap">
 					<?php
@@ -411,10 +412,10 @@
 					<div class='buffer w33'>
 						<div class='dropdown'>
 							<button id="speedDropdownBtn" class='btn btn-primary dropdown-toggle shadow4 fwDropdownButton' type='button' data-toggle='dropdown'>
-								<span id='createGameSpeed'>20</span>
+								<span id='createGameSpeed'>15</span>
 								<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 							</button>
-							<ul id='speedDropdown' class='dropdown-menu fwDropdown createGameInput' value="20">
+							<ul id='speedDropdown' class='dropdown-menu fwDropdown createGameInput' value="15">
 								<li><a class='speedSelect' href='#'>15</a></li>
 								<li><a class='speedSelect' href='#'>20</a></li>
 								<li><a class='speedSelect' href='#'>25</a></li>
@@ -606,8 +607,10 @@
 				<div class="col-xs-12">
 					<button id="leaderboardDone" type="button" class="btn btn-md fwGreen btn-responsive shadow4 pull-right">Done</button>
 					<button id="leaderboardFFABtn" type="button" class="btn fwBlue btn-responsive shadow4">FFA</button>
-					<button id="leaderboardRankedBtn" type="button" class="btn fwBlue btn-responsive shadow4">Ranked</button>
 					<button id="leaderboardTeamBtn" type="button" class="btn fwBlue btn-responsive shadow4">Team</button>
+					<button id="leaderboardRankedBtn" type="button" class="btn fwBlue btn-responsive shadow4">Ranked</button>
+					<button id="leaderboard-trips-btn" type="button" class="btn fwBlue btn-responsive shadow4">Trips</button>
+					<button id="leaderboard-quads-btn" type="button" class="btn fwBlue btn-responsive shadow4">Quads</button>
 					<hr class="fancyhr">
 				</div>
 				
@@ -631,9 +634,7 @@
 						<div id="targetNameAnchor">
 							<img id="targetFlag" class="targetFlag" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 							<div id="targetNameSpan" class="nowrap">
-								<span id="targetCapStar" class="no-select shadow4" title="Capital Palace Boosts tile defense">
-									<i class="glyphicon glyphicon-star capitalStar"></i>
-								</span>
+								<i id="targetCapStar" class="glyphicon glyphicon-star capitalStar no-select shadow4"></i>
 								<span id="targetNameWrap"></span>
 							</div>
 							<svg id="targetBarsWrap" class="targetBarsWrap"></svg>
@@ -642,9 +643,7 @@
 						<div id="targetTargetWrap" class="targetNameAnchor">
 							<img id="targetTargetFlag" class="targetFlag" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 							<div id="targetTargetNameSpan" class="nowrap">
-								<span id="targetTargetCapStar" class="no-select shadow4" title="Capital Palace Boosts tile defense">
-									<i class="glyphicon glyphicon-star capitalStar"></i>
-								</span>
+								<i id="targetTargetCapStar" class="glyphicon glyphicon-star capitalStar no-select shadow4" ></i>
 								<span id="targetTargetNameWrap"></span>
 							</div>
 							<svg id="targetTargetBarsWrap" class="targetBarsWrap"></svg>
@@ -675,7 +674,7 @@
 					</span>
 				</div>
 				
-				<div class="no-padding">
+				<div class="no-padding" title="Turn ends when time expires or when all players have spent their energy">
 					<div class="barWrap resourceBar resourceBarParent">
 						<div id="energyBar" class="resourceBar"></div>
 						<div id="energyIndicator"></div>
@@ -772,13 +771,12 @@
 			</div>
 						
 			<div id="tileActions" class="container w100">
-				<div class="actionHead shadow4">
+				<div class="row actionHead shadow4">
 					<i class="fa fa-bolt moves resourceIcon"></i>Command
 				</div>
 				
 				<div id="attack" class="actionButtons row" 
-					data-placement="bottom"
-					title="Move/attack with all troops">
+					title="Attack with all troops">
 					<div class="col-xs-9">
 						<span class='text-hotkey'>A</span>ttack
 					</div>
@@ -788,7 +786,7 @@
 				</div>
 				
 				<div id="splitAttack" class="actionButtons row" 
-					title="Move/attack with half of your troops">
+					title="Attack with half of your troops">
 					<div class="col-xs-9">
 						<span class='text-hotkey'>S</span>plit Attack
 					</div>
@@ -807,8 +805,8 @@
 					</div>
 				</div>
 				
-				<div class="actionHead shadow4">
-					<i class="fa fa-gavel production resourceIcon"></i>Build
+				<div class="row actionHead shadow4">
+					<i class="fa fa-gavel production resourceIcon"></i>Produce
 				</div>
 				
 				<div id="deploy" class="actionButtons row" 
@@ -820,20 +818,9 @@
 						<span id='deployCost'>10</cost>
 					</div>
 				</div>
-				
-				<div id="fireCannons" class="actionButtons row"
-					title="Fire cannons at an adjacent enemy tile. Kills 2 + 4% of troops.">
-					<div class="col-xs-9">
-						Fire <span class='text-hotkey'>C</span>annons
-					</div>
-					<div class="col-xs-3 tight2 text-right productionCost">
-						<span id='cannonsCost'>24</span>
-					</div>
-				</div>
 			
 				<div id="upgradeTileDefense" class="actionButtons row" 
-					 
-					title="Bunkers upgrade the structural defense of a territory">
+					title="Bunkers boost tile defense +5">
 					<div class="col-xs-9">
 						<span class='text-hotkey'>B</span>uild <span id="buildWord">Bunker</span>
 					</div>
@@ -842,8 +829,18 @@
 					</div>
 				</div>
 				
+				<div id="fireCannons" class="actionButtons row"
+					title="Fire cannons at an adjacent tile. Kills 2-4 troops.">
+					<div class="col-xs-9">
+						Fire <span class='text-hotkey'>C</span>annons
+					</div>
+					<div class="col-xs-3 tight2 text-right productionCost">
+						<span id='cannonsCost'>24</span>
+					</div>
+				</div>
+				
 				<div id="launchMissile" class="actionButtons row"
-					title="Launch a missile at any enemy territory. Kills 5 + 15% of troops.">
+					title="Launch a missile at any territory. Kills 8-16 troops.">
 					<div class="col-xs-9">
 						Launch <span class='text-hotkey'>M</span>issile
 					</div>
@@ -865,12 +862,11 @@
 			</div>
 			
 			<div id="tileResearch" class="container w100">
-				<div class="actionHead shadow4">
+				<div class="row actionHead shadow4">
 					<i class="fa fa-gavel production resourceIcon"></i>Research
 				</div>
 				
 				<div id="researchGunpowder" class="actionButtons row" 
-					 
 					title="Research gunpowder to unlock cannons.">
 					<div class="col-xs-9">
 						<span class='text-hotkey'>G</span>unpowder
@@ -881,7 +877,6 @@
 				</div>
 				
 				<div id="researchEngineering" class="actionButtons row" 
-					 
 					title="Research engineering to unlock walls and fortresses.">
 					<div class="col-xs-9">
 						<span class='text-hotkey'>E</span>ngineering
@@ -892,7 +887,6 @@
 				</div>
 				
 				<div id="researchRocketry" class="actionButtons row" 
-					 
 					title="Research rocketry to unlock missiles.">
 					<div class="col-xs-9">
 						Roc<span class='text-hotkey'>k</span>etry
@@ -903,7 +897,6 @@
 				</div>
 				
 				<div id="researchAtomicTheory" class="actionButtons row" 
-					 
 					title="Research atomic theory to unlock nuclear weapons.">
 					<div class="col-xs-9">
 						A<span class='text-hotkey'>t</span>omic Theory
@@ -914,7 +907,6 @@
 				</div>
 				
 				<div id="researchFutureTech" class="actionButtons row" 
-					 
 					title="Research future technology.">
 					<div class="col-xs-9">
 						<span class='text-hotkey'>F</span>uture Tech

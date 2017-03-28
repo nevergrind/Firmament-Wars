@@ -534,6 +534,9 @@ var title = {
 				if (data.rewardUnits){
 					animate.upgrade(data.tile, 'troops', data.rewardUnits);
 				}
+				if (data.sfx === 'sniper0'){
+					animate.upgrade(data.tile, 'culture');
+				}
 			} else if (data.type === 'food'){
 				if (data.account.indexOf(my.account) > -1){
 					audio.play('hup2');
@@ -615,7 +618,7 @@ var title = {
 				account: a[1]
 			}
 		}).done(function(data){
-			var str = '';
+			var str = '<hr class="fancyhr">';
 			if (data.ribbons !== undefined){
 				var len = data.ribbons.length;
 				if (len){
@@ -628,8 +631,8 @@ var title = {
 				}
 			}
 			str += data.str;
-			if (data.account !== my.account){
-				str += '<button class="addFriend btn btn-xs fwBlue" data-account="'+ data.account +'">Add Friend</button>';
+			if (data.account !== my.account && g.friends.indexOf(data.account) === -1){
+				str += '<button style="pointer-events: initial" class="addFriend btn btn-xs fwBlue" data-account="'+ data.account +'">Add Friend</button>';
 			}
 			str += '<hr class="fancyhr">';
 			g.chat(str);
@@ -776,7 +779,6 @@ var title = {
 					speed: speed
 				}
 			}).done(function(data) {
-				console.info(data);
 				socket.removePlayer(my.account);
 				my.player = data.player;
 				my.playerColor = data.playerColor;

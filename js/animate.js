@@ -131,7 +131,7 @@ var animate = {
 			boxHeight += 4;
 		}
 		if (game.tiles[i].defense){
-			boxHeight += 4;
+			boxHeight += 6;
 		}
 		var foodWidth = game.tiles[i].food * 3;
 		if (foodWidth > 24){
@@ -200,7 +200,7 @@ var animate = {
 		}
 		// defense
 		if (game.tiles[i].defense){
-			y += 4;
+			y += 5;
 			var defWidth = game.tiles[i].defense * 6;
 			var svg = document.createElementNS('http://www.w3.org/2000/svg', 'line');
 			svg.setAttributeNS(null,"x1",x);
@@ -208,7 +208,7 @@ var animate = {
 			svg.setAttributeNS(null,"x2",x + defWidth);
 			svg.setAttributeNS(null,"y2",y);
 			svg.setAttributeNS(null,"stroke","#ffff00");
-			svg.setAttributeNS(null,"stroke-width","3");
+			svg.setAttributeNS(null,"stroke-width","5");
 			svg.setAttributeNS(null,"opacity",1);
 			svg.setAttributeNS(null,"class","mapBars mapBars2x mapBars" + i);
 			DOM.mapBars.appendChild(svg);

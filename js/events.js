@@ -87,7 +87,7 @@ var events = {
 				g.teamMode = 1;
 				e1.textContent = 'Create Team Game';
 			}
-			e3.val('');
+			e3.val(my.account).select();
 			TweenMax.to(document.getElementById("createGameWrap"), g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
@@ -99,9 +99,8 @@ var events = {
 			});
 			title.showBackdrop(e3);
 			
-			var speed = localStorage.getItem('gameSpeed2') === null ? 20 : localStorage.getItem('gameSpeed2');
+			var speed = localStorage.getItem('gameSpeed2') === null ? 15 : localStorage.getItem('gameSpeed2');
 			g.speed = speed;
-			console.info(speed);
 			$("#createGameSpeed").text(speed);
 		}
 		$("#mainWrap").on(ui.click, '.chat-join', function(){
@@ -154,12 +153,15 @@ var events = {
 			title.joinGame();
 		});
 
-		$("#mainWrap").on(ui.click, "#cancelGame", function(){
+		$("#body").on(ui.click, "#cancelGame", function(){
 			exitGame();
 		}).on(ui.click, "#startGame", function(){
 			lobby.startGame();
 		}).on(ui.click, '.addFriend', function(){
 			title.toggleFriend($(this).data('account'));
+		})
+		$("#titleChatLog").on(ui.click, '.friend-status', function(){
+			title.listFriends();
 		});
 		$("#toggleNation").on(ui.click, function(){
 			$.ajax({
@@ -229,6 +231,12 @@ var events = {
 		});
 		$("#leaderboardRankedBtn").on(ui.click, function(){
 			title.getLeaderboard('Ranked');
+		});
+		$("#leaderboard-trips-btn").on(ui.click, function(){
+			title.getLeaderboard('Trips');
+		});
+		$("#leaderboard-quads-btn").on(ui.click, function(){
+			title.getLeaderboard('Quads');
 		});
 		$("#leaderboardTeamBtn").on(ui.click, function(){
 			title.getLeaderboard('Team');
@@ -693,7 +701,7 @@ $(document).on('keydown', function(e){
 		imgError('Wrong file type! Image must be in jpg format.');
 	 } else {
 		 reader.addEventListener("load", function(){
-			if (reader.result.length > 64000){
+			if (reader.result.length < 64000){
 				$.ajax({
 					url: "php/uploadDictator.php",
 					type: "POST",

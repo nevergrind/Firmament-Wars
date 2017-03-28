@@ -21,10 +21,7 @@ var action = {
 	},
 	target: function(o){
 		my.targetData = o;
-		// console.info(my.attackOn, my.tgt, game.tiles[my.tgt].player, my.player);
-		if (game.tiles[my.tgt].player !== my.player){
-			return;
-		}
+		my.checkSelectLastTarget();
 		if (my.attackOn && o.attackName === my.attackName){
 			my.attackOn = false;
 			my.attackName = '';
@@ -150,10 +147,8 @@ var action = {
 		});
 	},
 	deploy: function(){
+		my.checkSelectLastTarget();
 		var t = game.tiles[my.tgt];
-		if (t.player !== my.player){
-			return;
-		}
 		if (my.production < my.deployCost){
 			action.error();
 			return;
@@ -186,11 +181,9 @@ var action = {
 		}
 	},
 	rush: function(){
+		my.checkSelectLastTarget();
 		var t = game.tiles[my.tgt],
 			tgt = my.tgt;
-		if (t.player !== my.player){
-			return;
-		}
 		if (my.moves < my.rushCost){
 			action.error('Not enough energy!');
 			return;
@@ -217,12 +210,9 @@ var action = {
 		}
 	},
 	upgradeTileDefense: function(){
-		var oldTgt = my.tgt;
+		my.checkSelectLastTarget();
 		var t = game.tiles[my.tgt],
 			ind = t.defense - t.capital ? 1 : 0;
-		if (t.player !== my.player){
-			return;
-		}
 		if (ind > 2){
 			return;
 		}
