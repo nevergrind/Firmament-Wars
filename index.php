@@ -48,9 +48,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-67">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-68">
 	<script>
-		version = '1-0-67';
+		version = '1-0-68';
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -864,6 +864,16 @@
 			<div id="tileResearch" class="container w100">
 				<div class="row actionHead shadow4">
 					<i class="fa fa-gavel production resourceIcon"></i>Research
+				</div>
+				
+				<div id="researchConstruction" class="actionButtons row" 
+					title="Research construction to unlock bunkers.">
+					<div class="col-xs-9">
+						C<span class='text-hotkey'>o</span>nstruction
+					</div>
+					<div class="col-xs-3 tight2 text-right productionCost">
+						<span id='gunpowderCost'>40</span>
+					</div>
 				</div>
 				
 				<div id="researchGunpowder" class="actionButtons row" 

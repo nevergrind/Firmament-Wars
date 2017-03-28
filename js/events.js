@@ -551,6 +551,7 @@ $(document).on('keydown', function(e){
 	}
 }).on('keyup', function(e) {
 	var x = e.keyCode;
+	console.info(x);
 	if (g.view === 'title'){
 		if (x === 13){
 			if (g.focusUpdateNationName){
@@ -638,6 +639,9 @@ $(document).on('keydown', function(e){
 						action.rush();
 					}
 				}
+			} else if (x === 79){
+				// o
+				research.construction();
 			} else if (x === 69){
 				// e
 				research.engineering();

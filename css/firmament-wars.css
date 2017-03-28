@@ -792,7 +792,6 @@ tbody{
 	bottom: 0vh;
 	right: 0;
 	width: 170px;
-	padding-top: 8px;
 	border-right: none;
 	border-bottom:none;
 	border-radius: 4px 0 0 0;
@@ -820,6 +819,7 @@ tbody{
 #resourceHead{
 	color: #fff;
 	padding: 0 8px;
+	font-size: 1.25em;
 	letter-spacing: 2px;
 	border-bottom: 1px solid #357;
 }

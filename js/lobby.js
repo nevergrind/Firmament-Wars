@@ -69,7 +69,7 @@ var lobby = {
 			str = '<div id="lobbyGovName" class="text-primary">Republic</div>\
 				<div id="lobbyGovPerks">\
 					<div>+50% plunder bonus rewards</div>\
-					<div>Start with engineering</div>\
+					<div>Start with construction</div>\
 					<div>+1 energy per turn</div>\
 					<div>Combat medics</div>\
 				</div>';
@@ -804,6 +804,7 @@ function loadGameState(){
 				document.getElementById('deployCost').textContent = my.deployCost;
 			} else if (my.government === 'Communism'){
 				// research
+				DOM.constructionCost.textContent = 20;
 				DOM.gunpowderCost.textContent = 30;
 				DOM.engineeringCost.textContent = 40;
 				DOM.rocketryCost.textContent = 60;

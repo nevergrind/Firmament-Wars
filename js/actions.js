@@ -371,7 +371,8 @@ var action = {
 	// updates currently visible buttons after research/targeting
 	setMenu: function(){
 		// show/hide research
-		DOM.researchEngineering.style.display = my.tech.engineering ? 'none' : 'block';
+		DOM.researchConstruction.style.display = my.tech.construction ? 'none' : 'block';
+		DOM.researchEngineering.style.display = my.tech.engineering || !my.tech.construction ? 'none' : 'block';
 		DOM.researchGunpowder.style.display = my.tech.gunpowder ? 'none' : 'block';
 		DOM.researchRocketry.style.display = my.tech.rocketry || !my.tech.gunpowder ? 'none' : 'block';
 		DOM.researchAtomicTheory.style.display = my.tech.atomicTheory || !my.tech.gunpowder || !my.tech.rocketry || !my.tech.engineering ? 'none' : 'block';
@@ -384,25 +385,29 @@ var action = {
 			display = 'none';
 		}
 		DOM.researchFutureTech.style.display = display;
-		if (!game.tiles[my.tgt].defense){
-			// zero defense
-			DOM.upgradeTileDefense.style.display = 'block';
-		} else {
-			// wall or fortress
-			var capValue = game.tiles[my.tgt].capital ? 1 : 0,
-				dMinusPalace = game.tiles[my.tgt].defense - capValue,
-				display = 'none';
-			if (!my.tech.engineering){
-				// bunker max possible
-				if (!dMinusPalace){
-					display = 'block';
-				}
+		if (my.tech.construction){
+			if (!game.tiles[my.tgt].defense){
+				// zero defense
+				DOM.upgradeTileDefense.style.display = 'block';
 			} else {
-				if (dMinusPalace < 3){
-					display = 'block';
+				// wall or fortress
+				var capValue = game.tiles[my.tgt].capital ? 1 : 0,
+					dMinusPalace = game.tiles[my.tgt].defense - capValue,
+					display = 'none';
+				if (!my.tech.engineering){
+					// bunker max possible
+					if (!dMinusPalace){
+						display = 'block';
+					}
+				} else {
+					if (dMinusPalace < 3){
+						display = 'block';
+					}
 				}
+				DOM.upgradeTileDefense.style.display = display;
 			}
-			DOM.upgradeTileDefense.style.display = display;
+		} else {
+			DOM.upgradeTileDefense.style.display = 'none';
 		}
 		DOM.fireCannons.style.display = my.tech.gunpowder ? 'block' : 'none';
 		DOM.launchMissile.style.display = my.tech.rocketry ? 'block' : 'none';
@@ -467,86 +472,71 @@ function toggleChatMode(bypass){
 	}
 }
 
-$("#gameWrap").on("mousedown", '#attack', function(e){
-	if (e.which === 1){
-		var o = new Target({});
-		action.target(o);
-	}
-}).on('mousedown', '#deploy', function(e){
-	if (e.which === 1){
-		action.deploy();
-	}
-}).on('mousedown', '#splitAttack', function(e){
-	if (e.which === 1){
-		var o = new Target({
-			cost: 1,
-			attackName: 'splitAttack',
-			hudMsg: 'Split Attack: Select Target',
-			splitAttack: true
-		});
-		action.target(o);
-	}
-}).on('mousedown', '#rush', function(e){
-	if (e.which === 1){
-		action.rush();
-	}
-}).on('mousedown', '#upgradeTileDefense', function(e){
-	if (e.which === 1){
-		action.upgradeTileDefense();
-	}
-}).on('mousedown', '#researchGunpowder', function(e){
-	if (e.which === 1){
-		research.gunpowder();
-	}
-}).on('mousedown', '#researchEngineering', function(e){
-	if (e.which === 1){
-		research.engineering();
-	}
-}).on('mousedown', '#researchRocketry', function(e){
-	if (e.which === 1){
-		research.rocketry();
-	}
-}).on('mousedown', '#researchAtomicTheory', function(e){
-	if (e.which === 1){
-		research.atomicTheory();
-	}
-}).on('mousedown', '#researchFutureTech', function(e){
-	if (e.which === 1){
-		research.futureTech();
-	}
-}).on('mousedown', '#fireCannons', function(e){
-	if (e.which === 1){
-		var o = new Target({
-			cost: 0,
-			minimum: 0,
-			attackName: 'cannons',
-			hudMsg: 'Fire Cannons'
-		});
-		action.target(o);
-	}
-}).on('mousedown', '#launchMissile', function(e){
-	if (e.which === 1){
-		var o = new Target({
-			cost: 0,
-			minimum: 0,
-			attackName: 'missile',
-			hudMsg: 'Launch Missile'
-		});
-		action.target(o);
-	}
-}).on('mousedown', '#launchNuke', function(e){
-	if (e.which === 1){
-		var o = new Target({
-			cost: 0,
-			minimum: 0,
-			attackName: 'nuke',
-			hudMsg: 'Launch Nuclear Weapon'
-		});
-		action.target(o);
-	}
+$("#gameWrap").on(ui.click, '#attack', function(){
+	var o = new Target({});
+	action.target(o);
+}).on(ui.click, '#deploy', function(){
+	action.deploy();
+}).on(ui.click, '#splitAttack', function(){
+	var o = new Target({
+		cost: 1,
+		attackName: 'splitAttack',
+		hudMsg: 'Split Attack: Select Target',
+		splitAttack: true
+	});
+	action.target(o);
+}).on(ui.click, '#rush', function(){
+	action.rush();
+}).on(ui.click, '#upgradeTileDefense', function(){
+	action.upgradeTileDefense();
+}).on(ui.click, '#researchConstruction', function(){
+	research.construction();
+}).on(ui.click, '#researchGunpowder', function(){
+	research.gunpowder();
+}).on(ui.click, '#researchEngineering', function(){
+	research.engineering();
+}).on(ui.click, '#researchRocketry', function(){
+	research.rocketry();
+}).on(ui.click, '#researchAtomicTheory', function(){
+	research.atomicTheory();
+}).on(ui.click, '#researchFutureTech', function(){
+	research.futureTech();
+}).on(ui.click, '#fireCannons', function(){
+	var o = new Target({
+		cost: 0,
+		minimum: 0,
+		attackName: 'cannons',
+		hudMsg: 'Fire Cannons'
+	});
+	action.target(o);
+}).on(ui.click, '#launchMissile', function(){
+	var o = new Target({
+		cost: 0,
+		minimum: 0,
+		attackName: 'missile',
+		hudMsg: 'Launch Missile'
+	});
+	action.target(o);
+}).on(ui.click, '#launchNuke', function(){
+	var o = new Target({
+		cost: 0,
+		minimum: 0,
+		attackName: 'nuke',
+		hudMsg: 'Launch Nuclear Weapon'
+	});
+	action.target(o);
 });
 
 var research = {
+	construction: function(){
+		$.ajax({
+			type: 'GET',
+			url: 'php/researchConstruction.php'
+		}).done(function(data) {
+			my.tech.construction = 1;
+			research.report(data, "Construction");
+		});
+	},
 	gunpowder: function(){
 		$.ajax({
 			type: 'GET',
@@ -554,8 +544,6 @@ var research = {
 		}).done(function(data) {
 			my.tech.gunpowder = 1;
 			research.report(data, "Gunpowder");
-		}).fail(function(data){
-			console.info('gunpowder: ', data);
 		});
 	},
 	engineering: function(){
@@ -574,8 +562,6 @@ var research = {
 		}).done(function(data) {
 			my.tech.rocketry = 1;
 			research.report(data, "Rocketry");
-		}).fail(function(data){
-			console.info('rocketry: ', data);
 		});
 	},
 	atomicTheory: function(){
@@ -585,8 +571,6 @@ var research = {
 		}).done(function(data) {
 			my.tech.atomicTheory = 1;
 			research.report(data, "Atomic Theory");
-		}).fail(function(data){
-			console.info('atomic: ', data);
 		});
 	},
 	futureTech: function(){
@@ -595,8 +579,6 @@ var research = {
 			url: 'php/researchFutureTech.php'
 		}).done(function(data) {
 			research.report(data, "Future Tech");
-		}).fail(function(data){
-			console.info('future: ', data);
 		});
 	},
 	report: function(data, tech){

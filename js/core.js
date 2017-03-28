@@ -806,6 +806,7 @@ var my = {
 	selectedFlagFull: "Default.jpg",
 	government: 'Despotism',
 	tech: {
+		construction: 0,
 		engineering: 0,
 		gunpowder: 0,
 		rocketry: 0,
@@ -995,6 +996,7 @@ function initDom(){
 		cannonsCost: d.getElementById('cannonsCost'),
 		missileCost: d.getElementById('missileCost'),
 		nukeCost: d.getElementById('nukeCost'),
+		constructionCost: d.getElementById('constructionCost'),
 		gunpowderCost: d.getElementById('gunpowderCost'),
 		engineeringCost: d.getElementById('engineeringCost'),
 		rocketryCost: d.getElementById('rocketryCost'),
@@ -1005,6 +1007,7 @@ function initDom(){
 		fireCannons: d.getElementById('fireCannons'),
 		launchMissile: d.getElementById('launchMissile'),
 		launchNuke: d.getElementById('launchNuke'),
+		researchConstruction: d.getElementById('researchConstruction'),
 		researchEngineering: d.getElementById('researchEngineering'),
 		researchGunpowder: d.getElementById('researchGunpowder'),
 		researchRocketry: d.getElementById('researchRocketry'),
