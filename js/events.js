@@ -51,6 +51,13 @@ var events = {
 			playerLogout();
 			return false;
 		});
+		$("#login").on(ui.click, function(){
+			socket.removePlayer(my.account);
+			$.ajax({
+				type: 'GET',
+				url: 'php/deleteFromFwtitle.php'
+			});
+		});
 
 		$("#titleMenu").on(ui.click, ".wars", function(){
 			var gameName = $(this).data("name");

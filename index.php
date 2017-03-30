@@ -48,9 +48,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-69">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-70">
 	<script>
-		version = '1-0-69';
+		version = '1-0-70';
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -149,25 +149,30 @@
 					'<a href="/account" class="btn fwBlue btn-responsive shadow4" title="Manage Account">'. $_SESSION['account'] .'</a>&ensp;';
 				}
 				?>
-					<a href="/forums" target="_blank" title="Nevergrind Browser Game Forums">Forums</a>&ensp; 
 					<a href="/blog/how-to-play-firmament-wars/" target="_blank" title="Nevergrind Browser Game Development News and Articles">How to Play</a>&ensp;
-					<a href="//discord.gg/D4suK8b" target="_blank" title="Discord Server">Discord</a>&ensp;
+					<a href="//discord.gg/D4suK8b" target="_blank" title="Join the Firmament Wars Discord Server">Discord Server</a>&ensp;
 					<i id="options" class="pointer options fa fa-volume-up"></i>
 				<div class="pull-right text-primary">
-					<a href="//www.youtube.com/user/Maelfyn">
+					<a href="//www.youtube.com/user/Maelfyn" target="_blank">
 						<i class="fa fa-youtube text-primary pointer"></i>
 					</a>
-					<a href="//www.facebook.com/neverworksgames">
+					<a href="//www.facebook.com/neverworksgames" target="_blank">
 						<i class="fa fa-facebook text-primary pointer"></i>
 					</a>
-					<a href="//twitter.com/maelfyn">
+					<a href="//twitter.com/maelfyn" target="_blank">
 						<i class="fa fa-twitter text-primary pointer"></i>
 					</a>
-					<a href="//github.com/Maelfyn/Nevergrind">
+					<a href="//github.com/Maelfyn/Firmament-Wars" target="_blank">
 						<i class="fa fa-github text-primary pointer"></i>
 					</a>
-					<a href="//reddit.com/r/firmamentwars">
+					<a href="//reddit.com/r/firmamentwars" target="_blank">
 						<i class="fa fa-reddit text-primary pointer"></i>
+					</a>
+					<a href="https://www.linkedin.com/company-beta/10050163/" target="_blank">
+						<i class="fa fa-linkedin text-primary pointer"></i>
+					</a>
+					<a href="http://www.indiedb.com/games/firmament-wars" target="_blank">
+						<i class="fa fa-gamepad text-primary pointer"></i>
 					</a>
 				<?php
 				if (isset($_SESSION['email'])){

@@ -78,9 +78,11 @@ var title = {
 				console.info(e.responseText);
 				//Msg("Server error.");
 			});
+			/*
 			setTimeout(function(){
 				g.keepAlive();
 			}, 180000);
+			*/
 		});
 	})(),
 	updatePlayers: function(once){
@@ -635,9 +637,9 @@ var title = {
 			}
 			
 			var str = 
+			'<hr class="fancyhr">'+
 			'<div class="row">'+
 				'<div class="col-xs-8">';
-			
 				// left col
 				str += data.str;
 				if (data.account !== my.account && g.friends.indexOf(data.account) === -1){
@@ -646,7 +648,7 @@ var title = {
 			str += 
 				'</div>'+
 				'<div class="col-xs-4">';
-			// right col
+				// right col
 				str += 
 					'<div class="who-avatar-wrap">'+
 						data.img +
@@ -655,7 +657,8 @@ var title = {
 						'</div>'+
 					'</div>'+
 				'</div>'+
-			'</div>';
+			'</div>'+
+			'<hr class="fancyhr">';
 			g.chat(str);
 		}).fail(function(){
 			g.chat('No data found.');

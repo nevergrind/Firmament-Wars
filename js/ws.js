@@ -35,9 +35,7 @@ var socket = {
 		if (g.view === 'title'){
 			// remove from channel
 			channel = channel.trim();
-			if (channel === my.channel){
-				// fail silently 
-			} else {
+			if (channel !== my.channel){
 				$.ajax({
 					type: "POST",
 					url: "php/titleChangeChannel.php",

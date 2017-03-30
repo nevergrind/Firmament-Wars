@@ -1096,6 +1096,7 @@ function Msg(msg, d) {
 
 function playerLogout(){
     g.lock();
+	socket.removePlayer(my.account);
     $.ajax({
 		type: 'GET',
 		url: 'php/deleteFromFwtitle.php'

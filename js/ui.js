@@ -183,7 +183,7 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
 	}
 	localStorage.setItem('isMobile', isMobile);
 	setTimeout(function(){
-		$("meta, script").remove();
+		$("script").remove();
 	}, 1000);
 })();
 
