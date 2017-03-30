@@ -36,7 +36,7 @@
 	<title>Firmament Wars | Free Multiplayer Risk-Like Strategy | HTML5 Browser Game</title>
 	<meta charset="utf-8">
 	<meta name="keywords" content="free, risk, browser, multiplayer, online, strategy, html5">
-	<meta name="description" content="Firmament Wars is a free multiplayer strategy game inspired by Risk and Civilization with fast-paced, real-time combat in FFA, ranked, and team modes!">
+	<meta name="description" content="Firmament Wars is a free multiplayer strategy game inspired by Risk and Civilization featuring fast-paced combat in FFA, ranked, and team modes!">
 	<meta name="author" content="Joe Leonard">
 	<meta name="referrer" content="always">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -48,9 +48,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-68">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-69">
 	<script>
-		version = '1-0-68';
+		version = '1-0-69';
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -872,7 +872,7 @@
 						C<span class='text-hotkey'>o</span>nstruction
 					</div>
 					<div class="col-xs-3 tight2 text-right productionCost">
-						<span id='gunpowderCost'>40</span>
+						<span id='constructionCost'>40</span>
 					</div>
 				</div>
 				
@@ -938,7 +938,15 @@
 			</tr>
 		</table>
 		
-		<input id="chat-input" class="fw-text nobg" type='text' maxlength="240" autocomplete="off" spellcheck="false"/>
+		<div id="chat-input-wrap" class="input-group">
+			<span class="input-group-addon fwBlue shadow4" id="chat-input-send">
+				<i class="fa fa-send pointer2"></i>
+			</span>
+			<input id="chat-input" class="fw-text nobg" type='text' maxlength="240" autocomplete="off" spellcheck="false"/>
+		</div>
+		<button id="chat-input-open" class="btn fwBlue shadow4">
+			<i class="fa fa-comment pointer2"></i>
+		</button>
 			
 		<div id="worldWrap"></div>
 		

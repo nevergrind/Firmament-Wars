@@ -489,24 +489,34 @@ tbody{
 	border: 1px solid #2e6da4;
 	border-right: none;
 }
-#chat-input{
+#chat-input-open{
+	position: absolute;
+	bottom: 1vh;
+	left: 1vh;
+	z-index: 9999;
+	border-radius: 4px;
+	opacity: 1;
+}
+#chat-input-wrap{
 	position: absolute;
 	bottom: 1vh;
 	left: 1vh;
 	width: 40%;
-	padding: .5% 1%;
 	z-index: 9999;
 	font-family: Roboto, Verdana, Arial, sans-serif;
-	border-radius: 4px;
-	pointer-events: none;
+	visibility: hidden;
+}
+#chat-input{
+	padding: .5vh 1vw;
+	background: rgba(0,0,0,.4);
+	border: 1px solid rgba(192,240,255,.2);
+	border-radius: 0 4px 4px 0;
+	height: 34px;
+	width: 35vw;
 }
 .nobg{
 	border: none;
 	background: none;
-}
-.chatOn{
-	background: rgba(0,0,0,.3);
-	border: 1px solid rgba(192,240,255,.2);
 }
 #unlockGame, #configureNation, #createGameWrap{
 	background: #000;
@@ -1603,9 +1613,22 @@ span.unlockGameBtn{
 	width: 120px;
 	height: 120px;
 }
-.avatarChat{
-	width: 200px;
-	height: 200px;
+.who-avatar-wrap{
+	margin-left: .25vw;
+}
+.who-avatar-img{
+	width: 100%;
+}
+.who-ribbon-wrap{
+	position: relative;
+	margin: 0 auto;
+}
+.who-ribbon-chat{
+	position: relative;
+	margin: 0 auto;
+	margin-top: .5vh;
+	text-align: center;
+	line-height: 0;
 }
 #avatarWrap{
 	position: relative;
@@ -2163,6 +2186,10 @@ table {
 }
 .margin-top{
 	margin-top: 12px;
+}
+.friend-status{
+	font-size: 1em;
+	padding: .125em .5em;
 }
 /* stat */
 #statWrap{

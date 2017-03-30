@@ -430,9 +430,12 @@ var action = {
 function toggleChatMode(bypass){
 	g.chatOn = g.chatOn ? false : true;
 	if (g.chatOn){
+		// show chat
+		$DOM.chatInputOpen.css('visibility', 'hidden');
+		$DOM.chatInputWrap.css('visibility', 'visible');
 		$DOM.chatInput.focus();
-		DOM.chatInput.className = 'fw-text noselect nobg chatOn';
 	} else {
+		// hide chat
 		var msg = $DOM.chatInput.val().trim();
 		if (bypass && msg){
 			// send ajax chat msg
@@ -468,7 +471,8 @@ function toggleChatMode(bypass){
 			}
 		}
 		$DOM.chatInput.val('').blur();
-		DOM.chatInput.className = 'fw-text noselect nobg';
+		$DOM.chatInputOpen.css('visibility', 'visible');
+		$DOM.chatInputWrap.css('visibility', 'hidden');
 	}
 }
 

@@ -11,10 +11,10 @@ var ui = {
 			'#diplomacy-ui, #ui2{ top: .25vh; }'+
 			'#resources-ui{ bottom: .5vh; }'+
 			'#lobbyLeftCol, #lobbyRightCol{ top: 1vh; }'+
-			'#chat-input{ bottom: 3vh; }'+
 			'#chat-ui{ bottom: 4vh; }'+
 			'#refreshGameWrap{ height: 64vh; }'+
 			/*'.titlePanelLeft{ height: 80vh; } '+
+			'#chat-input{ bottom: 3vh; }'+
 			'#titleMenu, #titleChat{ bottom: 7vh; } '+*/
 			'.lobbyButtons, .fwDropdown, .govDropdown{ font-size: 1.25em; }'+
 			'#target-ui, #targetLineShadow, .chat-img{ display: none; }'+
@@ -453,7 +453,7 @@ function gameVictory(){
 };
 function triggerEndGame(msg, victory){
 	$("*").off('click mousedown keydown keyup keypress');
-	$("#chat-input").remove();
+	$("#chat-input-open, #chat-input-wrap").remove();
 	window.onbeforeunload = null;
 	setTimeout(function(){
 		// allow for last update to occur for spectators
@@ -479,7 +479,7 @@ function triggerEndGame(msg, victory){
 				TweenMax.to('#gameWrap', .05, {
 					alpha: 0,
 					onComplete: function(){ 
-						$("#diplomacy-ui, #ui2, #resources-ui, #chat-ui, #chat-input, #hud, #worldWrap, #victoryScreen").remove();
+						$("#diplomacy-ui, #ui2, #resources-ui, #chat-input-open, #chat-ui, #chat-input-wrap, #hud, #worldWrap, #victoryScreen").remove();
 						stats.show();
 					}
 				});

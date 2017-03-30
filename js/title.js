@@ -618,23 +618,44 @@ var title = {
 				account: a[1]
 			}
 		}).done(function(data){
-			var str = '<hr class="fancyhr">';
-			if (data.ribbons !== undefined){
-				var len = data.ribbons.length;
-				if (len){
-					str += '<div class="ribbonWrapChat '+ (len >= 24 ? 'wideRack' : 'narrowRack') +'">';
-					for (var i=0, len=data.ribbons.length; i<len; i++){
-						var z = data.ribbons[i];
-						str += '<div class="ribbon ribbon'+ z +'" title="'+ game.ribbonTitle[i] +'"></div>';
+			function getRibbonStr(){
+				var str = '';
+				if (data.ribbons !== undefined){
+					var len = data.ribbons.length;
+					if (len){
+						str += '<div class="who-ribbon-chat '+ (len >= 24 ? 'wideRack' : 'narrowRack') +'">';
+						for (var i=0, len=data.ribbons.length; i<len; i++){
+							var z = data.ribbons[i];
+							str += '<div class="ribbon ribbon'+ z +'" title="'+ game.ribbonTitle[i] +'"></div>';
+						}
+						str += '</div>';
 					}
-					str += '</div>';
 				}
+				return str;
 			}
-			str += data.str;
-			if (data.account !== my.account && g.friends.indexOf(data.account) === -1){
-				str += '<button style="pointer-events: initial" class="addFriend btn btn-xs fwBlue" data-account="'+ data.account +'">Add Friend</button>';
-			}
-			str += '<hr class="fancyhr">';
+			
+			var str = 
+			'<div class="row">'+
+				'<div class="col-xs-8">';
+			
+				// left col
+				str += data.str;
+				if (data.account !== my.account && g.friends.indexOf(data.account) === -1){
+					str += '<button style="pointer-events: initial" class="addFriend btn btn-xs fwBlue" data-account="'+ data.account +'">Add Friend</button>';
+				}
+			str += 
+				'</div>'+
+				'<div class="col-xs-4">';
+			// right col
+				str += 
+					'<div class="who-avatar-wrap">'+
+						data.img +
+						'<div class="who-ribbon-wrap">'+
+							getRibbonStr()+
+						'</div>'+
+					'</div>'+
+				'</div>'+
+			'</div>';
 			g.chat(str);
 		}).fail(function(){
 			g.chat('No data found.');

@@ -176,7 +176,7 @@ var stats = {
 				y: 30
 			});
 		}
-		$("#worldWrap, #targetWrap, #ui2, #resources-ui, #diplomacy-ui, #chat-ui, #chat-input, #surrenderScreen").remove();
+		$("#worldWrap, #targetWrap, #ui2, #resources-ui, #diplomacy-ui, #chat-ui, #chat-input-open, #chat-input-wrap, #surrenderScreen").remove();
 	},
 	events: function(){
 		$("#statWrap").on(ui.click, '.statTabs', function(){

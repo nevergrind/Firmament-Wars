@@ -1026,6 +1026,8 @@ initDom();
 
 var $DOM = {
 	head: $("#head"),
+	chatInputOpen: $("#chat-input-open"),
+	chatInputWrap: $("#chat-input-wrap"),
 	chatInput: $("#chat-input"),
 	lobbyChatInput: $("#lobby-chat-input"),
 	titleChatInput: $("#title-chat-input")

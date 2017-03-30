@@ -374,6 +374,12 @@ var events = {
 		});
 	})(),
 	lobby: (function(){
+		$("#chat-input-open").on(ui.click, function(){
+			toggleChatMode();
+		});
+		$("#chat-input-send").on(ui.click, function(){
+			toggleChatMode(true);
+		});
 		$("#lobby-chat-input").on('focus', function(){
 			lobby.chatOn = true;
 		}).on('blur', function(){
