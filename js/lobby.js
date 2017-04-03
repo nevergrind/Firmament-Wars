@@ -28,17 +28,17 @@ var lobby = {
 		if (government === "Despotism"){
 			str = '<div id="lobbyGovName" class="text-primary">Despotism</div>\
 				<div id="lobbyGovPerks">\
-					<div>3x starting production</div>\
+					<div>Start with 3x production</div>\
 					<div>Start with gunpowder</div>\
 					<div>Start with a wall</div>\
-					<div>Free split attack</div>\
+					<div>Free movement through own tiles</div>\
 				</div>';
 		} else if (government === "Monarchy"){
 			str = '<div id="lobbyGovName" class="text-primary">Monarchy</div>\
 				<div id="lobbyGovPerks">\
 					<div>3x capital culture</div>\
 					<div>50% starting culture bonus</div>\
-					<div>Start with two great tacticians</div>\
+					<div>Start with two great tacticians: +2 defense</div>\
 					<div>1/2 cost structures</div>\
 				</div>';
 		} else if (government === "Democracy"){
@@ -46,37 +46,37 @@ var lobby = {
 				<div id="lobbyGovPerks">\
 					<div>4x maximum troop deployment</div>\
 					<div>50% starting production bonus</div>\
-					<div>More great people</div>\
+					<div>More great people: Reduced culture milestone requirement</div>\
 					<div>Start with a fortress</div>\
 				</div>';
 		} else if (government === "Fundamentalism"){
 			str = '<div id="lobbyGovName" class="text-primary">Fundamentalism</div>\
 				<div id="lobbyGovPerks">\
-					<div>Overrun ability</div>\
-					<div>Infiltration</div>\
-					<div>Faster growth</div>\
+					<div>Overrun ability: Instant win with 4x advantage</div>\
+					<div>Infiltration: -5 structure defense</div>\
+					<div>Faster growth: Reduced growth milestone requirement</div>\
 					<div>1/2 cost rush</div>\
 				</div>';
 		} else if (government === "Fascism"){
 			str = '<div id="lobbyGovName" class="text-primary">Fascism</div>\
 				<div id="lobbyGovPerks">\
-					<div>Double bonus production rewards</div>\
-					<div>2x starting energy</div>\
-					<div>Start with great general</div>\
+					<div>2x production rewards from barbarians</div>\
+					<div>Start with 4 bonus energy</div>\
+					<div>Start with great general: +1 attack</div>\
 					<div>1/2 cost deploy</div>\
 				</div>';
 		} else if (government === "Republic"){
 			str = '<div id="lobbyGovName" class="text-primary">Republic</div>\
 				<div id="lobbyGovPerks">\
-					<div>+50% plunder bonus rewards</div>\
+					<div>+50% plundered reward bonus from barbarians</div>\
 					<div>Start with construction</div>\
-					<div>+1 energy per turn</div>\
-					<div>Combat medics</div>\
+					<div>+2 energy per turn</div>\
+					<div>Combat medics: Recover 1/2 of lost troops after victory</div>\
 				</div>';
 		} else if (government === "Communism"){
 			str = '<div id="lobbyGovName" class="text-primary">Communism</div>\
 				<div id="lobbyGovPerks">\
-					<div>2x discovery bonus rewards</div>\
+					<div>2x discovered reward bonus from barbarians</div>\
 					<div>1/2 cost research</div>\
 					<div>1/2 cost weapons</div>\
 					<div>Start with a great person</div>\
@@ -131,7 +131,9 @@ var lobby = {
 					title.who(msg);
 				} else {
 					// send ajax chat msg
-					if (msg.charAt(0) !== '/'){
+					if (msg.charAt(0) === '/' && msg.indexOf('/me') !== 0){
+						// skip
+					} else {
 						$.ajax({
 							url: 'php/insertLobbyChat.php',
 							data: {
@@ -249,6 +251,7 @@ var lobby = {
 			}
 			str += '</div>';
 			document.getElementById("lobbyPlayers").innerHTML = str;
+			lobby.updateGovernmentWindow(my.government);
 		}
 		delete lobby.init;
 	},
@@ -263,12 +266,8 @@ var lobby = {
 		}
 		g.lock(1);
 		g.view = "lobby";
-		var titleMain = document.getElementById('titleMain'),
-			titleMenu = document.getElementById ('titleMenu'),
-			titleChat = document.getElementById ('titleChat'),
-			logoWrap = document.getElementById('firmamentWarsLogoWrap');
 		title.closeModal();
-		TweenMax.to(titleChat, d, {
+		TweenMax.to('#titleChat', d, {
 			x: '100%',
 			ease: Quad.easeIn
 		});
@@ -280,14 +279,14 @@ var lobby = {
 			document.getElementById('worldTitle').src = 'images/FlatWorld50-2.jpg';
 		}
 		
-		TweenMax.to(titleMenu, d, {
+		TweenMax.to('#titleMenu', d, {
 			x: '-100%',
 			ease: Quad.easeIn,
 			onComplete: function(){
-				TweenMax.to([titleMain, logoWrap], ui.delay(.5), {
+				TweenMax.to(['#titleMain', '#logoWrap', '#firmamentWarsLogoWrap'], ui.delay(.5), {
 					alpha: 0,
 					onComplete: function(){
-						titleMain.parentNode.removeChild(titleMain);
+						$("#titleMain").remove();
 						g.unlock(1);
 						TweenMax.fromTo('#joinGameLobby', ui.delay(d), {
 							autoAlpha: 0
@@ -300,7 +299,11 @@ var lobby = {
 		});
 		if (!d){
 			// load game
-			loadGameState(); // page refresh
+			console.info(localStorage.getItem('reload'));
+			if (localStorage.getItem('reload') !== false){
+				localStorage.setItem('reload', true);
+				loadGameState(); // page refresh
+			}
 		} else {
 			// load lobby
 			(function repeat(){
@@ -495,6 +498,7 @@ var lobby = {
 		};
 		return icon[government];
 	},
+	/*
 	initRibbons: function(data){
 		for (var key in data){
 			var str = '',
@@ -508,6 +512,7 @@ var lobby = {
 			game.player[key].ribbonArray = arr;
 		}
 	},
+	*/
 	startGame: function(){
 		if (lobby.totalPlayers() >= 2 && my.player === 1){
 			startGame.style.display = "none";
@@ -535,7 +540,7 @@ function initOffensiveTooltips(){
 			.tooltip('fixTitle')
 			.tooltip({ animation: false });
 		$('#launchMissile')
-			.attr('title', 'Launch a missile at any territory. Kills '+ (8 + (my.oBonus * 2)) +'-'+ (16 + (my.oBonus * 2)) +' troops.').tooltip('fixTitle')
+			.attr('title', 'Launch a missile at any territory. Kills '+ (7 + (my.oBonus * 2)) +'-'+ (12 + (my.oBonus * 2)) +' troops.').tooltip('fixTitle')
 			.tooltip({ animation: false });
 		$('#rush')
 			.attr('title', 'Deploy ' + (2 + ~~(my.cultureBonus / 50)) + ' troops using energy instead of production. Boosted by culture.')
@@ -748,6 +753,7 @@ function loadGameState(){
 					}, 500);
 				} else {
 					Msg("Failed to load game data");
+					localStorage.setItem('reload', false);
 					setTimeout(function(){
 						window.onbeforeunload = null;
 						location.reload();
@@ -759,7 +765,6 @@ function loadGameState(){
 			g.screen.resizeMap();
 			
 			audio.gameMusicInit();
-			// console.info('loadGameState ', data);
 			// only when refreshing page while testing
 			audio.load.game();
 			video.load.game();
@@ -783,10 +788,7 @@ function loadGameState(){
 			my.buildCost = data.buildCost;
 			lobby.updateGovernmentWindow(my.government);
 			// global government bonuses
-			if (my.government === 'Despotism'){
-				document.getElementById('splitAttackCost').textContent = 0;
-				my.splitAttackCost = 0;
-			} else if (my.government === 'Monarchy'){
+			if (my.government === 'Monarchy'){
 				my.buildCost = .5;
 			} else if (my.government === 'Democracy'){
 				my.maxDeployment = 48;
@@ -807,12 +809,12 @@ function loadGameState(){
 				DOM.constructionCost.textContent = 20;
 				DOM.gunpowderCost.textContent = 30;
 				DOM.engineeringCost.textContent = 40;
-				DOM.rocketryCost.textContent = 60;
-				DOM.atomicTheoryCost.textContent = 100;
+				DOM.rocketryCost.textContent = 100;
+				DOM.atomicTheoryCost.textContent = 250;
 				DOM.futureTechCost.textContent = 400;
 				// weapons
 				DOM.cannonsCost.textContent = 12;
-				DOM.missileCost.textContent = 20;
+				DOM.missileCost.textContent = 25;
 				DOM.nukeCost.textContent = 75;
 				my.weaponCost = .5;
 			}
@@ -950,7 +952,7 @@ function loadGameState(){
 			for (var i=0; i<len; i++){
 				animate.initMapBars(i);
 			}
-			lobby.initRibbons(data.ribbons);
+			//lobby.initRibbons(data.ribbons);
 			var str = '';
 			// init diplomacyPlayers
 			function diploRow(p){
@@ -961,10 +963,6 @@ function loadGameState(){
 				}
 				var str = '<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">'+
 					// bg
-					/*
-					'<div class="flagWrapper">'+
-						'<img class="diploFlag" src="images/flags/'+ p.flag + '">'+
-					'</div>'+*/
 					'<div>'+
 					// row 1
 					'<div class="flag '+ p.flagClass +'" data-placement="right" title="'+ p.flagShort + '"></div>'+ p.account + '</div>'+
@@ -975,9 +973,6 @@ function loadGameState(){
 					p.nation +
 					'</div>\
 				</div>';
-				if (my.player === p.player){
-					document.getElementById('ui2-flag').src = 'images/flags/'+ p.flag;
-				}
 				return str;
 			}
 			var teamArr = [ str ];
@@ -998,10 +993,14 @@ function loadGameState(){
 					}
 				}
 			}
+			var mode = g.rankedMode ? 'Ranked' :
+				g.teamMode ? 'Teams' : 'Free For All';
+			var diploHead = '<div class="header text-center diplo-head '+ (mode === 'Ranked' ? 'ranked' : '') +'">'+ mode +'</div>';
+			
 			if (g.teamMode){
-				document.getElementById('diplomacy-ui').innerHTML = teamArr.join("");
+				document.getElementById('diplomacy-ui').innerHTML = diploHead + teamArr.join("");
 			} else {
-				document.getElementById('diplomacy-ui').innerHTML = str;
+				document.getElementById('diplomacy-ui').innerHTML = diploHead + str;
 			}
 			initResources(data);
 			// set images
@@ -1083,11 +1082,6 @@ function loadGameState(){
 				}
 				game.startGameState();
 				ui.setCurrentYear(data.resourceTick);
-				if (!isMobile){
-					$('[title]').tooltip({
-						animation: false
-					});
-				}
 			}, 350);
 		}).fail(function(data){
 			serverError(data);

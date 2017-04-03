@@ -148,6 +148,10 @@ var events = {
 				alpha: 1
 			});
 			title.showBackdrop();
+		}).on(ui.click, '#resync', function(){
+			window.onbeforeunload = null;
+			localStorage.setItem('resync', 1);
+			location.reload();
 		});
 		$("#hotkeysDone, #optionsDone, #cancelCreateGame").on(ui.click, function(){
 			title.closeModal();
@@ -167,7 +171,7 @@ var events = {
 		}).on(ui.click, '.addFriend', function(){
 			title.toggleFriend($(this).data('account'));
 		})
-		$("#titleChatLog").on(ui.click, '.friend-status', function(){
+		$("#titleChatPlayers").on(ui.click, '#friend-status', function(){
 			title.listFriends();
 		});
 		$("#toggleNation").on(ui.click, function(){
@@ -334,6 +338,30 @@ var events = {
 			} else {
 				title.joinGame();
 			}
+		});
+		$("#get-help").on(ui.click, function(){
+			title.help();
+		});
+		$("#ignore-user").on(ui.click, function(){
+			$("#title-chat-input").val('/ignore ').focus();
+		});
+		$("#share-image").on(ui.click, function(){
+			$("#title-chat-input").val('/img ').focus();
+		});
+		$("#share-video").on(ui.click, function(){
+			$("#title-chat-input").val('/video ').focus();
+		});
+		$("#who-account").on(ui.click, function(){
+			$("#title-chat-input").val('/who ').focus();
+		});
+		$("#add-friend").on(ui.click, function(){
+			$("#title-chat-input").val('/friend ').focus();
+		});
+		$("#whisper-account").on(ui.click, function(){
+			$("#title-chat-input").val('@').focus();
+		});
+		$("#change-channel").on(ui.click, function(){
+			$("#title-chat-input").val('#').focus();
 		});
 		$("#overlay").on(ui.click, function(){
 			g.searchingGame = false;

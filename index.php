@@ -33,10 +33,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head id='head'>
-	<title>Firmament Wars | Free Multiplayer Risk-Like Strategy | HTML5 Browser Game</title>
+	<title>Firmament Wars | Free Multiplayer Risk-Like Strategy | Browser Game</title>
 	<meta charset="utf-8">
 	<meta name="keywords" content="free, risk, browser, multiplayer, online, strategy, html5">
-	<meta name="description" content="Firmament Wars is a free multiplayer strategy game inspired by Risk and Civilization featuring fast-paced combat in FFA, ranked, and team modes!">
+	<meta name="description" content="Firmament Wars is a free online strategy game, inspired by Risk and Civilization, playable in your web browser!">
 	<meta name="author" content="Joe Leonard">
 	<meta name="referrer" content="always">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -48,9 +48,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-70">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-87">
 	<script>
-		version = '1-0-70';
+		version = '1-0-87';
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -134,11 +134,6 @@
 					$_SESSION['nation'] = $nation;
 					$_SESSION['flag'] = $flag;
 				}
-				if (!$_SESSION['guest']){
-					// add ribbon
-					require $_SERVER['DOCUMENT_ROOT']. '/games/firmament-wars/php/addRibbon.php';
-					addRibbon(1);
-				}
 				$arr = explode(".", $_SESSION['flag']);
 				$_SESSION['flagShort'] = $arr[0];
 				$_SESSION['flagClass'] = str_replace(" ", "-", $arr[0]);
@@ -208,7 +203,7 @@
 				
 					<div>
 						<div class="btn-group" class="fwBlue">
-							<button id="createGameBtn" type="button" class="titleButtons btn btn-responsive shadow4 dropdown-toggle fwDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<button id="createGameBtn" type="button" class="titleButtons btn btn-md btn-responsive shadow4 dropdown-toggle fwDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Create Game <span class="titleCaret caret chat-warning"></span>
 							</button>
 							<ul class="dropdown-menu fwDropdown">
@@ -227,7 +222,7 @@
 						</div>
 						
 						<div class="btn-group" class="fwBlue">
-							<button id="autoJoinBtn" type="button" class="titleButtons btn btn-responsive shadow4 dropdown-toggle fwDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<button id="autoJoinBtn" type="button" class="titleButtons btn btn-md btn-responsive shadow4 dropdown-toggle fwDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Auto Join Game <span class="titleCaret caret chat-warning"></span>
 							</button>
 							<ul class="dropdown-menu fwDropdown">
@@ -244,7 +239,7 @@
 								}
 							echo '</ul>
 						</div>
-						<button id="joinPrivateGameBtn" type="button" class="btn fwBlue btn-responsive shadow4">Join Private Game</button>
+						<button id="joinPrivateGameBtn" type="button" class="btn btn-md fwBlue btn-responsive shadow4">Join Private Game</button>
 					</div>
 					
 					<hr class="fancyhr">
@@ -271,6 +266,31 @@
 						<span id="titleChatHeaderChannel"></span> 
 						<span id="titleChatHeaderCount"></span>
 					</div>
+					<div id="title-chat-btns" class="btn-group" role="group">
+						<button id="friend-status" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Friend list">
+							<i class="fa fa-users pointer2"></i>
+						</button>
+						<button id="add-friend" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Toggle friend">
+							<i class="fa fa-user-plus"></i>
+						</button>
+						<button id="who-account" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Query account data">
+							<i class="fa fa-vcard"></i>
+						</button>
+						<button id="whisper-account" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Send another account a private message">@</button>
+						<button id="change-channel" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Change Channel">#</button>
+						<button id="share-image" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Share image with channel using URL from another website">
+							<i class="fa fa-file-image-o pointer2"></i>
+						</button>
+						<button id="share-video" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Share video with channel using 11-character ID from a youtube video">
+							<i class="fa fa-file-video-o pointer2"></i>
+						</button>
+						<button id="ignore-user" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Ignore account messages">
+							<i class="fa fa-microphone-slash pointer2"></i>
+						</button>
+						<button id="get-help" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Help">
+							<i class="fa fa-question pointer2"></i>
+						</button>
+					</div>
 					<div id="titleChatBody"></div>
 				</div>
 					
@@ -289,12 +309,11 @@
 				if ($result->num_rows){
 					while ($row = mysqli_fetch_assoc($result)){
 						$currentPlayers += $row['count'];
-						echo '<div>There '. ($currentPlayers === 1 ? 'is' : 'are') .' '. $currentPlayers . ' '. ($currentPlayers === 1 ? 'person' : 'people') .' playing Firmament Wars</div><div class="chat-muted">Type /help for chat commands</div>';
+						echo '<div>There '. ($currentPlayers === 1 ? 'is' : 'are') .' '. $currentPlayers . ' '. ($currentPlayers === 1 ? 'person' : 'people') .' playing Firmament Wars</div>';
 					}
 				}
 				echo 
-				'<button class="friend-status btn btn-xs fwBlue">Check Friend Status</button>
-				</div>';
+				'</div>';
 				?>
 				<div id="titleChatWrap">
 					<?php
@@ -355,12 +374,7 @@
 				
 				<div id="lobbyGovernmentDescription" class="fw-primary text-center lobbyRelWrap">
 					<div id="lobbyGovName" class='text-primary'>Despotism</div>
-					<div id="lobbyGovPerks">
-						<div>3x starting production</div>
-						<div>Start with gunpowder</div>
-						<div>Start with a wall</div>
-						<div>Free Split Attack</div>
-					</div>
+					<div id="lobbyGovPerks"></div>
 				</div>
 				
 				<div id="lobbyButtonWrap" class="fw-primary text-center lobbyRelWrap">
@@ -632,26 +646,15 @@
 			<table id="target-ui">
 				<tr>
 					<td id="avatarWrap" class="tight">
-						<div id="ribbonWrap" class="tight wideRack"></div>
 						<img id="avatar" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 					</td>
 					<td id="targetName" class="text-center shadow4 tight">
 						<div id="targetNameAnchor">
 							<img id="targetFlag" class="targetFlag" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
-							<div id="targetNameSpan" class="nowrap">
+							<div id="targetNameSpan">
 								<i id="targetCapStar" class="glyphicon glyphicon-star capitalStar no-select shadow4"></i>
 								<span id="targetNameWrap"></span>
 							</div>
-							<svg id="targetBarsWrap" class="targetBarsWrap"></svg>
-						</div>
-						
-						<div id="targetTargetWrap" class="targetNameAnchor">
-							<img id="targetTargetFlag" class="targetFlag" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
-							<div id="targetTargetNameSpan" class="nowrap">
-								<i id="targetTargetCapStar" class="glyphicon glyphicon-star capitalStar no-select shadow4" ></i>
-								<span id="targetTargetNameWrap"></span>
-							</div>
-							<svg id="targetTargetBarsWrap" class="targetBarsWrap"></svg>
 						</div>
 					</td>
 				</tr>
@@ -660,6 +663,7 @@
 		
 		<div id="resources-ui" class="shadow4 blueBg gameWindow">
 			<div id="resourceHead">
+				<i id="resync" class="pointer options fa fa-refresh" title="Attempt to resynchronize game data. Try this if your game seems to be in a bugged state"></i>
 				<i id="hotkeys" class="pointer options fa fa-keyboard-o" title="Hotkeys"></i>
 				<i id="options" class="pointer options fa fa-volume-up" title="Audio"></i>
 				<i id="surrender" class="pointer fa fa-flag" title="Surrender"></i>
@@ -749,9 +753,6 @@
 		</div>
 		
 		<div id="ui2" class="blueBg gameWindow">
-			<div class="flagWrapper">
-				<img id="ui2-flag" class="ui2-flag">
-			</div>
 			<div id="ui2-head" class="stagBlue">
 				<span id='manpowerWrap' class="manpower pull-left">
 					<span  
@@ -759,11 +760,11 @@
 						title="Great Generals boost troop attack">
 						<i class="glyphicon glyphicon-star"></i>
 						<span id="oBonus">0</span> 
-					</span>
+					</span>&thinsp;
 					<span   
 						data-placement="bottom"
 						title="Great Tacticians boost troop defense">
-						<i class="glyphicon glyphicon-star-empty"></i>
+						<i class="fa fa-shield"></i>
 						<span id="dBonus">0</span>
 					</span>
 				</span>
@@ -845,12 +846,12 @@
 				</div>
 				
 				<div id="launchMissile" class="actionButtons row"
-					title="Launch a missile at any territory. Kills 8-16 troops.">
+					title="Launch a missile at any territory. Kills 7-12 troops.">
 					<div class="col-xs-9">
 						Launch <span class='text-hotkey'>M</span>issile
 					</div>
 					<div class="col-xs-3 tight2 text-right productionCost">
-						<span id='missileCost'>40</span>
+						<span id='missileCost'>50</span>
 					</div>
 				</div>
 				
@@ -907,7 +908,7 @@
 						Roc<span class='text-hotkey'>k</span>etry
 					</div>
 					<div class="col-xs-3 tight2 text-right productionCost">
-						<span id='rocketryCost'>120</span>
+						<span id='rocketryCost'>200</span>
 					</div>
 				</div>
 				
@@ -917,7 +918,7 @@
 						A<span class='text-hotkey'>t</span>omic Theory
 					</div>
 					<div class="col-xs-3 tight2 text-right productionCost">
-						<span id='atomicTheoryCost'>200</span>
+						<span id='atomicTheoryCost'>500</span>
 					</div>
 				</div>
 				

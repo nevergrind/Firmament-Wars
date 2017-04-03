@@ -78,11 +78,9 @@ var title = {
 				console.info(e.responseText);
 				//Msg("Server error.");
 			});
-			/*
 			setTimeout(function(){
 				g.keepAlive();
 			}, 180000);
-			*/
 		});
 	})(),
 	updatePlayers: function(once){
@@ -395,7 +393,7 @@ var title = {
 				g.chat(str);
 			});
 		} else {
-			g.chat("<img src='images/chat/random/feelsbad.png'><div>You don't have any friends!</div>", 'chat-muted');
+			g.chat("<div>You don't have any friends! Use /friend account to add a new friend.</div>", 'chat-muted');
 		}
 	},
 	friendGet: function(){
@@ -483,6 +481,7 @@ var title = {
 			} else if (data.type === 'add'){
 				title.addPlayer(data.account, data.flag, data.rating);
 			} else {
+				console.info(data, data.message);
 				if (data.message !== undefined){
 					title.chat(data);
 				}
@@ -628,7 +627,7 @@ var title = {
 						str += '<div class="who-ribbon-chat '+ (len >= 24 ? 'wideRack' : 'narrowRack') +'">';
 						for (var i=0, len=data.ribbons.length; i<len; i++){
 							var z = data.ribbons[i];
-							str += '<div class="ribbon ribbon'+ z +'" title="'+ game.ribbonTitle[i] +'"></div>';
+							str += '<div class="ribbon ribbon'+ z +'" title="'+ game.ribbonTitle[z] +'"></div>';
 						}
 						str += '</div>';
 					}
@@ -666,18 +665,16 @@ var title = {
 	},
 	help: function(){
 		var str = 
-			'<div class="chat-warning">Chat Commands:</div>\
-			<div>/j: change channel</div>\
-			<div>/join: change channel</div>\
-			<div>/w account: whisper user</div>\
-			<div>/whisper account: whisper user</div>\
-			<div>@account_name: whisper user</div>\
-			<div>/ignore: show ignore list</div>\
+			'<h5 class="chat-warning">Chat Commands:</h5>\
+			<div>#channel: join channel</div>\
+			<div>@account: whisper user</div>\
 			<div>/ignore account: ignore account</div>\
 			<div>/unignore account: stop ignoring account</div>\
-			<div>/friend: show friend list</div>\
 			<div>/friend account: add/remove friend</div>\
-			<div>/who account: check account info</div>\
+			<div>/who account: check account info (or click account name)</div>\
+			<h5 class="chat-warning">Title screen lobbies only:</h5>\
+			<div>/img url: share image</div>\
+			<div>/video youtube_11-character_id: share video</div>\
 			';
 		var o = {
 			message: str,
@@ -693,11 +690,36 @@ var title = {
 			}
 		});
 	},
+	img: function(url){
+		$.ajax({
+			url: 'php/insertImg.php',
+			data: {
+				url: url
+			}
+		});
+	},
+	video: function(url){
+		$.ajax({
+			url: 'php/insertVideo.php',
+			data: {
+				url: url
+			}
+		});
+	},
 	fwpaid: function(msg){
 		$.ajax({
 			url: 'php/fwpaid.php',
 			data: {
 				message: msg
+			}
+		});
+	},
+	addRibbon: function(account, ribbon){
+		$.ajax({
+			url: 'php/fw-add-ribbon.php',
+			data: {
+				account: account,
+				ribbon: ribbon
 			}
 		});
 	},
@@ -719,10 +741,10 @@ var title = {
 				} else if (msg.indexOf('/ignore ') === 0){
 					var account = msg.slice(8);
 					title.addIgnore(account);
-				} else if (msg.indexOf('/help') === 0){
-					title.help();
 				} else if (msg.indexOf('/join ') === 0){
 					title.changeChannel(msg, '/join ');
+				} else if (msg.indexOf('#') === 0){
+					title.changeChannel(msg, '#');
 				} else if (msg.indexOf('/j ') === 0){
 					title.changeChannel(msg, '/j ');
 				} else if (msg.indexOf('/whisper ') === 0){
@@ -735,11 +757,22 @@ var title = {
 					title.who(msg);
 				} else if (msg.indexOf('/broadcast ') === 0){
 					title.broadcast(msg);
-				} else if (msg.indexOf('/fwpaid ') === 0){
+				} else if (msg.indexOf('/img ') === 0){
+					title.img(msg);
+				} else if (msg.indexOf('/video ') === 0){
+					title.video(msg);
+				} else if (msg.indexOf('/fw-paid ') === 0){
 					var account = msg.slice(8);
 					title.fwpaid(account);
-				}else {
-					if (msg.charAt(0) !== '/'){
+				} else if (msg.indexOf('/fw-add-ribbon ') === 0){
+					var a = msg.split(" "),
+						account = a[1],
+						ribbon = a[2];
+					title.addRibbon(account, ribbon);
+				} else {
+					if (msg.charAt(0) === '/' && msg.indexOf('/me') !== 0 || msg === '/me'){
+						// skip
+					} else {
 						$.ajax({
 							url: 'php/insertTitleChat.php',
 							data: {
@@ -842,7 +875,6 @@ var title = {
 		}).fail(function(data){
 			console.info(data);
 			Msg(data.statusText, 1.5);
-		}).always(function(){
 			g.unlock();
 		});
 	},
@@ -860,6 +892,7 @@ var title = {
 		g.speed = data.speed;
 		lobby.init(data);
 		lobby.join(); // normal join
+		//$("#titleMenu, #titleChat").remove();
 		socket.joinGame();
 	},
 	submitNationName: function(){

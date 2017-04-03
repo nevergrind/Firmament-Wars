@@ -43,7 +43,6 @@ var socket = {
 						channel: channel
 					}
 				}).done(function(data){
-					console.info("NEW CHANNEL: " + data);
 					// removes id
 					socket.removePlayer(my.account);
 					// unsubs
@@ -63,7 +62,7 @@ var socket = {
 						}
 					});
 					// add id
-					socket.addPlayer(my.account, my.flag, my.rating);
+					socket.addPlayer(my.account, my.flag);
 					// update display of channel
 					if (g.view === 'title'){
 						document.getElementById('titleChatHeaderChannel').textContent = data.channel;

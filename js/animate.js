@@ -62,7 +62,7 @@ var animate = {
 		},
 		shield: {
 			audio: 'build',
-			text: '\uf132',
+			text: '\uf286',
 			color: '#ff0'
 		}
 	},

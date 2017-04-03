@@ -460,7 +460,9 @@ function toggleChatMode(bypass){
 			} else if (msg.indexOf('/who ') === 0){
 				title.who(msg);
 			} else {
-				if (msg.charAt(0) !== '/'){
+				if (msg.charAt(0) === '/' && msg.indexOf('/me') !== 0){
+					// skip
+				} else {
 					$.ajax({
 						url: 'php/insertChat.php',
 						data: {

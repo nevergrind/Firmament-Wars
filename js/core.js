@@ -166,8 +166,8 @@ var g = {
 	},
 	config: {
 		audio: {
-			musicVolume: 20,
-			soundVolume: 60
+			musicVolume: 10,
+			soundVolume: 50
 		}
 	},
 	geo: {},
@@ -302,7 +302,10 @@ g.init = (function(){
 		});
 	}
 	document.getElementById("flagDropdown").innerHTML = s;
-	if (location.hostname === 'localhost' && location.hash !== '#stop'){
+	if ((location.hostname === 'localhost' && location.hash !== '#stop') || 
+		localStorage.getItem('resync') && 
+		localStorage.getItem('reload') !== false){
+		localStorage.setItem('resync', 0);
 		$.ajax({
 			type: "GET",
 			url: 'php/rejoinGame.php' // check if already in a game
@@ -389,8 +392,8 @@ var game = {
 		'Achieved 2100+ rating',//10
 		'Achieved 2400+ rating',
 		'Achieved 2700+ rating',
-		'Reporting a significant bug, exploit, or suggested an improvement',
-		'Acquired a custom flag',
+		'Reported a significant bug or exploit',
+		'Recorded a video of Firmament Wars and shared it online',
 		'Won 10+ games in a row', // 15
 		'Won 25+ games in a row',
 		'Beat Nevergrind on normal',
@@ -938,16 +941,16 @@ function initDom(){
 		energyIndicator: d.getElementById('energyIndicator'),
 		currentYear: d.getElementById('currentYear'),
 		currentYearBG: d.getElementById('currentYearBG'),
-		targetTargetWrap: d.getElementById('targetTargetWrap'),
+		//targetTargetWrap: d.getElementById('targetTargetWrap'),
 		targetFlag: d.getElementById('targetFlag'),
 		targetCapStar: d.getElementById('targetCapStar'),
 		targetNameWrap: d.getElementById('targetNameWrap'),
 		targetBarsWrap: d.getElementById('targetBarsWrap'),
 		targetNameAnchor: d.getElementById('targetNameAnchor'),
-		targetTargetFlag: d.getElementById('targetTargetFlag'),
-		targetTargetCapStar: d.getElementById('targetTargetCapStar'),
-		targetTargetNameWrap: d.getElementById('targetTargetNameWrap'),
-		targetTargetBarsWrap: d.getElementById('targetTargetBarsWrap'),
+		//targetTargetFlag: d.getElementById('targetTargetFlag'),
+		//targetTargetCapStar: d.getElementById('targetTargetCapStar'),
+		//targetTargetNameWrap: d.getElementById('targetTargetNameWrap'),
+		//targetTargetBarsWrap: d.getElementById('targetTargetBarsWrap'),
 		landWrap: d.getElementById('landWrap'),
 		gameWindows: d.getElementsByClassName('gameWindow'),
 		sumMoves: d.getElementById('sumMoves'),
@@ -977,7 +980,7 @@ function initDom(){
 		target: d.getElementById('target'),
 		avatarWrap: d.getElementById('avatarWrap'),
 		avatar: d.getElementById('avatar'),
-		ribbonWrap: d.getElementById('ribbonWrap'),
+		//ribbonWrap: d.getElementById('ribbonWrap'),
 		targetName: d.getElementById('targetName'),
 		oBonus: d.getElementById('oBonus'),
 		dBonus: d.getElementById('dBonus'),

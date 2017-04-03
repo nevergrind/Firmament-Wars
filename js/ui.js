@@ -105,6 +105,7 @@ var ui = {
 			my.attackName = '';
 		}
 	},
+	/*
 	targetBars: function(o){
 		var spacing = 8;
 		var str = 
@@ -117,6 +118,7 @@ var ui = {
 			str += '<line class="targetBars targetBarsDefense" opacity="'+ (o.defense ? 1 : 0) +'"x1="1%" x2="'+ o.defense +'%" y1="'+ o.yPos +'" y2="'+ o.yPos +'" />';
 		return str;
 	},
+	*/
 	transformYear: function(tick){
 		var foo = tick >= 40 ? ' A.D.' : ' B.C.',
 			year = 0;
@@ -268,6 +270,7 @@ function updateTileInfo(tileId){
 		} else {
 			DOM.avatarWrap.style.display = 'none';
 		}
+		/*
 		if (game.player[t.player].ribbons === undefined){
 			DOM.ribbonWrap.style.display = 'none';
 		} else {
@@ -280,14 +283,14 @@ function updateTileInfo(tileId){
 		}
 		DOM.ribbonWrap.innerHTML = game.player[t.player].ribbons === undefined ? 
 			'' : game.player[t.player].ribbons;
+		*/
 	}
 	// tileName and bars
 	var o = {
 		food: 0,
 		culture: 0,
 		production: 0,
-		defense: 0,
-		yPos: 7
+		defense: 0
 	};
 	if (t.player){
 		o.food = ~~(((t.food > 8 ? 8 : t.food) / 8) * 99);
@@ -296,21 +299,9 @@ function updateTileInfo(tileId){
 		o.defense = ~~((t.defense / 4) * 99);
 	}
 	if (!isMobile){
-		if (my.attackOn){
-			DOM.targetNameAnchor.style.height = '60px';
-			DOM.targetTargetFlag.src = 'images/flags/' + flag;
-			DOM.targetTargetCapStar.style.display = t.capital ? 'inline' : 'none';
-			DOM.targetTargetNameWrap.textContent = name;
-			DOM.targetTargetBarsWrap.innerHTML = ui.targetBars(o);
-			DOM.targetTargetWrap.style.visibility = 'visible';
-		} else {
-			DOM.targetNameAnchor.style.height = '120px';
-			DOM.targetFlag.src = 'images/flags/' + flag;
-			DOM.targetCapStar.style.display = t.capital ? 'inline' : 'none';
-			DOM.targetNameWrap.textContent = name;
-			DOM.targetBarsWrap.innerHTML = ui.targetBars(o);
-			DOM.targetTargetWrap.style.visibility = 'hidden';
-		}
+		DOM.targetCapStar.style.display = t.capital ? 'inline' : 'none';
+		DOM.targetNameWrap.textContent = name;
+		DOM.targetFlag.src = 'images/flags/' + flag;
 	}
 	
 	var defWord = ['Bunker', 'Wall', 'Fortress'],
