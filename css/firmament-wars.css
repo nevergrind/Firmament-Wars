@@ -308,19 +308,23 @@ tbody {
     background: -ms-radial-gradient(top center, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
     background: -o-radial-gradient(top center, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%)
 }
-#title-chat-btns{
-	width: 100%;
-	padding: 0 .25vw .25vh;
-	border-bottom: 1px solid #357;
+#title-chat-btn-wrap {
+    border-bottom: 1px solid #357
 }
-#title-chat-btns button{
-	border: 1px solid #357 !important;
-	font-size: .75em;
+#title-chat-btns {
+    padding: 0 .25vw .25vh;
+    margin: 0 auto;
+    text-align: center;
+    width: inherit;
+    display: inline-block
 }
-/* temp fix for margin inside of above btn tooltips */
-.btn-group > .tooltip + .btn,
-.btn-group > .popover + .btn{
-	margin-left:-1px;
+#title-chat-btns button {
+    border: 1px solid #357!important;
+    font-size: .75em
+}
+.btn-group>.tooltip+.btn,
+.btn-group>.popover+.btn {
+    margin-left: -1px
 }
 .titlePlayer {
     padding: 0 .5em
@@ -393,7 +397,7 @@ tbody {
     border-radius: 4px;
     border: 1px solid #357;
     margin: 0;
-    padding: .25em .5em .5em;
+    padding: .25em .5em .5em
 }
 #leaderboard {
     width: 85%;
@@ -417,18 +421,18 @@ tbody {
     font-size: .75em;
     padding: 0em .25em
 }
-.video-wrap{
+.video-wrap {
     position: relative;
     width: 100%;
     height: 0;
-    padding-bottom: 56.25%;
+    padding-bottom: 56.25%
 }
-.video{
+.video {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100%
 }
 .fwGameLabel {
     background: rgba(16, 56, 96, 1);
@@ -611,8 +615,8 @@ tbody {
 #targetNameAnchor {
     position: relative;
     overflow: hidden;
-	width: 100%;
-    height: 120px;
+    width: 100%;
+    height: 120px
 }
 .ribbonName {
     font-size: 1.5em;
@@ -817,10 +821,10 @@ tbody {
     background-position: -50%!important;
     z-index: -1
 }
-.diplo-head{
-	font-size: .875em;
-	padding: .25vh .5vh;
-	border-bottom: 1px solid #357;
+.diplo-head {
+    font-size: .875em;
+    padding: .25vh .5vh;
+    border-bottom: 1px solid #357
 }
 #diplomacy-ui {
     position: absolute;
@@ -886,7 +890,7 @@ tbody {
     padding-left: .5em
 }
 .manpower {
-    color: #ff0;
+    color: #ff0
 }
 .moves {
     color: #faf2a5
@@ -913,8 +917,7 @@ tbody {
 }
 .actionHead {
     text-align: center;
-    font-size: 1.5em;
-    letter-spacing: .25em
+    font-size: 1.5em
 }
 #tileActions {
     position: relative
@@ -1206,7 +1209,7 @@ circle {
     overflow: hidden
 }
 #targetCapStar {
-    display: none;
+    display: none
 }
 .fw-primary {
     background: rgba(0, 0, 0, .7);
@@ -2396,7 +2399,7 @@ input[type=number]::-webkit-outer-spin-button {
     overflow: hidden
 }
 .Albania {
-    background-position: -1000% -100%;
+    background-position: -1000% -100%
 }
 .Algeria {
     background-position: -100% 0

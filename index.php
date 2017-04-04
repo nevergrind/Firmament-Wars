@@ -48,9 +48,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-87">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-88">
 	<script>
-		version = '1-0-87';
+		version = '1-0-88';
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -266,30 +266,35 @@
 						<span id="titleChatHeaderChannel"></span> 
 						<span id="titleChatHeaderCount"></span>
 					</div>
-					<div id="title-chat-btns" class="btn-group" role="group">
-						<button id="friend-status" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Friend list">
-							<i class="fa fa-users pointer2"></i>
-						</button>
-						<button id="add-friend" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Toggle friend">
-							<i class="fa fa-user-plus"></i>
-						</button>
-						<button id="who-account" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Query account data">
-							<i class="fa fa-vcard"></i>
-						</button>
-						<button id="whisper-account" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Send another account a private message">@</button>
-						<button id="change-channel" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Change Channel">#</button>
-						<button id="share-image" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Share image with channel using URL from another website">
-							<i class="fa fa-file-image-o pointer2"></i>
-						</button>
-						<button id="share-video" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Share video with channel using 11-character ID from a youtube video">
-							<i class="fa fa-file-video-o pointer2"></i>
-						</button>
-						<button id="ignore-user" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Ignore account messages">
-							<i class="fa fa-microphone-slash pointer2"></i>
-						</button>
-						<button id="get-help" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Help">
-							<i class="fa fa-question pointer2"></i>
-						</button>
+					<div id="title-chat-btn-wrap" class="text-center">
+						<div id="title-chat-btns" class="btn-group" role="group">
+							<button id="friend-status" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Friend list">
+								<i class="fa fa-users pointer2"></i>
+							</button>
+							<button id="add-friend" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Toggle friend">
+								<i class="fa fa-user-plus"></i>
+							</button>
+							<button id="who-account" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Query account data">
+								<i class="fa fa-vcard"></i>
+							</button>
+							<button id="whisper-account" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Send another account a private message">@</button>
+							<button id="change-channel" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Change Channel">#</button>
+							<button id="share-url" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Share hyperlink with channel">
+								<i class="fa fa-external-link pointer2"></i>
+							</button>
+							<button id="share-image" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Share image with channel using URL from another website">
+								<i class="fa fa-file-image-o pointer2"></i>
+							</button>
+							<button id="share-video" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Share video with channel using 11-character ID from a youtube video">
+								<i class="fa fa-file-video-o pointer2"></i>
+							</button>
+							<button id="ignore-user" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Ignore account messages">
+								<i class="fa fa-microphone-slash pointer2"></i>
+							</button>
+							<button id="get-help" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Help">
+								<i class="fa fa-question pointer2"></i>
+							</button>
+						</div>
 					</div>
 					<div id="titleChatBody"></div>
 				</div>

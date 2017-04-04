@@ -673,6 +673,7 @@ var title = {
 			<div>/friend account: add/remove friend</div>\
 			<div>/who account: check account info (or click account name)</div>\
 			<h5 class="chat-warning">Title screen lobbies only:</h5>\
+			<div>/url url: share URL</div>\
 			<div>/img url: share image</div>\
 			<div>/video youtube_11-character_id: share video</div>\
 			';
@@ -687,6 +688,14 @@ var title = {
 			url: 'php/insertBroadcast.php',
 			data: {
 				message: msg
+			}
+		});
+	},
+	url: function(url){
+		$.ajax({
+			url: 'php/insertUrl.php',
+			data: {
+				url: url
 			}
 		});
 	},
@@ -757,6 +766,8 @@ var title = {
 					title.who(msg);
 				} else if (msg.indexOf('/broadcast ') === 0){
 					title.broadcast(msg);
+				} else if (msg.indexOf('/url ') === 0){
+					title.url(msg);
 				} else if (msg.indexOf('/img ') === 0){
 					title.img(msg);
 				} else if (msg.indexOf('/video ') === 0){

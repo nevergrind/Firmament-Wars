@@ -345,6 +345,9 @@ var events = {
 		$("#ignore-user").on(ui.click, function(){
 			$("#title-chat-input").val('/ignore ').focus();
 		});
+		$("#share-url").on(ui.click, function(){
+			$("#title-chat-input").val('/url ').focus();
+		});
 		$("#share-image").on(ui.click, function(){
 			$("#title-chat-input").val('/img ').focus();
 		});
