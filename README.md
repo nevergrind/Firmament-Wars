@@ -13,19 +13,21 @@ All projects shown helped create Firmament Wars.
 * [AutobahnJS](https://github.com/crossbario/autobahn-js)
 * [ZeroMQ](https://github.com/mkoppanen/php-zmq)
 
-# Developer
+# Firmament Wars Links
 
-[Joe Leonard](https://www.linkedin.com/in/joseph-leonard-78b56287) is a software engineer at [Synergist Computing](http://www.synergistcomputing.com).
-* [Game Development Blog](https://nevergrind.com/blog)
 * [How to Play Firmament Wars](https://nevergrind.com/blog/how-to-play-firmament-wars)
 * [About Firmament Wars](https://nevergrind.com/blog/about-firmament-wars)
 * [Discord Server](https://discord.gg/D4suK8b)
-* [Nevergrind Forums](https://nevergrind.com/forums)
-* [GitHub](https://github.com/Maelfyn)
-* [Facebook](https://www.facebook.com/neverworksgames)
-* [YouTube](https://www.youtube.com/user/Maelfyn)
-* [LinkedIn](https://www.linkedin.com/company/neverworks-games-llc)
+* [Game Development Blog](https://nevergrind.com/blog)
 * [IndieDB](http://www.indiedb.com/games/firmament-wars)
 * [Reddit](https://www.reddit.com/r/firmamentwars)
+
+# Developer
+
+* [YouTube](https://www.youtube.com/user/Maelfyn)
 * [Twitter](https://twitter.com/maelfyn)
+* [Facebook](https://www.facebook.com/neverworksgames)
+* [GitHub](https://github.com/Maelfyn)
+* [LinkedIn](https://www.linkedin.com/company/neverworks-games-llc)
 * [Google+](https://plus.google.com/+Maelfyn)
+* [Joe Leonard](https://www.linkedin.com/in/joseph-leonard-78b56287) is a software engineer at [Synergist Computing](http://www.synergistcomputing.com).
