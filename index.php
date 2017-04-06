@@ -48,9 +48,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-88">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-89">
 	<script>
-		version = '1-0-88';
+		version = '1-0-89';
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -526,14 +526,6 @@
 		<div id="configureNation" class="fw-primary container title-modals">
 			<div class="row text-center">
 				<div class='col-xs-12'>
-					<h2 class='header'>Configure Nation</h2>
-					<hr class="fancyhr">
-				</div>
-			</div>
-			<?php require('php/myNation.php'); ?>
-			<div class="row text-center buffer2">
-				<div class='col-xs-12'>
-					<hr class="fancyhr">
 					<h2 class='header'>Update Name</h2>
 					<hr class="fancyhr">
 				</div>

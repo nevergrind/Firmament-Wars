@@ -55,7 +55,7 @@ var lobby = {
 					<div>Overrun ability: Instant win with 4x advantage</div>\
 					<div>Infiltration: -5 structure defense</div>\
 					<div>Faster growth: Reduced growth milestone requirement</div>\
-					<div>1/2 cost rush</div>\
+					<div>+2 troop reward bonus</div>\
 				</div>';
 		} else if (government === "Fascism"){
 			str = '<div id="lobbyGovName" class="text-primary">Fascism</div>\
@@ -762,6 +762,7 @@ function loadGameState(){
 				return;
 			}
 			initDom();
+			$("meta").remove();
 			g.screen.resizeMap();
 			
 			audio.gameMusicInit();
@@ -792,9 +793,6 @@ function loadGameState(){
 				my.buildCost = .5;
 			} else if (my.government === 'Democracy'){
 				my.maxDeployment = 48;
-			} else if (my.government === 'Fundamentalism'){
-				my.rushCost = 1;
-				document.getElementById('rushCost').textContent = my.rushCost;
 			} else if (my.government === 'Republic'){
 				my.sumMoves = data.sumMoves;
 				document.getElementById('moves').textContent = my.sumMoves;

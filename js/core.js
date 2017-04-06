@@ -302,6 +302,7 @@ g.init = (function(){
 		});
 	}
 	document.getElementById("flagDropdown").innerHTML = s;
+	// TODO separate this confusing logic a bit
 	if ((location.hostname === 'localhost' && location.hash !== '#stop') || 
 		localStorage.getItem('resync') && 
 		localStorage.getItem('reload') !== false){
