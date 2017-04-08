@@ -478,21 +478,17 @@ var events = {
 			});
 			
 		}).on(ui.click, '#cpu-add-player', function(e){
-			console.info("Adding player");
+			//console.info("Adding player");
 			audio.play('click');
 			$.ajax({
-				url: 'php/cpu-add-player.php',
-				data: {
-					name: g.name
-				}
-			}).done(function(data) {
-				console.info("SUCCESS", data);
-			}).fail(function(data){
-				console.info("FAIL", data);
-				Msg(data.statusText, 1.5);
+				url: 'php/cpu-add-player.php'
 			});
 		}).on(ui.click, '#cpu-remove-player', function(e){
-			console.info("Removing player");
+			//console.info("Removing player");
+			audio.play('click');
+			$.ajax({
+				url: 'php/cpu-add-player.php'
+			});
 		});
 	})(),
 	map: (function(){

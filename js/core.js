@@ -556,7 +556,7 @@ var game = {
 		// this is now a reality check in case zmq messes up?
 		// or check that players are still online?
 		$.ajax({
-			type: "GET",
+			type: 'GET',
 			url: "php/getGameState.php"
 		}).done(function(data){
 			// get tile data
@@ -731,9 +731,28 @@ var game = {
 	},
 	updateResources: function(){
 		if (!g.over){
+			var firstPlayer = 0,
+				foundCpu = 0,
+				pingCpu = 0;
+			game.player.forEach(function(d){
+				if (d.cpu){
+					foundCpu = 1;
+				} else if (d.cpu === 0){
+					// 0 means player, null means empty
+					if (!firstPlayer){
+						firstPlayer = 1;
+						if (d.account === my.account){
+							pingCpu = 1;
+						}
+					}
+				}
+			});
+			console.info('getGameState ', firstPlayer, foundCpu, pingCpu);
 			$.ajax({
-				type: "GET",
-				url: "php/updateResources.php"
+				url: "php/updateResources.php",
+				data: {
+					pingCpu: pingCpu
+				}
 			}).done(function(data){
 				setResources(data);
 				ui.setCurrentYear(data.resourceTick);

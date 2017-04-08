@@ -932,6 +932,7 @@ function loadGameState(){
 				game.player[d.player].team = d.team;
 				game.player[d.player].government = d.government;
 				game.player[d.player].avatar = d.avatar;
+				game.player[d.player].cpu = d.cpu;
 			}
 			
 			// initialize client tile data

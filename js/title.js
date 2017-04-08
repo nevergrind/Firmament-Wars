@@ -490,7 +490,7 @@ var title = {
 			}
 		} else if (g.view === 'lobby'){
 			// lobby
-			console.info('lobby receive: ', data);
+			//console.info('lobby receive: ', data);
 			if (data.type === 'hostLeft'){
 				lobby.hostLeft();
 			} else if (data.type === 'government'){
