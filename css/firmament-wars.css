@@ -306,10 +306,11 @@ tbody {
     background: -webkit-radial-gradient(top center, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
     background: -moz-radial-gradient(top center, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
     background: -ms-radial-gradient(top center, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
-    background: -o-radial-gradient(top center, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%)
+    background: -o-radial-gradient(top center, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
 }
 #title-chat-btn-wrap {
-    border-bottom: 1px solid #357
+    border-bottom: 1px solid #357;
+	margin-bottom: .5vh;
 }
 #title-chat-btns {
     padding: 0 .25vw .25vh;
@@ -611,6 +612,11 @@ tbody {
     width: 180px;
     height: 120px;
     background: #000
+}
+#targetResources {
+    position: relative;
+    letter-spacing: 2px;
+    word-spacing: 6px
 }
 #targetNameAnchor {
     position: relative;
@@ -1107,11 +1113,11 @@ text {
     alignment-baseline: center
 }
 .mapBars {
-    stroke-dasharray: 2, 1;
+    stroke-dasharray: 4, 1;
     overflow: hidden
 }
 .mapBars2x {
-    stroke-dasharray: 5, 1
+    stroke-dasharray: 9, 1
 }
 .targetBarsWrap {
     position: relative;
@@ -1502,6 +1508,16 @@ span.unlockGameBtn {
     width: 120px;
     height: 120px
 }
+.who-wrap{
+	padding: 5px 0;
+	margin: 5px -15px;
+	border: 2px ridge #357;
+    background: -webkit-radial-gradient(top right, cover, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
+    background: -moz-radial-gradient(top right, cover, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
+    background: -ms-radial-gradient(top right, cover, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
+    background: -o-radial-gradient(top right, cover, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
+	box-shadow: 0 -1px #8bf, 0 1px #8bf;
+}
 .who-avatar-wrap {
     position: relative;
     margin-left: .25vw
@@ -1615,6 +1631,9 @@ table {
     height: 2.8em;
     line-height: 2.8em;
     margin-top: .5em
+}
+.cpu-button{
+	margin-left: 5px;
 }
 .lobbyCaret {
     position: absolute;

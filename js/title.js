@@ -336,6 +336,11 @@ var title = {
 	},
 	chatDrag: false,
 	chatOn: false,
+	scrollBottom: function(){
+		if (!title.chatDrag){
+			DOM.titleChatLog.scrollTop = DOM.titleChatLog.scrollHeight;
+		}
+	},
 	chat: function (data){
 		if (g.view === 'title' && data.message){
 			while (DOM.titleChatLog.childNodes.length > 500) {
@@ -347,9 +352,7 @@ var title = {
 			}
 			z.innerHTML = data.message;
 			DOM.titleChatLog.appendChild(z);
-			if (!title.chatDrag){
-				DOM.titleChatLog.scrollTop = DOM.titleChatLog.scrollHeight;
-			}
+			title.scrollBottom();
 			if (!data.skip){
 				g.sendNotification(data);
 			}
@@ -481,14 +484,13 @@ var title = {
 			} else if (data.type === 'add'){
 				title.addPlayer(data.account, data.flag, data.rating);
 			} else {
-				console.info(data, data.message);
 				if (data.message !== undefined){
 					title.chat(data);
 				}
 			}
 		} else if (g.view === 'lobby'){
 			// lobby
-			// console.info('lobby receive: ', data);
+			console.info('lobby receive: ', data);
 			if (data.type === 'hostLeft'){
 				lobby.hostLeft();
 			} else if (data.type === 'government'){
@@ -499,8 +501,10 @@ var title = {
 				lobby.updateTeamNumber(data);
 			} else if (data.type === 'countdown'){
 				lobby.countdown(data);
-			} else if (data.type === 'update'){
+			} else if (data.type === 'updateLobbyPlayer'){
 				lobby.updatePlayer(data);
+			} else if (data.type === 'updateLobbyCPU'){
+				lobby.updateCPU(data);
 			} else {
 				if (data.message !== undefined){
 					lobby.chat(data);
@@ -627,7 +631,7 @@ var title = {
 						str += '<div class="who-ribbon-chat '+ (len >= 24 ? 'wideRack' : 'narrowRack') +'">';
 						for (var i=0, len=data.ribbons.length; i<len; i++){
 							var z = data.ribbons[i];
-							str += '<div class="ribbon ribbon'+ z +'" title="'+ game.ribbonTitle[z] +'"></div>';
+							str += '<div class="pointer ribbon ribbon'+ z +'" title="'+ game.ribbonTitle[z] +'" data-ribbon="'+ z +'"></div>';
 						}
 						str += '</div>';
 					}
@@ -636,8 +640,7 @@ var title = {
 			}
 			
 			var str = 
-			'<hr class="fancyhr">'+
-			'<div class="row">'+
+			'<div class="row who-wrap">'+
 				'<div class="col-xs-8">';
 				// left col
 				str += data.str;
@@ -656,8 +659,7 @@ var title = {
 						'</div>'+
 					'</div>'+
 				'</div>'+
-			'</div>'+
-			'<hr class="fancyhr">';
+			'</div>';
 			g.chat(str);
 		}).fail(function(){
 			g.chat('No data found.');
@@ -675,7 +677,7 @@ var title = {
 			<h5 class="chat-warning">Title screen lobbies only:</h5>\
 			<div>/url url: share URL</div>\
 			<div>/img url: share image</div>\
-			<div>/video youtube_11-character_id: share video</div>\
+			<div>/video youtube_url: share video</div>\
 			';
 		var o = {
 			message: str,
@@ -705,6 +707,14 @@ var title = {
 			data: {
 				url: url
 			}
+		}).done(function(){
+			(function repeat(count){
+				if (++count < 15){
+					console.info("SCROLLING");
+					title.scrollBottom();
+					setTimeout(repeat, 200, count);
+				}
+			})(0);
 		});
 	},
 	video: function(url){

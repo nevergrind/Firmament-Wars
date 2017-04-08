@@ -723,7 +723,7 @@ var game = {
 	},
 	
 	triggerNextTurn: function(data){ 
-		//console.info("TRIGGERING NEXT TURN!", data);
+		console.info("TRIGGERING NEXT TURN!", data);
 		clearInterval(game.energyTimer);
 		game.energyTimer = setInterval(game.updateResources, g.speed * 1000);
 		game.updateResources();
@@ -945,6 +945,7 @@ function initDom(){
 		//targetTargetWrap: d.getElementById('targetTargetWrap'),
 		targetFlag: d.getElementById('targetFlag'),
 		targetCapStar: d.getElementById('targetCapStar'),
+		targetResources: d.getElementById('targetResources'),
 		targetNameWrap: d.getElementById('targetNameWrap'),
 		targetBarsWrap: d.getElementById('targetBarsWrap'),
 		targetNameAnchor: d.getElementById('targetNameAnchor'),

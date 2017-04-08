@@ -119,99 +119,112 @@ var animate = {
 		// console.info("UPDATING MAP BARS");
 	},
 	initMapBars: function(i, x, y){
-		var e = DOM['unit' + i];
-		var x = e.getAttribute('x') - 17;
-		var y = e.getAttribute('y') - 24;
+		var e = DOM['unit' + i],
+			x = e.getAttribute('x') - 25,
+			y = e.getAttribute('y') - 24,
+			boxHeight = 0,
+			barHeight = 5,
+			barPad = 1,
+			widthPerTick = 5,
+			widthMax = 40;
 		
-		var boxHeight = 4;
-		if (game.tiles[i].production){
-			boxHeight += 4;
+		if (game.tiles[i].food > 2){
+			boxHeight += barHeight + barPad;
+		}
+		if (game.tiles[i].production > 1){
+			boxHeight += barHeight + barPad;
 		}
 		if (game.tiles[i].culture){
-			boxHeight += 4;
+			boxHeight += barHeight + barPad; 
 		}
 		if (game.tiles[i].defense){
-			boxHeight += 6;
+			boxHeight += barHeight + barPad;
 		}
-		var foodWidth = game.tiles[i].food * 3;
-		if (foodWidth > 24){
-			foodWidth = 24;
+		var foodWidth = game.tiles[i].food * widthPerTick;
+		if (foodWidth > widthMax){
+			foodWidth = widthMax;
 		}
 		// wrapper
-		x += 4
-		var svg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-		svg.setAttributeNS(null, 'width', 25);
-		svg.setAttributeNS(null, 'height', boxHeight);
-		svg.setAttributeNS(null,"x",x);
-		svg.setAttributeNS(null,"y",y + 26);
-		svg.setAttributeNS(null,"fill","#151515");
-		svg.setAttributeNS(null,"stroke","#000000");
-		svg.setAttributeNS(null,"opacity",1);
-		svg.setAttributeNS(null,"class","mapBars" + i);
-		DOM.mapBars.appendChild(svg);
-		// food
-		y += 28;
-		x += 1
-		var svg = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-		svg.setAttributeNS(null,"x1",x);
-		svg.setAttributeNS(null,"y1",y);
-		svg.setAttributeNS(null,"x2",x + foodWidth);
-		svg.setAttributeNS(null,"y2",y);
-		svg.setAttributeNS(null,"stroke","#88dd00");
-		svg.setAttributeNS(null,"stroke-width","3");
-		svg.setAttributeNS(null,"opacity",1);
-		svg.setAttributeNS(null,"class","mapBars mapBars" + i);
-		DOM.mapBars.appendChild(svg);
-		// production
-		if (game.tiles[i].production){
-			y += 4;
-			var productionWidth = game.tiles[i].production * 6;
-			if (productionWidth > 24){
-				productionWidth = 24;
+		x += barHeight
+		if (boxHeight){
+			var svg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+			svg.setAttributeNS(null, 'width', widthMax);
+			svg.setAttributeNS(null, 'height', boxHeight);
+			svg.setAttributeNS(null,"x",x);
+			svg.setAttributeNS(null,"y",y + 26);
+			svg.setAttributeNS(null,"fill","#151515");
+			svg.setAttributeNS(null,"stroke","#000000");
+			svg.setAttributeNS(null,"stroke-width",1);
+			svg.setAttributeNS(null,"opacity",1);
+			svg.setAttributeNS(null,"class","mapBars" + i);
+			DOM.mapBars.appendChild(svg);
+			// food
+			y += 23; // fixed value?
+			//x += 1 // padding
+			if (game.tiles[i].food > 2){
+				y += barHeight + barPad;
+				var svg = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+				svg.setAttributeNS(null,"x1",x);
+				svg.setAttributeNS(null,"y1",y);
+				svg.setAttributeNS(null,"x2",x + foodWidth);
+				svg.setAttributeNS(null,"y2",y);
+				svg.setAttributeNS(null,"stroke","#88dd00");
+				svg.setAttributeNS(null,"stroke-width",widthPerTick);
+				svg.setAttributeNS(null,"opacity",1);
+				svg.setAttributeNS(null,"class","mapBars mapBars" + i);
+				DOM.mapBars.appendChild(svg);
 			}
-			var svg = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-			svg.setAttributeNS(null,"x1",x);
-			svg.setAttributeNS(null,"y1",y);
-			svg.setAttributeNS(null,"x2",x + productionWidth);
-			svg.setAttributeNS(null,"y2",y);
-			svg.setAttributeNS(null,"stroke","#ffa500");
-			svg.setAttributeNS(null,"stroke-width","3");
-			svg.setAttributeNS(null,"opacity",1);
-			svg.setAttributeNS(null,"class","mapBars mapBars2x mapBars" + i);
-			DOM.mapBars.appendChild(svg);
-		}
-		// culture
-		if (game.tiles[i].culture){
-			y += 4;
-			var cultureWidth = game.tiles[i].culture * 3;
-			if (cultureWidth > 24){
-				cultureWidth = 24;
+			// production
+			if (game.tiles[i].production > 1){
+				y += barHeight + barPad;
+				var productionWidth = game.tiles[i].production * (widthPerTick * 2);
+				if (productionWidth > widthMax){
+					productionWidth = widthMax;
+				}
+				var svg = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+				svg.setAttributeNS(null,"x1",x);
+				svg.setAttributeNS(null,"y1",y);
+				svg.setAttributeNS(null,"x2",x + productionWidth);
+				svg.setAttributeNS(null,"y2",y);
+				svg.setAttributeNS(null,"stroke","#ffa500");
+				svg.setAttributeNS(null,"stroke-width",widthPerTick);
+				svg.setAttributeNS(null,"opacity",1);
+				svg.setAttributeNS(null,"class","mapBars mapBars2x mapBars" + i);
+				DOM.mapBars.appendChild(svg);
 			}
-			var svg = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-			svg.setAttributeNS(null,"x1",x);
-			svg.setAttributeNS(null,"y1",y);
-			svg.setAttributeNS(null,"x2",x + cultureWidth);
-			svg.setAttributeNS(null,"y2",y);
-			svg.setAttributeNS(null,"stroke","#dd22dd");
-			svg.setAttributeNS(null,"stroke-width","3");
-			svg.setAttributeNS(null,"opacity",1);
-			svg.setAttributeNS(null,"class","mapBars mapBars" + i);
-			DOM.mapBars.appendChild(svg);
-		}
-		// defense
-		if (game.tiles[i].defense){
-			y += 5;
-			var defWidth = game.tiles[i].defense * 6;
-			var svg = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-			svg.setAttributeNS(null,"x1",x);
-			svg.setAttributeNS(null,"y1",y);
-			svg.setAttributeNS(null,"x2",x + defWidth);
-			svg.setAttributeNS(null,"y2",y);
-			svg.setAttributeNS(null,"stroke","#ffff00");
-			svg.setAttributeNS(null,"stroke-width","5");
-			svg.setAttributeNS(null,"opacity",1);
-			svg.setAttributeNS(null,"class","mapBars mapBars2x mapBars" + i);
-			DOM.mapBars.appendChild(svg);
+			// culture
+			if (game.tiles[i].culture){
+				y += barHeight + barPad;
+				var cultureWidth = game.tiles[i].culture * widthPerTick;
+				if (cultureWidth > widthMax){
+					cultureWidth = widthMax;
+				}
+				var svg = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+				svg.setAttributeNS(null,"x1",x);
+				svg.setAttributeNS(null,"y1",y);
+				svg.setAttributeNS(null,"x2",x + cultureWidth);
+				svg.setAttributeNS(null,"y2",y);
+				svg.setAttributeNS(null,"stroke","#dd22dd");
+				svg.setAttributeNS(null,"stroke-width",widthPerTick);
+				svg.setAttributeNS(null,"opacity",1);
+				svg.setAttributeNS(null,"class","mapBars mapBars" + i);
+				DOM.mapBars.appendChild(svg);
+			}
+			// defense
+			if (game.tiles[i].defense){
+				y += barHeight + barPad;
+				var defWidth = game.tiles[i].defense * (widthPerTick * 2);
+				var svg = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+				svg.setAttributeNS(null,"x1",x);
+				svg.setAttributeNS(null,"y1",y);
+				svg.setAttributeNS(null,"x2",x + defWidth);
+				svg.setAttributeNS(null,"y2",y);
+				svg.setAttributeNS(null,"stroke","#ffff00");
+				svg.setAttributeNS(null,"stroke-width",barHeight);
+				svg.setAttributeNS(null,"opacity",1);
+				svg.setAttributeNS(null,"class","mapBars mapBars2x mapBars" + i);
+				DOM.mapBars.appendChild(svg);
+			}
 		}
 	},
 	gunfire: function(atkTile, defTile, playSound){

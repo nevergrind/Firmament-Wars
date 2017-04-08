@@ -58,6 +58,10 @@ var action = {
 		if (my.tgt === defender){
 			return;
 		}
+		if (g.adj[attacker].indexOf(defender) === -1){
+			action.targetNotAdjacent('You can only attack adjacent territories.', attacker);
+			return;
+		}
 		// can't move to maxed friendly tile
 		if (game.tiles[defender].player === my.player){
 			if (game.tiles[defender].units >= 255){
@@ -139,15 +143,21 @@ var action = {
 			// process barbarian reward messages
 			game.reportMilestones(data);
 		}).fail(function(data){
-			//console.info('attackTile', data);
-			audio.play('error');
-			Msg(data.statusText, 1.5);
-			// set target attacker
-			ui.showTarget(DOM['land' + attacker]);
+			action.targetNotAdjacent(data.statusText, attacker);
 		});
 	},
+	targetNotAdjacent: function(msg, attacker){
+		audio.play('error');
+		Msg(msg, 1.5);
+		// set target attacker
+		ui.showTarget(DOM['land' + attacker]);
+	},
 	deploy: function(){
-		my.checkSelectLastTarget();
+		if (my.government === 'Communism' && !game.tiles[my.tgt].player && !game.tiles[my.tgt].units){
+			// skip for commie bonus
+		} else {
+			my.checkSelectLastTarget();
+		}
 		var t = game.tiles[my.tgt];
 		if (my.production < my.deployCost){
 			action.error();
@@ -166,6 +176,7 @@ var action = {
 					target: my.tgt
 				}
 			}).done(function(data) {
+				console.info(data);
 				audio.deploy();
 				game.tiles[tgt].units = data.units;
 				my.manpower = data.manpower;
@@ -244,7 +255,7 @@ var action = {
 		}
 		my.attackOn = false;
 		my.attackName = '';
-		if (my.production < 24 * my.weaponCost){
+		if (my.production < Math.ceil(24 * my.weaponCost)){
 			action.error();
 			return;
 		}
@@ -280,7 +291,7 @@ var action = {
 		}
 		my.attackOn = false;
 		my.attackName = '';
-		if (my.production < 40 * my.weaponCost){
+		if (my.production < Math.ceil(50 * my.weaponCost)){
 			action.error();
 			return;
 		}
@@ -333,7 +344,7 @@ var action = {
 		}
 		my.attackOn = false;
 		my.attackName = '';
-		if (my.production < 150 * my.weaponCost){
+		if (my.production < Math.ceil(150 * my.weaponCost)){
 			action.error();
 			return;
 		}

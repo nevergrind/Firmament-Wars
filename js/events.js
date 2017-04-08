@@ -164,15 +164,49 @@ var events = {
 			title.joinGame();
 		});
 
+		// events for title-chat buttons
+		$("#titleChatPlayers").on(ui.click, '#friend-status', function(){
+			title.listFriends();
+			$("#title-chat-input").focus();
+		});
+		$("#get-help").on(ui.click, function(){
+			title.help();
+			$("#title-chat-input").focus();
+		});
+		$("#ignore-user").on(ui.click, function(){
+			$("#title-chat-input").val('/ignore ').focus();
+		});
+		$("#share-url").on(ui.click, function(){
+			$("#title-chat-input").val('/url ').focus();
+		});
+		$("#share-image").on(ui.click, function(){
+			$("#title-chat-input").val('/img ').focus();
+		});
+		$("#share-video").on(ui.click, function(){
+			$("#title-chat-input").val('/video ').focus();
+		});
+		$("#who-account").on(ui.click, function(){
+			$("#title-chat-input").val('/who ').focus();
+		});
+		$("#add-friend").on(ui.click, function(){
+			$("#title-chat-input").val('/friend ').focus();
+		});
+		$("#whisper-account").on(ui.click, function(){
+			$("#title-chat-input").val('@').focus();
+		});
+		$("#change-channel").on(ui.click, function(){
+			$("#title-chat-input").val('#').focus();
+		});
+		
 		$("#body").on(ui.click, "#cancelGame", function(){
 			exitGame();
 		}).on(ui.click, "#startGame", function(){
 			lobby.startGame();
 		}).on(ui.click, '.addFriend', function(){
 			title.toggleFriend($(this).data('account'));
-		})
-		$("#titleChatPlayers").on(ui.click, '#friend-status', function(){
-			title.listFriends();
+		}).on(ui.click, '.ribbon', function(){
+			var x = $(this).data('ribbon') * 1;
+			g.chat(game.ribbonTitle[x] +": "+ game.ribbonDescription[x]);
 		});
 		$("#toggleNation").on(ui.click, function(){
 			$.ajax({
@@ -237,6 +271,7 @@ var events = {
 			title.showBackdrop();
 			title.getLeaderboard('FFA');
 		});
+		// leaderboard buttons
 		$("#leaderboardFFABtn").on(ui.click, function(){
 			title.getLeaderboard('FFA');
 		});
@@ -339,33 +374,6 @@ var events = {
 				title.joinGame();
 			}
 		});
-		$("#get-help").on(ui.click, function(){
-			title.help();
-		});
-		$("#ignore-user").on(ui.click, function(){
-			$("#title-chat-input").val('/ignore ').focus();
-		});
-		$("#share-url").on(ui.click, function(){
-			$("#title-chat-input").val('/url ').focus();
-		});
-		$("#share-image").on(ui.click, function(){
-			$("#title-chat-input").val('/img ').focus();
-		});
-		$("#share-video").on(ui.click, function(){
-			$("#title-chat-input").val('/video ').focus();
-		});
-		$("#who-account").on(ui.click, function(){
-			$("#title-chat-input").val('/who ').focus();
-		});
-		$("#add-friend").on(ui.click, function(){
-			$("#title-chat-input").val('/friend ').focus();
-		});
-		$("#whisper-account").on(ui.click, function(){
-			$("#title-chat-input").val('@').focus();
-		});
-		$("#change-channel").on(ui.click, function(){
-			$("#title-chat-input").val('#').focus();
-		});
 		$("#overlay").on(ui.click, function(){
 			g.searchingGame = false;
 			TweenMax.set(DOM.Msg, {
@@ -450,7 +458,7 @@ var events = {
 				data: {
 					playerColor: playerColor*1
 				}
-			}).done(function(data) {
+			}).done(function(data){
 				my.playerColor = data.playerColor;
 			}).fail(function(data){
 				Msg(data.statusText, 1.5);
@@ -469,6 +477,22 @@ var events = {
 				Msg(data.statusText, 1.5);
 			});
 			
+		}).on(ui.click, '#cpu-add-player', function(e){
+			console.info("Adding player");
+			audio.play('click');
+			$.ajax({
+				url: 'php/cpu-add-player.php',
+				data: {
+					name: g.name
+				}
+			}).done(function(data) {
+				console.info("SUCCESS", data);
+			}).fail(function(data){
+				console.info("FAIL", data);
+				Msg(data.statusText, 1.5);
+			});
+		}).on(ui.click, '#cpu-remove-player', function(e){
+			console.info("Removing player");
 		});
 	})(),
 	map: (function(){

@@ -48,9 +48,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-89">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-93">
 	<script>
-		version = '1-0-89';
+		version = '1-0-93';
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -269,30 +269,30 @@
 					<div id="title-chat-btn-wrap" class="text-center">
 						<div id="title-chat-btns" class="btn-group" role="group">
 							<button id="friend-status" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Friend list">
-								<i class="fa fa-users pointer2"></i>
+								<i class="fa fa-users pointer"></i>
 							</button>
 							<button id="add-friend" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Toggle friend">
-								<i class="fa fa-user-plus"></i>
+								<i class="fa fa-user-plus pointer"></i>
 							</button>
 							<button id="who-account" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Query account data">
-								<i class="fa fa-vcard"></i>
+								<i class="fa fa-vcard pointer"></i>
 							</button>
 							<button id="whisper-account" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Send another account a private message">@</button>
 							<button id="change-channel" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Change Channel">#</button>
 							<button id="share-url" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Share hyperlink with channel">
-								<i class="fa fa-external-link pointer2"></i>
+								<i class="fa fa-external-link pointer"></i>
 							</button>
 							<button id="share-image" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Share image with channel using URL from another website">
-								<i class="fa fa-file-image-o pointer2"></i>
+								<i class="fa fa-file-image-o pointer"></i>
 							</button>
-							<button id="share-video" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Share video with channel using 11-character ID from a youtube video">
-								<i class="fa fa-file-video-o pointer2"></i>
+							<button id="share-video" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Share video with channel using a youtube video URL">
+								<i class="fa fa-file-video-o pointer"></i>
 							</button>
 							<button id="ignore-user" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Ignore account messages">
-								<i class="fa fa-microphone-slash pointer2"></i>
+								<i class="fa fa-microphone-slash pointer"></i>
 							</button>
 							<button id="get-help" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Help">
-								<i class="fa fa-question pointer2"></i>
+								<i class="fa fa-question pointer"></i>
 							</button>
 						</div>
 					</div>
@@ -648,10 +648,11 @@
 					<td id="targetName" class="text-center shadow4 tight">
 						<div id="targetNameAnchor">
 							<img id="targetFlag" class="targetFlag" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
-							<div id="targetNameSpan">
+							<div>
 								<i id="targetCapStar" class="glyphicon glyphicon-star capitalStar no-select shadow4"></i>
 								<span id="targetNameWrap"></span>
 							</div>
+							<div id="targetResources"></div>
 						</div>
 					</td>
 				</tr>
@@ -714,7 +715,7 @@
 						+<span id="foodBonus">0</span>%
 					</span>
 					<span  title="Food milestones produce additional troops">
-						Food <i class="glyphicon glyphicon-apple"></i> 
+						Food <i class="fa fa-apple"></i> 
 					</span>
 				</div>
 				

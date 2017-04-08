@@ -153,7 +153,7 @@ var socket = {
 			socket.connectionSuccess();
 		}, function(){
 			// on close/fail
-			socket.connectionFailure();
+			socket.reconnect();
 		}, {
 			// options
 			'skipSubprotocolCheck': true
@@ -191,7 +191,7 @@ var socket = {
 	},
 	connectionTries: 0,
 	connectionRetryDuration: 100,
-	connectionFailure: function(){
+	reconnect: function(){
 		console.warn('WebSocket connection failed. Retrying...');
 		socket.enabled = false;
 		setTimeout(socket.init, socket.connectionRetryDuration);

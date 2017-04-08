@@ -245,6 +245,7 @@ function updateTileInfo(tileId){
 		name = t.name,
 		account = "",
 		name = t.name;
+	
 	if (t.player === 0){
 		flag = "Player0.jpg";
 		if (t.units > 0){
@@ -264,43 +265,34 @@ function updateTileInfo(tileId){
 		account = t.account;
 	}
 	if (!isMobile){
+		// avatar
 		if (game.player[t.player].avatar){
 			DOM.avatarWrap.style.display = 'table-cell';
 			DOM.avatar.src = game.player[t.player].avatar;
 		} else {
 			DOM.avatarWrap.style.display = 'none';
 		}
-		/*
-		if (game.player[t.player].ribbons === undefined){
-			DOM.ribbonWrap.style.display = 'none';
-		} else {
-			DOM.ribbonWrap.style.display = 'table-cell';
-			if (game.player[t.player].ribbonArray.length >= 24){
-				DOM.ribbonWrap.className = 'tight wideRack';
-			} else {
-				DOM.ribbonWrap.className = 'tight narrowRack';
-			}
+		// tileName and bars
+		var o = {
+			food: 0,
+			culture: 0,
+			production: 0,
+			defense: 0
+		};
+		if (t.player){
+			o.food = ~~(((t.food > 8 ? 8 : t.food) / 8) * 99);
+			o.production = ~~(((t.production > 8 ? 8 : t.production) / 8) * 99);
+			o.culture = ~~(((t.culture > 8 ? 8 : t.culture) / 8) * 99);
+			o.defense = ~~((t.defense / 4) * 99);
 		}
-		DOM.ribbonWrap.innerHTML = game.player[t.player].ribbons === undefined ? 
-			'' : game.player[t.player].ribbons;
-		*/
-	}
-	// tileName and bars
-	var o = {
-		food: 0,
-		culture: 0,
-		production: 0,
-		defense: 0
-	};
-	if (t.player){
-		o.food = ~~(((t.food > 8 ? 8 : t.food) / 8) * 99);
-		o.production = ~~(((t.production > 8 ? 8 : t.production) / 8) * 99);
-		o.culture = ~~(((t.culture > 8 ? 8 : t.culture) / 8) * 99);
-		o.defense = ~~((t.defense / 4) * 99);
-	}
-	if (!isMobile){
+		var resources = 
+		t.food + '<i class="fa fa-apple food"></i> '+
+		t.production + '<i class="fa fa-gavel production "></i> '+
+		(t.culture ? t.culture + '<i class="fa fa-flag culture"></i> ' : '')+
+		(t.defense ? t.defense + '<i class="fa fa-fort-awesome manpower"></i>' : '');
 		DOM.targetCapStar.style.display = t.capital ? 'inline' : 'none';
-		DOM.targetNameWrap.textContent = name;
+		DOM.targetNameWrap.innerHTML = name;
+		DOM.targetResources.innerHTML = resources;
 		DOM.targetFlag.src = 'images/flags/' + flag;
 	}
 	

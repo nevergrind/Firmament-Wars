@@ -53,7 +53,7 @@ var lobby = {
 			str = '<div id="lobbyGovName" class="text-primary">Fundamentalism</div>\
 				<div id="lobbyGovPerks">\
 					<div>Overrun ability: Instant win with 4x advantage</div>\
-					<div>Infiltration: -5 structure defense</div>\
+					<div>Infiltration: -3 structure defense</div>\
 					<div>Faster growth: Reduced growth milestone requirement</div>\
 					<div>+2 troop reward bonus</div>\
 				</div>';
@@ -77,8 +77,8 @@ var lobby = {
 			str = '<div id="lobbyGovName" class="text-primary">Communism</div>\
 				<div id="lobbyGovPerks">\
 					<div>2x discovered reward bonus from barbarians</div>\
-					<div>1/2 cost research</div>\
-					<div>1/2 cost weapons</div>\
+					<div>Can deploy troops to uninhabited territory</div>\
+					<div>1/4 cost weapons</div>\
 					<div>Start with a great person</div>\
 				</div>';
 		}
@@ -247,7 +247,106 @@ var lobby = {
 							</button>\
 						</div>';
 					}
-					str += '</div></div>';
+					str += '</div>\
+					</div>';
+			}
+			// 2-8 possible CPU slots
+			// added lobbyRowCPU, lobbyFlagCPU
+			/*
+			for (var i=2; i<=8; i++){
+				str += 
+				'<div id="lobbyRowCPU' +i+ '" class="row lobbyRow">\
+					<div class="col-xs-2">\
+						<img id="lobbyFlagCPU' +i+ '" class="lobbyFlags block center" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">\
+					</div>\
+					<div class="col-xs-6 lobbyDetails">\
+						<div class="lobbyAccounts">';
+							if (g.teamMode){
+								// yes, the span is necessary to group the dropdown
+								str += '<span><div id="lobbyTeam'+ i +'" data-placement="right" class="lobbyTeams dropdown-toggle';
+								if (i === my.player){
+									str += ' pointer2';
+								}
+								str += '" data-toggle="dropdown">';
+								if (i === my.player){
+									str += '<i class="fa fa-flag pointer2 lobbyTeamFlag"></i> <span id="lobbyTeamNumber'+ i +'" class="lobbyTeamNumbers">' + i +'</span>';
+								} else {
+									str += '<i class="fa fa-flag lobbyTeamFlag"></i> <span id="lobbyTeamNumber'+ i +'" class="lobbyTeamNumbers">' + i +'</span>';
+								}
+								str += '</div>';
+								if (i === my.player){
+									str += 
+									'<ul id="teamDropdown" class="dropdown-menu">\
+										<li class="header text-center selectTeamHeader">Team</li>';
+										for (var j=1; j<=8; j++){
+											str += '<li class="teamChoice">Team '+ j +'</li>';
+										}
+									str += '</ul></span>';
+								}
+							}
+							str += '<span><i id="lobbyPlayerColor'+ i +'" class="fa fa-square player'+ i +' lobbyPlayer dropdown-toggle';
+							if (i === my.player){
+								str += ' pointer2';
+							}
+							str += '" data-placement="right" data-toggle="dropdown"></i>';
+							if (i === my.player){
+								str += 
+								'<ul id="teamColorDropdown" class="dropdown-menu">\
+									<li class="header text-center selectTeamHeader">Player Color</li>';
+								for (var j=1; j<=20; j++){
+									str += '<i class="fa fa-square player'+ j +' playerColorChoice" data-playercolor="'+ j +'"></i>';
+								}
+								str += '</ul></span>';
+							}
+							str += '<span id="lobbyAccountName'+ i +'" class="lobbyAccountName chat-warning"></span>\
+						</div>\
+						<div id="lobbyName' +i+ '" class="lobbyNames nowrap"></div>\
+					</div>\
+					<div class="col-xs-4">';
+					if (i === x.player){
+						// me
+						str += 
+						'<div class="dropdown govDropdown">\
+							<button class="btn btn-primary btn-responsive dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">\
+								<span id="lobbyGovernment' +i+ '">Despotism</span>\
+								<i class="fa fa-caret-down text-warning lobbyCaret"></i>\
+							</button>\
+							<ul id="governmentDropdown" class="dropdown-menu">\
+								<li class="governmentChoice"><a href="#">Despotism</a></li>\
+								<li class="governmentChoice"><a href="#">Monarchy</a></li>\
+								<li class="governmentChoice"><a href="#">Democracy</a></li>\
+								<li class="governmentChoice"><a href="#">Fundamentalism</a></li>\
+								<li class="governmentChoice"><a href="#">Fascism</a></li>\
+								<li class="governmentChoice"><a href="#">Republic</a></li>\
+								<li class="governmentChoice"><a href="#">Communism</a></li>\
+							</ul>\
+						</div>';
+					} else {
+						// not me
+						str += 
+						'<div class="dropdown govDropdown">\
+							<button style="cursor: default" class="btn btn-primary btn-responsive dropdown-toggle shadow4 fwDropdownButton fwDropdownButtonEnemy" type="button">\
+								<span id="lobbyGovernment' +i+ '" class="pull-left">Despotism</span>\
+								<i class="fa fa-caret-down text-disabled lobbyCaret"></i>\
+							</button>\
+						</div>';
+					}
+					str += '</div>\
+					</div>';
+			}
+			*/
+			if (my.player === 1 && !g.rankedMode){
+				str += 
+				'<div class="row buffer2">\
+					<div class="col-xs-12">\
+						<button id="cpu-remove-player" type="button" class="btn fwBlue btn-responsive shadow4 pull-right cpu-button">\
+							<i class="fa fa-minus-circle"></i> Remove CPU\
+						</button>\
+						<button id="cpu-add-player" type="button" class="btn fwBlue btn-responsive shadow4 pull-right cpu-button">\
+							<i class="fa fa-plus-circle"></i> Add CPU\
+						</button>\
+					</div>\
+				</div>';
 			}
 			str += '</div>';
 			document.getElementById("lobbyPlayers").innerHTML = str;
@@ -308,9 +407,20 @@ var lobby = {
 			// load lobby
 			(function repeat(){
 				if (g.view === "lobby"){
+					var pingCpu = 0;
+					if (my.player === 1){
+						lobby.data.forEach(function(d){
+							if (d.cpu){
+								pingCpu = 1;
+							}
+						});
+					}
+					//console.info('pingCpu ', pingCpu);
 					$.ajax({
-						type: "GET",
-						url: "php/updateLobby.php"
+						url: "php/updateLobby.php",
+						data: {
+							pingCpu: pingCpu
+						}
 					}).done(function(x){
 						if (g.view === "lobby"){
 							// reality check of presence data every 5 seconds
@@ -371,7 +481,7 @@ var lobby = {
 			//console.info("ADD PLAYER: ", data);
 			document.getElementById("lobbyRow" + i).style.display = 'block';
 			// different player account
-			document.getElementById("lobbyAccountName" + i).innerHTML = data.account;
+			document.getElementById("lobbyAccountName" + i).innerHTML = data.cpu ? 'Computer' : data.account;
 			document.getElementById("lobbyName" + i).innerHTML = data.nation;
 			var flag = data.flag === 'Default.jpg' ? 
 				'Player'+ i +'.jpg' : 
@@ -403,11 +513,12 @@ var lobby = {
 			lobby.updateGovernment(data);
 			lobby.data[i] = data;
 			lobby.updatePlayerColor(data);
+			document.getElementById('lobbyGovernment'+ i).innerHTML = data.cpu ? 'Computer' : 'Despotism';
 		} else {
 			// remove
-			console.info("REMOVE PLAYER: ", data);
+			//console.info("REMOVE PLAYER: ", data);
 			document.getElementById("lobbyRow" + i).style.display = 'none';
-			lobby.data[i] = { account: '' };
+			lobby.data[i] = { account: '', cpu: 0 };
 		}
 		lobby.styleStartGame();
 	},
@@ -498,21 +609,6 @@ var lobby = {
 		};
 		return icon[government];
 	},
-	/*
-	initRibbons: function(data){
-		for (var key in data){
-			var str = '',
-				arr = [];
-			for (var i=0, len=data[key].length; i<len; i++){
-				var ribbonNum = data[key][i];
-				str += '<div class="ribbon ribbon'+ ribbonNum +'" title="'+ game.ribbonTitle[ribbonNum] +'"></div>';
-				arr.push(ribbonNum);
-			}
-			game.player[key].ribbons = str;
-			game.player[key].ribbonArray = arr;
-		}
-	},
-	*/
 	startGame: function(){
 		if (lobby.totalPlayers() >= 2 && my.player === 1){
 			startGame.style.display = "none";
@@ -762,6 +858,7 @@ function loadGameState(){
 				return;
 			}
 			initDom();
+			g.adj = data.adj;
 			$("meta").remove();
 			g.screen.resizeMap();
 			
@@ -803,18 +900,11 @@ function loadGameState(){
 				my.deployCost = 5;
 				document.getElementById('deployCost').textContent = my.deployCost;
 			} else if (my.government === 'Communism'){
-				// research
-				DOM.constructionCost.textContent = 20;
-				DOM.gunpowderCost.textContent = 30;
-				DOM.engineeringCost.textContent = 40;
-				DOM.rocketryCost.textContent = 100;
-				DOM.atomicTheoryCost.textContent = 250;
-				DOM.futureTechCost.textContent = 400;
 				// weapons
-				DOM.cannonsCost.textContent = 12;
-				DOM.missileCost.textContent = 25;
-				DOM.nukeCost.textContent = 75;
-				my.weaponCost = .5;
+				DOM.cannonsCost.textContent = 18;
+				DOM.missileCost.textContent = 38;
+				DOM.nukeCost.textContent = 113;
+				my.weaponCost = .75;
 			}
 			// initialize player data
 			game.initialized = true;
