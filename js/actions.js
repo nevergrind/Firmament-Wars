@@ -173,10 +173,11 @@ var action = {
 			$.ajax({
 				url: 'php/deploy.php',
 				data: {
-					target: my.tgt
+					target: my.tgt,
+					tile: tile // cpu player
 				}
 			}).done(function(data) {
-				console.info(data);
+				//console.info(data);
 				audio.deploy();
 				game.tiles[tgt].units = data.units;
 				my.manpower = data.manpower;
@@ -214,7 +215,6 @@ var action = {
 			}).fail(function(e){
 				audio.play('error');
 			}).always(function(data){
-				
 				// my.manpower = data.manpower;
 				setResources(data);
 			});

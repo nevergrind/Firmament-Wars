@@ -487,7 +487,7 @@ var events = {
 			//console.info("Removing player");
 			audio.play('click');
 			$.ajax({
-				url: 'php/cpu-add-player.php'
+				url: 'php/cpu-remove-player.php' 
 			});
 		});
 	})(),
@@ -615,7 +615,7 @@ $(document).on('keydown', function(e){
 	}
 }).on('keyup', function(e) {
 	var x = e.keyCode;
-	console.info(x);
+	//console.info(x);
 	if (g.view === 'title'){
 		if (x === 13){
 			if (g.focusUpdateNationName){

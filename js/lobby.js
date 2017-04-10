@@ -398,7 +398,7 @@ var lobby = {
 		});
 		if (!d){
 			// load game
-			console.info(localStorage.getItem('reload'));
+			//console.info(localStorage.getItem('reload'));
 			if (localStorage.getItem('reload') !== false){
 				localStorage.setItem('reload', true);
 				loadGameState(); // page refresh
@@ -833,6 +833,7 @@ function loadGameState(){
 			type: "GET",
 			url: "php/loadGameState.php"
 		}).done(function(data){
+			g.resourceTick = data.resourceTick;
 			g.startGame = data.startGame * 1;
 			g.teamMode = data.teamMode;
 			// set map data

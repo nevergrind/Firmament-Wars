@@ -1096,7 +1096,8 @@
 				'audio',
 				'map',
 				'actions',
-				'events'
+				'events',
+				'ai'
 			]
 		}
 		for(var i=0, len=scripts.length; i<len; i++){
