@@ -99,7 +99,7 @@ var stats = {
 					<div id="statVerse" class="text-right">'+ stats.data.verse +'</div>\
 				</div>\
 				<div id="statDuration" class="col-xs-4 stagBlue text-center">\
-					<div id="gameDuration">Game Duration '+ stats.gameDuration(data.gameDuration) +'</div>\
+					<div id="gameDuration">Game Duration '+ stats.gameDuration(g.gameDuration) +'</div>\
 					<button id="statsEndGame" class="btn btn-responsive fwBlue shadow4">End Game</button>\
 				</div>\
 			</div>\
@@ -570,7 +570,8 @@ var stats = {
 					if (g.teamMode){
 						str += '<span class="diploTeam">'+ game.player[i].team +'</span>';
 					}
-					str += p.account +
+					var account = p.cpu === 1 ? "Computer" : p.account;
+					str += account +
 				'</div>\
 				<div class="statsNation nowrap">'+ p.nation +'</div>\
 			</div>\

@@ -179,26 +179,16 @@ var lobby = {
 						<div class="lobbyAccounts">';
 							if (g.teamMode){
 								// yes, the span is necessary to group the dropdown
-								str += '<span><div id="lobbyTeam'+ i +'" data-placement="right" class="lobbyTeams dropdown-toggle';
-								if (i === my.player){
-									str += ' pointer2';
-								}
-								str += '" data-toggle="dropdown">';
-								if (i === my.player){
-									str += '<i class="fa fa-flag pointer2 lobbyTeamFlag"></i> <span id="lobbyTeamNumber'+ i +'" class="lobbyTeamNumbers">' + i +'</span>';
-								} else {
-									str += '<i class="fa fa-flag lobbyTeamFlag"></i> <span id="lobbyTeamNumber'+ i +'" class="lobbyTeamNumbers">' + i +'</span>';
-								}
-								str += '</div>';
-								if (i === my.player){
-									str += 
-									'<ul id="teamDropdown" class="dropdown-menu">\
-										<li class="header text-center selectTeamHeader">Team</li>';
-										for (var j=1; j<=8; j++){
-											str += '<li class="teamChoice">Team '+ j +'</li>';
-										}
-									str += '</ul></span>';
-								}
+								str += '<span><div id="lobbyTeam'+ i +'" data-placement="right" class="lobbyTeams dropdown-toggle pointer2" data-toggle="dropdown">';
+								
+								str += '<i class="fa fa-flag pointer2 lobbyTeamFlag"></i> <span id="lobbyTeamNumber'+ i +'" class="lobbyTeamNumbers">' + i +'</span></div>';
+								str += 
+								'<ul id="teamDropdown" class="dropdown-menu">\
+									<li class="header text-center selectTeamHeader">Team</li>';
+									for (var j=1; j<=8; j++){
+										str += '<li class="teamChoice" data-player="'+ i +'">Team '+ j +'</li>';
+									}
+								str += '</ul></span>';
 							}
 							str += '<span><i id="lobbyPlayerColor'+ i +'" class="fa fa-square player'+ i +' lobbyPlayer dropdown-toggle';
 							if (i === my.player){
@@ -587,7 +577,8 @@ var lobby = {
 						alpha: 0,
 						ease: Linear.easeNone,
 						onComplete: function(){
-							loadGameState();
+							loadGameState(); // countdown down
+							sessionStorage.setItem('gameDuration', Date.now());
 						}
 					});
 					audio.fade();
@@ -846,7 +837,7 @@ function loadGameState(){
 				if (g.loadAttempts < 20){
 					setTimeout(function(){
 						g.loadAttempts++;
-						loadGameState();
+						loadGameState(); // try again
 					}, 500);
 				} else {
 					Msg("Failed to load game data");
@@ -859,7 +850,6 @@ function loadGameState(){
 				return;
 			}
 			initDom();
-			g.adj = data.adj;
 			$("meta").remove();
 			g.screen.resizeMap();
 			
@@ -952,7 +942,8 @@ function loadGameState(){
 					food: d.food,
 					production: d.production,
 					culture: d.culture,
-					defense: d.defense
+					defense: d.defense,
+					adj: data.adj[i]
 				}
 				// init flag unit values
 				var zig = document.getElementById('unit' + i);
@@ -1046,6 +1037,9 @@ function loadGameState(){
 			var str = '';
 			// init diplomacyPlayers
 			function diploRow(p){
+				var account = p.cpu ? "Computer" : p.account,
+					icon = p.cpu ? 'fa fa-microchip' : lobby.governmentIcon(p.government),
+					gov = p.cpu ? 'Computer' : p.government;
 				function teamIcon(team){
 					return g.teamMode ? 
 						'<span class="diploTeam" data-placement="right" title="Team '+ team +'">'+ team +'</span>' :
@@ -1055,17 +1049,17 @@ function loadGameState(){
 					// bg
 					'<div>'+
 					// row 1
-					'<div class="flag '+ p.flagClass +'" data-placement="right" title="'+ p.flagShort + '"></div>'+ p.account + '</div>'+
+					'<div class="flag '+ p.flagClass +'" data-placement="right" title="'+ p.flagShort + '"></div>'+ account + '</div>'+
 					// row 2
 					'<div>'+ 
 					teamIcon(p.team) +
-					'<i class="' + lobby.governmentIcon(p.government)+ ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right" title="' + p.government + '"></i>'+
+					'<i class="' + icon + ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right" title="' + gov + '"></i>'+
 					p.nation +
 					'</div>\
 				</div>';
 				return str;
 			}
-			var teamArr = [ str ];
+			var teamArr = [str];
 			for (var i=0, len=game.player.length; i<len; i++){
 				var p = game.player[i];
 				if (p.account){

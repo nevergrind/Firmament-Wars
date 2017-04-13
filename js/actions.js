@@ -58,7 +58,7 @@ var action = {
 		if (my.tgt === defender){
 			return;
 		}
-		if (g.adj[attacker].indexOf(defender) === -1){
+		if (game.tiles[attacker].adj.indexOf(defender) === -1){
 			action.targetNotAdjacent('You can only attack adjacent territories.', attacker);
 			return;
 		}
@@ -173,8 +173,7 @@ var action = {
 			$.ajax({
 				url: 'php/deploy.php',
 				data: {
-					target: my.tgt,
-					tile: tile // cpu player
+					target: tgt
 				}
 			}).done(function(data) {
 				//console.info(data);

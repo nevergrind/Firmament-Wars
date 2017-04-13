@@ -9,6 +9,7 @@ if (location.host !== 'localhost'){
 };
 TweenMax.defaultEase = Quad.easeOut;
 var g = {
+	gameDuration: 0,
 	spectateStatus: 0,
 	modalSpeed: isMobile ? 0 : .5,
 	friends: [],
@@ -612,11 +613,8 @@ var game = {
 					}
 					setTileUnits(i, unitColor);
 				}
-				if (updateTargetStatus){
-					// update this tile within loop cycle?
-					ui.showTarget(DOM['land' + i]);
-					//game.updateTopTile(i);
-				}
+				
+				updateTargetStatus && ui.showTarget(DOM['land' + i]); 
 			}
 		}).fail(function(data){
 			console.info(data.responseText);
@@ -680,11 +678,7 @@ var game = {
 			});
 		}
 		
-		if (my.tgt === i){
-			// update this tile within loop cycle?
-			ui.showTarget(DOM['land' + i]);
-			//game.updateTopTile(i);
-		}
+		my.tgt === i && ui.showTarget(DOM['land' + i]);
 	},
 	setSumValues: function(){
 		var o = {
@@ -723,7 +717,7 @@ var game = {
 	},
 	
 	triggerNextTurn: function(data){ 
-		console.info("TRIGGERING NEXT TURN!", data);
+		//console.info("TRIGGERING NEXT TURN!", data);
 		clearInterval(game.energyTimer);
 		game.energyTimer = setInterval(game.updateResources, g.speed * 1000);
 		game.updateResources();
@@ -734,11 +728,24 @@ var game = {
 			var firstPlayer = 0,
 				pingCpu = 0;
 			game.player.forEach(function(d){
-				if (d.cpu){
-					if (d.alive){
-						setTimeout(function(){
-							ai.deploy(d); 
-						}, 0);
+				if (d.cpu && d.alive) {
+					var food = ai.getFoodTotal(d.player);
+					// deploy
+					if (g.resourceTick % 2 === 0){
+						ai.deploy(d, food);
+					}
+					var turns = ~~(food / 40);
+					for (var i=0; i<turns; i++){
+						ai.deploy(d, food);
+					}
+					// attack
+					var turns = Math.ceil(food / 16) + 1;
+					for (var i=0; i<turns; i++){
+						(function(delay, d){
+							setTimeout(function(){
+								ai.attack(d); 
+							}, ~~(Math.random() * 250 + (delay * 500) + 250));
+						})(i, d);
 					}
 				} else if (d.cpu === 0){
 					// 0 means player, null means empty

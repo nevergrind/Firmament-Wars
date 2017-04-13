@@ -533,7 +533,7 @@ var title = {
 					animate.upgrade(data.tile, 'troops', data.rewardUnits);
 				}
 			} else if (data.type === 'updateTile'){
-				// attacker tile update
+				// attacker tile update 
 				game.updateTile(data);
 				game.setSumValues();
 				if (data.rewardUnits){

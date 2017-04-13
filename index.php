@@ -33,10 +33,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head id='head'>
-	<title>Firmament Wars | Free Multiplayer Risk-Like Strategy | Browser Game</title>
+	<title>Firmament Wars | Free Multiplayer Grand Strategy | Risk Browser Game</title>
 	<meta charset="utf-8">
 	<meta name="keywords" content="free, risk, browser, multiplayer, online, strategy, html5">
-	<meta name="description" content="Firmament Wars is a free online strategy game, inspired by Risk and Civilization, playable in your web browser!">
+	<meta name="description" content="Firmament Wars is a Risk-inspired free online strategy game playable in your web browser!">
 	<meta name="author" content="Joe Leonard">
 	<meta name="referrer" content="always">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -48,9 +48,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-93">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-99">
 	<script>
-		version = '1-0-93';
+		version = '1-0-99';
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -309,7 +309,7 @@
 					}
 				}
 				/* count playing game */
-				$result = mysqli_query($link, 'select count(row) count from `fwplayers` where timestamp > date_sub(now(), interval 20 second)');
+				$result = mysqli_query($link, 'select count(row) count from `fwplayers` where cpu=0 and timestamp > date_sub(now(), interval 20 second)');
 				// Associative array
 				if ($result->num_rows){
 					while ($row = mysqli_fetch_assoc($result)){

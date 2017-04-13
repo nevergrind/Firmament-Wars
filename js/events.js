@@ -464,17 +464,17 @@ var events = {
 				Msg(data.statusText, 1.5);
 			});
 		}).on(ui.click, '.teamChoice', function(e){
-			var team = $(this).text().slice(5);
-			console.info("TEAM: ", team);
+			var team = $(this).text().slice(5),
+				player = $(this).data('player');
+			console.info("TEAM: ", team, player);
 			$.ajax({
 				url: 'php/changeTeam.php',
 				data: {
-					team: team
+					team: team,
+					player: player
 				}
 			}).done(function(data) {
 				my.team = data.team;
-			}).fail(function(data){
-				Msg(data.statusText, 1.5);
 			});
 			
 		}).on(ui.click, '#cpu-add-player', function(e){
