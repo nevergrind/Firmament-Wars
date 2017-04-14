@@ -48,9 +48,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-99">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-101">
 	<script>
-		version = '1-0-99';
+		version = '1-0-101';
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>

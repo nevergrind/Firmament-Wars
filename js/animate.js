@@ -48,7 +48,7 @@ var animate = {
 		food: {
 			audio: '',
 			text: '\uf179',
-			color: '#8d0'
+			color: '#b5ff00'
 		},
 		production: {
 			audio: '',
@@ -168,7 +168,7 @@ var animate = {
 				svg.setAttributeNS(null,"y1",y);
 				svg.setAttributeNS(null,"x2",x + foodWidth);
 				svg.setAttributeNS(null,"y2",y);
-				svg.setAttributeNS(null,"stroke","#88dd00");
+				svg.setAttributeNS(null,"stroke","#b5ff00");
 				svg.setAttributeNS(null,"stroke-width",widthPerTick);
 				svg.setAttributeNS(null,"opacity",1);
 				svg.setAttributeNS(null,"class","mapBars mapBars" + i);
@@ -186,7 +186,7 @@ var animate = {
 				svg.setAttributeNS(null,"y1",y);
 				svg.setAttributeNS(null,"x2",x + productionWidth);
 				svg.setAttributeNS(null,"y2",y);
-				svg.setAttributeNS(null,"stroke","#ffa500");
+				svg.setAttributeNS(null,"stroke","#55cfff");
 				svg.setAttributeNS(null,"stroke-width",widthPerTick);
 				svg.setAttributeNS(null,"opacity",1);
 				svg.setAttributeNS(null,"class","mapBars mapBars2x mapBars" + i);

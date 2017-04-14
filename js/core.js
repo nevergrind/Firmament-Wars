@@ -420,9 +420,9 @@ var game = {
 		'Played 200 games and maintained a disconnect rate below 5%',
 	],
 	toggleGameWindows: function(){
-		var x = $("#targetWrap").css('visibility') === 'visible';
+		var x = $("#targetWrap").css('display') === 'block';
 		TweenMax.set(DOM.gameWindows, {
-			visibility: x ? 'hidden' : 'visible'
+			display: x ? 'none' : 'block'
 		});
 		TweenMax.to('#hotkey-ui', 5, {
 			startAt: {
@@ -475,7 +475,8 @@ var game = {
 		game.player[i].alive = false;
 		// count alive players remaining
 		game.player.forEach(function(e){
-			if (e.alive && e.account){ 
+			if (e.alive && e.account && !e.cpu){ 
+				// only counts human players
 				count++;
 				if (teams.indexOf(e.team) === -1){
 					teams.push(e.team);
@@ -498,7 +499,7 @@ var game = {
 		// game over - insurance check to avoid multiples somehow happening
 		if (!g.over){
 			// it's not over... check with server
-			console.info('ELIMINATED: ', count, teams.length);
+			// console.info('ELIMINATED: ', count, teams.length);
 			if (i === my.player){
 				gameDefeat();
 			} else {
@@ -728,24 +729,22 @@ var game = {
 			var firstPlayer = 0,
 				pingCpu = 0;
 			game.player.forEach(function(d){
-				if (d.cpu && d.alive) {
-					var food = ai.getFoodTotal(d.player);
-					// deploy
-					if (g.resourceTick % 2 === 0){
-						ai.deploy(d, food);
-					}
-					var turns = ~~(food / 40);
-					for (var i=0; i<turns; i++){
-						ai.deploy(d, food);
-					}
-					// attack
-					var turns = Math.ceil(food / 16) + 1;
-					for (var i=0; i<turns; i++){
-						(function(delay, d){
-							setTimeout(function(){
-								ai.attack(d); 
-							}, ~~(Math.random() * 250 + (delay * 500) + 250));
-						})(i, d);
+				if (d.cpu) {
+					if (d.alive){
+						var food = ai.getFoodTotal(d.player);
+						// deploy
+						var mod = 5 - ~~(food / 20);
+						mod = mod < 1 ? 1 : mod;
+						g.resourceTick % mod === 0 && ai.deploy(d, food);
+						// attack
+						var turns = Math.ceil(food / 20) + 1;
+						for (var i=0; i<turns; i++){
+							(function(delay, d){
+								setTimeout(function(){
+									ai.attack(d); 
+								}, ((delay * 500) + 250) );
+							})(i, d);
+						}
 					}
 				} else if (d.cpu === 0){
 					// 0 means player, null means empty

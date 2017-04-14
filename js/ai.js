@@ -1,24 +1,17 @@
 var ai = {
+	structureDefense: [0, 5, 15, 30],
 	scoreTargetAttack: function(o){
 		if (o.attackerUnits < 4){
 			return 0;
 		} 
-		var score = 50;
-		// score units
-		if (o.unitDiff > 25){
-			score += 20;
-		} else if (o.unitDiff > 10){
-			score += 10;
-		} else if (o.unitDiff > 5){
-			score += 5;
-		} else if (o.unitDiff < 0){
-			score -= 20;
-		}
+		var score = 50 + o.unitDiff;
 		// score player
 		if (!g.teamMode){
 			if (o.defender === 0){
+				// barb/empty
 				score += 10;
 			} else if (o.attacker !== o.defender){
+				// another player
 				score += 5;
 			} else {
 				score -= 10;
@@ -40,13 +33,8 @@ var ai = {
 			}
 		}
 		// defense
-		if (!o.defense){
-			score += 25;
-		} else if (o.defense === 1){
-			score += 15;
-		} else if (o.defense === 2){
-			score += 5;
-		}
+		score -= ai.structureDefense[o.defense];
+		score -= o.capital ? 10 : 0;
 		// food
 		score += ~~((o.food * 2) + (o.production * 2) + o.culture + Math.random()*10 - 5);
 		return score;
@@ -70,7 +58,8 @@ var ai = {
 						defense: z.defense,
 						food: z.food,
 						production: z.production,
-						culture: z.culture
+						culture: z.culture,
+						capital: z.capital
 					};
 					var score = ai.scoreTargetAttack(o);
 					if (score > maxScore){

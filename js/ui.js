@@ -300,9 +300,9 @@ function updateTileInfo(tileId){
 		defBonus = [5, 15, 30],
 		ind = t.defense - (t.capital ? 1 : 0);
 		var defTooltip = [
-			'',
-			' Walls reduce cannon damage by 50%.',
-			' Fortresses reduce cannon damage by 75% and missile damage by 50%.'
+			'reduce weapon damage by 1',
+			'reduce weapon damage by 3',
+			'reduce weapon damage by 6'
 		];
 	if (ind > 2){
 		DOM.upgradeTileDefense.style.display = 'none';
@@ -314,7 +314,7 @@ function updateTileInfo(tileId){
 			defWord[2] = 'Fortresse';
 		}
 		if (!isMobile){
-			var tooltip = defWord[ind] + 's boost tile defense +'+ defBonus[ind] +'.' + defTooltip[ind];
+			var tooltip = defWord[ind] + 's boost tile defense +'+ defBonus[ind] +' and ' + defTooltip[ind];
 			$('#upgradeTileDefense')
 				.attr('title', tooltip)
 				.tooltip('fixTitle')

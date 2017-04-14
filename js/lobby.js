@@ -601,21 +601,25 @@ var lobby = {
 		return icon[government];
 	},
 	startGame: function(){
-		if (lobby.totalPlayers() >= 2 && my.player === 1){
-			startGame.style.display = "none";
-			cancelGame.style.display = 'none';
-			g.lock(1);
-			audio.play('click');
-			$.ajax({
-				type: "GET",
-				url: "php/startGame.php"
-			}).fail(function(data){
-				Msg(data.statusText);
-				startGame.style.display = "block";
-				cancelGame.style.display = 'block';
-			}).always(function(){
-				g.unlock();
-			});
+		if (my.player === 1){
+			if (lobby.totalPlayers() >= 2){
+				startGame.style.display = "none";
+				cancelGame.style.display = 'none';
+				g.lock(1);
+				audio.play('click');
+				$.ajax({
+					type: "GET",
+					url: "php/startGame.php"
+				}).fail(function(data){
+					Msg(data.statusText);
+					startGame.style.display = "block";
+					cancelGame.style.display = 'block';
+				}).always(function(){
+					g.unlock();
+				});
+			} else {
+				Msg("You need two players to start a game! Wait for players to join or add a computer player to begin.");
+			}
 		}
 	}
 };

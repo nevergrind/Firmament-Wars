@@ -607,6 +607,7 @@ $(document).on('keydown', function(e){
 				}
 				e.preventDefault();
 			} else if (x === 86){
+				// v
 				if (g.view === 'game' && !g.chatOn){
 					game.toggleGameWindows(1);
 				}
@@ -641,6 +642,7 @@ $(document).on('keydown', function(e){
 				lobby.sendMsg();
 			}
 		}
+	// game hotkeys
 	} else if (g.view === 'game'){
 		if (g.chatOn){
 			if (x === 13){
@@ -651,7 +653,6 @@ $(document).on('keydown', function(e){
 				toggleChatMode();
 			}
 		} else {
-			// game hotkeys
 			if (x === 13){
 				// enter
 				toggleChatMode();

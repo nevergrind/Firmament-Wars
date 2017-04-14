@@ -29,10 +29,6 @@ var action = {
 			ui.showTarget(DOM['land' + my.tgt]);
 			return;
 		}
-		if (my.moves < o.cost){
-			action.error('Not enough energy!');
-			return;
-		}
 		if (game.tiles[my.tgt].units < o.minimum){
 			Msg("You need at least " + o.minimum + " troops to attack!", 1.5);
 			my.clearHud();
@@ -78,13 +74,24 @@ var action = {
 			my.clearHud();
 			return;
 		}
-		if ((my.moves < 2 && !my.splitAttack) ||
-			(my.moves < 1 && my.splitAttack) ){
-			action.error('Not enough energy!');
-			return;
+		if (my.government === 'Despotism' && game.tiles[defender].player === my.player){
+			// nothing
+		} else {
+			if ((my.moves < 2 && !my.splitAttack) ||
+				(my.moves < 1 && my.splitAttack) ){
+				action.error('Not enough energy!');
+				return;
+			}
 		}
 		ui.showTarget(that);
 		my.clearHud();
+		if (g.teamMode && game.tiles[defender].player){
+			if (my.account !== game.tiles[defender].account){
+				if (my.team === game.player[game.tiles[defender].player].team){
+					Msg("Friendly fire! That's your teammate!");
+				}
+			}
+		}
 		// send attack to server
 		$.ajax({
 			url: 'php/attackTile.php',
