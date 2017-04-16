@@ -45,7 +45,6 @@ var title = {
 				my.account = data.account;
 				my.flag = data.flag;
 				my.rating = data.rating;
-				title.updatePlayers();
 				g.checkPlayerData();
 			});
 			// initial refresh of games
@@ -97,76 +96,76 @@ var title = {
 						}
 					}).done(function(data){
 						// set title players
-						if (data.playerData !== undefined){
-							var p = data.playerData,
-								foundPlayers = [];
-							for (var i=0, len=p.length; i<len; i++){
-								// add new players
-								var account = p[i].account,
-									flag = p[i].flag,
-									rating = p[i].rating;
-								if (title.players[account] === undefined){
-									//console.info("ADDING PLAYER: ", p[i]);
-									title.addPlayer(account, flag, rating);
-								} else if (title.players[account].flag !== flag){
-									// replace player flag
-									var flagElement = document.getElementById("titlePlayerFlag_" + account);
-									if (flagElement !== null){
-										var flagClass = flag.split(".");
-										flagElement.className = 'flag ' + flagClass[0].replace(/ /g, "-");
-									}
-								}
-								foundPlayers.push(account);
-							}
-							// remove missing players
-							for (var key in title.players){
-								if (foundPlayers.indexOf(key) === -1){
-									var x = {
-										account: key
-									}
-									// console.info("REMOVING PLAYER: " + x.account);
-									title.removePlayer(x);
-								}
-							}
-						}
 						if (g.view === 'title'){
-							document.getElementById('titleChatHeaderCount').textContent = '('+ len +')';
-						}
-						// game data sanity check
-						var serverGames = [];
-						if (data.gameData !== undefined){
-							var p = data.gameData;
-							for (var i=0, len=p.length; i<len; i++){
-								serverGames[p[i].id] = {
-									players: p[i].players * 1,
-									max: p[i].max * 1
-								}
-							}
-						}
-						// remove games if they're not found in server games
-						title.games.forEach(function(e, ind){
-							// console.info(serverGames[ind]);
-							if (serverGames[ind] === undefined){
-								// game timed out, not found
-								var o = {
-									id: ind
-								}
-								console.info("REMOVING: ", o);
-								title.removeGame(o);
-							} else {
-								// found game
-								if (serverGames[ind].players !== title.games[ind]){
-									// player count does not match... fixing
-									// console.info("PLAYER COUNT WRONG!");
-									var o = {
-										id: ind,
-										players: serverGames[ind].players,
-										max: serverGames[ind].max
+							if (data.playerData !== undefined){
+								var p = data.playerData,
+									foundPlayers = [];
+								for (var i=0, len=p.length; i<len; i++){
+									// add new players
+									var account = p[i].account,
+										flag = p[i].flag,
+										rating = p[i].rating;
+									if (title.players[account] === undefined){
+										//console.info("ADDING PLAYER: ", p[i]);
+										title.addPlayer(account, flag, rating);
+									} else if (title.players[account].flag !== flag){
+										// replace player flag
+										var flagElement = document.getElementById("titlePlayerFlag_" + account);
+										if (flagElement !== null){
+											var flagClass = flag.split(".");
+											flagElement.className = 'flag ' + flagClass[0].replace(/ /g, "-");
+										}
 									}
-									title.setToGame(o);
+									foundPlayers.push(account);
+								}
+								// remove missing players
+								for (var key in title.players){
+									if (foundPlayers.indexOf(key) === -1){
+										var x = {
+											account: key
+										}
+										// console.info("REMOVING PLAYER: " + x.account);
+										title.removePlayer(x);
+									}
 								}
 							}
-						});
+							document.getElementById('titleChatHeaderCount').textContent = '('+ len +')';
+							// game data sanity check
+							var serverGames = [];
+							if (data.gameData !== undefined){
+								var p = data.gameData;
+								for (var i=0, len=p.length; i<len; i++){
+									serverGames[p[i].id] = {
+										players: p[i].players * 1,
+										max: p[i].max * 1
+									}
+								}
+							}
+							// remove games if they're not found in server games
+							title.games.forEach(function(e, ind){
+								// console.info(serverGames[ind]);
+								if (serverGames[ind] === undefined){
+									// game timed out, not found
+									var o = {
+										id: ind
+									}
+									console.info("REMOVING: ", o);
+									title.removeGame(o);
+								} else {
+									// found game
+									if (serverGames[ind].players !== title.games[ind]){
+										// player count does not match... fixing
+										// console.info("PLAYER COUNT WRONG!");
+										var o = {
+											id: ind,
+											players: serverGames[ind].players,
+											max: serverGames[ind].max
+										}
+										title.setToGame(o);
+									}
+								}
+							});
+						}
 					}).always(function(){
 						if (!once){
 							setTimeout(repeat, 5000);

@@ -284,6 +284,9 @@ var events = {
 		$("#leaderboard-quads-btn").on(ui.click, function(){
 			title.getLeaderboard('Quads');
 		});
+		$("#leaderboard-pents-btn").on(ui.click, function(){
+			title.getLeaderboard('Pents');
+		});
 		$("#leaderboardTeamBtn").on(ui.click, function(){
 			title.getLeaderboard('Team');
 		});
@@ -481,7 +484,10 @@ var events = {
 			//console.info("Adding player");
 			audio.play('click');
 			$.ajax({
-				url: 'php/cpu-add-player.php'
+				url: 'php/cpu-add-player.php',
+				data: {
+					flag: g.getRandomFlag()
+				}
 			});
 		}).on(ui.click, '#cpu-remove-player', function(e){
 			//console.info("Removing player");

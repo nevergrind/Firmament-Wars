@@ -14,6 +14,7 @@ var ai = {
 				// another player
 				score += 5;
 			} else {
+				// mine
 				score -= 10;
 			}
 		} else {
@@ -29,7 +30,7 @@ var ai = {
 				score -= 5;
 			} else {
 				// ally
-				score -= 15;
+				score -= 25;
 			}
 		}
 		// defense

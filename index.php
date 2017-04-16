@@ -33,10 +33,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head id='head'>
-	<title>Firmament Wars | Free Multiplayer Grand Strategy | Risk Browser Game</title>
+	<title>Firmament Wars | Free Multiplayer Risk-Like Grand Strategy War Game</title>
 	<meta charset="utf-8">
 	<meta name="keywords" content="free, risk, browser, multiplayer, online, strategy, html5">
-	<meta name="description" content="Firmament Wars is a Risk-inspired free online strategy game playable in your web browser!">
+	<meta name="description" content="Firmament Wars is a free online strategy game playable in your web browser! Gameplay is like Risk with a layer of Civilization Revolution on top.">
 	<meta name="author" content="Joe Leonard">
 	<meta name="referrer" content="always">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -48,9 +48,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-0-101">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-1-1">
 	<script>
-		version = '1-0-101';
+		version = '1-1-1';
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -145,7 +145,6 @@
 				}
 				?>
 					<a href="/blog/how-to-play-firmament-wars/" target="_blank" title="Nevergrind Browser Game Development News and Articles">How to Play</a>&ensp;
-					<a href="//discord.gg/D4suK8b" target="_blank" title="Join the Firmament Wars Discord Server">Discord Server</a>&ensp;
 					<i id="options" class="pointer options fa fa-volume-up"></i>
 				<div class="pull-right text-primary">
 					<a href="//www.youtube.com/user/Maelfyn" target="_blank">
@@ -180,10 +179,7 @@
 				
 			</header>
 			
-			<?php
-			$currentPlayers = 0;
-				echo 
-				'<div id="titleMenu" class="fw-primary">
+				<div id="titleMenu" class="fw-primary">
 					<div id="menuHead">
 						<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">
 							Configure Nation
@@ -194,10 +190,45 @@
 					</div>
 					<hr class="fancyhr">
 			
-					<div id="myNationWrap" class="container tight w100">';
-					require('php/myNation.php'); 
-					echo 
-					'</div>
+					<div id="myNationWrap" class="container tight w100">
+					
+						<img class="nationFlag" id="nationFlag" src="images/flags/<?php echo $flag; ?>" title="<?php echo $_SESSION['flagShort']; ?>">
+						<div class='row fw-text'>
+							<div class='col-xs-3'>
+								Name:
+							</div>
+							<div class='col-xs-9' id="nationName">
+								<div id="configureNationName" class="configureNationName">
+									<?php echo $_SESSION['nation']; ?>
+								</div>
+							</div>
+							<div class='col-xs-3'>
+								FFA:
+							</div>
+							<div class='col-xs-9'>
+								<?php echo $_SESSION['wins'] .'-'. $_SESSION['losses']; ?>
+							</div>
+							<div class='col-xs-3'>
+								Team:
+							</div>
+							<div class='col-xs-9'>
+								<?php echo $_SESSION['teamWins'] .'-'. $_SESSION['teamLosses']; ?>
+							</div>
+							<div class='col-xs-3'>
+								Ranked:
+							</div>
+							<div class='col-xs-9'>
+								<?php echo $_SESSION['rankedWins'] .'-'. $_SESSION['rankedLosses']; ?>
+							</div>
+							<div class='col-xs-3'>
+								Rating:
+							</div>
+							<div class='col-xs-9'>
+								<?php echo $_SESSION['rating']; ?>
+							</div>
+						</div>
+					
+					</div>
 					<div class="fw-text">
 					<hr class="fancyhr">
 				
@@ -212,13 +243,15 @@
 								</li>
 								<li id="createTeamBtn" class="gameSelect">
 									<a href="#">Team Game</a>
-								</li>';
+								</li>
+								<?php
 								if (!$_SESSION['guest'] && isset($_SESSION['email'])){
 									echo '<li id="createRankedBtn" class="gameSelect">
 										<a href="#">Ranked Match</a>
 									</li>';
 								}
-							echo '</ul>
+								?>
+							</ul>
 						</div>
 						
 						<div class="btn-group" class="fwBlue">
@@ -231,13 +264,15 @@
 								</li>
 								<li id="joinTeamGame" class="gameSelect">
 									<a href="#">Team Game</a>
-								</li>';
+								</li>
+								<?php
 								if (!$_SESSION['guest'] && isset($_SESSION['email'])){
 									echo '<li id="joinRankedGame" class="gameSelect">
 										<a href="#">Ranked Match</a>
 									</li>';
 								}
-							echo '</ul>
+								?>
+							</ul>
 						</div>
 						<button id="joinPrivateGameBtn" type="button" class="btn btn-md fwBlue btn-responsive shadow4">Join Private Game</button>
 					</div>
@@ -299,9 +334,15 @@
 					<div id="titleChatBody"></div>
 				</div>
 					
-				<div id="titleChatLog" class="titlePanelLeft">';
-				/* right chat window */
-				/* count from title screen */
+				<div id="titleChatLog" class="titlePanelLeft">
+					<div class="chat-warning">Game night every Thursday @ 9 p.m. EST, 1 a.m. GMT.</div>
+					<a href="//discord.gg/D4suK8b" target="_blank">Join our Discord Server to receive notifications!</a>
+				<!-- 
+					right chat window
+					count from title screen 
+				-->
+				<?php
+				$currentPlayers = 0;
 				$result = mysqli_query($link, 'select count(row) count from `fwtitle` where timestamp > date_sub(now(), interval 20 second)');
 				if ($result->num_rows){
 					while ($row = mysqli_fetch_assoc($result)){
@@ -317,19 +358,16 @@
 						echo '<div>There '. ($currentPlayers === 1 ? 'is' : 'are') .' '. $currentPlayers . ' '. ($currentPlayers === 1 ? 'person' : 'people') .' playing Firmament Wars</div>';
 					}
 				}
-				echo 
-				'</div>';
 				?>
+				</div>
+				
 				<div id="titleChatWrap">
-					<?php
-						echo '
-						<div class="input-group">
-							<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" autocomplete="off" spellcheck="false" />
-							<div id="titleChatSend" class="input-group-btn">
-								<button id="titleChatSendBtn" class="btn shadow4 fwBlue">Send</button>
-							</div>
-						</div>';
-					?>
+					<div class="input-group">
+						<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" autocomplete="off" spellcheck="false" />
+						<div id="titleChatSend" class="input-group-btn">
+							<button id="titleChatSendBtn" class="btn shadow4 fwBlue">Send</button>
+						</div>
+					</div>
 				</div>
 			</div>
 				
@@ -586,9 +624,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<?php
-				if (!$_SESSION['guest']){ 
-				?>
+				<?php if (!$_SESSION['guest']){ ?>
 				<div class="col-xs-8">
 					<p>Upload your dictator avatar. A 200x200 image is recommended. Image must be a jpg < 40 kb:</p>
 					<p>
@@ -599,15 +635,11 @@
 				<div class="col-xs-4">
 					<img id="configureAvatarImage" class="dictator">
 				</div>
-				<?php
-				} else {
-				?>
+				<?php } else { ?>
 					<div class="col-xs-12 text-warning text-center">
 						Sign up to update your nation's name
 					</div>
-				<?php
-				}
-				?>
+				<?php } ?>
 			</div>
 			
 			<div class='row text-center'>
@@ -627,6 +659,7 @@
 					<button id="leaderboardRankedBtn" type="button" class="btn fwBlue btn-responsive shadow4">Ranked</button>
 					<button id="leaderboard-trips-btn" type="button" class="btn fwBlue btn-responsive shadow4">Trips</button>
 					<button id="leaderboard-quads-btn" type="button" class="btn fwBlue btn-responsive shadow4">Quads</button>
+					<button id="leaderboard-pents-btn" type="button" class="btn fwBlue btn-responsive shadow4">Pents</button>
 					<hr class="fancyhr">
 				</div>
 				
@@ -948,7 +981,7 @@
 			</span>
 			<input id="chat-input" class="fw-text nobg" type='text' maxlength="240" autocomplete="off" spellcheck="false"/>
 		</div>
-		<button id="chat-input-open" class="btn fwBlue shadow4">
+		<button id="chat-input-open" class="btn fwBlue shadow4 gameWindow">
 			<i class="fa fa-comment pointer2"></i>
 		</button>
 			

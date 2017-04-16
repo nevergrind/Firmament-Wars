@@ -3,6 +3,7 @@
 var socket = {
 	initialConnection: true,
 	removePlayer: function(account){
+		// instant update of clients
 		var o = {
 			type: 'remove',
 			account: my.account
@@ -12,6 +13,7 @@ var socket = {
 		delete title.players[account];
 	},
 	addPlayer: function(account, flag){
+		// instant update of clients
 		var o = {
 			type: 'add',
 			account: my.account,
@@ -68,7 +70,7 @@ var socket = {
 						document.getElementById('titleChatHeaderChannel').textContent = data.channel;
 						document.getElementById('titleChatBody').innerHTML = '';
 					}
-					title.updatePlayers(true);
+					title.updatePlayers(0);
 					location.hash = my.channel;
 				});
 			}

@@ -18,6 +18,7 @@ var ui = {
 			'#titleMenu, #titleChat{ bottom: 7vh; } '+*/
 			'.lobbyButtons, .fwDropdown, .govDropdown{ font-size: 1.25em; }'+
 			'#target-ui, #targetLineShadow, .chat-img{ display: none; }'+
+			'.chat-hidden{ color: #fff; }'+
 		'</style>');
 	},
 	setWorkSafe: function(){
@@ -176,7 +177,6 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
 		}
 		$("head").append('<style> text { fill: #ffffff; stroke: none; stroke-width: 0px; } </style>');
 	}
-	
 	if (isMobile || location.hash === '#mobiletest'){
 		ui.setMobile();
 	}

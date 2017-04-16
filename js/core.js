@@ -238,19 +238,20 @@ var g = {
 		} else {
 			game.chat(o);
 		}
-	}
-};
-g.init = (function(){
-	// console.info("Initializing game...");
-	if (!isMobile){
-		$('[title]').tooltip({
-			animation: false
-		});
-	}
-	// build map drop-down 
-	// <li><a class='flagSelect'>Default</a></li>
-	var s = "";
-	var flagData = {
+	},
+	getRandomFlag: function(){
+		var a = [],
+			i = 0;
+		for (var key in g.flagData){
+			g.flagData[key].name.forEach(function(flag){
+				a[i++] = flag;
+			});
+		}
+		var len = a.length,
+			ind = ~~(Math.random() * len);
+		return a[ind];
+	},
+	flagData: {
 		Africa: {
 			group: "Africa",
 			name: ['Algeria', 'Botswana', 'Cameroon', 'Cape Verde', 'Ivory Coast', 'Egypt', 'Ghana', 'Kenya', 'Liberia', 'Morocco', 'Mozambique', 'Namibia', 'Nigeria', 'South Africa', 'Uganda']
@@ -296,9 +297,20 @@ g.init = (function(){
 			name: ['Argentina', 'Bolivia', 'Brazil', 'Chile', 'Colombia', 'Ecuador', 'Paraguay', 'Peru', 'Uruguay', 'Venezuela']
 		},
 	}
-	for (var key in flagData){
-		s += "<li class='dropdown-header'>" + flagData[key].group + "</li>";
-		flagData[key].name.forEach(function(e){
+};
+g.init = (function(){
+	// console.info("Initializing game...");
+	if (!isMobile){
+		$('[title]').tooltip({
+			animation: false
+		});
+	}
+	// build map drop-down 
+	// <li><a class='flagSelect'>Default</a></li>
+	var s = "";
+	for (var key in g.flagData){
+		s += "<li class='dropdown-header'>" + g.flagData[key].group + "</li>";
+		g.flagData[key].name.forEach(function(e){
 			s += "<li><a class='flagSelect' href='#'>" + e + "</a></li>";
 		});
 	}
