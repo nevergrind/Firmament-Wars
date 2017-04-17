@@ -743,13 +743,13 @@ var game = {
 			game.player.forEach(function(d){
 				if (d.cpu) {
 					if (d.alive){
-						var food = ai.getFoodTotal(d.player);
+						var o = ai.getFoodTotal(d.player);
 						// deploy
-						var mod = 5 - ~~(food / 20);
+						var mod = 5 - ~~(o.food / 20);
 						mod = mod < 1 ? 1 : mod;
-						g.resourceTick % mod === 0 && ai.deploy(d, food);
+						g.resourceTick % mod === 0 && ai.deploy(d, o); 
 						// attack
-						var turns = Math.ceil(food / 20) + 1;
+						var turns = Math.ceil(o.food / 20) + 1;
 						for (var i=0; i<turns; i++){
 							(function(delay, d){
 								setTimeout(function(){

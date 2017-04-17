@@ -98,7 +98,9 @@ var action = {
 			data: {
 				attacker: attacker,
 				defender: defender,
-				split: my.splitAttack ? 1 : 0
+				split: my.splitAttack ? 1 : 0,
+				randomTile: action.getRandomDemocracyTile(defender, game.tiles[defender].player),
+				defGovernment: game.player[game.tiles[defender].player].government
 			}
 		}).done(function(data){
 			//console.info('attackTile', data);
@@ -152,6 +154,17 @@ var action = {
 		}).fail(function(data){
 			action.targetNotAdjacent(data.statusText, attacker);
 		});
+	},
+	getRandomDemocracyTile: function(tile, player){
+		var a = [],
+			i = 0;
+		game.tiles.forEach(function(t, index){
+		  if (t.player === player && index !== tile){
+			a[i++] = index;
+		  }
+		});
+		var len = a.length;
+		return a[~~(Math.random() * len)];
 	},
 	targetNotAdjacent: function(msg, attacker){
 		audio.play('error');

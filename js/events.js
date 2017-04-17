@@ -355,6 +355,7 @@ var events = {
 			audio.play('click');
 			title.closeModal();
 		});
+		/*
 		$("#autoJoinGame").on(ui.click, function(){
 			$("#joinGame").val('');
 			audio.play('click');
@@ -377,6 +378,7 @@ var events = {
 				title.joinGame();
 			}
 		});
+		*/
 		$("#overlay").on(ui.click, function(){
 			g.searchingGame = false;
 			TweenMax.set(DOM.Msg, {
@@ -409,8 +411,6 @@ var events = {
 							g.searchingGame = false;
 							title.joinGameCallback(data);
 						}
-					}).fail(function(data){
-						console.info(data);
 					});
 				} else {
 					if (!g.joinedGame && g.searchingGame){

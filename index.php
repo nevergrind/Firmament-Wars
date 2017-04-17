@@ -44,13 +44,14 @@
 	<meta name="mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
+	<meta property="article:published_time" content="<?php echo date("F d Y H:i:s",filemtime("index.php")); ?>">
 	
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-1-1">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-1-2">
 	<script>
-		version = '1-1-1';
+		version = '1-1-2';
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -255,9 +256,9 @@
 						</div>
 						
 						<div class="btn-group" class="fwBlue">
-							<button id="autoJoinBtn" type="button" class="titleButtons btn btn-md btn-responsive shadow4 dropdown-toggle fwDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<!--button id="autoJoinBtn" type="button" class="titleButtons btn btn-md btn-responsive shadow4 dropdown-toggle fwDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Auto Join Game <span class="titleCaret caret chat-warning"></span>
-							</button>
+							</button-->
 							<ul class="dropdown-menu fwDropdown">
 								<li id="autoJoinGame" class="gameSelect">
 									<a href="#">Free For All</a>

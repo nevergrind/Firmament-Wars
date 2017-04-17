@@ -80,7 +80,9 @@ var ai = {
 				url: 'php/attack-ai.php',
 				data: {
 					attacker: tiles[0],
-					defender: tiles[1]
+					defender: tiles[1],
+					randomTile: action.getRandomDemocracyTile(tiles[1], game.tiles[tiles[1]].player),
+					defGovernment: game.player[game.tiles[tiles[1]].player].government
 				}
 			});
 		}
@@ -146,25 +148,33 @@ var ai = {
 		});
 		return tile;
 	},
-	deploy: function(d, food){
+	deploy: function(d, o){
 		var tile = ai.getDeployTarget(d.player);
 		if (tile !== undefined){
 			$.ajax({
 				url: 'php/deploy-ai.php',
 				data: {
 					tile: tile,
-					food: food
+					food: o.food,
+					production: o.production,
+					culture: o.culture
 				}
 			});
 		}
 	},
 	getFoodTotal: function(player){
-		var sum = 0;
+		var o = {
+			food: 0,
+			production: 0,
+			culture: 0
+		}
 		game.tiles.forEach(function(tile){
 			if (player === tile.player){
-				sum += tile.food;
+				o.food += tile.food;
+				o.production += tile.production;
+				o.culture += tile.culture;
 			}
 		});
-		return sum;
+		return o;
 	}
 };

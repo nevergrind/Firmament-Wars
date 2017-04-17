@@ -30,7 +30,7 @@ var lobby = {
 				<div id="lobbyGovPerks">\
 					<div>Start with 3x production</div>\
 					<div>Start with gunpowder</div>\
-					<div>Start with a wall</div>\
+					<div>Start with a bunker</div>\
 					<div>Free movement through own tiles</div>\
 				</div>';
 		} else if (government === "Monarchy"){
@@ -46,8 +46,8 @@ var lobby = {
 				<div id="lobbyGovPerks">\
 					<div>4x maximum troop deployment</div>\
 					<div>50% starting production bonus</div>\
-					<div>More great people: Reduced culture milestone requirement</div>\
-					<div>Start with a fortress</div>\
+					<div>Reduced culture milestone requirement</div>\
+					<div>Patriotism: +3 troops when you lose a tile</div>\
 				</div>';
 		} else if (government === "Fundamentalism"){
 			str = '<div id="lobbyGovName" class="text-primary">Fundamentalism</div>\
@@ -390,7 +390,6 @@ var lobby = {
 			// load game
 			//console.info(localStorage.getItem('reload'));
 			if (localStorage.getItem('reload') !== false){
-				localStorage.setItem('reload', true);
 				loadGameState(); // page refresh
 			}
 		} else {
@@ -413,6 +412,7 @@ var lobby = {
 						}
 					}).done(function(x){
 						if (g.view === "lobby"){
+							localStorage.setItem('reload', true);
 							// reality check of presence data every 5 seconds
 							var hostFound = false
 							for (var i=1; i<=8; i++){
@@ -805,6 +805,7 @@ function Nation(){
 	this.team = 1;
 	this.alive = true;
 	this.avatar = '';
+	this.government = '';
 	return this;
 }
 
@@ -1081,9 +1082,7 @@ function loadGameState(){
 					}
 				}
 			}
-			var mode = g.rankedMode ? 'Ranked' :
-				g.teamMode ? 'Teams' : 'Free For All';
-			var diploHead = '<div class="header text-center diplo-head '+ (mode === 'Ranked' ? 'ranked' : '') +'">'+ mode +'</div>';
+			var diploHead = '<div class="header text-center diplo-head '+ (g.mode === 'Ranked' ? 'ranked' : '') +'">'+ g.mode +'</div>';
 			
 			if (g.teamMode){
 				document.getElementById('diplomacy-ui').innerHTML = diploHead + teamArr.join("");
@@ -1137,7 +1136,7 @@ function loadGameState(){
 					});
 				} else {
 					zug.on('click', ".land", function(e){
-						console.info(this.id, e.offsetX, e.offsetY);
+						location.host === 'localhost' && console.info(this.id, e.offsetX, e.offsetY);
 						triggerAction(this);
 					});
 				}
