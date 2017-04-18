@@ -255,6 +255,9 @@
 							</ul>
 						</div>
 						
+						<button id="refresh-game-button" type="button" class="btn btn-md fwBlue btn-responsive shadow4 pull-right" title="Refresh Game List">
+							<i class="fa fa-refresh pointer"></i>
+						</button>
 						<div class="btn-group" class="fwBlue">
 							<!--button id="autoJoinBtn" type="button" class="titleButtons btn btn-md btn-responsive shadow4 dropdown-toggle fwDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Auto Join Game <span class="titleCaret caret chat-warning"></span>

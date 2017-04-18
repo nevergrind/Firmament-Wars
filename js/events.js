@@ -165,6 +165,10 @@ var events = {
 		});
 
 		// events for title-chat buttons
+		$("#refresh-game-button").on(ui.click, function(){
+			title.refreshGames();
+			$("#title-chat-input").focus();
+		});
 		$("#titleChatPlayers").on(ui.click, '#friend-status', function(){
 			title.listFriends();
 			$("#title-chat-input").focus();

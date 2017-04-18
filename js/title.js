@@ -16,6 +16,36 @@ var title = {
 			g.unlock();
 		});
 	},
+	refreshGames: function(){
+		$.ajax({
+			type: 'GET',
+			url: 'php/refreshGames.php'
+		}).done(function(data) {
+			var e = document.getElementById('gameTableBody');
+			if (e === null){
+				return;
+			}
+			// head
+			var str = '';
+			// body
+			for (var i=0, len=data.length; i<len; i++){
+				var d = data[i];
+				title.games[d.id] = d.players * 1;
+				str += 
+				"<tr id='game_"+ d.id +"' class='wars wars-"+ d.gameMode +" no-select' data-name='" + d.name + "'>\
+					<td class='warCells'>"+ d.name + "</td>\
+					<td class='warCells'>" + d.map + "</td>\
+					<td class='warCells'>" + d.speed + "</td>\
+					<td class='warCells'>" + d.gameMode + "</td>\
+				</tr>";
+				
+			}
+			e.innerHTML = str;
+		}).fail(function(e){
+			console.info(e.responseText);
+			//Msg("Server error.");
+		});
+	},
 	init: (function(){
 		$(document).ready(function(){
 			// console.info("Initializing title screen...");
@@ -48,34 +78,8 @@ var title = {
 				g.checkPlayerData();
 			});
 			// initial refresh of games
-			$.ajax({
-				type: 'GET',
-				url: 'php/refreshGames.php'
-			}).done(function(data) {
-				var e = document.getElementById('gameTableBody');
-				if (e === null){
-					return;
-				}
-				// head
-				var str = '';
-				// body
-				console.info(data);
-				for (var i=0, len=data.length; i<len; i++){
-					var d = data[i];
-					title.games[d.id] = d.players * 1;
-					str += 
-					"<tr id='game_"+ d.id +"' class='wars wars-"+ d.gameMode +" no-select' data-name='" + d.name + "'>\
-						<td class='warCells'>"+ d.name + "</td>\
-						<td class='warCells'>" + d.map + "</td>\
-						<td class='warCells'>" + d.speed + "</td>\
-						<td class='warCells'>" + d.gameMode + "</td>\
-					</tr>";
-					
-				}
-				e.innerHTML = str;
-			}).fail(function(e){
-				console.info(e.responseText);
-				//Msg("Server error.");
+			setTimeout(function(){
+				title.refreshGames();
 			});
 			setTimeout(function(){
 				g.keepAlive();
