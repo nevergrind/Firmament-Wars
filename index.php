@@ -36,7 +36,7 @@
 	<title>Firmament Wars | Free Multiplayer Risk-Like Grand Strategy War Game</title>
 	<meta charset="utf-8">
 	<meta name="keywords" content="free, risk, browser, multiplayer, online, strategy, html5">
-	<meta name="description" content="Firmament Wars is a free online strategy game playable in your web browser! Gameplay is like Risk with a layer of Civilization Revolution on top.">
+	<meta name="description" content="A free multiplayer strategy game playable in your web browser! Gameplay is like Risk meets Civilization Revolution! Offers team, FFA, and ranked modes!">
 	<meta name="author" content="Joe Leonard">
 	<meta name="referrer" content="always">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -49,9 +49,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-1-2">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-1-4">
 	<script>
-		version = '1-1-2';
+		version = '1-1-4';
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>

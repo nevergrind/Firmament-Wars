@@ -832,6 +832,7 @@ function loadGameState(){
 			g.resourceTick = data.resourceTick;
 			g.startGame = data.startGame * 1;
 			g.teamMode = data.teamMode;
+			g.gameMode = data.gameMode;
 			// set map data
 			g.map.sizeX = data.mapData.sizeX;
 			g.map.sizeY = data.mapData.sizeY;
@@ -1082,7 +1083,7 @@ function loadGameState(){
 					}
 				}
 			}
-			var diploHead = '<div class="header text-center diplo-head '+ (g.mode === 'Ranked' ? 'ranked' : '') +'">'+ g.mode +'</div>';
+			var diploHead = '<div class="header text-center diplo-head '+ g.gameMode.toLowerCase() +'">'+ g.gameMode +'</div>';
 			
 			if (g.teamMode){
 				document.getElementById('diplomacy-ui').innerHTML = diploHead + teamArr.join("");

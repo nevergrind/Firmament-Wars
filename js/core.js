@@ -483,15 +483,21 @@ var game = {
 		// player eliminated
 		var i = data.player,
 			count = 0,
+			cpuCount = 0,
 			teams = [];
 		game.player[i].alive = false;
 		// count alive players remaining
 		game.player.forEach(function(e){
-			if (e.alive && e.account && !e.cpu){ 
-				// only counts human players
-				count++;
-				if (teams.indexOf(e.team) === -1){
-					teams.push(e.team);
+			if (e.account){
+				if (e.alive && !e.cpu){
+					// only counts human players
+					count++;
+					if (teams.indexOf(e.team) === -1){
+						teams.push(e.team);
+					}
+				}
+				if (e.cpu){
+					cpuCount++;
 				}
 			}
 		});
@@ -516,17 +522,20 @@ var game = {
 				gameDefeat();
 			} else {
 				// check if I won
-				if (g.teamMode){
-					if (teams.length <= 1){
-						setTimeout(function(){
-							gameVictory();
-						}, 1000);
-					}
-				} else {
-					if (count <= 1){
-						setTimeout(function(){
-							gameVictory();
-						}, 1000);
+				if (!cpuCount){
+					// cpus must be dead
+					if (g.teamMode){
+						if (teams.length <= 1){
+							setTimeout(function(){
+								gameVictory();
+							}, 1000);
+						}
+					} else {
+						if (count <= 1){
+							setTimeout(function(){
+								gameVictory();
+							}, 1000);
+						}
 					}
 				}
 			}
@@ -745,16 +754,23 @@ var game = {
 					if (d.alive){
 						var o = ai.getFoodTotal(d.player);
 						// deploy
-						var mod = 5 - ~~(o.food / 20);
+						var mod = 3 - ~~(o.food / 24);
 						mod = mod < 1 ? 1 : mod;
-						g.resourceTick % mod === 0 && ai.deploy(d, o); 
+						//console.info(g.resourceTick, mod, g.resourceTick % mod === 0);
+						if (g.resourceTick % 2 === 0){
+							ai.deploy(d, o); 
+							// bonus deploy
+							for (var i=0, len = ~~(o.food / 20); i<len; i++){
+								ai.deploy(d, o);
+							}
+						}
 						// attack
 						var turns = Math.ceil(o.food / 20) + 1;
 						for (var i=0; i<turns; i++){
 							(function(delay, d){
 								setTimeout(function(){
 									ai.attack(d); 
-								}, ((delay * 500) + 250) );
+								}, ((delay * 500) + 500) );
 							})(i, d);
 						}
 					}
@@ -763,6 +779,7 @@ var game = {
 					if (!firstPlayer){
 						firstPlayer = 1;
 						if (d.account === my.account){
+							// so only one players updates
 							pingCpu = 1;
 						}
 					}
