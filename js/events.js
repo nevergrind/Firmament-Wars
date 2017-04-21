@@ -123,8 +123,15 @@ var events = {
 			openCreateGameModal('team');
 		});
 
-		$("#createGame").on(ui.click, function(e){
+		$("#createGame").on(ui.click, function(){
 			title.createGame();
+		});
+		$("#play-now-btn").on(ui.click, function(){
+			title.createGameService(my.account +'_'+ ~~(Math.random()*999999), '', 'Earth Omega', 8, 0, 0, 20);
+			setTimeout(function(){
+				lobby.addCpuPlayer();
+			}, 500);
+			
 		});
 		$("body").on(ui.click, '#options', function(){
 			TweenMax.to(document.getElementById("optionsModal"), g.modalSpeed, {
@@ -487,12 +494,7 @@ var events = {
 		}).on(ui.click, '#cpu-add-player', function(e){
 			//console.info("Adding player");
 			audio.play('click');
-			$.ajax({
-				url: 'php/cpu-add-player.php',
-				data: {
-					flag: g.getRandomFlag()
-				}
-			});
+			lobby.addCpuPlayer();
 		}).on(ui.click, '#cpu-remove-player', function(e){
 			//console.info("Removing player");
 			audio.play('click');

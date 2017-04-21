@@ -482,34 +482,39 @@ var game = {
 	eliminatePlayer: function(data){
 		// player eliminated
 		var i = data.player,
-			count = 0,
+			playerCount = 0,
 			cpuCount = 0,
 			teams = [];
 		game.player[i].alive = false;
 		// count alive players remaining
-		game.player.forEach(function(e){
+		game.player.forEach(function(e, index){
 			if (e.account){
-				if (e.alive && !e.cpu){
-					// only counts human players
-					count++;
-					if (teams.indexOf(e.team) === -1){
-						teams.push(e.team);
+				if (e.alive){
+					if (!e.cpu){
+						// only counts human players
+						//console.info('Human player found at: '+ index);
+						playerCount++;
+						if (teams.indexOf(e.team) === -1){
+							teams.push(e.team);
+						}
 					}
-				}
-				if (e.cpu){
-					cpuCount++;
+					if (e.cpu){
+						//console.info('CPU player found at: '+ index);
+						cpuCount++;
+					}
 				}
 			}
 		});
 		// found 2 players on diplomacy panel
 		$("#diplomacyPlayer" + i).removeClass('alive');
+		//console.info(playerCount, cpuCount, teams);
 		if (g.teamMode){
 			if (teams.length <= 1){
 				// disables spectate button
 				g.showSpectateButton = 0;
 			}
 		} else {
-			if (count <= 1){
+			if (playerCount <= 1){
 				// disables spectate button
 				g.showSpectateButton = 0;
 			}
@@ -517,25 +522,23 @@ var game = {
 		// game over - insurance check to avoid multiples somehow happening
 		if (!g.over){
 			// it's not over... check with server
-			// console.info('ELIMINATED: ', count, teams.length);
+			//console.info('ELIMINATED: ', count, teams.length);
 			if (i === my.player){
 				gameDefeat();
 			} else {
 				// check if I won
-				if (!cpuCount){
-					// cpus must be dead
-					if (g.teamMode){
-						if (teams.length <= 1){
-							setTimeout(function(){
-								gameVictory();
-							}, 1000);
-						}
-					} else {
-						if (count <= 1){
-							setTimeout(function(){
-								gameVictory();
-							}, 1000);
-						}
+				// cpus must be dead
+				if (g.teamMode){
+					if (teams.length <= 1){
+						setTimeout(function(){
+							gameVictory();
+						}, 1000);
+					}
+				} else {
+					if (playerCount <= 1 && !cpuCount){
+						setTimeout(function(){
+							gameVictory();
+						}, 1000);
 					}
 				}
 			}
@@ -750,22 +753,27 @@ var game = {
 			var firstPlayer = 0,
 				pingCpu = 0;
 			game.player.forEach(function(d){
-				if (d.cpu) {
-					if (d.alive){
+				if (d.alive) {
+					if (d.cpu){
 						var o = ai.getFoodTotal(d.player);
 						// deploy
-						var mod = 3 - ~~(o.food / 24);
-						mod = mod < 1 ? 1 : mod;
 						//console.info(g.resourceTick, mod, g.resourceTick % mod === 0);
-						if (g.resourceTick % 2 === 0){
+						if (g.resourceTick % 4 === 0){
 							ai.deploy(d, o); 
 							// bonus deploy
-							for (var i=0, len = ~~(o.food / 20); i<len; i++){
+							var len = ~~(o.food / 25);
+							if (len > 3){
+								len = 3;
+							}
+							for (var i=0; i<len; i++){
 								ai.deploy(d, o);
 							}
 						}
 						// attack
-						var turns = Math.ceil(o.food / 20) + 1;
+						var turns = Math.ceil(o.food / 30) + 1;
+						if (turns > 4){
+							turns = 4;
+						}
 						for (var i=0; i<turns; i++){
 							(function(delay, d){
 								setTimeout(function(){
@@ -773,14 +781,14 @@ var game = {
 								}, ((delay * 500) + 500) );
 							})(i, d);
 						}
-					}
-				} else if (d.cpu === 0){
-					// 0 means player, null means empty
-					if (!firstPlayer){
-						firstPlayer = 1;
-						if (d.account === my.account){
-							// so only one players updates
-							pingCpu = 1;
+					} else if (d.cpu === 0){
+						// 0 means player, null means empty
+						if (!firstPlayer){
+							firstPlayer = 1;
+							if (d.account === my.account){
+								// so only one players updates
+								pingCpu = 1;
+							}
 						}
 					}
 				}

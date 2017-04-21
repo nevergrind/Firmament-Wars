@@ -22,6 +22,14 @@ var lobby = {
 		}
 		return count;
 	},
+	addCpuPlayer: function(){
+		$.ajax({
+			url: 'php/cpu-add-player.php',
+			data: {
+				flag: g.getRandomFlag()
+			}
+		});
+	},
 	updateGovernmentWindow: function(government){
 		// updates government description
 		var str = '';
@@ -346,10 +354,12 @@ var lobby = {
 	},
 	join: function(d){
 		// transition to game lobby
+		/*
 		var loadTime = Date.now() - g.startTime;
-		if (loadTime < 1000){
+		if (location.host === 'localhost' && loadTime < 400){
 			d = 0;
 		}
+		*/
 		if (d === undefined){
 			d = .5;
 		}
@@ -577,7 +587,10 @@ var lobby = {
 						alpha: 0,
 						ease: Linear.easeNone,
 						onComplete: function(){
-							loadGameState(); // countdown down
+							var delay = my.player === 1 ? 0 : 750;
+							setTimeout(function(){
+								loadGameState(); // countdown down 
+							}, delay);
 							sessionStorage.setItem('gameDuration', Date.now());
 						}
 					});
@@ -1172,7 +1185,9 @@ function loadGameState(){
 				ui.setCurrentYear(data.resourceTick);
 			}, 350);
 		}).fail(function(data){
-			serverError(data);
+			setTimeout(function(){
+				loadGameState();
+			}, 1500);
 		}).always(function(){
 			g.unlock();
 		});

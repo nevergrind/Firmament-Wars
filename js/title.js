@@ -851,37 +851,42 @@ var title = {
 		} else if (!g.rankedMode && (max < 2 || max > 8 || max % 1 !== 0)){
 			Msg("Game must have 2-8 players.", 1);
 		} else {
-			g.lock(1);
-			audio.play('click');
-			$.ajax({
-				url: 'php/createGame.php',
-				data: {
-					name: name,
-					pw: pw,
-					map: title.mapData[g.map.key].name,
-					max: max,
-					rating: g.rankedMode,
-					teamMode: g.teamMode,
-					speed: speed
-				}
-			}).done(function(data) {
-				socket.removePlayer(my.account);
-				my.player = data.player;
-				my.playerColor = data.playerColor;
-				my.team = data.team;
-				game.id = data.gameId;
-				game.name = data.gameName;
-				// console.info("Creating: ", data);
-				lobby.init(data);
-				lobby.join(); // create
-				socket.joinGame();
-				lobby.styleStartGame();
-			}).fail(function(e){
-				console.info(e);
-				Msg(e.statusText);
-				g.unlock(1);
-			});
+			title.createGameService(name, pw, title.mapData[g.map.key].name, max, g.rankedMode, g.teamMode, speed);
 		}
+	},
+	createGameService: function(name, pw, map, max, rankedMode, teamMode, speed){
+		g.lock(1);
+		audio.play('click');
+		g.rankedMode = rankedMode;
+		g.teamMode = teamMode;
+		g.speed = speed;
+		$.ajax({
+			url: 'php/createGame.php',
+			data: {
+				name: name,
+				pw: pw,
+				map: map,
+				max: max,
+				rating: rankedMode,
+				teamMode: teamMode,
+				speed: speed
+			}
+		}).done(function(data) {
+			socket.removePlayer(my.account);
+			my.player = data.player;
+			my.playerColor = data.playerColor;
+			my.team = data.team;
+			game.id = data.gameId;
+			game.name = data.gameName;
+			// console.info("Creating: ", data);
+			lobby.init(data);
+			lobby.join(); // create
+			socket.joinGame();
+			lobby.styleStartGame();
+		}).fail(function(e){
+			Msg(e.statusText);
+			g.unlock(1);
+		});
 	},
 	joinGame: function(){
 		g.name = $("#joinGame").val();

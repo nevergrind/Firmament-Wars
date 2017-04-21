@@ -49,9 +49,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-1-4">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-1-8">
 	<script>
-		version = '1-1-4';
+		version = '1-1-8';
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -234,6 +234,12 @@
 					<hr class="fancyhr">
 				
 					<div>
+						<button id="refresh-game-button" type="button" class="btn btn-md fwBlue btn-responsive shadow4 pull-right" title="Refresh Game List">
+							<i class="fa fa-refresh pointer"></i>
+						</button>
+						<button id="play-now-btn" type="button" class="btn btn-md fwBlue btn-responsive shadow4">
+							Play Now
+						</button>
 						<div class="btn-group" class="fwBlue">
 							<button id="createGameBtn" type="button" class="titleButtons btn btn-md btn-responsive shadow4 dropdown-toggle fwDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Create Game <span class="titleCaret caret chat-warning"></span>
@@ -248,30 +254,6 @@
 								<?php
 								if (!$_SESSION['guest'] && isset($_SESSION['email'])){
 									echo '<li id="createRankedBtn" class="gameSelect">
-										<a href="#">Ranked Match</a>
-									</li>';
-								}
-								?>
-							</ul>
-						</div>
-						
-						<button id="refresh-game-button" type="button" class="btn btn-md fwBlue btn-responsive shadow4 pull-right" title="Refresh Game List">
-							<i class="fa fa-refresh pointer"></i>
-						</button>
-						<div class="btn-group" class="fwBlue">
-							<!--button id="autoJoinBtn" type="button" class="titleButtons btn btn-md btn-responsive shadow4 dropdown-toggle fwDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Auto Join Game <span class="titleCaret caret chat-warning"></span>
-							</button-->
-							<ul class="dropdown-menu fwDropdown">
-								<li id="autoJoinGame" class="gameSelect">
-									<a href="#">Free For All</a>
-								</li>
-								<li id="joinTeamGame" class="gameSelect">
-									<a href="#">Team Game</a>
-								</li>
-								<?php
-								if (!$_SESSION['guest'] && isset($_SESSION['email'])){
-									echo '<li id="joinRankedGame" class="gameSelect">
 										<a href="#">Ranked Match</a>
 									</li>';
 								}
