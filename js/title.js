@@ -354,6 +354,15 @@ var title = {
 			while (DOM.titleChatLog.childNodes.length > 500) {
 				DOM.titleChatLog.removeChild(DOM.titleChatLog.firstChild);
 			}
+			if (data.type === 'inserted-image'){
+				(function repeat(count){
+					if (++count < 10){
+						console.info("SCROLLING");
+						title.scrollBottom();
+						setTimeout(repeat, 200, count);
+					}
+				})(0);
+			}
 			var z = document.createElement('div'); 
 			if (data.type){
 				z.className = data.type;
@@ -715,14 +724,6 @@ var title = {
 			data: {
 				url: url
 			}
-		}).done(function(){
-			(function repeat(count){
-				if (++count < 15){
-					console.info("SCROLLING");
-					title.scrollBottom();
-					setTimeout(repeat, 200, count);
-				}
-			})(0);
 		});
 	},
 	video: function(url){

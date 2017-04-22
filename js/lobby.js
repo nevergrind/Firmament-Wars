@@ -86,7 +86,7 @@ var lobby = {
 				<div id="lobbyGovPerks">\
 					<div>2x discovered reward bonus from barbarians</div>\
 					<div>Can deploy troops to uninhabited territory</div>\
-					<div>1/4 cost weapons</div>\
+					<div>1/4 cost reduced weapons</div>\
 					<div>Start with a great person</div>\
 				</div>';
 		}

@@ -217,7 +217,7 @@ var events = {
 			title.toggleFriend($(this).data('account'));
 		}).on(ui.click, '.ribbon', function(){
 			var x = $(this).data('ribbon') * 1;
-			g.chat(game.ribbonTitle[x] +": "+ game.ribbonDescription[x]);
+			g.chat(game.ribbonTitle[x] +": "+ game.ribbonDescription[x], 'chat-warning'); 
 		});
 		$("#toggleNation").on(ui.click, function(){
 			$.ajax({

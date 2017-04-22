@@ -4,8 +4,9 @@ $.ajaxSetup({
 	timeout: 5000
 });
 if (location.host !== 'localhost'){
-	console.log = function(){};
-	console.info = function(){};
+	console.info("Disabling log, info");
+	//console.log = function(){};
+	//console.info = function(){};
 };
 TweenMax.defaultEase = Quad.easeOut;
 var g = {
@@ -748,39 +749,14 @@ var game = {
 		game.updateResources();
 		animate.energyBar();
 	},
-	updateResources: function(){ 
+	updateResources: function(){
 		if (!g.over){
 			var firstPlayer = 0,
 				pingCpu = 0;
 			game.player.forEach(function(d){
-				if (d.alive) {
+				if (d.alive){
 					if (d.cpu){
-						var o = ai.getFoodTotal(d.player);
-						// deploy
-						//console.info(g.resourceTick, mod, g.resourceTick % mod === 0);
-						if (g.resourceTick % 4 === 0){
-							ai.deploy(d, o); 
-							// bonus deploy
-							var len = ~~(o.food / 25);
-							if (len > 3){
-								len = 3;
-							}
-							for (var i=0; i<len; i++){
-								ai.deploy(d, o);
-							}
-						}
-						// attack
-						var turns = Math.ceil(o.food / 30) + 1;
-						if (turns > 4){
-							turns = 4;
-						}
-						for (var i=0; i<turns; i++){
-							(function(delay, d){
-								setTimeout(function(){
-									ai.attack(d); 
-								}, ((delay * 500) + 500) );
-							})(i, d);
-						}
+						ai.takeTurn(d);
 					} else if (d.cpu === 0){
 						// 0 means player, null means empty
 						if (!firstPlayer){
