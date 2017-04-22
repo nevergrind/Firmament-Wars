@@ -32,6 +32,8 @@ var ai = {
 		}
 		// defense
 		if (o.attacker !== o.defender){
+			score += o.unitDiff;
+			/*
 			if (o.unitDiff > 20){
 				score += 20;
 			} else if (o.unitDiff > 5){
@@ -41,6 +43,7 @@ var ai = {
 			} else {
 				score -= 20;
 			}
+			*/
 			score -= ai.structureDefense[o.defense];
 			score -= o.capital ? 10 : 0;
 			// food
@@ -112,6 +115,7 @@ var ai = {
 		}
 		// defense
 		if (o.attacker !== o.defender){
+			/*
 			if (o.unitDiff > 20){
 				score -= 20;
 			} else if (o.unitDiff > 5){
@@ -121,6 +125,8 @@ var ai = {
 			} else {
 				score += 20;
 			}
+			*/
+			score -= o.unitDiff;
 			// food
 			score += ~~((o.food) + Math.random()*10 - 5);
 		}
@@ -334,16 +340,22 @@ var ai = {
 			
 		}
 		if (g.resourceTick > 40){
-			for (var i=0, len = Math.ceil(o.food / 60); i<len; i++){
-				setTimeout(function(){
-					ai.launchMissile(d);
-				}, ai.weaponDelay());
+			if (Math.random() > .5){
+				var len = Math.ceil(o.food / 60);
+				for (var i=0; i<len; i++){
+					setTimeout(function(){
+						ai.launchMissile(d);
+					}, ai.weaponDelay());
+				}
 			}
 		} else if (g.resourceTick > 20){
-			for (var i=0, len = Math.ceil(o.food / 30); i<len; i++){
-				setTimeout(function(){
-					ai.fireCannons(d);
-				}, ai.weaponDelay());
+			if (Math.random() > .66){
+				var len = Math.ceil(o.food / 30);
+				for (var i=0; i<len; i++){
+					setTimeout(function(){
+						ai.fireCannons(d);
+					}, ai.weaponDelay());
+				}
 			}
 		}
 	}
