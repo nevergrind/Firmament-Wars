@@ -560,6 +560,8 @@ var game = {
 				transformOrigin: '50% 0',
 				rotationX: 0
 			},
+			paddingTop: 0,
+			paddingBottom: 0,
 			height: 0,
 			rotationX: -90
 		});

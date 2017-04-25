@@ -275,24 +275,22 @@ var ai = {
 				}
 			}
 		});
-		console.info('DEPLOYING TO: ', tile);
+		//console.info('DEPLOYING TO: ', tile);
 		return tile;
 	},
-	deploy: function(d, o){
+	deploy: function(d, o){ 
 		var tile = ai.getDeployTarget(d.player);
 		if (tile !== undefined){
 			$.ajax({
 				url: 'php/deploy-ai.php',
 				data: {
 					tile: tile,
-					food: o.food,
-					production: o.production,
-					culture: o.culture
+					food: o.food
 				}
 			});
 		}
 	},
-	getFoodTotal: function(player){
+	getResourceTotal: function(player){
 		var o = {
 			food: 0,
 			production: 0,
@@ -478,10 +476,22 @@ var ai = {
 		Mania: 2,
 		Juggernaut: 0
 	},
+	updateResources: function(o, player){
+		$.ajax({
+			url: 'php/ai-updateResources.php',
+			data: {
+				player: player,
+				moves: (4 + ~~(o.food / 50)), 
+				food: o.food,
+				production: o.production,
+				culture: o.culture
+			}
+		});
+	},
 	takeTurn: function(d){
-		var o = ai.getFoodTotal(d.player);
+		var o = ai.getResourceTotal(d.player);
 		// deploy
-		//console.info(g.resourceTick, mod, g.resourceTick % mod === 0);
+		ai.updateResources(o, d.player);
 		if (g.resourceTick % ai.deployRate[d.difficultyShort] === 0){
 			ai.deploy(d, o); 
 			// bonus deploy
