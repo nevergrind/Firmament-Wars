@@ -295,8 +295,6 @@ var action = {
 			if (e.statusText){
 				Msg(e.statusText, 1.5);
 			}
-		}).always(function(data){
-			console.info('always: ', data);
 		});
 	},
 	launchMissile: function(that){
@@ -377,8 +375,6 @@ var action = {
 				defender: defender
 			}
 		}).done(function(data) {
-			var e1 = DOM['land' + defender],
-				box = e1.getBBox();
 			setTimeout(function(){
 				$.ajax({
 					url: 'php/launchNukeHit.php',
@@ -401,36 +397,34 @@ var action = {
 	// updates currently visible buttons after research/targeting
 	setMenu: function(){
 		// show/hide research
-		DOM.researchConstruction.style.display = my.tech.construction ? 'none' : 'block';
-		DOM.researchEngineering.style.display = my.tech.engineering || !my.tech.construction ? 'none' : 'block';
-		DOM.researchGunpowder.style.display = my.tech.gunpowder ? 'none' : 'block';
-		DOM.researchRocketry.style.display = my.tech.rocketry || !my.tech.gunpowder ? 'none' : 'block';
-		DOM.researchAtomicTheory.style.display = my.tech.atomicTheory || !my.tech.gunpowder || !my.tech.rocketry || !my.tech.engineering ? 'none' : 'block';
-		// all techs must be finished for future tech
-		var display = 'block';
-		if (!my.tech.engineering || 
-			!my.tech.gunpowder || 
-			!my.tech.rocketry || 
-			!my.tech.atomicTheory){
-			display = 'none';
+		if (my.tech.masonry){
 		}
-		DOM.researchFutureTech.style.display = display;
-		if (my.tech.construction){
+		DOM.researchMasonry.style.display = !my.tech.masonry ? 'block' : 'none';
+		DOM.researchConstruction.style.display = my.tech.masonry && !my.tech.construction ? 'block' : 'none';
+		DOM.researchEngineering.style.display = my.tech.construction && !my.tech.engineering ? 'block' : 'none';
+		DOM.researchGunpowder.style.display = my.tech.gunpowder ? 'none' : 'block';
+		DOM.researchRocketry.style.display = my.tech.rocketry ? 'none' : 'block';
+		DOM.researchAtomicTheory.style.display = my.tech.atomicTheory ? 'none' : 'block';
+		DOM.researchFutureTech.style.display = my.tech.atomicTheory ? 'block' : 'none';
+		if (my.tech.masonry){
+			// masonry unlocked
 			if (!game.tiles[my.tgt].defense){
 				// zero defense
 				DOM.upgradeTileDefense.style.display = 'block';
 			} else {
-				// wall or fortress
+				// bunker built
 				var capValue = game.tiles[my.tgt].capital ? 1 : 0,
 					dMinusPalace = game.tiles[my.tgt].defense - capValue,
 					display = 'none';
-				if (!my.tech.engineering){
-					// bunker max possible
-					if (!dMinusPalace){
+				
+				console.info('dMinusPalace ', dMinusPalace);
+				if (my.tech.engineering){
+					if (dMinusPalace < 3){
 						display = 'block';
 					}
-				} else {
-					if (dMinusPalace < 3){
+				} else if (my.tech.construction){
+					if (!dMinusPalace){
+						// nothing built
 						display = 'block';
 					}
 				}
@@ -525,6 +519,8 @@ $("#gameWrap").on(ui.click, '#attack', function(){
 	action.rush();
 }).on(ui.click, '#upgradeTileDefense', function(){
 	action.upgradeTileDefense();
+}).on(ui.click, '#researchMasonry', function(){
+	research.masonry();
 }).on(ui.click, '#researchConstruction', function(){
 	research.construction();
 }).on(ui.click, '#researchGunpowder', function(){
@@ -564,6 +560,15 @@ $("#gameWrap").on(ui.click, '#attack', function(){
 });
 
 var research = {
+	masonry: function(){
+		$.ajax({
+			type: 'GET',
+			url: 'php/researchMasonry.php'
+		}).done(function(data) {
+			my.tech.masonry = 1;
+			research.report(data, "Masonry");
+		});
+	},
 	construction: function(){
 		$.ajax({
 			type: 'GET',

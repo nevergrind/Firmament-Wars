@@ -24,7 +24,7 @@ var title = {
 				type: 'GET',
 				url: 'php/refreshGames.php'
 			}).done(function(data) {
-				console.info(data);
+				//console.info(data);
 				var e = document.getElementById('gameTableBody');
 				if (e === null){
 					return;
@@ -357,7 +357,6 @@ var title = {
 			if (data.type === 'inserted-image'){
 				(function repeat(count){
 					if (++count < 10){
-						console.info("SCROLLING");
 						title.scrollBottom();
 						setTimeout(repeat, 200, count);
 					}
@@ -510,7 +509,9 @@ var title = {
 			//console.info('lobby receive: ', data);
 			if (data.type === 'hostLeft'){
 				lobby.hostLeft();
-			} else if (data.type === 'government'){
+			} else if (data.type === 'lobby-set-cpu-difficulty'){
+				lobby.updateDifficulty(data);
+			} else if (data.type === 'updateGovernment'){
 				lobby.updateGovernment(data);
 			} else if (data.type === 'updatePlayerColor'){
 				lobby.updatePlayerColor(data);
@@ -545,6 +546,7 @@ var title = {
 			} else if (data.type === 'gunfire'){
 				// defender tile update
 				animate.gunfire(data.attackerTile, data.tile, data.player === my.player || data.playerB === my.player); 
+				animate.cannons(data.attackerTile, data.tile, false, 0, .175, 10);  
 				game.updateTile(data);
 				if (data.rewardUnits){
 					animate.upgrade(data.tile, 'troops', data.rewardUnits);

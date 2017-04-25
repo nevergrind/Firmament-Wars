@@ -279,14 +279,15 @@ var animate = {
 			}
 		}
 	},
-	cannons: function(atkTile, defTile, playSound){
+	cannons: function(atkTile, defTile, playSound, delay, delay2){
 		var box1 = DOM['unit' + atkTile].getBBox(),
 			box2 = DOM['land' + defTile].getBBox(),
-			box3 = DOM['unit' + defTile].getBBox();
+			box3 = DOM['unit' + defTile].getBBox()
+			delay = delay === undefined ? .08 : delay;
 		if (game.tiles[atkTile].player === my.player){
 			var a = [5, 6, 8];
 			var sfx = ~~(Math.random() * 3);
-			audio.play('grenade' + a[sfx]);
+			playSound && audio.play('grenade' + a[sfx]);
 		}
 		var x1 = box1.x + box1.width * .5;
 			y1 = box1.y + box1.height * .5,
@@ -307,7 +308,7 @@ var animate = {
 				circ.setAttributeNS(null,"strokeWidth",1);
 				DOM.mapAnimations.appendChild(circ);
 				
-				TweenMax.to(circ, .08, {
+				TweenMax.to(circ, delay, {
 					delay: i * .0125,
 					startAt: {
 						alpha: 1
@@ -320,7 +321,7 @@ var animate = {
 					onComplete: function(){
 						// explode outward
 						var d1 = Math.random()*.5 + .3,
-							d2 = d1/2,
+							d2 = delay2 === undefined ? d1/2 : delay2,
 							s1 = (d1 * 10) + 3;
 						TweenMax.to(circ, d2, {
 							startAt: {

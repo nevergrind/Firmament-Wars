@@ -77,8 +77,8 @@ var lobby = {
 			str = '<div id="lobbyGovName" class="text-primary">Republic</div>\
 				<div id="lobbyGovPerks">\
 					<div>+50% plundered reward bonus from barbarians</div>\
-					<div>Start with construction</div>\
-					<div>+2 energy per turn</div>\
+					<div>Start with masonry</div>\
+					<div>+1 energy per turn</div>\
 					<div>Combat medics: Recover 1/2 of lost troops after victory</div>\
 				</div>';
 		} else if (government === "Communism"){
@@ -91,7 +91,14 @@ var lobby = {
 				</div>';
 		}
 		document.getElementById('lobbyGovernment' + my.player).innerHTML = government;
-		document.getElementById('lobbyGovernmentDescription').innerHTML = str;
+		document.getElementById('lobbyGovernmentDescription').innerHTML = government === 'Random' ?
+			'<div id="lobbyGovName" class="text-primary">Random</div>\
+				<div id="lobbyGovPerks">\
+					<div>???</div>\
+					<div>???</div>\
+					<div>???</div>\
+					<div>???</div>\
+				</div>' : str;
 	},
 	chat: function (data){
 		while (DOM.lobbyChatLog.childNodes.length > 200) {
@@ -154,6 +161,12 @@ var lobby = {
 			$DOM.lobbyChatInput.val('');
 		}
 	},
+	difficulties: [
+		'Very Easy', 'Easy', 'Normal', 'Hard', 'Very Hard', 'Mania', 'Juggernaut'
+	],
+	governments: [
+		'Despotism', 'Monarchy', 'Democracy', 'Fundamentalism', 'Fascism', 'Republic', 'Communism', 'Random'
+	],
 	init: function(x){
 		// build the lobby DOM
 		var e1 = document.getElementById("lobbyGameName");
@@ -185,6 +198,7 @@ var lobby = {
 					</div>\
 					<div class="col-xs-6 lobbyDetails">\
 						<div class="lobbyAccounts">';
+						
 							if (g.teamMode){
 								// yes, the span is necessary to group the dropdown
 								str += '<span><div id="lobbyTeam'+ i +'" data-placement="right" class="lobbyTeams dropdown-toggle pointer2" data-toggle="dropdown">';
@@ -198,11 +212,15 @@ var lobby = {
 									}
 								str += '</ul></span>';
 							}
+							
 							str += '<span><i id="lobbyPlayerColor'+ i +'" class="fa fa-square player'+ i +' lobbyPlayer dropdown-toggle';
+							
 							if (i === my.player){
 								str += ' pointer2';
 							}
+							
 							str += '" data-placement="right" data-toggle="dropdown"></i>';
+							
 							if (i === my.player){
 								str += 
 								'<ul id="teamColorDropdown" class="dropdown-menu">\
@@ -212,130 +230,48 @@ var lobby = {
 								}
 								str += '</ul></span>';
 							}
+							
 							str += '<span id="lobbyAccountName'+ i +'" class="lobbyAccountName chat-warning"></span>\
 						</div>\
 						<div id="lobbyName' +i+ '" class="lobbyNames nowrap"></div>\
 					</div>\
 					<div class="col-xs-4">';
 					if (i === x.player){
-						// me
+						// my.player === i || data.cpu && my.player === 1
+						// me - gov dropdown
 						str += 
-						'<div class="dropdown govDropdown">\
+						'<div id="gov-dropdown-player'+ i +'" class="dropdown govDropdown">\
 							<button class="btn btn-primary btn-responsive dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">\
 								<span id="lobbyGovernment' +i+ '">Despotism</span>\
-								<i class="fa fa-caret-down text-warning lobbyCaret"></i>\
+								<i id="lobbyCaret' +i+ '" class="fa fa-caret-down text-warning lobbyCaret"></i>\
 							</button>\
-							<ul id="governmentDropdown" class="dropdown-menu">\
-								<li class="governmentChoice"><a href="#">Despotism</a></li>\
-								<li class="governmentChoice"><a href="#">Monarchy</a></li>\
-								<li class="governmentChoice"><a href="#">Democracy</a></li>\
-								<li class="governmentChoice"><a href="#">Fundamentalism</a></li>\
-								<li class="governmentChoice"><a href="#">Fascism</a></li>\
-								<li class="governmentChoice"><a href="#">Republic</a></li>\
-								<li class="governmentChoice"><a href="#">Communism</a></li>\
-							</ul>\
-						</div>';
-					} else {
-						// not me
-						str += 
-						'<div class="dropdown govDropdown">\
-							<button style="cursor: default" class="btn btn-primary btn-responsive dropdown-toggle shadow4 fwDropdownButton fwDropdownButtonEnemy" type="button">\
-								<span id="lobbyGovernment' +i+ '" class="pull-left">Despotism</span>\
-								<i class="fa fa-caret-down text-disabled lobbyCaret"></i>\
-							</button>\
-						</div>';
-					}
-					str += '</div>\
-					</div>';
-			}
-			// 2-8 possible CPU slots
-			// added lobbyRowCPU, lobbyFlagCPU
-			/*
-			for (var i=2; i<=8; i++){
-				str += 
-				'<div id="lobbyRowCPU' +i+ '" class="row lobbyRow">\
-					<div class="col-xs-2">\
-						<img id="lobbyFlagCPU' +i+ '" class="lobbyFlags block center" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">\
-					</div>\
-					<div class="col-xs-6 lobbyDetails">\
-						<div class="lobbyAccounts">';
-							if (g.teamMode){
-								// yes, the span is necessary to group the dropdown
-								str += '<span><div id="lobbyTeam'+ i +'" data-placement="right" class="lobbyTeams dropdown-toggle';
-								if (i === my.player){
-									str += ' pointer2';
-								}
-								str += '" data-toggle="dropdown">';
-								if (i === my.player){
-									str += '<i class="fa fa-flag pointer2 lobbyTeamFlag"></i> <span id="lobbyTeamNumber'+ i +'" class="lobbyTeamNumbers">' + i +'</span>';
-								} else {
-									str += '<i class="fa fa-flag lobbyTeamFlag"></i> <span id="lobbyTeamNumber'+ i +'" class="lobbyTeamNumbers">' + i +'</span>';
-								}
-								str += '</div>';
-								if (i === my.player){
+							<ul class="governmentDropdown dropdown-menu">';
+								for (var z=0, len=lobby.governments.length; z<len; z++){
 									str += 
-									'<ul id="teamDropdown" class="dropdown-menu">\
-										<li class="header text-center selectTeamHeader">Team</li>';
-										for (var j=1; j<=8; j++){
-											str += '<li class="teamChoice">Team '+ j +'</li>';
-										}
-									str += '</ul></span>';
+									'<li class="governmentChoice">'+
+										'<a>'+ lobby.governments[z] +'</a>'+
+									'</li>';
 								}
-							}
-							str += '<span><i id="lobbyPlayerColor'+ i +'" class="fa fa-square player'+ i +' lobbyPlayer dropdown-toggle';
-							if (i === my.player){
-								str += ' pointer2';
-							}
-							str += '" data-placement="right" data-toggle="dropdown"></i>';
-							if (i === my.player){
-								str += 
-								'<ul id="teamColorDropdown" class="dropdown-menu">\
-									<li class="header text-center selectTeamHeader">Player Color</li>';
-								for (var j=1; j<=20; j++){
-									str += '<i class="fa fa-square player'+ j +' playerColorChoice" data-playercolor="'+ j +'"></i>';
-								}
-								str += '</ul></span>';
-							}
-							str += '<span id="lobbyAccountName'+ i +'" class="lobbyAccountName chat-warning"></span>\
-						</div>\
-						<div id="lobbyName' +i+ '" class="lobbyNames nowrap"></div>\
-					</div>\
-					<div class="col-xs-4">';
-					if (i === x.player){
-						// me
-						str += 
-						'<div class="dropdown govDropdown">\
-							<button class="btn btn-primary btn-responsive dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">\
-								<span id="lobbyGovernment' +i+ '">Despotism</span>\
-								<i class="fa fa-caret-down text-warning lobbyCaret"></i>\
-							</button>\
-							<ul id="governmentDropdown" class="dropdown-menu">\
-								<li class="governmentChoice"><a href="#">Despotism</a></li>\
-								<li class="governmentChoice"><a href="#">Monarchy</a></li>\
-								<li class="governmentChoice"><a href="#">Democracy</a></li>\
-								<li class="governmentChoice"><a href="#">Fundamentalism</a></li>\
-								<li class="governmentChoice"><a href="#">Fascism</a></li>\
-								<li class="governmentChoice"><a href="#">Republic</a></li>\
-								<li class="governmentChoice"><a href="#">Communism</a></li>\
-							</ul>\
-						</div>';
+							str += '</ul>\
+						</div>' + 
+						lobby.getCpuDropdown(i);
 					} else {
-						// not me
+						// not me - gov dropdown
 						str += 
-						'<div class="dropdown govDropdown">\
+						'<div id="gov-dropdown-player'+ i +'" class="dropdown govDropdown">\
 							<button style="cursor: default" class="btn btn-primary btn-responsive dropdown-toggle shadow4 fwDropdownButton fwDropdownButtonEnemy" type="button">\
 								<span id="lobbyGovernment' +i+ '" class="pull-left">Despotism</span>\
-								<i class="fa fa-caret-down text-disabled lobbyCaret"></i>\
+								<i id="lobbyCaret' +i+ '" class="fa fa-caret-down text-disabled lobbyCaret"></i>\
 							</button>\
-						</div>';
+						</div>' + 
+						lobby.getCpuDropdown(i);
 					}
 					str += '</div>\
 					</div>';
 			}
-			*/
 			if (my.player === 1 && !g.rankedMode){
 				str += 
-				'<div class="row buffer2">\
+				'<div id="lobby-cpu-row" class="row buffer2">\
 					<div class="col-xs-12">\
 						<button id="cpu-remove-player" type="button" class="btn fwBlue btn-responsive shadow4 pull-right cpu-button">\
 							<i class="fa fa-minus-circle"></i> Remove CPU\
@@ -352,14 +288,26 @@ var lobby = {
 		}
 		delete lobby.init;
 	},
+	getCpuDropdown: function(player){
+		var str = 
+		'<div id="gov-dropdown-cpu'+ player +'" class="dropdown govDropdown none">\
+			<button class="btn btn-primary btn-responsive dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">\
+				<span id="lobby-difficulty-cpu'+ player +'">Computer: Very Easy</span>\
+				<i id="lobby-caret-cpu'+ player +'" class="fa fa-caret-down text-warning lobbyCaret"></i>\
+			</button>\
+			<ul class="governmentDropdown dropdown-menu">';
+				for (var i=0, len=lobby.difficulties.length; i<len; i++){
+					str += 
+					'<li class="cpu-choice" data-player="'+ player +'">'+
+						'<a>'+ lobby.difficulties[i] +'</a>'+
+					'</li>';
+				}
+			str += '</ul>\
+		</div>';
+		return str;
+	},
 	join: function(d){
 		// transition to game lobby
-		/*
-		var loadTime = Date.now() - g.startTime;
-		if (location.host === 'localhost' && loadTime < 400){
-			d = 0;
-		}
-		*/
 		if (d === undefined){
 			d = .5;
 		}
@@ -487,6 +435,7 @@ var lobby = {
 				'Player'+ i +'.jpg' : 
 				data.flag;
 			document.getElementById("lobbyFlag" + i).src = 'images/flags/'+ flag;
+			
 			if (!isMobile){
 				$('#lobbyFlag' + i)
 					.attr('title', data.flag.split(".").shift())
@@ -496,6 +445,7 @@ var lobby = {
 						container: 'body'
 					});
 			}
+			
 			if (my.player === i){
 				if (!isMobile){
 					$("#lobbyPlayerColor" + i).attr('title', 'Select Player Color')
@@ -510,14 +460,26 @@ var lobby = {
 						});
 				}
 			}
+			
 			lobby.updateGovernment(data);
 			lobby.data[i] = data;
 			lobby.updatePlayerColor(data);
-			document.getElementById('lobbyGovernment'+ i).innerHTML = data.cpu ? 'Computer' : 'Despotism';
+			document.getElementById('lobbyGovernment'+ i).innerHTML = 
+				data.cpu ? ('Computer: '+ data.difficulty) : 'Despotism';
+			
+			$("#lobbyCaret"+ i)
+				.removeClass("text-warning text-disabled")
+				.addClass(my.player === i || data.cpu && my.player === 1 ? 'text-warning' : 'text-disabled');
+			
+			document.getElementById('gov-dropdown-player'+ data.player).style.display = 
+				data.cpu ? 'none' : 'block';
+			document.getElementById('gov-dropdown-cpu'+ data.player).style.display = 
+				data.cpu ? 'block' : 'none';
 		} else {
 			// remove
 			//console.info("REMOVE PLAYER: ", data);
 			document.getElementById("lobbyRow" + i).style.display = 'none';
+			document.getElementById('lobby-difficulty-cpu' + i).innerHTML = 'Computer: Very Easy';
 			lobby.data[i] = { account: '', cpu: 0 };
 		}
 		lobby.styleStartGame();
@@ -553,6 +515,11 @@ var lobby = {
 		document.getElementById('lobbyGovernment' + i).innerHTML = data.government;
 		lobby.data[i].government = data.government;
 	},
+	updateDifficulty: function(data){
+		var i = data.player;
+		document.getElementById('lobby-difficulty-cpu' + i).innerHTML = 'Computer: '+ data.difficulty;
+		lobby.data[i].difficulty = data.difficulty;
+	},
 	styleStartGame: function(){
 		if (my.player === 1){
 			// set start game button
@@ -567,6 +534,7 @@ var lobby = {
 		socket.unsubscribe('title:refreshGames');
 		// still in the lobby?
 		if (!lobby.gameStarted){
+			$("#lobby-cpu-row").remove();
 			lobby.gameStarted = true;
 			new Audio('sound/beepHi.mp3');
 			// normal countdown
@@ -933,16 +901,19 @@ function loadGameState(){
 			});
 			// init game player data
 			for (var i=0, len=data.players.length; i<len; i++){
-				var d = data.players[i];
-				game.player[d.player].account = d.account;
-				game.player[d.player].flag = d.flag;
-				game.player[d.player].nation = d.nation;
-				game.player[d.player].player = d.player;
-				game.player[d.player].playerColor = d.playerColor;
-				game.player[d.player].team = d.team;
-				game.player[d.player].government = d.government;
-				game.player[d.player].avatar = d.avatar;
-				game.player[d.player].cpu = d.cpu;
+				var d = data.players[i],
+					z = game.player[d.player];
+				z.account = d.account;
+				z.flag = d.flag;
+				z.nation = d.nation;
+				z.player = d.player;
+				z.playerColor = d.playerColor;
+				z.team = d.team;
+				z.government = d.government;
+				z.avatar = d.avatar;
+				z.cpu = d.cpu;
+				z.difficulty = d.difficulty;
+				z.difficultyShort = d.difficulty.replace(/ /g, '');
 			}
 			
 			// initialize client tile data
@@ -1056,7 +1027,7 @@ function loadGameState(){
 			var str = '';
 			// init diplomacyPlayers
 			function diploRow(p){
-				var account = p.cpu ? "Computer" : p.account,
+				var account = p.cpu ? ("Computer: "+ p.difficulty) : p.account,
 					icon = p.cpu ? 'fa fa-microchip' : lobby.governmentIcon(p.government),
 					gov = p.cpu ? 'Computer' : p.government;
 				function teamIcon(team){
@@ -1064,18 +1035,18 @@ function loadGameState(){
 						'<span class="diploTeam" data-placement="right" title="Team '+ team +'">'+ team +'</span>' :
 						'';
 				}
-				var str = '<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">'+
-					// bg
-					'<div>'+
+				var str = 
+				'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">'+
+					// bg 
+					'<img src="images/flags/'+ p.flagSrc +'" class="diplo-flag" data-placement="right" title="'+ p.flagShort + '">'+
 					// row 1
-					'<div class="flag '+ p.flagClass +'" data-placement="right" title="'+ p.flagShort + '"></div>'+ account + '</div>'+
+					'<div class="nowrap">'+
+						'<i class="' + icon + ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right" title="' + gov + '"></i> '+ account + 
+					'</div>'+
 					// row 2
-					'<div>'+ 
-					teamIcon(p.team) +
-					'<i class="' + icon + ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right" title="' + gov + '"></i>'+
-					p.nation +
-					'</div>\
-				</div>';
+					'<div class="nowrap">'+ teamIcon(p.team) + p.nation + '</div>'+
+					
+				'</div>';
 				return str;
 			}
 			var teamArr = [str];
@@ -1084,9 +1055,9 @@ function loadGameState(){
 				if (p.account){
 					p.flagArr = p.flag.split("."),
 					p.flagShort = p.flagArr[0],
-					p.flagClass = p.flag === 'Default.jpg' ? 
-						'player'+ game.player[p.player].playerColor : 
-						p.flagArr[0].replace(/ /g, "-");
+					p.flagSrc = p.flag === 'Default.jpg' ? 
+						'Player'+ game.player[p.player].playerColor +'.jpg' : 
+						p.flag;
 					if (g.teamMode){
 						var foo = diploRow(p);
 						// 100 just in case the players/game are increased later
@@ -1096,7 +1067,8 @@ function loadGameState(){
 					}
 				}
 			}
-			var diploHead = '<div class="header text-center diplo-head '+ g.gameMode.toLowerCase() +'">'+ g.gameMode +'</div>';
+			var diploHead = 
+			'<div class="header text-center diplo-head '+ g.gameMode.toLowerCase() +'">'+ g.gameMode +'</div>';
 			
 			if (g.teamMode){
 				document.getElementById('diplomacy-ui').innerHTML = diploHead + teamArr.join("");

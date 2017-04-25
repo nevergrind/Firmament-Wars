@@ -94,7 +94,7 @@ var events = {
 				g.teamMode = 1;
 				e1.textContent = 'Create Team Game';
 			}
-			e3.val(my.account).select();
+			e3.val(my.account +'_'+ ~~(Math.random()*999999)).select();
 			TweenMax.to(document.getElementById("createGameWrap"), g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
@@ -110,13 +110,13 @@ var events = {
 			g.speed = speed;
 			$("#createGameSpeed").text(speed);
 		}
-		$("#mainWrap").on(ui.click, '.chat-join', function(){
+		$('#mainWrap').on(ui.click, '.chat-join', function(){
 			socket.setChannel($(this).text());
 		});
-		$("#create").on(ui.click, function(){
+		$('#create').on(ui.click, function(){
 			openCreateGameModal('ffa');
 		});
-		$("#createRankedBtn").on(ui.click, function(){
+		$('#createRankedBtn').on(ui.click, function(){
 			openCreateGameModal('ranked');
 		});
 		$("#createTeamBtn").on(ui.click, function(){
@@ -464,7 +464,15 @@ var events = {
 					government: government
 				}
 			});
-			e.preventDefault();
+		}).on(ui.click, '.cpu-choice', function(e){
+			var difficulty = $(this).text();
+			$.ajax({
+				url: "php/change-cpu-difficulty.php",
+				data: {
+					difficulty: difficulty,
+					player: $(this).data('player')
+				}
+			});
 		}).on(ui.click, '.playerColorChoice', function(e){
 			var playerColor = $(this).data('playercolor');
 			$.ajax({
@@ -716,6 +724,9 @@ $(document).on('keydown', function(e){
 						action.rush();
 					}
 				}
+			} else if (x === 89){
+				// y
+				research.masonry();
 			} else if (x === 79){
 				// o
 				research.construction();

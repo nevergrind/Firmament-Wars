@@ -49,9 +49,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-1-9">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-1-15">
 	<script>
-		version = '1-1-9';
+		version = '1-1-15';
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -142,7 +142,7 @@
 				
 				if (isset($_SESSION['email'])){
 					echo 
-					'<a href="/account" class="btn fwBlue btn-responsive shadow4" title="Manage Account">'. $_SESSION['account'] .'</a>&ensp;';
+					'<a href="/account" target="_blank" class="btn fwBlue btn-responsive shadow4" title="Manage Account">'. $_SESSION['account'] .'</a>&ensp;';
 				}
 				?>
 					<a href="/blog/how-to-play-firmament-wars/" target="_blank" title="Nevergrind Browser Game Development News and Articles">How to Play</a>&ensp;
@@ -387,7 +387,7 @@
 						<div class='text-primary margin-top'>Game Name:</div> 
 						<div id='lobbyGameName'></div>
 					</div>
-					<div id="lobbyGamePasswordWrap">
+					<div id="lobbyGamePasswordWrap" class="none">
 						<div class='text-primary margin-top'>Password:</div> 
 						<div id='lobbyGamePassword'></div>
 					</div>
@@ -407,7 +407,7 @@
 				</div>
 				
 				<div id="lobbyButtonWrap" class="fw-primary text-center lobbyRelWrap">
-					<button id='startGame' type='button' class='btn btn-default btn-md btn-block btn-responsive shadow4 lobbyButtons'>Start Game</button>
+					<button id='startGame' type='button' class='btn btn-default btn-md btn-block btn-responsive shadow4 lobbyButtons none'>Start Game</button>
 					<button id='cancelGame' type='button' class='btn btn-default btn-md btn-block btn-responsive shadow4 lobbyButtons'>Exit</button>
 					<div id='countdown' class='text-warning'></div>
 				</div>
@@ -642,7 +642,7 @@
 					<button id="leaderboardDone" type="button" class="btn btn-md fwGreen btn-responsive shadow4 pull-right">Done</button>
 					<button id="leaderboardFFABtn" type="button" class="btn fwBlue btn-responsive shadow4">FFA</button>
 					<button id="leaderboardTeamBtn" type="button" class="btn fwBlue btn-responsive shadow4">Team</button>
-					<button id="leaderboardRankedBtn" type="button" class="btn fwBlue btn-responsive shadow4">Ranked</button>
+					<button id="leaderboardRankedBtn" type="button" class="btn fwBlue btn-responsive shadow4 ranked">Ranked</button>
 					<button id="leaderboard-trips-btn" type="button" class="btn fwBlue btn-responsive shadow4">Trips</button>
 					<button id="leaderboard-quads-btn" type="button" class="btn fwBlue btn-responsive shadow4">Quads</button>
 					<button id="leaderboard-pents-btn" type="button" class="btn fwBlue btn-responsive shadow4">Pents</button>
@@ -668,7 +668,7 @@
 						<div id="targetNameAnchor">
 							<img id="targetFlag" class="targetFlag" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 							<div>
-								<i id="targetCapStar" class="glyphicon glyphicon-star capitalStar no-select shadow4"></i>
+								<i id="targetCapStar" class="glyphicon glyphicon-star capitalStar no-select shadow4 none"></i>
 								<span id="targetNameWrap"></span>
 							</div>
 							<div id="targetResources"></div>
@@ -684,7 +684,7 @@
 				<i id="hotkeys" class="pointer options fa fa-keyboard-o" title="Hotkeys"></i>
 				<i id="options" class="pointer options fa fa-volume-up" title="Audio"></i>
 				<i id="surrender" class="pointer fa fa-flag" title="Surrender"></i>
-				<i id="exitSpectate" class="pointer fa fa-times-circle"></i>
+				<i id="exitSpectate" class="pointer fa fa-times-circle none"></i>
 			</div>
 			<div id="resourceBody">
 			
@@ -852,7 +852,7 @@
 					</div>
 				</div>
 				
-				<div id="fireCannons" class="actionButtons row"
+				<div id="fireCannons" class="actionButtons row none"
 					title="Fire cannons at an adjacent tile. Kills 2-4 troops.">
 					<div class="col-xs-9">
 						Fire <span class='text-hotkey'>C</span>annons
@@ -862,7 +862,7 @@
 					</div>
 				</div>
 				
-				<div id="launchMissile" class="actionButtons row"
+				<div id="launchMissile" class="actionButtons row none"
 					title="Launch a missile at any territory. Kills 7-12 troops.">
 					<div class="col-xs-9">
 						Launch <span class='text-hotkey'>M</span>issile
@@ -872,7 +872,7 @@
 					</div>
 				</div>
 				
-				<div id="launchNuke" class="actionButtons row" 
+				<div id="launchNuke" class="actionButtons row none" 
 					title="Launch a nuclear weapon at any enemy territory. Kills 80-99% of troops and destroys all structures.">
 					<div class="col-xs-9">Launch <span class='text-hotkey'>N</span>uke</div>
 					<div class="col-xs-3 tight2 text-right productionCost">
@@ -889,13 +889,33 @@
 					<i class="fa fa-gavel production resourceIcon"></i>Research
 				</div>
 				
-				<div id="researchConstruction" class="actionButtons row" 
-					title="Research construction to unlock bunkers.">
+				<div id="researchMasonry" class="actionButtons row" 
+					title="Research masonry to unlock bunkers.">
+					<div class="col-xs-9">
+						Masonr<span class='text-hotkey'>y</span>
+					</div>
+					<div class="col-xs-3 tight2 text-right productionCost">
+						<span id='masonryCost'>40</span>
+					</div>
+				</div>
+				
+				<div id="researchConstruction" class="actionButtons row none" 
+					title="Research construction to unlock walls.">
 					<div class="col-xs-9">
 						C<span class='text-hotkey'>o</span>nstruction
 					</div>
 					<div class="col-xs-3 tight2 text-right productionCost">
-						<span id='constructionCost'>40</span>
+						<span id='constructionCost'>60</span>
+					</div>
+				</div>
+				
+				<div id="researchEngineering" class="actionButtons row none" 
+					title="Research engineering to unlock walls and fortresses.">
+					<div class="col-xs-9">
+						<span class='text-hotkey'>E</span>ngineering
+					</div>
+					<div class="col-xs-3 tight2 text-right productionCost">
+						<span id='engineeringCost'>80</span>
 					</div>
 				</div>
 				
@@ -909,17 +929,7 @@
 					</div>
 				</div>
 				
-				<div id="researchEngineering" class="actionButtons row" 
-					title="Research engineering to unlock walls and fortresses.">
-					<div class="col-xs-9">
-						<span class='text-hotkey'>E</span>ngineering
-					</div>
-					<div class="col-xs-3 tight2 text-right productionCost">
-						<span id='engineeringCost'>80</span>
-					</div>
-				</div>
-				
-				<div id="researchRocketry" class="actionButtons row" 
+				<div id="researchRocketry" class="actionButtons row none" 
 					title="Research rocketry to unlock missiles.">
 					<div class="col-xs-9">
 						Roc<span class='text-hotkey'>k</span>etry
@@ -929,7 +939,7 @@
 					</div>
 				</div>
 				
-				<div id="researchAtomicTheory" class="actionButtons row" 
+				<div id="researchAtomicTheory" class="actionButtons row none" 
 					title="Research atomic theory to unlock nuclear weapons.">
 					<div class="col-xs-9">
 						A<span class='text-hotkey'>t</span>omic Theory
@@ -939,7 +949,7 @@
 					</div>
 				</div>
 				
-				<div id="researchFutureTech" class="actionButtons row" 
+				<div id="researchFutureTech" class="actionButtons row none" 
 					title="Research future technology.">
 					<div class="col-xs-9">
 						<span class='text-hotkey'>F</span>uture Tech

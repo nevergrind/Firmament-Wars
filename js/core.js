@@ -140,31 +140,34 @@ var g = {
 					localStorage.setItem('geoSeason', 1);
 					localStorage.setItem('geoTime', Date.now());
 				});
-				console.info('loc: ', g.geo);
+				//console.info('loc: ', g.geo);
 			});
 		}
 	},
 	checkPlayerData: function(){
-		var geo = localStorage.getItem('geo');
-		var geoTime = localStorage.getItem('geoTime');
-		var geoSeason = localStorage.getItem('geoSeason');
-		if (geoTime !== null || geoSeason === null){
-			// longer than 90 days?
-			if ((Date.now() - geoTime) > 7776000 || geoSeason === null){
+		if (my.account.indexOf('guest_') !== 0){
+			// not a guest
+			var geo = localStorage.getItem(my.account+ '_geo');
+			var geoTime = localStorage.getItem(my.account+ '_geoTime');
+			var geoSeason = localStorage.getItem(my.account+ '_geoSeason');
+			if (geoTime !== null || geoSeason === null){
+				// longer than 90 days?
+				if ((Date.now() - geoTime) > 7776000 || geoSeason === null){
+					g.updateUserInfo();
+				}
+			} else if (geo === null){
 				g.updateUserInfo();
 			}
-		} else if (geo === null){
-			g.updateUserInfo();
+			// ignore list
+			var ignore = localStorage.getItem('ignore');
+			if (ignore !== null){
+				g.ignore = JSON.parse(ignore);
+			} else {
+				var foo = []; 
+				localStorage.setItem('ignore', JSON.stringify(foo));
+			}
+			title.friendGet();
 		}
-		// ignore list
-		var ignore = localStorage.getItem('ignore');
-		if (ignore !== null){
-			g.ignore = JSON.parse(ignore);
-		} else {
-			var foo = []; 
-			localStorage.setItem('ignore', JSON.stringify(foo));
-		}
-		title.friendGet();
 	},
 	config: {
 		audio: {
@@ -178,7 +181,7 @@ var g = {
 			type: 'GET',
 			url: "php/keepAlive.php"
 		}).always(function() {
-			setTimeout(g.keepAlive, 300000);
+			setTimeout(g.keepAlive, 120000);
 		});
 	},
 	removeContainers: function(){
@@ -373,7 +376,7 @@ var game = {
 		'Distinguished Resolve Citation',
 		'Combat Service Award',
 		'Combat Gallantry Award',
-		'Vandamor Campaign Medal',
+		'Neverworks Campaign Medal',
 		"Global Commendation Ribbon",
 		'Holy Trips Ribbon',
 		'Sweet Quads Ribbon',//20
@@ -407,11 +410,11 @@ var game = {
 		'Achieved 2100+ rating',//10
 		'Achieved 2400+ rating',
 		'Achieved 2700+ rating',
-		'Reported a significant bug or exploit',
+		'Reported a significant bug or exploit', //13
 		'Recorded a video of Firmament Wars and shared it online',
 		'Won 10+ games in a row', // 15
 		'Won 25+ games in a row',
-		'Beat Nevergrind on normal',
+		'Referred a player to the Discord server',// 17
 		'Provided your real country code',
 		'Scored holy trips',
 		'Scored sweet quads',//20
@@ -508,7 +511,7 @@ var game = {
 		});
 		// found 2 players on diplomacy panel
 		$("#diplomacyPlayer" + i).removeClass('alive');
-		//console.info(playerCount, cpuCount, teams);
+		// console.info(playerCount, cpuCount, teams);
 		if (g.teamMode){
 			if (teams.length <= 1){
 				// disables spectate button
@@ -758,7 +761,7 @@ var game = {
 					if (d.cpu){
 						ai.takeTurn(d);
 					} else if (d.cpu === 0){
-						// 0 means player, null means empty
+						// 0 means player, null means barb
 						if (!firstPlayer){
 							firstPlayer = 1;
 							if (d.account === my.account){
@@ -853,6 +856,7 @@ var my = {
 	selectedFlagFull: "Default.jpg",
 	government: 'Despotism',
 	tech: {
+		masonry: 0,
 		construction: 0,
 		engineering: 0,
 		gunpowder: 0,
@@ -1044,6 +1048,7 @@ function initDom(){
 		cannonsCost: d.getElementById('cannonsCost'),
 		missileCost: d.getElementById('missileCost'),
 		nukeCost: d.getElementById('nukeCost'),
+		masonryCost: d.getElementById('masonryCost'),
 		constructionCost: d.getElementById('constructionCost'),
 		gunpowderCost: d.getElementById('gunpowderCost'),
 		engineeringCost: d.getElementById('engineeringCost'),
@@ -1055,6 +1060,7 @@ function initDom(){
 		fireCannons: d.getElementById('fireCannons'),
 		launchMissile: d.getElementById('launchMissile'),
 		launchNuke: d.getElementById('launchNuke'),
+		researchMasonry: d.getElementById('researchMasonry'),
 		researchConstruction: d.getElementById('researchConstruction'),
 		researchEngineering: d.getElementById('researchEngineering'),
 		researchGunpowder: d.getElementById('researchGunpowder'),

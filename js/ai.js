@@ -115,17 +115,6 @@ var ai = {
 		}
 		// defense
 		if (o.attacker !== o.defender){
-			/*
-			if (o.unitDiff > 20){
-				score -= 20;
-			} else if (o.unitDiff > 5){
-				score -= 10;
-			} else if (o.unitDiff > -5){
-				score += 10;
-			} else {
-				score += 20;
-			}
-			*/
 			score -= o.unitDiff;
 			// food
 			score += ~~((o.food) + Math.random()*10 - 5);
@@ -159,6 +148,33 @@ var ai = {
 						defTile = defender;
 					}
 				});
+			}
+		});
+		//console.info("ATTACKING FROM: ", atkTile, defTile, maxScore);
+		return [atkTile, defTile, maxScore];
+	},
+	getRangedWeaponTarget: function(player){
+		var atkTile = -1,
+			defTile = -1,
+			maxScore = 0;
+		
+		game.tiles.forEach(function(tile, index){
+			if (tile.player !== player){
+				var score = 50;
+				score += tile.units;
+				score += tile.defense * 20;
+				if (tile.capital){
+					score += 5;
+				}
+				if (!tile.player){
+					score = 0;
+				}
+				if (score > maxScore){
+					maxScore = score;
+					defTile = index;
+				}
+			} else {
+				atkTile = index;
 			}
 		});
 		//console.info("ATTACKING FROM: ", atkTile, defTile, maxScore);
@@ -240,6 +256,28 @@ var ai = {
 		// console.info('DEPLOYING TO: ', game.tiles[tile].name, maxScore);
 		return tile;
 	},
+	getDefenseTarget: function(player){
+		var tile = -1,
+			maxScore = 0;
+		
+		game.tiles.forEach(function(d, index){
+			var score = 0;
+			//console.info(index, d.player === cpuPlayer, d.units, d.flag);
+			if (d.player === player && d.units < 255 && d.flag){
+				// cpu's tile
+				// less than 255
+				// not a barb or empty
+				score += d.units;
+				score += ( (3 - d.defense) * 10);
+				if (score > maxScore){
+					maxScore = score;
+					tile = index;
+				}
+			}
+		});
+		console.info('DEPLOYING TO: ', tile);
+		return tile;
+	},
 	deploy: function(d, o){
 		var tile = ai.getDeployTarget(d.player);
 		if (tile !== undefined){
@@ -269,6 +307,9 @@ var ai = {
 		}); 
 		return o;
 	},
+	weaponDelay: function(){
+		return Math.random()*4000 + 1000;
+	},
 	fireCannons: function(d){
 		var tiles = ai.getWeaponTarget(d.player);
 		if (tiles[0] > -1){
@@ -282,7 +323,7 @@ var ai = {
 		}
 	},
 	launchMissile: function(d){
-		var tiles = ai.getWeaponTarget(d.player);
+		var tiles = ai.getRangedWeaponTarget(d.player);
 		if (tiles[0] > -1){
 			$.ajax({
 				url: 'php/ai-launchMissile.php',
@@ -304,19 +345,147 @@ var ai = {
 			});
 		}
 	},
-	fireNuke: function(d){
+	launchNuke: function(d){
+		var tiles = ai.getRangedWeaponTarget(d.player);
+		if (tiles[0] > -1){
+			$.ajax({
+				url: 'php/ai-launchNuke.php',
+				data: {
+					attacker: tiles[0],
+					defender: tiles[1]
+				}
+			}).done(function(){
+				setTimeout(function(){
+					$.ajax({
+						url: 'php/ai-launchNukeHit.php',
+						data: {
+							account: d.account,
+							defender: tiles[1]
+						}
+					});
+				}, 6000);
+			});
+		}
 	},
-	weaponDelay: function(){
-		return Math.random()*3000 + 2000;
+	upgradeTileDefense: function(d){
+		var tile = ai.getDefenseTarget(d.player);
+		if (tile > -1){
+			$.ajax({
+				url: 'php/ai-upgradeTileDefense.php',
+				data: {
+					target: tile,
+					account: d.account
+				}
+			});
+		}
+	},
+	deployRate: {
+		VeryEasy: 6, 
+		Easy: 5,
+		Normal: 4,
+		Hard: 4,
+		VeryHard: 3,
+		Mania: 2,
+		Juggernaut: 1
+	},
+	deployFood: {
+		VeryEasy: 50, 
+		Easy: 40,
+		Normal: 30,
+		Hard: 22,
+		VeryHard: 15,
+		Mania: 10,
+		Juggernaut: 5
+	},
+	attackFood: {
+		VeryEasy: 40,
+		Easy: 30,
+		Normal: 50,
+		Hard: 40,
+		VeryHard: 30,
+		Mania: 20,
+		Juggernaut: 10
+	},
+	attackMax: {
+		VeryEasy: 2,
+		Easy: 3,
+		Normal: 3,
+		Hard: 4,
+		VeryHard: 5,
+		Mania: 6,
+		Juggernaut: 8
+	},
+	attackBaseTurns: {
+		VeryEasy: 0, 
+		Easy: 0,
+		Normal: 1,
+		Hard: 1,
+		VeryHard: 1,
+		Mania: 2,
+		Juggernaut: 3
+	},
+	unlockNuke: {
+		VeryEasy: 250, 
+		Easy: 150,
+		Normal: 100,
+		Hard: 90,
+		VeryHard: 80,
+		Mania: 60,
+		Juggernaut: 20
+	},
+	unlockMissile: {
+		VeryEasy: 100, 
+		Easy: 65,
+		Normal: 50,
+		Hard: 40,
+		VeryHard: 30,
+		Mania: 20,
+		Juggernaut: 10
+	},
+	unlockCannons: {
+		VeryEasy: 50, 
+		Easy: 30,
+		Normal: 20,
+		Hard: 15,
+		VeryHard: 10,
+		Mania: 5,
+		Juggernaut: 0
+	},
+	missileRate: {
+		VeryEasy: .875, 
+		Easy: .75,
+		Normal: .66,
+		Hard: .6,
+		VeryHard: .5,
+		Mania: .33,
+		Juggernaut: 0
+	},
+	cannonRate: {
+		VeryEasy: .75, 
+		Easy: .66,
+		Normal: .5,
+		Hard: .35,
+		VeryHard: .2,
+		Mania: .1,
+		Juggernaut: 0
+	},
+	unlockStructures: {
+		VeryEasy: 30, 
+		Easy: 20,
+		Normal: 10,
+		Hard: 8,
+		VeryHard: 5,
+		Mania: 2,
+		Juggernaut: 0
 	},
 	takeTurn: function(d){
 		var o = ai.getFoodTotal(d.player);
 		// deploy
 		//console.info(g.resourceTick, mod, g.resourceTick % mod === 0);
-		if (g.resourceTick % 4 === 0){
+		if (g.resourceTick % ai.deployRate[d.difficultyShort] === 0){
 			ai.deploy(d, o); 
 			// bonus deploy
-			var len = ~~(o.food / 25);
+			var len = ~~(o.food / ai.deployFood[d.difficultyShort]);
 			if (len > 3){
 				len = 3;
 			}
@@ -325,9 +494,9 @@ var ai = {
 			}
 		}
 		// attack
-		var turns = Math.ceil(o.food / 30) + 1;
-		if (turns > 4){
-			turns = 4;
+		var turns = Math.ceil(o.food / ai.attackFood[d.difficultyShort]) + ai.attackBaseTurns[d.difficultyShort];
+		if (turns > ai.attackMax[d.difficultyShort]){
+			turns = ai.attackMax[d.difficultyShort];
 		}
 		for (var i=0; i<turns; i++){
 			(function(delay, d){
@@ -336,26 +505,42 @@ var ai = {
 				}, ((delay * 500) + 500) );
 			})(i, d);
 		}
-		if (g.resourceTick > 80){
-			
+		var usingNuke = 0;
+		if (g.resourceTick > ai.unlockNuke[d.difficultyShort]){
+			if (Math.random() > .95){
+				usingNuke = 1;
+				setTimeout(function(){
+					ai.launchNuke(d);
+				}, ai.weaponDelay());
+			}
 		}
-		if (g.resourceTick > 40){
-			if (Math.random() > .5){
-				var len = Math.ceil(o.food / 60);
-				for (var i=0; i<len; i++){
-					setTimeout(function(){
-						ai.launchMissile(d);
-					}, ai.weaponDelay());
+		if (!usingNuke){
+			if (g.resourceTick > ai.unlockMissile[d.difficultyShort]){
+				if (Math.random() > ai.missileRate[d.difficultyShort]){
+					var len = Math.ceil(o.food / 60);
+					for (var i=0; i<len; i++){
+						setTimeout(function(){
+							ai.launchMissile(d);
+						}, ai.weaponDelay());
+					}
+				}
+			} else if (g.resourceTick > ai.unlockCannons[d.difficultyShort]){
+				if (Math.random() > ai.cannonRate[d.difficultyShort]){
+					var len = Math.ceil(o.food / 30);
+					for (var i=0; i<len; i++){
+						setTimeout(function(){
+							ai.fireCannons(d);
+						}, ai.weaponDelay());
+					}
 				}
 			}
-		} else if (g.resourceTick > 20){
-			if (Math.random() > .66){
-				var len = Math.ceil(o.food / 30);
-				for (var i=0; i<len; i++){
-					setTimeout(function(){
-						ai.fireCannons(d);
-					}, ai.weaponDelay());
-				}
+		}
+		// defense
+		if (g.resourceTick > ai.unlockStructures[d.difficultyShort]){
+			if (Math.random() > .875){
+				setTimeout(function(){
+					ai.upgradeTileDefense(d);
+				}, ai.weaponDelay());
 			}
 		}
 	}

@@ -559,18 +559,21 @@ var stats = {
 		return str;
 	},
 	playerCell: function(p, i){
-		var color = game.player[i].playerColor,
+		var z = game.player[i],
+			color = z.playerColor,
 			flag = p.flag === 'Default.jpg' ? 'Player'+ color +'.jpg' : p.flag;
 		var str = '<td style="position: relative">\
-			<div class="statWrapper"><img class="statFlagBG" src="images/flags/'+ flag +'"></div>\
+			<div class="statWrapper">\
+				<img class="statFlagBG" src="images/flags/'+ flag +'">\
+			</div>\
 			<img class="statsFlags" src="images/flags/'+ flag +'">\
 			<div class="statsPlayerWrap">\
 				<div class="statsAccount chat-warning nowrap">\
-					<i class="'+ lobby.governmentIcon(game.player[i].government) +' diploSquare statsGov player'+ color +'"></i>';
+					<i class="'+ lobby.governmentIcon(z.government) +' diploSquare statsGov player'+ color +'"></i>';
 					if (g.teamMode){
-						str += '<span class="diploTeam">'+ game.player[i].team +'</span>';
+						str += '<span class="diploTeam">'+ z.team +'</span>';
 					}
-					var account = p.cpu === 1 ? "Computer" : p.account;
+					var account = p.cpu === 1 ? ("Computer: "+ z.difficulty) : p.account;
 					str += account +
 				'</div>\
 				<div class="statsNation nowrap">'+ p.nation +'</div>\
