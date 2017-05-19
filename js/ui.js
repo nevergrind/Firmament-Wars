@@ -225,12 +225,6 @@ function resizeWindow() {
 		xPercent: -50,
 		yPercent: -50
 	});
-	if (g.view === 'title'){
-		TweenMax.set("#firmamentWarsLogo", {
-			yPercent: -50,
-			top: '40%'
-		});
-	}
 	if (g.view === 'game'){
 		g.screen.resizeMap();
 		if (typeof worldMap[0] !== 'undefined'){

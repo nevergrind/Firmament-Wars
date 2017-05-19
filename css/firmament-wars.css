@@ -45,10 +45,6 @@ body {
     overflow: hidden
 }
 header {
-    position: absolute;
-    top: 0%;
-    left: 0%;
-    width: 100%;
     font-size: 1.275em;
     padding: .25em .5em;
     word-spacing: .05em
@@ -72,6 +68,11 @@ h2 {
     color: #fff;
     margin: 0;
     padding: 0
+}
+h1{
+    font-family: Cinzel, Palatino Linotype, serif;
+	text-align: center;
+	margin-bottom: 12px;
 }
 .header {
     font-family: Cinzel, Palatino Linotype, serif;
@@ -118,13 +119,10 @@ a:hover {
     bottom: 0
 }
 #firmamentWarsLogo {
-    position: absolute;
-    width: 80%;
-    max-width: 1280px;
-    top: -100%;
-    left: 10%;
-    right: 10%;
-    margin: 0 auto
+	position: relative;
+    width: 66%;
+	display: block;
+	margin: 4px auto;
 }
 #gameWrap {
     visibility: hidden;
@@ -258,22 +256,14 @@ a:hover {
     color: #fff;
     text-shadow: .5px .5px #444, 1px 1px #444
 }
-#titleMenu {
-    position: absolute;
-    top: 7vh;
-    bottom: 0vh;
-    left: 0;
-    width: 52%;
-    overflow: hidden;
+#titleMenu { 
     padding: .5vh .75vw;
-    z-index: 100;
     border-radius: 0
 }
 #refreshGameWrap {
     color: #bef;
     margin-top: .5vh;
     overflow-y: auto;
-    height: 69vh
 }
 #gameTable {
     table-layout: fixed;
@@ -287,9 +277,6 @@ a:hover {
 }
 tbody {
     border: 0
-}
-#gameTableHead {
-    background: rgba(0, 0, 0, .7)
 }
 #titleChatHeader {
     text-align: center;
@@ -329,20 +316,12 @@ tbody {
 }
 #titleChat {
     text-align: left;
-    position: absolute;
-    top: 7vh;
-    bottom: 0vh;
     padding: 0;
-    right: 0;
-    width: 48%;
     border-radius: 0
 }
 #titleChatWrap {
     position: relative;
-    padding: 0;
-    top: 1vh;
-    left: .25vw;
-    right: .25vw;
+    padding: 4px 0 4px 4px;
     font-family: Roboto, Verdana, Arial, sans-serif;
     color: #bef;
     text-shadow: 1px 1px #357;
@@ -350,17 +329,11 @@ tbody {
 }
 #titleChatPlayers {
     position: relative;
-    top: .25vh;
-    left: .25vw;
-    width: 40%;
     padding: 0;
     background: rgba(0, 55, 155, .2)
 }
 #titleChatLog {
-    position: absolute;
-    top: .25vh;
-    left: 41%;
-    right: .25vw;
+	width: 100%;
     background: rgba(0, 0, 0, .5);
     overflow-x: hidden;
     word-break: break-word
@@ -386,13 +359,14 @@ tbody {
 .titlePanelLeft {
     position: absolute;
     font-family: Roboto, Verdana, Arial, sans-serif;
-    height: 88vh;
+    height: 55vh;
     text-shadow: .5px .5px #357, 1px 1px #357;
     color: #bef;
-    border-radius: 4px;
-    border: 1px solid #357;
-    margin: 0;
-    padding: .25em .5em .5em
+    border-top: 1px solid #357;
+    border-left: 1px solid #357;
+    border-bottom: 1px solid #357;
+    padding: .25em .5em .5em;
+	margin: 0;
 }
 #leaderboard {
     width: 85%;
@@ -1555,6 +1529,7 @@ span.unlockGameBtn {
 .title-modals {
     visibility: hidden;
     position: absolute;
+	top: 0;
     padding: 8px;
     left: 0;
     right: 0;
@@ -2901,67 +2876,27 @@ input[type=number]::-webkit-outer-spin-button {
         display: none
     }
 }
-@media all and (min-height: 868px) and (max-height: 967px) {
-    #refreshGameWrap {
-        height: 66vh
-    }
-}
-@media all and (min-height: 768px) and (max-height: 867px) {
-    #refreshGameWrap {
-        height: 63vh
-    }
-}
 @media all and (min-height: 668px) and (max-height: 767px) {
-    .titlePanelLeft {
-        height: 86vh
-    }
-    #refreshGameWrap {
-        height: 60vh
-    }
     #leaderboardBody {
         height: 83vh
     }
 }
 @media all and (min-height: 558px) and (max-height: 667px) {
-    .titlePanelLeft {
-        height: 85vh
-    }
-    #refreshGameWrap {
-        height: 54vh
-    }
     #leaderboardBody {
         height: 82vh
     }
 }
 @media all and (min-height: 458px) and (max-height: 567px) {
-    .titlePanelLeft {
-        height: 84vh
-    }
-    #refreshGameWrap {
-        height: 46vh
-    }
     #leaderboardBody {
         height: 79vh
     }
 }
 @media all and (min-height: 368px) and (max-height: 467px) {
-    .titlePanelLeft {
-        height: 82vh
-    }
-    #refreshGameWrap {
-        height: 38vh
-    }
     #leaderboardBody {
         height: 74vh
     }
 }
 @media all and (max-height: 367px) {
-    .titlePanelLeft {
-        height: 80vh
-    }
-    #refreshGameWrap {
-        height: 29vh
-    }
     #leaderboardBody {
         height: 70vh
     }

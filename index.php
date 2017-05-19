@@ -49,9 +49,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-1-19">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-1-20">
 	<script>
-		version = '1-1-19';
+		version = '1-1-20';
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -62,14 +62,14 @@
 
 	<div id="firmamentWarsLogoWrap">
 		<img src="images/title/firmament-wars-background-2-75.jpg" id="firmamentWarsBG" title="Firmament Wars Background">
-		<img src="images/title/firmament-wars-logo-1280.png" id="firmamentWarsLogo" title="Firmament Wars Logo">
 	</div>
 	
-	<div id="mainWrap" class="portal">
+	<div id="mainWrap">
 	
-		<div id="titleMain" class="portal">
+		<div id="titleMain" class="container-fluid">
 			
-			<header class="shadow4 text-primary">
+			<header class="shadow4 text-primary row">
+				<div class="col-xs-12">
 				<?php
 				// load/init nation data
 				// remove players that left
@@ -139,7 +139,6 @@
 				$_SESSION['flagShort'] = $arr[0];
 				$_SESSION['flagClass'] = str_replace(" ", "-", $arr[0]);
 				
-				
 				if (isset($_SESSION['email'])){
 					echo 
 					'<a href="/account" target="_blank" class="btn fwBlue btn-responsive shadow4" title="Manage Account">'. $_SESSION['account'] .'</a>&ensp;';
@@ -167,63 +166,85 @@
 					echo '&ensp;<a id="login" class="btn btn-responsive fwBlue shadow4" href="/login.php?back=/games/firmament-wars">Login</a>';
 				}
 				?>
+					</div>
 				</div>
 				
 			</header>
 			
-				<div id="titleMenu" class="fw-primary">
-					<div id="menuHead">
-						<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">
-							Configure Nation
-						</button>
-						<button id="leaderboardBtn" type="button" class="btn fwBlue btn-responsive shadow4">
-							Leaderboard
-						</button>
-					</div>
+			<div id="titleMenu" class="fw-primary col-xs-6">
+				<div class="nowrap">
+					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- firmament wars ads -->
+					<ins class="adsbygoogle center"
+						 style="display:block;"
+						 data-ad-client="ca-pub-8697751823759563"
+						 data-ad-slot="3352931782"
+						 data-ad-format="auto"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>
+				</div>
 					<hr class="fancyhr">
+				<h1>
+					<div>Firmament Wars | Multiplayer Risk-like Strategy Game</div>
+					<div>a free online game</div>
+					<div>by <a href="https://www.linkedin.com/company/neverworks-games-llc">Neverworks Games</a></div>
+				</h1>
+				<img id="firmamentWarsLogo" src="images/title/firmament-wars-logo-1280.png">
+				<hr class="fancyhr">
+				
+				<div id="menuHead">
+					<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">
+						Configure Nation
+					</button>
+					<button id="leaderboardBtn" type="button" class="btn fwBlue btn-responsive shadow4">
+						Leaderboard
+					</button>
+				</div>
+				<hr class="fancyhr">
 			
-					<div id="myNationWrap" class="container tight w100">
-					
-						<img class="nationFlag" id="nationFlag" src="images/flags/<?php echo $flag; ?>" title="<?php echo $_SESSION['flagShort']; ?>">
-						<div class='row fw-text'>
-							<div class='col-xs-3'>
-								Name:
-							</div>
-							<div class='col-xs-9' id="nationName">
-								<div id="configureNationName" class="configureNationName">
-									<?php echo $_SESSION['nation']; ?>
-								</div>
-							</div>
-							<div class='col-xs-3'>
-								FFA:
-							</div>
-							<div class='col-xs-9'>
-								<?php echo $_SESSION['wins'] .'-'. $_SESSION['losses']; ?>
-							</div>
-							<div class='col-xs-3'>
-								Team:
-							</div>
-							<div class='col-xs-9'>
-								<?php echo $_SESSION['teamWins'] .'-'. $_SESSION['teamLosses']; ?>
-							</div>
-							<div class='col-xs-3'>
-								Ranked:
-							</div>
-							<div class='col-xs-9'>
-								<?php echo $_SESSION['rankedWins'] .'-'. $_SESSION['rankedLosses']; ?>
-							</div>
-							<div class='col-xs-3'>
-								Rating:
-							</div>
-							<div class='col-xs-9'>
-								<?php echo $_SESSION['rating']; ?>
+				<div id="myNationWrap" class="container tight w100">
+				
+					<img class="nationFlag" id="nationFlag" src="images/flags/<?php echo $flag; ?>" title="<?php echo $_SESSION['flagShort']; ?>">
+					<div class='row fw-text'>
+						<div class='col-xs-3'>
+							Name:
+						</div>
+						<div class='col-xs-9' id="nationName">
+							<div id="configureNationName" class="configureNationName">
+								<?php echo $_SESSION['nation']; ?>
 							</div>
 						</div>
-					
+						<div class='col-xs-3'>
+							FFA:
+						</div>
+						<div class='col-xs-9'>
+							<?php echo $_SESSION['wins'] .'-'. $_SESSION['losses']; ?>
+						</div>
+						<div class='col-xs-3'>
+							Team:
+						</div>
+						<div class='col-xs-9'>
+							<?php echo $_SESSION['teamWins'] .'-'. $_SESSION['teamLosses']; ?>
+						</div>
+						<div class='col-xs-3'>
+							Ranked:
+						</div>
+						<div class='col-xs-9'>
+							<?php echo $_SESSION['rankedWins'] .'-'. $_SESSION['rankedLosses']; ?>
+						</div>
+						<div class='col-xs-3'>
+							Rating:
+						</div>
+						<div class='col-xs-9'>
+							<?php echo $_SESSION['rating']; ?>
+						</div>
 					</div>
-					<div class="fw-text">
-					<hr class="fancyhr">
 				
+				</div>
+				<div class="fw-text">
+					<hr class="fancyhr">
+					
 					<div>
 						<button id="refresh-game-button" type="button" class="btn btn-md fwBlue btn-responsive shadow4 pull-right" title="Refresh Game List">
 							<i class="fa fa-refresh pointer"></i>
@@ -272,71 +293,88 @@
 				</div>
 			</div>
 			
-			<div id="titleChat" class="fw-primary text-center">
-				<div id="titleChatPlayers" class="titlePanelLeft">
-					<div id="titleChatHeader" class="chat-warning nowrap">
-						<span id="titleChatHeaderChannel"></span> 
-						<span id="titleChatHeaderCount"></span>
+			<div id="titleChat" class="fw-primary text-center col-xs-6">
+				<div class="nowrap">
+					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- firmament wars ads -->
+					<ins class="adsbygoogle center"
+						 style="display:block"
+						 data-ad-client="ca-pub-8697751823759563"
+						 data-ad-slot="3352931782"
+						 data-ad-format="auto"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>
+				</div>
+				<div id="titleChatPlayers" class="titlePanelLeft row">
+					<div class="col-xs-5 tight">
+						<div id="titleChatHeader" class="chat-warning nowrap">
+							<span id="titleChatHeaderChannel"></span> 
+							<span id="titleChatHeaderCount"></span>
+						</div>
+						<div id="title-chat-btn-wrap" class="text-center">
+							<div id="title-chat-btns" class="btn-group" role="group">
+								<button id="friend-status" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Friend list">
+									<i class="fa fa-users pointer"></i>
+								</button>
+								<button id="add-friend" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Toggle friend">
+									<i class="fa fa-user-plus pointer"></i>
+								</button>
+								<button id="who-account" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Query account data">
+									<i class="fa fa-vcard pointer"></i>
+								</button>
+								<button id="whisper-account" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Send another account a private message">@</button>
+								<button id="change-channel" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Change Channel">#</button>
+								<button id="share-url" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Share hyperlink with channel">
+									<i class="fa fa-external-link pointer"></i>
+								</button>
+								<button id="share-image" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Share image with channel using URL from another website">
+									<i class="fa fa-file-image-o pointer"></i>
+								</button>
+								<button id="share-video" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Share video with channel using a youtube video URL">
+									<i class="fa fa-file-video-o pointer"></i>
+								</button>
+								<button id="ignore-user" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Ignore account messages">
+									<i class="fa fa-microphone-slash pointer"></i>
+								</button>
+								<button id="get-help" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Help">
+									<i class="fa fa-question pointer"></i>
+								</button>
+							</div>
+						</div>
+						<div id="titleChatBody"></div>
 					</div>
-					<div id="title-chat-btn-wrap" class="text-center">
-						<div id="title-chat-btns" class="btn-group" role="group">
-							<button id="friend-status" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Friend list">
-								<i class="fa fa-users pointer"></i>
-							</button>
-							<button id="add-friend" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Toggle friend">
-								<i class="fa fa-user-plus pointer"></i>
-							</button>
-							<button id="who-account" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Query account data">
-								<i class="fa fa-vcard pointer"></i>
-							</button>
-							<button id="whisper-account" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Send another account a private message">@</button>
-							<button id="change-channel" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Change Channel">#</button>
-							<button id="share-url" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Share hyperlink with channel">
-								<i class="fa fa-external-link pointer"></i>
-							</button>
-							<button id="share-image" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Share image with channel using URL from another website">
-								<i class="fa fa-file-image-o pointer"></i>
-							</button>
-							<button id="share-video" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Share video with channel using a youtube video URL">
-								<i class="fa fa-file-video-o pointer"></i>
-							</button>
-							<button id="ignore-user" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Ignore account messages">
-								<i class="fa fa-microphone-slash pointer"></i>
-							</button>
-							<button id="get-help" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Help">
-								<i class="fa fa-question pointer"></i>
-							</button>
+					
+					<div class="col-xs-7 tight">
+						<div id="titleChatLog" class="titlePanelLeft">
+							<div class="chat-warning">Game night every Thursday @ 9 p.m. EST, 1 a.m. GMT.</div>
+							<a href="//discord.gg/D4suK8b" target="_blank">Join our Discord Server to receive notifications!</a>
+							<!-- 
+								right chat window
+								count from title screen 
+							-->
+							<?php
+							$currentPlayers = 0;
+							$result = mysqli_query($link, 'select count(row) count from `fwtitle` where timestamp > date_sub(now(), interval 20 second)');
+							if ($result->num_rows){
+								while ($row = mysqli_fetch_assoc($result)){
+									$currentPlayers += $row['count'];
+								}
+							}
+							/* count playing game */
+							$result = mysqli_query($link, 'select count(row) count from `fwplayers` where cpu=0 and timestamp > date_sub(now(), interval 20 second)');
+							// Associative array
+							if ($result->num_rows){
+								while ($row = mysqli_fetch_assoc($result)){
+									$currentPlayers += $row['count'];
+									echo '<div>There '. ($currentPlayers === 1 ? 'is' : 'are') .' '. $currentPlayers . ' '. ($currentPlayers === 1 ? 'person' : 'people') .' playing Firmament Wars</div>';
+								}
+							}
+							?>
 						</div>
 					</div>
-					<div id="titleChatBody"></div>
 				</div>
 					
-				<div id="titleChatLog" class="titlePanelLeft">
-					<div class="chat-warning">Game night every Thursday @ 9 p.m. EST, 1 a.m. GMT.</div>
-					<a href="//discord.gg/D4suK8b" target="_blank">Join our Discord Server to receive notifications!</a>
-				<!-- 
-					right chat window
-					count from title screen 
-				-->
-				<?php
-				$currentPlayers = 0;
-				$result = mysqli_query($link, 'select count(row) count from `fwtitle` where timestamp > date_sub(now(), interval 20 second)');
-				if ($result->num_rows){
-					while ($row = mysqli_fetch_assoc($result)){
-						$currentPlayers += $row['count'];
-					}
-				}
-				/* count playing game */
-				$result = mysqli_query($link, 'select count(row) count from `fwplayers` where cpu=0 and timestamp > date_sub(now(), interval 20 second)');
-				// Associative array
-				if ($result->num_rows){
-					while ($row = mysqli_fetch_assoc($result)){
-						$currentPlayers += $row['count'];
-						echo '<div>There '. ($currentPlayers === 1 ? 'is' : 'are') .' '. $currentPlayers . ' '. ($currentPlayers === 1 ? 'person' : 'people') .' playing Firmament Wars</div>';
-					}
-				}
-				?>
-				</div>
 				
 				<div id="titleChatWrap">
 					<div class="input-group">
