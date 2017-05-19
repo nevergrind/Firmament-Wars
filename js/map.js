@@ -1,11 +1,11 @@
 // map.js
 // map zooming and scrolling
 function mouseZoomIn(e){
-	g.mouse.zoom += 20;
-	if (g.mouse.zoom > 300){
-		g.mouse.zoom = 300;
+	g.mouse.zoom += 10;
+	if (g.mouse.zoom > 400){
+		g.mouse.zoom = 400;
 	}
-	TweenMax.to(DOM.worldWrap, .2, {
+	TweenMax.to(DOM.worldWrap, .5, {
 		transformOrigin: g.mouse.transX + "% " + g.mouse.transY + "%",
 		force3D: false,
 		smoothOrigin: true,
@@ -19,11 +19,11 @@ function mouseZoomIn(e){
 	});
 }
 function mouseZoomOut(e){
-	g.mouse.zoom -= 20;
-	if (g.mouse.zoom < 100){
-		g.mouse.zoom = 100;
+	g.mouse.zoom -= 10;
+	if (g.mouse.zoom < 60){
+		g.mouse.zoom = 60;
 	}
-	TweenMax.to(DOM.worldWrap, .2, {
+	TweenMax.to(DOM.worldWrap, .5, {
 		force3D: false,
 		smoothOrigin: true,
 		transformOrigin: g.mouse.transX + "% " + g.mouse.transY + "%",

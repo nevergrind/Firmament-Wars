@@ -383,7 +383,6 @@ var action = {
 					}
 				});
 			}, 6000);
-			console.info('launchNuke', data);
 			setProduction(data);
 		}).fail(function(e){
 			console.info('error: ', e);
@@ -402,9 +401,9 @@ var action = {
 		DOM.researchMasonry.style.display = !my.tech.masonry ? 'block' : 'none';
 		DOM.researchConstruction.style.display = my.tech.masonry && !my.tech.construction ? 'block' : 'none';
 		DOM.researchEngineering.style.display = my.tech.construction && !my.tech.engineering ? 'block' : 'none';
-		DOM.researchGunpowder.style.display = my.tech.gunpowder ? 'none' : 'block';
-		DOM.researchRocketry.style.display = my.tech.rocketry ? 'none' : 'block';
-		DOM.researchAtomicTheory.style.display = my.tech.atomicTheory ? 'none' : 'block';
+		DOM.researchGunpowder.style.display = !my.tech.gunpowder ? 'block' : 'none';
+		DOM.researchRocketry.style.display = my.tech.gunpowder && !my.tech.rocketry ? 'block' : 'none';
+		DOM.researchAtomicTheory.style.display = my.tech.rocketry && !my.tech.atomicTheory ? 'block' : 'none';
 		DOM.researchFutureTech.style.display = my.tech.atomicTheory ? 'block' : 'none';
 		if (my.tech.masonry){
 			// masonry unlocked

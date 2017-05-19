@@ -49,9 +49,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-1-17">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-1-19">
 	<script>
-		version = '1-1-17';
+		version = '1-1-19';
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -148,7 +148,10 @@
 					<a href="/blog/how-to-play-firmament-wars/" target="_blank" title="Nevergrind Browser Game Development News and Articles">How to Play</a>&ensp;
 					<i id="options" class="pointer options fa fa-volume-up"></i>
 				<div class="pull-right text-primary">
-					<a href="//www.youtube.com/user/Maelfyn" target="_blank">
+					<a href="//twitch.tv/maelfyn" target="_blank">
+						<i class="fa fa-twitch text-primary pointer"></i>
+					</a>
+					<a href="//youtube.com/c/Maelfyn" target="_blank">
 						<i class="fa fa-youtube text-primary pointer"></i>
 					</a>
 					<a href="//www.facebook.com/neverworksgames" target="_blank">
@@ -156,18 +159,6 @@
 					</a>
 					<a href="//twitter.com/maelfyn" target="_blank">
 						<i class="fa fa-twitter text-primary pointer"></i>
-					</a>
-					<a href="//github.com/Maelfyn/Firmament-Wars" target="_blank">
-						<i class="fa fa-github text-primary pointer"></i>
-					</a>
-					<a href="//reddit.com/r/firmamentwars" target="_blank">
-						<i class="fa fa-reddit text-primary pointer"></i>
-					</a>
-					<a href="https://www.linkedin.com/company-beta/10050163/" target="_blank">
-						<i class="fa fa-linkedin text-primary pointer"></i>
-					</a>
-					<a href="http://www.indiedb.com/games/firmament-wars" target="_blank">
-						<i class="fa fa-gamepad text-primary pointer"></i>
 					</a>
 				<?php
 				if (isset($_SESSION['email'])){

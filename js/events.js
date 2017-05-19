@@ -59,7 +59,7 @@ var events = {
 			});
 		});
 
-		$("#titleMenu").on(ui.click, ".wars", function(){
+		$("#titleMenu").on(ui.click, '.wars', function(){
 			var gameName = $(this).data("name");
 			$("#joinGame").val(gameName);
 			$("#joinGamePassword").val('');

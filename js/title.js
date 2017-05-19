@@ -912,6 +912,7 @@ var title = {
 		}).fail(function(data){
 			console.info(data);
 			Msg(data.statusText, 1.5);
+		}).always(function(){
 			g.unlock();
 		});
 	},
