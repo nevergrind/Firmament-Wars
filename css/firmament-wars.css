@@ -120,7 +120,7 @@ a:hover {
 }
 #firmamentWarsLogo {
 	position: relative;
-    width: 66%;
+    width: 80%;
 	display: block;
 	margin: 4px auto;
 }
@@ -264,6 +264,7 @@ a:hover {
     color: #bef;
     margin-top: .5vh;
     overflow-y: auto;
+	height: 20vh;
 }
 #gameTable {
     table-layout: fixed;

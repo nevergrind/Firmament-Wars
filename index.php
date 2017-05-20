@@ -49,9 +49,9 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-1-20">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-1-21">
 	<script>
-		version = '1-1-20';
+		version = '1-1-21';
 	</script>
 	<link rel="shortcut icon" href="/images1/favicon.png">
 </head>
@@ -171,27 +171,7 @@
 				
 			</header>
 			
-			<div id="titleMenu" class="fw-primary col-xs-6">
-				<div class="nowrap">
-					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-					<!-- firmament wars ads -->
-					<ins class="adsbygoogle center"
-						 style="display:block;"
-						 data-ad-client="ca-pub-8697751823759563"
-						 data-ad-slot="3352931782"
-						 data-ad-format="auto"></ins>
-					<script>
-					(adsbygoogle = window.adsbygoogle || []).push({});
-					</script>
-				</div>
-					<hr class="fancyhr">
-				<h1>
-					<div>Firmament Wars | Multiplayer Risk-like Strategy Game</div>
-					<div>a free online game</div>
-					<div>by <a href="https://www.linkedin.com/company/neverworks-games-llc">Neverworks Games</a></div>
-				</h1>
-				<img id="firmamentWarsLogo" src="images/title/firmament-wars-logo-1280.png">
-				<hr class="fancyhr">
+			<div id="titleMenu" class="fw-primary col-xs-5">
 				
 				<div id="menuHead">
 					<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">
@@ -202,8 +182,16 @@
 					</button>
 				</div>
 				<hr class="fancyhr">
+				
+				<h1>
+					<div>Firmament Wars | Multiplayer Risk-like Strategy</div>
+					<div>
+						a free online game by <a href="https://www.linkedin.com/company/neverworks-games-llc">Neverworks Games</a>
+					</div>
+				</h1>
+				<img id="firmamentWarsLogo" src="images/title/firmament-wars-logo-1280.png">
 			
-				<div id="myNationWrap" class="container tight w100">
+				<!--div id="myNationWrap" class="container tight w100">
 				
 					<img class="nationFlag" id="nationFlag" src="images/flags/<?php echo $flag; ?>" title="<?php echo $_SESSION['flagShort']; ?>">
 					<div class='row fw-text'>
@@ -241,7 +229,7 @@
 						</div>
 					</div>
 				
-				</div>
+				</div-->
 				<div class="fw-text">
 					<hr class="fancyhr">
 					
@@ -291,10 +279,24 @@
 						<tbody id="gameTableBody"></tbody>
 					</table>
 				</div>
+				
+				<hr class="fancyhr">
+				<div class="nowrap"  style="margin: 6px 0">
+					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- firmament wars ads -->
+					<ins class="adsbygoogle center"
+						 style="display:block;"
+						 data-ad-client="ca-pub-8697751823759563"
+						 data-ad-slot="3352931782"
+						 data-ad-format="auto"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>
+				</div>
 			</div>
 			
-			<div id="titleChat" class="fw-primary text-center col-xs-6">
-				<div class="nowrap">
+			<div id="titleChat" class="fw-primary text-center col-xs-7">
+				<div class="nowrap"  style="margin: 6px 0">
 					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 					<!-- firmament wars ads -->
 					<ins class="adsbygoogle center"
