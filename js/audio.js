@@ -27,7 +27,7 @@ var audio = {
 	},
 	save: function(){
 		// save to storage
-		var foo = JSON.stringify(g.config);
+		var foo = JSON.stringify(g.config); 
 		localStorage.setItem('config', foo);
 	},
 	setMusicVolume: function(val){
