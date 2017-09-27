@@ -50,3 +50,4 @@ class Pusher implements WampServerInterface {
     }
     public function onError(ConnectionInterface $conn, \Exception $e) {}
 }
+?>

@@ -1,0 +1,16 @@
+[07-Nov-2016 16:36:40 America/Denver] PHP Fatal error:  Uncaught exception 'ZMQSocketException' with message 'Failed to bind the ZMQ: Address already in use' in /home/nevergrind2/public_html/games/firmament-wars/socket/vendor/react/zmq/src/React/ZMQ/SocketWrapper.php:114
+Stack trace:
+#0 [internal function]: ZMQSocket->bind('tcp://127.0.0.1...')
+#1 /home/nevergrind2/public_html/games/firmament-wars/socket/vendor/react/zmq/src/React/ZMQ/SocketWrapper.php(114): call_user_func_array(Array, Array)
+#2 /home/nevergrind2/public_html/games/firmament-wars/socket/bin/push-server.php(11): React\ZMQ\SocketWrapper->__call('bind', Array)
+#3 /home/nevergrind2/public_html/games/firmament-wars/socket/bin/push-server.php(11): React\ZMQ\SocketWrapper->bind('tcp://127.0.0.1...')
+#4 {main}
+  thrown in /home/nevergrind2/public_html/games/firmament-wars/socket/vendor/react/zmq/src/React/ZMQ/SocketWrapper.php on line 114
+[11-Nov-2016 09:23:48 America/Denver] PHP Fatal error:  Uncaught exception 'ZMQSocketException' with message 'Failed to bind the ZMQ: Address already in use' in /home/nevergrind2/public_html/games/firmament-wars/socket/vendor/react/zmq/src/React/ZMQ/SocketWrapper.php:114
+Stack trace:
+#0 [internal function]: ZMQSocket->bind('tcp://127.0.0.1...')
+#1 /home/nevergrind2/public_html/games/firmament-wars/socket/vendor/react/zmq/src/React/ZMQ/SocketWrapper.php(114): call_user_func_array(Array, Array)
+#2 /home/nevergrind2/public_html/games/firmament-wars/socket/bin/push-server.php(11): React\ZMQ\SocketWrapper->__call('bind', Array)
+#3 /home/nevergrind2/public_html/games/firmament-wars/socket/bin/push-server.php(11): React\ZMQ\SocketWrapper->bind('tcp://127.0.0.1...')
+#4 {main}
+  thrown in /home/nevergrind2/public_html/games/firmament-wars/socket/vendor/react/zmq/src/React/ZMQ/SocketWrapper.php on line 114
