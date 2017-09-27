@@ -1,4 +1,5 @@
 <?php
+	// git test
 	session_start();
 	if($_SERVER["SERVER_NAME"] === "localhost"){
 		error_reporting(E_ALL);
