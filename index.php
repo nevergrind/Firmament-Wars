@@ -21,7 +21,7 @@
 			// logged in - not a guest
 			$_SESSION['guest'] = 0;
 		}
-	} else {
+	} else { 
 		// guest already determined
 		if (strpos($_SESSION['account'], '_') !== FALSE){
 			$_SESSION['guest'] = 1;
