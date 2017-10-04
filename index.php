@@ -30,7 +30,7 @@
 		}
 	}
 ?>
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head id='head'>
 	<title>Firmament Wars | Free Multiplayer Risk-Like Grand Strategy War Game</title>
