@@ -1,4 +1,4 @@
-(function($,Math,document,location,TweenMax,TimelineMax,Power0,Power1,Power2,Power3,Power4,Back,Elastic,Bounce,SteppedEase,Circ,Expo,Sine,setTimeout,setInterval){// ui.js
+(function($,Math,document,location,TweenMax,TimelineMax,Power0,Power1,Power2,Power3,Power4,Back,Elastic,Bounce,SteppedEase,Circ,Expo,Sine,setTimeout,setInterval,undefined){// ui.js
 
 var ui = {
 	setMobile: function(){
@@ -3137,21 +3137,36 @@ function Msg(msg, d) {
 }
 
 function playerLogout(){
+	
+	function nwLogout(){
+		$.ajax({
+			type: 'GET',
+			url: 'php/logout.php'
+		}).done(function(data){
+			location.reload();
+		}).fail(function(){
+			Msg("Logout failed. Is the server on fire?");
+		});
+	}
+	
     g.lock();
 	socket.removePlayer(my.account);
     $.ajax({
 		type: 'GET',
 		url: 'php/deleteFromFwtitle.php'
 	});
-    $.ajax({
-		type: 'GET',
-		url: 'php/logout.php'
-    }).done(function(data){
-		localStorage.removeItem('token');
-        location.reload();
-    }).fail(function(){
-        Msg("Logout failed. Is the server on fire?");
-    });
+	
+	var auth2 = gapi.auth2.getAuthInstance();
+	if (auth2 === null){
+		nwLogout();
+	} else {
+		auth2.signOut().then(function () {
+			nwLogout();
+		});
+	}
+	
+	localStorage.removeItem('email');
+	localStorage.removeItem('token');
 }
 
 function exitGame(bypass){
@@ -7790,4 +7805,4 @@ $(document).on('keydown', function(e){
 			}
 		}
 	}
-};})($,Math,document,location,TweenMax,TimelineMax,Power0,Power1,Power2,Power3,Power4,Back,Elastic,Bounce,SteppedEase,Circ,Expo,Sine,setTimeout,setInterval);
+};})($,Math,document,location,TweenMax,TimelineMax,Power0,Power1,Power2,Power3,Power4,Back,Elastic,Bounce,SteppedEase,Circ,Expo,Sine,setTimeout,setInterval,undefined);

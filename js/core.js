@@ -1151,21 +1151,36 @@ function Msg(msg, d) {
 }
 
 function playerLogout(){
+	
+	function nwLogout(){
+		$.ajax({
+			type: 'GET',
+			url: 'php/logout.php'
+		}).done(function(data){
+			location.reload();
+		}).fail(function(){
+			Msg("Logout failed. Is the server on fire?");
+		});
+	}
+	
     g.lock();
 	socket.removePlayer(my.account);
     $.ajax({
 		type: 'GET',
 		url: 'php/deleteFromFwtitle.php'
 	});
-    $.ajax({
-		type: 'GET',
-		url: 'php/logout.php'
-    }).done(function(data){
-		localStorage.removeItem('token');
-        location.reload();
-    }).fail(function(){
-        Msg("Logout failed. Is the server on fire?");
-    });
+	
+	var auth2 = gapi.auth2.getAuthInstance();
+	if (auth2 === null){
+		nwLogout();
+	} else {
+		auth2.signOut().then(function () {
+			nwLogout();
+		});
+	}
+	
+	localStorage.removeItem('email');
+	localStorage.removeItem('token');
 }
 
 function exitGame(bypass){

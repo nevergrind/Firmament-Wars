@@ -43,17 +43,15 @@
 	
 	<meta name="mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="google-signin-client_id" content="1015425037202-g5ri6qnj14b8vrk33lnu130ver9f43ef.apps.googleusercontent.com">
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
-	<meta property="article:published_time" content="<?php echo date("F d Y H:i:s",filemtime("index.php")); ?>">
 	
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-1-21">
-	<script>
-		version = '1-1-21';
-	</script>
-	<link rel="shortcut icon" href="/images1/favicon.png">
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-1-23">
+	<script>version = '1-1-23';</script>
+	<link rel="shortcut icon" href="/images/favicon.png">
 </head>
 
 <body id="body">
@@ -1119,7 +1117,14 @@
 	<div id="overlay" class="portal"></div>
 	<div id="Msg" class="shadow4"></div>
 </body>
-
+<script>
+	function googleSsoSignIn(){
+		gapi.load('auth2', function() {
+			console.info("Loaded SSO data");
+			gapi.auth2.init();
+		});
+	}
+</script>
 <script src="js/libs/TweenMax.min.js"></script>
 <script src="js/libs/jquery.min.js"></script>
 <script src="js/libs/Draggable.min.js"></script>
@@ -1128,16 +1133,20 @@
 <script src="js/libs/autobahn.min.js"></script>
 <script src="js/libs/bootstrap.min.js"></script>
 <script src="js/libs/bootstrap-slider.min.js"></script>
+<script src="//apis.google.com/js/platform.js?onload=googleSsoSignIn" async defer></script>
 <?php
 	require $_SERVER['DOCUMENT_ROOT'] . '/includes/ga.php';
-	echo '<script>
-		var guest = '. $_SESSION['guest'] .';
+?>
+<script>
+<?php
+	echo 'var guest = '. $_SESSION['guest'] .';
 		// set channel
 		if (location.hash.length > 1){
 			initChannel = location.hash.slice(1);
 		} else {
 			initChannel = "usa-" + (~~(Math.random()*'. ($currentPlayers / 1000) .') + 1);
 		}'; ?>
+		
 	(function(d){
 		if (location.host === 'nevergrind.com' || location.hash === '#test'){
 			var scripts = [
