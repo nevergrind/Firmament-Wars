@@ -49,12 +49,22 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-1-23">
-	<script>version = '1-1-23';</script>
+	<link rel="stylesheet" href="css/firmament-wars.css?v=1-1-24">
+	<script>version = '1-1-24';</script>
 	<link rel="shortcut icon" href="/images/favicon.png">
 </head>
 
 <body id="body">
+<script>
+	(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=737706186279455";
+		fjs.parentNode.insertBefore(js, fjs);
+		console.info("ATTEMPTING FB LOGIN...");
+	}(document, 'script', 'facebook-jssdk'));
+</script>
 		
 	<div id="titleViewBackdrop"></div>
 
@@ -1120,7 +1130,6 @@
 <script>
 	function googleSsoSignIn(){
 		gapi.load('auth2', function() {
-			console.info("Loaded SSO data");
 			gapi.auth2.init();
 		});
 	}
