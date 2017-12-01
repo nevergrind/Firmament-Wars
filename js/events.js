@@ -326,7 +326,7 @@ var events = {
 				});
 				Msg("Your nation's flag is now: " + my.selectedFlag);
 				document.getElementById('selectedFlag').textContent = my.selectedFlag;
-				if (!isMobile){
+				if (!isMobile && isLoggedIn){
 					$("[title]")
 						.tooltip('fixTitle')
 						.tooltip({
@@ -611,7 +611,7 @@ $(document).on('keydown', function(e){
 		}
 	} else {
 		if (g.view === 'title'){
-			if (!g.isModalOpen){
+			if (!g.isModalOpen && isLoggedIn){
 				$("#title-chat-input").focus();
 			}
 		} else if (g.view === 'lobby'){

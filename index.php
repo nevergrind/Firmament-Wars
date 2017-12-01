@@ -9,26 +9,7 @@
 	require('php/connect1.php');
 	require('php/values.php');
 	
-	if (!isset($_SESSION['guest'])){
-		// first visit
-		if ( !isset($_SESSION['email']) && !isset($_SESSION['account']) ){
-			// guests
-			mysqli_query($link, "insert into fwguests (`row`) VALUES (null)");
-			$guestId = mysqli_insert_id($link);
-			$_SESSION['guest'] = 1;
-			$_SESSION['account'] = 'guest_'. $guestId;
-		} else {
-			// logged in - not a guest
-			$_SESSION['guest'] = 0;
-		}
-	} else { 
-		// guest already determined
-		if (strpos($_SESSION['account'], '_') !== FALSE){
-			$_SESSION['guest'] = 1;
-		} else {
-			$_SESSION['guest'] = 0;
-		}
-	}
+	$_SESSION['guest'] = 0;
 ?>
 <!DOCTYPE html> 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
@@ -48,29 +29,36 @@
 	
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/firmament-wars.css?v=1-1-24">
-	<script>version = '1-1-24';</script>
+	<link rel="stylesheet" href="/css/font-awesome.min.css">
 	<link rel="shortcut icon" href="/images/favicon.png">
+	<?php
+	if (!isset($_SESSION['account'])){
+		require $_SERVER['DOCUMENT_ROOT'] . "/includes/loginCss.html";
+	}
+	$version = '1.1.29';
+	?>
+	<link rel="stylesheet" href="css/firmament-wars.<?php
+		echo $_SERVER["SERVER_NAME"] === "localhost" ? '' : 'min.'; ?>css?v=<?php echo $version;
+	?>">
+	<script>version = '1-1-29';</script>
 </head>
 
 <body id="body">
-<script>
-	(function(d, s, id) {
-		var js, fjs = d.getElementsByTagName(s)[0];
-		if (d.getElementById(id)) return;
-		js = d.createElement(s); js.id = id;
-		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=737706186279455";
-		fjs.parentNode.insertBefore(js, fjs);
-		console.info("ATTEMPTING FB LOGIN...");
-	}(document, 'script', 'facebook-jssdk'));
-</script>
-		
 	<div id="titleViewBackdrop"></div>
 
 	<div id="firmamentWarsLogoWrap">
 		<img src="images/title/firmament-wars-background-2-75.jpg" id="firmamentWarsBG" title="Firmament Wars Background">
 	</div>
+	<?php
+	if (!isset($_SESSION['account'])){
+		echo '<script>var isLoggedIn = 0;</script>';
+		$backdrop = 1;
+		require $_SERVER['DOCUMENT_ROOT'] . "/includes/loginModal.php";
+		require $_SERVER['DOCUMENT_ROOT'] . "/includes/loginRefer.php";
+	} else {
+		echo '<script>var isLoggedIn = 1;</script>';
+	}
+	?>
 	
 	<div id="mainWrap">
 	
@@ -147,7 +135,7 @@
 				$_SESSION['flagShort'] = $arr[0];
 				$_SESSION['flagClass'] = str_replace(" ", "-", $arr[0]);
 				
-				if (isset($_SESSION['email'])){
+				if ($_SESSION['account']){
 					echo 
 					'<a href="/account" target="_blank" class="btn fwBlue btn-responsive shadow4" title="Manage Account">'. $_SESSION['account'] .'</a>&ensp;';
 				}
@@ -161,17 +149,22 @@
 					<a href="//youtube.com/c/Maelfyn" target="_blank">
 						<i class="fa fa-youtube text-primary pointer"></i>
 					</a>
-					<a href="//www.facebook.com/neverworksgames" target="_blank">
+					<a href="//discord.gg/n2gp8rC" target="_blank">
+						<i class="fa fa-discord text-primary pointer"></i>
+					</a>
+					<a href="//www.facebook.com/maelfyn" target="_blank">
 						<i class="fa fa-facebook text-primary pointer"></i>
 					</a>
 					<a href="//twitter.com/maelfyn" target="_blank">
 						<i class="fa fa-twitter text-primary pointer"></i>
 					</a>
 				<?php
-				if (isset($_SESSION['email'])){
-					echo '&ensp;<a id="logout" class="btn fwBlue btn-responsive shadow4">Logout</a>';
-				} else {
-					echo '&ensp;<a id="login" class="btn btn-responsive fwBlue shadow4" href="/login.php?back=/games/firmament-wars">Login</a>';
+				if (!isset($_SESSION['kong'])){
+					if (isset($_SESSION['email'])){
+						echo '&ensp;<a id="logout" class="btn fwBlue btn-responsive shadow4">Logout</a>';
+					} else {
+						echo '&ensp;<a id="login" class="btn btn-responsive fwBlue shadow4" href="/login.php?back=/games/firmament-wars">Login</a>';
+					}
 				}
 				?>
 					</div>
@@ -188,13 +181,17 @@
 					<button id="leaderboardBtn" type="button" class="btn fwBlue btn-responsive shadow4">
 						Leaderboard
 					</button>
+					<!--button id="donate" type="button" class="btn fwBlue btn-responsive shadow4">
+						<a target="_blank" href="//streamlabs.com/maelfyn">Donate</a>
+					</button-->
 				</div>
 				<hr class="fancyhr">
 				
 				<h1>
-					<div>Firmament Wars | Multiplayer Risk-like Strategy</div>
+					<div>Firmament Wars<br>Multiplayer Risk-like Strategy</div>
 					<div>
-						a free online game by <a href="https://www.linkedin.com/company/neverworks-games-llc">Neverworks Games</a>
+						<div style="font-size: 80%">a free online game by</div>
+						<a href="https://www.linkedin.com/company/neverworks-games-llc">Neverworks Games</a>
 					</div>
 				</h1>
 				<img id="firmamentWarsLogo" src="images/title/firmament-wars-logo-1280.png">
@@ -287,11 +284,8 @@
 						<tbody id="gameTableBody"></tbody>
 					</table>
 				</div>
-				
-				<hr class="fancyhr">
-				<div class="nowrap"  style="margin: 6px 0">
+				<!--div class="nowrap"  style="margin: 6px 0">
 					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-					<!-- firmament wars ads -->
 					<ins class="adsbygoogle center"
 						 style="display:block;"
 						 data-ad-client="ca-pub-8697751823759563"
@@ -300,13 +294,12 @@
 					<script>
 					(adsbygoogle = window.adsbygoogle || []).push({});
 					</script>
-				</div>
+				</div-->
 			</div>
 			
 			<div id="titleChat" class="fw-primary text-center col-xs-7">
-				<div class="nowrap"  style="margin: 6px 0">
+				<!--div class="nowrap"  style="margin: 6px 0">
 					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-					<!-- firmament wars ads -->
 					<ins class="adsbygoogle center"
 						 style="display:block"
 						 data-ad-client="ca-pub-8697751823759563"
@@ -315,7 +308,7 @@
 					<script>
 					(adsbygoogle = window.adsbygoogle || []).push({});
 					</script>
-				</div>
+				</div-->
 				<div id="titleChatPlayers" class="titlePanelLeft row">
 					<div class="col-xs-5 tight">
 						<div id="titleChatHeader" class="chat-warning nowrap">
@@ -357,7 +350,6 @@
 					
 					<div class="col-xs-7 tight">
 						<div id="titleChatLog" class="titlePanelLeft">
-							<div class="chat-warning">Game night every Thursday @ 9 p.m. EST, 1 a.m. GMT.</div>
 							<a href="//discord.gg/D4suK8b" target="_blank">Join our Discord Server to receive notifications!</a>
 							<!-- 
 								right chat window
@@ -877,7 +869,7 @@
 						<span class='text-hotkey'>D</span>eploy Troops
 					</div>
 					<div class="col-xs-3 tight2 text-right productionCost">
-						<span id='deployCost'>10</cost>
+						<span id='deployCost'>10</span>
 					</div>
 				</div>
 			
@@ -1127,13 +1119,7 @@
 	<div id="overlay" class="portal"></div>
 	<div id="Msg" class="shadow4"></div>
 </body>
-<script>
-	function googleSsoSignIn(){
-		gapi.load('auth2', function() {
-			gapi.auth2.init();
-		});
-	}
-</script>
+
 <script src="js/libs/TweenMax.min.js"></script>
 <script src="js/libs/jquery.min.js"></script>
 <script src="js/libs/Draggable.min.js"></script>
@@ -1142,48 +1128,49 @@
 <script src="js/libs/autobahn.min.js"></script>
 <script src="js/libs/bootstrap.min.js"></script>
 <script src="js/libs/bootstrap-slider.min.js"></script>
-<script src="//apis.google.com/js/platform.js?onload=googleSsoSignIn" async defer></script>
+<script src='//cdn1.kongregate.com/javascripts/kongregate_api.js'></script>
+
 <?php
-	require $_SERVER['DOCUMENT_ROOT'] . '/includes/ga.php';
+require $_SERVER['DOCUMENT_ROOT'] . "/includes/loginJs.php";
 ?>
-<script>
+
+<script src="//apis.google.com/js/platform.js?onload=loginRenderButton" async defer></script>
+
 <?php
-	echo 'var guest = '. $_SESSION['guest'] .';
-		// set channel
-		if (location.hash.length > 1){
-			initChannel = location.hash.slice(1);
-		} else {
-			initChannel = "usa-" + (~~(Math.random()*'. ($currentPlayers / 1000) .') + 1);
-		}'; ?>
-		
-	(function(d){
-		if (location.host === 'nevergrind.com' || location.hash === '#test'){
-			var scripts = [
-				'firmament-wars'
-			]
-		} else {
-			var scripts = [
-				'ui',
-				'payment',
-				'stats',
-				'animate',
-				'core',
-				'title',
-				'lobby',
-				'ws',
-				'audio',
-				'map',
-				'actions',
-				'events',
-				'ai'
-			]
-		}
-		for(var i=0, len=scripts.length; i<len; i++){
-			var x = d.createElement('script');
-			x.src = 'js/' + scripts[i]+'.js?v=' + version;
-			x.async = false;
-			d.head.appendChild(x);
-		}
-	})(document);
+require $_SERVER['DOCUMENT_ROOT'] . '/includes/ga.php';
+if (!isset($_SESSION['account'])){
+	require $_SERVER['DOCUMENT_ROOT'] . "/includes/loginKong.html";
+}
+?>
+
+<script>
+var guest = 0;
+var initChannel = "usa-1";
+(function(d, s, x){
+	if (location.host === 'localhost'){
+		x = '.js';
+		s = [
+			'ui',
+			'payment',
+			'stats',
+			'animate',
+			'core',
+			'title',
+			'lobby',
+			'ws',
+			'audio',
+			'map',
+			'actions',
+			'events',
+			'ai'
+		]
+	}
+	for(var i=0, len=s.length; i<len; i++){
+		var e = d.createElement('script');
+		e.src = 'js/' + s[i] + x + '?v=<?php echo $version ?>';
+		e.async = false;
+		d.head.appendChild(e);
+	}
+})(document, ['firmament-wars'], '.min.js');
 </script>
 </html>

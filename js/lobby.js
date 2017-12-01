@@ -436,7 +436,7 @@ var lobby = {
 				data.flag;
 			document.getElementById("lobbyFlag" + i).src = 'images/flags/'+ flag;
 			
-			if (!isMobile){
+			if (!isMobile && isLoggedIn){
 				$('#lobbyFlag' + i)
 					.attr('title', data.flag.split(".").shift())
 					.tooltip({
@@ -447,7 +447,7 @@ var lobby = {
 			}
 			
 			if (my.player === i){
-				if (!isMobile){
+				if (!isMobile && isLoggedIn){
 					$("#lobbyPlayerColor" + i).attr('title', 'Select Player Color')
 						.tooltip({
 							container: 'body',
@@ -606,7 +606,7 @@ var lobby = {
 };
 
 function initOffensiveTooltips(){
-	if (!isMobile){
+	if (!isMobile && isLoggedIn){
 		$('#fireCannons')
 			.attr('title', 'Fire cannons at an adjacent tile. Kills ' + (2 + my.oBonus) +'-'+ (4 + my.oBonus) +' troops.')
 			.tooltip('fixTitle')

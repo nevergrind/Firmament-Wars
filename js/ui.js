@@ -190,6 +190,10 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
 })();
 
 function resizeWindow() {
+	function forceMod4(x){
+		while (x % 4 !== 0) x--;
+		return x;
+	}
     var winWidth = window.innerWidth,
 		winHeight = window.innerHeight
 		b = document.getElementById('body');
@@ -208,6 +212,8 @@ function resizeWindow() {
     	// too wide
     	h = ~~(w / widthToHeight);
     }
+	w = forceMod4(w);
+	h = forceMod4(h);
 	b.style.width = w + 'px';
 	b.style.height = h + 'px';
 	TweenMax.set(b, {
@@ -307,7 +313,7 @@ function updateTileInfo(tileId){
 		if (ind === 2){
 			defWord[2] = 'Fortresse';
 		}
-		if (!isMobile){
+		if (!isMobile && isLoggedIn){
 			var tooltip = defWord[ind] + 's boost tile defense +'+ defBonus[ind] +' and ' + defTooltip[ind];
 			$('#upgradeTileDefense')
 				.attr('title', tooltip)

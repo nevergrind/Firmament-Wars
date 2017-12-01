@@ -96,7 +96,7 @@ var title = {
 		if (title.titleUpdate){
 			// title chat loop
 			(function repeat(){
-				if (g.view === 'title'){
+				if (isLoggedIn && g.view === 'title'){
 					$.ajax({
 						type: "POST",
 						url: "php/titleUpdate.php",
@@ -138,7 +138,7 @@ var title = {
 									}
 								}
 							}
-							document.getElementById('titleChatHeaderCount').textContent = '('+ len +')';
+							document.getElementById('titleChatHeaderCount').textContent = len !== undefined ? '('+len+')' : '';
 							// game data sanity check
 							var serverGames = [];
 							if (data.gameData !== undefined){
@@ -961,7 +961,7 @@ var title = {
 	if (e1 !== null){
 		e1.innerHTML = str;
 	}
-	if (!isMobile){
+	if (!isMobile && isLoggedIn){
 		$('[title]').tooltip({
 			animation: false
 		});

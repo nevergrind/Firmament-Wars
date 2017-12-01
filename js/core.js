@@ -3,11 +3,6 @@ $.ajaxSetup({
 	type: 'POST',
 	timeout: 5000
 });
-if (location.host !== 'localhost'){
-	console.info("Disabling log, info");
-	//console.log = function(){};
-	//console.info = function(){};
-};
 TweenMax.defaultEase = Quad.easeOut;
 var g = {
 	gameDuration: 0,
@@ -304,7 +299,7 @@ var g = {
 };
 g.init = (function(){
 	// console.info("Initializing game...");
-	if (!isMobile){
+	if (!isMobile && isLoggedIn){
 		$('[title]').tooltip({
 			animation: false
 		});
@@ -1159,45 +1154,36 @@ function playerLogout(){
 		url: 'php/deleteFromFwtitle.php'
 	});
 	
-	var ssoFailLogins = 0;
-	
-	FB.getLoginStatus(function(ret) {
-		if (ret.authResponse) {
-			FB.logout(function(response) {
-				nwLogout(1);
-			});
-		} else {
-			ssoFailLogins++;
-			nwLogout();
-		}
-	});
-	
-	var auth2 = gapi.auth2.getAuthInstance();
-	if (auth2 !== null){
-		auth2.signOut().then(function () {
-			nwLogout(1);
+	try {
+		FB.getLoginStatus(function(ret) {
+			ret.authResponse && FB.logout(function(response) {});
 		});
-	} else {
-		ssoFailLogins++;
-		nwLogout();
+	} catch (err){
+		console.info('Facebook error: ', err);
+	}
+	
+	try {
+		var auth2 = gapi.auth2.getAuthInstance();
+		auth2.signOut().then(function(){});
+	} catch (err){
+		console.info('Google error: ', err);
 	}
 	
 	localStorage.removeItem('email');
 	localStorage.removeItem('token');
 	
-	function nwLogout(bypass){
-		// successful SSO logout or 2 fails triggers logout
-		if (bypass || ssoFailLogins >= 2){
-			$.ajax({
-				type: 'GET',
-				url: 'php/logout.php'
-			}).done(function(data){
-				location.reload();
-			}).fail(function(){
-				Msg("Logout failed. Is the server on fire?");
-			});
-		}
-	}
+	setTimeout(function(){
+		$.ajax({
+			type: 'GET',
+			url: 'php/logout.php'
+		}).done(function(data) {
+			localStorage.removeItem('token');
+			location.reload();
+			Msg("Logout successful");
+		}).fail(function() {
+			Msg("Logout failed.");
+		});
+	}, 1000);
 }
 
 function exitGame(bypass){
