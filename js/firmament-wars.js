@@ -1,4 +1,38 @@
-(function($,Math,document,location,TweenMax,TimelineMax,Power0,Power1,Power2,Power3,Power4,Back,Elastic,Bounce,SteppedEase,Circ,Expo,Sine,setTimeout,setInterval,undefined){
+(function(
+	$,
+	Math,
+	document,
+	location,
+	TweenMax,
+	TimelineMax,
+	Power0,
+	Power1,
+	Power2,
+	Power3,
+	Power4,
+	Back,
+	Elastic,
+	Bounce,
+	SteppedEase,
+	Circ,
+	Expo,
+	Sine,
+	setTimeout,
+	setInterval,
+	clearTimeout,
+	clearInterval,
+	webkitRequestAnimationFrame,
+	webkitCancelAnimationFrame,
+	getComputedStyle,
+	requestAnimationFrame,
+	cancelAnimationFrame,
+	window,
+	Array,
+	JSON,
+	Date,
+	Object,
+	undefined
+){
 // ui.js
 
 var ui = {
@@ -3593,47 +3627,6 @@ var title = {
 			}
 		}
 	},
-	listFriends: function(){
-		var len = g.friends.length;
-		g.chat('<div>Checking friends list...</div>');
-		if (g.friends.length){
-			$.ajax({
-				url: 'php/friendStatus.php',
-				data: {
-					friends: g.friends
-				}
-			}).done(function(data){
-				var str = '<div>Friend List ('+ len +')</div>';
-				for (var i=0; i<len; i++){
-					var index = data.players.indexOf(g.friends[i]);
-					if (index > -1){
-						// online
-						str += '<div><span class="chat-online titlePlayerAccount">' + g.friends[i] + '</span>';
-						if (typeof data.locations[index] === 'number'){
-							str += ' playing in game: ' + data.locations[index];
-						} else {
-							str += ' in chat channel: ';
-							if (g.view === 'title'){
-								// enable clicking to change channel
-								str += '<span class="chat-online chat-join">' + data.locations[index] + '</span>';
-							} else {
-								// not in a game ?
-								str += data.locations[index];
-							}
-						}
-						
-						str += '</div>';
-					} else {
-						// offline
-						str += '<div><span class="chat-muted titlePlayerAccount">' + g.friends[i] +'</span></div>';
-					}
-				}
-				g.chat(str);
-			});
-		} else {
-			g.chat("<div>You don't have any friends! Use /friend account to add a new friend.</div>", 'chat-muted');
-		}
-	},
 	friendGet: function(){
 		// friend list
 		g.friends = [];
@@ -5482,7 +5475,7 @@ var socket = {
 			setInterval(console.clear, 600000); // 10 min
 		}
 		(function keepAliveWs(){
-			socket.zmq.publish('admin:broadcast', {});
+			socket.zmq.publish('fw:hb', {});
 			setTimeout(keepAliveWs, 20000);
 		})();
 	},
@@ -5527,6 +5520,11 @@ var socket = {
 					title.updateGame(data);
 				});
 				socket.zmq.subscribe('admin:broadcast', function(topic, data) {
+					if (data.msg){
+						g.chat(data.msg, data.type);
+					}
+				});
+				socket.zmq.subscribe('fw:hb', function(topic, data) {
 					if (data.msg){
 						g.chat(data.msg, data.type);
 					}
@@ -7828,4 +7826,37 @@ var ai = {
 		}
 	}
 };
-})($,Math,document,location,TweenMax,TimelineMax,Power0,Power1,Power2,Power3,Power4,Back,Elastic,Bounce,SteppedEase,Circ,Expo,Sine,setTimeout,setInterval,undefined);
+})(
+	$,
+		Math,
+		document,
+		location,
+		TweenMax,
+		TimelineMax,
+		Power0,
+		Power1,
+		Power2,
+		Power3,
+		Power4,
+		Back,
+		Elastic,
+		Bounce,
+		SteppedEase,
+		Circ,
+		Expo,
+		Sine,
+		setTimeout,
+		setInterval,
+		clearTimeout,
+		clearInterval,
+		window.webkitRequestAnimationFrame === undefined ? undefined : webkitRequestAnimationFrame,
+		window.webkitCancelAnimationFrame === undefined ? undefined : webkitCancelAnimationFrame,
+		getComputedStyle,
+		requestAnimationFrame,
+		cancelAnimationFrame,
+		window,
+		Array,
+		JSON,
+		Date,
+		Object
+);

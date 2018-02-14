@@ -1,5 +1,6 @@
 <?php
 	session_start();
+	$_SESSION['referPath'] = '/games/firmament-wars';
 	if($_SERVER["SERVER_NAME"] === "localhost"){
 		error_reporting(E_ALL);
 		ini_set('display_errors', true);
@@ -29,7 +30,7 @@
 	
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
-	<link rel="stylesheet" href="/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="shortcut icon" href="/images/favicon.png">
 	<?php
 	if (!isset($_SESSION['account'])){
@@ -40,14 +41,14 @@
 	<link rel="stylesheet" href="css/firmament-wars.<?php
 		echo $_SERVER["SERVER_NAME"] === "localhost" ? '' : 'min.'; ?>css?v=<?php echo $version;
 	?>">
-	<script>version = '1-1-29';</script>
+	<script>version = '1-1-30';</script>
 </head>
 
 <body id="body">
 	<div id="titleViewBackdrop"></div>
 
 	<div id="firmamentWarsLogoWrap">
-		<img src="images/title/firmament-wars-background-2-75.jpg" id="firmamentWarsBG" title="Firmament Wars Background">
+		<img src="images/title/firmament-wars-background-image-75.jpg" id="firmamentWarsBG" title="Firmament Wars Background">
 	</div>
 	<?php
 	if (!isset($_SESSION['account'])){
@@ -140,7 +141,8 @@
 					'<a href="/account" target="_blank" class="btn fwBlue btn-responsive shadow4" title="Manage Account">'. $_SESSION['account'] .'</a>&ensp;';
 				}
 				?>
-					<a href="/blog/how-to-play-firmament-wars/" target="_blank" title="Nevergrind Browser Game Development News and Articles">How to Play</a>&ensp;
+					<a href="/blog/how-to-play-firmament-wars/" target="_blank" title="Nevergrind Browser Game Development News and Articles">How to Play</a>&ensp;|&thinsp;
+					<a href="/forums" title="Nevergrind Forums">Forums</a>&ensp;
 					<i id="options" class="pointer options fa fa-volume-up"></i>
 				<div class="pull-right text-primary">
 					<a href="//twitch.tv/maelfyn" target="_blank">

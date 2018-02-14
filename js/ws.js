@@ -126,7 +126,7 @@ var socket = {
 			setInterval(console.clear, 600000); // 10 min
 		}
 		(function keepAliveWs(){
-			socket.zmq.publish('admin:broadcast', {});
+			socket.zmq.publish('fw:hb', {});
 			setTimeout(keepAliveWs, 20000);
 		})();
 	},
@@ -171,6 +171,11 @@ var socket = {
 					title.updateGame(data);
 				});
 				socket.zmq.subscribe('admin:broadcast', function(topic, data) {
+					if (data.msg){
+						g.chat(data.msg, data.type);
+					}
+				});
+				socket.zmq.subscribe('fw:hb', function(topic, data) {
 					if (data.msg){
 						g.chat(data.msg, data.type);
 					}

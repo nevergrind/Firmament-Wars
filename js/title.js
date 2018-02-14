@@ -374,47 +374,6 @@ var title = {
 			}
 		}
 	},
-	listFriends: function(){
-		var len = g.friends.length;
-		g.chat('<div>Checking friends list...</div>');
-		if (g.friends.length){
-			$.ajax({
-				url: 'php/friendStatus.php',
-				data: {
-					friends: g.friends
-				}
-			}).done(function(data){
-				var str = '<div>Friend List ('+ len +')</div>';
-				for (var i=0; i<len; i++){
-					var index = data.players.indexOf(g.friends[i]);
-					if (index > -1){
-						// online
-						str += '<div><span class="chat-online titlePlayerAccount">' + g.friends[i] + '</span>';
-						if (typeof data.locations[index] === 'number'){
-							str += ' playing in game: ' + data.locations[index];
-						} else {
-							str += ' in chat channel: ';
-							if (g.view === 'title'){
-								// enable clicking to change channel
-								str += '<span class="chat-online chat-join">' + data.locations[index] + '</span>';
-							} else {
-								// not in a game ?
-								str += data.locations[index];
-							}
-						}
-						
-						str += '</div>';
-					} else {
-						// offline
-						str += '<div><span class="chat-muted titlePlayerAccount">' + g.friends[i] +'</span></div>';
-					}
-				}
-				g.chat(str);
-			});
-		} else {
-			g.chat("<div>You don't have any friends! Use /friend account to add a new friend.</div>", 'chat-muted');
-		}
-	},
 	friendGet: function(){
 		// friend list
 		g.friends = [];
