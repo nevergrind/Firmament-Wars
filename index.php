@@ -36,7 +36,7 @@
 	if (!isset($_SESSION['account'])){
 		require $_SERVER['DOCUMENT_ROOT'] . "/includes/loginCss.html";
 	}
-	$version = '1.1.29';
+	$version = '1.1.30';
 	?>
 	<link rel="stylesheet" href="css/firmament-wars.<?php
 		echo $_SERVER["SERVER_NAME"] === "localhost" ? '' : 'min.'; ?>css?v=<?php echo $version;
@@ -1146,6 +1146,19 @@ if (!isset($_SESSION['account'])){
 ?>
 
 <script>
+	if (app.isServer || app.isApp) {
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-35167620-1', 'auto');
+		ga('send', 'pageview');
+		if (app.isServer) {
+			document.getElementById('social-login-wrap').style.display = 'block';
+		}
+	}
+
+
 var guest = 0;
 var initChannel = "usa-1";
 (function(d, s, x){
