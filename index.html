@@ -1,18 +1,4 @@
-<?php
-	session_start();
-	$_SESSION['referPath'] = '/games/firmament-wars';
-	if($_SERVER["SERVER_NAME"] === "localhost"){
-		error_reporting(E_ALL);
-		ini_set('display_errors', true);
-	} else {
-		error_reporting(0);
-	}
-	require('php/connect1.php');
-	require('php/values.php');
-	
-	$_SESSION['guest'] = 0;
-?>
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head id='head'>
 	<title>Firmament Wars | Free Multiplayer Risk-Like Grand Strategy War Game</title>
@@ -27,124 +13,125 @@
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="google-signin-client_id" content="1015425037202-g5ri6qnj14b8vrk33lnu130ver9f43ef.apps.googleusercontent.com">
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
+	<script>
+		var app = {
+			version: '1.0.0',
+			initialized: 0, // init-game returned
+			isApp: location.protocol === 'chrome-extension:' ? 1 : 0,
+			account: ''
+		};
+		app.url = app.isApp ?
+			'https://nevergrind.com/games/firmament-wars/' : '';
+		app.socketUrl = app.isApp ?
+			'nevergrind.com' : location.hostname;
+		app.isServer = 0;
+		if (!app.isApp && location.hostname === 'nevergrind.com'){
+			app.isServer = 1;
+		}
+		app.isLocal = location.hostname.indexOf('localhost') > -1;
+		app.loginUrl = app.isLocal ? '' : 'https://nevergrind.com';
+		// fw only
+		var isLoggedIn = 0;
+	</script>
+	<style>
+		body {
+			display: none;
+		}
+	</style>
 	
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="shortcut icon" href="/images/favicon.png">
-	<?php
-	if (!isset($_SESSION['account'])){
-		require $_SERVER['DOCUMENT_ROOT'] . "/includes/loginCss.html";
-	}
-	$version = '1.1.30';
-	?>
-	<link rel="stylesheet" href="css/firmament-wars.<?php
-		echo $_SERVER["SERVER_NAME"] === "localhost" ? '' : 'min.'; ?>css?v=<?php echo $version;
-	?>">
-	<script>version = '1-1-30';</script>
 </head>
 
 <body id="body">
+<script>
+	(function(b){
+		var e = document.createElement('link');
+		e.href = 'css/firmament-wars.' + (app.isLocal ? 'css' : 'min.css') + '?v='+ app.version;
+		e.rel = 'stylesheet';
+		b.appendChild(e);
+	})(document.body);
+</script>
+
+<div id="login-modal">
+	<div id="login-backdrop"></div>
+	<div id="login-container">
+		<form id="loginWrap"
+			  accept-charset="UTF-8"
+			  class="strongShadow"
+			  method="post"
+			  onSubmit="return loginAuthenticate(this);">
+			<fieldset>
+				<p>
+					<div>
+						<a id="createAccount" class="login-actions strongShadow">Create an Account</a>
+					</div>
+					<div>or</div>
+					<div>
+						<a id="gotoAccount" class="login-actions strongShadow">Login with your Neverworks Account</a>
+					</div>
+				</p>
+				<div id="login-form-contents"></div>
+
+				<div id="social-login-wrap">
+					<hr class="fancy-hr">
+
+					<p>Or login with existing accounts:</p>
+
+					<div id="google-wrap">
+						<span id="my-signin2"></span>
+					</div>
+
+					<a id="twitter-wrap" href="/twitterLogin.php">
+						<div id="twitter-icon-wrap">
+							<i id="twitter-icon" class="fa fa-twitter"></i>
+						</div>
+						<div id="twitter-text">Sign in with Twitter</div>
+					</a>
+
+					<fb:login-button
+						class="fb_button"
+						data-width="176"
+						data-max-rows="1"
+						data-size="large"
+						data-button-type="login_with"
+						data-show-faces="false"
+						data-auto-logout-link="false"
+						data-use-continue-as="false"
+						scope="public_profile,email"
+						onlogin="checkLoginState();">
+					</fb:login-button>
+				</div>
+
+				<hr class="fancy-hr">
+				<div>Problems?</div>
+				<div>Contact: support@nevergrind.com</div>
+			</fieldset>
+		</form>
+	</div>
+</div> <!-- end login -->
+
+
+
+
 	<div id="titleViewBackdrop"></div>
 
-	<div id="firmamentWarsLogoWrap">
-		<img src="images/title/firmament-wars-background-image-75.jpg" id="firmamentWarsBG" title="Firmament Wars Background">
-	</div>
-	<?php
-	if (!isset($_SESSION['account'])){
-		echo '<script>var isLoggedIn = 0;</script>';
-		$backdrop = 1;
-		require $_SERVER['DOCUMENT_ROOT'] . "/includes/loginModal.php";
-		require $_SERVER['DOCUMENT_ROOT'] . "/includes/loginRefer.php";
-	} else {
-		echo '<script>var isLoggedIn = 1;</script>';
-	}
-	?>
+	<img src="images/title/firmament-wars-background-image-75.jpg"
+		 id="firmamentWarsBG">
 	
 	<div id="mainWrap">
 	
-		<div id="titleMain" class="container-fluid">
+		<div id="titleMain">
 			
-			<header class="shadow4 text-primary row">
-				<div class="col-xs-12">
-				<?php
-				// load/init nation data
-				// remove players that left
-				mysqli_query($link, 'delete from fwtitle where timestamp < date_sub(now(), interval 1 minute)');
-				
-				// check if nation exists; create if not
-				$query = 'select count(row) from fwnations where account=?';
-				$stmt = $link->prepare($query);
-				$stmt->bind_param('s', $_SESSION['account']);
-				$stmt->execute();
-				$stmt->bind_result($dbcount);
-				while($stmt->fetch()){
-					$count = $dbcount;
-				}
-				$_SESSION['rating'] = 1500;
-				$_SESSION['totalGames'] = 0;
-				$_SESSION['wins'] = 0;
-				$_SESSION['losses'] = 0;
-				$_SESSION['teamWins'] = 0;
-				$_SESSION['teamLosses'] = 0;
-				$_SESSION['rankedWins'] = 0;
-				$_SESSION['rankedLosses'] = 0;
-				$_SESSION['disconnects'] = 0;
-				$_SESSION['disconnectRate'] = 0;
-				$_SESSION['avatar'] = $_SESSION['defaultAvatar'];
-				$nation = 'Kingdom of '. ucfirst($_SESSION['account']);
-				$flag = !isset($_SESSION['flag']) ? 'United States.jpg' : $_SESSION['flag'];
-				
-				if($count > 0){
-					// nation exists
-					$query = "select nation, flag, rating, wins, losses, teamWins, teamLosses, rankedWins, rankedLosses, disconnects, avatar from fwnations where account=?";
-					$stmt = $link->prepare($query);
-					$stmt->bind_param('s', $_SESSION['account']);
-					$stmt->execute();
-					$stmt->bind_result($dName, $dFlag, $rating, $wins, $losses, $teamWins, $teamLosses, $rankedWins, $rankedLosses, $disconnects, $avatar);
-					while($stmt->fetch()){
-						$nation = $dName;
-						$flag = $dFlag;
-						$_SESSION['rating'] = $rating;
-						$_SESSION['totalGames'] = $wins + $losses + $rankedWins + $rankedLosses + $disconnects;
-						$_SESSION['wins'] = $wins;
-						$_SESSION['losses'] = $losses;
-						$_SESSION['teamWins'] = $teamWins;
-						$_SESSION['teamLosses'] = $teamLosses;
-						$_SESSION['rankedWins'] = $rankedWins;
-						$_SESSION['rankedLosses'] = $rankedLosses;
-						$_SESSION['disconnects'] = $disconnects;
-						$_SESSION['disconnectRate'] = $_SESSION['totalGames'] === 0 ? 0 : round(($_SESSION['disconnects'] / $_SESSION['totalGames']) * 100) ;
-						$_SESSION['avatar'] = $avatar;
-					}
-					// init nation values
-					$_SESSION['rating'] = $rating;
-					$_SESSION['nation'] = $nation;
-					$_SESSION['flag'] = $flag;
-				} else {
-					if (!$_SESSION['guest']){
-						// create nation
-						$query = "insert into fwnations (`account`, `nation`, `flag`, `avatar`) VALUES (?, '$nation', '$flag', '". $_SESSION['defaultAvatar'] ."')";
-						$stmt = $link->prepare($query);
-						$stmt->bind_param('s', $_SESSION['account']);
-						$stmt->execute();
-					}
-					$_SESSION['nation'] = $nation;
-					$_SESSION['flag'] = $flag;
-				}
-				$arr = explode(".", $_SESSION['flag']);
-				$_SESSION['flagShort'] = $arr[0];
-				$_SESSION['flagClass'] = str_replace(" ", "-", $arr[0]);
-				
-				if ($_SESSION['account']){
-					echo 
-					'<a href="/account" target="_blank" class="btn fwBlue btn-responsive shadow4" title="Manage Account">'. $_SESSION['account'] .'</a>&ensp;';
-				}
-				?>
-					<a href="/blog/how-to-play-firmament-wars/" target="_blank" title="Nevergrind Browser Game Development News and Articles">How to Play</a>&ensp;|&thinsp;
-					<a href="/forums" title="Nevergrind Forums">Forums</a>&ensp;
+			<header class="shadow4 text-primary fw-primary">
+				<div>
+					<a id="logout" class="btn fwBlue btn-responsive shadow4">Loading...</a>&ensp;
 					<i id="options" class="pointer options fa fa-volume-up"></i>
-				<div class="pull-right text-primary">
+				</div>
+				<img src="images/neverworks-txt.png">
+				<!--div id="social-links" class="text-primary">
 					<a href="//twitch.tv/maelfyn" target="_blank">
 						<i class="fa fa-twitch text-primary pointer"></i>
 					</a>
@@ -160,234 +147,134 @@
 					<a href="//twitter.com/maelfyn" target="_blank">
 						<i class="fa fa-twitter text-primary pointer"></i>
 					</a>
-				<?php
-				if (!isset($_SESSION['kong'])){
-					if (isset($_SESSION['email'])){
-						echo '&ensp;<a id="logout" class="btn fwBlue btn-responsive shadow4">Logout</a>';
-					} else {
-						echo '&ensp;<a id="login" class="btn btn-responsive fwBlue shadow4" href="/login.php?back=/games/firmament-wars">Login</a>';
-					}
-				}
-				?>
-					</div>
-				</div>
+				</div-->
 				
 			</header>
+
+			<div id="title-column-wrap">
 			
-			<div id="titleMenu" class="fw-primary col-xs-5">
-				
-				<div id="menuHead">
-					<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">
-						Configure Nation
-					</button>
-					<button id="leaderboardBtn" type="button" class="btn fwBlue btn-responsive shadow4">
-						Leaderboard
-					</button>
-					<!--button id="donate" type="button" class="btn fwBlue btn-responsive shadow4">
-						<a target="_blank" href="//streamlabs.com/maelfyn">Donate</a>
-					</button-->
-				</div>
-				<hr class="fancyhr">
-				
-				<h1>
-					<div>Firmament Wars<br>Multiplayer Risk-like Strategy</div>
-					<div>
-						<div style="font-size: 80%">a free online game by</div>
-						<a href="https://www.linkedin.com/company/neverworks-games-llc">Neverworks Games</a>
+				<div id="titleMenu" class="fw-primary">
+
+					<div id="menuHead">
+						<button id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">
+							Configure Nation
+						</button>
+						<button id="leaderboardBtn" type="button" class="btn fwBlue btn-responsive shadow4">
+							Leaderboard
+						</button>
 					</div>
-				</h1>
-				<img id="firmamentWarsLogo" src="images/title/firmament-wars-logo-1280.png">
-			
-				<!--div id="myNationWrap" class="container tight w100">
-				
-					<img class="nationFlag" id="nationFlag" src="images/flags/<?php echo $flag; ?>" title="<?php echo $_SESSION['flagShort']; ?>">
-					<div class='row fw-text'>
-						<div class='col-xs-3'>
-							Name:
-						</div>
-						<div class='col-xs-9' id="nationName">
-							<div id="configureNationName" class="configureNationName">
-								<?php echo $_SESSION['nation']; ?>
+					<hr class="fancyhr">
+
+					<h1>
+						<div>Firmament Wars<br>Realtime Strategic Warfare</div>
+						<div style="font-size: 80%">developed by</div>
+						<div>Neverworks Games</div>
+					</h1>
+					<img id="firmamentWarsLogo" src="images/title/firmament-wars-logo-1280.png">
+
+					<div class="fw-text">
+						<hr class="fancyhr">
+
+						<div id="title-action-row">
+							<div>
+								<button id="play-now-btn" type="button" class="btn btn-md fwBlue btn-responsive shadow4">
+									Play Now
+								</button>
+								<div class="btn-group" class="fwBlue">
+									<button id="createGameBtn" type="button" class="titleButtons btn btn-md btn-responsive shadow4 dropdown-toggle fwDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Create Game <span class="titleCaret caret chat-warning"></span>
+									</button>
+									<ul class="dropdown-menu fwDropdown">
+										<li id="create" class="gameSelect">
+											<a href="#">Free For All</a>
+										</li>
+										<li id="createTeamBtn" class="gameSelect">
+											<a href="#">Team Game</a>
+										</li>
+										<li id="createRankedBtn" class="gameSelect">
+											<a href="#">Ranked Match</a>
+										</li>
+									</ul>
+								</div>
+								<button id="joinPrivateGameBtn" type="button" class="btn btn-md fwBlue btn-responsive shadow4">Join Private Game</button>
 							</div>
-						</div>
-						<div class='col-xs-3'>
-							FFA:
-						</div>
-						<div class='col-xs-9'>
-							<?php echo $_SESSION['wins'] .'-'. $_SESSION['losses']; ?>
-						</div>
-						<div class='col-xs-3'>
-							Team:
-						</div>
-						<div class='col-xs-9'>
-							<?php echo $_SESSION['teamWins'] .'-'. $_SESSION['teamLosses']; ?>
-						</div>
-						<div class='col-xs-3'>
-							Ranked:
-						</div>
-						<div class='col-xs-9'>
-							<?php echo $_SESSION['rankedWins'] .'-'. $_SESSION['rankedLosses']; ?>
-						</div>
-						<div class='col-xs-3'>
-							Rating:
-						</div>
-						<div class='col-xs-9'>
-							<?php echo $_SESSION['rating']; ?>
-						</div>
-					</div>
-				
-				</div-->
-				<div class="fw-text">
-					<hr class="fancyhr">
-					
-					<div>
-						<button id="refresh-game-button" type="button" class="btn btn-md fwBlue btn-responsive shadow4 pull-right" title="Refresh Game List">
-							<i class="fa fa-refresh pointer"></i>
-						</button>
-						<button id="play-now-btn" type="button" class="btn btn-md fwBlue btn-responsive shadow4">
-							Play Now
-						</button>
-						<div class="btn-group" class="fwBlue">
-							<button id="createGameBtn" type="button" class="titleButtons btn btn-md btn-responsive shadow4 dropdown-toggle fwDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Create Game <span class="titleCaret caret chat-warning"></span>
+
+							<button id="refresh-game-button" type="button" class="btn btn-md fwBlue btn-responsive shadow4" title="Refresh Game List">
+								<i class="fa fa-refresh pointer"></i>
 							</button>
-							<ul class="dropdown-menu fwDropdown">
-								<li id="create" class="gameSelect">
-									<a href="#">Free For All</a>
-								</li>
-								<li id="createTeamBtn" class="gameSelect">
-									<a href="#">Team Game</a>
-								</li>
-								<?php
-								if (!$_SESSION['guest'] && isset($_SESSION['email'])){
-									echo '<li id="createRankedBtn" class="gameSelect">
-										<a href="#">Ranked Match</a>
-									</li>';
-								}
-								?>
-							</ul>
 						</div>
-						<button id="joinPrivateGameBtn" type="button" class="btn btn-md fwBlue btn-responsive shadow4">Join Private Game</button>
+
+						<hr class="fancyhr">
 					</div>
-					
-					<hr class="fancyhr">
+
+					<div id="refreshGameWrap" class="buffer2">
+						<table id="gameTable" class="table table-condensed table-borderless">
+							<thead>
+								<tr id="gameTableHead">
+									<th class="gameTableCol1 warCells">Game Name</th>
+									<th class="gameTableCol2 warCells">Map</th>
+									<th class="gameTableCol3 warCells">Turn Duration</th>
+									<th class="gameTableCol4 warCells">Type</th>
+								</tr>
+							</thead>
+							<tbody id="gameTableBody"></tbody>
+						</table>
+					</div>
 				</div>
 
-				<div id="refreshGameWrap" class="buffer2">
-					<table id="gameTable" class="table table-condensed table-borderless">
-						<thead>
-							<tr id="gameTableHead">
-								<th class="gameTableCol1 warCells">Game Name</th>
-								<th class="gameTableCol2 warCells">Map</th>
-								<th class="gameTableCol3 warCells">Turn Duration</th>
-								<th class="gameTableCol4 warCells">Game Type</th>
-							</tr>
-						</thead>
-						<tbody id="gameTableBody"></tbody>
-					</table>
-				</div>
-				<!--div class="nowrap"  style="margin: 6px 0">
-					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-					<ins class="adsbygoogle center"
-						 style="display:block;"
-						 data-ad-client="ca-pub-8697751823759563"
-						 data-ad-slot="3352931782"
-						 data-ad-format="auto"></ins>
-					<script>
-					(adsbygoogle = window.adsbygoogle || []).push({});
-					</script>
-				</div-->
-			</div>
-			
-			<div id="titleChat" class="fw-primary text-center col-xs-7">
-				<!--div class="nowrap"  style="margin: 6px 0">
-					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-					<ins class="adsbygoogle center"
-						 style="display:block"
-						 data-ad-client="ca-pub-8697751823759563"
-						 data-ad-slot="3352931782"
-						 data-ad-format="auto"></ins>
-					<script>
-					(adsbygoogle = window.adsbygoogle || []).push({});
-					</script>
-				</div-->
-				<div id="titleChatPlayers" class="titlePanelLeft row">
-					<div class="col-xs-5 tight">
-						<div id="titleChatHeader" class="chat-warning nowrap">
-							<span id="titleChatHeaderChannel"></span> 
-							<span id="titleChatHeaderCount"></span>
+				<div id="titleChat" class="fw-primary text-center">
+					<div id="titleChatPlayers" class="titlePanelLeft row">
+						<div id="title-chat-players-room">
+							<div id="titleChatHeader" class="chat-warning nowrap">
+								<span id="titleChatHeaderChannel"></span>
+								<span id="titleChatHeaderCount"></span>
+							</div>
+							<div id="title-chat-btn-wrap" class="text-center">
+								<div id="title-chat-btns" class="btn-group" role="group">
+									<button id="friend-status" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Friend list">
+										<i class="fa fa-users pointer"></i>
+									</button>
+									<button id="add-friend" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Toggle friend">
+										<i class="fa fa-user-plus pointer"></i>
+									</button>
+									<button id="who-account" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Query account data">
+										<i class="fa fa-vcard pointer"></i>
+									</button>
+									<button id="whisper-account" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Send another account a private message">@</button>
+									<button id="change-channel" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Change Channel">#</button>
+									<button id="ignore-user" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Ignore account messages">
+										<i class="fa fa-microphone-slash pointer"></i>
+									</button>
+									<button id="get-help" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Help">
+										<i class="fa fa-question pointer"></i>
+									</button>
+								</div>
+							</div>
+							<div id="titleChatBody"></div>
 						</div>
-						<div id="title-chat-btn-wrap" class="text-center">
-							<div id="title-chat-btns" class="btn-group" role="group">
-								<button id="friend-status" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Friend list">
-									<i class="fa fa-users pointer"></i>
-								</button>
-								<button id="add-friend" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Toggle friend">
-									<i class="fa fa-user-plus pointer"></i>
-								</button>
-								<button id="who-account" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Query account data">
-									<i class="fa fa-vcard pointer"></i>
-								</button>
-								<button id="whisper-account" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Send another account a private message">@</button>
-								<button id="change-channel" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Change Channel">#</button>
-								<button id="share-url" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Share hyperlink with channel">
-									<i class="fa fa-external-link pointer"></i>
-								</button>
-								<button id="share-image" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Share image with channel using URL from another website">
-									<i class="fa fa-file-image-o pointer"></i>
-								</button>
-								<button id="share-video" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Share video with channel using a youtube video URL">
-									<i class="fa fa-file-video-o pointer"></i>
-								</button>
-								<button id="ignore-user" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Ignore account messages">
-									<i class="fa fa-microphone-slash pointer"></i>
-								</button>
-								<button id="get-help" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Help">
-									<i class="fa fa-question pointer"></i>
-								</button>
+
+						<div id="title-chat-players-log">
+							<div id="titleChatLog" class="titlePanelLeft">
+								<a href="//discord.gg/D4suK8b" target="_blank">Join our Discord Server to receive notifications!</a>
+								<!--
+									right chat window
+									count from title screen
+								-->
 							</div>
 						</div>
-						<div id="titleChatBody"></div>
 					</div>
-					
-					<div class="col-xs-7 tight">
-						<div id="titleChatLog" class="titlePanelLeft">
-							<a href="//discord.gg/D4suK8b" target="_blank">Join our Discord Server to receive notifications!</a>
-							<!-- 
-								right chat window
-								count from title screen 
-							-->
-							<?php
-							$currentPlayers = 0;
-							$result = mysqli_query($link, 'select count(row) count from `fwtitle` where timestamp > date_sub(now(), interval 20 second)');
-							if ($result->num_rows){
-								while ($row = mysqli_fetch_assoc($result)){
-									$currentPlayers += $row['count'];
-								}
-							}
-							/* count playing game */
-							$result = mysqli_query($link, 'select count(row) count from `fwplayers` where cpu=0 and timestamp > date_sub(now(), interval 20 second)');
-							// Associative array
-							if ($result->num_rows){
-								while ($row = mysqli_fetch_assoc($result)){
-									$currentPlayers += $row['count'];
-									echo '<div>There '. ($currentPlayers === 1 ? 'is' : 'are') .' '. $currentPlayers . ' '. ($currentPlayers === 1 ? 'person' : 'people') .' playing Firmament Wars</div>';
-								}
-							}
-							?>
+
+
+					<div id="titleChatWrap">
+						<div class="input-group">
+							<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" autocomplete="off" spellcheck="false" />
+							<div id="titleChatSend" class="input-group-btn">
+								<button id="titleChatSendBtn" class="btn shadow4 fwBlue">Send</button>
+							</div>
 						</div>
 					</div>
 				</div>
-					
-				
-				<div id="titleChatWrap">
-					<div class="input-group">
-						<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" autocomplete="off" spellcheck="false" />
-						<div id="titleChatSend" class="input-group-btn">
-							<button id="titleChatSendBtn" class="btn shadow4 fwBlue">Send</button>
-						</div>
-					</div>
-				</div>
+
 			</div>
 				
 		</div>
@@ -589,24 +476,14 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12">
-					<?php
-					if ($_SESSION['guest']){
-						?> 
-						<div class='text-center text-warning'>Sign up to update your nation's name</div>
-						<?php
-					} else {
-						?> 
-						<div class="input-group">
-							<input id="updateNationName" class="form-control" type="text" maxlength="32" autocomplete="off" size="24" aria-describedby="updateNationNameStatus" placeholder="Enter New Nation Name">
-							<span class="input-group-btn">
-								<button id="submitNationName" class="btn fwBlue shadow4" type="button">
-									Update Nation Name
-								</button>
-							</span>
-						</div>
-						<?php
-					}
-					?>
+					<div class="input-group">
+						<input id="updateNationName" class="form-control" type="text" maxlength="32" autocomplete="off" size="24" aria-describedby="updateNationNameStatus" placeholder="Enter New Nation Name">
+						<span class="input-group-btn">
+							<button id="submitNationName" class="btn fwBlue shadow4" type="button">
+								Update Nation Name
+							</button>
+						</span>
+					</div>
 				</div>
 			</div>
 			
@@ -622,7 +499,7 @@
 				<div class="col-xs-6">
 					<div class="dropdown">
 						<button class="btn dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">
-							<span id="selectedFlag"><?php echo $_SESSION['flagShort']; ?></span>
+							<span id="selectedFlag"></span>
 							<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 						</button>
 						<ul id="flagDropdown" class="dropdown-menu fwDropdown"></ul>
@@ -630,7 +507,7 @@
 					<div id="flagPurchased" class="flagPurchasedStatus"></div>
 				</div>
 				<div class="col-xs-6">
-					<img id="updateNationFlag" class="w100 block center" src="images/flags/<?php echo $flag; ?>">
+					<img id="updateNationFlag" class="w100 block center" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 				</div>
 			</div>
 			
@@ -643,7 +520,6 @@
 				</div>
 			</div>
 			<div class="row">
-				<?php if (!$_SESSION['guest']){ ?>
 				<div class="col-xs-8">
 					<p>Upload your dictator avatar. A 200x200 image is recommended. Image must be a jpg < 40 kb:</p>
 					<p>
@@ -654,11 +530,6 @@
 				<div class="col-xs-4">
 					<img id="configureAvatarImage" class="dictator">
 				</div>
-				<?php } else { ?>
-					<div class="col-xs-12 text-warning text-center">
-						Sign up to update your nation's name
-					</div>
-				<?php } ?>
 			</div>
 			
 			<div class='row text-center'>
@@ -697,7 +568,7 @@
 					<td id="avatarWrap" class="tight">
 						<img id="avatar" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 					</td>
-					<td id="targetName" class="text-center shadow4 tight">
+					<td id="targetName" class="text-center shadow4 tight no-select">
 						<div id="targetNameAnchor">
 							<img id="targetFlag" class="targetFlag" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 							<div>
@@ -1130,29 +1001,492 @@
 <script src="js/libs/autobahn.min.js"></script>
 <script src="js/libs/bootstrap.min.js"></script>
 <script src="js/libs/bootstrap-slider.min.js"></script>
-<script src='//cdn1.kongregate.com/javascripts/kongregate_api.js'></script>
 
-<?php
-require $_SERVER['DOCUMENT_ROOT'] . "/includes/loginJs.php";
-?>
-
-<script src="//apis.google.com/js/platform.js?onload=loginRenderButton" async defer></script>
-
-<?php
-require $_SERVER['DOCUMENT_ROOT'] . '/includes/ga.php';
-if (!isset($_SESSION['account'])){
-	require $_SERVER['DOCUMENT_ROOT'] . "/includes/loginKong.html";
-}
-?>
 
 <script>
+	var login = {
+		lock: 0,
+		init: function() {
+			setTimeout(function(){
+				document.getElementById('login-form-contents').innerHTML = login.getLoginHtml();
+				$("#loginWrap").attr('onSubmit', 'return loginAuthenticate(this)');
+			});
+			$("#gotoAccount").on('click', function(){
+				document.getElementById('login-form-contents').innerHTML = login.getLoginHtml();
+				$("#loginWrap").attr('onSubmit', 'return loginAuthenticate(this)');
+			});
+			$("#createAccount").on('click', function(){
+				document.getElementById('login-form-contents').innerHTML = login.getCreateHtml();
+				$("#loginWrap").attr('onSubmit', 'return login.createAccount(this)');
+			});
+		},
+		getLoginHtml: function(){
+			var s =
+				'<label class="textLeft" for="loginEmail">Account or Email Address' +
+				'<input name="username"' +
+					'type="text"' +
+					'id="loginEmail"' +
+					'class="loginInputs text-shadow"' +
+					'maxlength="255"' +
+					'placeholder="Account or Email Address"' +
+					'required="required"' +
+					'spellcheck="false"/>' +
+				'</label>' +
+				'<label class="textLeft" for="password">Password' +
+					'<input name="password"' +
+						'type="password"' +
+						'id="password"' +
+						'class="loginInputs text-shadow"' +
+						'maxlength="20"' +
+						'autocomplete="current-password"' +
+						'placeholder="Password"' +
+						'required="required" />' +
+				'</label>' +
+				'<label for="rememberMe">' +
+					'<input type="checkbox" id="rememberMe" name="rememberMe" checked> Remember Me' +
+				'</label>' +
+				'<input id="login-btn" type="submit" value="Login" class="ng-btn" />' +
+				'<div class="error-msg text-shadow"></div>' +
+				'<div id="forgotPasswordWrap">' +
+					'<a title="Neverworks Games will send you an email. Click the link to reset your password." ' +
+						'id="forgotPassword">Forgot Password?</a>' +
+				'</div>';
+			return s;
+		},
+		getCreateHtml: function() {
+			var s =
+				'<label class="textLeft" for="loginEmail">Email Address' +
+					'<input name="username" ' +
+					'type="text" ' +
+					'id="loginEmail" ' +
+					'class="loginInputs" ' +
+					'maxlength="255" ' +
+					'placeholder="Account or Email Address" ' +
+					'required="required" ' +
+					'spellcheck="false"/></label>' +
+				'<label class="textLeft" ' +
+					'for="password">Password' +
+					'<input name="password" ' +
+					'type="password" ' +
+					'id="password" ' +
+					'class="loginInputs" ' +
+					'maxlength="20" ' +
+					'placeholder="Password" required="required" /></label>' +
+				'<label class="textLeft create-account signupHeader" ' +
+					'for="loginAccount">Account Name' +
+					'<input name="account" ' +
+					'type="text" ' +
+					'name="account" ' +
+					'id="loginAccount" ' +
+					'class="loginInputs create-account" ' +
+					'maxlength="16" ' +
+					'placeholder="Account Name" ' +
+					'required="required" /></label>' +
+				'<div id="tosWrap" class="create-account">' +
+					'<span id="tos" class="aqua">' +
+					'<a target="_blank" href="//nevergrind.com/blog/terms-of-service/">Terms of Service</a> | <a target="_blank" href="//nevergrind.com/blog/privacy-policy/">Privacy Policy</a></span>' +
+				'</div>' +
+				'<input id="create-account" type="submit" value="Create" class="ng-btn strongShadow" />' +
+				'<div class="error-msg text-shadow"></div>';
+			return s;
+		},
+		createAccount: function() {
+			if (login.lock) {
+				return false;
+			}
+			var pw = $("#password").val(),
+				acc = $("#loginAccount").val();
+
+			if (acc.length < 2) {
+				loginMsg("Your account name must be more than two characters long.");
+				return false;
+			}
+			if (acc.length > 16) {
+				loginMsg("Your account name must be less than 16 characters long.");
+				return false;
+			}
+			var tempAcc = acc.replace('_', '');
+			if (tempAcc.match(/[a-z0-9]/gi, '').length < tempAcc.length) {
+				loginMsg("Your account name should only contain letters, numbers, and underscores.");
+				return false;
+			}
+			if (pw.length < 6) {
+				loginMsg("Your password must be at least six characters long.");
+				return false;
+			}
+			loginMsg("Connecting to server...");
+			login.lock = 1;
+			/*,
+				referral: $("#referFriend").val().toLowerCase()
+			*/
+			var email = $("#loginEmail").val().toLowerCase(),
+				account = acc.toLowerCase();
+			$.ajax({
+				type: 'POST',
+				url: app.loginUrl + '/php/master1.php',
+				data: {
+					run: "createAccount",
+					email: email,
+					account: account,
+					password: pw,
+					promo: ''
+				}
+			}).done(function(data) {
+				if (data.indexOf("Account Created") === -1){
+					// something went wrong
+					loginMsg(data);
+				} else {
+					loginMsg("Account Created! Reloading!");
+					setTimeout(function(){
+						location.reload();
+					}, 100);
+				}
+			}).fail(function() {
+				loginMsg("There was a problem communicating with the server.");
+			}).always(function() {
+				login.lock = 0;
+				alert('ok');
+			});
+			return false; // prevent form submission
+		}
+	}
+	login.init();
+	// loginModal.php
+	sessionStorage.setItem('refer', location.pathname);
+	// FB SSO
+	if (app.isServer) {
+		window.fbAsyncInit = function () {
+			FB.init({
+				appId: '737706186279455',
+				cookie: true,
+				xfbml: true,
+				version: 'v2.8'
+			});
+			/*
+			FB.getLoginStatus(function (response) {
+				fbLoginCallback(response);
+			});
+			*/
+			// only triggers upon login event
+			FB.Event.subscribe('auth.authResponseChange', function (response) {
+				response.status === 'connected' && fbLoginCallback(response);
+			});
+		}
+	}
+	function checkLoginState() { // called from FB button
+		FB.getLoginStatus(function(response) {
+			fbLoginCallback(response);
+		});
+	}
+	function fbLoginCallback(response){
+		if (app.isServer) {
+			if (response && response.status === 'connected') {
+				// Logged into your app and Facebook.
+				var token = response.authResponse.accessToken;
+				if (token) {
+					loginAuthenticationLock = true;
+					FB.api('/me', {
+						fields: 'email'
+					}, function (response) {
+						$.ajax({
+							type: 'POST',
+							url: app.loginUrl + '/php/master1.php',
+							data: {
+								run: 'authenticate',
+								facebookToken: token
+							}
+						}).done(function (data) {
+							if (data === 'Create an account name!') {
+								// redirect to
+								var to = 'https://nevergrind.com/setAccount.php';
+								window.location = to;
+							} else {
+								// it's coming out here for some reason
+								loginGotoRefer(data, undefined, 'fbLoginCallback');
+							}
+						}).fail(function (data) {
+							loginMsg(data.statusText);
+						}).always(function () {
+							loginAuthenticationLock = false;
+						});
+					});
+				} else {
+					loginMsg("Facebook credentials could not be verified.");
+				}
+			}
+		}
+	}
+
+	// google SSO
+	function loginRenderButton() {
+		if (app.isServer || app.isApp) {
+			gapi.load('auth2', function () {
+				gapi.auth2.init();
+				gapi.signin2.render('my-signin2', {
+					scope: 'profile email openid',
+					width: 240,
+					height: 40,
+					longtitle: true,
+					theme: 'dark',
+					onsuccess: function (googleUser) {
+						var token = googleUser.getAuthResponse().id_token;
+						if (token) {
+							loginAuthenticationLock = true;
+							$.ajax({
+								type: 'POST',
+								url: app.loginUrl + '/php/master1.php',
+								data: {
+									run: 'authenticate',
+									googleToken: token
+								}
+							}).done(function (data) {
+								console.info('google login? ', data);
+								if (data === 'Create an account name!') {
+									// redirect to
+									var to = 'https://nevergrind.com/setAccount.php';
+									window.location = to;
+								} else {
+									// it's coming out here for some reason data === Login successful!
+									loginGotoRefer(data, undefined, 'loginRenderButton');
+								}
+							}).fail(function (data) {
+								loginMsg(data.statusText);
+							}).always(function () {
+								loginAuthenticationLock = false;
+							});
+						}
+					},
+					onfailure: function () {
+						console.log('error: ', error);
+					}
+				});
+			});
+		}
+	}
+
+	var loginFadeTimer = new TweenMax.delayedCall(0, '');;
+	function fadeOut(){
+		loginFadeTimer.kill();
+		loginFadeTimer = TweenMax.to('.error-msg', 0, {
+			opacity: 1,
+			height: 'auto',
+			display: 'block',
+			onComplete: function(){
+				TweenMax.to('.error-msg', 1, {
+					delay: 8,
+					transformOrigin: '50% 0',
+					transformPerspective: 500,
+					rotationX: -90,
+					height: 0,
+					opacity: 0,
+					onComplete: function(){
+						$(".error-msg").html('');
+					}
+				});
+			}
+		});
+	}
+	function loginMsg(msg){
+		var str = "<div>" + msg + "</div>";
+		$(".error-msg").html(str);
+		fadeOut();
+		TweenMax.set('.error-msg', {
+			transformOrigin: '50% 0',
+			transformPerspective: 500,
+			rotationX: 0
+		})
+	}
+	$('#login').on('click', function() {
+		loginAuthenticate();
+	});
+	$("#login-form-contents").on('click', '#forgotPassword', function() {
+		if (this.textContent === "Checking...") {
+			return;
+		}
+		var email = $("#loginEmail").val().toLowerCase();
+		var msg = "Forgot Password?";
+		$("#forgotPassword").text("Checking...");
+		if (!email || email.length < 3) {
+			loginMsg("Enter a valid email address");
+			$("#forgotPassword").text(msg);
+			return;
+		}
+		loginMsg("Checking account status...");
+		$.ajax({
+			url: app.loginUrl + '/php/master1.php',
+			data: {
+				run: "forgotPassword",
+				email: email
+			}
+		}).done(function(data){
+			loginMsg(data, 0, 0, 8000);
+			$("#forgotPassword").text(msg);
+		});
+	});
+
+	var loginFocusInput = false,
+		loginAuthenticationLock = false;
+
+	$(".loginInputs").on('focus', function() {
+		loginFocusInput = true;
+	}).on('blur', function() {
+		loginFocusInput = false;
+	});
+	// delegate login events
+	$("#login-form-contents").on('click', '#login-btn', function(){
+		loginAuthenticate();
+	}).on('click', '#create-account', function(){
+		login.createAccount();
+	});
+
+	$('.loginInputs').on('keydown', function(e){
+		// hit enter
+		if(e.keyCode === 13){
+			loginAuthenticate();
+		}
+	});
+	function loginAuthenticate(f) {
+		if (loginAuthenticationLock === true) {
+			return false;
+		}
+		if ($("#loginEmail").val().length < 3) {
+			loginMsg("This is not a valid email address.");
+			return false;
+		}
+		if ($("#password").val().length < 6 && !token) {
+			loginMsg("Passwords must be at least six characters long.");
+			return false;
+		}
+		var loginEmail = $("#loginEmail").val().toLowerCase();
+		if ($("#rememberMe").prop('checked')){
+			localStorage.setItem('email', loginEmail);
+			localStorage.setItem('token', token);
+		} else {
+			localStorage.removeItem('email');
+		}
+		loginMsg("Connecting to server...");
+		loginAuthenticationLock = true;
+
+		$.ajax({
+			type: 'POST',
+			url: app.loginUrl + '/php/master1.php',
+			data: {
+				run: 'authenticate',
+				email: loginEmail,
+				password: $("#password").val()
+			}
+		}).done(function(data){
+			loginGotoRefer(data, undefined, 'loginAuthenticate');
+		}).fail(function(data) {
+			loginMsg(data.statusText);
+		}).always(function(){
+			loginAuthenticationLock = false;
+		});
+		return false; // prevent form submission
+	}
+	function loginTokenAuthenticate(){
+		$.ajax({
+			type: 'POST',
+			url: app.loginUrl + '/php/master1.php',
+			data: {
+				run: 'authenticate',
+				email: email,
+				token: token
+			}
+		}).done(function(data){
+			loginGotoRefer(data, true, 'loginTokenAuthenticate');
+		}).always(function(){
+			document.getElementsByTagName('body')[0].style.visibility = 'visible';
+		});
+	}
+	function loginGotoRefer(data, suppress, origin){
+		function redirect(){
+			if (app.isApp){
+				location.reload();
+			}
+			else {
+				if (sessionStorage.getItem('refer') === location.pathname) {
+					location.reload();
+				}
+				else {
+					location.replace(target);
+				}
+			}
+		}
+		var target = app.url + (sessionStorage.getItem('refer') || '');
+		if (data === 'Create an account name!'){
+			location.replace("https://nevergrind.com/setAccount.php");
+		} else if (data === "Login successful!"){
+			if (origin === 'loginRenderButton'){
+				$("#login-modal").remove();
+				(function repeat(){
+					if (app.initialized){
+						if (!app.account) {
+							// not logged in - Google SSO requires this
+							redirect();
+						}
+					}
+					else {
+						setTimeout(repeat, 100);
+					}
+				})();
+			}
+			else {
+				redirect();
+			}
+		} else {
+			if (!suppress){
+				loginMsg(data);
+				console.error(data);
+			}
+		}
+	}
+
+	(function(){
+		email = localStorage.getItem('email');
+		token = localStorage.getItem('token');
+	})();
+
+	// facebook
+	(function(d, s, id) {
+		if (app.isServer) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			js = d.createElement(s);
+			js.id = id;
+			js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=737706186279455";
+			fjs.parentNode.insertBefore(js, fjs);
+		}
+	}(document, 'script', 'facebook-jssdk'));
+</script>
+
+<script src="//apis.google.com/js/platform.js?onload=loginRenderButton" async defer></script>
+<script>
+if (app.isServer || app.isApp) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-35167620-1', 'auto');
+	ga('send', 'pageview');
+	if (app.isServer) {
+		document.getElementById('social-login-wrap').style.display = 'block';
+	}
+}
+// only try if not logged in
+function notLoggedIn() {
+	$("#login-modal").css({
+		visibility: 'visible'
+	});
+	$("#logout").remove();
+}
 
 
 var guest = 0;
 var initChannel = "usa-1";
+
 (function(d, s, x){
-	if (location.host === 'localhost'){
-		x = '.js';
+	if (location.hostname === 'localhost' && location.hash !== '#test'){
+		x = ".js";
 		s = [
 			'ui',
 			'payment',
@@ -1169,12 +1503,15 @@ var initChannel = "usa-1";
 			'ai'
 		]
 	}
-	for(var i=0, len=s.length; i<len; i++){
-		var e = d.createElement('script');
-		e.src = 'js/' + s[i] + x + '?v=<?php echo $version ?>';
+
+	for (var i=0, len=s.length; i<len; i++){
+		var e = d.createElement("script");
+		var js = "js/" + s[i] + x + "?v="+ app.version;
+		e.src = js;
 		e.async = false;
 		d.head.appendChild(e);
 	}
-})(document, ['firmament-wars'], '.min.js');
+
+})(document, ["firmament-wars"], ".min.js");
 </script>
 </html>

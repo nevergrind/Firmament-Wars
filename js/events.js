@@ -11,6 +11,12 @@ var events = {
 			resizeWindow();
 		}).on('load', function(){
 			resizeWindow();
+			setTimeout(function() {
+				TweenMax.to('body', .3, {
+					startAt: { display: 'block', opacity: 0 },
+					opacity: 1
+				})
+			}, 100);
 			// background map
 			if (isMobile){
 				document.getElementById('worldTitle').style.display = 'none';
@@ -55,7 +61,7 @@ var events = {
 			socket.removePlayer(my.account);
 			$.ajax({
 				type: 'GET',
-				url: 'php/deleteFromFwtitle.php'
+				url: app.url + 'php/deleteFromFwtitle.php'
 			});
 		});
 
@@ -221,7 +227,7 @@ var events = {
 		});
 		$("#toggleNation").on(ui.click, function(){
 			$.ajax({
-				url: 'php/loadAvatar.php',
+				url: app.url + 'php/loadAvatar.php',
 			}).done(function(data){
 				document.getElementById('configureAvatarImage').src = data.uri;
 			});
@@ -314,7 +320,7 @@ var events = {
 				.css("display", "block");
 			g.lock(1);
 			$.ajax({
-				url: 'php/updateFlag.php',
+				url: app.url + 'php/updateFlag.php',
 				data: {
 					flag: my.selectedFlagFull
 				}
@@ -411,7 +417,7 @@ var events = {
 					}, 1000);
 					// ajax call to join ranked game
 					$.ajax({
-						url: 'php/joinRankedGame.php'
+						url: app.url + 'php/joinRankedGame.php'
 					}).done(function(data){
 						if (g.searchingGame){
 							TweenMax.set(DOM.Msg, {
@@ -459,7 +465,7 @@ var events = {
 			var government = $(this).text();
 			lobby.updateGovernmentWindow(government);
 			$.ajax({
-				url: "php/changeGovernment.php",
+				url: app.url + "php/changeGovernment.php",
 				data: {
 					government: government
 				}
@@ -467,7 +473,7 @@ var events = {
 		}).on(ui.click, '.cpu-choice', function(e){
 			var difficulty = $(this).text();
 			$.ajax({
-				url: "php/change-cpu-difficulty.php",
+				url: app.url + "php/change-cpu-difficulty.php",
 				data: {
 					difficulty: difficulty,
 					player: $(this).data('player')
@@ -476,7 +482,7 @@ var events = {
 		}).on(ui.click, '.playerColorChoice', function(e){
 			var playerColor = $(this).data('playercolor');
 			$.ajax({
-				url: 'php/changePlayerColor.php',
+				url: app.url + 'php/changePlayerColor.php',
 				data: {
 					playerColor: playerColor*1
 				}
@@ -490,7 +496,7 @@ var events = {
 				player = $(this).data('player');
 			console.info("TEAM: ", team, player);
 			$.ajax({
-				url: 'php/changeTeam.php',
+				url: app.url + 'php/changeTeam.php',
 				data: {
 					team: team,
 					player: player
@@ -507,7 +513,7 @@ var events = {
 			//console.info("Removing player");
 			audio.play('click');
 			$.ajax({
-				url: 'php/cpu-remove-player.php' 
+				url: app.url + 'php/cpu-remove-player.php'
 			});
 		});
 	})(),
@@ -795,7 +801,7 @@ $(document).on('keydown', function(e){
 		 reader.addEventListener("load", function(){
 			if (reader.result.length < 64000){
 				$.ajax({
-					url: "php/uploadDictator.php",
+					url: app.url + "php/uploadDictator.php",
 					type: "POST",
 					data: {
 						uri: reader.result

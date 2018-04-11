@@ -1,3 +1,256 @@
+/* login styles */
+fieldset {
+	min-width: 0;
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
+#social-login-wrap {
+	display: none;
+}
+#login-header{
+	position:relative;
+	height:32px;
+	box-shadow: 0 100 rgba(0,0,0,.75) inset;
+	border-bottom:2px groove #444;
+	overflow:hidden;
+	left:0;
+	top:0;
+	z-index:99999;
+}
+#loginWrap{
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+	font-size: 14px;
+	margin:0 auto;
+	width:280px;
+	padding-bottom:40px;
+	text-align:center;
+}
+.textLeft{
+	text-align:left;
+	text-indent:15px;
+}
+#create-account, #login-btn, #resetPW{
+	position: relative;
+	font: 1rem/2;
+	width: 12rem;
+	margin: 0 auto;
+	margin-top: .5rem;
+	left: 0;
+	right: 0;
+	outline: none;
+}
+#create-account:hover, #login-btn:hover, #resetPW:hover{
+	box-shadow:0 0 2px rgba(80, 110, 240, 1),
+	0 0 5px rgba(80, 110, 240, 1);
+}
+.loginInputs{
+	display:block;
+	left:0;
+	right:0;
+	margin:0 auto;
+	border:1px solid #666;
+	font-size:16px;
+	line-height:22px;
+	width:250px;
+	background:#132239;
+	background-image: -webkit-radial-gradient(80 0, farthest-corner, #132239 0%, #001 100%);
+	background-image: -moz-radial-gradient(80 0, farthest-corner, #132239 0%, #001 100%);
+	background-image: -ms-radial-gradient(80 0, farthest-corner, #132239 0%, #001 100%);
+	background-image: -o-radial-gradient(80 0, farthest-corner, #132239 0%, #001 100%);
+	color:#fff;
+	border-radius:4px;
+	text-indent:2px;
+}
+.loginInputs:focus{
+	background:#4478c7;
+	background-image: -webkit-radial-gradient(80 0, farthest-corner, #5488da 0%, #132239 100%);
+	background-image: -moz-radial-gradient(80 0, farthest-corner, #5488da 0%, #132239 100%);
+	background-image: -ms-radial-gradient(80 0, farthest-corner, #5488da 0%, #132239 100%);
+	background-image: -o-radial-gradient(80 0, farthest-corner, #5488da 0%, #132239 100%);
+}
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #4478c7 inset;
+	-webkit-text-fill-color: #fff;
+}
+#tosWrap {
+	margin: .5rem;
+}
+#forgotPasswordWrap{
+	margin-top: 0;
+}
+#forgotPassword{
+	color: #aef;
+	cursor: pointer;
+}
+
+
+body{
+	position: relative;
+	width: 100%;
+	height: auto;
+	top: 0;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	max-width: 1920
+}
+.abcRioButton{
+	margin: 5px auto;
+}
+.abcRioButtonBlue .abcRioButtonIcon {
+	border-radius: 5px !important;
+}
+.abcRioButtonBlue {
+	border-radius: 5px !important;
+}
+#divider{
+	margin: 8px 0
+}
+.error-msg {
+	padding: .5rem;
+	margin: 0;
+	color: #ff0;
+}
+#currencyIndicator{
+	width: 100%
+}
+#mainBG{
+	width: 100%;
+	height: 1080;
+	background: url('/img2/ng2-bg.jpg')
+}
+label{
+	font-weight: normal;
+	display: block;
+	margin: .1em 0
+}
+#twitter-wrap {
+	margin:0 0 5px 0;
+	width:240px;
+	border-radius: 6px;
+	background: #337ab7;
+	color: #fff;
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	cursor: pointer!important;
+}
+#twitter-wrap:hover {
+	text-decoration: none;
+}
+#twitter-icon-wrap {
+	color: #337ab7;
+	cursor: pointer;
+	background: #ddd;
+	padding: 6px 9px;
+	display: inline-block;
+	margin-bottom: 0;
+	font-size: 14px;
+	line-height: 20px;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	float: left;
+}
+#twitter-icon {
+	font-size:20px;
+	text-shadow: none;
+	height:20px;
+	display:inline-block;
+	cursor: pointer!important;
+}
+#twitter-text {
+	color: #fff;
+	line-height: 2.5;
+	border-radius:0;
+	display: inline-block;
+	font-size: 14px;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	cursor: pointer!important;
+}
+#loginWrap .login-actions {
+	color: #aef;
+	font-size: .75rem;
+}
+#loginWrap .login-actions:hover {
+	color: #fff;
+}
+.textLeft, .signupHeader{
+	margin-top: .375em
+}
+.loginInputs{
+	background: #132239;
+	border: 1px solid #357
+}
+.hide{
+	display: none
+}
+#rememberMe{
+	position: relative;
+	top: 2px
+}
+.strongShadow {
+	text-shadow: 1px 1px #222, -0.4px 0.6px #222, 0.6px -0.6px #222, -0.4px 0 #222, 0.6px 0 #222, 0 0.6px #222, 0 -0.6px #222, 0.6px 0.6px #222;
+}
+#login-modal {
+	visibility: hidden;
+}
+#login-modal, #login-container {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	overflow-y: auto;
+	z-index: 99999999;
+}
+#login-backdrop{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,.8);
+	z-index: 99999999;
+}
+#loginWrap{
+	position: absolute;
+	z-index: 99999999;
+	color: #fff;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	width: 280;
+	text-align: center;
+	top: 30px;
+	bottom: auto;
+	padding: 10 0;
+	border-radius: 6px;
+	border: 2px ridge #337ab7;
+	background: #0a0a1a;
+	box-shadow: 0 0 20 #000,
+	0 0 40 #000,
+	0 0 60 #000
+}
+#loginWrap p {
+	line-height: 1.5;
+	margin: 0 0 10px;
+}
+#loginWrap .btn-primary {
+	color: #fff;
+	background: #337ab7;
+	padding: 6px 12px;
+	cursor: pointer;
+}
+/* main styles */
 @font-face {
     font-family: Cinzel;
     src: url(../fonts/Cinzel-Regular.otf)
@@ -45,17 +298,44 @@ body {
     overflow: hidden
 }
 header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
     font-size: 1.275em;
     padding: .25em .5em;
-    word-spacing: .05em
+    word-spacing: .05em;
+    background: -webkit-linear-gradient(top, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%)!important;
+    background: -moz-radial-gradient(top, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%)!important;
+    background: -ms-radial-gradient(top, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%)!important;
+    background: -o-radial-gradient(top, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%)!important;
 }
 #mainWrap {
+	display: flex;
+	align-items: center;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
 	max-width: 1920px;
     height: 100%
+}
+#social-links {
+	letter-spacing: .2rem;
+}
+#titleMain {
+	display: flex;
+	flex-direction: column;
+	margin: 0 1rem;
+}
+#title-column-wrap {
+	display: flex;
+}
+#menuHead {
+	display: flex;
+	align-items: center;
+}
+#menuHead > button {
+	margin: .2rem .3rem;
 }
 a {
     color: #8bf
@@ -73,7 +353,7 @@ h2 {
 h1{
     font-family: Cinzel, Palatino Linotype, serif;
 	text-align: center;
-	margin-bottom: 12px;
+	margin: 1rem 0;
 }
 .header {
     font-family: Cinzel, Palatino Linotype, serif;
@@ -91,7 +371,7 @@ a:hover {
 .fancyhr {
     border: 0;
     height: 1px;
-    margin: .5vh 0;
+    margin: .2rem 0;
     background-image: -webkit-linear-gradient(left, rgba(16, 64, 176, .4), rgba(32, 128, 232, 1), rgba(16, 64, 176, .4));
     background-image: -moz-linear-gradient(left, rgba(16, 64, 176, .4), rgba(32, 128, 232, 1), rgba(16, 64, 176, .4));
     background-image: -ms-linear-gradient(left, rgba(16, 64, 176, .4), rgba(32, 128, 232, 1), rgba(16, 64, 176, .4));
@@ -113,17 +393,18 @@ a:hover {
     overflow: hidden
 }
 #firmamentWarsBG {
-    position: absolute;
-    width: 1920px;
-    height: 1280px;
-    left: 0;
-    bottom: 0
+	position: absolute;
+	width: 1920px;
+	height: 1080px;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 }
 #firmamentWarsLogo {
 	position: relative;
     width: 80%;
 	display: block;
-	margin: 4px auto;
+	margin: 2rem auto;
 }
 #gameWrap {
     visibility: hidden;
@@ -212,7 +493,8 @@ a:hover {
     display: inline-block;
     color: #ffff1a;
     text-shadow: .5px .5px #550, 1px 1px #550;
-    font-size: .75em
+    font-size: .75em;
+	margin-right: .5rem;
 }
 .chat-online {
     color: gold;
@@ -257,25 +539,37 @@ a:hover {
     color: #fff;
     text-shadow: .5px .5px #444, 1px 1px #444
 }
-#titleMenu { 
-    padding: .5vh .75vw;
-    border-radius: 0
+#titleMenu {
+	display: flex;
+	flex-direction: column;
+    padding: .2rem .3rem;
+	flex-basis: 42%;
+}
+#title-action-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: .2rem .3rem;
 }
 #refreshGameWrap {
     color: #bef;
     margin-top: .5vh;
     overflow-y: auto;
-	height: 20vh;
+	flex: 1;
+	background: rgba(0,0,0,.8);
 }
 #gameTable {
     table-layout: fixed;
     width: 100%;
-    padding: 0 1%;
+    padding: 0;
     margin: 0;
     color: #fff
 }
+#gameTableHead {
+	background: #013;
+}
 #gameTable th {
-    font-size: .75em
+    font-size: 1.5rem
 }
 tbody {
     border: 0
@@ -311,15 +605,19 @@ tbody {
     margin-left: -1px
 }
 .titlePlayer {
+	display: flex;
+	align-items: center;
     padding: 0 .5em
 }
 .titlePlayerAccount {
     cursor: pointer
 }
 #titleChat {
+	display: flex;
+	flex-direction: column;
     text-align: left;
     padding: 0;
-    border-radius: 0
+	flex-basis: 58%;
 }
 #titleChatWrap {
     position: relative;
@@ -330,15 +628,30 @@ tbody {
     border-radius: 0
 }
 #titleChatPlayers {
-    position: relative;
+	display: flex;
     padding: 0;
+	flex: 1;
     background: rgba(0, 55, 155, .2)
+}
+#title-chat-players-room {
+	flex-basis: 42%;
+}
+#title-chat-players-log {
+	flex-basis: 58%;
 }
 #titleChatLog {
 	width: 100%;
     background: rgba(0, 0, 0, .5);
     overflow-x: hidden;
     word-break: break-word
+}
+#titleChatLog > *,
+#lobbyChatLog > *,
+#chat-content > * {
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+	flex-wrap: wrap;
 }
 #login {
     color: #fff
@@ -359,11 +672,10 @@ tbody {
     background: rgba(255, 255, 255, .1)
 }
 .titlePanelLeft {
-    position: absolute;
     font-family: Roboto, Verdana, Arial, sans-serif;
-    height: 55vh;
     text-shadow: .5px .5px #357, 1px 1px #357;
     color: #bef;
+	height: 90vh;
     border-top: 1px solid #357;
     border-left: 1px solid #357;
     border-bottom: 1px solid #357;
@@ -536,12 +848,13 @@ tbody {
 #targetWrap {
     position: absolute;
     top: 0;
-    right: 180px;
-    border-top: none;
-    border-right: none;
-    border-radius: 0 0 0 4px;
+	left: 0;
+    right: 0;
+	margin: 0 auto;
+	width: 280px;
     z-index: 9999;
-    background: rgba(0, 0, 0, 0)
+    background: rgba(0, 0, 0, 0);
+	border: 0!important;
 }
 #targetNameWrap {
     position: relative;
@@ -744,15 +1057,15 @@ tbody {
 }
 #resources-ui {
     position: absolute;
-    bottom: 0vh;
-    right: 0;
+    top: 0vh;
+    right: 180px;
     width: 170px;
     border-right: none;
     border-bottom: none;
-    border-radius: 4px 0 0 0;
     text-overflow: ellipsis;
     color: #fff;
     text-align: right;
+	border-radius: 0;
     z-index: 9999
 }
 #resources-ui>.row,
@@ -1195,7 +1508,6 @@ circle {
 }
 .fw-primary {
     background: rgba(0, 0, 0, .7);
-    border-radius: 6px;
     color: #fff;
     box-shadow: 0 0 0 1px #37d inset, 0 0 0 1px #02c
 }
@@ -1482,14 +1794,22 @@ span.unlockGameBtn {
     height: 120px
 }
 .who-wrap {
-    padding: 5px 0;
-    margin: 5px -15px;
+	display: flex;
+	flex: 1;
+    padding: .5rem;
+    margin: 0;
     border: 2px ridge #357;
     background: -webkit-radial-gradient(top right, cover, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
     background: -moz-radial-gradient(top right, cover, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
     background: -ms-radial-gradient(top right, cover, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
     background: -o-radial-gradient(top right, cover, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
     box-shadow: 0 -1px #8bf, 0 1px #8bf
+}
+.who-wrap-left {
+	flex-basis: 66%;
+}
+.who-wrap-right {
+	flex-basis: 34%;
 }
 .who-avatar-wrap {
     position: relative;
@@ -2374,15 +2694,14 @@ input[type=number]::-webkit-outer-spin-button {
     cursor: crosshair
 }
 .flag {
-    position: relative;
-    display: inline-block;
-    top: .125em;
+	display: inline-flex;
     background-image: url(../images/flags/flagMap4.jpg);
     background-size: 480px 120px;
-    margin: .125em .5em 0 0;
+    margin-right: .5rem;
     height: 15px;
     width: 24px;
-    overflow: hidden
+    overflow: hidden;
+	flex-shrink: 0;
 }
 .diplo-flag {
     position: relative;
@@ -2878,31 +3197,6 @@ input[type=number]::-webkit-outer-spin-button {
         display: none
     }
 }
-@media all and (min-height: 668px) and (max-height: 767px) {
-    #leaderboardBody {
-        height: 83vh
-    }
-}
-@media all and (min-height: 558px) and (max-height: 667px) {
-    #leaderboardBody {
-        height: 82vh
-    }
-}
-@media all and (min-height: 458px) and (max-height: 567px) {
-    #leaderboardBody {
-        height: 79vh
-    }
-}
-@media all and (min-height: 368px) and (max-height: 467px) {
-    #leaderboardBody {
-        height: 74vh
-    }
-}
-@media all and (max-height: 367px) {
-    #leaderboardBody {
-        height: 70vh
-    }
-}
 @media all and (min-width: 1024px) {
     body {
         font-size: 1.5em
@@ -2946,4 +3240,35 @@ input[type=number]::-webkit-outer-spin-button {
         font-size: .75em;
         padding: 1px 2px
     }
+}
+
+::-webkit-scrollbar {
+	/* addresses the background of the bar itself. It is usually covered by the other elements */
+	width: .5rem;
+}
+::-webkit-scrollbar-button {
+	/* addresses the directional buttons on the scrollbar */
+}
+::-webkit-scrollbar-track {
+	/* background */
+	background: #333;
+	background-image: -webkit-linear-gradient(left, #013 0%, #103860 100%);
+	box-shadow: inset 0 0 0 1px #444;
+}
+::-webkit-scrollbar-track-piece {
+	/*
+		is the top-most layer of the the progress bar not covered
+		by the draggable scrolling element (thumb)
+	*/
+}
+::-webkit-scrollbar-thumb {
+	/* draggable thing */
+	background-color: #58a;
+	/*background-image: -webkit-linear-gradient(top, #579 0%, #bdf 50%, #579 100%);*/
+}
+::selection {
+	background: #999;
+}
+::-moz-selection {
+	background: #999;
 }

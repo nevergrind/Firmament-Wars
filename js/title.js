@@ -7,7 +7,7 @@ var title = {
 		e.innerHTML = '';
 		g.lock();
 		$.ajax({
-			url: 'php/leaderboard.php',
+			url: app.url + 'php/leaderboard.php',
 			data: {
 				type: type
 			}
@@ -22,7 +22,7 @@ var title = {
 			title.refreshTimer = Date.now();
 			$.ajax({
 				type: 'GET',
-				url: 'php/refreshGames.php'
+				url: app.url + 'php/refreshGames.php'
 			}).done(function(data) {
 				//console.info(data);
 				var e = document.getElementById('gameTableBody');
@@ -75,7 +75,7 @@ var title = {
 			});
 			$.ajax({
 				type: 'GET',
-				url: 'php/initChatId.php'
+				url: app.url + 'php/initChatId.php'
 			}).done(function(data){
 				my.account = data.account;
 				my.flag = data.flag;
@@ -99,7 +99,7 @@ var title = {
 				if (isLoggedIn && g.view === 'title'){
 					$.ajax({
 						type: "POST",
-						url: "php/titleUpdate.php",
+						url: app.url + "php/titleUpdate.php",
 						data: {
 							channel: my.channel
 						}
@@ -369,9 +369,11 @@ var title = {
 			z.innerHTML = data.message;
 			DOM.titleChatLog.appendChild(z);
 			title.scrollBottom();
+			/*
 			if (!data.skip){
 				g.sendNotification(data);
 			}
+			*/
 		}
 	},
 	friendGet: function(){
@@ -379,7 +381,7 @@ var title = {
 		g.friends = [];
 		$.ajax({
 			type: 'GET',
-			url: 'php/friendGet.php',
+			url: app.url + 'php/friendGet.php',
 		}).done(function(data){
 			data.friends.forEach(function(friend){
 				g.friends.push(friend);
@@ -391,7 +393,7 @@ var title = {
 		if (account !== my.account){
 			console.info('toggle: ', account, account.length);
 			$.ajax({
-				url: 'php/friendToggle.php',
+				url: app.url + 'php/friendToggle.php',
 				data: {
 					account: account
 				}
@@ -413,11 +415,11 @@ var title = {
 	},
 	listIgnore: function(){
 		var len = g.ignore.length;
-		var str = '<div>Ignore List ('+ len +')</div>';
+		g.chat('<div>Ignore List ('+ len +')</div>');
 		for (var i=0; i<len; i++){
-			str += '<div><span class="chat-muted titlePlayerAccount">' + g.ignore[i] +'</span></div>';
+			var str = '<div><span class="chat-muted titlePlayerAccount">' + g.ignore[i] +'</span></div>';
+			g.chat(str);
 		}
-		g.chat(str);
 	},
 	addIgnore: function(account){
 		account = account.trim();
@@ -564,7 +566,7 @@ var title = {
 		var flag = my.flag.split(".");
 		flag = flag[0].replace(/ /g, "-");
 		$.ajax({
-			url: 'php/insertWhisper.php',
+			url: app.url + 'php/insertWhisper.php',
 			data: {
 				account: account,
 				flag: flag,
@@ -596,7 +598,7 @@ var title = {
 	who: function(msg){
 		var a = msg.split("/who ");
 		$.ajax({
-			url: 'php/whoUser.php',
+			url: app.url + 'php/whoUser.php',
 			data: {
 				account: a[1]
 			}
@@ -618,8 +620,8 @@ var title = {
 			}
 			
 			var str = 
-			'<div class="row who-wrap">'+
-				'<div class="col-xs-8">';
+			'<div class="who-wrap">'+
+				'<div class="who-wrap-left">';
 				// left col
 				str += data.str;
 				if (data.account !== my.account && g.friends.indexOf(data.account) === -1){
@@ -627,7 +629,7 @@ var title = {
 				}
 			str += 
 				'</div>'+
-				'<div class="col-xs-4">';
+				'<div class="who-wrap-left">';
 				// right col
 				str += 
 					'<div class="who-avatar-wrap">'+
@@ -644,28 +646,25 @@ var title = {
 		});
 	},
 	help: function(){
-		var str = 
-			'<h5 class="chat-warning">Chat Commands:</h5>\
-			<div>#channel: join channel</div>\
-			<div>@account: whisper user</div>\
-			<div>/ignore account: ignore account</div>\
-			<div>/unignore account: stop ignoring account</div>\
-			<div>/friend account: add/remove friend</div>\
-			<div>/who account: check account info (or click account name)</div>\
-			<h5 class="chat-warning">Title screen lobbies only:</h5>\
-			<div>/url url: share URL</div>\
-			<div>/img url: share image</div>\
-			<div>/video youtube_url: share video</div>\
-			';
-		var o = {
-			message: str,
-			type: 'chat-muted'
-		};
-		title.chat(o);
+		var a = [
+			'<h5 class="chat-warning">Chat Commands:</h5>',
+			'<div>#channel: join channel</div>',
+			'<div>@account: whisper user</div>',
+			'<div>/ignore account: ignore account</div>',
+			'<div>/unignore account: stop ignoring account</div>',
+			'<div>/friend account: add/remove friend</div>',
+			'<div>/who account: check account info (or click account name)</div>'
+		];
+		a.forEach(function(v) {
+			title.chat({
+				message: v,
+				type: 'chat-muted'
+			});
+		});
 	},
 	broadcast: function(msg){
 		$.ajax({
-			url: 'php/insertBroadcast.php',
+			url: app.url + 'php/insertBroadcast.php',
 			data: {
 				message: msg
 			}
@@ -673,7 +672,7 @@ var title = {
 	},
 	url: function(url){
 		$.ajax({
-			url: 'php/insertUrl.php',
+			url: app.url + 'php/insertUrl.php',
 			data: {
 				url: url
 			}
@@ -681,7 +680,7 @@ var title = {
 	},
 	img: function(url){
 		$.ajax({
-			url: 'php/insertImg.php',
+			url: app.url + 'php/insertImg.php',
 			data: {
 				url: url
 			}
@@ -689,7 +688,7 @@ var title = {
 	},
 	video: function(url){
 		$.ajax({
-			url: 'php/insertVideo.php',
+			url: app.url + 'php/insertVideo.php',
 			data: {
 				url: url
 			}
@@ -697,7 +696,7 @@ var title = {
 	},
 	fwpaid: function(msg){
 		$.ajax({
-			url: 'php/fwpaid.php',
+			url: app.url + 'php/fwpaid.php',
 			data: {
 				message: msg
 			}
@@ -705,7 +704,7 @@ var title = {
 	},
 	addRibbon: function(account, ribbon){
 		$.ajax({
-			url: 'php/fw-add-ribbon.php',
+			url: app.url + 'php/fw-add-ribbon.php',
 			data: {
 				account: account,
 				ribbon: ribbon
@@ -765,7 +764,7 @@ var title = {
 						// skip
 					} else {
 						$.ajax({
-							url: 'php/insertTitleChat.php',
+							url: app.url + 'php/insertTitleChat.php',
 							data: {
 								message: msg
 							}
@@ -774,6 +773,50 @@ var title = {
 				}
 			}
 			$DOM.titleChatInput.val('');
+		}
+	},
+	listFriends: function(){
+		var len = g.friends.length;
+		g.chat('<div>Checking friends list...</div>');
+		if (g.friends.length){
+			$.ajax({
+				url: 'php/friendStatus.php',
+				data: {
+					friends: g.friends
+				}
+			}).done(function(data){
+				var str = '<div>Friend List ('+ len +')</div>';
+				g.chat(str);
+				for (var i=0; i<len; i++){
+					var str = '',
+						index = data.players.indexOf(g.friends[i]);
+					if (index > -1){
+						// online
+						str += '<div><span class="chat-online titlePlayerAccount">' + g.friends[i] + '</span>';
+						if (typeof data.locations[index] === 'number'){
+							str += ' playing in game: ' + data.locations[index];
+						} else {
+							str += ' in chat channel: ';
+							if (g.view === 'title'){
+								// enable clicking to change channel
+								str += '<span class="chat-online chat-join">' + data.locations[index] + '</span>';
+							} else {
+								// not in a game ?
+								str += data.locations[index];
+							}
+						}
+						console.info("ONLINE: ", str);
+						str += '</div>';
+						g.chat(str);
+					} else {
+						// offline
+						console.info("OFFLINE: ");
+						g.chat('<div><span class="chat-muted titlePlayerAccount">' + g.friends[i] +'</span></div>');
+					}
+				}
+			});
+		} else {
+			g.chat("<div>You don't have any friends! Use /friend account to add a new friend.</div>", 'chat-muted');
 		}
 	},
 	showBackdrop: function(e){
@@ -823,7 +866,7 @@ var title = {
 		g.teamMode = teamMode;
 		g.speed = speed;
 		$.ajax({
-			url: 'php/createGame.php',
+			url: app.url + 'php/createGame.php',
 			data: {
 				name: name,
 				pw: pw,
@@ -861,7 +904,7 @@ var title = {
 		g.lock();
 		audio.play('click');
 		$.ajax({
-			url: 'php/joinGame.php',
+			url: app.url + 'php/joinGame.php',
 			data: {
 				name: g.name,
 				password: g.password
@@ -897,7 +940,7 @@ var title = {
 		g.lock();
 		audio.play('click');
 		$.ajax({
-			url: 'php/updateNationName.php',
+			url: app.url + 'php/updateNationName.php',
 			data: {
 				name: x
 			}

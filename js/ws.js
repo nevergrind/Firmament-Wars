@@ -40,7 +40,7 @@ var socket = {
 			if (channel !== my.channel){
 				$.ajax({
 					type: "POST",
-					url: "php/titleChangeChannel.php",
+					url: app.url + "php/titleChangeChannel.php",
 					data: {
 						channel: channel
 					}
@@ -87,7 +87,7 @@ var socket = {
 					flag = flag[0].replace(/ /g, "-");
 					my.lastReceivedWhisper = data.account;
 					$.ajax({
-						url: 'php/insertWhisper.php',
+						url: app.url + 'php/insertWhisper.php',
 						data: {
 							action: "receive",
 							flag: data.flag,

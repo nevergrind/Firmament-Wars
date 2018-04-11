@@ -24,7 +24,7 @@ var lobby = {
 	},
 	addCpuPlayer: function(){
 		$.ajax({
-			url: 'php/cpu-add-player.php',
+			url: app.url +'php/cpu-add-player.php',
 			data: {
 				flag: g.getRandomFlag()
 			}
@@ -113,7 +113,7 @@ var lobby = {
 		if (!lobby.chatDrag){
 			DOM.lobbyChatLog.scrollTop = DOM.lobbyChatLog.scrollHeight;
 		}
-		g.sendNotification(data.message);
+		// g.sendNotification(data.message);
 	},
 	chatDrag: false,
 	gameStarted: false,
@@ -150,7 +150,7 @@ var lobby = {
 						// skip
 					} else {
 						$.ajax({
-							url: 'php/insertLobbyChat.php',
+							url: app.url +'php/insertLobbyChat.php',
 							data: {
 								message: msg
 							}
@@ -364,7 +364,7 @@ var lobby = {
 					}
 					//console.info('pingCpu ', pingCpu);
 					$.ajax({
-						url: "php/updateLobby.php",
+						url: app.url +"php/updateLobby.php",
 						data: {
 							pingCpu: pingCpu
 						}
@@ -590,7 +590,7 @@ var lobby = {
 				audio.play('click');
 				$.ajax({
 					type: "GET",
-					url: "php/startGame.php"
+					url: app.url +"php/startGame.php"
 				}).fail(function(data){
 					Msg(data.statusText);
 					startGame.style.display = "block";
@@ -802,13 +802,13 @@ function loadGameState(){
 	// console.warn("Loading: " + g.map.key + ".php");
 	$.ajax({
 		type: 'GET',
-		url: 'maps/' + g.map.key + '.php'
+		url: app.url +'maps/' + g.map.key + '.php'
 	}).done(function(data){
 		DOM.worldWrap.innerHTML = data;
 			
 		$.ajax({
 			type: "GET",
-			url: "php/loadGameState.php"
+			url: app.url +"php/loadGameState.php"
 		}).done(function(data){
 			g.resourceTick = data.resourceTick;
 			g.startGame = data.startGame * 1;

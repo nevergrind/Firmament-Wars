@@ -184,7 +184,7 @@ var ai = {
 		var tiles = ai.getAttackTarget(d.player);
 		if (tiles[0] > -1){
 			$.ajax({
-				url: 'php/attack-ai.php',
+				url: app.url + 'php/attack-ai.php',
 				data: {
 					attacker: tiles[0],
 					defender: tiles[1],
@@ -282,7 +282,7 @@ var ai = {
 		var tile = ai.getDeployTarget(d.player);
 		if (tile !== undefined){
 			$.ajax({
-				url: 'php/deploy-ai.php',
+				url: app.url + 'php/deploy-ai.php',
 				data: {
 					tile: tile,
 					food: o.food
@@ -312,7 +312,7 @@ var ai = {
 		var tiles = ai.getWeaponTarget(d.player);
 		if (tiles[0] > -1){
 			$.ajax({
-				url: 'php/ai-fireCannons.php',
+				url: app.url + 'php/ai-fireCannons.php',
 				data: {
 					attacker: tiles[0],
 					defender: tiles[1]
@@ -324,7 +324,7 @@ var ai = {
 		var tiles = ai.getRangedWeaponTarget(d.player);
 		if (tiles[0] > -1){
 			$.ajax({
-				url: 'php/ai-launchMissile.php',
+				url: app.url + 'php/ai-launchMissile.php',
 				data: {
 					attacker: tiles[0],
 					defender: tiles[1]
@@ -332,7 +332,7 @@ var ai = {
 			}).done(function(){
 				setTimeout(function(){
 					$.ajax({
-						url: 'php/ai-launchMissileHit.php',
+						url: app.url + 'php/ai-launchMissileHit.php',
 						data: {
 							account: d.account,
 							attacker: tiles[0],
@@ -347,7 +347,7 @@ var ai = {
 		var tiles = ai.getRangedWeaponTarget(d.player);
 		if (tiles[0] > -1){
 			$.ajax({
-				url: 'php/ai-launchNuke.php',
+				url: app.url + 'php/ai-launchNuke.php',
 				data: {
 					attacker: tiles[0],
 					defender: tiles[1]
@@ -355,7 +355,7 @@ var ai = {
 			}).done(function(){
 				setTimeout(function(){
 					$.ajax({
-						url: 'php/ai-launchNukeHit.php',
+						url: app.url + 'php/ai-launchNukeHit.php',
 						data: {
 							account: d.account,
 							defender: tiles[1]
@@ -369,7 +369,7 @@ var ai = {
 		var tile = ai.getDefenseTarget(d.player);
 		if (tile > -1){
 			$.ajax({
-				url: 'php/ai-upgradeTileDefense.php',
+				url: app.url + 'php/ai-upgradeTileDefense.php',
 				data: {
 					target: tile,
 					account: d.account
@@ -478,7 +478,7 @@ var ai = {
 	},
 	updateResources: function(o, player){
 		$.ajax({
-			url: 'php/ai-updateResources.php',
+			url: app.url + 'php/ai-updateResources.php',
 			data: {
 				player: player,
 				moves: (4 + ~~(o.food / 50)), 

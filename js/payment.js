@@ -50,7 +50,7 @@ var payment = {
 					// No errors, submit the form.
 					Msg("Communicating with the server...");
 					$.ajax({
-						url: "php/purchaseFw.php",
+						url: app.url + "php/purchaseFw.php",
 						data: {
 							stripeToken: response.id
 						}

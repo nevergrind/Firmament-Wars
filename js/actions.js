@@ -94,7 +94,7 @@ var action = {
 		}
 		// send attack to server
 		$.ajax({
-			url: 'php/attackTile.php',
+			url: app.url + 'php/attackTile.php',
 			data: {
 				attacker: attacker,
 				defender: defender,
@@ -191,7 +191,7 @@ var action = {
 			// do it
 			var tgt = my.tgt;
 			$.ajax({
-				url: 'php/deploy.php',
+				url: app.url + 'php/deploy.php',
 				data: {
 					target: tgt
 				}
@@ -221,7 +221,7 @@ var action = {
 		}
 		if (t.units <= 254){
 			$.ajax({
-				url: 'php/rush.php',
+				url: app.url + 'php/rush.php',
 				data: {
 					target: tgt
 				}
@@ -251,7 +251,7 @@ var action = {
 			return;
 		}
 		$.ajax({
-			url: 'php/upgradeTileDefense.php',
+			url: app.url + 'php/upgradeTileDefense.php',
 			data: {
 				target: my.tgt
 			}
@@ -282,7 +282,7 @@ var action = {
 		ui.showTarget(DOM['land' + attacker]);
 		// send attack to server
 		$.ajax({
-			url: 'php/fireCannons.php',
+			url: app.url + 'php/fireCannons.php',
 			data: {
 				attacker: attacker,
 				defender: defender
@@ -316,7 +316,7 @@ var action = {
 		ui.showTarget(DOM['land' + attacker]);
 		// send attack to server
 		$.ajax({
-			url: 'php/launchMissile.php',
+			url: app.url + 'php/launchMissile.php',
 			data: {
 				attacker: attacker,
 				defender: defender
@@ -329,7 +329,7 @@ var action = {
 			}
 			setTimeout(function(){
 				$.ajax({
-					url: 'php/launchMissileHit.php',
+					url: app.url + 'php/launchMissileHit.php',
 					data: {
 						attacker: attacker,
 						defender: defender
@@ -369,7 +369,7 @@ var action = {
 		ui.showTarget(DOM['land' + attacker]);
 		// send attack to server
 		$.ajax({
-			url: 'php/launchNuke.php',
+			url: app.url + 'php/launchNuke.php',
 			data: {
 				attacker: attacker,
 				defender: defender
@@ -377,7 +377,7 @@ var action = {
 		}).done(function(data) {
 			setTimeout(function(){
 				$.ajax({
-					url: 'php/launchNukeHit.php',
+					url: app.url + 'php/launchNukeHit.php',
 					data: {
 						defender: defender
 					}
@@ -441,7 +441,7 @@ var action = {
 			audio.play('click');
 			$.ajax({
 				type: 'GET',
-				url: 'php/endTurn.php',
+				url: app.url + 'php/endTurn.php',
 			}).done(function(data){
 				setMoves(data);
 			});
@@ -487,7 +487,7 @@ function toggleChatMode(bypass){
 					// skip
 				} else {
 					$.ajax({
-						url: 'php/insertChat.php',
+						url: app.url + 'php/insertChat.php',
 						data: {
 							message: msg
 						}
@@ -562,7 +562,7 @@ var research = {
 	masonry: function(){
 		$.ajax({
 			type: 'GET',
-			url: 'php/researchMasonry.php'
+			url: app.url + 'php/researchMasonry.php'
 		}).done(function(data) {
 			my.tech.masonry = 1;
 			research.report(data, "Masonry");
@@ -571,7 +571,7 @@ var research = {
 	construction: function(){
 		$.ajax({
 			type: 'GET',
-			url: 'php/researchConstruction.php'
+			url: app.url + 'php/researchConstruction.php'
 		}).done(function(data) {
 			my.tech.construction = 1;
 			research.report(data, "Construction");
@@ -580,7 +580,7 @@ var research = {
 	gunpowder: function(){
 		$.ajax({
 			type: 'GET',
-			url: 'php/researchGunpowder.php'
+			url: app.url + 'php/researchGunpowder.php'
 		}).done(function(data) {
 			my.tech.gunpowder = 1;
 			research.report(data, "Gunpowder");
@@ -589,7 +589,7 @@ var research = {
 	engineering: function(){
 		$.ajax({
 			type: 'GET',
-			url: 'php/researchEngineering.php'
+			url: app.url + 'php/researchEngineering.php'
 		}).done(function(data) {
 			my.tech.engineering = 1;
 			research.report(data, "Engineering");
@@ -598,7 +598,7 @@ var research = {
 	rocketry: function(){
 		$.ajax({
 			type: 'GET',
-			url: 'php/researchRocketry.php'
+			url: app.url + 'php/researchRocketry.php'
 		}).done(function(data) {
 			my.tech.rocketry = 1;
 			research.report(data, "Rocketry");
@@ -607,7 +607,7 @@ var research = {
 	atomicTheory: function(){
 		$.ajax({
 			type: 'GET',
-			url: 'php/researchAtomicTheory.php'
+			url: app.url + 'php/researchAtomicTheory.php'
 		}).done(function(data) {
 			my.tech.atomicTheory = 1;
 			research.report(data, "Atomic Theory");
@@ -616,7 +616,7 @@ var research = {
 	futureTech: function(){
 		$.ajax({
 			type: 'GET',
-			url: 'php/researchFutureTech.php'
+			url: app.url + 'php/researchFutureTech.php'
 		}).done(function(data) {
 			research.report(data, "Future Tech");
 		});

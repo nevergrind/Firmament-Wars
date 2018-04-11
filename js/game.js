@@ -204,7 +204,7 @@ function gameDefeat(){
 	new Audio('sound/shotgun2.mp3');
 	$.ajax({
 		type: "GET",
-		url: "php/gameDefeat.php" 
+		url: app.url + "php/gameDefeat.php"
 	}).done(function(data){
 		console.info("DEFEAT: ", data);
 		var msg = '';
@@ -244,7 +244,7 @@ function gameVictory(){
 	(function repeat(){
 		$.ajax({
 			type: "GET",
-			url: "php/gameVictory.php"
+			url: app.url + "php/gameVictory.php"
 		}).done(function(data){
 			var msg = '';
 			console.info('VICTORY: ', data);

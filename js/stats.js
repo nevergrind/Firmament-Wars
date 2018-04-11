@@ -12,7 +12,7 @@
 			if (token){
 				$.ajax({
 					type: 'POST',
-					url: '/php/master1.php',
+					url: app.url + '/php/master1.php',
 					data: {
 						run: "authenticate",
 						email: email,
@@ -22,7 +22,7 @@
 					if (data === "Login successful!"){
 						$.ajax({
 							type: 'POST',
-							url: '/php/master1.php', 
+							url: app.url + '/php/master1.php',
 							data: {
 								run: "getToken",
 								email: email
@@ -31,7 +31,7 @@
 							token = data;
 							$.ajax({
 								type: 'POST',
-								url: '/php/master1.php',
+								url: app.url + '/php/master1.php',
 								data: {
 									run: "authenticate",
 									email: email,
@@ -52,7 +52,7 @@
 			} else {
 				$.ajax({
 					type: 'POST',
-					url: '/php/master1.php',
+					url: app.url + '/php/master1.php',
 					data: {
 						run: "getToken",
 						email: email
@@ -573,6 +573,7 @@ var stats = {
 					if (g.teamMode){
 						str += '<span class="diploTeam">'+ z.team +'</span>';
 					}
+					// TODO: undefined error here on difficulty after CPU was eliminated and I surrendered
 					var account = p.cpu === 1 ? ("Computer: "+ z.difficulty) : p.account;
 					str += account +
 				'</div>\
@@ -615,7 +616,7 @@ var stats = {
 	},
 	get: function(){
 		$.ajax({
-			url: 'php/stats.php',
+			url: app.url + 'php/stats.php',
 		}).done(function(data){
 			stats.data = data;
 			stats.init(data);

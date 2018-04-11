@@ -126,7 +126,7 @@ var g = {
 				data.longitude += '';
 				g.geo = data;
 				$.ajax({
-					url: 'php/updateUserInfo.php',
+					url: app.url + 'php/updateUserInfo.php',
 					data: {
 						location: g.geo
 					}
@@ -174,7 +174,7 @@ var g = {
 	keepAlive: function(){
 		$.ajax({
 			type: 'GET',
-			url: "php/keepAlive.php"
+			url: app.url + "php/keepAlive.php"
 		}).always(function() {
 			setTimeout(g.keepAlive, 120000);
 		});
@@ -314,6 +314,27 @@ g.init = (function(){
 		});
 	}
 	document.getElementById("flagDropdown").innerHTML = s;
+	$.ajax({
+		type: "GET",
+		url: app.url + 'php/init-game.php' // check if already in a game
+	}).done(function(data) {
+		console.info('init-game', data.account, data);
+		if (data.account) {
+			isLoggedIn = 1;
+			document.getElementById('logout').textContent = 'Logout ' + data.account;
+			$("#login-modal").remove();
+			// people playing firmament wars:
+			title.chat({
+				message: 'There are '+ data.currentPlayers +' people playing Firmament Wars'
+			});
+			// set flag
+			document.getElementById('updateNationFlag').src = 'images/flags/'+ data.flag;
+			document.getElementById('selectedFlag').textContent = data.flagShort;
+		}
+		else {
+			notLoggedIn();
+		}
+	});
 	// TODO separate this confusing logic a bit
 	if ((location.hostname === 'localhost' && location.hash !== '#stop') || 
 		localStorage.getItem('resync') && 
@@ -321,7 +342,7 @@ g.init = (function(){
 		localStorage.setItem('resync', 0);
 		$.ajax({
 			type: "GET",
-			url: 'php/rejoinGame.php' // check if already in a game
+			url: app.url + 'php/rejoinGame.php' // check if already in a game
 		}).done(function(data) {
 			//console.info('rejoin ', data.gameId, data.team);
 			if (data.gameId > 0){
@@ -584,7 +605,7 @@ var game = {
 		// or check that players are still online?
 		$.ajax({
 			type: 'GET',
-			url: "php/getGameState.php"
+			url: app.url + "php/getGameState.php"
 		}).done(function(data){
 			// get tile data
 			for (var i=0, len=data.tiles.length; i<len; i++){
@@ -771,7 +792,7 @@ var game = {
 			});
 			//console.info('getGameState ', firstPlayer, pingCpu);
 			$.ajax({
-				url: "php/updateResources.php",
+				url: app.url + "php/updateResources.php",
 				data: {
 					pingCpu: pingCpu,
 					resourceTick: g.resourceTick 
@@ -1151,7 +1172,7 @@ function playerLogout(){
 	socket.removePlayer(my.account);
     $.ajax({
 		type: 'GET',
-		url: 'php/deleteFromFwtitle.php'
+		url: app.url + 'php/deleteFromFwtitle.php'
 	});
 	
 	try {
@@ -1175,7 +1196,7 @@ function playerLogout(){
 	setTimeout(function(){
 		$.ajax({
 			type: 'GET',
-			url: 'php/logout.php'
+			url: app.url + 'php/logout.php'
 		}).done(function(data) {
 			localStorage.removeItem('token');
 			location.reload();
@@ -1193,7 +1214,7 @@ function exitGame(bypass){
 	if (r || bypass || g.view !== 'game'){
 		g.lock(1);
 		$.ajax({
-			url: 'php/exitGame.php',
+			url: app.url + 'php/exitGame.php',
 			data: {
 				view: g.view
 			}
@@ -1210,7 +1231,7 @@ function surrender(){
 	document.getElementById('surrenderScreen').style.display = 'none';
 	$.ajax({
 		type: 'GET',
-		url: 'php/surrender.php',
+		url: app.url + 'php/surrender.php',
 	});
 	audio.play('click');
 	
