@@ -114,12 +114,22 @@
 </div> <!-- end login -->
 
 
-
-
 	<div id="titleViewBackdrop"></div>
 
-	<img src="images/title/firmament-wars-background-image-75.jpg"
-		 id="firmamentWarsBG">
+	<div id="title-bg-wrap" class="title-bg">
+		<div id="title-backdrop"></div>
+
+		<div id="title-stars-1"
+			 class="title-bg title-stars"></div>
+		<div id="title-stars-2"
+			 class="title-bg title-stars"></div>
+		<div id="title-stars-3"
+			 class="title-bg title-stars"></div>
+
+		<img src="images/title/title-bg-planet.png"
+			 id="firmamentWarsBG"
+			 class="title-bg">
+	</div>
 	
 	<div id="mainWrap">
 	
@@ -128,7 +138,7 @@
 			<header class="shadow4 text-primary fw-primary">
 				<div>
 					<a id="logout" class="btn fwBlue btn-responsive shadow4">Loading...</a>&ensp;
-					<i id="options" class="pointer options fa fa-volume-up"></i>
+					<i id="options" class="pointer options fa fa-gear"></i>
 				</div>
 				<img src="images/neverworks-txt.png">
 				<!--div id="social-links" class="text-primary">
@@ -163,17 +173,17 @@
 							Leaderboard
 						</button>
 					</div>
-					<hr class="fancyhr">
+					<img id="firmamentWarsLogo" src="images/title/firmament-wars-logo-1280.png">
 
+					<hr style="width: 90%; margin: 0 auto" class="fancyhr">
 					<h1>
-						<div>Firmament Wars<br>Realtime Strategic Warfare</div>
+						<div>Multiplayer Strategic Warfare</div>
 						<div style="font-size: 80%">developed by</div>
 						<div>Neverworks Games</div>
 					</h1>
-					<img id="firmamentWarsLogo" src="images/title/firmament-wars-logo-1280.png">
+					<hr style="width: 90%; margin: 0 auto" class="fancyhr">
 
-					<div class="fw-text">
-						<hr class="fancyhr">
+					<div style="margin-top: 1rem;" class="fw-text">
 
 						<div id="title-action-row">
 							<div>
@@ -225,7 +235,7 @@
 				<div id="titleChat" class="fw-primary text-center">
 					<div id="titleChatPlayers" class="titlePanelLeft row">
 						<div id="title-chat-players-room">
-							<div id="titleChatHeader" class="chat-warning nowrap">
+							<div id="titleChatHeader" class="chat-warning nowrap">&nbsp;
 								<span id="titleChatHeaderChannel"></span>
 								<span id="titleChatHeaderCount"></span>
 							</div>
@@ -255,7 +265,6 @@
 
 						<div id="title-chat-players-log">
 							<div id="titleChatLog" class="titlePanelLeft">
-								<a href="//discord.gg/D4suK8b" target="_blank">Join our Discord Server to receive notifications!</a>
 								<!--
 									right chat window
 									count from title screen
@@ -426,7 +435,7 @@
 			<div>
 				<hr class='fancyhr'>
 			</div>
-			<div class='text-center'>
+			<div id="create-game-form-foot" class='text-center'>
 				<button id='createGame' type='button' class='btn btn-md fwGreen btn-responsive shadow4'>Create Game</button>
 				<button id='cancelCreateGame' type='button' class='btn btn-md fwGreen btn-responsive shadow4'>Cancel</button>
 			</div>
@@ -468,14 +477,16 @@
 		</div>
 		
 		<div id="configureNation" class="fw-primary container title-modals">
-			<div class="row text-center">
-				<div class='col-xs-12'>
+
+			<div class="text-center">
+				<div>
 					<h2 class='header'>Update Name</h2>
 					<hr class="fancyhr">
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-xs-12">
+
+			<div id="configure-nation-name">
+				<div>
 					<div class="input-group">
 						<input id="updateNationName" class="form-control" type="text" maxlength="32" autocomplete="off" size="24" aria-describedby="updateNationNameStatus" placeholder="Enter New Nation Name">
 						<span class="input-group-btn">
@@ -487,16 +498,16 @@
 				</div>
 			</div>
 			
-			<div class="row text-center">
-				<div class='col-xs-12'>
+			<div class="text-center">
+				<div>
 					<hr class="fancyhr">
 					<h2 class='header'>Update Flag</h2>
 					<hr class="fancyhr">
 				</div>
 			</div>
 			
-			<div class="row text-center">
-				<div class="col-xs-6">
+			<div id="configure-nation-flag-flex" class="text-center">
+				<div>
 					<div class="dropdown">
 						<button class="btn dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">
 							<span id="selectedFlag"></span>
@@ -506,56 +517,58 @@
 					</div>
 					<div id="flagPurchased" class="flagPurchasedStatus"></div>
 				</div>
-				<div class="col-xs-6">
+
+				<div>
 					<img id="updateNationFlag" class="w100 block center" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 				</div>
 			</div>
 			
 			
-			<div class="row text-center">
-				<div class='col-xs-12'>
+			<div class="text-center">
+				<div>
 					<hr class="fancyhr">
 					<h2 class='header'>Update Avatar</h2>
 					<hr class="fancyhr">
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-xs-8">
-					<p>Upload your dictator avatar. A 200x200 image is recommended. Image must be a jpg < 40 kb:</p>
+
+			<div id="configure-nation-avatar">
+				<div style="flex-basis: 33%">
+					<p>Upload your dictator avatar. A 200x200 image is recommended.<br>Image must be a jpg < 40 kb:</p>
 					<p>
 						<input id="dictatorAvatar" class="btn btn-primary fwBlue shadow4" type="file" accept=".jpg" name="image">
 					</p>
 					<p id="uploadErr" class="text-warning"></p>
 				</div>
-				<div class="col-xs-4">
+				<div style="flex-basis: 67%">
 					<img id="configureAvatarImage" class="dictator">
 				</div>
 			</div>
 			
-			<div class='row text-center'>
-				<div class='col-xs-12'>
+			<div class='text-center'>
+				<div>
 					<hr class="fancyhr">
 					<button id="configureNationDone" type="button" class="btn btn-md fwGreen btn-responsive shadow4">Done</button>
 				</div>
 			</div>
 		</div>
 		
-		<div id="leaderboard" class="fw-primary container title-modals">
-			<div class="row">
-				<div class="col-xs-12">
-					<button id="leaderboardDone" type="button" class="btn btn-md fwGreen btn-responsive shadow4 pull-right">Done</button>
+		<div id="leaderboard" class="fw-primary title-modals">
+			<div id="leaderboard-head">
+				<div>
 					<button id="leaderboardFFABtn" type="button" class="btn fwBlue btn-responsive shadow4">FFA</button>
 					<button id="leaderboardTeamBtn" type="button" class="btn fwBlue btn-responsive shadow4">Team</button>
 					<button id="leaderboardRankedBtn" type="button" class="btn fwBlue btn-responsive shadow4 ranked">Ranked</button>
 					<button id="leaderboard-trips-btn" type="button" class="btn fwBlue btn-responsive shadow4">Trips</button>
 					<button id="leaderboard-quads-btn" type="button" class="btn fwBlue btn-responsive shadow4">Quads</button>
 					<button id="leaderboard-pents-btn" type="button" class="btn fwBlue btn-responsive shadow4">Pents</button>
-					<hr class="fancyhr">
 				</div>
-				
-				<div id="leaderboardBody" class="col-xs-12">
-					<div class="text-center">Loading...</div>
-				</div>
+				<button id="leaderboardDone" type="button" class="btn btn-md fwGreen btn-responsive shadow4">Done</button>
+			</div>
+
+			<hr class="fancyhr">
+			<div id="leaderboardBody">
+				<div class="text-center">Loading...</div>
 			</div>
 		</div>
 		
@@ -586,7 +599,7 @@
 			<div id="resourceHead">
 				<i id="resync" class="pointer options fa fa-refresh" title="Attempt to resynchronize game data. Try this if your game seems to be in a bugged state"></i>
 				<i id="hotkeys" class="pointer options fa fa-keyboard-o" title="Hotkeys"></i>
-				<i id="options" class="pointer options fa fa-volume-up" title="Audio"></i>
+				<i id="options" class="pointer options fa fa-gear" title="Options"></i>
 				<i id="surrender" class="pointer fa fa-flag" title="Surrender"></i>
 				<i id="exitSpectate" class="pointer fa fa-times-circle none"></i>
 			</div>
@@ -908,7 +921,7 @@
 	<audio id="bgmusic" autoplay loop preload="auto"></audio>
 	
 	<div id="hotkeysModal" class='fw-primary title-modals'>
-		<h2 class='header text-center'>Hotkeys</h2>
+		<h2 style="margin-bottom: .5rem" class='header text-center'>Hotkeys</h2>
 		<hr class="fancyhr">
 		
 		<div id="hotkeysFormWrap" class="container w100">
@@ -954,12 +967,15 @@
 		
 		<hr class='fancyhr buffer2'>
 		<div class='text-center'>
-			<button id='hotkeysDone' type='button' class='btn btn-md fwGreen btn-responsive shadow4'>Done</button>
+			<button style="margin-top: .5rem"
+					id='hotkeysDone'
+					type='button'
+					class='btn btn-md fwGreen btn-responsive shadow4'>Done</button>
 		</div>
 	</div>
 	
 	<div id="optionsModal" class='fw-primary title-modals'>
-		<h2 class='header text-center'>Audio</h2>
+		<h2 style="margin-bottom: .5rem;" class='header text-center'>Options</h2>
 		<hr class="fancyhr">
 		<div id="optionsFormWrap" class="container w100">
 		
@@ -984,6 +1000,9 @@
 			<hr class='fancyhr'>
 		</div>
 		<div class='text-center'>
+			<button id='exit-game'
+					type='button'
+					class='btn btn-md fwRed btn-responsive shadow4'>Exit Game</button>
 			<button id='optionsDone' type='button' class='btn btn-md fwGreen btn-responsive shadow4'>Done</button>
 		</div>
 	</div>

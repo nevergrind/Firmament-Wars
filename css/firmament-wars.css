@@ -259,6 +259,15 @@ label{
     font-family: Roboto;
     src: url(../fonts/Roboto-Regular.ttf)
 }
+@font-face {
+  	font-family: 'KJV-1611';
+    src:  url('../fonts/KJV-1611.ttf.woff') format('woff'),
+    url('../fonts/KJV-1611.ttf.svg#KJV-1611') format('svg'),
+    url('../fonts/KJV-1611.ttf.eot'),
+    url('../fonts/KJV-1611.eot?#iefix') format('embedded-opentype');
+    font-weight: normal;
+    font-style: normal;
+}
 * {
     _noFocusLine: expression(this.hideFocus=true);
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -333,6 +342,12 @@ header {
 #menuHead {
 	display: flex;
 	align-items: center;
+	border: 2px groove #013;
+	background: #0a0a0a;
+	background: -webkit-radial-gradient(top left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
+	background: -moz-radial-gradient(top left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
+	background: -o-radial-gradient(top left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
+	background: -ms-radial-gradient(top left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
 }
 #menuHead > button {
 	margin: .2rem .3rem;
@@ -392,13 +407,53 @@ a:hover {
     top: 0;
     overflow: hidden
 }
-#firmamentWarsBG {
+.title-bg {
 	position: absolute;
 	width: 1920px;
 	height: 1080px;
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
+}
+#titleViewBackdrop {
+    position: absolute;
+    visibility: hidden;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .8);
+    background: -webkit-radial-gradient(center center, farthest-corner, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, .7) 100%);
+    background: -moz-radial-gradient(center center, farthest-corner, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, .7) 100%);
+    background: -ms-radial-gradient(center center, farthest-corner, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, .7) 100%);
+    background: -o-radial-gradient(center center, farthest-corner, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, .7) 100%);
+    z-index: 999999
+
+}
+#title-backdrop {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #0a0a0a;
+	background: -webkit-radial-gradient(bottom left, farthest-side, rgba(5, 64, 80, 1) 0%, rgba(5, 64, 80, 0) 75%, rgba(0,0,0,0) 100%);
+	background: -moz-radial-gradient(top left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
+	background: -o-radial-gradient(top left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
+	background: -ms-radial-gradient(top left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
+}
+#title-stars-1 {
+	background-position: 0px 0px;
+}
+#title-stars-2 {
+	background-position: -200px -200px;
+}
+#title-stars-3 {
+	background-position: -400px -400px;
+}
+.title-stars {
+	background-image: url(../images/title/simple-stars.png);
+	background-size: 100% 100%;
 }
 #firmamentWarsLogo {
 	position: relative;
@@ -542,7 +597,7 @@ a:hover {
 #titleMenu {
 	display: flex;
 	flex-direction: column;
-    padding: .2rem .3rem;
+    padding: .1rem;
 	flex-basis: 42%;
 }
 #title-action-row {
@@ -550,13 +605,29 @@ a:hover {
 	align-items: center;
 	justify-content: space-between;
 	padding: .2rem .3rem;
+	border: 2px groove #013;
+	background: #0a0a0a;
+	background: -webkit-radial-gradient(top left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
+	background: -moz-radial-gradient(top left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
+	background: -o-radial-gradient(top left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
+	background: -ms-radial-gradient(top left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
+}
+#optionsDone {
+	margin-top: .5rem;
+}
+#leaderboard-head {
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+	margin-bottom: .5rem;
 }
 #refreshGameWrap {
     color: #bef;
-    margin-top: .5vh;
+    margin-top: 0;
     overflow-y: auto;
 	flex: 1;
-	background: rgba(0,0,0,.8);
+	border: 4px ridge #124;
+	background: rgba(33,33,33,.3);
 }
 #gameTable {
     table-layout: fixed;
@@ -566,6 +637,7 @@ a:hover {
     color: #fff
 }
 #gameTableHead {
+	border: 2px groove #136;
 	background: #013;
 }
 #gameTable th {
@@ -641,7 +713,6 @@ tbody {
 }
 #titleChatLog {
 	width: 100%;
-    background: rgba(0, 0, 0, .5);
     overflow-x: hidden;
     word-break: break-word
 }
@@ -726,7 +797,8 @@ tbody {
     background: rgba(16, 56, 96, 1);
     color: #aef!important;
     cursor: pointer;
-    border: 1px solid #2e6da4;
+    border: 1px outset #2e6da4;
+	box-shadow: 0 0 0 1px #012 inset;
     border-radius: 4px;
     text-shadow: 1px 1px #000, -1px 0 #000, 1px 0 #000, -1px 1px #000, 1px -1px #000, -1px -1px #000!important
 }
@@ -734,13 +806,18 @@ tbody {
     background: rgba(26, 66, 106, 1)
 }
 .fwBlue:active {
-    background: rgba(6, 46, 86, 1)
+    background: rgba(6, 46, 86, 1);
+    border: 1px inset #2e6da4!important;
+}
+.fwBlue:focus {
+	outline: none!important;
 }
 .fwGreen {
     background: rgba(11, 76, 11, 1);
     color: #afa!important;
     cursor: pointer;
-    border: 1px solid #3a3;
+    border: 1px outset #3a3;
+	box-shadow: 0 0 0 1px #012 inset;
     border-radius: 4px;
     text-shadow: 1px 1px #000, -1px 0 #000, 1px 0 #000, -1px 1px #000, 1px -1px #000, -1px -1px #000!important
 }
@@ -748,7 +825,33 @@ tbody {
     background: rgba(26, 86, 26, 1)
 }
 .fwGreen:active {
-    background: rgba(1, 66, 1, 1)
+    background: rgba(1, 66, 1, 1);
+    border: 1px inset #3a3!important;
+}
+.fwGreen:focus {
+	outline: none!important;
+}
+.fwRed{
+    background: rgba(88, 11, 11, 1);
+    color: #faa!important;
+    cursor: pointer;
+    border: 1px outset #a33;
+	box-shadow: 0 0 0 1px #012 inset;
+    border-radius: 4px;
+    text-shadow: 1px 1px #000, -1px 0 #000, 1px 0 #000, -1px 1px #000, 1px -1px #000, -1px -1px #000!important
+}
+.fwRed:hover {
+    background: rgba(99, 11, 11, 1)
+}
+.fwRed:active {
+    background: rgba(77, 11, 11, 1);
+    border: 1px inset #511!important;
+}
+.fwRed:focus {
+	outline: none!important;
+}
+#exit-game {
+	margin-top: .5rem;
 }
 #lobbyChatSend,
 #titleChatSendBtn {
@@ -796,6 +899,35 @@ tbody {
 #configureNation,
 #createGameWrap {
     background: #000
+}
+#configureNation {
+	padding:0!important;
+}
+#configure-nation-name {
+	display: flex;
+	padding: 1rem;
+}
+#configureNationDone {
+	margin-top: .5rem;
+}
+#configureNation > div{
+	margin: 1rem 0;
+}
+#configure-nation-flag-flex {
+	display: flex;
+}
+#configure-nation-flag-flex > div{
+	flex-basis: 50%;
+	padding: 1rem;
+}
+#configure-nation-avatar {
+	display: flex;
+}
+#configure-nation-avatar > div {
+	padding: 1rem;
+}
+#create-game-form-foot {
+	padding-top: .5rem;
 }
 #card-number {
     width: 50%
@@ -1680,6 +1812,8 @@ circle {
 }
 #createGameBtn,
 #autoJoinBtn {
+    border: 1px outset #2e6da4;
+	box-shadow: 0 0 0 1px #012 inset;
     height: 2.145em;
     background: rgba(16, 56, 96, 1)!important
 }
@@ -1754,7 +1888,6 @@ circle {
 .pad2 {
     padding: .25em .5em
 }
-#titleViewBackdrop,
 #ribbonBackdrop {
     position: absolute;
     visibility: hidden;
@@ -1922,9 +2055,19 @@ table {
 }
 .lobbyRow {
     display: none;
+	align-items: center;
     height: 2.8em;
     line-height: 2.8em;
-    margin-top: .5em
+    margin: .5em 0
+}
+.lobby-row-col-1 {
+	flex-basis: 17%;
+}
+.lobby-row-col-2 {
+	flex-basis: 50%;
+}
+.lobby-row-col-3 {
+	flex-basis: 33%;
 }
 .cpu-button {
     margin-left: 5px
@@ -2420,15 +2563,15 @@ table {
     font-size: 1.625em;
     cursor: pointer;
     text-align: center;
-    background: rgba(0, 0, 0, .8)
+    box-shadow: 0 0 0 2px #0a1a4a inset, 0 0 0 3px #357 inset;
+    border-radius: 7px 7px 0 0;
+    background: -webkit-linear-gradient(bottom, rgba(16, 64, 128, 1) 0%, rgba(0, 16, 64, 1) 100%)!important;
+    background: -moz-linear-gradient(bottom, rgba(16, 64, 128, 1) 0%, rgba(0, 16, 64, 1) 100%)!important;
+    background: -ms-linear-gradient(bottom, rgba(16, 64, 128, 1) 0%, rgba(0, 16, 64, 1) 100%)!important;
+    background: -o-linear-gradient(bottom, rgba(16, 64, 128, 1) 0%, rgba(0, 16, 64, 1) 100%)!important
 }
 .statTabs.active {
-    background: -webkit-radial-gradient(top center, farthest-side, rgba(48, 96, 155, 1) 0%, rgba(0, 32, 69, 1) 100%);
-    background: -moz-radial-gradient(top center, farthest-side, rgba(48, 96, 155, 1) 0%, rgba(0, 32, 69, 1) 100%);
-    background: -ms-radial-gradient(top center, farthest-side, rgba(48, 96, 155, 1) 0%, rgba(0, 32, 69, 1) 100%);
-    background: -o-radial-gradient(top center, farthest-side, rgba(48, 96, 155, 1) 0%, rgba(0, 32, 69, 1) 100%);
-    color: #d5faff;
-    box-shadow: 0 0 3px #17d inset
+	color: #ff0!important;
 }
 .statTabs:hover {
     color: #d5faff
@@ -2453,10 +2596,7 @@ table {
 .statHead {
     box-shadow: 0 0 0 2px #0a1a4a inset, 0 0 0 3px #357 inset;
     border-radius: 7px 7px 0 0;
-    background: -webkit-linear-gradient(bottom, rgba(16, 64, 128, 1) 0%, rgba(0, 16, 64, 1) 100%)!important;
-    background: -moz-linear-gradient(bottom, rgba(16, 64, 128, 1) 0%, rgba(0, 16, 64, 1) 100%)!important;
-    background: -ms-linear-gradient(bottom, rgba(16, 64, 128, 1) 0%, rgba(0, 16, 64, 1) 100%)!important;
-    background: -o-linear-gradient(bottom, rgba(16, 64, 128, 1) 0%, rgba(0, 16, 64, 1) 100%)!important
+    background: rgba(0, 0, 0, .8)!important;
 }
 .statWrapper {
     position: absolute;
@@ -2515,13 +2655,14 @@ table {
     border-radius: 0
 }
 #statQuote {
-    font-family: Palatino Linotype, Times New Roman, serif;
-    font-size: .925em;
+    font-family: KJV-1611, Palatino Linotype, Times New Roman, serif;
+    font-size: 2rem;
     padding: .25em .5em;
-    margin: 0 2em 0 .5em
+	letter-spacing: .1rem;
+    margin: 0 2em 0 .5em;
+	color: #ffc;
 }
 #statVerse {
-    font-family: Cinzel, Palatino Linotype, serif;
     margin-top: .5em
 }
 #statDuration {

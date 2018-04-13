@@ -403,7 +403,8 @@ var action = {
 		DOM.researchEngineering.style.display = my.tech.construction && !my.tech.engineering ? 'block' : 'none';
 		DOM.researchGunpowder.style.display = !my.tech.gunpowder ? 'block' : 'none';
 		DOM.researchRocketry.style.display = my.tech.gunpowder && !my.tech.rocketry ? 'block' : 'none';
-		DOM.researchAtomicTheory.style.display = my.tech.rocketry && !my.tech.atomicTheory ? 'block' : 'none';
+		DOM.researchAtomicTheory.style.display =
+			my.tech.rocketry && my.tech.engineering && !my.tech.atomicTheory ? 'block' : 'none';
 		DOM.researchFutureTech.style.display = my.tech.atomicTheory ? 'block' : 'none';
 		if (my.tech.masonry){
 			// masonry unlocked

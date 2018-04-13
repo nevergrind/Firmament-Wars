@@ -78,7 +78,7 @@ var stats = {
 			<img class="statResultFlag pull-left" src="images/flags/'+ flag +'">\
 			<img class="statResultFlag pull-right" src="images/flags/'+ flag +'">\
 		</div>\
-		<div id="statTabWrap" class="no-select">\
+		<div id="statTabWrap" class="no-select shadow4">\
 			<div id="statOverview" class="statTabs active">\
 				Overview\
 			</div><div id="statUnits" class="statTabs">\

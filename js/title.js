@@ -177,7 +177,7 @@ var title = {
 						}
 					}).always(function(){
 						if (!once){
-							setTimeout(repeat, 5000);
+							setTimeout(repeat, 15000);
 						}
 					});
 				}
@@ -422,7 +422,7 @@ var title = {
 		}
 	},
 	addIgnore: function(account){
-		account = account.trim();
+		account = account.toLowerCase().trim();
 		g.chat('<div>Ignoring '+ account +'</div>');
 		if (g.ignore.indexOf(account) === -1 && account){
 			if (g.ignore.length < 20){
@@ -441,9 +441,8 @@ var title = {
 		}
 	},
 	removeIgnore: function(account){
-		account = account.trim();
-		g.chat('<div>Unignoring '+ account +'</div>');
-		if (g.ignore.indexOf(account) > -1 && account){
+		account = account.toLowerCase().trim();
+		if (account && g.ignore.indexOf(account) > -1){
 			// found account
 			var index = g.ignore.indexOf(account);
 			g.ignore.splice(index, 1);
@@ -834,12 +833,42 @@ var title = {
 		});
 		g.isModalOpen = true;
 	},
+	showModal: function() {
+		TweenMax.to(document.getElementById("optionsModal"), g.modalSpeed, {
+			startAt: {
+				visibility: 'visible',
+				y: 0,
+				alpha: 0
+			},
+			y: 30,
+			alpha: 1
+		});
+		title.showBackdrop();
+	},
+	toggleModal: function() {
+		if (g.isModalOpen) {
+			title.closeModal();
+		}
+		else {
+			title.showModal();
+		}
+	},
 	closeModal: function(){
 		TweenMax.set('.title-modals, #titleViewBackdrop', {
 			alpha: 0,
 			visibility: 'hidden'
 		});
 		g.isModalOpen = false;
+	},
+	exitGame: function() {
+		console.info("EXIT GAME");
+		var win = nw.Window.get();
+		win.on('close', function() {
+			this.hide(); // Pretend to be closed already
+			console.log("We're closing...");
+			this.close(true); // then close it forcely
+		});
+		win.close();
 	},
 	createGameFocus: false,
 	createGame: function(){

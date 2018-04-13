@@ -192,11 +192,11 @@ var lobby = {
 			var str = '<div id="lobbyWrap" class="container">';
 			for (var i=1; i<=8; i++){
 				str += 
-				'<div id="lobbyRow' +i+ '" class="row lobbyRow">\
-					<div class="col-xs-2">\
+				'<div id="lobbyRow' +i+ '" class="lobbyRow">\
+					<div class="lobby-row-col-1">\
 						<img id="lobbyFlag' +i+ '" class="lobbyFlags block center" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">\
 					</div>\
-					<div class="col-xs-6 lobbyDetails">\
+					<div class="lobby-row-col-2 lobbyDetails">\
 						<div class="lobbyAccounts">';
 						
 							if (g.teamMode){
@@ -235,7 +235,7 @@ var lobby = {
 						</div>\
 						<div id="lobbyName' +i+ '" class="lobbyNames nowrap"></div>\
 					</div>\
-					<div class="col-xs-4">';
+					<div class="lobby-row-col-3">';
 					if (i === x.player){
 						// my.player === i || data.cpu && my.player === 1
 						// me - gov dropdown
@@ -427,7 +427,7 @@ var lobby = {
 		if (data.account !== undefined){
 			// add
 			//console.info("ADD PLAYER: ", data);
-			document.getElementById("lobbyRow" + i).style.display = 'block';
+			document.getElementById("lobbyRow" + i).style.display = 'flex';
 			// different player account
 			document.getElementById("lobbyAccountName" + i).innerHTML = data.cpu ? 'Computer' : data.account;
 			document.getElementById("lobbyName" + i).innerHTML = data.nation;
@@ -810,6 +810,10 @@ function loadGameState(){
 			type: "GET",
 			url: app.url +"php/loadGameState.php"
 		}).done(function(data){
+			setTimeout(function() {
+				$("#title-bg-wrap").remove();
+			}, 2000);
+
 			g.resourceTick = data.resourceTick;
 			g.startGame = data.startGame * 1;
 			g.teamMode = data.teamMode;

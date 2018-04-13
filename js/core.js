@@ -304,6 +304,14 @@ g.init = (function(){
 			animation: false
 		});
 	}
+	if (app.isApp) {
+	}
+	else {
+		$("#exit-game").on('click', function() {
+			title.exitGame();
+		})
+		// $("#exit-game").remove();
+	}
 	// build map drop-down 
 	// <li><a class='flagSelect'>Default</a></li>
 	var s = "";
@@ -314,6 +322,35 @@ g.init = (function(){
 		});
 	}
 	document.getElementById("flagDropdown").innerHTML = s;
+	TweenMax.to(document.getElementById('title-stars-1'), 20, {
+		startAt: { backgroundPosition: '0'},
+		force3D: true,
+		backgroundPosition: '-1920px',
+		repeat: -1,
+		ease: Linear.easeNone
+	});
+	TweenMax.to(document.getElementById('title-stars-2'), 30, {
+		startAt: { backgroundPosition: '200px -200px'},
+		backgroundPosition: '-1720px -200px',
+		repeat: -1,
+		ease: Linear.easeNone
+	});
+	TweenMax.to(document.getElementById('title-stars-3'), 45, {
+		startAt: { backgroundPosition: '400px -400px'},
+		backgroundPosition: '-1520px -400px',
+		repeat: -1,
+		ease: Linear.easeNone
+	});
+	TweenMax.to(document.getElementById('title-backdrop'), 12, {
+		startAt: { scale: 1, transformOrigin: '0% 100%' },
+		scale: 3,
+		repeat: -1,
+		yoyo: true,
+		ease: Power1.easeInOut
+	})
+	$('[title]').tooltip({
+		position: 'right'
+	});
 	$.ajax({
 		type: "GET",
 		url: app.url + 'php/init-game.php' // check if already in a game

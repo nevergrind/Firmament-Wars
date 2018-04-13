@@ -140,16 +140,7 @@ var events = {
 			
 		});
 		$("body").on(ui.click, '#options', function(){
-			TweenMax.to(document.getElementById("optionsModal"), g.modalSpeed, {
-				startAt: {
-					visibility: 'visible',
-					y: 0,
-					alpha: 0
-				},
-				y: 30,
-				alpha: 1
-			});
-			title.showBackdrop();
+			title.showModal();
 		}).on(ui.click, '#hotkeys', function(){
 			TweenMax.to(document.getElementById("hotkeysModal"), g.modalSpeed, {
 				startAt: {
@@ -610,6 +601,7 @@ var events = {
 
 $(document).on('keydown', function(e){
 	var x = e.keyCode;
+	console.info('x', x);
 	if (e.ctrlKey){
 		if (x === 82){
 			// ctrl+r refresh
@@ -620,8 +612,14 @@ $(document).on('keydown', function(e){
 			if (!g.isModalOpen && isLoggedIn){
 				$("#title-chat-input").focus();
 			}
+			if (x === 27) {
+				title.toggleModal();
+			}
 		} else if (g.view === 'lobby'){
 			$("#lobby-chat-input").focus();
+			if (x === 27) {
+				title.toggleModal();
+			}
 		} else {
 			// game
 			if (x === 9){
@@ -637,6 +635,9 @@ $(document).on('keydown', function(e){
 				if (g.view === 'game' && !g.chatOn){
 					game.toggleGameWindows(1);
 				}
+			}
+			else if (x === 27) {
+				!my.attackOn && title.toggleModal();
 			}
 		}
 	}
@@ -657,9 +658,6 @@ $(document).on('keydown', function(e){
 			} else if (title.createGameFocus){
 				title.createGame();
 			}
-		} else if (x === 27){
-			// esc
-			title.closeModal();
 		}
 	} else if (g.view === 'lobby'){
 		if (lobby.chatOn){
@@ -674,9 +672,6 @@ $(document).on('keydown', function(e){
 			if (x === 13){
 				// enter/esc - sends chat
 				toggleChatMode(true);
-			} else if (x === 27){
-				// esc
-				toggleChatMode();
 			}
 		} else {
 			if (x === 13){
@@ -684,11 +679,12 @@ $(document).on('keydown', function(e){
 				toggleChatMode();
 			}  else if (x === 27){
 				// esc
-				my.attackOn = false;
-				my.attackName = '';
-				my.clearHud();
-				ui.showTarget(DOM['land' + my.tgt]); 
-				//console.clear();
+				if (my.attackOn) {
+					my.attackOn = false;
+					my.attackName = '';
+					my.clearHud();
+					ui.showTarget(DOM['land' + my.tgt]);
+				}
 			} else if (x === 65){
 				// a
 				var o = new Target();
