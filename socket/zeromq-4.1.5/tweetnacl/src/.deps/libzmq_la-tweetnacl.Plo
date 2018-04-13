@@ -1,4 +1,0 @@
-tweetnacl/src/libzmq_la-tweetnacl.lo: tweetnacl/src/tweetnacl.c \
- tweetnacl/src/tweetnacl_base.h
-
-tweetnacl/src/tweetnacl_base.h:
