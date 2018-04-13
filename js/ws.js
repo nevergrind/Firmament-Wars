@@ -150,7 +150,7 @@ var socket = {
 	enabled: false,
 	init: function(){
 		// is player logged in?
-		socket.zmq = new ab.Session('wss://' + location.hostname + '/wss2/', function(){
+		socket.zmq = new ab.Session('wss://' + app.socketUrl + '/wss2/', function () {
 			// on open
 			socket.connectionSuccess();
 		}, function(){

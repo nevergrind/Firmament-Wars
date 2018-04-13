@@ -861,14 +861,9 @@ var title = {
 		g.isModalOpen = false;
 	},
 	exitGame: function() {
+		// exit from app
 		console.info("EXIT GAME");
-		var win = nw.Window.get();
-		win.on('close', function() {
-			this.hide(); // Pretend to be closed already
-			console.log("We're closing...");
-			this.close(true); // then close it forcely
-		});
-		win.close();
+		nw.App.closeAllWindows();
 	},
 	createGameFocus: false,
 	createGame: function(){

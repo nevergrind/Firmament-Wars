@@ -299,12 +299,10 @@ var g = {
 };
 g.init = (function(){
 	// console.info("Initializing game...");
-	if (!isMobile && isLoggedIn){
-		$('[title]').tooltip({
-			animation: false
-		});
-	}
 	if (app.isApp) {
+		$("#exit-game").on('click', function() {
+			title.exitGame();
+		})
 	}
 	else {
 		$("#exit-game").on('click', function() {
@@ -347,16 +345,19 @@ g.init = (function(){
 		repeat: -1,
 		yoyo: true,
 		ease: Power1.easeInOut
-	})
-	$('[title]').tooltip({
-		position: 'right'
 	});
 	$.ajax({
 		type: "GET",
 		url: app.url + 'php/init-game.php' // check if already in a game
 	}).done(function(data) {
 		console.info('init-game', data.account, data);
+		$('[title]').tooltip({
+			animation: false,
+			placement: 'bottom',
+			container: 'body'
+		});
 		if (data.account) {
+			app.account = data.account; // for global reference
 			isLoggedIn = 1;
 			document.getElementById('logout').textContent = 'Logout ' + data.account;
 			$("#login-modal").remove();

@@ -323,13 +323,11 @@ var events = {
 				});
 				Msg("Your nation's flag is now: " + my.selectedFlag);
 				document.getElementById('selectedFlag').textContent = my.selectedFlag;
-				if (!isMobile && isLoggedIn){
-					$("[title]")
-						.tooltip('fixTitle')
-						.tooltip({
-							animation: false
-						});
-				}
+				$("[title]")
+					.tooltip('fixTitle')
+					.tooltip({
+						animation: false
+					});
 			}).always(function(){
 				g.unlock(1);
 				TweenMax.to("#updateNationFlag", 1, {

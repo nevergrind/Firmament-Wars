@@ -320,7 +320,9 @@ function updateTileInfo(tileId){
 				.tooltip('fixTitle')
 				.tooltip('hide')
 				.tooltip({
-					animation: false
+					animation: false,
+					placement: 'bottom',
+					container: 'body'
 				});
 		}
 	}
