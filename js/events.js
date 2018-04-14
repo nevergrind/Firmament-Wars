@@ -7,13 +7,10 @@ var events = {
 				g.notification.close();
 			}
 		});
-		$(window).on('resize orientationchange focus', function() {
-			resizeWindow();
-		}).on('load', function(){
-			resizeWindow();
+		$(window).on('load', function(){
 			setTimeout(function() {
 				TweenMax.to('body', .3, {
-					startAt: { display: 'block', opacity: 0 },
+					startAt: { display: 'flex', opacity: 0 },
 					opacity: 1
 				})
 			}, 100);
@@ -40,6 +37,8 @@ var events = {
 					ease: Linear.easeNone
 				});
 			}
+		}).on('resize', function() {
+			ui.resizeWindow();
 		});
 	})(),
 	title: (function(){
@@ -302,8 +301,12 @@ var events = {
 			action.endTurn();
 		});
 
+		$("#window-select-wrap").on(ui.click, '.window-select', function() {
+			my.window = this.textContent.trim();
+			ui.setWindow(my.window);
+		});
 		$("#flagDropdown").on(ui.click, '.flagSelect', function(e){
-			my.selectedFlag = $(this).text();
+			my.selectedFlag = $(this).text().trim();
 			my.selectedFlagFull = my.selectedFlag === "Nepal" ? my.selectedFlag+".png" : my.selectedFlag+".jpg";
 			$(".flagPurchaseStatus").css("display", "none");
 			$("#updateNationFlag")

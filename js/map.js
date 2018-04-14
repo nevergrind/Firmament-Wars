@@ -1,6 +1,6 @@
 // map.js
 // map zooming and scrolling
-function mouseZoomIn(e){
+function mouseZoomIn(){
 	g.mouse.zoom += 10;
 	if (g.mouse.zoom > 400){
 		g.mouse.zoom = 400;
@@ -18,10 +18,10 @@ function mouseZoomIn(e){
 		}
 	});
 }
-function mouseZoomOut(e){
+function mouseZoomOut(){
 	g.mouse.zoom -= 10;
-	if (g.mouse.zoom < 60){
-		g.mouse.zoom = 60;
+	if (g.mouse.zoom < 100){
+		g.mouse.zoom = 100;
 	}
 	TweenMax.to(DOM.worldWrap, .5, {
 		force3D: false,

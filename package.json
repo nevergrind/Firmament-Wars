@@ -27,11 +27,13 @@
     "toolbar": true,
     "frame": true,
     "position": "center",
-    "min_width": 1920,
-    "min_height": 1080,
+    "width": 1920,
+    "height": 1080,
+    "min_width": 1280,
+    "min_height": 720,
     "max_width": 1920,
     "max_height": 1080,
-    "resizeable": false,
+    "resizeable": true,
     "fullscreen": true
   },
   "permissions": [

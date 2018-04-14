@@ -73,10 +73,11 @@ var stats = {
 		} else {
 			var str = '<img id="statWorld" src="images/FlatWorld50-2.jpg">';
 		}
-		str += '<div id="statResult" class="no-select">\
+		str +=
+		'<div id="statResult" class="no-select">\
+			<img class="statResultFlag" src="images/flags/'+ flag +'">\
 			<span id="statGameResult">Defeat in '+ ui.transformYear(data.resourceTick) +'</span>\
-			<img class="statResultFlag pull-left" src="images/flags/'+ flag +'">\
-			<img class="statResultFlag pull-right" src="images/flags/'+ flag +'">\
+			<img class="statResultFlag" src="images/flags/'+ flag +'">\
 		</div>\
 		<div id="statTabWrap" class="no-select shadow4">\
 			<div id="statOverview" class="statTabs active">\
@@ -94,7 +95,7 @@ var stats = {
 		<table id="gameStatsTable" class="table"></table>\
 		<div id="statFooter" class="container-fluid">\
 			<div class="row">\
-				<div id="statQuote" class="col-xs-7 stagBlue">\
+				<div id="statQuote" class="col-xs-7 shadow4 stagBlue">\
 					<div>'+ stats.data.quote +'</div>\
 					<div id="statVerse" class="text-right">'+ stats.data.verse +'</div>\
 				</div>\
@@ -562,7 +563,7 @@ var stats = {
 		var z = game.player[i],
 			color = z.playerColor,
 			flag = p.flag === 'Default.jpg' ? 'Player'+ color +'.jpg' : p.flag;
-		var str = '<td style="position: relative">\
+		var str = '<td class="stat-detail-wrap">\
 			<div class="statWrapper">\
 				<img class="statFlagBG" src="images/flags/'+ flag +'">\
 			</div>\

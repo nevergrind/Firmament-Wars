@@ -181,8 +181,7 @@ audio.init = (function(){
 	if (e.length){
 		e.slider({
 			min  : 0, 
-			max  : 100, 
-			value: g.config.audio.musicVolume, 
+			max  : 100,
 			formatter: function(value) {
 				if (initComplete){
 					audio.setMusicVolume(value);

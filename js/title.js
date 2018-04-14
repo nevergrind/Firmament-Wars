@@ -177,7 +177,7 @@ var title = {
 						}
 					}).always(function(){
 						if (!once){
-							setTimeout(repeat, 15000);
+							setTimeout(repeat, 5000);
 						}
 					});
 				}
@@ -202,7 +202,7 @@ var title = {
 		var flagClass = flag.split(".");
 		flagClass = flagClass[0].replace(/ /g, "-");
 		e.innerHTML = '<div id="titlePlayerFlag_'+ account +'" class="flag ' + flagClass +'"></div><span class="chat-rating">['+ rating +']</span> <span class="titlePlayerAccount">'+ account +'</span>';
-		if (title.titleUpdate){
+		if (account && rating && title.titleUpdate){
 			DOM.titleChatBody.appendChild(e);
 		}
 	},
@@ -779,7 +779,7 @@ var title = {
 		g.chat('<div>Checking friends list...</div>');
 		if (g.friends.length){
 			$.ajax({
-				url: 'php/friendStatus.php',
+				url: app.url + 'php/friendStatus.php',
 				data: {
 					friends: g.friends
 				}
@@ -992,5 +992,4 @@ var title = {
 			animation: false
 		});
 	}
-	animate.logo();
 })();

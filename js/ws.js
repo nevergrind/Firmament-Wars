@@ -20,9 +20,11 @@ var socket = {
 			flag: my.flag,
 			rating: my.rating
 		}
-		socket.zmq.publish('title:' + my.channel, o);
-		title.players[account] = {
-			flag: flag
+		if (account) {
+			socket.zmq.publish('title:' + my.channel, o);
+			title.players[account] = {
+				flag: flag
+			}
 		}
 	},
 	unsubscribe: function(channel){

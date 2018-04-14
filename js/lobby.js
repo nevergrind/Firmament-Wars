@@ -187,7 +187,7 @@ var lobby = {
 			document.getElementById("lobbyGameMax").innerHTML = x.max;
 			document.getElementById("startGame").style.display = x.player === 1 ? "block" : "none";
 			if (!x.startGame){
-				document.getElementById('mainWrap').style.display = "block";
+				document.getElementById('mainWrap').style.display = "flex";
 			}
 			var str = '<div id="lobbyWrap" class="container">';
 			for (var i=1; i<=8; i++){
@@ -314,6 +314,10 @@ var lobby = {
 		g.lock(1);
 		g.view = "lobby";
 		title.closeModal();
+		TweenMax.to('header', d, {
+			y: '-200%',
+			ease: Quad.easeIn
+		});
 		TweenMax.to('#titleChat', d, {
 			x: '100%',
 			ease: Quad.easeIn
@@ -333,7 +337,7 @@ var lobby = {
 				TweenMax.to(['#titleMain', '#logoWrap', '#firmamentWarsLogoWrap'], ui.delay(.5), {
 					alpha: 0,
 					onComplete: function(){
-						$("#titleMain").remove();
+						$("#titleMain, #title-bg-wrap").remove();
 						g.unlock(1);
 						TweenMax.fromTo('#joinGameLobby', ui.delay(d), {
 							autoAlpha: 0
@@ -1036,19 +1040,20 @@ function loadGameState(){
 					gov = p.cpu ? 'Computer' : p.government;
 				function teamIcon(team){
 					return g.teamMode ? 
-						'<span class="diploTeam" data-placement="right" title="Team '+ team +'">'+ team +'</span>' :
-						'';
+						'<span class="diploTeam">'+ team +'</span>' : '';
 				}
 				var str = 
 				'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">'+
 					// bg 
-					'<img src="images/flags/'+ p.flagSrc +'" class="diplo-flag" data-placement="right" title="'+ p.flagShort + '">'+
+					'<img src="images/flags/'+ p.flagSrc +'" class="diplo-flag">'+
 					// row 1
-					'<div class="nowrap">'+
-						'<i class="' + icon + ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right" title="' + gov + '"></i> '+ account + 
-					'</div>'+
-					// row 2
-					'<div class="nowrap">'+ teamIcon(p.team) + p.nation + '</div>'+
+					'<div class="diplo-data-col"' +
+						'<div>'+
+							'<div class="nowrap"><i class="' + icon + ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right"></i> '+ account +'</div>' +
+							'<div class="nowrap">'+ teamIcon(p.team) + p.nation + '</div>'+
+						'</div>'+
+						// row 2
+					'</div>' +
 					
 				'</div>';
 				return str;

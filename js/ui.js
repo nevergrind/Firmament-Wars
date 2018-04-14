@@ -1,6 +1,46 @@
 // ui.js
 
 var ui = {
+	resizeWindow: function() {
+		g.view === 'game' && worldMap[0].applyBounds();
+		console.info("RESIZING");
+	},
+	windowDefault: 'Full Screen',
+	initWindow: function() {
+		var size = localStorage.getItem('window-size');
+		if (size === null) {
+			localStorage.setItem('window-size', ui.windowDefault);
+		}
+		ui.setWindow(size);
+	},
+	setWindow: function(size) {
+		if (app.isApp) {
+			var gui = require('nw.gui'),
+				win = gui.Window.get();
+			// ??????? reasons
+			setTimeout(function() {
+				if (size === 'Full Screen') {
+					!win.isFullscreen && win.enterFullscreen();
+				}
+				else if (size === 'Windowed - 1920x1080') {
+					win.isFullscreen && win.leaveFullscreen();
+					win.resizeTo(1920, 1080);
+					win.maximize();
+				}
+				else if (size === 'Windowed - 1280x720') {
+					win.isFullscreen && win.leaveFullscreen();
+					win.resizeTo(1280, 720);
+
+				}
+				else {
+					// just in case do this
+					!win.isFullscreen && win.enterFullScreen();
+				}
+				$("#window-size").text(size);
+				localStorage.setItem('window-size', size);
+			}, 100);
+		}
+	},
 	setMobile: function(){
 		 $("head").append('<style>'+
 			'*{ box-shadow: none !important; border-radius: 0 !important; } '+
@@ -187,57 +227,8 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
 	setTimeout(function(){
 		$("script").remove();
 	}, 1000);
+	ui.initWindow();
 })();
-
-function resizeWindow() {
-	function forceMod4(x){
-		while (x % 4 !== 0) x--;
-		return x;
-	}
-    var winWidth = window.innerWidth,
-		winHeight = window.innerHeight
-		b = document.getElementById('body');
-	if (isMobile){
-		winHeight = ~~(winHeight * 1.1);
-	}
-    // game ratio
-    var widthToHeight = window.innerWidth / window.innerHeight;
-    // current window size
-    var w = winWidth > window.innerWidth ? window.innerWidth : winWidth;
-    var h = winHeight > window.innerHeight ? window.innerHeight : winHeight;
-    if(w / h > widthToHeight){
-    	// too tall
-    	w = ~~(h * widthToHeight);
-    } else {
-    	// too wide
-    	h = ~~(w / widthToHeight);
-    }
-	w = forceMod4(w);
-	h = forceMod4(h);
-	b.style.width = w + 'px';
-	b.style.height = h + 'px';
-	TweenMax.set(b, {
-		x: ~~(w/2 + ((winWidth - w) / 2)),
-		y: ~~(h/2 + ((winHeight - h) / 2)),
-		opacity: 1,
-		visibility: 'visible',
-		yPercent: -50,
-		xPercent: -50,
-		force3D: true
-	});
-	g.resizeX = w / window.innerWidth;
-	g.resizeY = h / window.innerHeight;
-	TweenMax.set("#worldTitle", {
-		xPercent: -50,
-		yPercent: -50
-	});
-	if (g.view === 'game'){
-		g.screen.resizeMap();
-		if (typeof worldMap[0] !== 'undefined'){
-			worldMap[0].applyBounds();
-		}
-	}
-};
 
 function updateTileInfo(tileId){
 	var t = game.tiles[tileId],

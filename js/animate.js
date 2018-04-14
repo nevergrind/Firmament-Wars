@@ -626,9 +626,6 @@ var animate = {
 			}
 		});
 	},
-	logo: function(linear){
-		resizeWindow();
-	},
 	smoke: function(tile, x, y, scale){
 		if (x === undefined){
 			var o = animate.getXY(tile);

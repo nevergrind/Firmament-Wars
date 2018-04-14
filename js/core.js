@@ -302,13 +302,12 @@ g.init = (function(){
 	if (app.isApp) {
 		$("#exit-game").on('click', function() {
 			title.exitGame();
-		})
+			$("#endTurn").css('display', 'none');
+		});
+		$("#resync").remove();
 	}
 	else {
-		$("#exit-game").on('click', function() {
-			title.exitGame();
-		})
-		// $("#exit-game").remove();
+		// $("#exit-game, #options-app-only").remove();
 	}
 	// build map drop-down 
 	// <li><a class='flagSelect'>Default</a></li>
@@ -351,6 +350,11 @@ g.init = (function(){
 		url: app.url + 'php/init-game.php' // check if already in a game
 	}).done(function(data) {
 		console.info('init-game', data.account, data);
+		$('.actionButtons').tooltip({
+			animation: false,
+			placement: 'left',
+			container: 'body'
+		});
 		$('[title]').tooltip({
 			animation: false,
 			placement: 'bottom',
@@ -864,6 +868,7 @@ var game = {
 };
 // player data values
 var my = {
+	window: 'Full Screen',
 	lastReceivedWhisper: '',
 	account: '',
 	channel: '',

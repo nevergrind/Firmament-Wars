@@ -21,13 +21,10 @@ fieldset {
 }
 #loginWrap{
 	position:absolute;
-	bottom:0;
-	left:0;
-	right:0;
-	font-size: 14px;
+	font-size: 1.5rem;
 	margin:0 auto;
 	width:280px;
-	padding-bottom:40px;
+	padding-bottom: 20px;
 	text-align:center;
 }
 .textLeft{
@@ -54,8 +51,8 @@ fieldset {
 	right:0;
 	margin:0 auto;
 	border:1px solid #666;
-	font-size:16px;
-	line-height:22px;
+	font-size: .8rem;
+	line-height: 1.5;
 	width:250px;
 	background:#132239;
 	background-image: -webkit-radial-gradient(80 0, farthest-corner, #132239 0%, #001 100%);
@@ -73,6 +70,10 @@ fieldset {
 	background-image: -ms-radial-gradient(80 0, farthest-corner, #5488da 0%, #132239 100%);
 	background-image: -o-radial-gradient(80 0, farthest-corner, #5488da 0%, #132239 100%);
 }
+#login-form-contents > label {
+	display: block;
+	text-align: center;
+}
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px #4478c7 inset;
 	-webkit-text-fill-color: #fff;
@@ -89,15 +90,20 @@ input:-webkit-autofill {
 }
 
 
-body{
-	position: relative;
-	width: 100%;
-	height: auto;
+body {
+	position: absolute;
+	display: flex;
+	align-items: center;
+    font-family: Play, Roboto, Verdana, Arial, sans-serif;
+    font-size: 1rem;
 	top: 0;
 	left: 0;
-	right: 0;
-	margin: 0 auto;
-	max-width: 1920
+	width: 100%;
+	height: 100%;
+	max-width: 1920px;
+	max-height: 1080px;
+    background: #000;
+    overflow: hidden
 }
 .abcRioButton{
 	margin: 5px auto;
@@ -150,8 +156,8 @@ label{
 	padding: 6px 9px;
 	display: inline-block;
 	margin-bottom: 0;
-	font-size: 14px;
-	line-height: 20px;
+	font-size: .75rem;
+	line-height: 1.25;
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: middle;
@@ -160,9 +166,9 @@ label{
 	float: left;
 }
 #twitter-icon {
-	font-size:20px;
+	font-size: 1rem;
 	text-shadow: none;
-	height:20px;
+	height:1rem;
 	display:inline-block;
 	cursor: pointer!important;
 }
@@ -171,7 +177,7 @@ label{
 	line-height: 2.5;
 	border-radius:0;
 	display: inline-block;
-	font-size: 14px;
+	font-size: .75rem;
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: middle;
@@ -181,7 +187,8 @@ label{
 }
 #loginWrap .login-actions {
 	color: #aef;
-	font-size: .75rem;
+	font-size: 1.5rem;
+	cursor: pointer;
 }
 #loginWrap .login-actions:hover {
 	color: #fff;
@@ -268,6 +275,10 @@ label{
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+	font-family: Play;
+	src: url(../fonts/Play.ttf)
+}
 * {
     _noFocusLine: expression(this.hideFocus=true);
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -285,7 +296,7 @@ label{
     outline: none
 }
 html {
-    font-family: Roboto, Verdana, Arial, sans-serif;
+    font-family: Play, Roboto, Verdana, Arial, sans-serif;
     -ms-touch-action: manipulation;
     touch-action: manipulation;
     display: block;
@@ -296,23 +307,13 @@ input {
     cursor: text;
     background: #059
 }
-body {
-    font-family: Roboto, Verdana, Arial, sans-serif;
-    font-size: 1em;
-    position: absolute;
-    visibility: hidden;
-    background: #000;
-    width: 100%;
-    height: 100%;
-    overflow: hidden
-}
 header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-    font-size: 1.275em;
-    padding: .25em .5em;
-    word-spacing: .05em;
+    font-size: 1.275rem;
+    padding: .25rem .5rem;
+    word-spacing: .05rem;
     background: -webkit-linear-gradient(top, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%)!important;
     background: -moz-radial-gradient(top, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%)!important;
     background: -ms-radial-gradient(top, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%)!important;
@@ -320,13 +321,14 @@ header {
 }
 #mainWrap {
 	display: flex;
+	flex-direction: column;
 	align-items: center;
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+	top: 0;
+	width: 100%;
+	height: 100%;
 	max-width: 1920px;
-    height: 100%
+    max-height: 1080px;
 }
 #social-links {
 	letter-spacing: .2rem;
@@ -334,10 +336,12 @@ header {
 #titleMain {
 	display: flex;
 	flex-direction: column;
-	margin: 0 1rem;
+	margin: 2rem 1rem;
+	flex: 1;
 }
 #title-column-wrap {
 	display: flex;
+	flex: 1;
 }
 #menuHead {
 	display: flex;
@@ -360,7 +364,7 @@ a {
 }
 h1,
 h2 {
-    font-size: 1.25em;
+    font-size: 1.25rem;
     color: #fff;
     margin: 0;
     padding: 0
@@ -396,7 +400,12 @@ a:hover {
     margin: .5% 0
 }
 .shadow4 {
-    text-shadow: 1px 1px #000, -1px 0 #000, 1px 0 #000, -1px 1px #000, 1px -1px #000, -1px -1px #000
+    text-shadow: 1px 1px #000,
+		-1px 0 #000,
+		1px 0 #000,
+		-1px 1px #000,
+		1px -1px #000,
+		-1px -1px #000
 }
 #firmamentWarsLogoWrap {
     background: #000;
@@ -486,7 +495,7 @@ a:hover {
     padding: 2%
 }
 #chat-ui {
-    font-family: Roboto, Verdana, Arial, sans-serif;
+    font-family: Play, Roboto, Verdana, Arial, sans-serif;
     display: table;
     table-layout: fixed;
     position: absolute;
@@ -500,7 +509,7 @@ a:hover {
 }
 #logout,
 #login {
-    font-size: .75em
+    font-size: .75rem
 }
 .uppercase {
     text-transform: uppercase
@@ -548,7 +557,7 @@ a:hover {
     display: inline-block;
     color: #ffff1a;
     text-shadow: .5px .5px #550, 1px 1px #550;
-    font-size: .75em;
+    font-size: .75rem;
 	margin-right: .5rem;
 }
 .chat-online {
@@ -612,9 +621,6 @@ a:hover {
 	background: -o-radial-gradient(top left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
 	background: -ms-radial-gradient(top left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
 }
-#optionsDone {
-	margin-top: .5rem;
-}
 #leaderboard-head {
 	display: flex;
 	justify-content: space-between;
@@ -670,7 +676,7 @@ tbody {
 }
 #title-chat-btns button {
     border: 1px solid #357!important;
-    font-size: .75em
+    font-size: .75rem
 }
 .btn-group>.tooltip+.btn,
 .btn-group>.popover+.btn {
@@ -693,8 +699,8 @@ tbody {
 }
 #titleChatWrap {
     position: relative;
-    padding: 4px 0 4px 4px;
-    font-family: Roboto, Verdana, Arial, sans-serif;
+    padding: 0 .5rem .5rem;
+    font-family: Play, Roboto, Verdana, Arial, sans-serif;
     color: #bef;
     text-shadow: 1px 1px #357;
     border-radius: 0
@@ -707,14 +713,20 @@ tbody {
 }
 #title-chat-players-room {
 	flex-basis: 42%;
+    border: 2px groove#357;
 }
 #title-chat-players-log {
+	display: flex;
 	flex-basis: 58%;
+	margin: 0 .5rem;
+	border: 2px groove#357;
+
 }
 #titleChatLog {
 	width: 100%;
     overflow-x: hidden;
-    word-break: break-word
+    word-break: break-word;
+	flex: 1;
 }
 #titleChatLog > *,
 #lobbyChatLog > *,
@@ -737,27 +749,23 @@ tbody {
 #titlePlayerCountWrap {
     float: right;
     color: #aef;
-    font-family: Roboto, Verdana, Arial, sans-serif;
+    font-family: Play, Roboto, Verdana, Arial, sans-serif;
     padding: .25em .5em;
     border-radius: 4px;
     background: rgba(255, 255, 255, .1)
 }
 .titlePanelLeft {
-    font-family: Roboto, Verdana, Arial, sans-serif;
+    font-family: Play, Roboto, Verdana, Arial, sans-serif;
     text-shadow: .5px .5px #357, 1px 1px #357;
     color: #bef;
-	height: 90vh;
-    border-top: 1px solid #357;
-    border-left: 1px solid #357;
-    border-bottom: 1px solid #357;
     padding: .25em .5em .5em;
-	margin: 0;
+	margin: .5rem;
 }
 #leaderboard {
+	position: absolute;
     width: 85%;
     max-width: 1024px;
     background: #000;
-    overflow: hidden
 }
 #leaderboardBody {
     overflow: hidden;
@@ -769,11 +777,14 @@ tbody {
     margin: .25em 0;
     padding: .25em .5em
 }
+.slider {
+	width: 85%!important;
+}
 #endTurn {
     float: left;
-    margin: .25em .25em 0;
-    font-size: .75em;
-    padding: 0em .25em
+    margin: .25rem .25rem 0;
+    font-size: .75rem;
+    padding: 0rem .25rem
 }
 .video-wrap {
     position: relative;
@@ -850,9 +861,6 @@ tbody {
 .fwRed:focus {
 	outline: none!important;
 }
-#exit-game {
-	margin-top: .5rem;
-}
 #lobbyChatSend,
 #titleChatSendBtn {
     border-radius: 0 6px 6px 0
@@ -880,7 +888,7 @@ tbody {
     left: 1vh;
     width: 40%;
     z-index: 9999;
-    font-family: Roboto, Verdana, Arial, sans-serif;
+    font-family: Play, Roboto, Verdana, Arial, sans-serif;
     visibility: hidden
 }
 #chat-input {
@@ -983,15 +991,16 @@ tbody {
 	left: 0;
     right: 0;
 	margin: 0 auto;
-	width: 280px;
+	width: 28rem;
     z-index: 9999;
     background: rgba(0, 0, 0, 0);
 	border: 0!important;
+	font-size: 1.5rem;
 }
 #targetNameWrap {
     position: relative;
-    font-size: 15px;
-    line-height: 21px
+    font-size: .75rem;
+    line-height: 1.3;
 }
 #ribbonBackdrop {
     visibility: hidden
@@ -1024,16 +1033,16 @@ tbody {
 #targetName {
     position: relative;
     vertical-align: top;
-    width: 180px;
-    height: 120px;
+    width: 18rem;
+    height: 12rem;
     background: #000
 }
 #targetResources {
     position: relative;
-    word-spacing: 6px
+    word-spacing: .6rem
 }
 #targetResources>i {
-    margin-left: 2px
+    margin-left: .2rem
 }
 #targetNameAnchor {
     position: relative;
@@ -1042,19 +1051,19 @@ tbody {
     height: 120px
 }
 .ribbonName {
-    font-size: 1.5em;
-    margin-top: .5em
+    font-size: 1.5rem;
+    margin-top: .5rem
 }
 .ribbonDescription {
     position: relative;
-    top: -.5em;
+    top: -.5rem;
     font-family: Palatino Linotype, Times New Roman, serif;
-    font-size: 1em;
-    margin-bottom: .25em
+    font-size: 1rem;
+    margin-bottom: .25rem
 }
 .giantRibbon {
-    margin: 0 auto .5em;
-    width: 184px
+    margin: 0 auto .5rem;
+    width: 18.5rem
 }
 .ribbon1 {
     background-position: 0 0
@@ -1165,15 +1174,9 @@ tbody {
     background-position: -500% -500%
 }
 #ui2 {
-    position: absolute;
-    border-radius: 0 0 0 4px;
+    position: relative;
     color: #fff;
-    border-top: none;
-    border-right: none;
-    top: 0vh;
-    right: 0;
     padding: 4px;
-    width: 180px;
     z-index: 9999
 }
 #ui2-head {
@@ -1189,14 +1192,13 @@ tbody {
 }
 #resources-ui {
     position: absolute;
-    top: 0vh;
-    right: 180px;
-    width: 170px;
+    top: 0;
+    right: 0;
+	font-size: 2rem;
     border-right: none;
     border-bottom: none;
     text-overflow: ellipsis;
     color: #fff;
-    text-align: right;
 	border-radius: 0;
     z-index: 9999
 }
@@ -1210,7 +1212,7 @@ tbody {
     color: #8df;
     position: absolute;
     top: .25em;
-    font-size: 2em;
+    font-size: 2rem;
     width: 100%;
     text-align: center;
     visibility: hidden;
@@ -1218,21 +1220,30 @@ tbody {
     z-index: 9999
 }
 #resourceHead {
+	display: flex;
+	justify-content: space-around;
     color: #aef;
-    padding: 0 8px;
-    font-size: 1.125em;
-    letter-spacing: 2px;
+    padding: .4rem .8rem;
+    font-size: 2.25rem;
     border-bottom: 1px solid #357
 }
 #resourceBody {
-    padding: 0 5px 8px
+    padding: 0 .5rem .8rem;
+    text-align: right;
 }
 .diplomacyPlayers {
     position: relative;
+	display: flex;
+	align-items: center;
     border: 1px solid #357;
-    padding: .25em .375em .25em;
+    padding: .25rem .375rem;
     margin: 1px;
 	overflow: hidden;
+}
+.diplo-data-col {
+	display: flex;
+	flex-direction: column;
+	padding: 0 .5rem;
 }
 .diploFlag {
     position: absolute;
@@ -1245,14 +1256,15 @@ tbody {
     z-index: -1
 }
 .diplo-head {
-    font-size: .875em;
-    padding: .25vh .5vh;
+    font-size: 1.5rem;
+    padding: .2rem .4rem;
     border-bottom: 1px solid #357
 }
 #diplomacy-ui {
     position: absolute;
     left: 0;
-    top: 0vh;
+    top: 0;
+	font-size: 1.5rem;
     border-radius: 0 0 4px 0;
     border-top: none;
     border-left: none;
@@ -1260,7 +1272,7 @@ tbody {
     text-align: left;
     z-index: 9999;
     overflow: hidden;
-    min-width: 192px;
+    max-width: 25.6rem;
     line-height: 1.3
 }
 .tight {
@@ -1342,14 +1354,14 @@ tbody {
 }
 .actionHead {
     text-align: center;
-    font-size: 1.5em
+    font-size: 1.5rem
 }
 #tileActions {
     position: relative
 }
 #tileActions,
 #tileResearch {
-    font-size: .625em
+    font-size: .625rem
 }
 #tileActionsOverlay {
     position: absolute;
@@ -1373,14 +1385,16 @@ table td,
     border-top: none!important
 }
 .resourceIcon {
-    margin-right: .5em
+    margin-right: .5rem
 }
 .actionButtons {
-    font-size: 1.5em;
-    line-height: 1.75em;
-    margin-bottom: 2px;
+    display: flex;
+	justify-content: space-between;
+	font-size: 1.5rem;
+    line-height: 1.5;
+    margin-bottom: .2rem;
     cursor: pointer;
-    border: 2px solid #000;
+    border: .2rem solid #000;
     border-radius: 8px 0 8px 0;
     box-shadow: 1px 1px rgba(128, 192, 255, 1) inset, -1px -1px rgba(16, 92, 162, 1) inset;
     background: rgba(23, 42, 84, 1);
@@ -1404,10 +1418,10 @@ table td,
     background: -o-linear-gradient(top, rgba(32, 100, 177, 1) 0%, rgba(32, 100, 177, 1) 50%, rgba(32, 177, 232, 1) 50%, rgba(32, 177, 232, 1) 100%)
 }
 .actionButtons:active {
-    box-shadow: 0 0 0 5em rgba(0, 0, 0, .3) inset
+    box-shadow: 0 0 0 5rem rgba(0, 0, 0, .3) inset
 }
-.actionButtons>div {
-    padding: 0 1em
+.actionButtons > div {
+    padding: 0 1rem
 }
 #players {
     height: 30%
@@ -1435,7 +1449,7 @@ audio,
     width: 33%;
     max-width: 400px;
     padding: 1% 3%;
-    font-size: 1.25em;
+    font-size: 1.25rem;
     text-align: center;
     z-index: 9999
 }
@@ -1528,9 +1542,9 @@ text {
 }
 .unit {
     visibility: hidden;
-    margin-left: 1em;
+    margin-left: 1rem;
     white-space: nowrap;
-    font-size: 22px;
+    font-size: 1.1rem;
     font-family: Times New Roman, Serif;
     pointer-events: none;
     text-anchor: middle;
@@ -1623,7 +1637,7 @@ circle {
     width: 100%
 }
 .bigFont {
-    font-size: 1.25em
+    font-size: 1.25rem
 }
 .nationFlag {
     position: absolute;
@@ -1647,7 +1661,7 @@ circle {
     padding: 8px
 }
 #lobbyHead {
-    font-size: 1.25em
+    font-size: 1.25rem
 }
 .active {
     background-color: #286090;
@@ -1666,43 +1680,80 @@ circle {
     left: 0;
     right: 0
 }
+#lobby-cpu-row {
+	margin-bottom: .5rem;
+}
 #lobbyLeftCol {
     position: absolute;
-    top: 2vh;
+	display: flex;
+	flex-direction: column;
+    top: 1rem;
     left: 2%;
     width: 55%;
-    height: 96vh
+	height: 98%;
 }
 #lobbyRightCol {
     position: absolute;
-    top: 2vh;
+    top: 1rem;;
     width: 35%;
     left: 60%;
-    font-size: 1em
+    font-size: 1.5rem
 }
 #lobbyPlayers {
+	flex: 1;
+}
+#lobbyChatLogWrap {
+	display: flex;
+	flex-direction: column;
+	flex-basis: 29%;
+    padding: .25rem .5rem;
+    word-break: break-word
+}
+#lobbyChatLog {
     position: relative;
-    top: 0%;
-    height: 59vh;
-    left: 0%
+    overflow: auto;
+    overflow-x: hidden;
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin: .125vh auto;
+	flex: 1;
+    font-family: Play, Roboto, Verdana, Arial, sans-serif;
+    color: #bef;
+    padding: .5vh 1vh;
+    text-shadow: 1px 1px #357;
+    border: 1px solid #2e6da4;
+}
+#lobbyChatWrap {
+    position: relative;
+    left: 0;
+    right: 0;
+    margin: .125rem auto;
+    width: 100%;
+	flex: 0;
+    font-family: Play, Roboto, Verdana, Arial, sans-serif;
+    color: #bef;
+    text-shadow: 1px 1px #357;
+    border-radius: 0;
+    padding: .25rem 0
 }
 #lobbyGame {
     position: relative;
     top: 0%;
-    padding: 1em;
+    padding: 1rem;
     text-align: center
 }
 #lobbyRankedMatch {
     display: none;
     font-family: Cinzel, Palatino Linotype, serif;
-    font-size: 1.125em
+    font-size: 1.125rem
 }
 #lobbyGameName {
     overflow: hidden;
     text-overflow: ellipsis
 }
 #lobbyGovernmentDescription {
-    padding: 1em
+    padding: 1rem
 }
 .lobbyTeamFlag {
     margin-bottom: .125em
@@ -1723,8 +1774,7 @@ circle {
     margin-right: .5em
 }
 .lobbyFlags {
-    max-height: 2.8em;
-    margin-top: .1em
+    max-height: 5.6rem;
 }
 .lobbyRelWrap {
     position: relative;
@@ -1739,57 +1789,24 @@ circle {
     cursor: pointer
 }
 .lobbyNames {
-    font-size: 1.125em;
-    line-height: 1.5em;
+    font-size: 1.125rem;
+    line-height: 1.5rem;
     color: #8df;
     text-shadow: .5px .5px #145, 1px 1px #145
-}
-#lobbyChatLogWrap {
-    padding: .25vh .5vh;
-    border-radius: 6px 6px 0 0;
-    word-break: break-word
-}
-#lobbyChatLog {
-    position: relative;
-    overflow: auto;
-    overflow-x: hidden;
-    left: 0;
-    right: 0;
-    width: 100%;
-    margin: .125vh auto;
-    height: 27vh;
-    font-family: Roboto, Verdana, Arial, sans-serif;
-    color: #bef;
-    padding: .5vh 1vh;
-    text-shadow: 1px 1px #357;
-    border: 1px solid #2e6da4;
-    border-radius: 6px
-}
-#lobbyChatWrap {
-    position: relative;
-    left: 0;
-    right: 0;
-    margin: .125vh auto;
-    width: 100%;
-    font-family: Roboto, Verdana, Arial, sans-serif;
-    color: #bef;
-    text-shadow: 1px 1px #357;
-    border-radius: 0;
-    padding: .25vh 0
 }
 #lobbyGovernmentDescription {
     padding: 1em
 }
 #lobbyButtonWrap {
     position: relative;
-    padding: 1em 5em
+    padding: 1rem 5rem
 }
 .lobbyButtons {
     position: relative;
     left: 0;
     right: 0;
     margin: 0 auto;
-    max-width: 200px
+    max-width: 20rem
 }
 .joinGameInputs {
     color: #bef;
@@ -1814,7 +1831,7 @@ circle {
 #autoJoinBtn {
     border: 1px outset #2e6da4;
 	box-shadow: 0 0 0 1px #012 inset;
-    height: 2.145em;
+    height: 3.4rem;
     background: rgba(16, 56, 96, 1)!important
 }
 .fwBlueInput {
@@ -1850,7 +1867,7 @@ circle {
     max-width: 800px;
     padding: 0 8%;
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.5rem;
     color: #fff;
     background: rgba(0, 0, 0, .9);
     background: linear-gradient(right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .9) 20%, rgba(0, 0, 0, .9) 80%, rgba(0, 0, 0, 0) 100%);
@@ -1876,7 +1893,7 @@ circle {
     left: 0%;
     width: 100%;
     text-align: center;
-    font-size: 1.75em;
+    font-size: 1.75rem;
     color: #bef;
     z-index: 999999;
     pointer-events: none;
@@ -1909,8 +1926,8 @@ circle {
     position: relative;
     top: 2px;
     color: #ffc500;
-    margin-right: .125em;
-    font-size: 15px
+    margin-right: .125rem;
+    font-size: .75rem
 }
 .mapStar {
     fill: #ffc500;
@@ -1923,8 +1940,8 @@ span.unlockGameBtn {
     cursor: pointer
 }
 #avatar {
-    width: 120px;
-    height: 120px
+    width: 12rem;
+    height: 12rem
 }
 .who-wrap {
 	display: flex;
@@ -1968,13 +1985,13 @@ span.unlockGameBtn {
 }
 #avatarWrap {
     position: relative;
-    width: 100px;
+    width: 10rem;
     border-radius: 0 0 0 4px
 }
 #configureAvatarImage {
     float: right;
-    width: 100px;
-    height: 100px
+    width: 10rem;
+    height: 10rem
 }
 .fa-stack {
     width: 1em;
@@ -2036,7 +2053,7 @@ table {
 }
 .dropdown-header {
     font-weight: 700;
-    font-size: 1.125em;
+    font-size: 1.125rem;
     background: #357;
     border-top: 1px solid #016;
     border-bottom: 1px solid #016;
@@ -2056,18 +2073,18 @@ table {
 .lobbyRow {
     display: none;
 	align-items: center;
-    height: 2.8em;
-    line-height: 2.8em;
-    margin: .5em 0
+    height: 2.8rem;
+    line-height: 2.8rem;
+    margin: 1rem 0
 }
 .lobby-row-col-1 {
 	flex-basis: 17%;
 }
 .lobby-row-col-2 {
-	flex-basis: 50%;
+	flex-basis: 53%;
 }
 .lobby-row-col-3 {
-	flex-basis: 33%;
+	flex-basis: 30%;
 }
 .cpu-button {
     margin-left: 5px
@@ -2076,7 +2093,7 @@ table {
     position: absolute;
     top: .375em;
     right: .5em;
-    font-size: 1.5em
+    font-size: 1.5rem
 }
 .fwDropdownButton {
     position: relative;
@@ -2137,7 +2154,7 @@ table {
 .lobbyNationName {
     word-break: break-word;
     font-family: Times New Roman, serif;
-    font-size: 1.5em;
+    font-size: 1.5rem;
     overflow: hidden
 }
 .lobbyNationInfo {
@@ -2151,7 +2168,7 @@ table {
     overflow: hidden
 }
 #buyFlag {
-    font-size: 1.625em;
+    font-size: 1.625rem;
     background: rgba(16, 56, 96, .7)
 }
 #buyFlag:hover {
@@ -2166,14 +2183,14 @@ table {
     border: 2px groove #204d74;
     background: #00061a;
     padding: 5px;
-    font-size: 1em
+    font-size: 1rem
 }
 #teamColorDropdown {
     border: 2px groove #204d74;
     background: #00061a;
     width: 12em!important;
     padding: 5px;
-    font-size: 1em
+    font-size: 1rem
 }
 .selectTeamHeader {
     border-bottom: 1px solid #204d74;
@@ -2189,7 +2206,7 @@ table {
 }
 .playerColorChoice {
     cursor: pointer!important;
-    font-size: 2em;
+    font-size: 2rem;
     margin: .25em;
     text-shadow: 1px 1px #aaa, -1px -1px #aaa, 1px -1px #aaa, -1px 1px #aaa
 }
@@ -2390,11 +2407,11 @@ table {
     width: 1em;
     text-align: center;
     color: #7FFFD4;
-    margin-right: .5em
+    margin-right: .5rem
 }
 .diploSquare {
-    font-size: 1em;
-    margin-right: .375em;
+    font-size: 1rem;
+    margin-right: .375rem;
     text-shadow: 1px 1px #000
 }
 #myNationWrap {
@@ -2410,7 +2427,8 @@ table {
 #currentYearWrap {
     position: relative;
     display: block;
-    font-size: 1.125em;
+    font-size: 2rem;
+	margin: 0;
     letter-spacing: .125em;
     font-family: Cinzel, Palatino Linotype, serif;
     display: block
@@ -2486,15 +2504,53 @@ table {
     font-family: Cinzel, Palatino Linotype, serif;
     letter-spacing: .25em
 }
+header #options {
+	margin: 0 1rem;
+}
+.close-btn-wrap {
+	border-radius: 50%;
+	padding: 4px 6px!important;
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 1;
+	transform: translate(50%, -50%);
+}
+.close-btn-wrap .close-btn {
+	cursor: pointer;
+	font-size: 2rem;
+	padding: 0;
+	height: 20px;
+	width: 20px;
+	display: block;
+}
 #optionsModal {
+	position: absolute;
     background: #000
 }
 #hotkeysModal {
+	position: absolute;
     background: #000
 }
 #hotkeysFormWrap,
 #optionsFormWrap {
     padding: 0 3em
+}
+#exit-game {
+	margin: 2rem 0 1rem;
+	font-size: 1.5rem;
+	cursor: pointer;
+	text-align: center;
+}
+#exit-game:hover {
+	color: #ffa;
+    background: -webkit-radial-gradient(center center, farthest-side, rgba(255, 255, 160, .2) 0%, rgba(0, 0, 0, .1) 100%);
+    background: -moz-radial-gradient(center center, farthest-side, rgba(255, 255, 160, .2) 0%, rgba(0, 0, 0, .1) 100%);
+    background: -ms-radial-gradient(center center, farthest-side, rgba(255, 255, 160, .2) 0%, rgba(0, 0, 0, .1) 100%);
+    background: -o-radial-gradient(center center, farthest-side, rgba(255, 255, 160, .2) 0%, rgba(0, 0, 0, .1) 100%);
+}
+#window-size-wrap {
+	width: 100%;
 }
 .no-point {
     pointer-events: none
@@ -2505,7 +2561,7 @@ table {
     overflow: hidden
 }
 .margin-top {
-    margin-top: 12px
+    margin-top: .6rem
 }
 #statWrap {
     visibility: hidden;
@@ -2515,10 +2571,11 @@ table {
     margin: 0%;
     left: 0;
     right: 0;
+	font-size: 1.25rem;
     z-index: 9999;
     padding: 0;
     background: #000;
-    overflow: hidden
+    overflow-y: scroll
 }
 #statWorld {
     position: absolute;
@@ -2530,26 +2587,31 @@ table {
     z-index: -1
 }
 #statResult {
+	display: flex;
+	align-items: center;
     font-family: Cinzel, Palatino Linotype, serif;
-    font-size: 3.5em;
-    line-height: 1.7em;
+    font-size: 3.5rem;
     color: #fff;
     border-bottom: 1px solid #369;
     padding: 0;
-    text-indent: .5em;
     text-align: center;
-    letter-spacing: .025em;
+    letter-spacing: .025rem;
     background: -webkit-linear-gradient(bottom, rgba(0, 8, 38, 1) 0%, rgba(0, 0, 0, 1) 100%);
     background: -moz-linear-gradient(bottom, rgba(0, 8, 38, 1) 0%, rgba(0, 0, 0, 1) 100%);
     background: -ms-linear-gradient(bottom, rgba(0, 8, 38, 1) 0%, rgba(0, 0, 0, 1) 100%);
     background: -o-linear-gradient(bottom, rgba(0, 8, 38, 1) 0%, rgba(0, 0, 0, 1) 100%)
 }
+#statGameResult {
+	flex: 1;
+}
 .statResultFlag {
+	margin: .5rem;
     height: 1.675em
 }
 #statTabWrap {
     border-bottom: 1px solid #369;
-    margin-bottom: 1em
+    margin-bottom: 1rem;
+	margin-top: .05rem;
 }
 .statTabs {
     font-family: Cinzel, Palatino Linotype, serif;
@@ -2560,42 +2622,39 @@ table {
     padding: 0;
     color: #bef;
     width: 20%;
-    font-size: 1.625em;
+    font-size: 1.625rem;
     cursor: pointer;
     text-align: center;
     box-shadow: 0 0 0 2px #0a1a4a inset, 0 0 0 3px #357 inset;
-    border-radius: 7px 7px 0 0;
     background: -webkit-linear-gradient(bottom, rgba(16, 64, 128, 1) 0%, rgba(0, 16, 64, 1) 100%)!important;
     background: -moz-linear-gradient(bottom, rgba(16, 64, 128, 1) 0%, rgba(0, 16, 64, 1) 100%)!important;
     background: -ms-linear-gradient(bottom, rgba(16, 64, 128, 1) 0%, rgba(0, 16, 64, 1) 100%)!important;
     background: -o-linear-gradient(bottom, rgba(16, 64, 128, 1) 0%, rgba(0, 16, 64, 1) 100%)!important
 }
+.statTabs:hover {
+    color: #d5faff;
+	box-shadow: 0 0 0 2px #0a1a4a inset, 0 0 0 3px #357 inset, 0 999px rgba(0,255,255,.1) inset;
+}
 .statTabs.active {
 	color: #ff0!important;
 }
-.statTabs:hover {
-    color: #d5faff
-}
-.statTabs:active {
-    color: #9cd
-}
 #gameStatsTable {
     border-spacing: 0;
-    padding: 1em;
-    font-size: 1.125em;
+    padding: 1rem;
+    font-size: 1.125rem;
     text-shadow: 1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000
 }
 .statSum {
     color: #ffff1a
 }
 #gameStatsTable>tr>th {
-    font-size: 1.25em;
-    line-height: 1.25em!important;
+    font-size: 1.25rem;
+    line-height: 1.25rem!important;
     padding: 0!important
 }
 .statHead {
     box-shadow: 0 0 0 2px #0a1a4a inset, 0 0 0 3px #357 inset;
-    border-radius: 7px 7px 0 0;
+    padding: .4rem .8rem;
     background: rgba(0, 0, 0, .8)!important;
 }
 .statWrapper {
@@ -2619,37 +2678,45 @@ table {
     border-right: none;
     background: #000
 }
+.statRow > td {
+	padding: .5rem 0;
+}
 .statSpacer {
     height: 2px
 }
 .statSpacer2 {
     height: 0
 }
+.stat-detail-wrap {
+	position: relative;
+	display: flex;
+	align-items: flex-start;
+	padding: .4rem .8rem;
+}
 .statsFlags {
     position: relative;
-    max-height: 3em;
-    margin: 0 .5em .5em;
-    float: left
+    max-height: 3rem;
+    margin: 0;
 }
 .statsPlayerWrap {
     position: relative;
-    margin-left: 6.5em
+    margin-left: 1rem
 }
 .statsAccount {
-    font-size: .875em
+    font-size: .875rem
 }
 .statsNation {
-    font-size: 1em;
+    font-size: 1rem;
     color: #8df;
     text-shadow: .5px .5px #145, 1px 1px #145, 1.5px 1.5px #145, 2px 2px #145
 }
 .statsGov {
-    font-size: .875em;
-    margin-right: .25em
+    font-size: .875rem;
+    margin-right: .25rem
 }
 #statFooter {
     font-family: Times New Roman, serif;
-    font-size: 1.25em;
+    font-size: 1.25rem;
     border-left: none;
     border-right: none;
     border-radius: 0
@@ -2657,9 +2724,10 @@ table {
 #statQuote {
     font-family: KJV-1611, Palatino Linotype, Times New Roman, serif;
     font-size: 2rem;
-    padding: .25em .5em;
+    padding: .25rem .5rem;
 	letter-spacing: .1rem;
-    margin: 0 2em 0 .5em;
+    margin: 0 2rem 0 .5rem;
+	border: .1rem groove #ffc;
 	color: #ffc;
 }
 #statVerse {
@@ -2674,8 +2742,8 @@ table {
 }
 #statsEndGame {
     font-family: Cinzel, Consolas, monospace;
-    font-size: .875em;
-    padding: .125em 1em;
+    font-size: .875rem;
+    padding: .125rem 1rem;
     margin: .5em;
     font-variant: normal
 }
@@ -2811,6 +2879,7 @@ input[type=number]::-webkit-outer-spin-button {
     border-color: #111
 }
 .tooltip.in {
+	z-index: 99999;
     opacity: 1!important
 }
 .tooltip-inner {
@@ -2818,6 +2887,11 @@ input[type=number]::-webkit-outer-spin-button {
     text-shadow: 1px 1px #000;
     border: 2px ridge #357;
     background: rgba(16, 56, 96, 1)
+}
+
+/* sliders */
+.tooltip-main {
+	visibility: hidden;
 }
 .no-padding {
     padding: 0!important
@@ -2845,12 +2919,7 @@ input[type=number]::-webkit-outer-spin-button {
 	flex-shrink: 0;
 }
 .diplo-flag {
-    position: relative;
-    top: .125em;
-    margin: .125em .5em 0 0;
-    float: left;
     width: 48px;
-    height: 30px
 }
 .Albania {
     background-position: -1000% -100%
@@ -3333,53 +3402,29 @@ input[type=number]::-webkit-outer-spin-button {
 .Arizona {
     background-position: -1900% -700%
 }
-@media all and (max-height: 750px) {
-    #lobbyFirmamentWarsLogo {
-        display: none
+@media all and (min-width: 1281px) {
+    body {
+        font-size: 20px
     }
 }
-@media all and (min-width: 1024px) {
+@media all and (min-width: 800px) and (max-width: 1280px) {
     body {
-        font-size: 1.5em
-    }
-    .btn-responsive {
-        padding: 4px 8px
-    }
-}
-@media all and (min-width: 800px) and (max-width: 1023px) {
-    body {
-        font-size: 1.125em
-    }
-    .btn-responsive {
-        font-size: .925em;
-        padding: 3px 6px
+        font-size: 18px
     }
 }
 @media all and (min-width: 640px) and (max-width: 799px) {
     body {
-        font-size: .925em
-    }
-    .btn-responsive {
-        font-size: .875em;
-        padding: 2px 4px
+        font-size: 16px
     }
 }
 @media all and (min-width: 500px) and (max-width: 639px) {
     body {
-        font-size: .875em
-    }
-    .btn-responsive {
-        font-size: .825em;
-        padding: 2px 4px
+        font-size: 14px
     }
 }
 @media all and (max-width: 499px) {
     body {
-        font-size: .75em
-    }
-    .btn-responsive {
-        font-size: .75em;
-        padding: 1px 2px
+        font-size: 12px
     }
 }
 
