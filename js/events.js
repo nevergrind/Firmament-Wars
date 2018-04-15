@@ -638,7 +638,7 @@ $(document).on('keydown', function(e){
 				}
 			}
 			else if (x === 27) {
-				!my.attackOn && title.toggleModal();
+				!my.attackOn && !g.chatOn && title.toggleModal();
 			}
 		}
 	}
@@ -670,7 +670,7 @@ $(document).on('keydown', function(e){
 	// game hotkeys
 	} else if (g.view === 'game'){
 		if (g.chatOn){
-			if (x === 13){
+			if (x === 13 || x === 27){
 				// enter/esc - sends chat
 				toggleChatMode(true);
 			}

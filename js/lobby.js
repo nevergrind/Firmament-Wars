@@ -189,7 +189,7 @@ var lobby = {
 			if (!x.startGame){
 				document.getElementById('mainWrap').style.display = "flex";
 			}
-			var str = '<div id="lobbyWrap" class="container">';
+			var str = '<div id="lobbyWrap">';
 			for (var i=1; i<=8; i++){
 				str += 
 				'<div id="lobbyRow' +i+ '" class="lobbyRow">\

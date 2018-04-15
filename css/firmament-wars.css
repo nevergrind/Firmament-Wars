@@ -51,7 +51,7 @@ fieldset {
 	right:0;
 	margin:0 auto;
 	border:1px solid #666;
-	font-size: .8rem;
+	font-size: 1.5rem;
 	line-height: 1.5;
 	width:250px;
 	background:#132239;
@@ -95,7 +95,6 @@ body {
 	display: flex;
 	align-items: center;
     font-family: Play, Roboto, Verdana, Arial, sans-serif;
-    font-size: 1rem;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -311,7 +310,6 @@ header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-    font-size: 1.275rem;
     padding: .25rem .5rem;
     word-spacing: .05rem;
     background: -webkit-linear-gradient(top, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%)!important;
@@ -364,7 +362,7 @@ a {
 }
 h1,
 h2 {
-    font-size: 1.25rem;
+    font-size: 2rem;
     color: #fff;
     margin: 0;
     padding: 0
@@ -503,13 +501,9 @@ a:hover {
     left: 1vh;
     width: 50%;
     max-width: 640px;
-    padding: 5px;
+    padding: .5rem;
     z-index: 9999;
     vertical-align: bottom
-}
-#logout,
-#login {
-    font-size: .75rem
 }
 .uppercase {
     text-transform: uppercase
@@ -557,7 +551,6 @@ a:hover {
     display: inline-block;
     color: #ffff1a;
     text-shadow: .5px .5px #550, 1px 1px #550;
-    font-size: .75rem;
 	margin-right: .5rem;
 }
 .chat-online {
@@ -640,7 +633,8 @@ a:hover {
     width: 100%;
     padding: 0;
     margin: 0;
-    color: #fff
+    color: #fff;
+	font-size: 1.5rem;
 }
 #gameTableHead {
 	border: 2px groove #136;
@@ -655,8 +649,7 @@ tbody {
 #titleChatHeader {
     text-align: center;
     background: rgba(0, 0, 0, .7);
-    margin-bottom: .25em;
-    padding: .125em 0;
+	padding: .3rem .6rem;
     border-bottom: 1px solid #357;
     background: -webkit-radial-gradient(top center, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
     background: -moz-radial-gradient(top center, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
@@ -665,18 +658,20 @@ tbody {
 }
 #title-chat-btn-wrap {
     border-bottom: 1px solid #357;
+	padding: .3rem .6rem;
     margin-bottom: .5vh
 }
 #title-chat-btns {
-    padding: 0 .25vw .25vh;
+	padding: .5rem 1rem;
     margin: 0 auto;
     text-align: center;
     width: inherit;
     display: inline-block
 }
 #title-chat-btns button {
+	padding: .5rem 1rem!important;
     border: 1px solid #357!important;
-    font-size: .75rem
+    font-size: 1.5rem
 }
 .btn-group>.tooltip+.btn,
 .btn-group>.popover+.btn {
@@ -709,7 +704,8 @@ tbody {
 	display: flex;
     padding: 0;
 	flex: 1;
-    background: rgba(0, 55, 155, .2)
+    background: rgba(0, 55, 155, .2);
+	font-size: 1.8rem;
 }
 #title-chat-players-room {
 	flex-basis: 42%;
@@ -771,7 +767,13 @@ tbody {
     overflow: hidden;
     overflow-y: auto;
     width: 99%;
-    height: 83vh
+    height: 83vh;
+	padding-left: 1rem;
+	font-size: 2rem;
+}
+#leaderboardBody th,
+#leaderboardBody td {
+	padding: .4rem 0;
 }
 .addFriend {
     margin: .25em 0;
@@ -783,7 +785,7 @@ tbody {
 #endTurn {
     float: left;
     margin: .25rem .25rem 0;
-    font-size: .75rem;
+    font-size: 1.25rem;
     padding: 0rem .25rem
 }
 .video-wrap {
@@ -865,11 +867,17 @@ tbody {
 #titleChatSendBtn {
     border-radius: 0 6px 6px 0
 }
+#submitNationName {
+	height: 3.8rem;
+}
 #titleChatSendBtn {
-    margin-right: .4vw
+    margin-right: .5rem;
+	height: 3.8rem;
+	z-index: 0;
 }
 #lobby-chat-input {
-    padding: .5vw 1vh;
+    padding: .5rem 1rem;
+	font-size: 2rem;
     width: 100%;
     border: 1px solid #2e6da4;
     border-right: none
@@ -986,12 +994,14 @@ tbody {
     z-index: 0
 }
 #targetWrap {
+	display: flex;
     position: absolute;
     top: 0;
 	left: 0;
     right: 0;
 	margin: 0 auto;
-	width: 28rem;
+	width: 30rem;
+	height: 6rem;
     z-index: 9999;
     background: rgba(0, 0, 0, 0);
 	border: 0!important;
@@ -999,8 +1009,6 @@ tbody {
 }
 #targetNameWrap {
     position: relative;
-    font-size: .75rem;
-    line-height: 1.3;
 }
 #ribbonBackdrop {
     visibility: hidden
@@ -1176,17 +1184,17 @@ tbody {
 #ui2 {
     position: relative;
     color: #fff;
-    padding: 4px;
+    padding: .4rem;
     z-index: 9999
 }
 #ui2-head {
     position: relative;
     color: #fff;
     z-index: 9999;
-    padding: .25em .5em;
+    padding: .25rem .5rem;
     text-align: right;
-    border-radius: 4px;
-    margin-bottom: .5em;
+    border-radius: .4rem;
+    margin-bottom: .5rem;
     white-space: nowrap;
     z-index: 1
 }
@@ -1194,12 +1202,13 @@ tbody {
     position: absolute;
     top: 0;
     right: 0;
-	font-size: 2rem;
+	font-size: 1.8rem;
     border-right: none;
     border-bottom: none;
     text-overflow: ellipsis;
     color: #fff;
 	border-radius: 0;
+	width: 21rem;
     z-index: 9999
 }
 #resources-ui>.row,
@@ -1264,7 +1273,7 @@ tbody {
     position: absolute;
     left: 0;
     top: 0;
-	font-size: 1.5rem;
+	font-size: 1.8rem;
     border-radius: 0 0 4px 0;
     border-top: none;
     border-left: none;
@@ -1285,12 +1294,6 @@ tbody {
 }
 .productionCost {
     padding-left: 5px
-}
-#target-ui {
-    padding: 0;
-    margin: 0;
-    color: #fff;
-    overflow: hidden
 }
 .blueBg {
     border: 2px ridge #357;
@@ -1384,13 +1387,34 @@ table td,
     outline: none;
     border-top: none!important
 }
+.table > tbody > tr > td {
+	padding: .8rem!important;
+}
 .resourceIcon {
     margin-right: .5rem
+}
+#prod-wrap {
+	background: #013;
+	border: .2rem outset #55cfff;
+	padding: .2rem .5rem;
+	margin-bottom: .5rem;
+}
+#food-wrap {
+	background: #130;
+	border: .2rem outset #b5ff00;
+	padding: .2rem .5rem;
+	margin-bottom: .5rem;
+}
+#culture-wrap {
+	background: #202;
+	border: .2rem outset #d2d;
+	padding: .2rem .5rem;
+	margin-bottom: .5rem;
 }
 .actionButtons {
     display: flex;
 	justify-content: space-between;
-	font-size: 1.5rem;
+	font-size: 1.8rem;
     line-height: 1.5;
     margin-bottom: .2rem;
     cursor: pointer;
@@ -1447,9 +1471,9 @@ audio,
     left: 0;
     right: 0;
     width: 33%;
-    max-width: 400px;
-    padding: 1% 3%;
-    font-size: 1.25rem;
+    max-width: 40rem;
+    padding: .5rem 1.5rem;
+    font-size: 2rem;
     text-align: center;
     z-index: 9999
 }
@@ -1544,7 +1568,7 @@ text {
     visibility: hidden;
     margin-left: 1rem;
     white-space: nowrap;
-    font-size: 1.1rem;
+    font-size: 2.5rem;
     font-family: Times New Roman, Serif;
     pointer-events: none;
     text-anchor: middle;
@@ -1697,7 +1721,7 @@ circle {
     top: 1rem;;
     width: 35%;
     left: 60%;
-    font-size: 1.5rem
+    font-size: 1.75rem
 }
 #lobbyPlayers {
 	flex: 1;
@@ -1716,6 +1740,7 @@ circle {
     left: 0;
     right: 0;
     width: 100%;
+	font-size: 2rem;
     margin: .125vh auto;
 	flex: 1;
     font-family: Play, Roboto, Verdana, Arial, sans-serif;
@@ -1789,8 +1814,6 @@ circle {
     cursor: pointer
 }
 .lobbyNames {
-    font-size: 1.125rem;
-    line-height: 1.5rem;
     color: #8df;
     text-shadow: .5px .5px #145, 1px 1px #145
 }
@@ -1818,11 +1841,11 @@ circle {
     width: 100%
 }
 .privateRow {
-    margin: 0 2.5em
+    margin: 0 2.5rem
 }
 .privateLabel {
     text-align: right;
-    line-height: 2em
+    line-height: 2
 }
 #joinPrivateGameModal {
     background: #000
@@ -1831,7 +1854,7 @@ circle {
 #autoJoinBtn {
     border: 1px outset #2e6da4;
 	box-shadow: 0 0 0 1px #012 inset;
-    height: 3.4rem;
+    height: 3rem;
     background: rgba(16, 56, 96, 1)!important
 }
 .fwBlueInput {
@@ -1926,8 +1949,6 @@ circle {
     position: relative;
     top: 2px;
     color: #ffc500;
-    margin-right: .125rem;
-    font-size: .75rem
 }
 .mapStar {
     fill: #ffc500;
@@ -1990,8 +2011,8 @@ span.unlockGameBtn {
 }
 #configureAvatarImage {
     float: right;
-    width: 10rem;
-    height: 10rem
+    width: 15rem;
+    height: 15rem
 }
 .fa-stack {
     width: 1em;
@@ -2041,8 +2062,11 @@ table {
 }
 #flagDropdown {
     width: 100%;
-    max-height: 300px;
+    max-height: 30rem;
     overflow: auto
+}
+.dropdown-menu {
+	font-size: 1.4rem;
 }
 .dropdown-menu>li>a {
     color: #222
@@ -2053,7 +2077,7 @@ table {
 }
 .dropdown-header {
     font-weight: 700;
-    font-size: 1.125rem;
+    font-size: 1.5rem;
     background: #357;
     border-top: 1px solid #016;
     border-bottom: 1px solid #016;
@@ -2073,15 +2097,16 @@ table {
 .lobbyRow {
     display: none;
 	align-items: center;
-    height: 2.8rem;
-    line-height: 2.8rem;
     margin: 1rem 0
 }
 .lobby-row-col-1 {
 	flex-basis: 17%;
 }
 .lobby-row-col-2 {
+	display: flex;
+	flex-direction: column;
 	flex-basis: 53%;
+	font-size: 1.75rem;
 }
 .lobby-row-col-3 {
 	flex-basis: 30%;
@@ -2089,17 +2114,22 @@ table {
 .cpu-button {
     margin-left: 5px
 }
+.form-control {
+	height: 3.8rem;
+	padding: .3rem .6rem;
+	font-size: 1.4rem;
+}
 .lobbyCaret {
     position: absolute;
-    top: .375em;
-    right: .5em;
+    top: 1rem;
+    right: 1rem;
     font-size: 1.5rem
 }
 .fwDropdownButton {
     position: relative;
     text-align: left;
     width: 100%;
-    height: 2.75em;
+    height: 2.25em;
     background: rgba(0, 0, 0, .5);
     border: 1px solid #2e6da4;
     color: #aef
@@ -2111,6 +2141,11 @@ table {
 .fwDropdownButton:active {
     border: 1px solid #2e6da4;
     background: rgba(0, 6, 36, .5)!important
+}
+.btn {
+	padding: .15rem .6rem!important;
+	font-size: 1.8rem;
+	line-height: 1.5
 }
 .open>.dropdown-toggle.btn {
     border: 1px solid #aef!important;
@@ -2425,13 +2460,16 @@ table {
     margin: .25em
 }
 #currentYearWrap {
-    position: relative;
+    position: absolute;
+	bottom: .5rem;
+	right: .5rem;
     display: block;
-    font-size: 2rem;
+    font-size: 3rem;
 	margin: 0;
-    letter-spacing: .125em;
+	color: #fff;
+    letter-spacing: .125rem;
     font-family: Cinzel, Palatino Linotype, serif;
-    display: block
+    z-index: 9999;
 }
 #currentYearBG {
     position: absolute;
@@ -2442,14 +2480,24 @@ table {
     opacity: 0;
     background: #774
 }
+.energy-label {
+
+}
 .resourceBar {
-    position: relative;
-    height: 1.5em;
-    line-height: 1.5em;
+    position: absolute;
+	top: 0;
+	left: 0;
+    height: 100%;
     background: #777
 }
 .resourceBarParent {
+	display: flex;
+	position: relative;
+	height: 2.5rem;
+	justify-content: space-between;
     border-radius: 4px;
+	background: #774;
+	padding: 0 .5rem;
     border: 1px solid #014;
     box-shadow: 2px 2px #357, 1px -2px #357, -1px -2px #357, -2px 2px #357, 2px 2px #014, 2px -2px #014, -2px -2px #014, -2px 2px #014
 }
@@ -2457,10 +2505,7 @@ table {
     text-align: right;
     left: 0;
     right: 0;
-    padding: 0 .25em 0 0
-}
-#energyBar {
-    background: #774
+    padding: 0 .25rem 0 0
 }
 #energyIndicator {
     position: absolute;
@@ -2530,15 +2575,17 @@ header #options {
 }
 #hotkeysModal {
 	position: absolute;
+	font-size: 2rem;
     background: #000
 }
 #hotkeysFormWrap,
 #optionsFormWrap {
+	font-size: 2rem;
     padding: 0 3em
 }
 #exit-game {
-	margin: 2rem 0 1rem;
-	font-size: 1.5rem;
+	margin: 3rem 0 1rem;
+	font-size: 2rem;
 	cursor: pointer;
 	text-align: center;
 }
@@ -2571,7 +2618,6 @@ header #options {
     margin: 0%;
     left: 0;
     right: 0;
-	font-size: 1.25rem;
     z-index: 9999;
     padding: 0;
     background: #000;
@@ -2605,8 +2651,8 @@ header #options {
 	flex: 1;
 }
 .statResultFlag {
-	margin: .5rem;
-    height: 1.675em
+	margin: 0;
+    height: 7rem
 }
 #statTabWrap {
     border-bottom: 1px solid #369;
@@ -2615,14 +2661,14 @@ header #options {
 }
 .statTabs {
     font-family: Cinzel, Palatino Linotype, serif;
-    letter-spacing: 2px;
+    letter-spacing: .2rem;
     position: relative;
     display: inline-block;
     margin: 0;
     padding: 0;
     color: #bef;
     width: 20%;
-    font-size: 1.625rem;
+    font-size: 2.5rem;
     cursor: pointer;
     text-align: center;
     box-shadow: 0 0 0 2px #0a1a4a inset, 0 0 0 3px #357 inset;
@@ -2641,7 +2687,7 @@ header #options {
 #gameStatsTable {
     border-spacing: 0;
     padding: 1rem;
-    font-size: 1.125rem;
+    font-size: 2rem;
     text-shadow: 1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000
 }
 .statSum {
@@ -2654,7 +2700,7 @@ header #options {
 }
 .statHead {
     box-shadow: 0 0 0 2px #0a1a4a inset, 0 0 0 3px #357 inset;
-    padding: .4rem .8rem;
+    padding: .8rem!important;
     background: rgba(0, 0, 0, .8)!important;
 }
 .statWrapper {
@@ -2667,8 +2713,9 @@ header #options {
 }
 .statFlagBG {
     position: absolute;
-    top: -50px;
     left: 0;
+    top: 50%;
+	transform: translate(0%,-50%);
     width: 100%;
     opacity: .2
 }
@@ -2676,7 +2723,8 @@ header #options {
     border: 1px solid #037;
     border-left: none;
     border-right: none;
-    background: #000
+    background: #000;
+	overflow: hidden;
 }
 .statRow > td {
 	padding: .5rem 0;
@@ -2690,29 +2738,27 @@ header #options {
 .stat-detail-wrap {
 	position: relative;
 	display: flex;
+	height: 7rem;
 	align-items: flex-start;
-	padding: .4rem .8rem;
+	padding: .4rem .8rem!important;
 }
 .statsFlags {
     position: relative;
-    max-height: 3rem;
-    margin: 0;
+    width: 9rem;
+    margin: .1rem 0;
+	align-self: center;
 }
 .statsPlayerWrap {
     position: relative;
     margin-left: 1rem
 }
-.statsAccount {
-    font-size: .875rem
-}
 .statsNation {
-    font-size: 1rem;
     color: #8df;
     text-shadow: .5px .5px #145, 1px 1px #145, 1.5px 1.5px #145, 2px 2px #145
 }
 .statsGov {
-    font-size: .875rem;
-    margin-right: .25rem
+    font-size: 1.5rem;
+    margin-right: 1rem
 }
 #statFooter {
     font-family: Times New Roman, serif;
@@ -2734,17 +2780,16 @@ header #options {
     margin-top: .5em
 }
 #statDuration {
-    padding: .25em 1em
+    font-family: Cinzel, Palatino Linotype, serif;
+	font-size: 2rem;
+    padding: .25rem 1rem
 }
 #gameDuration {
-    font-family: Cinzel, Palatino Linotype, serif;
     letter-spacing: 2px
 }
 #statsEndGame {
-    font-family: Cinzel, Consolas, monospace;
-    font-size: .875rem;
     padding: .125rem 1rem;
-    margin: .5em;
+    margin: .5rem;
     font-variant: normal
 }
 #statsEndGame:hover {
@@ -2752,16 +2797,14 @@ header #options {
     cursor: pointer
 }
 .statTD {
-    line-height: 3em!important;
     text-align: center
 }
 .statBar {
     position: relative;
-    margin: 5% 5% 0;
+    margin: 1rem;
     color: #fff;
     left: 0;
     right: 0;
-    line-height: 2em;
     border-radius: 5px;
     overflow: hidden;
     white-space: nowrap;
@@ -3402,29 +3445,29 @@ input[type=number]::-webkit-outer-spin-button {
 .Arizona {
     background-position: -1900% -700%
 }
-@media all and (min-width: 1281px) {
-    body {
-        font-size: 20px
-    }
-}
-@media all and (min-width: 800px) and (max-width: 1280px) {
-    body {
-        font-size: 18px
-    }
-}
-@media all and (min-width: 640px) and (max-width: 799px) {
-    body {
-        font-size: 16px
+@media all and (min-width: 0px) and (max-width: 499px) {
+    html {
+        font-size: 6px
     }
 }
 @media all and (min-width: 500px) and (max-width: 639px) {
-    body {
-        font-size: 14px
+    html {
+        font-size: 7px
     }
 }
-@media all and (max-width: 499px) {
-    body {
-        font-size: 12px
+@media all and (min-width: 640px) and (max-width: 799px) {
+    html {
+        font-size: 8px
+    }
+}
+@media all and (min-width: 800px) and (max-width: 1280px) {
+    html {
+        font-size: 9px
+    }
+}
+@media all and (min-width: 1281px) {
+    html {
+        font-size: 10px
     }
 }
 

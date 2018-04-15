@@ -550,7 +550,7 @@
 
 			<div id="configure-nation-avatar">
 				<div style="flex-basis: 33%">
-					<p>Upload your dictator avatar. A 200x200 image is recommended.<br>Image must be a jpg < 40 kb:</p>
+					<p>Upload your dictator avatar.<br>A 200x200 image is recommended.<br>Image must be a jpg < 40 kb:</p>
 					<p>
 						<input id="dictatorAvatar" class="btn btn-primary fwBlue shadow4" type="file" accept=".jpg" name="image">
 					</p>
@@ -588,24 +588,21 @@
 	</div>
 
 	<div id="gameWrap">
-		<div id="targetWrap" class="blueBg gameWindow">
-			<table id="target-ui">
-				<tr>
-					<td id="avatarWrap" class="tight">
-						<img id="avatar" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
-					</td>
-					<td id="targetName" class="text-center shadow4 tight no-select">
-						<div id="targetNameAnchor">
-							<img id="targetFlag" class="targetFlag" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
-							<div>
-								<i id="targetCapStar" class="glyphicon glyphicon-star capitalStar no-select shadow4 none"></i>
-								<span id="targetNameWrap"></span>
-							</div>
-							<div id="targetResources"></div>
-						</div>
-					</td>
-				</tr>
-			</table>
+
+		<div id="targetWrap">
+			<div id="avatarWrap">
+				<img id="avatar" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
+			</div>
+			<div id="targetName" class="text-center shadow4 no-select">
+				<div id="targetNameAnchor">
+					<img id="targetFlag" class="targetFlag" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
+					<div>
+						<i id="targetCapStar" class="glyphicon glyphicon-star capitalStar no-select shadow4 none"></i>
+						<span id="targetNameWrap"></span>
+					</div>
+					<div id="targetResources"></div>
+				</div>
+			</div>
 		</div>
 		
 		<div id="resources-ui" class="shadow4 blueBg gameWindow">
@@ -617,81 +614,74 @@
 				<i id="exitSpectate" class="pointer fa fa-times-circle none"></i>
 			</div>
 			<div id="resourceBody">
-			
-				<div id="currentYearWrap" class="chat-rating">
-					<div id="currentYearBG"></div>
-					<span id="currentYear">4000 B.C.</span>
-				</div>
-			
-				<div class="no-padding moves">
-					<button id="endTurn" class="btn btn-xs btn-responsive fwBlue">End Turn</button>
-					<span title="Energy is used to move and rush troops.">
+
+				<div class="barWrap resourceBarParent">
+					<div id="energyIndicator"></div>
+					<span id="energy-label"
+						  class="no-padding moves"
+					 	  title="Turn ends when time expires or when all players have spent their energy">
 						Energy <i class="fa fa-bolt"></i>
 					</span>
+					<div class="resourceIndicator"
+					 	 title="Energy is used to move and rush troops.">
+						<span id="moves">4</span>
+						+<span id="sumMoves">4</span>
+					</div>
 				</div>
-				
-				<div class="no-padding" title="Turn ends when time expires or when all players have spent their energy">
-					<div class="barWrap resourceBar resourceBarParent">
-						<div id="energyBar" class="resourceBar"></div>
-						<div id="energyIndicator"></div>
-						<div class="resourceIndicator resourceRight abs">
-							<span id="moves">4</span> 
-							+<span id="sumMoves">4</span>
+
+				<div id="prod-wrap">
+					<div class="production">
+						<span title="Productions Bonus">
+							+<span id="productionBonus">0</span>%
+						</span>
+						<span title="Production is used to deploy troops, build structures, and research technology.">
+							Production <i class="fa fa-gavel"></i>
+						</span>
+					</div>
+
+					<div class="no-padding">
+						<div class="resourceIndicator">
+							<span id="production">0</span>
+							<span title="Production per turn">
+								+<span id="sumProduction">0</span>
+							</span>
 						</div>
 					</div>
 				</div>
-			
-				<div class="no-padding production">
-					<span  title="Productions Bonus">
-						+<span id="productionBonus">0</span>%
-					</span>
-					<span  title="Production is used to deploy troops, build structures, and research technology.">
-						Production <i class="fa fa-gavel"></i>
-					</span>
-				</div>
-				
-				<div class="no-padding">
-					<div class="resourceIndicator">
-						<span id="production">0</span> 
-						<span title="Production per turn">
-							+<span id="sumProduction">0</span>
+
+				<div id="food-wrap">
+					<div class="food">
+						<span  title="Food Bonus">
+							+<span id="foodBonus">0</span>%
+						</span>
+						<span  title="Food milestones produce additional troops">
+							Food <i class="fa fa-apple"></i>
 						</span>
 					</div>
-				</div>
-				
-				<div class="no-padding food">
-					<span  title="Food Bonus">
-						+<span id="foodBonus">0</span>%
-					</span>
-					<span  title="Food milestones produce additional troops">
-						Food <i class="fa fa-apple"></i> 
-					</span>
-				</div>
-				
-				<div class="no-padding">
-					<div id="foodBarWrap" class="barWrap resourceBar resourceBarParent">
+
+					<div id="foodBarWrap" class="barWrap resourceBarParent">
 						<div id="foodBar" class="resourceBar"></div>
 						<div class="resourceIndicator resourceCenter abs">
-							<span id="food">0</span>/<span id="foodMax">25</span> 
+							<span id="food">0</span>/<span id="foodMax">25</span>
 							+<span id="sumFood">0</span>
 						</div>
 					</div>
 				</div>
-				
-				<div class="no-padding culture">
-					<span  title="Culture Bonus">
-						+<span id="cultureBonus">0</span>%
-					</span>
-					<span  title="Culture milestones produce special rewards">
-						Culture <i class="fa fa-flag"></i>
-					</span>
-				</div>
-				
-				<div class="no-padding">
-					<div id="cultureBarWrap" class="barWrap resourceBar resourceBarParent">
+
+				<div id="culture-wrap">
+					<div class="culture">
+						<span  title="Culture Bonus">
+							+<span id="cultureBonus">0</span>%
+						</span>
+						<span  title="Culture milestones produce special rewards">
+							Culture <i class="fa fa-flag"></i>
+						</span>
+					</div>
+
+					<div id="cultureBarWrap" class="barWrap resourceBarParent">
 						<div id="cultureBar" class="resourceBar"></div>
 						<div class="resourceIndicator resourceCenter abs">
-							<span id="culture">0</span>/<span id="cultureMax">300</span> 
+							<span id="culture">0</span>/<span id="cultureMax">300</span>
 							+<span id="sumCulture">0</span>
 						</div>
 					</div>
@@ -891,6 +881,12 @@
 				</div>
 
 			</div>
+		</div>
+
+		<div id="currentYearWrap" class="shadow4">
+			<button id="endTurn" class="btn btn-xs btn-responsive fwBlue">End Turn</button>
+			<div id="currentYearBG"></div>
+			<span id="currentYear">4000 B.C.</span>
 		</div>
 		
 		<div id="hotkey-ui" class="shadow4">Press V to toggle the UI</div>

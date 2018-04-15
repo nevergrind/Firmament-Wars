@@ -139,7 +139,7 @@ var stats = {
 		}
 		stats.setLeaderValues();
 	},
-	show: function(data){
+	show: function(){
 		DOM.bgmusic.loop = true;
 		stats.setView('statOverview');
 		if (g.victory){

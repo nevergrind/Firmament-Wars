@@ -57,7 +57,7 @@ var ui = {
 			'#chat-input{ bottom: 3vh; }'+
 			'#titleMenu, #titleChat{ bottom: 7vh; } '+*/
 			'.lobbyButtons, .fwDropdown, .govDropdown{ font-size: 1.25em; }'+
-			'#target-ui, #targetLineShadow, .chat-img{ display: none; }'+
+			'#targetLineShadow, .chat-img{ display: none; }'+
 			'.chat-hidden{ color: #fff; }'+
 		'</style>');
 	},
