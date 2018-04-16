@@ -760,11 +760,9 @@ var animate = {
 			x: 150,
 			ease: Linear.easeNone
 		});
-		TweenMax.to(DOM.currentYearBG, 2, {
-			startAt: {
-				alpha: 1
-			},
-			alpha: 0
+		TweenMax.to(DOM.currentYearWrap, 3, {
+			startAt: { color: '#ff0' },
+			color: '#fff',
 		});
 	}
 }

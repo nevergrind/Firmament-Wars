@@ -277,10 +277,10 @@ function updateTileInfo(tileId){
 			o.defense = ~~((t.defense / 4) * 99);
 		}
 		var resources = 
-		t.food + '<i class="fa fa-apple food"></i> '+
-		t.production + '<i class="fa fa-gavel production "></i> '+
-		(t.culture ? t.culture + '<i class="fa fa-flag culture"></i> ' : '')+
-		(t.defense ? t.defense + '<i class="fa fa-fort-awesome manpower"></i>' : '');
+		'<div>' + t.food + '<i class="fa fa-apple food"></i></div>'+
+		'<div>' + t.production + '<i class="fa fa-gavel production "></i></div>'+
+		(t.culture ? '<div>' + t.culture + '<i class="fa fa-flag culture"></i></div>' : '')+
+		(t.defense ? '<div>' + t.defense + '<i class="fa fa-fort-awesome manpower"></i></div>' : '');
 		DOM.targetCapStar.style.display = t.capital ? 'inline' : 'none';
 		DOM.targetNameWrap.innerHTML = name;
 		DOM.targetResources.innerHTML = resources;

@@ -224,11 +224,12 @@ var lobby = {
 							if (i === my.player){
 								str += 
 								'<ul id="teamColorDropdown" class="dropdown-menu">\
-									<li class="header text-center selectTeamHeader">Player Color</li>';
+									<li class="header text-center selectTeamHeader">Player Color</li>' +
+									'<li id="team-color-flex">';
 								for (var j=1; j<=20; j++){
-									str += '<i class="fa fa-square player'+ j +' playerColorChoice" data-playercolor="'+ j +'"></i>';
+									str += '<div class="pbar'+ j +' playerColorChoice" data-playercolor="'+ j +'"></div>';
 								}
-								str += '</ul></span>';
+								str += '</li></ul></span>';
 							}
 							
 							str += '<span id="lobbyAccountName'+ i +'" class="lobbyAccountName chat-warning"></span>\
@@ -658,7 +659,7 @@ function setMoves(d){
 		if (d.sumMoves){
 			DOM.sumMoves.textContent = d.sumMoves;
 		}
-		DOM.endTurn.style.visibility = my.moves ? 'visible' : 'hidden';
+		// DOM.endTurn.style.visibility = my.moves ? 'visible' : 'hidden';
 	}
 }
 function setProduction(d){
@@ -808,7 +809,9 @@ function loadGameState(){
 		type: 'GET',
 		url: app.url +'maps/' + g.map.key + '.php'
 	}).done(function(data){
-		DOM.worldWrap.innerHTML = data;
+		DOM.worldWrap.innerHTML =
+			'<div id="worldWater"></div>' +
+			data;
 			
 		$.ajax({
 			type: "GET",
@@ -879,7 +882,7 @@ function loadGameState(){
 			} else if (my.government === 'Republic'){
 				my.sumMoves = data.sumMoves;
 				document.getElementById('moves').textContent = my.sumMoves;
-				document.getElementById('sumMoves').textContent = my.sumMoves;
+				DOM.sumMoves.textContent = my.sumMoves;
 				console.info('sumMoves ', my.government, my.sumMoves, data.sumMoves);
 			} else if (my.government === 'Fascism'){
 				document.getElementById('moves').textContent = 8;
@@ -1076,13 +1079,17 @@ function loadGameState(){
 					}
 				}
 			}
-			var diploHead = 
-			'<div class="header text-center diplo-head '+ g.gameMode.toLowerCase() +'">'+ g.gameMode +'</div>';
+			var diploHead =
+
+			'<div id="game-mode">' +
+				'<div>Game Mode:</div>' +
+				'<div class="'+ g.gameMode.toLowerCase() +'">'+ g.gameMode +'</div>' +
+			'</div>';
 			
 			if (g.teamMode){
-				document.getElementById('diplomacy-ui').innerHTML = diploHead + teamArr.join("");
+				document.getElementById('diplomacy-body').innerHTML = diploHead + teamArr.join("");
 			} else {
-				document.getElementById('diplomacy-ui').innerHTML = diploHead + str;
+				document.getElementById('diplomacy-body').innerHTML = diploHead + str;
 			}
 			initResources(data);
 			// set images

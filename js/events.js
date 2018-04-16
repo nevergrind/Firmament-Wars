@@ -99,7 +99,8 @@ var events = {
 				g.teamMode = 1;
 				e1.textContent = 'Create Team Game';
 			}
-			e3.val(my.account +'_'+ ~~(Math.random()*999999)).select();
+			// e3.val(my.account +'_'+ ~~(Math.random()*999999)).select();
+			e3.val('').select();
 			TweenMax.to(document.getElementById("createGameWrap"), g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
@@ -138,6 +139,9 @@ var events = {
 			}, 500);
 			
 		});
+		if (!app.isLocal) {
+			$(document).on('contextmenu', function(){ return false; });
+		}
 		$("body").on(ui.click, '#options', function(){
 			title.showModal();
 		}).on(ui.click, '#hotkeys', function(){
@@ -297,9 +301,9 @@ var events = {
 		$("#leaderboardTeamBtn").on(ui.click, function(){
 			title.getLeaderboard('Team');
 		});
-		$("#endTurn").on(ui.click, function(){
+		/*$("#endTurn").on(ui.click, function(){
 			action.endTurn();
-		});
+		});*/
 
 		$("#window-select-wrap").on(ui.click, '.window-select', function() {
 			my.window = this.textContent.trim();
@@ -397,7 +401,7 @@ var events = {
 		});
 		$("#joinRankedGame").on(ui.click, function(){
 			audio.play('click');
-			g.lock();
+			g.lock(1);
 			g.searchingGame = true;
 			Msg("Searching for ranked games...", 0);
 			(function repeat(count){
@@ -542,7 +546,7 @@ var events = {
 				//console.info(e.offsetX, e.offsetY);
 			}
 		});
-		$("#resources-ui").on(ui.click, '#surrender', function(e){
+		$("#diplomacy-ui").on(ui.click, '#surrender', function(e){
 			surrenderMenu(); 
 		});
 		$("#createGameWrap").on(ui.click, '.mapSelect', function(e){

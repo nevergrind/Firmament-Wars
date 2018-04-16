@@ -437,7 +437,7 @@ var action = {
 		DOM.launchMissile.style.display = my.tech.rocketry ? 'block' : 'none';
 		DOM.launchNuke.style.display = my.tech.atomicTheory ? 'block' : 'none';
 	},
-	endTurn: function(){
+	/*endTurn: function(){
 		if (my.moves){
 			audio.play('click');
 			$.ajax({
@@ -447,7 +447,7 @@ var action = {
 				setMoves(data);
 			});
 		}
-	}
+	}*/
 }
 
 // key bindings

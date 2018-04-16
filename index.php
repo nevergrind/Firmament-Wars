@@ -15,7 +15,7 @@
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
 	<script>
 		var app = {
-			version: '1.0.2',
+			version: '1.0.1',
 			initialized: 0, // init-game returned
 			isApp: location.protocol === 'chrome-extension:' ? 1 : 0,
 			account: ''
@@ -135,11 +135,11 @@
 			 id="firmamentWarsBG"
 			 class="title-bg">
 	</div>
-	
+
 	<div id="mainWrap">
-	
+
 		<div id="titleMain">
-			
+
 			<header class="shadow4 text-primary fw-primary">
 				<div>
 					<a id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">
@@ -171,11 +171,11 @@
 						<i class="fa fa-twitter text-primary pointer"></i>
 					</a>
 				</div-->
-				
+
 			</header>
 
 			<div id="title-column-wrap">
-			
+
 				<div id="titleMenu" class="fw-primary">
 					<img id="firmamentWarsLogo" src="images/title/firmament-wars-logo-1280.png">
 
@@ -260,42 +260,42 @@
 				</div>
 
 			</div>
-				
+
 		</div>
-	
+
 		<div id="joinGameLobby" class="shadow4">
-		
+
 			<img id="worldTitle" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
-		
+
 			<div id="lobbyLeftCol">
-			
+
 				<div id="lobbyPlayers" class="fw-primary"></div>
-				
+
 				<div id="lobbyChatLogWrap" class="fw-primary lobbyRelWrap">
 					<div id="lobbyChatLog"></div>
-					
+
 					<div id="lobbyChatWrap" class="lobbyRelWrap input-group">
 						<input id="lobby-chat-input" class="fw-text noselect nobg form-control" type='text' maxlength="240" auto-complete="disabled" spellcheck="false"/>
 						<span id="lobbyChatSend" class="input-group-addon shadow4 fwBlue">Chat</span>
 					</div>
 				</div>
-				
+
 			</div>
-			
+
 			<div id="lobbyRightCol">
-			
+
 				<div id="lobbyGame" class="fw-primary">
 					<img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" id="lobbyFirmamentWarsLogo">
-					<div id="lobbyRankedMatch" class="shadow4 ranked">Ranked Match</div> 
+					<div id="lobbyRankedMatch" class="shadow4 ranked">Ranked Match</div>
 					<div id="lobbyGameNameWrap">
-						<div class='text-primary margin-top'>Game Name:</div> 
+						<div class='text-primary margin-top'>Game Name:</div>
 						<div id='lobbyGameName'></div>
 					</div>
 					<div id="lobbyGamePasswordWrap" class="none">
-						<div class='text-primary margin-top'>Password:</div> 
+						<div class='text-primary margin-top'>Password:</div>
 						<div id='lobbyGamePassword'></div>
 					</div>
-					<div class='text-primary margin-top'>Game Mode:</div> 
+					<div class='text-primary margin-top'>Game Mode:</div>
 					<div id='lobbyGameMode'></div>
 					<div class='text-primary margin-top'>Map:</div>
 					<div id='lobbyGameMap'></div>
@@ -304,21 +304,21 @@
 					<div class='text-primary margin-top'>Max Players:</div>
 					<div id='lobbyGameMax'></div>
 				</div>
-				
+
 				<div id="lobbyGovernmentDescription" class="fw-primary text-center lobbyRelWrap">
 					<div id="lobbyGovName" class='text-primary'>Despotism</div>
 					<div id="lobbyGovPerks"></div>
 				</div>
-				
+
 				<div id="lobbyButtonWrap" class="fw-primary text-center lobbyRelWrap">
 					<button id='startGame' type='button' class='btn btn-default btn-md btn-block btn-responsive shadow4 lobbyButtons none'>Start Game</button>
 					<button id='cancelGame' type='button' class='btn btn-default btn-md btn-block btn-responsive shadow4 lobbyButtons'>Exit</button>
 					<div id='countdown' class='text-warning'></div>
 				</div>
 			</div>
-			
+
 		</div>
-		
+
 		<div id='createGameWrap' class='fw-primary title-modals'>
 			<button id='cancelCreateGame'
 					type='button'
@@ -331,7 +331,7 @@
 			</div>
 			<hr class="fancyhr">
 			<div id="createGameFormWrap">
-				
+
 				<div id="createGameNameWrap">
 					<div class='buffer2'>
 						<label>Game Name</label>
@@ -340,32 +340,32 @@
 						<input id='gameName' class='form-control createGameInput' type='text' maxlength='32' auto-complete='disabled'>
 					</div>
 				</div>
-				
+
 				<div id="createGamePasswordWrap">
 					<div class='buffer2'>
 						<label>Password (Private Game)</label>
 					</div>
-					
+
 					<div class='buffer'>
 						<input id='gamePassword' class='form-control createGameInput' type='text' maxlength='16' auto-complete='disabled'>
 					</div>
 				</div>
-				
+
 				<div id="createGameMaxPlayerWrap" class="pull-right">
 					<div class='buffer2'>
 						<label class='control-label'>Maximum Number of Players</label>
 					</div>
-					
+
 					<div class='buffer'>
 						<input id='gamePlayers' type='number' class='form-control createGameInput' id='gamePlayers' value='8' min='2' max='8'>
 					</div>
 				</div>
-				
+
 				<div id="createGameSpeedWrap">
 					<div class='buffer2'>
 						<label class='control-label'>Turn Duration</label>
 					</div>
-					
+
 					<div class='buffer w33'>
 						<div class='dropdown'>
 							<button id="speedDropdownBtn" class='btn btn-primary dropdown-toggle shadow4 fwDropdownButton' type='button' data-toggle='dropdown'>
@@ -381,12 +381,12 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div>
 					<div class='buffer2'>
 						<label class='control-label'>Map</label>
 					</div>
-					
+
 					<div class='buffer w33'>
 						<div class='dropdown'>
 							<button class='btn btn-primary dropdown-toggle shadow4 fwDropdownButton' type='button' data-toggle='dropdown'>
@@ -396,7 +396,7 @@
 							<ul id='mapDropdown' class='dropdown-menu fwDropdown createGameInput'></ul>
 						</div>
 					</div>
-					
+
 					<div class='buffer2'>
 						<label class='control-label'>Map Details</label>
 					</div>
@@ -406,7 +406,7 @@
 							<span id='createGamePlayers'>8</span>
 						</span>&ensp;
 						<span title='Number of territories on this map'>
-							<i class='fa fa-globe'></i> 
+							<i class='fa fa-globe'></i>
 							<span id='createGameTiles'>78</span>
 						</span>
 					</div>
@@ -419,7 +419,7 @@
 				<button id='createGame' type='button' class='btn btn-md fwGreen btn-responsive shadow4'>Create Game</button>
 			</div>
 		</div>
-		
+
 		<div id="joinPrivateGameModal" class="fw-primary container title-modals">
 			<button id='cancelCreateGame'
 					type='button'
@@ -432,7 +432,7 @@
 					<hr class="fancyhr">
 				</div>
 			</div>
-			
+
 			<div class="row buffer2 privateRow">
 				<div class='col-xs-4 privateLabel'>
 					<label class="control-label">Game Name</label>
@@ -441,7 +441,7 @@
 					<input type="text" class="joinGameInputs fwBlueInput" id="joinGame" maxlength="32" placeholder="Game Name">
 				</div>
 			</div>
-			
+
 			<div class="row buffer2 privateRow">
 				<div class='col-xs-4 privateLabel'>
 					<label class="control-label">Password</label>
@@ -450,7 +450,7 @@
 					<input type="text" class="joinGameInputs fwBlueInput" id="joinGamePassword" maxlength="16" placeholder="Password (Private Game)">
 				</div>
 			</div>
-			
+
 			<div class='row buffer text-center'>
 				<div class='col-xs-12'>
 					<hr class="fancyhr">
@@ -461,7 +461,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div id="configureNation" class="fw-primary container title-modals">
 			<button id='configureNationDone'
 					type='button'
@@ -488,7 +488,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="text-center">
 				<div>
 					<hr class="fancyhr">
@@ -496,7 +496,7 @@
 					<hr class="fancyhr">
 				</div>
 			</div>
-			
+
 			<div id="configure-nation-flag-flex" class="text-center">
 				<div>
 					<div class="dropdown">
@@ -513,8 +513,8 @@
 					<img id="updateNationFlag" class="w100 block center" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 				</div>
 			</div>
-			
-			
+
+
 			<div class="text-center">
 				<div>
 					<hr class="fancyhr">
@@ -536,7 +536,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div id="leaderboard" class="fw-primary title-modals">
 			<button id='leaderboardDone'
 					type='button'
@@ -559,7 +559,7 @@
 				<div class="text-center">Loading...</div>
 			</div>
 		</div>
-		
+
 	</div>
 
 	<div id="gameWrap">
@@ -579,7 +579,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div id="resources-ui" class="shadow4 blueBg gameWindow">
 			<div id="resourceBody">
 				<div id="troop-flex" title="Deploy troops to conquered territories">
@@ -856,7 +856,7 @@
 			<!--button id="endTurn" class="btn btn-xs btn-responsive fwBlue">End Turn</button-->
 			<span id="currentYear">4000 B.C.</span>
 		</div>
-		
+
 		<div id="hotkey-ui" class="shadow4">Press V to toggle the UI</div>
 		<div id="diplomacy-ui" class="shadow4 blueBg gameWindow">
 			<div id="resourceHead">
@@ -869,13 +869,13 @@
 			</div>
 			<div id="diplomacy-body"></div>
 		</div>
-		
+
 		<table id="chat-ui" class="fw-text no-select no-point">
 			<tr>
 				<td id="chat-content"></td>
 			</tr>
 		</table>
-		
+
 		<div id="chat-input-wrap" class="input-group">
 			<span class="input-group-addon fwBlue shadow4" id="chat-input-send">
 				<i class="fa fa-send pointer2"></i>
@@ -885,12 +885,12 @@
 		<button id="chat-input-open" class="btn fwBlue shadow4 gameWindow">
 			<i class="fa fa-comment pointer2"></i>
 		</button>
-			
+
 		<div id="worldWrap">
 		</div>
-		
+
 		<div id="hud" class="shadow4">Select Target</div>
-		
+
 		<div id="surrenderScreen" class="fw-primary fw-text">
 			<p>Surrender? Are You Sure?</p>
 			<div id="cancelSurrenderButton" class="endBtn">
@@ -900,15 +900,15 @@
 				<div class="modalBtnChild">Surrender</div>
 			</div>
 		</div>
-		
+
 		<div id="victoryScreen" class="fw-primary fw-text"></div>
-		
+
 		<div id="statWrap" class="fw-text"></div>
-		
+
 	</div>
 
 	<audio id="bgmusic" autoplay loop preload="auto"></audio>
-	
+
 	<div id="hotkeysModal" class='fw-primary title-modals'>
 			<button id='hotkeysDone'
 					type='button'
@@ -917,7 +917,7 @@
 			</button>
 		<h2 style="margin-bottom: .5rem" class='header text-center'>Hotkeys</h2>
 		<hr class="fancyhr">
-		
+
 		<div id="hotkeysFormWrap" class="container w100">
 			<div class='row buffer2'>
 				<div class='col-xs-4'>
@@ -983,7 +983,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div id="optionsModal" class='fw-primary title-modals'>
 		<button id='optionsDone' type='button' class='close-btn-wrap btn btn-sm fwBlue shadow4'>
 			<i class="close-btn fa fa-close"></i>
@@ -991,7 +991,7 @@
 		<h2 style="margin-bottom: .5rem;" class='header text-center'>Options</h2>
 		<hr class="fancyhr">
 		<div id="optionsFormWrap" class="container w100">
-		
+
 			<div class='row buffer2'>
 				<div class='col-xs-4'>
 					Music Volume
@@ -1036,7 +1036,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div id="screenFlash"></div>
 	<div id="overlay" class="portal"></div>
 	<div id="Msg" class="shadow4"></div>
@@ -1531,7 +1531,6 @@ function notLoggedIn() {
 	});
 	$("#logout").remove();
 }
-
 
 var guest = 0;
 var initChannel = "usa-1";

@@ -10,7 +10,6 @@ echo '
    version="1.1" 
    id="world" 
    viewBox="0 0 3200 1500">';
-   
    require('filters.php');
    
 	echo '<g id="landWrap">

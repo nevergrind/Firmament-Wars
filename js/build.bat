@@ -1,1 +1,0 @@
-copy /b beginWrap.js+ui.js+payment.js+stats.js+animate.js+core.js+title.js+lobby.js+ws.js+audio.js+map.js+actions.js+events.js+ai.js+endWrap.js firmament-wars.js

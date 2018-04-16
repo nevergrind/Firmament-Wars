@@ -61,7 +61,7 @@ var g = {
 	isModalOpen: false,
 	lock: function(clear){
 		g.overlay.style.display = "block";
-		clear ? g.overlay.style.opacity = 0 : g.overlay.style.opacity = 1;
+		g.overlay.style.opacity = clear === void 0 ? 0 : 1;
 		g.keyLock = true;
 	},
 	unlock: function(clear){
@@ -91,7 +91,7 @@ var g = {
 		resizeMap: function(){
 			// set worldWrap CSS
 			$("#mapStyle").remove();
-			var css = 
+			var css =
 				'<style id="mapStyle">#worldWrap{ '+
 					'position: absolute; '+
 					'top: 0%; '+
@@ -302,12 +302,13 @@ g.init = (function(){
 	if (app.isApp) {
 		$("#exit-game").on('click', function() {
 			title.exitGame();
-			$("#endTurn").css('display', 'none');
+			// $("#endTurn").css('display', 'none');
 		});
 		$("#resync").remove();
 	}
 	else {
 		// $("#exit-game, #options-app-only").remove();
+		// $("#endTurn").css('display', 'none');
 	}
 	// build map drop-down 
 	// <li><a class='flagSelect'>Default</a></li>
@@ -318,21 +319,22 @@ g.init = (function(){
 			s += "<li><a class='flagSelect' href='#'>" + e + "</a></li>";
 		});
 	}
+	console.info("VIEW: ", g.view);
 	document.getElementById("flagDropdown").innerHTML = s;
-	TweenMax.to(document.getElementById('title-stars-1'), 20, {
+	TweenMax.to(document.getElementById('title-stars-1'), 50, {
 		startAt: { backgroundPosition: '0'},
 		force3D: true,
 		backgroundPosition: '-1920px',
 		repeat: -1,
 		ease: Linear.easeNone
 	});
-	TweenMax.to(document.getElementById('title-stars-2'), 30, {
+	TweenMax.to(document.getElementById('title-stars-2'), 75, {
 		startAt: { backgroundPosition: '200px -200px'},
 		backgroundPosition: '-1720px -200px',
 		repeat: -1,
 		ease: Linear.easeNone
 	});
-	TweenMax.to(document.getElementById('title-stars-3'), 45, {
+	TweenMax.to(document.getElementById('title-stars-3'), 100, {
 		startAt: { backgroundPosition: '400px -400px'},
 		backgroundPosition: '-1520px -400px',
 		repeat: -1,
@@ -344,6 +346,19 @@ g.init = (function(){
 		repeat: -1,
 		yoyo: true,
 		ease: Power1.easeInOut
+	});
+	TweenMax.to(document.getElementById('firmamentWarsBG'), 1, {
+		startAt: { y: '-47%' },
+		y: '-50%',
+		onComplete: function() {
+			TweenMax.to(document.getElementById('firmamentWarsBG'), 10, {
+				startAt: { scale: 1 },
+				scale: 1.08,
+				repeat: -1,
+				yoyo: true,
+				ease: Power1.easeInOut
+			});
+		}
 	});
 	$.ajax({
 		type: "GET",
@@ -1049,7 +1064,7 @@ function initDom(){
 		endTurn: d.getElementById('endTurn'),
 		energyIndicator: d.getElementById('energyIndicator'),
 		currentYear: d.getElementById('currentYear'),
-		currentYearBG: d.getElementById('currentYearBG'),
+		currentYearWrap: d.getElementById('currentYearWrap'),
 		//targetTargetWrap: d.getElementById('targetTargetWrap'),
 		targetFlag: d.getElementById('targetFlag'),
 		targetCapStar: d.getElementById('targetCapStar'),

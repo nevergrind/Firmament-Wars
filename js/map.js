@@ -1,6 +1,7 @@
 // map.js
 // map zooming and scrolling
 function mouseZoomIn(){
+	return;
 	g.mouse.zoom += 10;
 	if (g.mouse.zoom > 400){
 		g.mouse.zoom = 400;
@@ -19,6 +20,7 @@ function mouseZoomIn(){
 	});
 }
 function mouseZoomOut(){
+	return;
 	g.mouse.zoom -= 10;
 	if (g.mouse.zoom < 100){
 		g.mouse.zoom = 100;

@@ -20,11 +20,12 @@ var title = {
 	refreshGames: function(){
 		if (Date.now() - title.refreshTimer > 5000){
 			title.refreshTimer = Date.now();
+			g.lock(1);
+
 			$.ajax({
 				type: 'GET',
 				url: app.url + 'php/refreshGames.php'
 			}).done(function(data) {
-				//console.info(data);
 				var e = document.getElementById('gameTableBody');
 				if (e === null){
 					return;
@@ -35,19 +36,20 @@ var title = {
 				for (var i=0, len=data.length; i<len; i++){
 					var d = data[i];
 					title.games[d.id] = d.players * 1;
-					str += 
+					str +=
 					"<tr id='game_"+ d.id +"' class='wars wars-"+ d.gameMode +" no-select' data-name='" + d.name + "'>\
 						<td class='warCells'>"+ d.name + "</td>\
 						<td class='warCells'>" + d.map + "</td>\
 						<td class='warCells'>" + d.speed + "</td>\
 						<td class='warCells'>" + d.gameMode + "</td>\
 					</tr>";
-					
+
 				}
 				e.innerHTML = str;
 			}).fail(function(e){
 				console.info(e.responseText);
-				//Msg("Server error.");
+			}).always(function() {
+				g.unlock();
 			});
 		}
 	},
