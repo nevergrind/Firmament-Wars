@@ -23,8 +23,8 @@ fieldset {
 	position:absolute;
 	font-size: 2rem;
 	margin:0 auto;
-	width:280px;
-	padding-bottom: 20px;
+	width: 30rem;
+	padding-bottom: 2rem;
 	text-align:center;
 }
 .textLeft{
@@ -79,6 +79,7 @@ input:-webkit-autofill {
 	-webkit-text-fill-color: #fff!important;
 }
 #tosWrap {
+	font-size: 1.375rem;
 	margin: .5rem;
 }
 #forgotPasswordWrap{
@@ -135,7 +136,7 @@ label{
 	margin: .1em 0
 }
 #twitter-wrap {
-	margin:0 0 5px 0;
+	margin:0 0 .5rem 0;
 	width:240px;
 	border-radius: 6px;
 	background: #337ab7;
@@ -155,7 +156,7 @@ label{
 	padding: 6px 9px;
 	display: inline-block;
 	margin-bottom: 0;
-	font-size: .75rem;
+	font-size: 1.5rem;
 	line-height: 1.25;
 	text-align: center;
 	white-space: nowrap;
@@ -176,7 +177,7 @@ label{
 	line-height: 2.5;
 	border-radius:0;
 	display: inline-block;
-	font-size: .75rem;
+	font-size: 1.5rem;
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: middle;
@@ -402,15 +403,6 @@ a:hover {
 		1px -1px #000,
 		-1px -1px #000
 }
-#firmamentWarsLogoWrap {
-    background: #000;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    left: 0;
-    top: 0;
-    overflow: hidden
-}
 .title-bg {
 	position: absolute;
 	width: 1920px;
@@ -463,6 +455,12 @@ a:hover {
 .title-stars {
 	background-image: url(../images/title/simple-stars.png);
 	background-size: 100% 100%;
+}
+#firmament-wars-logo-wrap {
+    background: -webkit-linear-gradient(bottom, rgba(0, 48, 96, 1) 0%, rgba(0, 24, 48, 1) 10%, rgba(0, 0, 0, 1) 100%);
+    background: -moz-linear-gradient(bottom, rgba(0, 48, 96, 1) 0%, rgba(0, 24, 48, 1) 10%, rgba(0, 0, 0, 1) 100%);
+    background: -ms-linear-gradient(bottom, rgba(0, 48, 96, 1) 0%, rgba(0, 24, 48, 1) 10%, rgba(0, 0, 0, 1) 100%);
+    background: -o-linear-gradient(bottom, rgba(0, 48, 96, 1) 0%, rgba(0, 24, 48, 1) 10%, rgba(0, 0, 0, 1) 100%);
 }
 #firmamentWarsLogo {
 	position: relative;
@@ -613,11 +611,11 @@ a:hover {
 	padding: .2rem .3rem;
 	border-top: .2rem groove #37d;
 	border-bottom: .2rem groove #37d;
-	background: #0a0a0a;
-	background: -webkit-radial-gradient(bottom left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 0) 75%);
-	background: -moz-radial-gradient(bottom left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 0) 100%);
-	background: -o-radial-gradient(bottom left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 0) 100%);
-	background: -ms-radial-gradient(bottom left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 0) 100%);
+	background: #000;
+    background: -webkit-linear-gradient(top, rgba(0, 48, 96, 1) 0%, rgba(0, 24, 48, 1) 10%, rgba(0, 0, 0, 1) 100%);
+    background: -moz-linear-gradient(top, rgba(0, 48, 96, 1) 0%, rgba(0, 24, 48, 1) 10%, rgba(0, 0, 0, 1) 100%);
+    background: -ms-linear-gradient(top, rgba(0, 48, 96, 1) 0%, rgba(0, 24, 48, 1) 10%, rgba(0, 0, 0, 1) 100%);
+    background: -o-linear-gradient(top, rgba(0, 48, 96, 1) 0%, rgba(0, 24, 48, 1) 10%, rgba(0, 0, 0, 1) 100%);
 }
 #action-button-wrap {
 	position: relative;
@@ -631,13 +629,21 @@ a:hover {
 	height: 100%;
 	z-index: 1;
 }
+#title-action-row-bg-left {
+	left: 0;
+	/*background: #0a0a0a;
+	background: -webkit-radial-gradient(top left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 0) 75%);
+	background: -moz-radial-gradient(top left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 0) 100%);
+	background: -o-radial-gradient(top left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 0) 100%);
+	background: -ms-radial-gradient(top left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 0) 100%);*/
+}
 #title-action-row-bg-right {
 	right: 0;
-	background: #0a0a0a;
+	/*background: #0a0a0a;
 	background: -webkit-radial-gradient(top right, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 0) 75%);
 	background: -moz-radial-gradient(top right, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 0) 100%);
 	background: -o-radial-gradient(top right, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 0) 100%);
-	background: -ms-radial-gradient(top right, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 0) 100%);
+	background: -ms-radial-gradient(top right, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 0) 100%);*/
 }
 .action-btn {
 	font-size: 2.5rem;
@@ -646,7 +652,6 @@ a:hover {
 	cursor: pointer;
 	transition: box-shadow ease-out .2s, color ease-out .2s;
 	text-align: center;
-	box-shadow: 0 0 0 0rem rgba(255,255,0,.3) inset
 }
 .action-btn:hover {
 	color: #ff0;
@@ -667,8 +672,8 @@ a:hover {
     margin-top: 0;
     overflow-y: auto;
 	flex: 1;
-	border: 4px ridge #124;
-	background: rgba(33,33,33,.3);
+	border: 0;
+	background: rgba(0,0,0,.7);
 }
 #gameTable {
     table-layout: fixed;
@@ -679,7 +684,7 @@ a:hover {
 	font-size: 2rem;
 }
 #gameTableHead {
-	border: 2px groove #136;
+	border: 0;
 	background: #013;
 }
 #gameTable th {
@@ -728,10 +733,11 @@ tbody {
     cursor: pointer
 }
 #titleChat {
+	background: rgba(0,0,0,.7);
 	display: flex;
 	flex-direction: column;
     text-align: left;
-    padding: 0;
+	padding: .5rem;
 	flex: 1;
 }
 #titleChatWrap {
@@ -751,20 +757,32 @@ tbody {
 }
 #title-chat-players-room {
 	flex-basis: 42%;
+	margin-right: .5rem;
     border: 2px groove#357;
 }
 #title-chat-players-log {
 	display: flex;
+	flex-direction: column;
 	flex-basis: 58%;
-	margin: 0 .5rem;
-	border: 2px groove#357;
-
+	margin: 0;
 }
 #titleChatLog {
 	width: 100%;
     overflow-x: hidden;
+	padding: 0 .5rem;
     word-break: break-word;
 	flex: 1;
+	border: 2px groove#357;
+}
+#title-chat-input {
+	flex: 0;
+    padding: .3rem .6rem;
+	margin-top: .5rem;
+	display: block;
+    width: 100%;
+	font-size: 2rem;
+    border: 1px solid #2e6da4;
+    background: rgba(0, 12, 32, 1)
 }
 #titleChatLog > *,
 #lobbyChatLog > *,
@@ -777,14 +795,6 @@ tbody {
 #login {
     color: #fff
 }
-#title-chat-input {
-    padding: 0 2%;
-    width: 100%;
-	font-size: 2rem;
-    border: 1px solid #2e6da4;
-    border-right: none;
-    background: rgba(0, 12, 32, 1)
-}
 #titlePlayerCountWrap {
     float: right;
     color: #aef;
@@ -795,10 +805,8 @@ tbody {
 }
 .titlePanelLeft {
     font-family: Play, Roboto, Verdana, Arial, sans-serif;
-    text-shadow: .5px .5px #357, 1px 1px #357;
     color: #bef;
     padding: .2rem;
-	margin: .5rem;
 }
 #leaderboard {
 	position: absolute;
@@ -906,18 +914,15 @@ tbody {
 .fwRed:focus {
 	outline: none!important;
 }
-#lobbyChatSend,
-#titleChatSendBtn {
+#lobbyChatSend/*,
+#titleChatSendBtn*/ {
     border-radius: 0 6px 6px 0
 }
-#submitNationName {
-	height: 3.8rem;
-}
-#titleChatSendBtn {
+/*#titleChatSendBtn {
     margin-right: .5rem;
 	height: 3.8rem;
 	z-index: 0;
-}
+}*/
 #lobby-chat-input {
     padding: .5rem 1rem;
 	font-size: 2rem;
@@ -972,14 +977,24 @@ tbody {
 }
 #configure-nation-name {
 	display: flex;
-	padding: 1rem;
-	margin: 1rem!important;
+	flex-direction: column;
+}
+#updateNationName {
+	margin: 0 auto 1rem;
+    color: #222;
+    width: 50%
+}
+#submitNationName {
+	margin: 0 auto;
+	height: 3.8rem;
+	text-align: center;
 }
 #configureNationDone {
 	margin-top: .5rem;
 }
 #configureNation > div{
 	margin: 1rem 0;
+	text-align: center;
 }
 #configure-nation-flag-flex {
 	display: flex;
@@ -1589,7 +1604,7 @@ audio,
 }
 .endBtn {
     border: 1px solid #37d;
-    box-shadow: 0 0 20px rgba(0, 40, 148, 1) inset;
+    box-shadow: 0 0 2rem rgba(0, 40, 148, 1) inset;
     border-radius: 4%;
     color: #ff0;
     cursor: pointer;
@@ -1787,7 +1802,6 @@ circle {
     overflow: hidden
 }
 .fw-primary {
-    background: rgba(0, 0, 0, .7);
     color: #fff;
     box-shadow: 0 0 0 1px #37d inset, 0 0 0 1px #02c
 }
@@ -1990,7 +2004,7 @@ circle {
 #Msg {
     opacity: 0;
     position: absolute;
-    top: 120px;
+    top: 12rem;
     left: 0;
     right: 0;
     margin: 0 auto;
@@ -2020,7 +2034,7 @@ circle {
 }
 #hud {
     position: absolute;
-    top: 120px;
+    top: 12rem;
     left: 0%;
     width: 100%;
     text-align: center;
@@ -2164,10 +2178,6 @@ span.unlockGameBtn {
 table {
     table-layout: fixed;
     word-wrap: break-word
-}
-#updateNationName {
-    color: #222;
-    width: 100%
 }
 #flagDropdown {
     width: 100%;
@@ -2639,7 +2649,7 @@ table {
     background: #ffa;
     border: 1px solid gold;
 	z-index: 0;
-    box-shadow: -3px 0 8px #ffa, 0 0 2px #ffa, 0 0 5px #ffa, 0 0 16px #ffa
+    box-shadow: -3px 0 8px #ffa, 0 0 2px #ffa, 0 0 5px #ffa, 0 0 1.6rem #ffa
 }
 .resourceRight {
     text-align: right;
@@ -2689,13 +2699,14 @@ header #options {
 	cursor: pointer;
 	font-size: 2rem;
 	padding: 0;
-	height: 20px;
-	width: 20px;
+	height: 2rem;
+	width: 2rem;
 	display: block;
 }
 #optionsModal {
 	position: absolute;
-    background: #000
+    background: #000;
+	z-index: 99999999;
 }
 #hotkeysModal {
 	position: absolute;
@@ -2708,17 +2719,19 @@ header #options {
     padding: 1rem 2rem
 }
 #exit-game {
-	margin: 3rem 0 1rem;
 	font-size: 2rem;
 	cursor: pointer;
 	text-align: center;
+	width: 70%;
+	margin: 3rem auto 1rem;
+	-webkit-transition: box-shadow ease-out .2s;
+	-moz-transition: box-shadow ease-out .2s;
+	-o-transition: box-shadow ease-out .2s;
+	transition: box-shadow ease-out .2s;
 }
 #exit-game:hover {
-	color: #ffa;
-    background: -webkit-radial-gradient(center center, farthest-side, rgba(255, 255, 160, .2) 0%, rgba(0, 0, 0, .1) 100%);
-    background: -moz-radial-gradient(center center, farthest-side, rgba(255, 255, 160, .2) 0%, rgba(0, 0, 0, .1) 100%);
-    background: -ms-radial-gradient(center center, farthest-side, rgba(255, 255, 160, .2) 0%, rgba(0, 0, 0, .1) 100%);
-    background: -o-radial-gradient(center center, farthest-side, rgba(255, 255, 160, .2) 0%, rgba(0, 0, 0, .1) 100%);
+	color: #ff0;
+	box-shadow: 0 0 0 2rem rgba(255,255,0,.3) inset;
 }
 #window-size-wrap {
 	width: 100%;
@@ -3054,7 +3067,6 @@ input[type=number]::-webkit-outer-spin-button {
 
 /* sliders */
 .tooltip-main {
-	visibility: hidden;
 }
 .no-padding {
     padding: 0!important
@@ -3595,12 +3607,12 @@ input[type=number]::-webkit-outer-spin-button {
 }
 @media all and (min-width: 800px) and (max-width: 1280px) {
     html {
-        font-size: 9px
+        font-size: 10px
     }
 }
 @media all and (min-width: 1281px) {
     html {
-        font-size: 10px
+        font-size: 12px
     }
 	.lobbyFlags {
 		width: 12rem;

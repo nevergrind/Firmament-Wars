@@ -180,7 +180,7 @@ var g = {
 		});
 	},
 	removeContainers: function(){
-		$("#firmamentWarsLogoWrap, #mainWrap").remove();
+		$("#firmament-wars-logo-wrap, #mainWrap").remove();
 	},
 	notification: {},
 	sendNotification: function(data){

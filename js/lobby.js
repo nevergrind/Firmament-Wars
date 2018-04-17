@@ -1164,11 +1164,6 @@ function loadGameState(){
 				// focus on player home
 				my.focusTile(my.capital);
 				// add warning for players
-				if (location.host !== 'localhost'){
-					window.onbeforeunload = function(){
-						return "To leave the game use the surrender flag instead!";
-					}
-				}
 				game.startGameState();
 				ui.setCurrentYear(data.resourceTick);
 			}, 350);

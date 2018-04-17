@@ -37,10 +37,9 @@ var title = {
 					var d = data[i];
 					title.games[d.id] = d.players * 1;
 					str +=
-					"<tr id='game_"+ d.id +"' class='wars wars-"+ d.gameMode +" no-select' data-name='" + d.name + "'>\
+					"<tr id='game_"+ d.id +"' class='shadow4 wars wars-"+ d.gameMode +" no-select' data-name='" + d.name + "'>\
 						<td class='warCells'>"+ d.name + "</td>\
 						<td class='warCells'>" + d.map + "</td>\
-						<td class='warCells'>" + d.speed + "</td>\
 						<td class='warCells'>" + d.gameMode + "</td>\
 					</tr>";
 
@@ -72,9 +71,12 @@ var title = {
 			}).on('blur', function(){
 				title.createGameFocus = false;
 			});
-			$("#titleChatSend").on(ui.click, function(){
+			$("#login-container").on(ui.click, '.nw-link', function() {
+				title.openWindow($(this).attr('href'));
+			})
+			/*$("#titleChatSend").on(ui.click, function(){
 				title.sendMsg(true);
-			});
+			});*/
 			$.ajax({
 				type: 'GET',
 				url: app.url + 'php/initChatId.php'
@@ -277,12 +279,11 @@ var title = {
 		var e = document.createElement('tr'),
 			gameMode = data.gameMode === 'Ranked' ? 'Ranked' : data.gameMode === 'Team' ? 'Team' : 'FFA';
 		e.id = 'game_' + data.id;
-		e.className = 'wars wars-'+ gameMode +' no-select';
+		e.className = 'shadow4 wars wars-'+ gameMode +' no-select';
 		e.setAttribute('data-name', data.name);
 		e.innerHTML = 
 			"<td class='warCells'>"+ data.name + "</td>\
 			<td class='warCells'>" + data.map + "</td>\
-			<td class='warCells'>" + data.speed + "</td>\
 			<td class='warCells'>" + gameMode + "</td>";
 		DOM.gameTableBody.insertBefore(e, DOM.gameTableBody.childNodes[0]);
 	},
@@ -612,7 +613,7 @@ var title = {
 						str += '<div class="who-ribbon-chat '+ (len >= 24 ? 'wideRack' : 'narrowRack') +'">';
 						for (var i=0, len=data.ribbons.length; i<len; i++){
 							var z = data.ribbons[i];
-							str += '<div class="pointer ribbon ribbon'+ z +'" title="'+ game.ribbonTitle[z] +'" data-ribbon="'+ z +'"></div>';
+							str += '<div class="pointer ribbon ribbon'+ z +'" data-ribbon="'+ z +'"></div>';
 						}
 						str += '</div>';
 					}
@@ -883,6 +884,22 @@ var title = {
 			Msg("Game must have 2-8 players.", 1);
 		} else {
 			title.createGameService(name, pw, title.mapData[g.map.key].name, max, g.rankedMode, g.teamMode, speed);
+		}
+	},
+	openWindow: function(href) {
+		if (app.isApp) {
+			/*var gui = require('nw.gui'),
+				win = gui.Window.open(href, {
+					position: 'center',
+					width: 1280,
+					height: 720
+				});*/
+		}
+	},
+	closeGame: function() {
+		if (app.isApp) {
+			var gui = require('nw.gui');
+			// do things I should do before leaving the game
 		}
 	},
 	createGameService: function(name, pw, map, max, rankedMode, teamMode, speed){

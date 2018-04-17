@@ -3,6 +3,7 @@
 <head id='head'>
 	<title>Firmament Wars | Free Multiplayer Risk-Like Grand Strategy War Game</title>
 	<meta charset="utf-8">
+	<meta http-equiv="Cache-control" content="no-cache">
 	<meta name="keywords" content="free, risk, browser, multiplayer, online, strategy, html5">
 	<meta name="description" content="A free multiplayer strategy game playable in your web browser! Gameplay is like Risk meets Civilization Revolution! Offers team, FFA, and ranked modes!">
 	<meta name="author" content="Joe Leonard">
@@ -177,9 +178,11 @@
 			<div id="title-column-wrap">
 			
 				<div id="titleMenu" class="fw-primary">
-					<img id="firmamentWarsLogo" src="images/title/firmament-wars-logo-1280.png">
-
-					<div id="title-action-row" style="margin-top: 1rem;" class="fw-text">
+					<div id="firmament-wars-logo-wrap">
+						<img id="firmamentWarsLogo" src="images/title/firmament-wars-logo-1280.png">
+					</div>
+					<div id="title-action-row" class="fw-text">
+						<div id="title-action-row-bg-left" class="title-action-bg"></div>
 						<div id="title-action-row-bg-right" class="title-action-bg"></div>
 						<div id="action-button-wrap" class="no-select">
 							<div id="play-now-btn" class="action-btn shadow4">Play Now</div>
@@ -198,7 +201,6 @@
 								<tr id="gameTableHead">
 									<th class="gameTableCol1 warCells">Game Name</th>
 									<th class="gameTableCol2 warCells">Map</th>
-									<th class="gameTableCol3 warCells">Turn Duration</th>
 									<th class="gameTableCol4 warCells">Type</th>
 								</tr>
 							</thead>
@@ -208,8 +210,8 @@
 				</div>
 
 				<div id="titleChat" class="fw-primary text-center">
-					<div id="titleChatPlayers" class="titlePanelLeft row">
-						<div id="title-chat-players-room">
+					<div id="titleChatPlayers" class="titlePanelLeft">
+						<div id="title-chat-players-room" class="shadow4">
 							<div id="titleChatHeader" class="chat-warning nowrap">&nbsp;
 								<span id="titleChatHeaderChannel"></span>
 								<span id="titleChatHeaderCount"></span>
@@ -238,25 +240,14 @@
 							<div id="titleChatBody"></div>
 						</div>
 
-						<div id="title-chat-players-log">
-							<div id="titleChatLog" class="titlePanelLeft">
-								<!--
-									right chat window
-									count from title screen
-								-->
-							</div>
+						<div id="title-chat-players-log" class="shadow4">
+							<div id="titleChatLog" class="titlePanelLeft"></div>
+							<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" auto-complete="disabled" spellcheck="false">
 						</div>
 					</div>
 
 
-					<div id="titleChatWrap">
-						<div class="input-group">
-							<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" auto-complete="disabled" spellcheck="false" />
-							<div id="titleChatSend" class="input-group-btn">
-								<button id="titleChatSendBtn" class="btn shadow4 fwBlue">Send</button>
-							</div>
-						</div>
-					</div>
+
 				</div>
 
 			</div>
@@ -477,16 +468,17 @@
 			</div>
 
 			<div id="configure-nation-name">
-				<div>
-					<div class="input-group">
-						<input id="updateNationName" class="form-control" type="text" maxlength="32" auto-complete="disabled" size="24" aria-describedby="updateNationNameStatus" placeholder="Enter New Nation Name">
-						<span class="input-group-btn">
-							<button id="submitNationName" class="btn fwBlue shadow4" type="button">
-								Update Nation Name
-							</button>
-						</span>
-					</div>
-				</div>
+				<input id="updateNationName"
+					   class="form-control"
+					   type="text"
+					   maxlength="32"
+					   auto-complete="disabled"
+					   size="24"
+					   aria-describedby="updateNationNameStatus"
+					   placeholder="Enter New Nation Name">
+				<button id="submitNationName" class="btn fwBlue shadow4" type="button">
+					Update Nation Name
+				</button>
 			</div>
 			
 			<div class="text-center">
@@ -1135,7 +1127,8 @@
 					'required="required" /></label>' +
 				'<div id="tosWrap" class="create-account">' +
 					'<span id="tos" class="aqua">' +
-					'<a target="_blank" href="//nevergrind.com/blog/terms-of-service/">Terms of Service</a> | <a target="_blank" href="//nevergrind.com/blog/privacy-policy/">Privacy Policy</a></span>' +
+					'<a target="_blank" class="nw-link" href="https://nevergrind.com/blog/terms-of-service/">Terms of Service</a> | ' +
+					'<a target="_blank" class="nw-link" href="https://nevergrind.com/blog/privacy-policy/">Privacy Policy</a></span>' +
 				'</div>' +
 				'<input id="create-account" type="submit" value="Create" class="ng-btn fwBlue btn-responsive shadow4" />' +
 				'<div class="error-msg shadow4"></div>';

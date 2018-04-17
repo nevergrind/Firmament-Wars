@@ -176,6 +176,9 @@ var events = {
 			title.refreshGames();
 			$("#title-chat-input").focus();
 		});
+		$("#titleChat").on(ui.click, '.nw-link', function() {
+			title.openWindow($(this).attr('href'));
+		});
 		$("#titleChatPlayers").on(ui.click, '#friend-status', function(){
 			title.listFriends();
 			$("#title-chat-input").focus();
@@ -823,3 +826,15 @@ $(document).on('keydown', function(e){
 		 }, false);
 	 }
  });
+window.onbeforeunload = function(){
+	title.closeGame();
+}
+if (app.isApp) {
+	var gui = require('nw.gui');
+	win = gui.Window.get();
+	win.on('close', function() {
+		this.hide(); // pretend
+		title.closeGame();
+		this.close(true);
+	})
+}
