@@ -174,14 +174,14 @@ var events = {
 		// events for title-chat buttons
 		$("#refresh-game-button").on(ui.click, function(){
 			title.refreshGames();
-			$("#title-chat-input").focus();
 		});
 		$("#titleChat").on(ui.click, '.nw-link', function() {
 			title.openWindow($(this).attr('href'));
 		});
 		$("#titleChatPlayers").on(ui.click, '#friend-status', function(){
 			title.listFriends();
-			$("#title-chat-input").focus();
+		}).on(ui.click, '#ignore-status', function(){
+			title.listIgnore();
 		});
 		$("#get-help").on(ui.click, function(){
 			title.help();
@@ -826,9 +826,6 @@ $(document).on('keydown', function(e){
 		 }, false);
 	 }
  });
-window.onbeforeunload = function(){
-	title.closeGame();
-}
 if (app.isApp) {
 	var gui = require('nw.gui');
 	win = gui.Window.get();

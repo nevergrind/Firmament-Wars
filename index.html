@@ -188,10 +188,9 @@
 							<div id="play-now-btn" class="action-btn shadow4">Play Now</div>
 							<div id="create" class="gameSelect action-btn shadow4">Free For All</div>
 							<div id="createTeamBtn" class="gameSelect action-btn shadow4">Team Game</div>
+							<div id="joinPrivateGameBtn" class="action-btn shadow4">Join Private Game</div>
 							<div id="createRankedBtn" class="gameSelect action-btn shadow4">Create Ranked Match</div>
 							<div id="joinRankedGame" class="gameSelect action-btn shadow4">Join Ranked Match</div>
-							<div id="joinPrivateGameBtn" class="action-btn shadow4">Join Private Game</div>
-							<div id="refresh-game-button" class="action-btn shadow4">Refresh Games</div>
 						</div>
 					</div>
 
@@ -201,7 +200,9 @@
 								<tr id="gameTableHead">
 									<th class="gameTableCol1 warCells">Game Name</th>
 									<th class="gameTableCol2 warCells">Map</th>
-									<th class="gameTableCol4 warCells">Type</th>
+									<th class="gameTableCol4 warCells">
+										<i id="refresh-game-button"
+										   class="shadow4 pull-right fa fa-refresh"></i>Type</th>
 								</tr>
 							</thead>
 							<tbody id="gameTableBody"></tbody>
@@ -216,32 +217,22 @@
 								<span id="titleChatHeaderChannel"></span>
 								<span id="titleChatHeaderCount"></span>
 							</div>
-							<div id="title-chat-btn-wrap" class="text-center">
-								<div id="title-chat-btns" class="btn-group" role="group">
-									<button id="friend-status" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Friend list">
-										<i class="fa fa-users pointer"></i>
-									</button>
-									<button id="add-friend" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Toggle friend">
-										<i class="fa fa-user-plus pointer"></i>
-									</button>
-									<button id="who-account" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Query account data">
-										<i class="fa fa-vcard pointer"></i>
-									</button>
-									<button id="whisper-account" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Send another account a private message">@</button>
-									<button id="change-channel" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Change Channel">#</button>
-									<button id="ignore-user" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Ignore account messages">
-										<i class="fa fa-microphone-slash pointer"></i>
-									</button>
-									<button id="get-help" class="btn-group btn btn-xs btn-responsive fwBlue shadow4" title="Help">
-										<i class="fa fa-question pointer"></i>
-									</button>
-								</div>
-							</div>
 							<div id="titleChatBody"></div>
+							<div id="title-chat-btn-wrap" class="text-center no-select">
+								<div id="friend-status" class="title-utils shadow4">Friend List</div>
+								<div id="ignore-status" class="title-utils shadow4">Ignore List</div>
+								<div id="who-account" class="title-utils shadow4">Query Account</div>
+								<div id="add-friend" class="title-utils shadow4">Toggle Friend</div>
+								<div id="ignore-user" class="title-utils shadow4">Ignore Account</div>
+								<div id="whisper-account" class="title-utils shadow4">Private Message</div>
+								<div id="change-channel" class="title-utils shadow4">Change Channel</div>
+								<div id="get-help" class="title-utils shadow4">Chat Commands</div>
+							</div>
 						</div>
-
 						<div id="title-chat-players-log" class="shadow4">
-							<div id="titleChatLog" class="titlePanelLeft"></div>
+							<div id="titleChatLog" class="titlePanelLeft">
+								<div>Welcome to Broken.net!</div>
+							</div>
 							<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" auto-complete="disabled" spellcheck="false">
 						</div>
 					</div>
@@ -264,11 +255,12 @@
 				
 				<div id="lobbyChatLogWrap" class="fw-primary lobbyRelWrap">
 					<div id="lobbyChatLog"></div>
-					
-					<div id="lobbyChatWrap" class="lobbyRelWrap input-group">
-						<input id="lobby-chat-input" class="fw-text noselect nobg form-control" type='text' maxlength="240" auto-complete="disabled" spellcheck="false"/>
-						<span id="lobbyChatSend" class="input-group-addon shadow4 fwBlue">Chat</span>
-					</div>
+					<input id="lobby-chat-input"
+						   class="fw-text noselect nobg form-control"
+						   type='text'
+						   maxlength="240"
+						   auto-complete="disabled"
+						   spellcheck="false">
 				</div>
 				
 			</div>
@@ -334,7 +326,7 @@
 				
 				<div id="createGamePasswordWrap">
 					<div class='buffer2'>
-						<label>Password (Private Game)</label>
+						<label>Password (optional for private games)</label>
 					</div>
 					
 					<div class='buffer'>
@@ -359,7 +351,10 @@
 					
 					<div class='buffer w33'>
 						<div class='dropdown'>
-							<button id="speedDropdownBtn" class='btn btn-primary dropdown-toggle shadow4 fwDropdownButton' type='button' data-toggle='dropdown'>
+							<button id="speedDropdownBtn"
+									class='btn btn-primary dropdown-toggle shadow4 fwDropdownButton'
+									type='button'
+									data-toggle='dropdown'>
 								<span id='createGameSpeed'>15</span>
 								<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 							</button>
@@ -1069,7 +1064,7 @@
 					'id="loginEmail"' +
 					'class="loginInputs shadow4"' +
 					'maxlength="255"' +
-					'placeholder="Account or Email Address"' +
+					'placeholder="Account"' +
 					'required="required"' +
 					'spellcheck="false"/>' +
 				'</label>' +

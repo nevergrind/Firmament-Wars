@@ -22,35 +22,42 @@ var title = {
 			title.refreshTimer = Date.now();
 			g.lock(1);
 
+			$("#title-chat-input").focus();
+			TweenMax.to('#refresh-game-button', 1, {
+				rotation: "+=360",
+				ease: Linear.easeIn
+			});
+
 			$.ajax({
 				type: 'GET',
 				url: app.url + 'php/refreshGames.php'
 			}).done(function(data) {
-				var e = document.getElementById('gameTableBody');
-				if (e === null){
-					return;
-				}
-				// head
-				var str = '';
-				// body
-				for (var i=0, len=data.length; i<len; i++){
-					var d = data[i];
-					title.games[d.id] = d.players * 1;
-					str +=
-					"<tr id='game_"+ d.id +"' class='shadow4 wars wars-"+ d.gameMode +" no-select' data-name='" + d.name + "'>\
-						<td class='warCells'>"+ d.name + "</td>\
-						<td class='warCells'>" + d.map + "</td>\
-						<td class='warCells'>" + d.gameMode + "</td>\
-					</tr>";
-
-				}
-				e.innerHTML = str;
+				title.refreshGamesCallback(data.games);
 			}).fail(function(e){
 				console.info(e.responseText);
 			}).always(function() {
 				g.unlock();
 			});
 		}
+	},
+	refreshGamesCallback: function(data) {
+		var e = document.getElementById('gameTableBody');
+		if (e === null) return;
+		// head
+		var str = '';
+		// body
+		for (var i=0, len=data.length; i<len; i++){
+			var d = data[i];
+			title.games[d.id] = d.players * 1;
+			str +=
+			"<tr id='game_"+ d.id +"' class='shadow4 wars wars-"+ d.gameMode +" no-select' data-name='" + d.name + "'>\
+				<td class='warCells'>"+ d.name + "</td>\
+				<td class='warCells'>" + d.map + "</td>\
+				<td class='warCells'>" + d.gameMode + "</td>\
+			</tr>";
+
+		}
+		e.innerHTML = str;
 	},
 	init: (function(){
 		$(document).ready(function(){
@@ -77,27 +84,17 @@ var title = {
 			/*$("#titleChatSend").on(ui.click, function(){
 				title.sendMsg(true);
 			});*/
-			$.ajax({
-				type: 'GET',
-				url: app.url + 'php/initChatId.php'
-			}).done(function(data){
-				my.account = data.account;
-				my.flag = data.flag;
-				my.rating = data.rating;
-				g.checkPlayerData();
-			});
 			// initial refresh of games
-			setTimeout(function(){
-				title.refreshGames();
-			});
 			setTimeout(function(){
 				g.keepAlive();
 			}, 180000);
 		});
 	})(),
+	updateTimer: 0,
 	updatePlayers: function(once){
+		clearTimeout(title.updateTimer);
 		title.titleUpdate = $("#titleChatPlayers").length; // player is logged in
-		if (title.titleUpdate){
+		if (title.titleUpdate) {
 			// title chat loop
 			(function repeat(){
 				if (isLoggedIn && g.view === 'title'){
@@ -108,80 +105,10 @@ var title = {
 							channel: my.channel
 						}
 					}).done(function(data){
-						// set title players
-						if (g.view === 'title'){
-							if (data.playerData !== undefined){
-								var p = data.playerData,
-									foundPlayers = [];
-								for (var i=0, len=p.length; i<len; i++){
-									// add new players
-									var account = p[i].account,
-										flag = p[i].flag,
-										rating = p[i].rating;
-									if (title.players[account] === undefined){
-										//console.info("ADDING PLAYER: ", p[i]);
-										title.addPlayer(account, flag, rating);
-									} else if (title.players[account].flag !== flag){
-										// replace player flag
-										var flagElement = document.getElementById("titlePlayerFlag_" + account);
-										if (flagElement !== null){
-											var flagClass = flag.split(".");
-											flagElement.className = 'flag ' + flagClass[0].replace(/ /g, "-");
-										}
-									}
-									foundPlayers.push(account);
-								}
-								// remove missing players
-								for (var key in title.players){
-									if (foundPlayers.indexOf(key) === -1){
-										var x = {
-											account: key
-										}
-										// console.info("REMOVING PLAYER: " + x.account);
-										title.removePlayer(x);
-									}
-								}
-							}
-							document.getElementById('titleChatHeaderCount').textContent = len !== undefined ? '('+len+')' : '';
-							// game data sanity check
-							var serverGames = [];
-							if (data.gameData !== undefined){
-								var p = data.gameData;
-								for (var i=0, len=p.length; i<len; i++){
-									serverGames[p[i].id] = {
-										players: p[i].players * 1,
-										max: p[i].max * 1
-									}
-								}
-							}
-							// remove games if they're not found in server games
-							title.games.forEach(function(e, ind){
-								// console.info(serverGames[ind]);
-								if (serverGames[ind] === undefined){
-									// game timed out, not found
-									var o = {
-										id: ind
-									}
-									console.info("REMOVING: ", o);
-									title.removeGame(o);
-								} else {
-									// found game
-									if (serverGames[ind].players !== title.games[ind]){
-										// player count does not match... fixing
-										// console.info("PLAYER COUNT WRONG!");
-										var o = {
-											id: ind,
-											players: serverGames[ind].players,
-											max: serverGames[ind].max
-										}
-										title.setToGame(o);
-									}
-								}
-							});
-						}
+						title.updatePlayerCallback(data);
 					}).always(function(){
 						if (!once){
-							setTimeout(repeat, 5000);
+							title.updateTimer = setTimeout(repeat, 5000);
 						}
 					});
 				}
@@ -191,8 +118,82 @@ var title = {
 			$("#titleChat, #titleMenu").remove();
 		}
 	},
+	updatePlayerCallback: function(data) {
+		// set title players
+		if (g.view === 'title'){
+			if (data.playerData !== undefined){
+				var p = data.playerData,
+					foundPlayers = [];
+				for (var i=0, len=p.length; i<len; i++){
+					// add new players
+					var account = p[i].account,
+						flag = p[i].flag,
+						rating = p[i].rating;
+					if (title.players[account] === undefined){
+						//console.info("ADDING PLAYER: ", p[i]);
+						title.addPlayer(account, flag, rating);
+					} else if (title.players[account].flag !== flag){
+						// replace player flag
+						var flagElement = document.getElementById("titlePlayerFlag_" + account);
+						if (flagElement !== null){
+							var flagClass = flag.split(".");
+							flagElement.className = 'flag ' + flagClass[0].replace(/ /g, "-");
+						}
+					}
+					foundPlayers.push(account);
+				}
+				// remove missing players
+				for (var key in title.players){
+					if (foundPlayers.indexOf(key) === -1){
+						var x = {
+							account: key
+						}
+						// console.info("REMOVING PLAYER: " + x.account);
+						title.removePlayer(x);
+					}
+				}
+			}
+			document.getElementById('titleChatHeaderCount').textContent = len !== undefined ? '('+len+')' : '';
+			// game data sanity check
+			var serverGames = [];
+			if (data.gameData !== undefined){
+				var p = data.gameData;
+				for (var i=0, len=p.length; i<len; i++){
+					serverGames[p[i].id] = {
+						players: p[i].players * 1,
+						max: p[i].max * 1
+					}
+				}
+			}
+			// remove games if they're not found in server games
+			title.games.forEach(function(e, ind){
+				// console.info(serverGames[ind]);
+				if (serverGames[ind] === undefined){
+					// game timed out, not found
+					var o = {
+						id: ind
+					}
+					console.info("REMOVING: ", o);
+					title.removeGame(o);
+				} else {
+					// found game
+					if (serverGames[ind].players !== title.games[ind]){
+						// player count does not match... fixing
+						// console.info("PLAYER COUNT WRONG!");
+						var o = {
+							id: ind,
+							players: serverGames[ind].players,
+							max: serverGames[ind].max
+						}
+						title.setToGame(o);
+					}
+				}
+			});
+		}
+	},
 	// adds player to chat room
 	addPlayer: function(account, flag, rating){
+		console.info("title.addPlayer 2", account, flag, rating);
 		title.players[account] = {
 			flag: flag
 		}
@@ -206,7 +207,7 @@ var title = {
 		var flagClass = flag.split(".");
 		flagClass = flagClass[0].replace(/ /g, "-");
 		e.innerHTML = '<div id="titlePlayerFlag_'+ account +'" class="flag ' + flagClass +'"></div><span class="chat-rating">['+ rating +']</span> <span class="titlePlayerAccount">'+ account +'</span>';
-		if (account && rating && title.titleUpdate){
+		if (account && flag && title.titleUpdate){
 			DOM.titleChatBody.appendChild(e);
 		}
 	},
@@ -386,9 +387,12 @@ var title = {
 			type: 'GET',
 			url: app.url + 'php/friendGet.php',
 		}).done(function(data){
-			data.friends.forEach(function(friend){
-				g.friends.push(friend);
-			});
+			title.friendGetCallback(data.friends);
+		});
+	},
+	friendGetCallback: function(data) {
+		data.forEach(function(friend){
+			g.friends.push(friend);
 		});
 	},
 	toggleFriend: function(account){
@@ -649,7 +653,7 @@ var title = {
 	},
 	help: function(){
 		var a = [
-			'<h5 class="chat-warning">Chat Commands:</h5>',
+			'<div class="chat-warning">Chat Commands:</div>',
 			'<div>#channel: join channel</div>',
 			'<div>@account: whisper user</div>',
 			'<div>/ignore account: ignore account</div>',
@@ -777,7 +781,10 @@ var title = {
 			$DOM.titleChatInput.val('');
 		}
 	},
+	listFriendsThrottle: 0,
 	listFriends: function(){
+		if (Date.now() - title.listFriendsThrottle < 5000) return;
+		title.listFriendsThrottle = Date.now();
 		var len = g.friends.length;
 		g.chat('<div>Checking friends list...</div>');
 		if (g.friends.length){
@@ -820,6 +827,7 @@ var title = {
 		} else {
 			g.chat("<div>You don't have any friends! Use /friend account to add a new friend.</div>", 'chat-muted');
 		}
+		$("#title-chat-input").focus();
 	},
 	showBackdrop: function(e){
 		TweenMax.to('#titleViewBackdrop', ui.delay(.3), {
@@ -866,7 +874,21 @@ var title = {
 	exitGame: function() {
 		// exit from app
 		console.info("EXIT GAME");
+		title.closeGame();
 		nw.App.closeAllWindows();
+	},
+	closeGame: function() {
+		if (app.isApp) {
+			var gui = require('nw.gui');
+			// do things I should do before leaving the game
+			my.account && socket.removePlayer(my.account);
+			if (g.view === 'lobby') {
+				exitGame();
+			}
+			else if (g.view === 'game') {
+				surrender();
+			}
+		}
 	},
 	createGameFocus: false,
 	createGame: function(){
@@ -894,12 +916,6 @@ var title = {
 					width: 1280,
 					height: 720
 				});*/
-		}
-	},
-	closeGame: function() {
-		if (app.isApp) {
-			var gui = require('nw.gui');
-			// do things I should do before leaving the game
 		}
 	},
 	createGameService: function(name, pw, map, max, rankedMode, teamMode, speed){

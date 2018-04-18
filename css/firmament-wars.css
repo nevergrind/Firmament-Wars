@@ -31,6 +31,11 @@ fieldset {
 	text-align:left;
 	text-indent:15px;
 }
+#refresh-game-button {
+	cursor: pointer;
+	color: #aef;
+	margin: .3rem 0!important;
+}
 #create-account, #login-btn, #resetPW{
 	position: relative;
 	font: 1rem/2;
@@ -457,15 +462,25 @@ a:hover {
 	background-size: 100% 100%;
 }
 #firmament-wars-logo-wrap {
+	position: relative;
+	z-index: 1;
+	height: 11.25rem;
+	overflow: visible;
     background: -webkit-linear-gradient(bottom, rgba(0, 48, 96, 1) 0%, rgba(0, 24, 48, 1) 10%, rgba(0, 0, 0, 1) 100%);
     background: -moz-linear-gradient(bottom, rgba(0, 48, 96, 1) 0%, rgba(0, 24, 48, 1) 10%, rgba(0, 0, 0, 1) 100%);
     background: -ms-linear-gradient(bottom, rgba(0, 48, 96, 1) 0%, rgba(0, 24, 48, 1) 10%, rgba(0, 0, 0, 1) 100%);
     background: -o-linear-gradient(bottom, rgba(0, 48, 96, 1) 0%, rgba(0, 24, 48, 1) 10%, rgba(0, 0, 0, 1) 100%);
 }
+#action-button-wrap {
+	position: relative;
+	margin-top: 4rem;
+	z-index: 2;
+	width: 50%;
+}
 #firmamentWarsLogo {
 	position: relative;
-    width: 80%;
 	display: block;
+	height: 15rem;
 	margin: 1rem auto;
 }
 #gameWrap {
@@ -617,11 +632,6 @@ a:hover {
     background: -ms-linear-gradient(top, rgba(0, 48, 96, 1) 0%, rgba(0, 24, 48, 1) 10%, rgba(0, 0, 0, 1) 100%);
     background: -o-linear-gradient(top, rgba(0, 48, 96, 1) 0%, rgba(0, 24, 48, 1) 10%, rgba(0, 0, 0, 1) 100%);
 }
-#action-button-wrap {
-	position: relative;
-	z-index: 2;
-	width: 50%;
-}
 .title-action-bg {
 	position: absolute;
 	top: 0;
@@ -650,7 +660,7 @@ a:hover {
 	line-height: 3.25rem;
 	white-space: nowrap;
 	cursor: pointer;
-	transition: box-shadow ease-out .2s, color ease-out .2s;
+	transition: box-shadow ease-out .15s, color ease-out .3s;
 	text-align: center;
 }
 .action-btn:hover {
@@ -704,16 +714,32 @@ tbody {
     background: -o-radial-gradient(top center, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%)
 }
 #title-chat-btn-wrap {
-    border-bottom: 1px solid #357;
-	padding: .3rem .6rem;
-    margin-bottom: .5vh
+	flex: 0;
+    border-top: 1px solid #357;
+    background: -webkit-linear-gradient(bottom, rgba(0, 8, 38, 1) 0%, rgba(0, 33, 66, 1) 100%);
+    background: -moz-linear-gradient(bottom, rgba(0, 8, 38, 1) 0%, rgba(0, 0, 0, 1) 100%);
+    background: -ms-linear-gradient(bottom, rgba(0, 8, 38, 1) 0%, rgba(0, 0, 0, 1) 100%);
+    background: -o-linear-gradient(bottom, rgba(0, 8, 38, 1) 0%, rgba(0, 0, 0, 1) 100%)
 }
-#title-chat-btns {
-	padding: .5rem 1rem;
-    margin: 0 auto;
-    text-align: center;
-    width: inherit;
-    display: inline-block
+.title-utils {
+	font-size: 1.5rem;
+	white-space: nowrap;
+	cursor: pointer;
+	border: .2rem ridge #357;
+	color: #aef;
+	transition: box-shadow ease-out .3s, color ease-out .3s;
+	text-align: center;
+}
+.title-utils ~ .title-utils {
+	border-top: 1px solid #357;
+}
+.title-utils:hover {
+	color: #fff;
+	box-shadow: 0 0 0 2rem rgba(128,192,255,.2) inset
+}
+.title-utils:active {
+	color: #ffd;
+	box-shadow: 0 0 0 1rem rgba(128,192,255,1) inset
 }
 #title-chat-btns button {
 	padding: .5rem 1rem!important;
@@ -756,6 +782,8 @@ tbody {
 	font-size: 1.8rem;
 }
 #title-chat-players-room {
+	display: flex;
+	flex-direction: column;
 	flex-basis: 42%;
 	margin-right: .5rem;
     border: 2px groove#357;
@@ -773,6 +801,9 @@ tbody {
     word-break: break-word;
 	flex: 1;
 	border: 2px groove#357;
+}
+#titleChatBody {
+	flex: 1;
 }
 #title-chat-input {
 	flex: 0;
@@ -925,10 +956,10 @@ tbody {
 }*/
 #lobby-chat-input {
     padding: .5rem 1rem;
+	margin: 0.3rem 0;
 	font-size: 2rem;
     width: 100%;
     border: 1px solid #2e6da4;
-    border-right: none
 }
 #chat-input-open {
     position: absolute;
@@ -1600,7 +1631,8 @@ audio,
     padding: .5rem 1.5rem 1rem;
     font-size: 2rem;
     text-align: center;
-    z-index: 9999
+    z-index: 9999;
+	background: rgba(0,0,0,.8);
 }
 .endBtn {
     border: 1px solid #37d;
@@ -1839,13 +1871,15 @@ circle {
     left: 2%;
     width: 55%;
 	height: 98%;
+	background: rgba(0,0,0,.8);
 }
 #lobbyRightCol {
     position: absolute;
     top: 1rem;;
     width: 35%;
     left: 60%;
-    font-size: 1.8rem
+    font-size: 1.8rem;
+	background: rgba(0,0,0,.8);
 }
 #lobbyPlayers {
 	flex: 1;
@@ -1865,11 +1899,11 @@ circle {
     right: 0;
     width: 100%;
 	font-size: 2rem;
-    margin: .125vh auto;
+    margin: .2rem auto;
 	flex: 1;
     font-family: Play, Roboto, Verdana, Arial, sans-serif;
     color: #bef;
-    padding: .5vh 1vh;
+    padding: .2rem .5rem;
     text-shadow: 1px 1px #357;
     border: 1px solid #2e6da4;
 }
@@ -2216,7 +2250,7 @@ table {
 .lobbyRow {
     display: none;
 	align-items: center;
-    margin: .5rem 0 .5rem 1rem;
+    margin: .2rem 0 0 1rem;
 }
 .lobby-row-col-1 {
 	flex-basis: 17%;
@@ -2372,13 +2406,14 @@ table {
 	height: 6rem;
 	margin: .25rem;
     text-shadow: 1px 1px #aaa, -1px -1px #aaa, 1px -1px #aaa, -1px 1px #aaa;
-	-webkit-transition: box-shadow ease-out .2s;
-	-moz-transition: box-shadow ease-out .2s;
-	-o-transition: box-shadow ease-out .2s;
-	transition: box-shadow ease-out .2s;
+	-webkit-transition: all ease-out .3s;
+	-moz-transition: all ease-out .3s;
+	-o-transition: all ease-out .3s;
+	transition: all ease-out .3s;
 }
 .playerColorChoice:hover {
-	box-shadow: 0 0 1rem #111 inset, 0 999px rgba(255,255,255,.3) inset;
+	border: 2px groove #58a;
+	filter: brightness(150%);
 }
 .selectTeamHeader {
     border-bottom: 1px solid #204d74;
@@ -2921,12 +2956,13 @@ header #options {
     letter-spacing: 2px
 }
 #statsEndGame {
-    padding: .125rem 1rem;
-    margin: .5rem;
-    font-variant: normal
+	background: rgba(16, 56, 96, 1);
+    cursor: pointer
 }
 #statsEndGame:hover {
-    color: #d5faff;
+	background: rgba(16, 56, 96, 1);
+	color: #fff;
+	margin: 1rem auto;
     cursor: pointer
 }
 .statTD {
@@ -3580,8 +3616,8 @@ input[type=number]::-webkit-outer-spin-button {
     background-position: -1900% -700%
 }
 .lobbyFlags {
-    width: 8rem;
-	height: 5.333rem;
+    width: 7.2rem;
+	height: 4.8rem;
 }
 .statsFlags {
     position: relative;
@@ -3615,8 +3651,8 @@ input[type=number]::-webkit-outer-spin-button {
         font-size: 12px
     }
 	.lobbyFlags {
-		width: 12rem;
-		height: 8rem;
+		width: 9rem;
+		height: 6rem;
 	}
 }
 

@@ -14,14 +14,13 @@ var socket = {
 	},
 	addPlayer: function(account, flag){
 		// instant update of clients
-		var o = {
-			type: 'add',
-			account: my.account,
-			flag: my.flag,
-			rating: my.rating
-		}
 		if (account) {
-			socket.zmq.publish('title:' + my.channel, o);
+			socket.zmq.publish('title:' + my.channel, {
+				type: 'add',
+				account: my.account,
+				flag: my.flag,
+				rating: my.rating
+			});
 			title.players[account] = {
 				flag: flag
 			}
@@ -39,7 +38,11 @@ var socket = {
 		if (g.view === 'title'){
 			// remove from channel
 			channel = channel.trim();
-			if (channel !== my.channel){
+			// first character must be alphanumeric
+			if (!channel) {
+				g.chat("That channel name is not valid. Channel names may only contain alphanumeric values.");
+			}
+			else if (channel !== my.channel){
 				$.ajax({
 					type: "POST",
 					url: app.url + "php/titleChangeChannel.php",
@@ -51,6 +54,7 @@ var socket = {
 					socket.removePlayer(my.account);
 					// unsubs
 					socket.unsubscribe('title:' + my.channel);
+
 					// set new channel data
 					my.channel = data.channel;
 					for (var key in title.players){
@@ -59,8 +63,10 @@ var socket = {
 					data.skip = true;
 					data.message = "You have joined channel: " + data.channel;
 					data.type = "chat-warning";
+					// send message to my chat log
 					title.chat(data);
-					socket.zmq.subscribe('title:' + data.channel, function(topic, data) {
+					socket.zmq.subscribe('title:' + my.channel, function(topic, data) {
+						console.info("Data IN title:", data);
 						if (g.ignore.indexOf(data.account) === -1){
 							title.chatReceive(data);
 						}
@@ -73,7 +79,10 @@ var socket = {
 						document.getElementById('titleChatBody').innerHTML = '';
 					}
 					title.updatePlayers(0);
+					// update browser hash
 					location.hash = my.channel;
+				}).fail(function() {
+					g.chat("That channel name is not valid.");
 				});
 			}
 		}
@@ -169,6 +178,7 @@ var socket = {
 		// chat updates
 		if (g.view === 'title'){
 			if (socket.initialConnection){
+				g.unlock();
 				socket.zmq.subscribe('title:refreshGames', function(topic, data) {
 					title.updateGame(data);
 				});

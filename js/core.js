@@ -161,7 +161,6 @@ var g = {
 				var foo = []; 
 				localStorage.setItem('ignore', JSON.stringify(foo));
 			}
-			title.friendGet();
 		}
 	},
 	config: {
@@ -298,7 +297,7 @@ var g = {
 	}
 };
 g.init = (function(){
-	// console.info("Initializing game...");
+	g.lock();
 	if (app.isApp) {
 		$("#exit-game").on('click', function() {
 			title.exitGame();
@@ -319,7 +318,6 @@ g.init = (function(){
 			s += "<li><a class='flagSelect' href='#'>" + e + "</a></li>";
 		});
 	}
-	console.info("VIEW: ", g.view);
 	document.getElementById("flagDropdown").innerHTML = s;
 	TweenMax.to(document.getElementById('title-stars-1'), 50, {
 		startAt: { backgroundPosition: '0'},
@@ -387,6 +385,13 @@ g.init = (function(){
 			// set flag
 			document.getElementById('updateNationFlag').src = 'images/flags/'+ data.flag;
 			document.getElementById('selectedFlag').textContent = data.flagShort;
+			title.refreshGamesCallback(data.games);
+			// initChatId
+			my.account = data.account;
+			my.flag = data.flag;
+			my.rating = data.rating;
+			g.checkPlayerData();
+			title.friendGetCallback(data.friends);
 		}
 		else {
 			notLoggedIn();
@@ -423,8 +428,6 @@ g.init = (function(){
 			}
 		}).fail(function(data){
 			Msg(data.responseText);
-		}).always(function(){
-			g.unlock();
 		});
 	}
 })();

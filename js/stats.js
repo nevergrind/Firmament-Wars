@@ -101,7 +101,7 @@ var stats = {
 				</div>\
 				<div id="statDuration" class="col-xs-4 stagBlue text-center">\
 					<div id="gameDuration">Game Duration '+ stats.gameDuration(g.gameDuration) +'</div>\
-					<button id="statsEndGame" class="btn btn-responsive fwBlue shadow4">End Game</button>\
+					<button id="statsEndGame" class="btn btn-md btn-block btn-responsive shadow4 lobbyButtons">End Game</button>\
 				</div>\
 			</div>\
 		</div>\

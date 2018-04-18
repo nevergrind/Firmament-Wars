@@ -169,6 +169,9 @@ var lobby = {
 	],
 	init: function(x){
 		// build the lobby DOM
+		if (lobby.initialized) return;
+		document.getElementById('lobbyChatLog').innerHTML = 'You have joined the game: '+ x.name;
+		lobby.sendMsg();
 		var e1 = document.getElementById("lobbyGameName");
 		if (e1 !== null){
 			if (x.rating){
@@ -287,8 +290,8 @@ var lobby = {
 			document.getElementById("lobbyPlayers").innerHTML = str;
 			lobby.updateGovernmentWindow(my.government);
 		}
-		delete lobby.init;
 	},
+	initialized: 0,
 	getCpuDropdown: function(player){
 		var str = 
 		'<div id="gov-dropdown-cpu'+ player +'" class="dropdown govDropdown none">\
