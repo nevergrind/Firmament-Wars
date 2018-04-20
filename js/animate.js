@@ -57,7 +57,7 @@ var animate = {
 		},
 		culture: {
 			audio: '',
-			text: '\uf024',
+			image: 'culture.png',
 			color: '#d2d'
 		},
 		shield: {
@@ -74,6 +74,7 @@ var animate = {
 		var x = box.x + box.width/2 - 10;
 		var y = box.y + box.height/2 + 10;
 		// show icon
+		var wrap = document.createElementNS('http://www.w3.org/2000/svg', 'g');
 		var text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
 		text.setAttributeNS(null,"x",x);
 		text.setAttributeNS(null,"y",y);
@@ -81,12 +82,20 @@ var animate = {
         text.style.fontSize = '20px';
         text.style.fill = animate.icon[type].color;
 		if (count){
-			text.textContent = '+'+ count + ' '+ animate.icon[type].text;
+			text.textContent = '+'+ count;
 		} else {
-			text.textContent = animate.icon[type].text;
+			//text.textContent = animate.icon[type].text;
 		}
-		DOM.mapAnimations.appendChild(text);
-		TweenMax.to(text, .5, {
+		var image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+		image.setAttributeNS(null,"width",'3rem');
+		image.setAttributeNS(null,"height",'3rem');
+		image.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","images/icons/"+ animate.icon[type].image);
+		image.setAttributeNS(null,"x",x - 30);
+		image.setAttributeNS(null,"y",y - 20);
+		wrap.appendChild(image);
+		wrap.appendChild(text);
+		DOM.mapAnimations.appendChild(wrap);
+		TweenMax.to([text, image], .5, {
 			startAt: {
 				xPercent: -50,
 				yPercent: -50,
@@ -97,14 +106,14 @@ var animate = {
 			scale: 1,
 			ease: Back.easeOut.config(3)
 		});
-		TweenMax.to(text, 1.5, {
+		TweenMax.to([text, image], 1.5, {
 			y: '-=30'
 		});
-		TweenMax.to(text, .5, {
+		TweenMax.to([text, image], .5, {
 			delay: 1.5,
 			alpha: 0,
 			onComplete: function(){
-				this.target.parentNode.removeChild(this.target);
+				wrap.parentNode.removeChild(wrap);
 			}
 		});
 		// update bars
@@ -753,14 +762,14 @@ var animate = {
 		});
 	},
 	energyBar: function(){
-		TweenMax.to(DOM.energyIndicator, g.speed, {
+		TweenMax.to(DOM.energyIndicator, g.speed + 2, {
 			startAt: {
-				x: -5
+				strokeDasharray: '0,100'
 			},
-			x: 150,
+			strokeDasharray: '100,100',
 			ease: Linear.easeNone
 		});
-		TweenMax.to(DOM.currentYearWrap, 3, {
+		TweenMax.to(DOM.currentYear, 3, {
 			startAt: { color: '#ff0' },
 			color: '#fff',
 		});

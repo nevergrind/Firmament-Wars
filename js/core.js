@@ -315,7 +315,7 @@ g.init = (function(){
 	for (var key in g.flagData){
 		s += "<li class='dropdown-header'>" + g.flagData[key].group + "</li>";
 		g.flagData[key].name.forEach(function(e){
-			s += "<li><a class='flagSelect' href='#'>" + e + "</a></li>";
+			s += "<li><a class='flagSelect no-select'>" + e + "</a></li>";
 		});
 	}
 	document.getElementById("flagDropdown").innerHTML = s;
@@ -363,7 +363,7 @@ g.init = (function(){
 		url: app.url + 'php/init-game.php' // check if already in a game
 	}).done(function(data) {
 		console.info('init-game', data.account, data);
-		$('.actionButtons').tooltip({
+		$('.timer-tooltips, #currentYear, .actionButtons').tooltip({
 			animation: false,
 			placement: 'left',
 			container: 'body'
@@ -800,9 +800,9 @@ var game = {
 				o.culture += game.tiles[i].culture;
 			}
 		}
-		DOM.sumFood.textContent = o.food;
-		DOM.sumProduction.textContent = o.production;
-		DOM.sumCulture.textContent = o.culture;
+		//DOM.sumFood.textContent = o.food;
+		//DOM.sumProduction.textContent = o.production;
+		//DOM.sumCulture.textContent = o.culture;
 	},
 	energyTimer: 0,
 	startGameState: function(){

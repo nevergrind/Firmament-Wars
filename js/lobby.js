@@ -197,7 +197,7 @@ var lobby = {
 				str += 
 				'<div id="lobbyRow' +i+ '" class="lobbyRow">\
 					<div class="lobby-row-col-1">\
-						<img id="lobbyFlag' +i+ '" class="lobbyFlags block center" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">\
+						<img id="lobbyFlag' +i+ '" class="lobbyFlags block center no-select" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">\
 					</div>\
 					<div class="lobby-row-col-2 lobbyDetails">\
 						<div class="lobbyAccounts">';
@@ -249,7 +249,7 @@ var lobby = {
 								<span id="lobbyGovernment' +i+ '">Despotism</span>\
 								<i id="lobbyCaret' +i+ '" class="fa fa-caret-down text-warning lobbyCaret"></i>\
 							</button>\
-							<ul class="governmentDropdown dropdown-menu">';
+							<ul class="governmentDropdown dropdown-menu no-select">';
 								for (var z=0, len=lobby.governments.length; z<len; z++){
 									str += 
 									'<li class="governmentChoice">'+
@@ -299,7 +299,7 @@ var lobby = {
 				<span id="lobby-difficulty-cpu'+ player +'">Computer: Very Easy</span>\
 				<i id="lobby-caret-cpu'+ player +'" class="fa fa-caret-down text-warning lobbyCaret"></i>\
 			</button>\
-			<ul class="governmentDropdown dropdown-menu">';
+			<ul class="governmentDropdown dropdown-menu no-select">';
 				for (var i=0, len=lobby.difficulties.length; i<len; i++){
 					str += 
 					'<li class="cpu-choice" data-player="'+ player +'">'+
@@ -644,9 +644,9 @@ function initResources(d){
 	DOM.foodMax.textContent = d.foodMax;
 	DOM.cultureMax.textContent = d.cultureMax;
 	// sum
-	DOM.sumFood.textContent = d.sumFood;
-	DOM.sumProduction.textContent = d.sumProduction;
-	DOM.sumCulture.textContent = d.sumCulture;
+	//DOM.sumFood.textContent = d.sumFood;
+	//DOM.sumProduction.textContent = d.sumProduction;
+	//DOM.sumCulture.textContent = d.sumCulture;
 	// bonus values
 	DOM.oBonus.textContent = d.oBonus;
 	DOM.dBonus.textContent = d.dBonus;
@@ -660,7 +660,7 @@ function setMoves(d){
 		my.moves = d.moves;
 		DOM.moves.textContent = d.moves;
 		if (d.sumMoves){
-			DOM.sumMoves.textContent = d.sumMoves;
+			//DOM.sumMoves.textContent = d.sumMoves;
 		}
 		// DOM.endTurn.style.visibility = my.moves ? 'visible' : 'hidden';
 	}
@@ -724,19 +724,19 @@ function setResources(d){
 	}
 	if (d.sumFood !== undefined){
 		if (d.sumFood && d.sumFood !== my.sumFood){
-			DOM.sumFood.textContent = d.sumFood;
+			//DOM.sumFood.textContent = d.sumFood;
 			my.sumFood = d.sumFood;
 		}
 	}
 	if (d.sumProduction !== undefined){
 		if (d.sumProduction && d.sumProduction !== my.sumProduction){
-			DOM.sumProduction.textContent = d.sumProduction;
+			//DOM.sumProduction.textContent = d.sumProduction;
 			my.sumProduction = d.sumProduction;
 		}
 	}
 	if (d.sumCulture !== undefined){
 		if (d.sumCulture && d.sumCulture !== my.sumCulture){
-			DOM.sumCulture.textContent = d.sumCulture;
+			//DOM.sumCulture.textContent = d.sumCulture;
 			my.sumCulture = d.sumCulture;
 		}
 	}
@@ -885,8 +885,8 @@ function loadGameState(){
 			} else if (my.government === 'Republic'){
 				my.sumMoves = data.sumMoves;
 				document.getElementById('moves').textContent = my.sumMoves;
-				DOM.sumMoves.textContent = my.sumMoves;
-				console.info('sumMoves ', my.government, my.sumMoves, data.sumMoves);
+				// DOM.sumMoves.textContent = my.sumMoves;
+				//console.info('sumMoves ', my.government, my.sumMoves, data.sumMoves);
 			} else if (my.government === 'Fascism'){
 				document.getElementById('moves').textContent = 8;
 				my.deployCost = 5;
@@ -1051,7 +1051,7 @@ function loadGameState(){
 				var str = 
 				'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">'+
 					// bg 
-					'<img src="images/flags/'+ p.flagSrc +'" class="diplo-flag">'+
+					'<img src="images/flags/'+ p.flagSrc +'" class="diplo-flag no-select">'+
 					// row 1
 					'<div class="diplo-data-col"' +
 						'<div>'+

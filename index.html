@@ -497,7 +497,7 @@
 				</div>
 
 				<div>
-					<img id="updateNationFlag" class="w100 block center" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
+					<img id="updateNationFlag" class="w100 block center no-select" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 				</div>
 			</div>
 			
@@ -519,7 +519,7 @@
 					<p id="uploadErr" class="text-warning"></p>
 				</div>
 				<div id="configure-nation-avatar-col-2">
-					<img id="configureAvatarImage" class="dictator">
+					<img id="configureAvatarImage" class="dictator no-select">
 				</div>
 			</div>
 		</div>
@@ -551,39 +551,49 @@
 
 	<div id="gameWrap">
 
-		<div id="targetWrap">
+		<div id="targetWrap" class="no-pointer no-select">
 			<div id="avatarWrap">
 				<img id="avatar" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 			</div>
-			<div id="targetName" class="text-center shadow4 no-select">
+			<div id="targetName" class="text-center shadow4">
 				<div id="targetNameAnchor">
 					<img id="targetFlag" class="targetFlag" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 					<div>
-						<i id="targetCapStar" class="glyphicon glyphicon-star capitalStar no-select shadow4 none"></i>
+						<i id="targetCapStar" class="glyphicon glyphicon-star capitalStar shadow4 none"></i>
 						<span id="targetNameWrap"></span>
 					</div>
 					<div id="targetResources"></div>
 				</div>
 			</div>
 		</div>
-		
-		<div id="resources-ui" class="shadow4 blueBg gameWindow">
-			<div id="ui2-head">
-				<span id='manpowerWrap' class="manpower pull-left">
-					<span
-						data-placement="bottom"
-						title="Great Generals boost troop attack">
-						<i class="glyphicon glyphicon-star"></i>
-						<span id="oBonus">0</span>
-					</span>&thinsp;
-					<span
-						data-placement="bottom"
-						title="Great Tacticians boost troop defense">
-						<i class="fa fa-shield"></i>
-						<span id="dBonus">0</span>
-					</span>
-				</span>
+
+		<div id="ui2-head" class="stagBlue no-select">
+			<div title="Production is used to deploy troops, build structures, and research technology.">
+				<i class="fa fa-gavel production"></i>
+				<span id="production">0</span>
 			</div>
+			<div title="Food milestones produce available troops">
+				<i class="fa fa-apple food"></i>
+				<span id="food">0</span>/<span id="foodMax">25</span><!--(+<span id="sumFood">0</span>)-->
+			</div>
+			<div title="Culture milestones produce special rewards">
+				<img src="images/icons/culture.png" class="culture-icon">
+				<span id="culture">0</span>/<span id="cultureMax">300</span>
+				<!--(+<span id="sumCulture">0</span>)-->
+			</div>
+			<div data-placement="bottom"
+				title="Great Generals boost troop attack">
+				<i class="glyphicon glyphicon-star manpower"></i>
+				<span id="oBonus">0</span>
+			</div>
+			<div data-placement="bottom"
+				title="Great Tacticians boost troop defense">
+				<i class="fa fa-shield manpower"></i>
+				<span id="dBonus">0</span>
+			</div>
+		</div>
+		
+		<div id="resources-ui" class="shadow4 blueBg gameWindow  no-select">
 
 			<div id="resourceBody">
 				<div id="troop-flex" title="Deploy troops to conquered territories">
@@ -594,73 +604,43 @@
 					<div id="manpower">0</div>
 				</div>
 
-				<div class="barWrap resourceBarParent">
-					<div id="energyIndicator"></div>
-					<span id="energy-label"
-						  class="no-padding moves"
-					 	  title="Turn ends when time expires or when all players have spent their energy">
-						Energy <i class="fa fa-bolt"></i>
-					</span>
-					<span class="resourceIndicator"
-					 	 title="Energy is used to move and rush troops.">
-						<span id="moves">4</span>
-						(+<span id="sumMoves">4</span>)
-					</span>
-				</div>
-
 				<div id="prod-wrap">
 					<div class="production resource-flex">
 						<span title="Productions Bonus">
 							+<span id="productionBonus">0</span>%
 						</span>
+						<!--span class="resourceIndicator" title="Production per turn">
+							<span id="sumProduction">0</span>/Turn
+						</span-->
 						<span title="Production is used to deploy troops, build structures, and research technology.">
 							Production <i class="fa fa-gavel"></i>
-						</span>
-					</div>
-
-					<div class="resourceIndicator">
-						<span id="production">0</span>
-						<span title="Production per turn">
-							(+<span id="sumProduction">0</span>)
 						</span>
 					</div>
 				</div>
 
 				<div id="food-wrap">
-					<div class="food resource-flex">
-						<span  title="Food Bonus">
-							+<span id="foodBonus">0</span>%
-						</span>
-						<span  title="Food milestones produce additional troops">
-							Food <i class="fa fa-apple"></i>
-						</span>
-					</div>
-
-					<div id="foodBarWrap" class="barWrap resourceBarParent">
+					<div id="foodBarWrap" class="barWrap resourceBarParent resource-flex">
 						<div id="foodBar" class="resourceBar"></div>
-						<div class="resourceIndicator resourceCenter">
-							<span id="food">0</span>/<span id="foodMax">25</span>
-							(+<span id="sumFood">0</span>)
+						<div title="Food Bonus" class="resource-child">
+							+<span id="foodBonus">0</span>%
+						</div>
+						<div title="Food milestones produce available troops"
+							 class="resource-child">
+							Food <i class="fa fa-apple food"></i>
 						</div>
 					</div>
 				</div>
 
 				<div id="culture-wrap">
-					<div class="culture resource-flex">
-						<span  title="Culture Bonus">
+					<div id="cultureBarWrap" class="barWrap resourceBarParent resource-flex">
+						<div id="cultureBar" class="resourceBar"></div>
+						<span title="Culture Bonus" class="resource-child">
 							+<span id="cultureBonus">0</span>%
 						</span>
-						<span  title="Culture milestones produce special rewards">
-							Culture <i class="fa fa-flag"></i>
+							<span title="Culture milestones produce special rewards"
+								  class="resource-child">
+							Culture <img src="images/icons/culture.png" class="culture-icon">
 						</span>
-					</div>
-
-					<div id="cultureBarWrap" class="barWrap resourceBarParent">
-						<div id="cultureBar" class="resourceBar"></div>
-						<div class="resourceIndicator resourceCenter">
-							<span id="culture">0</span>/<span id="cultureMax">300</span>
-							(+<span id="sumCulture">0</span>)
-						</div>
 					</div>
 				</div>
 			</div>
@@ -823,13 +803,28 @@
 			</div>
 		</div>
 
-		<div id="currentYearWrap" class="shadow4">
+		<div id="currentYearWrap" class="shadow4 no-select no-pointer">
+			<div class="text-center">
+				<div id="move-wrap" class="moves no-pointer">
+					<i class="fa fa-bolt"></i><span id="moves">4</span>
+				</div>
+				<svg id="energy-timer-wrap"
+					 class="timer-tooltips"
+					 title="Turn ends when time expires or when all players have spent their energy">
+					<circle id="energyIndicator"></circle>
+				</svg>
+				<span id="energy-label"
+					  class="moves timer-tooltips"
+					  title="Energy is used to move and rush troops.">Energy</span>
+			</div>
 			<!--button id="endTurn" class="btn btn-xs btn-responsive fwBlue">End Turn</button-->
-			<span id="currentYear">4000 B.C.</span>
+			<div id="currentYear"
+				  data-placement="top"
+				  title="It's the current year!">4000 B.C.</div>
 		</div>
 		
 		<div id="hotkey-ui" class="shadow4">Press V to toggle the UI</div>
-		<div id="diplomacy-ui" class="shadow4 blueBg gameWindow">
+		<div id="diplomacy-ui" class="shadow4 blueBg gameWindow no-select">
 			<div id="resourceHead">
 				<div id="resource-head-right"></div>
 				<i id="resync" class="pointer options fa fa-refresh" title="Attempt to resynchronize game data. Try this if your game seems to be in a bugged state"></i>
