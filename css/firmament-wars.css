@@ -2688,6 +2688,14 @@ table {
     height: 100%;
     background: #777
 }
+#energy-wrap {
+	position: fixed;
+	bottom: 5rem;
+	right: 4rem;
+	width: 6rem;
+	height: 8rem;
+	z-index: 9999;
+}
 .resourceBarParent {
 	display: flex;
 	position: relative;
@@ -2695,7 +2703,6 @@ table {
 	justify-content: space-between;
 	background: #774;
 	padding: 0 .5rem;
-    border: 1px solid #014;
 }
 .resourceCenter {
     text-align: right;

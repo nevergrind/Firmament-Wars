@@ -803,24 +803,26 @@
 			</div>
 		</div>
 
-		<div id="currentYearWrap" class="shadow4 no-select no-pointer">
-			<div class="text-center">
-				<div id="move-wrap" class="moves no-pointer">
-					<i class="fa fa-bolt"></i><span id="moves">4</span>
-				</div>
-				<svg id="energy-timer-wrap"
-					 class="timer-tooltips"
-					 title="Turn ends when time expires or when all players have spent their energy">
-					<circle id="energyIndicator"></circle>
-				</svg>
-				<span id="energy-label"
-					  class="moves timer-tooltips"
-					  title="Energy is used to move and rush troops.">Energy</span>
+		<div id="energy-wrap" class="text-center">
+			<div id="move-wrap" class="moves no-pointer">
+				<i class="fa fa-bolt"></i><span id="moves">4</span>
 			</div>
+			<svg id="energy-timer-wrap"
+				 class="timer-tooltips"
+				 title="Turn ends when time expires or when all players have spent their energy">
+				<circle id="energyIndicator"></circle>
+			</svg>
+			<span id="energy-label"
+				  class="moves timer-tooltips"
+				  title="Energy is used to move and rush troops.">Energy</span>
+		</div>
+
+		<div id="currentYearWrap" class="shadow4 no-select">
 			<!--button id="endTurn" class="btn btn-xs btn-responsive fwBlue">End Turn</button-->
 			<div id="currentYear"
-				  data-placement="top"
-				  title="It's the current year!">4000 B.C.</div>
+				 class="no-pointer"
+				 data-placement="top"
+				 title="It's the current year!">4000 B.C.</div>
 		</div>
 		
 		<div id="hotkey-ui" class="shadow4">Press V to toggle the UI</div>

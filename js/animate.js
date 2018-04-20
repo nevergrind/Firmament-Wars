@@ -37,22 +37,22 @@ var animate = {
 	icon: {
 		troops: {
 			audio: '',
-			text: '\uf102',
+			image: 'culture.png',
 			color: '#ff0'
 		},
 		energy: {
 			audio: '',
-			text: '\uf0e7',
+			image: 'culture.png',
 			color: '#ffa'
 		},
 		food: {
 			audio: '',
-			text: '\uf179',
+			image: 'culture.png',
 			color: '#b5ff00'
 		},
 		production: {
 			audio: '',
-			text: '\uf0e3',
+			image: 'culture.png',
 			color: '#d60'
 		},
 		culture: {
@@ -62,7 +62,7 @@ var animate = {
 		},
 		shield: {
 			audio: 'build',
-			text: '\uf286',
+			image: 'culture.png',
 			color: '#ff0'
 		}
 	},
@@ -762,7 +762,7 @@ var animate = {
 		});
 	},
 	energyBar: function(){
-		TweenMax.to(DOM.energyIndicator, g.speed + 2, {
+		TweenMax.to(DOM.energyIndicator, g.speed + 1.5, {
 			startAt: {
 				strokeDasharray: '0,100'
 			},
