@@ -16,7 +16,7 @@
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
 	<script>
 		var app = {
-			version: '1.0.2',
+			version: '1.0.3',
 			initialized: 0, // init-game returned
 			isApp: location.protocol === 'chrome-extension:' ? 1 : 0,
 			account: ''
@@ -803,21 +803,21 @@
 			</div>
 		</div>
 
-		<div id="energy-wrap" class="text-center">
-			<div id="move-wrap" class="moves no-pointer">
-				<i class="fa fa-bolt"></i><span id="moves">4</span>
-			</div>
-			<svg id="energy-timer-wrap"
-				 class="timer-tooltips"
-				 title="Turn ends when time expires or when all players have spent their energy">
-				<circle id="energyIndicator"></circle>
-			</svg>
-			<span id="energy-label"
-				  class="moves timer-tooltips"
-				  title="Energy is used to move and rush troops.">Energy</span>
-		</div>
-
 		<div id="currentYearWrap" class="shadow4 no-select">
+
+			<div id="energy-wrap" class="text-center">
+				<div id="move-wrap" class="moves no-pointer">
+					<i class="fa fa-bolt"></i><span id="moves">4</span>
+				</div>
+				<svg id="energy-timer-wrap"
+					 class="timer-tooltips"
+					 title="Turn ends when time expires or when all players have spent their energy">
+					<circle id="energyIndicator"></circle>
+				</svg>
+				<div id="energy-label"
+					  class="moves timer-tooltips"
+					  title="Energy is used to move and rush troops.">Energy</div>
+			</div>
 			<!--button id="endTurn" class="btn btn-xs btn-responsive fwBlue">End Turn</button-->
 			<div id="currentYear"
 				 class="no-pointer"

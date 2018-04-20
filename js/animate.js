@@ -766,6 +766,7 @@ var animate = {
 			startAt: {
 				strokeDasharray: '0,100'
 			},
+			force3D: true,
 			strokeDasharray: '100,100',
 			ease: Linear.easeNone
 		});
