@@ -212,6 +212,12 @@
 
 				<div id="titleChat" class="fw-primary text-center">
 					<div id="titleChatPlayers" class="titlePanelLeft">
+						<div id="title-chat-players-log" class="shadow4">
+							<div id="titleChatLog" class="titlePanelLeft">
+								<div>Welcome to Broken.net!</div>
+							</div>
+							<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" auto-complete="disabled" spellcheck="false">
+						</div>
 						<div id="title-chat-players-room" class="shadow4">
 							<div id="titleChatHeader" class="chat-warning nowrap">&nbsp;
 								<span id="titleChatHeaderChannel"></span>
@@ -228,12 +234,6 @@
 								<div id="change-channel" class="title-utils shadow4">Change Channel</div>
 								<div id="get-help" class="title-utils shadow4">Chat Commands</div>
 							</div>
-						</div>
-						<div id="title-chat-players-log" class="shadow4">
-							<div id="titleChatLog" class="titlePanelLeft">
-								<div>Welcome to Broken.net!</div>
-							</div>
-							<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" auto-complete="disabled" spellcheck="false">
 						</div>
 					</div>
 
@@ -511,14 +511,14 @@
 			</div>
 
 			<div id="configure-nation-avatar">
-				<div style="flex-basis: 33%">
+				<div id="configure-nation-avatar-col-1">
 					<p>Upload your dictator avatar.<br>A 200x200 image is recommended.<br>Image must be a jpg < 40 kb:</p>
 					<p>
 						<input id="dictatorAvatar" class="btn btn-primary fwBlue shadow4" type="file" accept=".jpg" name="image">
 					</p>
 					<p id="uploadErr" class="text-warning"></p>
 				</div>
-				<div style="flex-basis: 67%">
+				<div id="configure-nation-avatar-col-2">
 					<img id="configureAvatarImage" class="dictator">
 				</div>
 			</div>
@@ -568,6 +568,23 @@
 		</div>
 		
 		<div id="resources-ui" class="shadow4 blueBg gameWindow">
+			<div id="ui2-head">
+				<span id='manpowerWrap' class="manpower pull-left">
+					<span
+						data-placement="bottom"
+						title="Great Generals boost troop attack">
+						<i class="glyphicon glyphicon-star"></i>
+						<span id="oBonus">0</span>
+					</span>&thinsp;
+					<span
+						data-placement="bottom"
+						title="Great Tacticians boost troop defense">
+						<i class="fa fa-shield"></i>
+						<span id="dBonus">0</span>
+					</span>
+				</span>
+			</div>
+
 			<div id="resourceBody">
 				<div id="troop-flex" title="Deploy troops to conquered territories">
 					<div id="available-troops">
@@ -601,13 +618,11 @@
 						</span>
 					</div>
 
-					<div class="no-padding">
-						<div class="resourceIndicator">
-							<span id="production">0</span>
-							<span title="Production per turn">
-								(+<span id="sumProduction">0</span>)
-							</span>
-						</div>
+					<div class="resourceIndicator">
+						<span id="production">0</span>
+						<span title="Production per turn">
+							(+<span id="sumProduction">0</span>)
+						</span>
 					</div>
 				</div>
 
@@ -623,7 +638,7 @@
 
 					<div id="foodBarWrap" class="barWrap resourceBarParent">
 						<div id="foodBar" class="resourceBar"></div>
-						<div class="resourceIndicator resourceCenter abs">
+						<div class="resourceIndicator resourceCenter">
 							<span id="food">0</span>/<span id="foodMax">25</span>
 							(+<span id="sumFood">0</span>)
 						</div>
@@ -642,7 +657,7 @@
 
 					<div id="cultureBarWrap" class="barWrap resourceBarParent">
 						<div id="cultureBar" class="resourceBar"></div>
-						<div class="resourceIndicator resourceCenter abs">
+						<div class="resourceIndicator resourceCenter">
 							<span id="culture">0</span>/<span id="cultureMax">300</span>
 							(+<span id="sumCulture">0</span>)
 						</div>
@@ -652,187 +667,156 @@
 
 
 			<div id="ui2" class="blueBg gameWindow">
-				<div id="ui2-head" class="stagBlue">
-					<span id='manpowerWrap' class="manpower pull-left">
-						<span
-							data-placement="bottom"
-							title="Great Generals boost troop attack">
-							<i class="glyphicon glyphicon-star"></i>
-							<span id="oBonus">0</span>
-						</span>&thinsp;
-						<span
-							data-placement="bottom"
-							title="Great Tacticians boost troop defense">
-							<i class="fa fa-shield"></i>
-							<span id="dBonus">0</span>
-						</span>
-					</span>
+
+				<div id="attack" class="actionButtons"
+					title="Attack with all troops">
+					<div>
+						<span class='text-hotkey'>A</span>ttack
+					</div>
+					<div class="tight2 text-right productionCost">
+						<i class="fa fa-bolt moves resourceIcon"></i><span id='attackCost'>2</span>
+					</div>
 				</div>
 
-				<div id="tileActions" class="container w100">
-					<div class="row actionHead shadow4">
-						<i class="fa fa-bolt moves resourceIcon"></i>Command
+				<div id="splitAttack" class="actionButtons"
+					title="Attack with half of your troops">
+					<div>
+						<span class='text-hotkey'>S</span>plit Attack
 					</div>
-
-					<div id="attack" class="actionButtons row"
-						title="Attack with all troops">
-						<div class="col-xs-9">
-							<span class='text-hotkey'>A</span>ttack
-						</div>
-						<div class="col-xs-3 tight2 text-right productionCost">
-							<span id='attackCost'>2</span>
-						</div>
+					<div class="tight2 text-right productionCost">
+						<i class="fa fa-bolt moves resourceIcon"></i></i><span id="splitAttackCost">1</span>
 					</div>
-
-					<div id="splitAttack" class="actionButtons row"
-						title="Attack with half of your troops">
-						<div class="col-xs-9">
-							<span class='text-hotkey'>S</span>plit Attack
-						</div>
-						<div class="col-xs-3 tight2 text-right productionCost">
-							</i><span id="splitAttackCost">1</span>
-						</div>
-					</div>
-
-					<div id="rush" class="actionButtons row"
-						title="Deploy 2 troops using energy instead of production. Boosted by culture.">
-						<div class="col-xs-9">
-							<span class='text-hotkey'>R</span>ush Troops
-						</div>
-						<div class="col-xs-3 tight2 text-right productionCost">
-							</i><span id="rushCost">2</span>
-						</div>
-					</div>
-
-					<div class="row actionHead shadow4">
-						<i class="fa fa-gavel production resourceIcon"></i>Build
-					</div>
-
-					<div id="deploy" class="actionButtons row"
-						title="Deploy troops to a tile">
-						<div class="col-xs-9">
-							<span class='text-hotkey'>D</span>eploy Troops
-						</div>
-						<div class="col-xs-3 tight2 text-right productionCost">
-							<span id='deployCost'>10</span>
-						</div>
-					</div>
-
-					<div id="upgradeTileDefense" class="actionButtons row"
-						title="Bunkers boost tile defense +5">
-						<div class="col-xs-9">
-							<span class='text-hotkey'>B</span>uild <span id="buildWord">Bunker</span>
-						</div>
-						<div class="col-xs-3 tight2 text-right productionCost">
-							<span id="buildCost"></span>
-						</div>
-					</div>
-
-					<div id="fireCannons" class="actionButtons row none"
-						title="Fire cannons at an adjacent tile. Kills 2-4 troops.">
-						<div class="col-xs-9">
-							Fire <span class='text-hotkey'>C</span>annons
-						</div>
-						<div class="col-xs-3 tight2 text-right productionCost">
-							<span id='cannonsCost'>24</span>
-						</div>
-					</div>
-
-					<div id="launchMissile" class="actionButtons row none"
-						title="Launch a missile at any territory. Kills 7-12 troops.">
-						<div class="col-xs-9">
-							Launch <span class='text-hotkey'>M</span>issile
-						</div>
-						<div class="col-xs-3 tight2 text-right productionCost">
-							<span id='missileCost'>50</span>
-						</div>
-					</div>
-
-					<div id="launchNuke" class="actionButtons row none"
-						title="Launch a nuclear weapon at any enemy territory. Kills 80-99% of troops and destroys all structures.">
-						<div class="col-xs-9">Launch <span class='text-hotkey'>N</span>uke</div>
-						<div class="col-xs-3 tight2 text-right productionCost">
-							<span id='nukeCost'>150</span>
-						</div>
-					</div>
-
-					<div id="tileActionsOverlay"></div>
-
 				</div>
 
-				<div id="tileResearch" class="container w100">
-					<div class="row actionHead shadow4">
-						<i class="fa fa-gavel production resourceIcon"></i>Research
+				<div id="rush" class="actionButtons"
+					title="Deploy 2 troops using energy instead of production. Boosted by culture.">
+					<div>
+						<span class='text-hotkey'>R</span>ush Troops
 					</div>
-
-					<div id="researchMasonry" class="actionButtons row"
-						title="Research masonry to unlock bunkers.">
-						<div class="col-xs-9">
-							Masonr<span class='text-hotkey'>y</span>
-						</div>
-						<div class="col-xs-3 tight2 text-right productionCost">
-							<span id='masonryCost'>40</span>
-						</div>
+					<div class="tight2 text-right productionCost">
+						<i class="fa fa-bolt moves resourceIcon"></i></i><span id="rushCost">2</span>
 					</div>
+				</div>
 
-					<div id="researchConstruction" class="actionButtons row none"
-						title="Research construction to unlock walls.">
-						<div class="col-xs-9">
-							C<span class='text-hotkey'>o</span>nstruction
-						</div>
-						<div class="col-xs-3 tight2 text-right productionCost">
-							<span id='constructionCost'>60</span>
-						</div>
+				<div id="deploy" class="actionButtons"
+					title="Deploy troops to a tile">
+					<div>
+						<span class='text-hotkey'>D</span>eploy Troops
 					</div>
-
-					<div id="researchEngineering" class="actionButtons row none"
-						title="Research engineering to unlock walls and fortresses.">
-						<div class="col-xs-9">
-							<span class='text-hotkey'>E</span>ngineering
-						</div>
-						<div class="col-xs-3 tight2 text-right productionCost">
-							<span id='engineeringCost'>80</span>
-						</div>
+					<div class="tight2 text-right productionCost">
+						<i class="fa fa-gavel production resourceIcon"></i><span id='deployCost'>10</span>
 					</div>
+				</div>
 
-					<div id="researchGunpowder" class="actionButtons row"
-						title="Research gunpowder to unlock cannons.">
-						<div class="col-xs-9">
-							<span class='text-hotkey'>G</span>unpowder
-						</div>
-						<div class="col-xs-3 tight2 text-right productionCost">
-							<span id='gunpowderCost'>60</span>
-						</div>
+				<div id="upgradeTileDefense" class="actionButtons"
+					title="Bunkers boost tile defense +5">
+					<div>
+						<span class='text-hotkey'>B</span>uild <span id="buildWord">Bunker</span>
 					</div>
-
-					<div id="researchRocketry" class="actionButtons row none"
-						title="Research rocketry to unlock missiles.">
-						<div class="col-xs-9">
-							Roc<span class='text-hotkey'>k</span>etry
-						</div>
-						<div class="col-xs-3 tight2 text-right productionCost">
-							<span id='rocketryCost'>200</span>
-						</div>
+					<div class="tight2 text-right productionCost">
+						<i class="fa fa-gavel production resourceIcon"></i><span id="buildCost"></span>
 					</div>
+				</div>
 
-					<div id="researchAtomicTheory" class="actionButtons row none"
-						title="Research atomic theory to unlock nuclear weapons.">
-						<div class="col-xs-9">
-							A<span class='text-hotkey'>t</span>omic Theory
-						</div>
-						<div class="col-xs-3 tight2 text-right productionCost">
-							<span id='atomicTheoryCost'>500</span>
-						</div>
+				<div id="fireCannons" class="actionButtons none"
+					title="Fire cannons at an adjacent tile. Kills 2-4 troops.">
+					<div>
+						Fire <span class='text-hotkey'>C</span>annons
 					</div>
+					<div class="tight2 text-right productionCost">
+						<i class="fa fa-gavel production resourceIcon"></i><span id='cannonsCost'>24</span>
+					</div>
+				</div>
 
-					<div id="researchFutureTech" class="actionButtons row none"
-						title="Research future technology.">
-						<div class="col-xs-9">
-							<span class='text-hotkey'>F</span>uture Tech
-						</div>
-						<div class="col-xs-3 tight2 text-right productionCost">
-							<span id='futureTechCost'>800</span>
-						</div>
+				<div id="launchMissile" class="actionButtons none"
+					title="Launch a missile at any territory. Kills 7-12 troops.">
+					<div>
+						Launch <span class='text-hotkey'>M</span>issile
+					</div>
+					<div class="tight2 text-right productionCost">
+						<i class="fa fa-gavel production resourceIcon"></i><span id='missileCost'>50</span>
+					</div>
+				</div>
+
+				<div id="launchNuke" class="actionButtons none"
+					title="Launch a nuclear weapon at any enemy territory. Kills 80-99% of troops and destroys all structures.">
+					<div>
+						Launch <span class='text-hotkey'>N</span>uke
+					</div>
+					<div class="tight2 text-right productionCost">
+						<i class="fa fa-gavel production resourceIcon"></i><span id='nukeCost'>150</span>
+					</div>
+				</div>
+				<!-- research -->
+				<div class="row actionHead shadow4">Research</div>
+
+				<div id="researchMasonry" class="actionButtons"
+					title="Research masonry to unlock bunkers.">
+					<div>
+						Masonr<span class='text-hotkey'>y</span>
+					</div>
+					<div class="tight2 text-right productionCost">
+						<i class="fa fa-gavel production resourceIcon"></i><span id='masonryCost'>40</span>
+					</div>
+				</div>
+
+				<div id="researchConstruction" class="actionButtons none"
+					title="Research construction to unlock walls.">
+					<div>
+						C<span class='text-hotkey'>o</span>nstruction
+					</div>
+					<div class="tight2 text-right productionCost">
+						<i class="fa fa-gavel production resourceIcon"></i><span id='constructionCost'>60</span>
+					</div>
+				</div>
+
+				<div id="researchEngineering" class="actionButtons none"
+					title="Research engineering to unlock walls and fortresses.">
+					<div>
+						<span class='text-hotkey'>E</span>ngineering
+					</div>
+					<div class="tight2 text-right productionCost">
+						<i class="fa fa-gavel production resourceIcon"></i><span id='engineeringCost'>80</span>
+					</div>
+				</div>
+
+				<div id="researchGunpowder" class="actionButtons"
+					title="Research gunpowder to unlock cannons.">
+					<div>
+						<span class='text-hotkey'>G</span>unpowder
+					</div>
+					<div class="tight2 text-right productionCost">
+						<i class="fa fa-gavel production resourceIcon"></i><span id='gunpowderCost'>60</span>
+					</div>
+				</div>
+
+				<div id="researchRocketry" class="actionButtons none"
+					title="Research rocketry to unlock missiles.">
+					<div>
+						Roc<span class='text-hotkey'>k</span>etry
+					</div>
+					<div class="tight2 text-right productionCost">
+						<i class="fa fa-gavel production resourceIcon"></i><span id='rocketryCost'>200</span>
+					</div>
+				</div>
+
+				<div id="researchAtomicTheory" class="actionButtons none"
+					title="Research atomic theory to unlock nuclear weapons.">
+					<div>
+						A<span class='text-hotkey'>t</span>omic Theory
+					</div>
+					<div class="tight2 text-right productionCost">
+						<i class="fa fa-gavel production resourceIcon"></i><span id='atomicTheoryCost'>500</span>
+					</div>
+				</div>
+
+				<div id="researchFutureTech" class="actionButtons none"
+					title="Research future technology.">
+					<div>
+						<span class='text-hotkey'>F</span>uture Tech
+					</div>
+					<div class="tight2 text-right productionCost">
+						<i class="fa fa-gavel production resourceIcon"></i><span id='futureTechCost'>800</span>
 					</div>
 				</div>
 

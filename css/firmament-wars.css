@@ -785,14 +785,13 @@ tbody {
 	display: flex;
 	flex-direction: column;
 	flex-basis: 42%;
-	margin-right: .5rem;
     border: 2px groove#357;
 }
 #title-chat-players-log {
 	display: flex;
 	flex-direction: column;
 	flex-basis: 58%;
-	margin: 0;
+	margin: 0 .5rem 0 0;
 }
 #titleChatLog {
 	width: 100%;
@@ -1149,9 +1148,11 @@ tbody {
 }
 #targetName {
     position: relative;
-    vertical-align: top;
-    width: 18rem;
-    height: 12rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+    width: 12rem;
+    height: 8rem;
     background: #000
 }
 #targetResources {
@@ -1174,6 +1175,7 @@ tbody {
     position: relative;
     overflow: hidden;
     width: 100%;
+	line-height: 1;
     height: 12rem
 }
 .ribbonName {
@@ -1302,7 +1304,6 @@ tbody {
 #ui2 {
     position: relative;
     color: #fff;
-    padding: .4rem;
     z-index: 9999
 }
 #troop-flex {
@@ -1320,7 +1321,7 @@ tbody {
 #game-mode {
 	display: flex;
 	font-family: Cinzel;
-	padding: .2rem .5rem;
+	padding: .2rem 1rem;
 	color: #bef;
 	justify-content: space-between;
 }
@@ -1331,16 +1332,18 @@ tbody {
 	align-self: center;
 }
 #ui2-head {
-    position: relative;
+    position: fixed;
+	top: 0;
+	right: 21rem;
 	display: flex;
-	justify-content: space-around;
+	justify-content: flex-end;
     color: #fff;
     z-index: 9999;
     padding: .25rem .5rem;
     text-align: right;
-    border-radius: .4rem;
     margin-bottom: .5rem;
     white-space: nowrap;
+	background: rgba(0,0,0,.8);
     z-index: 1
 }
 #resources-ui {
@@ -1430,7 +1433,7 @@ tbody {
 	flex-direction: column;
     left: 0;
     top: 0;
-	font-size: 1.8rem;
+	font-size: 1.6rem;
     border-radius: 0 0 4px 0;
     border-top: none;
     border-left: none;
@@ -1446,7 +1449,7 @@ tbody {
 }
 .tight2 {
     margin: 0!important;
-    padding: 0 5% 0 0!important
+    padding: 0 .6rem 0 0!important
 }
 .productionCost {
     padding-left: 5px
@@ -1518,7 +1521,6 @@ tbody {
 #tileActions {
     position: relative
 }
-#tileActions,
 #tileResearch {
     font-size: .625rem
 }
@@ -1547,7 +1549,7 @@ table td,
 	padding: .4rem .8rem!important;
 }
 .resourceIcon {
-    margin-right: .5rem
+    margin-right: .2rem
 }
 #prod-wrap {
 	background: #013;
@@ -1570,6 +1572,7 @@ table td,
 .actionButtons {
     display: flex;
 	justify-content: space-between;
+	align-content: center;
 	font-size: 1.8rem;
     line-height: 1.5;
     margin-bottom: .2rem;
@@ -1601,7 +1604,7 @@ table td,
     box-shadow: 0 0 0 5rem rgba(0, 0, 0, .3) inset
 }
 .actionButtons > div {
-    padding: 0 1rem
+    padding: 0 0 0 .6rem
 }
 #players {
     height: 30%
@@ -1726,7 +1729,7 @@ text {
     margin-left: 1rem;
     white-space: nowrap;
     font-size: 2.5rem;
-    font-family: Times New Roman, Serif;
+    font-family: Play, Times New Roman, Serif;
     pointer-events: none;
     text-anchor: middle;
     alignment-baseline: center
@@ -1875,11 +1878,10 @@ circle {
 }
 #lobbyRightCol {
     position: absolute;
-    top: 1rem;;
+    top: 1rem;
     width: 35%;
     left: 60%;
     font-size: 1.8rem;
-	background: rgba(0,0,0,.8);
 }
 #lobbyPlayers {
 	flex: 1;
@@ -1924,6 +1926,7 @@ circle {
     position: relative;
     top: 0%;
     padding: 1rem;
+	background: rgba(0,0,0,.8);
     text-align: center
 }
 #lobbyRankedMatch {
@@ -1936,6 +1939,7 @@ circle {
     text-overflow: ellipsis
 }
 #lobbyGovernmentDescription {
+	background: rgba(0,0,0,.8);
     padding: 1rem
 }
 .lobbyTeamFlag {
@@ -1977,6 +1981,7 @@ circle {
 }
 #lobbyButtonWrap {
     position: relative;
+	background: rgba(0,0,0,.8);
     padding: 1rem 5rem
 }
 .lobbyButtons {
@@ -2117,8 +2122,8 @@ span.unlockGameBtn {
     cursor: pointer
 }
 #avatar {
-    width: 12rem;
-    height: 12rem
+    width: 8rem;
+    height: 8rem
 }
 .who-wrap {
 	display: flex;
@@ -2137,6 +2142,9 @@ span.unlockGameBtn {
 }
 .who-wrap-right {
 	flex-basis: 34%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .who-avatar-wrap {
     position: relative;
@@ -2162,13 +2170,21 @@ span.unlockGameBtn {
 }
 #avatarWrap {
     position: relative;
-    width: 10rem;
-    border-radius: 0 0 0 4px
 }
 #configureAvatarImage {
-    float: right;
     width: 15rem;
     height: 15rem
+}
+#dictatorAvatar {
+	display: inline;
+	font-size: 1.5rem;
+	width: 21rem;
+}
+#configure-nation-avatar-col-1 {
+	flex-basis: 60%;
+}
+#configure-nation-avatar-col-2 {
+	flex-basis: 40%;
 }
 .fa-stack {
     width: 1em;
@@ -2655,9 +2671,7 @@ table {
 .resourceBarParent {
 	display: flex;
 	position: relative;
-	align-items: center;
-	height: 3.5rem;
-	font-size: 2.25rem;
+	font-size: 2rem;
 	margin: .5rem 0;
 	justify-content: space-between;
     border-radius: 4px;
@@ -2666,14 +2680,10 @@ table {
     border: 1px solid #014;
     box-shadow: 2px 2px #357, 1px -2px #357, -1px -2px #357, -2px 2px #357, 2px 2px #014, 2px -2px #014, -2px -2px #014, -2px 2px #014
 }
-.resourceBarParent > span {
-	z-index: 2;
-}
 .resourceCenter {
     text-align: right;
-    left: 0;
-    right: 0;
-    padding: 0 .25rem 0 0
+	z-index: 1;
+	width: 100%;
 }
 #energyIndicator {
     position: absolute;
@@ -3035,7 +3045,7 @@ header #options {
     margin-top: .5em
 }
 .buffer2 {
-    margin-top: 1em
+    margin-top: .2rem
 }
 #speedDropdownBtn,
 #speedDropdown {

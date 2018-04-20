@@ -635,7 +635,7 @@ var title = {
 				}
 			str += 
 				'</div>'+
-				'<div class="who-wrap-left">';
+				'<div class="who-wrap-right">';
 				// right col
 				str += 
 					'<div class="who-avatar-wrap">'+
@@ -845,7 +845,7 @@ var title = {
 		g.isModalOpen = true;
 	},
 	showModal: function() {
-		TweenMax.to(document.getElementById("optionsModal"), g.modalSpeed, {
+		TweenMax.to("#optionsModal", g.modalSpeed, {
 			startAt: {
 				visibility: 'visible',
 				y: 0,

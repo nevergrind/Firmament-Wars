@@ -319,37 +319,37 @@ g.init = (function(){
 		});
 	}
 	document.getElementById("flagDropdown").innerHTML = s;
-	TweenMax.to(document.getElementById('title-stars-1'), 50, {
+	TweenMax.to('#title-stars-1', 50, {
 		startAt: { backgroundPosition: '0'},
 		force3D: true,
 		backgroundPosition: '-1920px',
 		repeat: -1,
 		ease: Linear.easeNone
 	});
-	TweenMax.to(document.getElementById('title-stars-2'), 75, {
+	TweenMax.to('#title-stars-2', 75, {
 		startAt: { backgroundPosition: '200px -200px'},
 		backgroundPosition: '-1720px -200px',
 		repeat: -1,
 		ease: Linear.easeNone
 	});
-	TweenMax.to(document.getElementById('title-stars-3'), 100, {
+	TweenMax.to('#title-stars-3', 100, {
 		startAt: { backgroundPosition: '400px -400px'},
 		backgroundPosition: '-1520px -400px',
 		repeat: -1,
 		ease: Linear.easeNone
 	});
-	TweenMax.to(document.getElementById('title-backdrop'), 12, {
+	TweenMax.to('#title-backdrop', 12, {
 		startAt: { scale: 1, transformOrigin: '0% 100%' },
 		scale: 3,
 		repeat: -1,
 		yoyo: true,
 		ease: Power1.easeInOut
 	});
-	TweenMax.to(document.getElementById('firmamentWarsBG'), 1, {
+	TweenMax.to('#firmamentWarsBG', 1, {
 		startAt: { y: '-47%' },
 		y: '-50%',
 		onComplete: function() {
-			TweenMax.to(document.getElementById('firmamentWarsBG'), 10, {
+			TweenMax.to('#firmamentWarsBG', 10, {
 				startAt: { scale: 1 },
 				scale: 1.08,
 				repeat: -1,
@@ -380,7 +380,7 @@ g.init = (function(){
 			$("#login-modal").remove();
 			// people playing firmament wars:
 			title.chat({
-				message: 'There are '+ data.currentPlayers +' people playing Firmament Wars'
+				message: 'There are '+ data.currentPlayers +' people playing Firmament Wars.'
 			});
 			// set flag
 			document.getElementById('updateNationFlag').src = 'images/flags/'+ data.flag;
@@ -1120,7 +1120,6 @@ function initDom(){
 		world: d.getElementById('world'),
 		bgmusic: d.getElementById('bgmusic'),
 		tileName: d.getElementById('tileName'),
-		tileActions: d.getElementById('tileActions'),
 		tileActionsOverlay: d.getElementById('tileActionsOverlay'),
 		buildWord: d.getElementById('buildWord'),
 		buildCost: d.getElementById('buildCost'),

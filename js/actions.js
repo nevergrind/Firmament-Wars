@@ -398,44 +398,44 @@ var action = {
 		// show/hide research
 		if (my.tech.masonry){
 		}
-		DOM.researchMasonry.style.display = !my.tech.masonry ? 'block' : 'none';
-		DOM.researchConstruction.style.display = my.tech.masonry && !my.tech.construction ? 'block' : 'none';
-		DOM.researchEngineering.style.display = my.tech.construction && !my.tech.engineering ? 'block' : 'none';
-		DOM.researchGunpowder.style.display = !my.tech.gunpowder ? 'block' : 'none';
-		DOM.researchRocketry.style.display = my.tech.gunpowder && !my.tech.rocketry ? 'block' : 'none';
+		DOM.researchMasonry.style.display = !my.tech.masonry ? 'flex' : 'none';
+		DOM.researchConstruction.style.display = my.tech.masonry && !my.tech.construction ? 'flex' : 'none';
+		DOM.researchEngineering.style.display = my.tech.construction && !my.tech.engineering ? 'flex' : 'none';
+		DOM.researchGunpowder.style.display = !my.tech.gunpowder ? 'flex' : 'none';
+		DOM.researchRocketry.style.display = my.tech.gunpowder && !my.tech.rocketry ? 'flex' : 'none';
 		DOM.researchAtomicTheory.style.display =
-			my.tech.rocketry && my.tech.engineering && !my.tech.atomicTheory ? 'block' : 'none';
-		DOM.researchFutureTech.style.display = my.tech.atomicTheory ? 'block' : 'none';
+			my.tech.rocketry && my.tech.engineering && !my.tech.atomicTheory ? 'flex' : 'none';
+		DOM.researchFutureTech.style.display = my.tech.atomicTheory ? 'flex' : 'none';
 		if (my.tech.masonry){
 			// masonry unlocked
 			if (!game.tiles[my.tgt].defense){
 				// zero defense
-				DOM.upgradeTileDefense.style.display = 'block';
+				DOM.upgradeTileDefense.style.display = 'flex';
 			} else {
 				// bunker built
 				var capValue = game.tiles[my.tgt].capital ? 1 : 0,
 					dMinusPalace = game.tiles[my.tgt].defense - capValue,
-					display = 'none';
+					display = 'flex';
 				
 				console.info('dMinusPalace ', dMinusPalace);
 				if (my.tech.engineering){
 					if (dMinusPalace < 3){
-						display = 'block';
+						display = 'flex';
 					}
 				} else if (my.tech.construction){
 					if (!dMinusPalace){
 						// nothing built
-						display = 'block';
+						display = 'flex';
 					}
 				}
 				DOM.upgradeTileDefense.style.display = display;
 			}
 		} else {
-			DOM.upgradeTileDefense.style.display = 'none';
+			DOM.upgradeTileDefense.style.display = 'flex';
 		}
-		DOM.fireCannons.style.display = my.tech.gunpowder ? 'block' : 'none';
-		DOM.launchMissile.style.display = my.tech.rocketry ? 'block' : 'none';
-		DOM.launchNuke.style.display = my.tech.atomicTheory ? 'block' : 'none';
+		DOM.fireCannons.style.display = my.tech.gunpowder ? 'flex' : 'none';
+		DOM.launchMissile.style.display = my.tech.rocketry ? 'flex' : 'none';
+		DOM.launchNuke.style.display = my.tech.atomicTheory ? 'flex' : 'none';
 	},
 	/*endTurn: function(){
 		if (my.moves){

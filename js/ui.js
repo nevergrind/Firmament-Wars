@@ -42,7 +42,7 @@ var ui = {
 		}
 	},
 	setMobile: function(){
-		 $("head").append('<style>'+
+		 /*$("head").append('<style>'+
 			'*{ box-shadow: none !important; border-radius: 0 !important; } '+
 			'.fw-primary{ background: #04061a; border: 1px solid #357; } '+
 			'#titleChatPlayers,#statWrap, #joinGameLobby{ background: rgba(0,12,32,1); } '+
@@ -53,13 +53,13 @@ var ui = {
 			'#lobbyLeftCol, #lobbyRightCol{ top: 1vh; }'+
 			'#chat-ui{ bottom: 4vh; }'+
 			'#refreshGameWrap{ height: 64vh; }'+
-			/*'.titlePanelLeft{ height: 80vh; } '+
+			/!*'.titlePanelLeft{ height: 80vh; } '+
 			'#chat-input{ bottom: 3vh; }'+
-			'#titleMenu, #titleChat{ bottom: 7vh; } '+*/
+			'#titleMenu, #titleChat{ bottom: 7vh; } '+*!/
 			'.lobbyButtons, .fwDropdown, .govDropdown{ font-size: 1.25em; }'+
 			'#targetLineShadow, .chat-img{ display: none; }'+
 			'.chat-hidden{ color: #fff; }'+
-		'</style>');
+		'</style>');*/
 	},
 	setWorkSafe: function(){
 		 $("head").append('<style>'+
@@ -245,7 +245,8 @@ function updateTileInfo(tileId){
 			name = "Uninhabited";
 			flag = "Default.jpg";
 		}
-	} else {
+	}
+	else {
 		if (t.flag === "Default.jpg"){
 			flag = "Player" + game.player[t.player].playerColor + ".jpg";
 			flag = t.flag;
@@ -298,7 +299,7 @@ function updateTileInfo(tileId){
 	if (ind > 2){
 		DOM.upgradeTileDefense.style.display = 'none';
 	} else {
-		DOM.upgradeTileDefense.style.display = 'block';
+		DOM.upgradeTileDefense.style.display = 'flex';
 		DOM.buildWord.textContent = defWord[ind];
 		DOM.buildCost.textContent = g.upgradeCost[ind] * my.buildCost;
 		if (ind === 2){
@@ -318,9 +319,7 @@ function updateTileInfo(tileId){
 		}
 	}
 	// actions panel
-	my.player === t.player ? 
-		DOM.tileActionsOverlay.style.display = 'none' : 
-		DOM.tileActionsOverlay.style.display = 'none';
+	// DOM.tileActionsOverlay.style.display = my.player === t.player ? 'none' : 'block';
 	action.setMenu();
 };
 function setTileUnits(i, unitColor){
@@ -349,7 +348,7 @@ function setTileUnits(i, unitColor){
 	}
 };
 
-function gameDefeat(){
+/*function gameDefeat(){
 	new Audio('sound/shotgun2.mp3');
 	$.ajax({
 		type: "GET",
@@ -384,10 +383,10 @@ function gameDefeat(){
 	}).fail(function(data){
 		console.info("FAIL: ", data);
 	});
-};
+};*/
 
 
-function gameVictory(){
+/*function gameVictory(){
 	new Audio('sound/sniper0.mp3');
 	var count = 0;
 	(function repeat(){
@@ -426,60 +425,4 @@ function gameVictory(){
 			}
 		});
 	})();
-};
-function triggerEndGame(msg, victory){
-	$("*").off('click mousedown keydown keyup keypress');
-	g.gameDuration = ~~((Date.now()- ((sessionStorage.getItem('gameDuration') * 1))) / 1000);
-	$("#chat-input-open, #chat-input-wrap").remove();
-	window.onbeforeunload = null;
-	setTimeout(function(){
-		// allow for last update to occur for spectators
-		g.over = 1;
-	}, 1500);
-	stats.get();
-	if (!isMSIE && !isMSIE11 && !isMobile){
-		new Image('images/FlatWorld50-2.jpg');
-	}
-	setTimeout(function(){
-		var e = document.getElementById('victoryScreen');
-		e.innerHTML = msg;
-		e.style.display = 'block';
-		if (victory){
-			audio.play('sniper0');
-		} else {
-			audio.play('shotgun2');
-		}
-		$("#endWar").on('mousedown', function(e){
-			if (e.which === 1){
-				$("#endWar").off();
-				g.view = 'stats';
-				TweenMax.to('#gameWrap', .05, {
-					alpha: 0,
-					onComplete: function(){ 
-						$("#diplomacy-ui, #ui2, #resources-ui, #chat-input-open, #chat-ui, #chat-input-wrap, #hud, #worldWrap, #victoryScreen").remove();
-						stats.show();
-					}
-				});
-			}
-		});
-		$("#ceaseFire").on(ui.click, function(){
-			location.reload();
-		});
-		$("#spectate").on(ui.click, function(e){
-			$("#victoryScreen, #ui2, #resourceBody, #targetWrap").remove();
-			document.getElementById('surrender').style.display = "none";
-			document.getElementById('exitSpectate').style.display = "inline";
-			g.spectateStatus = 1;
-		});
-		$("#exitSpectate").on(ui.click, function(){
-			$(this).off(ui.click);
-			stats.get();
-			TweenMax.to('#diplomacy-ui', 1, {
-				alpha: 0,
-				onComplete: function(){
-					stats.show();
-				}
-			});
-		});
-	}, 2500);
-};
+};*/

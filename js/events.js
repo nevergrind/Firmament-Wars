@@ -101,7 +101,7 @@ var events = {
 			}
 			// e3.val(my.account +'_'+ ~~(Math.random()*999999)).select();
 			e3.val('').select();
-			TweenMax.to(document.getElementById("createGameWrap"), g.modalSpeed, {
+			TweenMax.to("#createGameWrap", g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
 					y: 0,
@@ -145,7 +145,7 @@ var events = {
 		$("body").on(ui.click, '#options', function(){
 			title.showModal();
 		}).on(ui.click, '#hotkeys', function(){
-			TweenMax.to(document.getElementById("hotkeysModal"), g.modalSpeed, {
+			TweenMax.to("#hotkeysModal", g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
 					y: 0,
@@ -273,7 +273,7 @@ var events = {
 			title.showBackdrop();
 		});
 		$("#leaderboardBtn").on(ui.click, function(){
-			TweenMax.to(document.getElementById('leaderboard'), g.modalSpeed, {
+			TweenMax.to('#leaderboard', g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
 					top: 0,

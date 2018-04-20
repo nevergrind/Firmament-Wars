@@ -1,5 +1,5 @@
 // game.js
-function updateTileInfo(tileId){
+/*function updateTileInfo(tileId){
 	var t = game.tiles[tileId],
 		flag = "Default.jpg",
 		name = t.name,
@@ -85,6 +85,7 @@ function updateTileInfo(tileId){
 		DOM.upgradeTileDefense.style.display = 'block';
 		DOM.buildWord.textContent = defWord[ind];
 		DOM.buildCost.textContent = g.upgradeCost[ind] * my.buildCost;
+		console.warn("OH NO 2", g.upgradeCost[ind], ind, my.buildCost);
 		if (ind === 2){
 			defWord[2] = 'Fortresse';
 		}
@@ -98,12 +99,10 @@ function updateTileInfo(tileId){
 			});
 	}
 	// actions panel
-	my.player === t.player ? 
-		DOM.tileActionsOverlay.style.display = 'none' : 
-		DOM.tileActionsOverlay.style.display = 'block';
+	// DOM.tileActionsOverlay.style.display = my.player === t.player ? 'none' : 'block';
 	action.setMenu();
-}
-function showTarget(e, hover, skipOldTgtUpdate){
+}*/
+/*function showTarget(e, hover, skipOldTgtUpdate){
 	if (e.id === undefined){
 		e.id = 'land0';
 	}
@@ -173,11 +172,11 @@ function showTarget(e, hover, skipOldTgtUpdate){
 		my.attackOn = false;
 		my.attackName = '';
 	}
-}
-function setTileUnits(i, unitColor){
+}*/
+/*function setTileUnits(i, unitColor){
 	DOM['unit' + i].textContent = game.tiles[i].units === 0 ? "" : ~~game.tiles[i].units;
 	if (unitColor === '#00ff00'){
-		/*
+		/!*
 		TweenMax.to(DOM['unit' + i], .05, {
 			startAt: {
 				transformOrigin: (game.tiles[i].units.length * 3) + ' 12',
@@ -188,7 +187,7 @@ function setTileUnits(i, unitColor){
 			repeat: 12,
 			yoyo: true
 		});
-		*/
+		*!/
 	} else {
 		TweenMax.to(DOM['unit' + i], .5, {
 			startAt: {
@@ -198,7 +197,7 @@ function setTileUnits(i, unitColor){
 			fill: '#ffffff'
 		});
 	}
-}
+}*/
 
 function gameDefeat(){
 	new Audio('sound/shotgun2.mp3');
@@ -277,7 +276,63 @@ function gameVictory(){
 			}
 		});
 	})();
-}
+}function triggerEndGame(msg, victory){
+	$("*").off('click mousedown keydown keyup keypress');
+	g.gameDuration = ~~((Date.now()- ((sessionStorage.getItem('gameDuration') * 1))) / 1000);
+	$("#chat-input-open, #chat-input-wrap").remove();
+	window.onbeforeunload = null;
+	setTimeout(function(){
+		// allow for last update to occur for spectators
+		g.over = 1;
+	}, 1500);
+	stats.get();
+	if (!isMSIE && !isMSIE11 && !isMobile){
+		new Image('images/FlatWorld50-2.jpg');
+	}
+	setTimeout(function(){
+		var e = document.getElementById('victoryScreen');
+		e.innerHTML = msg;
+		e.style.display = 'block';
+		if (victory){
+			audio.play('sniper0');
+		} else {
+			audio.play('shotgun2');
+		}
+		$("#endWar").on('mousedown', function(e){
+			if (e.which === 1){
+				$("#endWar").off();
+				g.view = 'stats';
+				TweenMax.to('#gameWrap', .05, {
+					alpha: 0,
+					onComplete: function(){
+						$("#diplomacy-ui, #ui2, #resources-ui, #chat-input-open, #chat-ui, #chat-input-wrap, #hud, #worldWrap, #victoryScreen").remove();
+						stats.show();
+					}
+				});
+			}
+		});
+		$("#ceaseFire").on(ui.click, function(){
+			location.reload();
+		});
+		$("#spectate").on(ui.click, function(e){
+			$("#victoryScreen, #ui2, #resourceBody, #targetWrap").remove();
+			document.getElementById('surrender').style.display = "none";
+			document.getElementById('exitSpectate').style.display = "inline";
+			g.spectateStatus = 1;
+		});
+		$("#exitSpectate").on(ui.click, function(){
+			$(this).off(ui.click);
+			stats.get();
+			TweenMax.to('#diplomacy-ui', 1, {
+				alpha: 0,
+				onComplete: function(){
+					stats.show();
+				}
+			});
+		});
+	}, 2500);
+};
+/*
 function triggerEndGame(msg, victory){
 	$("*").off('click mousedown keydown keyup keypress');
 	$("#chat-input").remove();
@@ -329,4 +384,4 @@ function triggerEndGame(msg, victory){
 			});
 		});
 	}, 2500);
-}
+}*/
