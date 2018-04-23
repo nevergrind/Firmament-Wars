@@ -11,3 +11,6 @@ socket/
 music/
 sound/
 images/
+lib/
+steam_appid.txt
+greenworks.js

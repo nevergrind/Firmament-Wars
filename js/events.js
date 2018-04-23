@@ -134,9 +134,7 @@ var events = {
 		});
 		$("#play-now-btn").on(ui.click, function(){
 			title.createGameService(my.account +'_'+ ~~(Math.random()*999999), '', 'Earth Omega', 8, 0, 0, 20);
-			setTimeout(function(){
-				lobby.addCpuPlayer();
-			}, 500);
+			title.addCpu = 1;
 			
 		});
 		if (!app.isLocal) {
@@ -801,9 +799,10 @@ $(document).on('keydown', function(e){
 	 reader.readAsDataURL(file);
 	 if (file.type !== 'image/jpeg'){
 		imgError('Wrong file type! Image must be in jpg format.');
-	 } else {
+	 }
+	 else {
 		 reader.addEventListener("load", function(){
-			if (reader.result.length < 64000){
+			if (reader.result.length < 70000){
 				$.ajax({
 					url: app.url + "php/uploadDictator.php",
 					type: "POST",

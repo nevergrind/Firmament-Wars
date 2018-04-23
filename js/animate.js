@@ -1,19 +1,5 @@
 // animate.js
 var animate = {
-	nationName: function(){
-		var tl = new TimelineMax();
-		var split = new SplitText(".configureNationName", {
-			type: "words,chars"
-		});
-		var chars = split.chars;
-		tl.staggerFromTo(chars, .05, {
-			immediateRender: true,
-			alpha: 0
-		}, {
-			delay: .25,
-			alpha: 1
-		}, .016);
-	},
 	colors: [
 		'#ffffff',
 		'#ffaa66',
@@ -37,22 +23,22 @@ var animate = {
 	icon: {
 		troops: {
 			audio: '',
-			image: 'culture.png',
+			image: 'troops.png',
 			color: '#ff0'
 		},
 		energy: {
 			audio: '',
-			image: 'culture.png',
+			image: 'energy.png',
 			color: '#ffa'
 		},
 		food: {
 			audio: '',
-			image: 'culture.png',
+			image: 'food.png',
 			color: '#b5ff00'
 		},
 		production: {
 			audio: '',
-			image: 'culture.png',
+			image: 'production.png',
 			color: '#d60'
 		},
 		culture: {
@@ -62,7 +48,7 @@ var animate = {
 		},
 		shield: {
 			audio: 'build',
-			image: 'culture.png',
+			image: 'tile-defense.png',
 			color: '#ff0'
 		}
 	},
@@ -76,8 +62,8 @@ var animate = {
 		// show icon
 		var wrap = document.createElementNS('http://www.w3.org/2000/svg', 'g');
 		var text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-		text.setAttributeNS(null,"x",x);
-		text.setAttributeNS(null,"y",y);
+		text.setAttributeNS(null,"x",x - 10);
+		text.setAttributeNS(null,"y",y + 10);
         text.style.fontFamily = 'FontAwesome';
         text.style.fontSize = '20px';
         text.style.fill = animate.icon[type].color;
@@ -90,7 +76,7 @@ var animate = {
 		image.setAttributeNS(null,"width",'3rem');
 		image.setAttributeNS(null,"height",'3rem');
 		image.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","images/icons/"+ animate.icon[type].image);
-		image.setAttributeNS(null,"x",x - 30);
+		image.setAttributeNS(null,"x",x + 10);
 		image.setAttributeNS(null,"y",y - 20);
 		wrap.appendChild(image);
 		wrap.appendChild(text);
@@ -195,7 +181,7 @@ var animate = {
 				svg.setAttributeNS(null,"y1",y);
 				svg.setAttributeNS(null,"x2",x + productionWidth);
 				svg.setAttributeNS(null,"y2",y);
-				svg.setAttributeNS(null,"stroke","#55cfff");
+				svg.setAttributeNS(null,"stroke","#d60");
 				svg.setAttributeNS(null,"stroke-width",widthPerTick);
 				svg.setAttributeNS(null,"opacity",1);
 				svg.setAttributeNS(null,"class","mapBars mapBars2x mapBars" + i);
@@ -293,7 +279,8 @@ var animate = {
 			box2 = DOM['land' + defTile].getBBox(),
 			box3 = DOM['unit' + defTile].getBBox()
 			delay = delay === undefined ? .08 : delay;
-		if (game.tiles[atkTile].player === my.player){
+
+		if (game.tiles[defTile].player === my.player){
 			var a = [5, 6, 8];
 			var sfx = ~~(Math.random() * 3);
 			playSound && audio.play('grenade' + a[sfx]);
@@ -774,5 +761,20 @@ var animate = {
 			startAt: { color: '#ff0' },
 			color: '#fff',
 		});
+		var o = {
+			blur: 10
+		}
+		TweenMax.to(o, 1, {
+			blur: 0,
+			onUpdate: function() {
+				animate.blur(DOM.currentYear, o.blur);
+			},
+			ease: Linear.easeIn
+		})
+	},
+	blur: function(e, blur) {
+		TweenMax.set(e, {
+			filter: 'blur('+ blur +'px)'
+		})
 	}
 }

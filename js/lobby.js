@@ -326,13 +326,8 @@ var lobby = {
 			x: '100%',
 			ease: Quad.easeIn
 		});
-		if (isMobile){
-			document.getElementById('lobbyFirmamentWarsLogo').style.display = 'none';
-			document.getElementById('worldTitle').style.display = 'none';
-		} else {
-			document.getElementById('lobbyFirmamentWarsLogo').src = 'images/title/firmament-wars-logo-1280.png';
-			document.getElementById('worldTitle').src = 'images/FlatWorld50-2.jpg';
-		}
+		document.getElementById('lobbyFirmamentWarsLogo').src = 'images/title/firmament-wars-logo-1280.png';
+		document.getElementById('worldTitle').src = 'images/FlatWorld50-2.jpg';
 		
 		TweenMax.to('#titleMenu', d, {
 			x: '-100%',
@@ -536,6 +531,9 @@ var lobby = {
 			} else {
 				startGame.className = lobby.startClassOn;
 			}
+			// add cpu automatically in Play Now
+			title.addCpu && lobby.addCpuPlayer();
+			title.addCpu = 0;
 		}
 	},
 	countdown: function(data){
@@ -577,24 +575,26 @@ var lobby = {
 			$("#teamDropdown").css('display', 'none');
 		}
 	},
-	governmentIcon: function(government){
-		var icon = {
-			Despotism: 'glyphicon glyphicon-bullhorn',
-			Monarchy: 'glyphicon glyphicon-king',
-			Democracy: 'fa fa-balance-scale',
-			Fundamentalism: 'fa fa-book',
-			Fascism: 'glyphicon glyphicon-fire',
-			Republic: 'glyphicon glyphicon-grain', 
-			Communism: 'fa fa-globe'
-		};
-		return icon[government];
+	governmentIcon: function(p){
+		// <i class="' + icon + ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right"></i>
+		var str = '',
+			playerClass = 'player-icon' + game.player[p.player].playerColor;
+
+		console.info('government: ', p.government);
+		if (p.cpu) {
+			str += '<img src="images/icons/computer.png" class="fw-icon-sm '+ playerClass +'">';
+		}
+		else {
+			str += '<img src="images/icons/'+ p.government +'.png" class="fw-icon-sm '+ playerClass +'">';
+		}
+		return str;
 	},
 	startGame: function(){
 		if (my.player === 1){
 			if (lobby.totalPlayers() >= 2){
 				startGame.style.display = "none";
 				cancelGame.style.display = 'none';
-				g.lock(1);
+				g.lock();
 				audio.play('click');
 				$.ajax({
 					type: "GET",
@@ -1041,21 +1041,23 @@ function loadGameState(){
 			var str = '';
 			// init diplomacyPlayers
 			function diploRow(p){
-				var account = p.cpu ? ("Computer: "+ p.difficulty) : p.account,
-					icon = p.cpu ? 'fa fa-microchip' : lobby.governmentIcon(p.government),
+				// <i class="' + icon + ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right"></i>
+				var account = p.cpu ? p.difficulty : p.account,
+					icon = lobby.governmentIcon(p),
 					gov = p.cpu ? 'Computer' : p.government;
 				function teamIcon(team){
 					return g.teamMode ? 
 						'<span class="diploTeam">'+ team +'</span>' : '';
 				}
 				var str = 
-				'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive">'+
+				'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive pb'+ p.player +'">'+
 					// bg 
+					'<div class="diplo-pipe pbar'+ p.player +'"></div>'+
 					'<img src="images/flags/'+ p.flagSrc +'" class="diplo-flag no-select">'+
 					// row 1
 					'<div class="diplo-data-col"' +
 						'<div>'+
-							'<div class="nowrap"><i class="' + icon + ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right"></i> '+ account +'</div>' +
+							'<div class="nowrap">'+ icon + account +'</div>' +
 							'<div class="nowrap">'+ teamIcon(p.team) + p.nation + '</div>'+
 						'</div>'+
 						// row 2

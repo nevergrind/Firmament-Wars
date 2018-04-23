@@ -569,13 +569,12 @@ var stats = {
 			</div>\
 			<img class="statsFlags" src="images/flags/'+ flag +'">\
 			<div class="statsPlayerWrap">\
-				<div class="statsAccount chat-warning nowrap">\
-					<i class="'+ (z.cpu ? 'fa fa-microchip' : lobby.governmentIcon(z.government)) +' diploSquare statsGov player'+ color +'"></i>';
+				<div class="statsAccount chat-warning nowrap">' + lobby.governmentIcon(z);
 					if (g.teamMode){
 						str += '<span class="diploTeam">'+ z.team +'</span>';
 					}
 					// TODO: undefined error here on difficulty after CPU was eliminated and I surrendered
-					var account = p.cpu === 1 ? ("Computer: "+ z.difficulty) : p.account;
+					var account = p.cpu === 1 ? z.difficulty : p.account;
 					str += account +
 				'</div>\
 				<div class="statsNation nowrap">'+ p.nation +'</div>\

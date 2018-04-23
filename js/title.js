@@ -499,7 +499,7 @@ var title = {
 			// game
 			// console.info('game receive: ', data);
 			if (data.type === 'cannons'){
-				animate.cannons(data.attackerTile, data.tile, false);
+				animate.cannons(data.attackerTile, data.tile, true);
 				game.updateTile(data);
 			} else if (data.type === 'missile'){
 				animate.missile(data.attacker, data.defender, true);
@@ -676,6 +676,14 @@ var title = {
 			}
 		});
 	},
+	closeApp: function(){
+		$.ajax({
+			type: 'GET',
+			url: app.url + 'php/close-app.php'
+		}).done(function() {
+			console.info('close-app');
+		});
+	},
 	url: function(url){
 		$.ajax({
 			url: app.url + 'php/insertUrl.php',
@@ -751,6 +759,8 @@ var title = {
 					title.who(msg);
 				} else if (msg.indexOf('/broadcast ') === 0){
 					title.broadcast(msg);
+				} else if (msg.indexOf('/closeApp') === 0){
+					title.closeApp();
 				} else if (msg.indexOf('/url ') === 0){
 					title.url(msg);
 				} else if (msg.indexOf('/img ') === 0){
@@ -873,7 +883,6 @@ var title = {
 	},
 	exitGame: function() {
 		// exit from app
-		console.info("EXIT GAME");
 		title.closeGame();
 		nw.App.closeAllWindows();
 	},
@@ -890,6 +899,7 @@ var title = {
 			}
 		}
 	},
+	addCpu: 0,
 	createGameFocus: false,
 	createGame: function(){
 		var name = $("#gameName").val(),
@@ -1004,8 +1014,7 @@ var title = {
 				name: x
 			}
 		}).done(function(data) {
-			$(".configureNationName").text(data);
-			// animate.nationName();
+			Msg("Your new nation name is: " + x);
 		}).fail(function(e){
 			Msg(e.statusText);
 		}).always(function(){

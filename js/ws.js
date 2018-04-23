@@ -186,6 +186,9 @@ var socket = {
 					if (data.msg){
 						g.chat(data.msg, data.type);
 					}
+					else if (data.category === 'close-app') {
+						title.exitGame();
+					}
 				});
 				socket.zmq.subscribe('fw:hb', function(topic, data) {
 					if (data.msg){

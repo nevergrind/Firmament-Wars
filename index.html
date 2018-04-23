@@ -16,7 +16,7 @@
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
 	<script>
 		var app = {
-			version: '1.0.3',
+			version: '1.0.5',
 			initialized: 0, // init-game returned
 			isApp: location.protocol === 'chrome-extension:' ? 1 : 0,
 			account: ''
@@ -212,12 +212,7 @@
 
 				<div id="titleChat" class="fw-primary text-center">
 					<div id="titleChatPlayers" class="titlePanelLeft">
-						<div id="title-chat-players-log" class="shadow4">
-							<div id="titleChatLog" class="titlePanelLeft">
-								<div>Welcome to Broken.net!</div>
-							</div>
-							<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" auto-complete="disabled" spellcheck="false">
-						</div>
+						<!-- col 1 -->
 						<div id="title-chat-players-room" class="shadow4">
 							<div id="titleChatHeader" class="chat-warning nowrap">&nbsp;
 								<span id="titleChatHeaderChannel"></span>
@@ -235,10 +230,14 @@
 								<div id="get-help" class="title-utils shadow4">Chat Commands</div>
 							</div>
 						</div>
+						<!-- col 2 -->
+						<div id="title-chat-players-log" class="shadow4">
+							<div id="titleChatLog" class="titlePanelLeft">
+								<div>Welcome to Broken.net!</div>
+							</div>
+							<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" auto-complete="disabled" spellcheck="false">
+						</div>
 					</div>
-
-
-
 				</div>
 
 			</div>
@@ -512,7 +511,7 @@
 
 			<div id="configure-nation-avatar">
 				<div id="configure-nation-avatar-col-1">
-					<p>Upload your dictator avatar.<br>A 200x200 image is recommended.<br>Image must be a jpg < 40 kb:</p>
+					<p>Upload your dictator avatar.<br>A 100x100 image is recommended.<br>Image should be a jpg < 50 KB:</p>
 					<p>
 						<input id="dictatorAvatar" class="btn btn-primary fwBlue shadow4" type="file" accept=".jpg" name="image">
 					</p>
@@ -551,13 +550,14 @@
 
 	<div id="gameWrap">
 
-		<div id="targetWrap" class="no-pointer no-select">
-			<div id="avatarWrap">
-				<img id="avatar" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
-			</div>
+		<div id="targetWrap" class="no-select">
 			<div id="targetName" class="text-center shadow4">
 				<div id="targetNameAnchor">
-					<img id="targetFlag" class="targetFlag" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
+					<img id="avatar"
+						 src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
+					<img id="targetFlag"
+						 class="targetFlag"
+						 src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 					<div>
 						<i id="targetCapStar" class="glyphicon glyphicon-star capitalStar shadow4 none"></i>
 						<span id="targetNameWrap"></span>
@@ -569,26 +569,24 @@
 
 		<div id="ui2-head" class="stagBlue no-select">
 			<div title="Production is used to deploy troops, build structures, and research technology.">
-				<i class="fa fa-gavel production"></i>
+				<img src="images/icons/production.png" class="fw-icon">
 				<span id="production">0</span>
 			</div>
 			<div title="Food milestones produce available troops">
-				<i class="fa fa-apple food"></i>
+				<img src="images/icons/food.png" class="fw-icon">
 				<span id="food">0</span>/<span id="foodMax">25</span><!--(+<span id="sumFood">0</span>)-->
 			</div>
 			<div title="Culture milestones produce special rewards">
-				<img src="images/icons/culture.png" class="culture-icon">
+				<img src="images/icons/culture.png" class="fw-icon">
 				<span id="culture">0</span>/<span id="cultureMax">300</span>
 				<!--(+<span id="sumCulture">0</span>)-->
 			</div>
-			<div data-placement="bottom"
-				title="Great Generals boost troop attack">
-				<i class="glyphicon glyphicon-star manpower"></i>
+			<div data-placement="bottom" title="Great Generals boost troop attack">
+				<img id="energy-icon" src="images/icons/general.png" class="fw-icon">
 				<span id="oBonus">0</span>
 			</div>
-			<div data-placement="bottom"
-				title="Great Tacticians boost troop defense">
-				<i class="fa fa-shield manpower"></i>
+			<div data-placement="bottom" title="Great Tacticians boost troop defense">
+				<img id="energy-icon" src="images/icons/tactician.png" class="fw-icon">
 				<span id="dBonus">0</span>
 			</div>
 		</div>
@@ -613,7 +611,7 @@
 							<span id="sumProduction">0</span>/Turn
 						</span-->
 						<span title="Production is used to deploy troops, build structures, and research technology.">
-							Production <i class="fa fa-gavel"></i>
+							Production <img src="images/icons/production.png" class="fw-icon resourceIcon">
 						</span>
 					</div>
 				</div>
@@ -626,7 +624,7 @@
 						</div>
 						<div title="Food milestones produce available troops"
 							 class="resource-child">
-							Food <i class="fa fa-apple food"></i>
+							Food <img src="images/icons/food.png" class="fw-icon">
 						</div>
 					</div>
 				</div>
@@ -639,7 +637,7 @@
 						</span>
 							<span title="Culture milestones produce special rewards"
 								  class="resource-child">
-							Culture <img src="images/icons/culture.png" class="culture-icon">
+							Culture <img src="images/icons/culture.png" class="fw-icon">
 						</span>
 					</div>
 				</div>
@@ -653,8 +651,9 @@
 					<div>
 						<span class='text-hotkey'>A</span>ttack
 					</div>
-					<div class="tight2 text-right productionCost">
-						<i class="fa fa-bolt moves resourceIcon"></i><span id='attackCost'>2</span>
+					<div class="action-button-cost tight2 text-right productionCost">
+						<img src="images/icons/energy.png" class="fw-icon resourceIcon">
+						<span id='attackCost'>2</span>
 					</div>
 				</div>
 
@@ -663,8 +662,9 @@
 					<div>
 						<span class='text-hotkey'>S</span>plit Attack
 					</div>
-					<div class="tight2 text-right productionCost">
-						<i class="fa fa-bolt moves resourceIcon"></i></i><span id="splitAttackCost">1</span>
+					<div class="action-button-cost tight2 text-right productionCost">
+						<img src="images/icons/energy.png" class="fw-icon resourceIcon">
+						</i><span id="splitAttackCost">1</span>
 					</div>
 				</div>
 
@@ -673,8 +673,9 @@
 					<div>
 						<span class='text-hotkey'>R</span>ush Troops
 					</div>
-					<div class="tight2 text-right productionCost">
-						<i class="fa fa-bolt moves resourceIcon"></i></i><span id="rushCost">2</span>
+					<div class="action-button-cost tight2 text-right productionCost">
+						<img src="images/icons/energy.png" class="fw-icon resourceIcon">
+						</i><span id="rushCost">2</span>
 					</div>
 				</div>
 
@@ -683,8 +684,9 @@
 					<div>
 						<span class='text-hotkey'>D</span>eploy Troops
 					</div>
-					<div class="tight2 text-right productionCost">
-						<i class="fa fa-gavel production resourceIcon"></i><span id='deployCost'>10</span>
+					<div class="action-button-cost tight2 text-right productionCost">
+						<img src="images/icons/production.png" class="fw-icon resourceIcon">
+						<span id='deployCost'>10</span>
 					</div>
 				</div>
 
@@ -693,8 +695,9 @@
 					<div>
 						<span class='text-hotkey'>B</span>uild <span id="buildWord">Bunker</span>
 					</div>
-					<div class="tight2 text-right productionCost">
-						<i class="fa fa-gavel production resourceIcon"></i><span id="buildCost"></span>
+					<div class="action-button-cost tight2 text-right productionCost">
+						<img src="images/icons/production.png" class="fw-icon resourceIcon">
+						<span id="buildCost">40</span>
 					</div>
 				</div>
 
@@ -703,8 +706,9 @@
 					<div>
 						Fire <span class='text-hotkey'>C</span>annons
 					</div>
-					<div class="tight2 text-right productionCost">
-						<i class="fa fa-gavel production resourceIcon"></i><span id='cannonsCost'>24</span>
+					<div class="action-button-cost tight2 text-right productionCost">
+						<img src="images/icons/production.png" class="fw-icon resourceIcon">
+						<span id='cannonsCost'>24</span>
 					</div>
 				</div>
 
@@ -713,8 +717,9 @@
 					<div>
 						Launch <span class='text-hotkey'>M</span>issile
 					</div>
-					<div class="tight2 text-right productionCost">
-						<i class="fa fa-gavel production resourceIcon"></i><span id='missileCost'>50</span>
+					<div class="action-button-cost tight2 text-right productionCost">
+						<img src="images/icons/production.png" class="fw-icon resourceIcon">
+						<span id='missileCost'>50</span>
 					</div>
 				</div>
 
@@ -723,8 +728,9 @@
 					<div>
 						Launch <span class='text-hotkey'>N</span>uke
 					</div>
-					<div class="tight2 text-right productionCost">
-						<i class="fa fa-gavel production resourceIcon"></i><span id='nukeCost'>150</span>
+					<div class="action-button-cost tight2 text-right productionCost">
+						<img src="images/icons/production.png" class="fw-icon resourceIcon">
+						<span id='nukeCost'>150</span>
 					</div>
 				</div>
 				<!-- research -->
@@ -735,8 +741,9 @@
 					<div>
 						Masonr<span class='text-hotkey'>y</span>
 					</div>
-					<div class="tight2 text-right productionCost">
-						<i class="fa fa-gavel production resourceIcon"></i><span id='masonryCost'>40</span>
+					<div class="action-button-cost tight2 text-right productionCost">
+						<img src="images/icons/production.png" class="fw-icon resourceIcon">
+						<span id='masonryCost'>40</span>
 					</div>
 				</div>
 
@@ -745,8 +752,9 @@
 					<div>
 						C<span class='text-hotkey'>o</span>nstruction
 					</div>
-					<div class="tight2 text-right productionCost">
-						<i class="fa fa-gavel production resourceIcon"></i><span id='constructionCost'>60</span>
+					<div class="action-button-cost tight2 text-right productionCost">
+						<img src="images/icons/production.png" class="fw-icon resourceIcon">
+						<span id='constructionCost'>60</span>
 					</div>
 				</div>
 
@@ -755,8 +763,9 @@
 					<div>
 						<span class='text-hotkey'>E</span>ngineering
 					</div>
-					<div class="tight2 text-right productionCost">
-						<i class="fa fa-gavel production resourceIcon"></i><span id='engineeringCost'>80</span>
+					<div class="action-button-cost tight2 text-right productionCost">
+						<img src="images/icons/production.png" class="fw-icon resourceIcon">
+						<span id='engineeringCost'>80</span>
 					</div>
 				</div>
 
@@ -765,8 +774,9 @@
 					<div>
 						<span class='text-hotkey'>G</span>unpowder
 					</div>
-					<div class="tight2 text-right productionCost">
-						<i class="fa fa-gavel production resourceIcon"></i><span id='gunpowderCost'>60</span>
+					<div class="action-button-cost tight2 text-right productionCost">
+						<img src="images/icons/production.png" class="fw-icon resourceIcon">
+						<span id='gunpowderCost'>60</span>
 					</div>
 				</div>
 
@@ -775,8 +785,9 @@
 					<div>
 						Roc<span class='text-hotkey'>k</span>etry
 					</div>
-					<div class="tight2 text-right productionCost">
-						<i class="fa fa-gavel production resourceIcon"></i><span id='rocketryCost'>200</span>
+					<div class="action-button-cost tight2 text-right productionCost">
+						<img src="images/icons/production.png" class="fw-icon resourceIcon">
+						<span id='rocketryCost'>200</span>
 					</div>
 				</div>
 
@@ -785,8 +796,9 @@
 					<div>
 						A<span class='text-hotkey'>t</span>omic Theory
 					</div>
-					<div class="tight2 text-right productionCost">
-						<i class="fa fa-gavel production resourceIcon"></i><span id='atomicTheoryCost'>500</span>
+					<div class="action-button-cost tight2 text-right productionCost">
+						<img src="images/icons/production.png" class="fw-icon resourceIcon">
+						<span id='atomicTheoryCost'>500</span>
 					</div>
 				</div>
 
@@ -795,8 +807,9 @@
 					<div>
 						<span class='text-hotkey'>F</span>uture Tech
 					</div>
-					<div class="tight2 text-right productionCost">
-						<i class="fa fa-gavel production resourceIcon"></i><span id='futureTechCost'>800</span>
+					<div class="action-button-cost tight2 text-right productionCost">
+						<img src="images/icons/production.png" class="fw-icon resourceIcon">
+						<span id='futureTechCost'>800</span>
 					</div>
 				</div>
 
@@ -807,16 +820,19 @@
 
 			<div id="energy-wrap" class="text-center">
 				<div id="move-wrap" class="moves no-pointer">
-					<i class="fa fa-bolt"></i><span id="moves">4</span>
+					<span id="moves">4</span>
 				</div>
 				<svg id="energy-timer-wrap"
 					 class="timer-tooltips"
 					 title="Turn ends when time expires or when all players have spent their energy">
 					<circle id="energyIndicator"></circle>
 				</svg>
-				<div id="energy-label"
-					  class="moves timer-tooltips"
-					  title="Energy is used to move and rush troops.">Energy</div>
+				<div id="energy-label-wrap">
+					<img id="energy-icon" src="images/icons/energy.png" class="fw-icon">
+					<div id="energy-label"
+						  class="moves timer-tooltips"
+						  title="Energy is used to move and rush troops.">Energy</div>
+				</div>
 			</div>
 			<!--button id="endTurn" class="btn btn-xs btn-responsive fwBlue">End Turn</button-->
 			<div id="currentYear"
@@ -871,7 +887,7 @@
 		
 		<div id="victoryScreen" class="fw-primary fw-text"></div>
 		
-		<div id="statWrap" class="fw-text"></div>
+		<div id="statWrap" class="fw-text no-select"></div>
 		
 	</div>
 
@@ -990,11 +1006,17 @@
 								<li id="window-full-screen" class="window-select">
 									<a href="#">Full Screen</a>
 								</li>
-								<li id="window-1080" class="window-select">
-									<a href="#">Windowed - 1920x1080</a>
+								<li id="window-1920-1080" class="window-select">
+									<a href="#">Windowed - 1920 x 1080</a>
 								</li>
-								<li id="window-720" class="window-select">
-									<a href="#">Windowed - 1280x720</a>
+								<li id="window-1600-900" class="window-select">
+									<a href="#">Windowed - 1600 x 900</a>
+								</li>
+								<li id="window-1360-768" class="window-select">
+									<a href="#">Windowed - 1360 x 768</a>
+								</li>
+								<li id="window-1280-720" class="window-select">
+									<a href="#">Windowed - 1280 x 720</a>
 								</li>
 							</ul>
 						</div>
@@ -1259,7 +1281,7 @@
 									googleToken: token
 								}
 							}).done(function (data) {
-								console.info('google login? ', data);
+								//console.info('google login? ', data);
 								if (data === 'Create an account name!') {
 									// redirect to
 									var to = 'https://nevergrind.com/setAccount.php';
@@ -1276,7 +1298,7 @@
 						}
 					},
 					onfailure: function () {
-						console.log('error: ', error);
+						console.warn('error: ', error);
 					}
 				});
 			});
@@ -1424,7 +1446,7 @@
 				location.reload();
 			}
 			else {
-				console.info("redirect", sessionStorage.getItem('refer'), location.pathname);
+				//console.info("redirect", sessionStorage.getItem('refer'), location.pathname);
 				if (sessionStorage.getItem('refer') === location.pathname) {
 					location.reload();
 				}
@@ -1440,7 +1462,7 @@
 			if (origin === 'loginRenderButton'){
 				$("#login-modal").remove();
 				(function repeat(count){
-					console.info("repeat");
+					//console.info("repeat");
 					if (!app.account) {
 						// not logged in - Google SSO requires this
 						redirect();
