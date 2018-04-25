@@ -360,9 +360,27 @@ g.init = (function(){
 			});
 		}
 	});
+	var steam = {
+		screenName: '',
+		staticAccountId: '',
+	};
+	if (app.isApp) {
+		var greenworks = require('./greenworks');
+		if (greenworks.initAPI()) {
+			greenworks.init();
+			var z = greenworks.getSteamId();
+			steam.screenName = z.screenName;
+			steam.staticAccountId = z.staticAccountId;
+		}
+	}
+
 	$.ajax({
-		type: "GET",
-		url: app.url + 'php/init-game.php' // check if already in a game
+		type: "POST",
+		url: app.url + 'php/init-game.php',
+		data: {
+			screenName: steam.screenName,
+			staticAccountId: steam.staticAccountId,
+		}
 	}).done(function(data) {
 		console.info('init-game', data.account, data);
 		$('.timer-tooltips, #currentYear, .actionButtons').tooltip({
@@ -398,6 +416,40 @@ g.init = (function(){
 		else {
 			notLoggedIn();
 		}
+		// animate logo
+		/*
+		blur(5px)
+		hue-rotate(360deg)
+		brightness(100%)
+		contrast(100%)
+		shadow(100%) (chrome not supported?)
+		grayscale(100%)
+		invert(100%)
+		opacity(100%)
+		saturate(100%)
+		sepia(100%)
+		 */
+		var e = document.getElementById('firmamentWarsLogo');
+		function applyFilter(o) {
+			e.style.filter =
+				'drop-shadow(0px 0px '+ o.shadow +'px #048) ' +
+				'brightness('+ o.brightness +'%)';
+		}
+		var o = {
+			shadow: 1,
+			brightness: 100,
+		};
+		TweenMax.to(o, 3, {
+		  overwrite: 1,
+		  shadow: 20,
+		  brightness: 200,
+		  onUpdate: function() {
+			applyFilter(o);
+		  },
+		  repeat: -1,
+		  yoyo: true,
+		  ease: Linear.easeNone
+		});
 	});
 	// TODO separate this confusing logic a bit
 	if ((location.hostname === 'localhost' && location.hash !== '#stop') || 

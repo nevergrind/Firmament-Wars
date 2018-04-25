@@ -463,6 +463,11 @@ a:hover {
 	background-image: url(../images/title/simple-stars.png);
 	background-size: 100% 100%;
 }
+.sharp-x {
+	position: relative;
+	font-size: 4rem!important;
+	top: -2.15rem;
+}
 #firmament-wars-logo-wrap {
 	position: relative;
 	z-index: 1;
@@ -1585,6 +1590,7 @@ table td,
 	background: #013;
 	border: .2rem outset #d60;
 	padding: .2rem .5rem;
+	margin-bottom: 1px;
 }
 #food-wrap {
 	background: #130;
@@ -2192,13 +2198,13 @@ span.unlockGameBtn {
 	flex-basis: 34%;
 	display: flex;
 	justify-content: center;
-	align-items: center;
 }
 .who-avatar-wrap {
     position: relative;
     margin-left: .25vw
 }
 .who-avatar-img {
+	display: none;
     position: relative;
     margin: 0 auto;
     left: 0;

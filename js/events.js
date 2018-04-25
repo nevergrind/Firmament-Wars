@@ -607,13 +607,20 @@ var events = {
 
 $(document).on('keydown', function(e){
 	var x = e.keyCode;
-	console.info('x', x);
+	console.info('key: ', x);
 	if (e.ctrlKey){
 		if (x === 82){
 			// ctrl+r refresh
 			return false;
 		}
 	} else {
+		// F12
+		if (x === 123 && app.isApp) {
+			if (location.hostname === 'localhost' || my.account === 'maelfyn') {
+				return false;
+			}
+		}
+
 		if (g.view === 'title'){
 			if (!g.isModalOpen && isLoggedIn){
 				$("#title-chat-input").focus();

@@ -265,12 +265,12 @@ function updateTileInfo(tileId){
 		account = t.account;
 	}
 	// avatar
-	if (game.player[t.player].avatar){
+	/*if (game.player[t.player].avatar){
 		DOM.avatar.style.display = 'block';
 		DOM.avatar.src = game.player[t.player].avatar;
 	} else {
 		DOM.avatar.style.display = 'none';
-	}
+	}*/
 	// tileName and bars
 	var o = {
 		food: 0,

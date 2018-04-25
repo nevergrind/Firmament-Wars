@@ -305,7 +305,7 @@
 			<button id='cancelCreateGame'
 					type='button'
 					class='close-btn-wrap btn btn-sm fwBlue shadow4'>
-				<i class="close-btn fa fa-close"></i>
+				<span class="close-btn sharp-x">&times;</span>
 			</button>
 			<div class='header text-center'>
 				<h2 id="createGameHead" class="header">Create FFA Game</h2>
@@ -409,7 +409,7 @@
 			<button id='cancelCreateGame'
 					type='button'
 					class='close-btn-wrap btn btn-sm fwBlue shadow4'>
-				<i class="close-btn fa fa-close"></i>
+				<span class="close-btn sharp-x">&times;</span>
 			</button>
 			<div class="row text-center">
 				<div class='col-xs-12'>
@@ -451,7 +451,7 @@
 			<button id='configureNationDone'
 					type='button'
 					class='close-btn-wrap btn btn-sm fwBlue shadow4'>
-				<i class="close-btn fa fa-close"></i>
+				<span class="close-btn sharp-x">&times;</span>
 			</button>
 
 			<div class="text-center">
@@ -501,7 +501,7 @@
 			</div>
 			
 			
-			<div class="text-center">
+			<!--div class="text-center">
 				<div>
 					<hr class="fancyhr">
 					<h2 class='header'>Update Avatar</h2>
@@ -520,14 +520,14 @@
 				<div id="configure-nation-avatar-col-2">
 					<img id="configureAvatarImage" class="dictator no-select">
 				</div>
-			</div>
+			</div-->
 		</div>
 		
 		<div id="leaderboard" class="fw-primary title-modals">
 			<button id='leaderboardDone'
 					type='button'
 					class='close-btn-wrap btn btn-sm fwBlue shadow4'>
-				<i class="close-btn fa fa-close"></i>
+				<span class="close-btn sharp-x">&times;</span>
 			</button>
 			<div id="leaderboard-head">
 				<div>
@@ -553,8 +553,8 @@
 		<div id="targetWrap" class="no-select">
 			<div id="targetName" class="text-center shadow4">
 				<div id="targetNameAnchor">
-					<img id="avatar"
-						 src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
+					<!--img id="avatar"
+						 src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="-->
 					<img id="targetFlag"
 						 class="targetFlag"
 						 src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
@@ -825,7 +825,12 @@
 				<svg id="energy-timer-wrap"
 					 class="timer-tooltips"
 					 title="Turn ends when time expires or when all players have spent their energy">
-					<circle id="energyIndicator"></circle>
+					<circle id="energyIndicator"
+							r="15px"
+							cx="30px"
+							cy="30px"
+							stroke-dasharray="0,100"></circle>
+
 				</svg>
 				<div id="energy-label-wrap">
 					<img id="energy-icon" src="images/icons/energy.png" class="fw-icon">
@@ -897,7 +902,7 @@
 			<button id='hotkeysDone'
 					type='button'
 					class='close-btn-wrap btn btn-sm fwBlue shadow4'>
-				<i class="close-btn fa fa-close"></i>
+				<span class="close-btn sharp-x">&times;</span>
 			</button>
 		<h2 style="margin-bottom: .5rem" class='header text-center'>Hotkeys</h2>
 		<hr class="fancyhr">
@@ -970,7 +975,7 @@
 	
 	<div id="optionsModal" class='fw-primary title-modals'>
 		<button id='optionsDone' type='button' class='close-btn-wrap btn btn-sm fwBlue shadow4'>
-			<i class="close-btn fa fa-close"></i>
+			<span class="close-btn sharp-x">&times;</span>
 		</button>
 		<h2 style="margin-bottom: .5rem;" class='header text-center'>Options</h2>
 		<hr class="fancyhr">

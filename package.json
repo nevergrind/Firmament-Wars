@@ -33,7 +33,7 @@
     "min_height": 720,
     "max_width": 1920,
     "max_height": 1080,
-    "resizeable": true,
+    "resizeable": false,
     "fullscreen": true
   },
   "permissions": [
