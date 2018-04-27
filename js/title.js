@@ -193,7 +193,7 @@ var title = {
 	},
 	// adds player to chat room
 	addPlayer: function(account, flag, rating){
-		console.info("title.addPlayer 2", account, flag, rating);
+		//console.info("title.addPlayer 2", account, flag, rating);
 		title.players[account] = {
 			flag: flag
 		}

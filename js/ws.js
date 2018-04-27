@@ -30,9 +30,10 @@ var socket = {
 		try {
 			socket.zmq.unsubscribe(channel);
 		} catch(err){
-			console.info(err);
+			// console.info(err);
 		}
 	},
+	firstInit: 0,
 	setChannel: function(channel){
 		// change channel on title screen
 		if (g.view === 'title'){
@@ -42,7 +43,8 @@ var socket = {
 			if (!channel) {
 				g.chat("That channel name is not valid. Channel names may only contain alphanumeric values.");
 			}
-			else if (channel !== my.channel){
+			else if (!socket.firstInit || channel !== my.channel){
+				socket.firstInit = 1;
 				$.ajax({
 					type: "POST",
 					url: app.url + "php/titleChangeChannel.php",
@@ -66,7 +68,7 @@ var socket = {
 					// send message to my chat log
 					title.chat(data);
 					socket.zmq.subscribe('title:' + my.channel, function(topic, data) {
-						console.info("Data IN title:", data);
+						//console.info("Data IN title:", data);
 						if (g.ignore.indexOf(data.account) === -1){
 							title.chatReceive(data);
 						}
@@ -205,7 +207,7 @@ var socket = {
 			}
 			socket.initialConnection = false;
 			document.getElementById('titleChatHeaderChannel').innerHTML = my.channel;
-			socket.setChannel(initChannel);
+			socket.setChannel(my.channel); // should be usa-1
 		}
 		if (g.view === 'game'){
 			game.getGameState();
@@ -219,4 +221,3 @@ var socket = {
 		setTimeout(socket.init, socket.connectionRetryDuration);
 	}
 }
-socket.init();

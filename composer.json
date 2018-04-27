@@ -1,2 +1,5 @@
 {
+    "require": {
+        "da-mitchell/steam-api": "^2.1"
+    }
 }

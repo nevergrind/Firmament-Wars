@@ -115,7 +115,7 @@ var g = {
 		tiles: 85
 	},
 	updateUserInfo: function(){
-		if (location.host !== 'localhost' && !guest){
+		if (location.host !== 'localhost'){
 			$.ajax({
 				async: true,
 				type: 'GET',
@@ -140,27 +140,24 @@ var g = {
 		}
 	},
 	checkPlayerData: function(){
-		if (my.account.indexOf('guest_') !== 0){
-			// not a guest
-			var geo = localStorage.getItem(my.account+ '_geo');
-			var geoTime = localStorage.getItem(my.account+ '_geoTime');
-			var geoSeason = localStorage.getItem(my.account+ '_geoSeason');
-			if (geoTime !== null || geoSeason === null){
-				// longer than 90 days?
-				if ((Date.now() - geoTime) > 7776000 || geoSeason === null){
-					g.updateUserInfo();
-				}
-			} else if (geo === null){
+		var geo = localStorage.getItem(my.account+ '_geo');
+		var geoTime = localStorage.getItem(my.account+ '_geoTime');
+		var geoSeason = localStorage.getItem(my.account+ '_geoSeason');
+		if (geoTime !== null || geoSeason === null){
+			// longer than 90 days?
+			if ((Date.now() - geoTime) > 7776000 || geoSeason === null){
 				g.updateUserInfo();
 			}
-			// ignore list
-			var ignore = localStorage.getItem('ignore');
-			if (ignore !== null){
-				g.ignore = JSON.parse(ignore);
-			} else {
-				var foo = []; 
-				localStorage.setItem('ignore', JSON.stringify(foo));
-			}
+		} else if (geo === null){
+			g.updateUserInfo();
+		}
+		// ignore list
+		var ignore = localStorage.getItem('ignore');
+		if (ignore !== null){
+			g.ignore = JSON.parse(ignore);
+		} else {
+			var foo = [];
+			localStorage.setItem('ignore', JSON.stringify(foo));
 		}
 	},
 	config: {
@@ -296,6 +293,67 @@ var g = {
 			group: "South America",
 			name: ['Argentina', 'Bolivia', 'Brazil', 'Chile', 'Colombia', 'Ecuador', 'Paraguay', 'Peru', 'Uruguay', 'Venezuela']
 		},
+	},
+	initGameCallback: function(data) {
+		console.info('init-game', data.account, data);
+		my.channel = data.initChannel;
+		$('.timer-tooltips, #currentYear, .actionButtons').tooltip({
+			animation: false,
+			placement: 'left',
+			container: 'body'
+		});
+		$('[title]').tooltip({
+			animation: false,
+			placement: 'bottom',
+			container: 'body'
+		});
+		if (data.account) {
+			app.account = data.account; // for global reference
+			isLoggedIn = 1;
+			document.getElementById('logout').textContent = 'Logout ' + data.account;
+			$("#login-modal").remove();
+			// people playing firmament wars:
+			title.chat({
+				message: 'There are '+ data.currentPlayers +' people playing Firmament Wars.'
+			});
+			// set flag
+			document.getElementById('updateNationFlag').src = 'images/flags/'+ data.flag;
+			document.getElementById('selectedFlag').textContent = data.flagShort;
+			title.refreshGamesCallback(data.games);
+			// initChatId
+			my.account = data.account;
+			my.flag = data.flag;
+			my.rating = data.rating;
+			g.checkPlayerData();
+			title.friendGetCallback(data.friends);
+		}
+		else {
+			notLoggedIn();
+		}
+		// animate logo
+		/* blur(5px) hue-rotate(360deg) brightness(100%) contrast(100%) shadow(100%) (chrome not supported?) grayscale(100%) invert(100%) opacity(100%) saturate(100%) sepia(100%) */
+		var e = document.getElementById('firmamentWarsLogo');
+		function applyFilter(o) {
+			e.style.filter =
+				'drop-shadow(0px 0px '+ o.shadow +'px #048) ' +
+				'brightness('+ o.brightness +'%)';
+		}
+		var o = {
+			shadow: 2,
+			brightness: 100
+		};
+		TweenMax.to(o, 3, {
+			overwrite: 1,
+			shadow: 12,
+			brightness: 150,
+			repeat: -1,
+			yoyo: true,
+			ease: Power4.easeIn,
+			onUpdate: function() {
+				applyFilter(o);
+			}
+		});
+		socket.init();
 	}
 };
 g.init = (function(){
@@ -360,97 +418,59 @@ g.init = (function(){
 			});
 		}
 	});
-	var steam = {
-		screenName: '',
-		staticAccountId: '',
-	};
 	if (app.isApp) {
-		var greenworks = require('./greenworks');
+		// app login, check for steam ticket
+		var greenworks = require('./greenworks'),
+			steam = {
+				screenName: '',
+				steamid: '',
+				handle: 0
+			};
 		if (greenworks.initAPI()) {
 			greenworks.init();
 			var z = greenworks.getSteamId();
 			steam.screenName = z.screenName;
-			steam.staticAccountId = z.staticAccountId;
-		}
-	}
+			steam.steamid = z.steamId;
 
-	$.ajax({
-		type: "POST",
-		url: app.url + 'php/init-game.php',
-		data: {
-			screenName: steam.screenName,
-			staticAccountId: steam.staticAccountId,
-		}
-	}).done(function(data) {
-		console.info('init-game', data.account, data);
-		$('.timer-tooltips, #currentYear, .actionButtons').tooltip({
-			animation: false,
-			placement: 'left',
-			container: 'body'
-		});
-		$('[title]').tooltip({
-			animation: false,
-			placement: 'bottom',
-			container: 'body'
-		});
-		if (data.account) {
-			app.account = data.account; // for global reference
-			isLoggedIn = 1;
-			document.getElementById('logout').textContent = 'Logout ' + data.account;
-			$("#login-modal").remove();
-			// people playing firmament wars:
-			title.chat({
-				message: 'There are '+ data.currentPlayers +' people playing Firmament Wars.'
+			greenworks.getAuthSessionTicket(function(data) {
+				steam.handle = data.handle;
+
+				$.ajax({
+					type: 'POST',
+					url: app.url + 'php/init-game.php',
+					data: {
+						screenName: steam.screenName,
+						steamid: steam.steamid,
+						ticket: data.ticket.toString('hex')
+					}
+				}).done(function(data) {
+					g.initGameCallback(data);
+					greenworks.cancelAuthTicket(steam.handle);
+				}).fail(function() {
+					Msg("Unable to contact the server right now.");
+				});
 			});
-			// set flag
-			document.getElementById('updateNationFlag').src = 'images/flags/'+ data.flag;
-			document.getElementById('selectedFlag').textContent = data.flagShort;
-			title.refreshGamesCallback(data.games);
-			// initChatId
-			my.account = data.account;
-			my.flag = data.flag;
-			my.rating = data.rating;
-			g.checkPlayerData();
-			title.friendGetCallback(data.friends);
 		}
 		else {
-			notLoggedIn();
+			console.warn("Could not find Greenworks");
 		}
-		// animate logo
-		/*
-		blur(5px)
-		hue-rotate(360deg)
-		brightness(100%)
-		contrast(100%)
-		shadow(100%) (chrome not supported?)
-		grayscale(100%)
-		invert(100%)
-		opacity(100%)
-		saturate(100%)
-		sepia(100%)
-		 */
-		var e = document.getElementById('firmamentWarsLogo');
-		function applyFilter(o) {
-			e.style.filter =
-				'drop-shadow(0px 0px '+ o.shadow +'px #048) ' +
-				'brightness('+ o.brightness +'%)';
-		}
-		var o = {
-			shadow: 1,
-			brightness: 100,
-		};
-		TweenMax.to(o, 3, {
-		  overwrite: 1,
-		  shadow: 20,
-		  brightness: 200,
-		  onUpdate: function() {
-			applyFilter(o);
-		  },
-		  repeat: -1,
-		  yoyo: true,
-		  ease: Linear.easeNone
+	}
+	else {
+		// non-app login
+		$.ajax({
+			type: "POST",
+			url: app.url + 'php/init-game.php',
+			data: {
+				screenName: '',
+				steamid: '',
+				ticket: ''
+			}
+		}).done(function(data) {
+			g.initGameCallback(data);
+		}).fail(function(data) {
+			Msg(data.responseText);
 		});
-	});
+	}
 	// TODO separate this confusing logic a bit
 	if ((location.hostname === 'localhost' && location.hash !== '#stop') || 
 		localStorage.getItem('resync') && 

@@ -615,10 +615,8 @@ $(document).on('keydown', function(e){
 		}
 	} else {
 		// F12
-		if (x === 123 && app.isApp) {
-			if (location.hostname === 'localhost' || my.account === 'maelfyn') {
-				return false;
-			}
+		if (x === 123 && app.isApp && my.account.indexOf('maelfyn') === -1) {
+			return false;
 		}
 
 		if (g.view === 'title'){

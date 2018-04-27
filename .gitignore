@@ -14,3 +14,4 @@ images/
 lib/
 steam_appid.txt
 greenworks.js
+node_modules/
