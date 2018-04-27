@@ -295,6 +295,19 @@ var g = {
 		},
 	},
 	initGameCallback: function(data) {
+		// handle hiding/showing menu based on environment
+		if (app.isServer) {
+			$(".action-btn").remove();
+		}
+		else {
+			g.chat('Coming soon to Steam in 2018!');
+			TweenMax.staggerTo(document.getElementsByClassName('action-btn'), .5, {
+				startAt: { x: -30 },
+				x: 0,
+				opacity: 1
+			}, .1);
+		}
+
 		console.info('init-game', data.account, data);
 		my.channel = data.initChannel;
 		$('.timer-tooltips, #currentYear, .actionButtons').tooltip({

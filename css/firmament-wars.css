@@ -483,6 +483,10 @@ a:hover {
 	margin-top: 4rem;
 	z-index: 2;
 	width: 50%;
+	min-height: 19rem;
+}
+.action-btn {
+	opacity: 0;
 }
 #firmamentWarsLogo {
 	position: relative;

@@ -71,7 +71,7 @@ var stats = {
 		if (isMobile){
 			var str = '<img id="statWorld" style="display: none">';
 		} else {
-			var str = '<img id="statWorld" src="images/FlatWorld50-2.jpg">';
+			var str = '<img id="statWorld" src="images/FlatWorld90.jpg">';
 		}
 		str +=
 		'<div id="statResult" class="no-select">\

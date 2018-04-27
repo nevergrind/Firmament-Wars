@@ -327,7 +327,7 @@ var lobby = {
 			ease: Quad.easeIn
 		});
 		document.getElementById('lobbyFirmamentWarsLogo').src = 'images/title/firmament-wars-logo-1280.png';
-		document.getElementById('worldTitle').src = 'images/FlatWorld50-2.jpg';
+		document.getElementById('worldTitle').src = 'images/FlatWorld90.jpg';
 		
 		TweenMax.to('#titleMenu', d, {
 			x: '-100%',

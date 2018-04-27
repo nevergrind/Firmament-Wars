@@ -446,7 +446,7 @@ function triggerEndGame(msg, victory){
 	}, 1500);
 	stats.get();
 	if (!isMSIE && !isMSIE11 && !isMobile){
-		new Image('images/FlatWorld50-2.jpg');
+		new Image('images/FlatWorld90.jpg');
 	}
 	setTimeout(function(){
 		var e = document.getElementById('victoryScreen');
