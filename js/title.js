@@ -639,7 +639,7 @@ var title = {
 				// right col
 				str += 
 					'<div class="who-avatar-wrap">'+
-						data.img +
+						// data.img +
 						'<div class="who-ribbon-wrap">'+
 							getRibbonStr()+
 						'</div>'+
@@ -915,7 +915,15 @@ var title = {
 		} else if (!g.rankedMode && (max < 2 || max > 8 || max % 1 !== 0)){
 			Msg("Game must have 2-8 players.", 1);
 		} else {
-			title.createGameService(name, pw, title.mapData[g.map.key].name, max, g.rankedMode, g.teamMode, speed);
+			title.createGameService(
+				name,
+				pw,
+				title.mapData[g.map.key].name,
+				max,
+				g.rankedMode,
+				g.teamMode,
+				speed
+			);
 		}
 	},
 	openWindow: function(href) {
@@ -933,7 +941,7 @@ var title = {
 		audio.play('click');
 		g.rankedMode = rankedMode;
 		g.teamMode = teamMode;
-		g.speed = speed;
+		// g.speed = speed;
 		$.ajax({
 			url: app.url + 'php/createGame.php',
 			data: {
@@ -998,7 +1006,7 @@ var title = {
 		game.id = data.id;
 		game.name = data.gameName;
 		g.map = data.mapData;
-		g.speed = data.speed;
+		// g.speed = data.speed;
 		lobby.init(data);
 		lobby.join(); // normal join
 		//$("#titleMenu, #titleChat").remove();

@@ -11,8 +11,8 @@ var lobby = {
 		{ account: '' },
 		{ account: '' }
 	],
-	startClassOn:  "btn btn-info btn-md btn-block btn-responsive shadow4 lobbyButtons",
-	startClassOff: "btn btn-default btn-md btn-block btn-responsive shadow4 lobbyButtons",
+	startClassOn:  "btn btn-md btn-block btn-responsive shadow4 lobbyButtons",
+	startClassOff: "btn btn-md btn-block btn-responsive shadow4 lobbyButtons",
 	totalPlayers: function(){
 		var count = 0;
 		for (var i=0, len=lobby.data.length; i<len; i++){
@@ -184,8 +184,8 @@ var lobby = {
 				document.getElementById('lobbyGamePasswordWrap').style.display = 'block';
 				document.getElementById('lobbyGamePassword').innerHTML = x.password;
 			}
-			g.speed = x.speed;
-			document.getElementById("lobbyGameSpeed").innerHTML = x.speed;
+			/*g.speed = x.speed;
+			document.getElementById("lobbyGameSpeed").innerHTML = x.speed;*/
 			document.getElementById("lobbyGameMap").innerHTML = x.map;
 			document.getElementById("lobbyGameMax").innerHTML = x.max;
 			document.getElementById("startGame").style.display = x.player === 1 ? "block" : "none";
@@ -793,7 +793,7 @@ function Nation(){
 	this.playerColor = 0;
 	this.team = 1;
 	this.alive = true;
-	this.avatar = '';
+	// this.avatar = '';
 	this.government = '';
 	return this;
 }
@@ -924,7 +924,7 @@ function loadGameState(){
 				z.playerColor = d.playerColor;
 				z.team = d.team;
 				z.government = d.government;
-				z.avatar = d.avatar;
+				// z.avatar = d.avatar;
 				z.cpu = d.cpu;
 				z.difficulty = d.difficulty;
 				z.difficultyShort = d.difficulty.replace(/ /g, '');
@@ -1171,6 +1171,7 @@ function loadGameState(){
 				// add warning for players
 				game.startGameState();
 				ui.setCurrentYear(data.resourceTick);
+				animate.paths();
 			}, 350);
 		}).fail(function(data){
 			setTimeout(function(){

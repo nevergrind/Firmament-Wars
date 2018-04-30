@@ -467,6 +467,7 @@ a:hover {
 	position: relative;
 	font-size: 4rem!important;
 	top: -2.15rem;
+	left: 0rem;
 }
 #firmament-wars-logo-wrap {
 	position: relative;
@@ -900,7 +901,7 @@ tbody {
     background: rgba(16, 56, 96, 1);
     color: #aef!important;
 	cursor: url('cursor/hover.png'), pointer;
-    border: 1px outset #2e6da4;
+    border: 1px solid #2e6da4;
 	box-shadow: 0 0 0 1px #012 inset;
     border-radius: 4px;
     text-shadow: 1px 1px #000, -1px 0 #000, 1px 0 #000, -1px 1px #000, 1px -1px #000, -1px -1px #000!important
@@ -910,7 +911,7 @@ tbody {
 }
 .fwBlue:active {
     background: rgba(6, 46, 86, 1);
-    border: 1px inset #2e6da4!important;
+    border: 1px solid #1e4d84!important;
 }
 .fwBlue:focus {
 	outline: none!important;
@@ -1587,6 +1588,9 @@ table td,
 .table > tbody > tr > td {
 	padding: .4rem .8rem 0 0!important;
 }
+.table > tbody > tr > td:first-child {
+	padding: .4rem .8rem 0 .8rem!important;
+}
 .resourceIcon {
     margin-right: .2rem
 }
@@ -1679,6 +1683,30 @@ audio,
     z-index: 9999;
 	background: rgba(0,0,0,.8);
 }
+#createGameNameWrap {
+	margin: 1rem 0;
+}
+#create-map-select {
+	margin: 2rem 0;
+}
+.lobbyButtons {
+	position: relative;
+	background: rgba(0, 48, 112, .8);
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	max-width: 20rem;
+    border: 1px double #37d!important;
+    box-shadow: 0 0 2rem rgba(0, 40, 148, 1) inset;
+	cursor: url('cursor/hover.png'), pointer;
+}
+.lobbyButtons:hover {
+	color: #fff;
+    background: rgba(0, 48, 112, 1)
+}
+.lobbyButtons:active {
+	color: #aef!important;
+}
 .endBtn {
     border: 1px solid #37d;
     box-shadow: 0 0 2rem rgba(0, 40, 148, 1) inset;
@@ -1759,6 +1787,7 @@ audio,
     stroke-linejoin: round;
     overflow: visible;
 	cursor: url('cursor/hover.png'), pointer;
+	filter: url(#emboss);
 }
 .dead {
     fill: #666;
@@ -2036,13 +2065,6 @@ circle {
 	background: rgba(0,0,0,.8);
     padding: 1rem 5rem
 }
-.lobbyButtons {
-    position: relative;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    max-width: 20rem
-}
 .joinGameInputs {
     color: #bef;
     background: none;
@@ -2053,7 +2075,7 @@ circle {
     width: 100%
 }
 .privateRow {
-    margin: 0 2.5rem
+    margin: 1.5rem 2.5rem
 }
 .privateLabel {
     text-align: right;
@@ -2317,6 +2339,10 @@ table {
 #lobbyWrap {
     width: 96%;
     padding: 0
+}
+.lobbyFlags {
+    width: 7.2rem;
+	height: 4.8rem;
 }
 .lobbyRow {
     display: none;
@@ -2847,6 +2873,8 @@ header #options {
 #hotkeysModal {
 	position: absolute;
 	font-size: 2rem;
+	width: 64rem;
+	max-width: 64rem;
     background: #000
 }
 #hotkeysFormWrap,
@@ -3062,17 +3090,17 @@ header #options {
     letter-spacing: 2px
 }
 #statsEndGame {
-	background: rgba(16, 56, 96, 1);
+	background: rgba(0, 48, 112, .8);
 	margin: 1rem auto;
 	cursor: url('cursor/hover.png'), pointer;
 }
 #statsEndGame:hover {
-	background: rgba(16, 56, 96, 1);
+	background: rgba(0, 48, 112, 1);
 	color: #fff;
 	cursor: url('cursor/hover.png'), pointer;
 }
 #statsEndGame:active {
-	color: #aef;
+	color: #aef!important;
 }
 .statTD {
     text-align: center
@@ -3105,8 +3133,11 @@ header #options {
 	cursor: url('cursor/hover.png'), pointer;
     background-image: linear-gradient(to bottom, #8bf 0, #0480be 100%)
 }
+.btn {
+	cursor: url('cursor/hover.png'), pointer!important;
+}
 .fa {
-    cursor: default
+	cursor: url('cursor/default.png'), pointer!important;
 }
 .text-right {
     text-align: right
@@ -3735,10 +3766,6 @@ input[type=number]::-webkit-outer-spin-button {
 .Arizona {
     background-position: -1900% -700%
 }
-.lobbyFlags {
-    width: 7.2rem;
-	height: 4.8rem;
-}
 .statsFlags {
     position: relative;
     width: 8rem;
@@ -3770,11 +3797,17 @@ input[type=number]::-webkit-outer-spin-button {
     html {
         font-size: 11px
     }
+	.lobbyRow {
+		margin: .5rem 0 0 1rem;
+	}
 }
 @media all and (min-width: 1367px) {
     html {
         font-size: 12px
     }
+	.lobbyRow {
+		margin: 1rem 0 0 1rem;
+	}
 	.lobbyFlags {
 		width: 9rem;
 		height: 6rem;

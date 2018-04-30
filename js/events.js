@@ -112,9 +112,9 @@ var events = {
 			});
 			title.showBackdrop(e3);
 			
-			var speed = localStorage.getItem('gameSpeed2') === null ? 15 : localStorage.getItem('gameSpeed2');
+			/*var speed = localStorage.getItem('gameSpeed2') === null ? 15 : localStorage.getItem('gameSpeed2');
 			g.speed = speed;
-			$("#createGameSpeed").text(speed);
+			$("#createGameSpeed").text(speed);*/
 		}
 		$('#mainWrap').on(ui.click, '.chat-join', function(){
 			socket.setChannel($(this).text());
@@ -221,11 +221,11 @@ var events = {
 			g.chat(game.ribbonTitle[x] +": "+ game.ribbonDescription[x], 'chat-warning'); 
 		});
 		$("#toggleNation").on(ui.click, function(){
-			$.ajax({
+			/*$.ajax({
 				url: app.url + 'php/loadAvatar.php',
 			}).done(function(data){
 				document.getElementById('configureAvatarImage').src = data.uri;
-			});
+			});*/
 			TweenMax.to('#configureNation', g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
@@ -556,7 +556,7 @@ var events = {
 			g.map.name = x;
 			g.map.key = key;
 			document.getElementById('createGameMap').innerHTML = x;
-			document.getElementById('createGameTiles').innerHTML = title.mapData[key].tiles;
+			// $('#createGameTiles').html(title.mapData[key].tiles);
 			document.getElementById('createGamePlayers').innerHTML = title.mapData[key].players;
 			var e1 = $("#gamePlayers");
 			e1.attr("max", title.mapData[key].players);
@@ -568,13 +568,13 @@ var events = {
 		$("#mainWrap").on(ui.click, '.gameSelect', function(e){
 			e.preventDefault();
 		});
-		$("#mainWrap").on(ui.click, '.speedSelect', function(e){
+		/*$("#mainWrap").on(ui.click, '.speedSelect', function(e){
 			var x = $(this).text()*1;
 			g.speed = x;
 			$("#createGameSpeed").text(x);
 			localStorage.setItem('gameSpeed2', x);
 			e.preventDefault();
-		});
+		});*/
 	})(),
 	audio: (function(){
 		$("#bgmusic").on('ended', function() {

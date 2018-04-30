@@ -41,7 +41,7 @@ var g = {
 	titleFlashing: false,
 	name: "",
 	password: "",
-	speed: 15,
+	speed: 24,
 	focusUpdateNationName: false,
 	focusGameName: false,
 	view: "title",
@@ -297,10 +297,10 @@ var g = {
 	initGameCallback: function(data) {
 		// handle hiding/showing menu based on environment
 		if (app.isServer) {
-			$(".action-btn").remove();
+			$(".action-btn, #toggleNation").remove();
+			g.chat('Coming soon to Steam in 2018!');
 		}
 		else {
-			g.chat('Coming soon to Steam in 2018!');
 			TweenMax.staggerTo(document.getElementsByClassName('action-btn'), .5, {
 				startAt: { x: -30 },
 				x: 0,
@@ -323,8 +323,8 @@ var g = {
 		if (data.account) {
 			app.account = data.account; // for global reference
 			isLoggedIn = 1;
-			document.getElementById('logout').textContent = 'Logout ' + data.account;
-			$("#login-modal").remove();
+			$('#logout').text('Logout ' + data.account);
+			app.isApp && $("#login-modal").remove();
 			// people playing firmament wars:
 			title.chat({
 				message: 'There are '+ data.currentPlayers +' people playing Firmament Wars.'
@@ -502,7 +502,7 @@ g.init = (function(){
 				my.team = data.team;
 				game.id = data.gameId;
 				g.map = data.mapData;
-				g.speed = data.speed;
+				// g.speed = data.speed;
 				// join lobby in progress
 				setTimeout(function(){
 					lobby.init(data);
@@ -1193,7 +1193,7 @@ function initDom(){
 		targetLineShadow: d.getElementById('targetLineShadow'),
 		targetCrosshair: d.getElementById('targetCrosshair'),
 		target: d.getElementById('target'),
-		avatar: d.getElementById('avatar'),
+		//avatar: d.getElementById('avatar'),
 		//ribbonWrap: d.getElementById('ribbonWrap'),
 		targetName: d.getElementById('targetName'),
 		oBonus: d.getElementById('oBonus'),

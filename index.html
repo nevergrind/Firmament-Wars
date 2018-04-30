@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head id='head'>
-	<title>Firmament Wars | Free Multiplayer Risk-Like Grand Strategy War Game</title>
+	<title>Firmament Wars | Multiplayer Strategic Warfare</title>
 	<meta charset="utf-8">
 	<meta http-equiv="Cache-control" content="no-cache">
-	<meta name="keywords" content="free, risk, browser, multiplayer, online, strategy, html5">
-	<meta name="description" content="A free multiplayer strategy game playable in your web browser! Gameplay is like Risk meets Civilization Revolution! Offers team, FFA, and ranked modes!">
+	<meta name="keywords" content="free, cooperative, browser, multiplayer, online, strategy, html5">
+	<meta name="description" content="A free multiplayer strategy game with Team, FFA, and Ranked modes!">
 	<meta name="author" content="Joe Leonard">
 	<meta name="referrer" content="always">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -149,7 +149,7 @@
 					<a id="leaderboardBtn" type="button" class="btn fwBlue btn-responsive shadow4">
 						Leaderboard
 					</a>
-					<a id="logout" class="btn fwBlue btn-responsive shadow4">Loading...</a>
+					<a id="logout" class="btn fwBlue btn-responsive shadow4">&nbsp;</a>
 				</div>
 				<div style="display: flex; align-items: center;">&ensp;
 					<i id="options" class="pointer options fa fa-gear" title="Options"></i>
@@ -293,8 +293,8 @@
 				</div>
 				
 				<div id="lobbyButtonWrap" class="fw-primary text-center lobbyRelWrap">
-					<button id='startGame' type='button' class='btn btn-default btn-md btn-block btn-responsive shadow4 lobbyButtons none'>Start Game</button>
-					<button id='cancelGame' type='button' class='btn btn-default btn-md btn-block btn-responsive shadow4 lobbyButtons'>Exit</button>
+					<button id='startGame' type='button' class='btn btn-md btn-block btn-responsive shadow4 lobbyButtons none'>Start Game</button>
+					<button id='cancelGame' type='button' class='btn btn-md btn-block btn-responsive shadow4 lobbyButtons'>Exit</button>
 					<div id='countdown' class='text-warning'></div>
 				</div>
 			</div>
@@ -333,17 +333,7 @@
 					</div>
 				</div>
 				
-				<div id="createGameMaxPlayerWrap" class="pull-right">
-					<div class='buffer2'>
-						<label class='control-label'>Maximum Number of Players</label>
-					</div>
-					
-					<div class='buffer'>
-						<input id='gamePlayers' type='number' class='form-control createGameInput' id='gamePlayers' value='8' min='2' max='8'>
-					</div>
-				</div>
-				
-				<div id="createGameSpeedWrap">
+				<!--div id="createGameSpeedWrap">
 					<div class='buffer2'>
 						<label class='control-label'>Turn Duration</label>
 					</div>
@@ -354,7 +344,7 @@
 									class='btn btn-primary dropdown-toggle shadow4 fwDropdownButton'
 									type='button'
 									data-toggle='dropdown'>
-								<span id='createGameSpeed'>15</span>
+								<span id='createGameSpeed'>24</span>
 								<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 							</button>
 							<ul id='speedDropdown' class='dropdown-menu fwDropdown createGameInput' value="15">
@@ -365,9 +355,21 @@
 							</ul>
 						</div>
 					</div>
-				</div>
+				</div-->
 				
-				<div>
+				<div id="create-map-select">
+
+					<div id="createGameMaxPlayerWrap" class="pull-right">
+						<div class='buffer2'>
+							<label class='control-label'>Maximum Players:</label>
+							<span id='createGamePlayers'>8</span>
+						</div>
+
+						<div class='buffer'>
+							<input id='gamePlayers' type='number' class='form-control createGameInput' id='gamePlayers' value='8' min='2' max='8'>
+						</div>
+					</div>
+
 					<div class='buffer2'>
 						<label class='control-label'>Map</label>
 					</div>
@@ -380,20 +382,6 @@
 							</button>
 							<ul id='mapDropdown' class='dropdown-menu fwDropdown createGameInput'></ul>
 						</div>
-					</div>
-					
-					<div class='buffer2'>
-						<label class='control-label'>Map Details</label>
-					</div>
-					<div class='buffer'>
-						<span title='Max players on this map'>
-							<i class='fa fa-users'></i>
-							<span id='createGamePlayers'>8</span>
-						</span>&ensp;
-						<span title='Number of territories on this map'>
-							<i class='fa fa-globe'></i> 
-							<span id='createGameTiles'>78</span>
-						</span>
 					</div>
 				</div>
 			</div>
@@ -418,7 +406,7 @@
 				</div>
 			</div>
 			
-			<div class="row buffer2 privateRow">
+			<div class="row privateRow">
 				<div class='col-xs-4 privateLabel'>
 					<label class="control-label">Game Name</label>
 				</div>
@@ -841,7 +829,6 @@
 			</div>
 			<!--button id="endTurn" class="btn btn-xs btn-responsive fwBlue">End Turn</button-->
 			<div id="currentYear"
-				 class="no-pointer"
 				 data-placement="top"
 				 title="It's the current year!">4000 B.C.</div>
 		</div>

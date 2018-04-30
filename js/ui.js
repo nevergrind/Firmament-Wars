@@ -286,10 +286,10 @@ function updateTileInfo(tileId){
 	}
 	var resources =
 	'<div>' + t.food + '<img src="images/icons/food.png" class="fw-icon"></div>'+
-	'<div>' + t.production + '<img src="images/icons/production.png" class="fw-icon"></div>'+
+	(t.production ? '<div>' + t.production + '<img src="images/icons/production.png" class="fw-icon"></div>' : '') +
 	(t.culture ? '<div>' + t.culture + '<img src="images/icons/culture.png" class="fw-icon"></div>' : '') +
 	(t.defense ?
-		'<div>' + t.defense + '<img src="images/icons/production.png" class="fw-icon"></div>' : '');
+		'<div>' + t.defense + '<img src="images/icons/tile-defense.png" class="fw-icon"></div>' : '');
 	DOM.targetCapStar.style.display = t.capital ? 'inline' : 'none';
 	DOM.targetNameWrap.innerHTML = name;
 	DOM.targetResources.innerHTML = resources;

@@ -105,6 +105,16 @@ var animate = {
 		// update bars
 		this.updateMapBars(tile);
 	},
+	paths: function() {
+		TweenMax.to('.paths > path', 1.5, {
+			startAt: {
+				strokeDashoffset: 0
+			},
+			strokeDashoffset: -12,
+			repeat: -1,
+			ease: Linear.easeNone
+		});
+	},
 	updateMapBars: function(tile){
 		var box = DOM['unit' + tile].getBBox(),
 			x = box.x + box.width/2 - 10,
@@ -123,10 +133,10 @@ var animate = {
 			widthPerTick = 5,
 			widthMax = 40;
 		
-		if (game.tiles[i].food > 2){
+		if (game.tiles[i].food){
 			boxHeight += barHeight + barPad;
 		}
-		if (game.tiles[i].production > 1){
+		if (game.tiles[i].production){
 			boxHeight += barHeight + barPad;
 		}
 		if (game.tiles[i].culture){
@@ -156,7 +166,7 @@ var animate = {
 			// food
 			y += 23; // fixed value?
 			//x += 1 // padding
-			if (game.tiles[i].food > 2){
+			if (game.tiles[i].food){
 				y += barHeight + barPad;
 				var svg = document.createElementNS('http://www.w3.org/2000/svg', 'line');
 				svg.setAttributeNS(null,"x1",x);
@@ -170,7 +180,7 @@ var animate = {
 				DOM.mapBars.appendChild(svg);
 			}
 			// production
-			if (game.tiles[i].production > 1){
+			if (game.tiles[i].production){
 				y += barHeight + barPad;
 				var productionWidth = game.tiles[i].production * (widthPerTick * 2);
 				if (productionWidth > widthMax){
