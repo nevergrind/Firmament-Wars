@@ -3,7 +3,7 @@
 var ui = {
 	resizeWindow: function() {
 		g.view === 'game' && worldMap[0].applyBounds();
-		console.info("RESIZING");
+		g.screen.resizeMap();
 	},
 	windowDefault: 'Full Screen',
 	initWindow: function() {
@@ -22,20 +22,20 @@ var ui = {
 				if (size === 'Full Screen') {
 					!win.isFullscreen && win.enterFullscreen();
 				}
-				else if (size === 'Windowed - 1920 x 1080') {
+				else if (size === '1920 x 1080') {
 					win.isFullscreen && win.leaveFullscreen();
 					win.resizeTo(1920, 1080);
 					win.maximize();
 				}
-				else if (size === 'Windowed - 1600 x 900') {
+				else if (size === '1600 x 900') {
 					win.isFullscreen && win.leaveFullscreen();
 					win.resizeTo(1600, 900);
 				}
-				else if (size === 'Windowed - 1360 x 768') {
+				else if (size === '1360 x 768') {
 					win.isFullscreen && win.leaveFullscreen();
 					win.resizeTo(1360, 768);
 				}
-				else if (size === 'Windowed - 1280 x 720') {
+				else if (size === '1280 x 720') {
 					win.isFullscreen && win.leaveFullscreen();
 					win.resizeTo(1280, 720);
 				}

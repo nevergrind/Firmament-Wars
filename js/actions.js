@@ -15,7 +15,7 @@ var action = {
 		if (msg === undefined){
 			msg = "Not enough production!";
 		}
-		Msg(msg, 1.5);
+		g.msg(msg, 1.5);
 		my.clearHud();
 		ui.showTarget(DOM['land' + my.tgt]);
 	},
@@ -30,7 +30,7 @@ var action = {
 			return;
 		}
 		if (game.tiles[my.tgt].units < o.minimum){
-			Msg("You need at least " + o.minimum + " troops to attack!", 1.5);
+			g.msg("You need at least " + o.minimum + " troops to attack!", 1.5);
 			my.clearHud();
 			return;
 		}
@@ -61,7 +61,7 @@ var action = {
 		// can't move to maxed friendly tile
 		if (game.tiles[defender].player === my.player){
 			if (game.tiles[defender].units >= 255){
-				Msg("That territory has the maximum number of units!", 1.5);
+				g.msg("That territory has the maximum number of units!", 1.5);
 				my.clearHud();
 				return;
 			}
@@ -70,7 +70,7 @@ var action = {
 		my.attackOn = false;
 		my.attackName = '';
 		if (game.tiles[my.tgt].units === 1){
-			Msg("You need at least 2 troops to move/attack!", 1.5);
+			g.msg("You need at least 2 troops to move/attack!", 1.5);
 			my.clearHud();
 			return;
 		}
@@ -88,7 +88,7 @@ var action = {
 		if (g.teamMode && game.tiles[defender].player){
 			if (my.account !== game.tiles[defender].account){
 				if (my.team === game.player[game.tiles[defender].player].team){
-					Msg("Friendly fire! That's your teammate!");
+					g.msg("Friendly fire! That's your teammate!");
 				}
 			}
 		}
@@ -168,7 +168,7 @@ var action = {
 	},
 	targetNotAdjacent: function(msg, attacker){
 		audio.play('error');
-		Msg(msg, 1.5);
+		g.msg(msg, 1.5);
 		// set target attacker
 		ui.showTarget(DOM['land' + attacker]);
 	},
@@ -259,7 +259,7 @@ var action = {
 			setProduction(data);
 		}).fail(function(e){
 			console.info(e.responseText);
-			Msg(e.statusText);
+			g.msg(e.statusText);
 			audio.play('error');
 		});
 	},
@@ -293,7 +293,7 @@ var action = {
 			console.info('error: ', e);
 			audio.play('error');
 			if (e.statusText){
-				Msg(e.statusText, 1.5);
+				g.msg(e.statusText, 1.5);
 			}
 		});
 	},
@@ -337,7 +337,7 @@ var action = {
 				}).fail(function(e){
 					console.info('error: ', e);
 					if (e.statusText){
-						Msg(e.statusText, 1.5);
+						g.msg(e.statusText, 1.5);
 					}
 				});
 			}, 1000);
@@ -345,7 +345,7 @@ var action = {
 			console.info('error: ', e);
 			audio.play('error');
 			if (e.statusText){
-				Msg(e.statusText, 1.5);
+				g.msg(e.statusText, 1.5);
 			}
 		});
 		
@@ -388,7 +388,7 @@ var action = {
 			console.info('error: ', e);
 			audio.play('error');
 			if (e.statusText){
-				Msg(e.statusText, 1.5);
+				g.msg(e.statusText, 1.5);
 			}
 		});
 		

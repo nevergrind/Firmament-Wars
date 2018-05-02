@@ -343,6 +343,9 @@ var lobby = {
 						}, {
 							autoAlpha: 1
 						});
+						// add cpu automatically in Play Now
+						title.addCpu && lobby.addCpuPlayer();
+						title.addCpu = 0;
 					}
 				});
 			}
@@ -413,12 +416,11 @@ var lobby = {
 					});
 				}
 			})();
-			delete lobby.join;
 		}
 	},
 	hostLeft: function(){
 		setTimeout(function(){
-			Msg("The host has left the lobby.");
+			g.msg("The host has left the lobby.");
 			setTimeout(function(){
 				exitGame(true);
 			}, 1000);
@@ -531,9 +533,6 @@ var lobby = {
 			} else {
 				startGame.className = lobby.startClassOn;
 			}
-			// add cpu automatically in Play Now
-			title.addCpu && lobby.addCpuPlayer();
-			title.addCpu = 0;
 		}
 	},
 	countdown: function(data){
@@ -600,14 +599,14 @@ var lobby = {
 					type: "GET",
 					url: app.url +"php/startGame.php"
 				}).fail(function(data){
-					Msg(data.statusText);
+					g.msg(data.statusText);
 					startGame.style.display = "block";
 					cancelGame.style.display = 'block';
 				}).always(function(){
 					g.unlock();
 				});
 			} else {
-				Msg("You need two players to start a game! Wait for players to join or add a computer player to begin.");
+				g.msg("You need two players to start a game! Wait for players to join or add a computer player to begin.");
 			}
 		}
 	}
@@ -841,7 +840,7 @@ function loadGameState(){
 						loadGameState(); // try again
 					}, 500);
 				} else {
-					Msg("Failed to load game data");
+					g.msg("Failed to load game data");
 					localStorage.setItem('reload', false);
 					setTimeout(function(){
 						window.onbeforeunload = null;

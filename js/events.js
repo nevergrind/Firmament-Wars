@@ -133,9 +133,9 @@ var events = {
 			title.createGame();
 		});
 		$("#play-now-btn").on(ui.click, function(){
-			title.createGameService(my.account +'_'+ ~~(Math.random()*999999), '', 'Earth Omega', 8, 0, 0, 20);
 			title.addCpu = 1;
-			
+			title.createGameService(my.account +'_'+ ~~(Math.random()*999999), '', 'Earth Omega', 8, 0, 0, 20);
+
 		});
 		if (!app.isLocal) {
 			$(document).on('contextmenu', function(){ return false; });
@@ -329,7 +329,7 @@ var events = {
 					src: "images/flags/" + my.selectedFlagFull,
 					title: my.selectedFlag
 				});
-				Msg("Your nation's flag is now: " + my.selectedFlag);
+				g.msg("Your nation's flag is now: " + my.selectedFlag);
 				document.getElementById('selectedFlag').textContent = my.selectedFlag;
 				$("[title]")
 					.tooltip('fixTitle')
@@ -376,7 +376,7 @@ var events = {
 			$("#joinGamePassword").val();
 			$(".wars-FFA").filter(":first").trigger(ui.click); 
 			if (!$("#joinGame").val()){
-				Msg("No FFA games found!", 1.5);
+				g.msg("No FFA games found!", 1.5);
 			} else {
 				title.joinGame();
 			}
@@ -387,7 +387,7 @@ var events = {
 			$("#joinGamePassword").val();
 			$(".wars-Team").filter(":first").trigger(ui.click); 
 			if (!$("#joinGame").val()){
-				Msg("No team games found!", 1.5);
+				g.msg("No team games found!", 1.5);
 			} else {
 				title.joinGame();
 			}
@@ -404,7 +404,7 @@ var events = {
 			audio.play('click');
 			g.lock(1);
 			g.searchingGame = true;
-			Msg("Searching for ranked games...", 0);
+			g.msg("Searching for ranked games...", 0);
 			(function repeat(count){
 				if (count < 4 && !g.joinedGame){
 					setTimeout(function(){
@@ -428,7 +428,7 @@ var events = {
 					});
 				} else {
 					if (!g.joinedGame && g.searchingGame){
-						Msg("No ranked games found! Try creating a ranked game instead.", 5);
+						g.msg("No ranked games found! Try creating a ranked game instead.", 5);
 						g.unlock();
 						g.searchingGame = false;
 					}
@@ -486,7 +486,7 @@ var events = {
 			}).done(function(data){
 				my.playerColor = data.playerColor;
 			}).fail(function(data){
-				Msg(data.statusText, 1.5);
+				g.msg(data.statusText, 1.5);
 			});
 		}).on(ui.click, '.teamChoice', function(e){
 			var team = $(this).text().slice(5),
@@ -616,7 +616,7 @@ $(document).on('keydown', function(e){
 	} else {
 		// F12
 		if (x === 123 && app.isApp && my.account.indexOf('maelfyn') === -1) {
-			return false;
+			//return false;
 		}
 
 		if (g.view === 'title'){

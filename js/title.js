@@ -908,12 +908,12 @@ var title = {
 			speed = g.speed;
 			
 		if (!g.rankedMode && (name.length < 4 || name.length > 32)){
-			Msg("Game name must be at least 4-32 characters.", 1);
+			g.msg("Game name must be at least 4-32 characters.", 1);
 			setTimeout(function(){
 				$("#gameName").focus().select();
 			}, 100);
 		} else if (!g.rankedMode && (max < 2 || max > 8 || max % 1 !== 0)){
-			Msg("Game must have 2-8 players.", 1);
+			g.msg("Game must have 2-8 players.", 1);
 		} else {
 			title.createGameService(
 				name,
@@ -966,14 +966,14 @@ var title = {
 			socket.joinGame();
 			lobby.styleStartGame();
 		}).fail(function(e){
-			Msg(e.statusText);
+			g.msg(e.statusText);
 			g.unlock(1);
 		});
 	},
 	joinGame: function(){
 		g.name = $("#joinGame").val();
 		if (!g.name){
-			Msg("Game name is not valid!", 1.5);
+			g.msg("Game name is not valid!", 1.5);
 			$("#joinGame").focus().select();
 			return;
 		}
@@ -990,7 +990,7 @@ var title = {
 			title.joinGameCallback(data);
 		}).fail(function(data){
 			console.info(data);
-			Msg(data.statusText, 1.5);
+			g.msg(data.statusText, 1.5);
 		}).always(function(){
 			g.unlock();
 		});
@@ -1022,9 +1022,9 @@ var title = {
 				name: x
 			}
 		}).done(function(data) {
-			Msg("Your new nation name is: " + x);
+			g.msg("Your new nation name is: " + x);
 		}).fail(function(e){
-			Msg(e.statusText);
+			g.msg(e.statusText);
 		}).always(function(){
 			g.unlock();
 		});

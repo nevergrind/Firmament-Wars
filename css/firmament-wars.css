@@ -1113,7 +1113,6 @@ tbody {
     position: absolute;
     top: 3rem;
     right: 21rem;
-	height: 6rem;
     z-index: 9999;
     background: rgba(0, 0, 0, 0);
 	border: 0!important;
@@ -1327,9 +1326,6 @@ tbody {
 	font-family: Cinzel;
 	text-align: center;
 }
-#available-troops {
-	padding: .5rem;
-}
 #game-mode {
 	display: flex;
 	font-family: Cinzel;
@@ -1337,11 +1333,22 @@ tbody {
 	color: #bef;
 	justify-content: space-between;
 }
+#available-troops {
+	position: relative;
+	padding: .5rem;
+}
+#troop-icon {
+	position: absolute;
+	right: -3rem;
+	top: .5rem;
+}
 #manpower {
-	padding: 0;
+	padding: 0 .5rem 0 0;
 	width: 7rem;
 	font-size: 3.5rem;
+	text-align: right;
 	align-self: center;
+	z-index: 1;
 }
 #ui2-head {
     position: absolute;
@@ -1787,11 +1794,16 @@ audio,
     stroke-linejoin: round;
     overflow: visible;
 	cursor: url('cursor/hover.png'), pointer;
-	filter: url(#emboss);
+	/*filter: url(#emboss);*/
+	transform: translateZ(0); /*for older browsers*/
+  	/*will-change: transform;*/
 }
 .dead {
     fill: #666;
     stroke: #111
+}
+#logout {
+	display: none;
 }
 text {
     fill: rgba(255, 255, 255, 1);

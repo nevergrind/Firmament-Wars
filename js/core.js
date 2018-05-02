@@ -5,6 +5,46 @@ $.ajaxSetup({
 });
 TweenMax.defaultEase = Quad.easeOut;
 var g = {
+	msg: function(msg, d) {
+		var e = document.getElementById('Msg');
+		e.innerHTML = msg;
+		if (d === 0){
+			TweenMax.set(e, {
+				overwrite: 1,
+				startAt: {
+					opacity: 1
+				}
+			});
+		} else {
+			if (!d || d < .5){
+				d = 2;
+			}
+			TweenMax.to(e, ui.delay(d), {
+				overwrite: 1,
+				startAt: {
+					opacity: 1
+				},
+				onComplete: function(){
+					TweenMax.to(this.target, .2, {
+						opacity: 0
+					});
+				}
+			});
+		}
+		// split text animation
+		var tl = new TimelineMax();
+		var split = new SplitText(e, {
+			type: "words,chars"
+		});
+		var chars = split.chars;
+		tl.staggerFromTo(chars, .01, {
+			immediateRender: true,
+			alpha: 0
+		}, {
+			delay: .1,
+			alpha: 1
+		}, .01);
+	},
 	gameDuration: 0,
 	spectateStatus: 0,
 	modalSpeed: isMobile ? 0 : .5,
@@ -41,7 +81,7 @@ var g = {
 	titleFlashing: false,
 	name: "",
 	password: "",
-	speed: 24,
+	speed: 30,
 	focusUpdateNationName: false,
 	focusGameName: false,
 	view: "title",
@@ -296,17 +336,17 @@ var g = {
 	},
 	initGameCallback: function(data) {
 		// handle hiding/showing menu based on environment
-		if (app.isServer) {
-			$(".action-btn, #toggleNation").remove();
-			g.chat('Coming soon to Steam in 2018!');
+		if (app.isApp) {
+			$("#logout").remove();
 		}
 		else {
-			TweenMax.staggerTo(document.getElementsByClassName('action-btn'), .5, {
-				startAt: { x: -30 },
-				x: 0,
-				opacity: 1
-			}, .1);
+			$("#logout").css('display', 'inline-block');
 		}
+		TweenMax.staggerTo(document.getElementsByClassName('action-btn'), .5, {
+			startAt: { x: -30 },
+			x: 0,
+			opacity: 1
+		}, .1);
 
 		console.info('init-game', data.account, data);
 		my.channel = data.initChannel;
@@ -432,6 +472,8 @@ g.init = (function(){
 		}
 	});
 	if (app.isApp) {
+		g.lock(1);
+		g.msg("Verifying Steam Credentials...");
 		// app login, check for steam ticket
 		var greenworks = require('./greenworks'),
 			steam = {
@@ -459,13 +501,13 @@ g.init = (function(){
 				}).done(function(data) {
 					g.initGameCallback(data);
 					greenworks.cancelAuthTicket(steam.handle);
-				}).fail(function() {
-					Msg("Unable to contact the server right now.");
+				}).fail(function(data) {
+					g.msg(data.responseText);
 				});
 			});
 		}
 		else {
-			console.warn("Could not find Greenworks");
+			g.msg("Unable to detect Steam. Run Steam prior to launching!");
 		}
 	}
 	else {
@@ -481,7 +523,7 @@ g.init = (function(){
 		}).done(function(data) {
 			g.initGameCallback(data);
 		}).fail(function(data) {
-			Msg(data.responseText);
+			g.msg(data.responseText);
 		});
 	}
 	// TODO separate this confusing logic a bit
@@ -514,7 +556,7 @@ g.init = (function(){
 				}, 111);
 			}
 		}).fail(function(data){
-			Msg(data.responseText);
+			g.msg(data.responseText);
 		});
 	}
 })();
@@ -562,8 +604,8 @@ var game = {
 	],
 	ribbonDescription: ['', // 0
 		'Established a new nation',
-		'Confirmed your email address',
-		'Beat the developer of Firmament Wars',
+		'Confirmed your email address', /* replace */
+		'Beat the developer of Firmament Wars', /* replace */
 		'Selected a national flag',
 		'Named your nation',//5
 		'Won 10 ranked games',
@@ -573,12 +615,12 @@ var game = {
 		'Achieved 2100+ rating',//10
 		'Achieved 2400+ rating',
 		'Achieved 2700+ rating',
-		'Reported a significant bug or exploit', //13
-		'Recorded a video of Firmament Wars and shared it online',
+		'Reported a significant bug or exploit', //13 /* replace */
+		'Recorded a video of Firmament Wars and shared it online', /* replace */
 		'Won 10+ games in a row', // 15
 		'Won 25+ games in a row',
-		'Referred a player to the Discord server',// 17
-		'Provided your real country code',
+		'Referred a player to the Discord server',// 17 /* replace */
+		'Provided your real country code', /* replace */
 		'Scored holy trips',
 		'Scored sweet quads',//20
 		'Scored double dubs',
@@ -591,25 +633,33 @@ var game = {
 		"Hit #1 on the leaderboard",
 		"Hit top #100 on the leaderboard",
 		"Hit top #1000 on the leaderboard",//30
-		"Refer a friend that plays 25 games",
+		"Refer a friend that plays 25 games", /* replace */
 		'Win an 8-player FFA game',
 		'Won 100 FFA games',
 		'Won 100 ranked games',
 		'Won 100 team games',
-		'Played 200 games and maintained a disconnect rate below 5%',
+		'Played 200 games and maintained a disconnect rate below 5%', /* replace */
 	],
 	toggleGameWindows: function(){
-		var x = $("#targetWrap").css('display') === 'block';
+		var x = $("#targetWrap").css('visibility') === 'visible';
+		console.info("visible? ", x);
 		TweenMax.set(DOM.gameWindows, {
-			display: x ? 'none' : 'block'
+		  	visibility: x ? 'hidden' : 'visible'
 		});
-		TweenMax.to('#hotkey-ui', 5, {
-			startAt: {
-				opacity: 1,
-				visibility: x ? 'visible' : 'hidden'
-			},
-			opacity: 1
-		});
+		if (x) {
+			TweenMax.to('#hotkey-ui', .5, {
+				startAt: {
+					opacity: 0,
+					visibility: 'visible'
+				},
+				opacity: 1
+			});
+		}
+		else {
+			TweenMax.to('#hotkey-ui', .5, {
+				visibility: 'hidden'
+			});
+		}
 	},
 	player: [0,0,0,0,0,0,0,0,0], // cached values on client to reduce DB load
 	initMap: function(){
@@ -1270,48 +1320,6 @@ var video = {
 	}
 }
 
-function Msg(msg, d) { 
-	DOM.Msg.innerHTML = msg;
-	if (d === 0){
-		TweenMax.set(DOM.Msg, {
-			overwrite: 1,
-			startAt: {
-				opacity: 1
-			}
-		});
-	} else {
-		if (!d || d < .5){
-			d = 2;
-		}
-		TweenMax.to(DOM.Msg, ui.delay(d), {
-			overwrite: 1,
-			startAt: {
-				opacity: 1
-			},
-			onComplete: function(){
-				TweenMax.to(this.target, .2, {
-					opacity: 0
-				});
-			}
-		});
-	}
-	// split text animation
-	if (!isMobile){
-		var tl = new TimelineMax();
-		var split = new SplitText(DOM.Msg, {
-			type: "words,chars"
-		});
-		var chars = split.chars;
-		tl.staggerFromTo(chars, .01, {
-			immediateRender: true,
-			alpha: 0
-		}, {
-			delay: .1,
-			alpha: 1
-		}, .01);
-	}
-}
-
 function playerLogout(){
 	
     g.lock();
@@ -1346,9 +1354,9 @@ function playerLogout(){
 		}).done(function(data) {
 			localStorage.removeItem('token');
 			location.reload();
-			Msg("Logout successful");
+			g.msg("Logout successful");
 		}).fail(function() {
-			Msg("Logout failed.");
+			g.msg("Logout failed.");
 		});
 	}, 1000);
 }
@@ -1384,6 +1392,6 @@ function surrender(){
 }
 
 function serverError(data){
-	// Msg('The server reported an error.');
+	// g.msg('The server reported an error.');
 	console.error('The server reported an error.', data);
 }

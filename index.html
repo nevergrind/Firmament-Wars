@@ -16,7 +16,7 @@
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
 	<script>
 		var app = {
-			version: '1.0.6',
+			version: '1.0.7',
 			initialized: 0, // init-game returned
 			isApp: location.protocol === 'chrome-extension:' ? 1 : 0,
 			account: ''
@@ -235,7 +235,12 @@
 							<div id="titleChatLog" class="titlePanelLeft">
 								<div>Welcome to Broken.net!</div>
 							</div>
-							<input id="title-chat-input" class="fw-text noselect nobg form-control" type="text" maxlength="240" auto-complete="disabled" spellcheck="false">
+							<input id="title-chat-input"
+								   class="fw-text noselect nobg form-control"
+								   type="text"
+								   maxlength="240"
+								   auto-complete="disabled"
+								   spellcheck="false">
 						</div>
 					</div>
 				</div>
@@ -538,7 +543,7 @@
 
 	<div id="gameWrap">
 
-		<div id="targetWrap" class="no-select">
+		<div id="targetWrap" class="no-select gameWindow">
 			<div id="targetName" class="text-center shadow4">
 				<div id="targetNameAnchor">
 					<!--img id="avatar"
@@ -555,7 +560,7 @@
 			</div>
 		</div>
 
-		<div id="ui2-head" class="stagBlue no-select">
+		<div id="ui2-head" class="stagBlue no-select gameWindow">
 			<div title="Production is used to deploy troops, build structures, and research technology.">
 				<img src="images/icons/production.png" class="fw-icon">
 				<span id="production">0</span>
@@ -584,6 +589,7 @@
 			<div id="resourceBody">
 				<div id="troop-flex" title="Deploy troops to conquered territories">
 					<div id="available-troops">
+						<img id="troop-icon" src="images/icons/troops.png">
 						<div>Available</div>
 						<div>Troops</div>
 					</div>
@@ -632,7 +638,7 @@
 			</div>
 
 
-			<div id="ui2" class="blueBg gameWindow">
+			<div id="ui2" class="blueBg">
 
 				<div id="attack" class="actionButtons"
 					title="Attack with all troops">
@@ -804,7 +810,7 @@
 			</div>
 		</div>
 
-		<div id="currentYearWrap" class="shadow4 no-select">
+		<div id="currentYearWrap" class="shadow4 no-select gameWindow">
 
 			<div id="energy-wrap" class="text-center">
 				<div id="move-wrap" class="moves no-pointer">
@@ -999,16 +1005,16 @@
 									<a href="#">Full Screen</a>
 								</li>
 								<li id="window-1920-1080" class="window-select">
-									<a href="#">Windowed - 1920 x 1080</a>
+									<a href="#">1920 x 1080</a>
 								</li>
 								<li id="window-1600-900" class="window-select">
-									<a href="#">Windowed - 1600 x 900</a>
+									<a href="#">1600 x 900</a>
 								</li>
 								<li id="window-1360-768" class="window-select">
-									<a href="#">Windowed - 1360 x 768</a>
+									<a href="#">1360 x 768</a>
 								</li>
 								<li id="window-1280-720" class="window-select">
-									<a href="#">Windowed - 1280 x 720</a>
+									<a href="#">1280 x 720</a>
 								</li>
 							</ul>
 						</div>
@@ -1022,6 +1028,7 @@
 	<div id="screenFlash"></div>
 	<div id="overlay" class="portal"></div>
 	<div id="Msg" class="shadow4"></div>
+
 </body>
 
 <script src="js/libs/TweenMax.min.js"></script>
@@ -1483,6 +1490,7 @@
 	})();
 
 	// facebook
+	/*
 	(function(d, s, id) {
 		if (app.isServer) {
 			var js, fjs = d.getElementsByTagName(s)[0];
@@ -1492,9 +1500,10 @@
 			fjs.parentNode.insertBefore(js, fjs);
 		}
 	}(document, 'script', 'facebook-jssdk'));
+	*/
 </script>
 
-<script src="//apis.google.com/js/platform.js?onload=loginRenderButton" async defer></script>
+<!--script src="//apis.google.com/js/platform.js?onload=loginRenderButton" async defer></script-->
 <script>
 if (app.isServer || app.isApp) {
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

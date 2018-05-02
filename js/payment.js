@@ -17,17 +17,17 @@ var payment = {
 			// Validate the number:
 			if (!Stripe.validateCardNumber(ccNum)) {
 				error = true;
-				Msg('The credit card number is invalid.');
+				g.msg('The credit card number is invalid.');
 			}
 			// Validate the CVC:
 			if (!Stripe.validateCVC(cvcNum)) {
 				error = true;
-				Msg('The CVC number is invalid.');
+				g.msg('The CVC number is invalid.');
 			}
 			// Validate the expiration:
 			if (!Stripe.validateExpiry(expMonth, expYear)) {
 				error = true;
-				Msg('The expiration date is invalid.');
+				g.msg('The expiration date is invalid.');
 			}
 			if (!error) {
 				$('#payment-errors').text('');
@@ -44,18 +44,18 @@ var payment = {
 			function stripeResponseHandler(status, response){
 				if (response.error) {
 					console.info("ERROR!");
-					Msg(response.error.message);
+					g.msg(response.error.message);
 					g.unlock();
 				} else {
 					// No errors, submit the form.
-					Msg("Communicating with the server...");
+					g.msg("Communicating with the server...");
 					$.ajax({
 						url: app.url + "php/purchaseFw.php",
 						data: {
 							stripeToken: response.id
 						}
 					}).done(function(data) {
-						Msg("Thank you for your purchase!<br>Firmament Wars - Complete Game Unlocked!", 8);
+						g.msg("Thank you for your purchase!<br>Firmament Wars - Complete Game Unlocked!", 8);
 						setTimeout(function(){
 							location.reload();
 						}, 3000);
