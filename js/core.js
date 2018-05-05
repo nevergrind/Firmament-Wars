@@ -407,6 +407,7 @@ var g = {
 			}
 		});
 		socket.init();
+		data.isNewAccount && title.configureNation();
 	}
 };
 g.init = (function(){
@@ -566,48 +567,48 @@ var game = {
 	initialized: false,
 	ribbonTitle: ['',
 		'National Combat Medal',
-		'Outstanding Communications Ribbon',
-		'Presidential Citation Ribbon',
-		'Ceremonial Commendation Ribbon',
+		'Tactical Nuke Recognition Award',
+		'Good Conduct Award',
+		"Patriot's Service Ribbon",
 		'Civic Service Ribbon',//5
-		'Bronze Campaign Medal',
+		'Bronze Meritorious Medal',
 		'Bronze Service Medal',
 		'Bronze Expeditionary Medal',
 		'Bronze Cross',
 		'Silver Cross',//10
 		'Golden Cross',
 		'Platinum Cross',
-		'Outstanding Volunteer Ribbon',
-		'Distinguished Resolve Citation',
-		'Combat Service Award',
+		'Revolutionary Cause Award',
+		'Strategic Warfare Award',
+		'Combat Service Award', //15
 		'Combat Gallantry Award',
-		'Neverworks Campaign Medal',
-		"Global Commendation Ribbon",
-		'Holy Trips Ribbon',
-		'Sweet Quads Ribbon',//20
-		'Double Dubs Ribbon',
-		'Glorious Pents Ribbon',
-		'Wicked Sexts Ribbon',
-		'Triple Dubs Ribbon',
-		'Righteous Septs Ribbon',
-		'Almighty Octs Ribbon',
-		'Quad Dubs Ribbon',
+		'Stalwart Campaign Medal', /* campaign */
+		"Dictator's Sword",
+		"King's Regalia",
+		"Archon's Scales",//20
+		'Divine Covenant',
+		"Emperor's Fasces",
+		"Eagle's Branch",
+		"Comrade's Sickle",
+		'Golden Expeditionary Medal',//25
+		'Golden Meritorious Medal',
+		'Golden Service Medal',
 		"Champion's Medal",
 		"Conqueror's Medal",
 		"Commander's Medal",//30
-		"Meritorious Service Medal",
+		"Intrepid Heroism Award",
 		'Global War Expeditionary Medal',
 		'Silver Expeditionary Medal',
-		'Silver Campaign Medal',
-		'Silver Service Medal',
-		'Good Conduct Medal',
+		'Silver Meritorious Medal',
+		'Silver Service Medal',//35
+		"Engineer's Service Ribbon",
 	],
 	ribbonDescription: ['', // 0
-		'Established a new nation',
-		'Confirmed your email address', /* replace */
-		'Beat the developer of Firmament Wars', /* replace */
-		'Selected a national flag',
-		'Named your nation',//5
+		'Established your nation',
+		'Destroyed a fortress with a nuclear weapon',
+		'Added two comrades to your friend list',
+		'Updated your national flag',
+		"Updated your nation's name",//5
 		'Won 10 ranked games',
 		'Won 10 team games',
 		'Won 10 FFA games',
@@ -615,30 +616,30 @@ var game = {
 		'Achieved 2100+ rating',//10
 		'Achieved 2400+ rating',
 		'Achieved 2700+ rating',
-		'Reported a significant bug or exploit', //13 /* replace */
-		'Recorded a video of Firmament Wars and shared it online', /* replace */
-		'Won 10+ games in a row', // 15
-		'Won 25+ games in a row',
-		'Referred a player to the Discord server',// 17 /* replace */
-		'Provided your real country code', /* replace */
-		'Scored holy trips',
-		'Scored sweet quads',//20
-		'Scored double dubs',
-		'Scored glorious pents',
-		'Scored wicked sexts',
-		'Scored a triple double',
-		'Scored righteous septs',//25
-		'Scored almighty octs',
-		'Scored sick quad dubs',
-		"Hit #1 on the leaderboard",
-		"Hit top #100 on the leaderboard",
-		"Hit top #1000 on the leaderboard",//30
-		"Refer a friend that plays 25 games", /* replace */
+		'Great Revolutionary conquered a tile with 100+ units', //13
+		'Win a game with a 2-to-1 kill ratio',
+		'Won 10 games in a row', // 15
+		'Won 25 games in a row',
+		'Completed all scenarios',// 17 /* replace */
+		"Won a game under Despotism",
+		'Won a game as a Monarchy',
+		'Won a game as a Democracy',//20
+		'Won a game under Fundamentalism',
+		'Won a game under Fascism',
+		'Won a game as a Republic',
+		'Won a game under Communism',
+		'Won 500 FFA games',//25
+		'Won 500 ranked games',
+		'Won 500 team games',
+		"Hit top #10 on the ranked leaderboard",
+		"Hit top #100 on the ranked leaderboard",
+		"Hit top #1000 on the ranked leaderboard",//30
+		"Defeated the Juggernaut",
 		'Win an 8-player FFA game',
 		'Won 100 FFA games',
 		'Won 100 ranked games',
-		'Won 100 team games',
-		'Played 200 games and maintained a disconnect rate below 5%', /* replace */
+		'Won 100 team games',//35
+		'Build a fortress',
 	],
 	toggleGameWindows: function(){
 		var x = $("#targetWrap").css('visibility') === 'visible';
@@ -1062,7 +1063,7 @@ var my = {
 	splitAttack: false,
 	splitAttackCost: 1,
 	attackCost: 2,
-	deployCost: 10,
+	deployCost: 1,
 	rushCost: 2,
 	weaponCost: 1,
 	maxDeployment: 12,
@@ -1094,7 +1095,7 @@ var my = {
 	clearHud: function(){
 		timer.hud.kill();
 		DOM.hud.style.visibility = 'hidden';
-		TweenMax.set([DOM.targetLine, DOM.targetLineShadow, DOM.targetCrosshair], {
+		TweenMax.set([DOM.targetLine, DOM.targetLineBorder, DOM.targetLineShadow, DOM.targetCrosshair], {
 			visibility: 'hidden',
 			strokeDashoffset: 0
 		});
@@ -1207,7 +1208,7 @@ function initDom(){
 		currentYearWrap: d.getElementById('currentYearWrap'),
 		//targetTargetWrap: d.getElementById('targetTargetWrap'),
 		targetFlag: d.getElementById('targetFlag'),
-		targetCapStar: d.getElementById('targetCapStar'),
+		//targetCapStar: d.getElementById('targetCapStar'),
 		targetResources: d.getElementById('targetResources'),
 		targetNameWrap: d.getElementById('targetNameWrap'),
 		targetBarsWrap: d.getElementById('targetBarsWrap'),
@@ -1240,6 +1241,10 @@ function initDom(){
 		worldWrap: d.getElementById('worldWrap'),
 		motionPath: d.getElementById('motionPath'),
 		targetLine: d.getElementById('targetLine'),
+		targetLineBorder: d.getElementById('targetLineBorder'),
+		arrowheadTip: d.getElementById('arrowhead-tip'),
+		arrowhead: d.getElementById('arrowhead'),
+		arrowheadBorder: d.getElementById('arrowhead-border'),
 		targetLineShadow: d.getElementById('targetLineShadow'),
 		targetCrosshair: d.getElementById('targetCrosshair'),
 		target: d.getElementById('target'),

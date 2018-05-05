@@ -936,6 +936,18 @@ var title = {
 				});*/
 		}
 	},
+	configureNation: function() {
+		TweenMax.to('#configureNation', g.modalSpeed, {
+			startAt: {
+				visibility: 'visible',
+				y: 0,
+				alpha: 0
+			},
+			y: 30,
+			alpha: 1
+		});
+		title.showBackdrop();
+	},
 	createGameService: function(name, pw, map, max, rankedMode, teamMode, speed){
 		g.lock(1);
 		audio.play('click');

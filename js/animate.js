@@ -106,7 +106,7 @@ var animate = {
 		this.updateMapBars(tile);
 	},
 	paths: function() {
-		TweenMax.to('.paths > path', 1.5, {
+		TweenMax.to('.paths > path', 3, {
 			startAt: {
 				strokeDashoffset: 0
 			},
@@ -239,7 +239,7 @@ var animate = {
 		var delay = [.6, .6, .43, .43, .43, .43, .9, .43, .76, .43];
 		if (playSound){
 			//console.info(delay, sfx)
-			audio.play('machine' + sfx);
+			audio.play('machine' + sfx, null, .7);
 		}
 		var shots = 30,
 			w1 = 50,

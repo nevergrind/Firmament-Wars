@@ -71,7 +71,7 @@ var lobby = {
 					<div>2x production rewards from barbarians</div>\
 					<div>Start with 4 bonus energy</div>\
 					<div>Start with great general: +1 attack</div>\
-					<div>1/2 cost deploy</div>\
+					<div>Bonus troop with each deployment</div>\
 				</div>';
 		} else if (government === "Republic"){
 			str = '<div id="lobbyGovName" class="text-primary">Republic</div>\
@@ -615,14 +615,14 @@ var lobby = {
 function initOffensiveTooltips(){
 	if (!isMobile && isLoggedIn){
 		$('#fireCannons')
-			.attr('title', 'Fire cannons at an adjacent tile. Kills ' + (2 + my.oBonus) +'-'+ (4 + my.oBonus) +' troops.')
+			.attr('title', 'Fire cannons at an adjacent tile. Kills ' + (2 + my.oBonus) +'-'+ (4 + my.oBonus) +' troops. Boosted by Great Generals.')
 			.tooltip('fixTitle')
 			.tooltip({ animation: false });
 		$('#launchMissile')
-			.attr('title', 'Launch a missile at any territory. Kills '+ (7 + (my.oBonus * 2)) +'-'+ (12 + (my.oBonus * 2)) +' troops.').tooltip('fixTitle')
+			.attr('title', 'Launch a missile at any territory. Kills '+ (7 + (my.oBonus * 2)) +'-'+ (12 + (my.oBonus * 2)) +' troops. Boosted by Great Generals.').tooltip('fixTitle')
 			.tooltip({ animation: false });
 		$('#rush')
-			.attr('title', 'Deploy ' + (2 + ~~(my.cultureBonus / 50)) + ' troops using energy instead of production. Boosted by culture.')
+			.attr('title', 'Rush ' + (2 + ~~(my.cultureBonus / 50)) + ' troops from your citizenry. Boosted by culture bonus.')
 			.tooltip('fixTitle')
 			.tooltip({ animation: false });
 	}
@@ -888,7 +888,7 @@ function loadGameState(){
 				//console.info('sumMoves ', my.government, my.sumMoves, data.sumMoves);
 			} else if (my.government === 'Fascism'){
 				document.getElementById('moves').textContent = 8;
-				my.deployCost = 5;
+				my.deployCost = 1;
 				document.getElementById('deployCost').textContent = my.deployCost;
 			} else if (my.government === 'Communism'){
 				// weapons
@@ -1020,15 +1020,14 @@ function loadGameState(){
 				} else {
 					console.warn("COULD NOT FIND: ", i);
 				}
-				if (!isMobile){
-					var svgTgt = document.getElementById('targetCrosshair');
-					TweenMax.to(svgTgt, 10, {
-						transformOrigin: '50% 50%',
-						rotation: 360,
-						repeat: -1,
-						ease: Linear.easeNone
-					});
-				}
+				var svgTgt = document.getElementById('targetCrosshair');
+				TweenMax.to(svgTgt, 10, {
+					force3D: true,
+					transformOrigin: '50% 50%',
+					rotation: 360,
+					repeat: -1,
+					ease: Linear.easeNone
+				});
 			}
 			// init map DOM elements
 			game.initMap();
@@ -1106,13 +1105,17 @@ function loadGameState(){
 				});
 				
 				initOffensiveTooltips();
-				if (!isMobile){
-					TweenMax.set(DOM.targetLine, {
-						stroke: g.color[game.player[my.player].playerColor]
-					});
-				}
 				TweenMax.set(DOM.targetLine, {
-					stroke: "hsl(+=0%, +=0%, +=15%)"
+					stroke: g.color[game.player[my.player].playerColor]
+				});
+				TweenMax.set(DOM.targetLine, {
+					stroke: "hsl(+=0%, +=0%, -=5%)"
+				});
+				TweenMax.set(DOM.arrowheadTip, {
+					fill: g.color[game.player[my.player].playerColor]
+				});
+				TweenMax.set(DOM.arrowheadTip, {
+					fill: "hsl(+=0%, +=0%, -=5%)"
 				});
 				
 				function triggerAction(that){
@@ -1172,6 +1175,9 @@ function loadGameState(){
 				ui.setCurrentYear(data.resourceTick);
 				animate.paths();
 			}, 350);
+			TweenMax.set('.land', {
+				filter: 'url(#emboss)'
+			})
 		}).fail(function(data){
 			setTimeout(function(){
 				loadGameState();

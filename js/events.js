@@ -221,21 +221,7 @@ var events = {
 			g.chat(game.ribbonTitle[x] +": "+ game.ribbonDescription[x], 'chat-warning'); 
 		});
 		$("#toggleNation").on(ui.click, function(){
-			/*$.ajax({
-				url: app.url + 'php/loadAvatar.php',
-			}).done(function(data){
-				document.getElementById('configureAvatarImage').src = data.uri;
-			});*/
-			TweenMax.to('#configureNation', g.modalSpeed, {
-				startAt: {
-					visibility: 'visible',
-					y: 0,
-					alpha: 0
-				},
-				y: 30,
-				alpha: 1
-			});
-			title.showBackdrop();
+			title.configureNation();
 		});
 		$("#joinPrivateGameBtn").on(ui.click, function(){
 			var e = $("#joinGame");
@@ -616,7 +602,7 @@ $(document).on('keydown', function(e){
 	} else {
 		// F12
 		if (x === 123 && app.isApp && my.account.indexOf('maelfyn') === -1) {
-			//return false;
+			return false;
 		}
 
 		if (g.view === 'title'){

@@ -1,6 +1,25 @@
 <?php
    echo
-'<defs>
+'<defs>  
+	<marker id="arrowhead"
+		orient="auto"
+    	markerWidth="2" 
+    	markerHeight="4"
+    	refX=".1" 
+    	refY="2">
+    <path id="arrowhead-tip" 
+    	d="M0,0 V4 L2,2 Z" />
+  </marker>
+	<marker id="arrowhead-border"
+		orient="auto"
+    	markerWidth="2.1" 
+    	markerHeight="4.2"
+    	refX=".25" 
+    	refY="2.1">
+    <path id="arrowhead-tip-head" 
+    	d="M0,0 V4.2 L2.1,2.1 Z" />
+  </marker>
+	
 	<filter id="emboss" filterUnits="objectBoundingBox" color-interpolation-filters="sRGB">  
 		<feGaussianBlur 
 			in="SourceAlpha" 
@@ -10,10 +29,10 @@
 			in="result0" 
 			result="result1" 
 			lighting-color="#fff" 
-			surfaceScale="10" 
-			specularConstant="1" 
-			specularExponent="25">  
-			  <feDistantLight azimuth="235" elevation="45"></feDistantLight>  
+			surfaceScale="5" 
+			specularConstant=".15" 
+			specularExponent="50">  
+			  <feDistantLight azimuth="235" elevation="70"></feDistantLight>  
 		 </feSpecularLighting>  
 		 <feComposite 
 			k2="1" 
@@ -27,6 +46,7 @@
 			result="result2" 
 			operator="in"></feComposite>  
 	</filter>
+	
 	<pattern id="smallGrid" width="22" height="22" patternUnits="userSpaceOnUse">
 		<path d="M 22 0 L 0 0 0 22" fill="none" stroke="rgba(32, 64, 96, 1)" stroke-width="2" />
 	</pattern>

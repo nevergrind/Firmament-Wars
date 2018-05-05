@@ -1797,6 +1797,7 @@ audio,
 	/*filter: url(#emboss);*/
 	transform: translateZ(0); /*for older browsers*/
   	/*will-change: transform;*/
+	transition: background ease-out .2s;
 }
 .dead {
     fill: #666;
@@ -1854,16 +1855,28 @@ text {
 #motionPath {
     visibility: hidden
 }
+#arrowhead-tip {
+	fill: #0f0;
+}
+#arrowhead-tip {
+	fill: #000;
+}
 #targetLine {
     visibility: hidden;
-    stroke-width: 3;
-    stroke-dasharray: 8, 4
+    stroke-width: 11;
+    stroke-dasharray: 31,1;
+}
+#targetLineBorder {
+    visibility: hidden;
+	stroke: #000;
+    stroke-width: 13;
+    stroke-dasharray: none;
 }
 #targetLineShadow {
     visibility: hidden;
-    stroke-width: 1;
-    stroke-dasharray: 8, 4;
-    stroke: rgba(0, 0, 0, 1)
+    stroke-width: 7;
+    stroke-dasharray: 31,1;
+    stroke: rgba(0, 0, 0, .5)
 }
 #targetCrosshair {
     visibility: hidden;

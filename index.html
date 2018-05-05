@@ -220,11 +220,11 @@
 							</div>
 							<div id="titleChatBody"></div>
 							<div id="title-chat-btn-wrap" class="text-center no-select">
-								<div id="friend-status" class="title-utils shadow4">Friend List</div>
-								<div id="ignore-status" class="title-utils shadow4">Ignore List</div>
-								<div id="who-account" class="title-utils shadow4">Query Account</div>
+								<div id="friend-status" class="title-utils shadow4">Show Friend List</div>
 								<div id="add-friend" class="title-utils shadow4">Toggle Friend</div>
+								<div id="ignore-status" class="title-utils shadow4">Show Ignore List</div>
 								<div id="ignore-user" class="title-utils shadow4">Ignore Account</div>
+								<div id="who-account" class="title-utils shadow4">Query Account</div>
 								<div id="whisper-account" class="title-utils shadow4">Private Message</div>
 								<div id="change-channel" class="title-utils shadow4">Change Channel</div>
 								<div id="get-help" class="title-utils shadow4">Chat Commands</div>
@@ -449,7 +449,7 @@
 
 			<div class="text-center">
 				<div>
-					<h2 class='header'>Update Name</h2>
+					<h2 class='header'>Nation Name</h2>
 					<hr class="fancyhr">
 				</div>
 			</div>
@@ -471,7 +471,7 @@
 			<div class="text-center">
 				<div>
 					<hr class="fancyhr">
-					<h2 class='header'>Update Flag</h2>
+					<h2 class='header'>National Flag</h2>
 					<hr class="fancyhr">
 				</div>
 			</div>
@@ -552,7 +552,7 @@
 						 class="targetFlag"
 						 src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 					<div>
-						<i id="targetCapStar" class="glyphicon glyphicon-star capitalStar shadow4 none"></i>
+						<!--i id="targetCapStar" class="glyphicon glyphicon-star capitalStar shadow4 none"></i-->
 						<span id="targetNameWrap"></span>
 					</div>
 					<div id="targetResources"></div>
@@ -662,25 +662,25 @@
 					</div>
 				</div>
 
+				<div id="deploy" class="actionButtons"
+					title="Deploy available troops to a tile">
+					<div>
+						<span class='text-hotkey'>D</span>eploy Troops
+					</div>
+					<div class="action-button-cost tight2 text-right productionCost">
+						<img src="images/icons/energy.png" class="fw-icon resourceIcon">
+						<span id='deployCost'>1</span>
+					</div>
+				</div>
+
 				<div id="rush" class="actionButtons"
-					title="Deploy 2 troops using energy instead of production. Boosted by culture.">
+					title="Rush 2 troops from your citizenry. Boosted by culture bonus.">
 					<div>
 						<span class='text-hotkey'>R</span>ush Troops
 					</div>
 					<div class="action-button-cost tight2 text-right productionCost">
 						<img src="images/icons/energy.png" class="fw-icon resourceIcon">
 						</i><span id="rushCost">2</span>
-					</div>
-				</div>
-
-				<div id="deploy" class="actionButtons"
-					title="Deploy troops to a tile">
-					<div>
-						<span class='text-hotkey'>D</span>eploy Troops
-					</div>
-					<div class="action-button-cost tight2 text-right productionCost">
-						<img src="images/icons/production.png" class="fw-icon resourceIcon">
-						<span id='deployCost'>10</span>
 					</div>
 				</div>
 
@@ -696,7 +696,7 @@
 				</div>
 
 				<div id="fireCannons" class="actionButtons none"
-					title="Fire cannons at an adjacent tile. Kills 2-4 troops.">
+					title="Fire cannons at an adjacent tile. Kills 2-4 troops. Boosted by Great Generals.">
 					<div>
 						Fire <span class='text-hotkey'>C</span>annons
 					</div>
@@ -707,7 +707,7 @@
 				</div>
 
 				<div id="launchMissile" class="actionButtons none"
-					title="Launch a missile at any territory. Kills 7-12 troops.">
+					title="Launch a missile at any territory. Kills 7-12 troops. Boosted by Great Generals.">
 					<div>
 						Launch <span class='text-hotkey'>M</span>issile
 					</div>

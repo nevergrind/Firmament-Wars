@@ -179,7 +179,7 @@ var action = {
 			my.checkSelectLastTarget();
 		}
 		var t = game.tiles[my.tgt];
-		if (my.production < my.deployCost){
+		if (my.moves < my.deployCost){
 			action.error();
 			return;
 		}
@@ -203,7 +203,7 @@ var action = {
 				setResources(data);
 			}).fail(function(e){
 				audio.play('error');
-			}).always(function(data){
+			}).always(function(){
 				setTileUnits(tgt, '#00ff00');
 			});
 			TweenMax.set('#manpower', {

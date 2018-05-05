@@ -97,51 +97,93 @@ var ui = {
 			if (hover && tileId !== my.tgt){
 				my.targetLine[4] = DOM['unit' + tileId].getAttribute('x')*1 - 10;
 				my.targetLine[5] = DOM['unit' + tileId].getAttribute('y')*1 - 10;
+				// draw straight line because it's close?
+				var straightLine = "M " + my.targetLine[0] +","+ my.targetLine[1] + " "
+								+ my.targetLine[4] +","+ my.targetLine[5],
+					totalCoordDiff = 0;
+				totalCoordDiff += Math.abs(my.targetLine[0] - my.targetLine[4]);
+				totalCoordDiff += Math.abs(my.targetLine[1] - my.targetLine[5]);
 				my.targetLine[2] = (my.targetLine[0] + my.targetLine[4]) / 2;
 				my.targetLine[3] = ((my.targetLine[1] + my.targetLine[5]) / 2) - 100;
+				var arcLine = "M " + my.targetLine[0] +","+ my.targetLine[1] +
+							" Q " + my.targetLine[2] +" "+ my.targetLine[3] + " "
+							+ my.targetLine[4] +" "+ my.targetLine[5];
+				// set path data for shadow
 				TweenMax.set(DOM.targetLineShadow, {
 					visibility: 'visible',
 					attr: {
-						d: "M " + my.targetLine[0] +","+ my.targetLine[1] + " "
-								+ my.targetLine[4] +","+ my.targetLine[5]
+						d: straightLine
 					}
 				});
-				if (!isMobile){
-					TweenMax.set(DOM.targetLine, {
-						visibility: 'visible',
-						attr: {
-							d: "M " + my.targetLine[0] +","+ my.targetLine[1] + 
-								" Q " + my.targetLine[2] +" "+ my.targetLine[3] + " " 
-								+ my.targetLine[4] +" "+ my.targetLine[5]
-						}
-					});
-				
-					TweenMax.to([DOM.targetLine, DOM.targetLineShadow], .2, {
-						startAt: {
-							strokeDashoffset: 0
-						},
-						strokeDashoffset: -12,
-						repeat: -1,
-						ease: Linear.easeNone
-					});
-				}
-				// crosshair game.tiles[tileId].player === my.player ? '#aa0000' : '#00cc00',
-				if (!isMobile){
-					TweenMax.set(DOM.targetCrosshair, {
-						fill: '#00dd00',
-						visibility: 'visible',
-						x: my.targetLine[4] - 255,
-						y: my.targetLine[5] - 257,
-						transformOrigin: '50% 50%'
-					})
-					TweenMax.fromTo(DOM.targetCrosshair, .2, {
-						scale: .1
-					}, {
-						repeat: -1,
-						yoyo: true,
-						scale: .08
-					});
-				}
+				// set path data for line
+				TweenMax.set([DOM.targetLine, DOM.targetLineBorder], {
+					visibility: 'visible',
+					attr: {
+						d: totalCoordDiff > 300 ? arcLine : straightLine
+					}
+				});
+				/*
+				TweenMax.to([DOM.targetLine, DOM.targetLineBorder, DOM.targetLineShadow], .5, {
+				  	startAt: { drawSVG: '0%' },
+				  	drawSVG: '100%'
+				});
+				 */
+
+				TweenMax.set([DOM.arrowhead, DOM.arrowheadBorder], {
+					visibility: 'hidden'
+				});
+				TweenMax.set(DOM.targetLineBorder, {
+					stroke: g.color[game.player[my.player].playerColor]
+				});
+				TweenMax.to([
+					DOM.targetLine,
+					DOM.targetLineBorder,
+					DOM.targetLineShadow], .2, {
+				  	startAt: {
+				  		drawSVG: '0%'
+					},
+				  	drawSVG: '100%',
+					onComplete: function() {
+						TweenMax.set([DOM.arrowhead, DOM.arrowheadBorder], {
+							visibility: 'visible'
+						});
+						TweenMax.to([DOM.targetLine, DOM.targetLineShadow], .5, {
+							startAt: {
+								strokeDasharray: '31,1',
+								strokeDashoffset: 0,
+							},
+							strokeDashoffset: -32,
+							repeat: -1,
+							force3D: true,
+							ease: Linear.easeNone
+						});
+						// fade in the black border
+						TweenMax.to(DOM.targetLineBorder, .5, {
+							stroke: '#000'
+						});
+					}
+				});
+				TweenMax.set(DOM.targetCrosshair, {
+					fill: '#00dd00',
+					visibility: 'visible',
+					x: my.targetLine[4] - 255,
+					y: my.targetLine[5] - 257,
+					transformOrigin: '50% 50%'
+				})
+				TweenMax.to(DOM.targetCrosshair, 1, {
+					startAt: { scale: .35 },
+					force3D: true,
+					scale: .175,
+					repeat: -1,
+					ease: Power4.easeOut
+				});
+				TweenMax.to(DOM.targetCrosshair, 1, {
+					startAt: { opacity: 1 },
+					force3D: true,
+					opacity: 0,
+					repeat: -1,
+					ease: Power2.easeIn
+				});
 			}
 			// tile data
 			if (!skipOldTgtUpdate){
@@ -290,7 +332,7 @@ function updateTileInfo(tileId){
 	(t.culture ? '<div>' + t.culture + '<img src="images/icons/culture.png" class="fw-icon"></div>' : '') +
 	(t.defense ?
 		'<div>' + t.defense + '<img src="images/icons/tile-defense.png" class="fw-icon"></div>' : '');
-	DOM.targetCapStar.style.display = t.capital ? 'inline' : 'none';
+	// DOM.targetCapStar.style.display = t.capital ? 'inline' : 'none';
 	DOM.targetNameWrap.innerHTML = name;
 	DOM.targetResources.innerHTML = resources;
 	DOM.targetFlag.src = 'images/flags/' + flag;

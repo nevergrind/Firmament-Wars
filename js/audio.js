@@ -6,22 +6,19 @@ var audio = {
 	on: (function(a){
 		return !!a.canPlayType ? true : false;
 	})(document.createElement('audio')),
-	play: function(foo, bg){
+	play: function(foo, bg, audioMod){
 		if (foo) {
 			if (bg){
 				// music
-				if (g.config.audio.musicVolume){
-					DOM.bgmusic.pause();
-					DOM.bgmusic.src = "music/" + foo + ".mp3";
-					DOM.bgmusic.volume = g.config.audio.musicVolume / 100;
-				}
+				DOM.bgmusic.pause();
+				DOM.bgmusic.src = "music/" + foo + ".mp3";
+				DOM.bgmusic.volume = g.config.audio.musicVolume / 100;
 			} else {
 				// sfx
-				if (g.config.audio.soundVolume){
-					var sfx = new Audio("sound/" + foo + ".mp3");
-					sfx.volume = g.config.audio.soundVolume / 100;
-					sfx.play();
-				}
+				var sfx = new Audio("sound/" + foo + ".mp3"),
+					mod = audioMod || 1;
+				sfx.volume = mod * (g.config.audio.soundVolume / 100);
+				sfx.play();
 			}
 		}
 	},

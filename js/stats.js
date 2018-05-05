@@ -636,6 +636,14 @@ var stats = {
 		stats.achievements = data;
 		if (stats.achievements.length){
 			new Audio('sound/ding3.mp3');
+			if (app.isApp) {
+				// notify Steam
+				var greenworks = require('./greenworks');
+				if (greenworks.initAPI()) {
+					greenworks.init();
+					// send achievement data
+				}
+			}
 		}
 	},
 	overviewTotal: function(i){

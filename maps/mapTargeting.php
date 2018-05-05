@@ -1,11 +1,5 @@
 <?php
 echo '
-	<path id="targetLine"
-	   d="M 0,0 Q 0 0 0 0"
-	   class="paths"></path>
-	<path id="targetLineShadow"
-	   d="M 0,0 Q 0 0 0 0"
-	   class="paths"></path>
 	   
    <g id="targetCrosshair">
     <path stroke="black" stroke-width="8"
@@ -19,6 +13,21 @@ echo '
     <path stroke="black" stroke-width="8"
        d="m 507.392,241.808 -212.142,0 c 1.618,4.444 2.642,9.175 2.642,14.172 0,5.018 -1.024,9.758 -2.642,14.213 l 212.142,0 0,-28.386 z"></path>
   </g>
+  
+	<path id="targetLineShadow"
+	   d="M 0,0 Q 0 0 0 0"
+	   class="paths"></path>
+	   
+	<path id="targetLineBorder"
+		marker-end="url(#arrowhead-border)"
+	   d="M 0,0 Q 0 0 0 0"
+	   class="paths"></path>
+	   
+	<path id="targetLine"
+		marker-mid="url(#mid-marker)"
+		marker-end="url(#arrowhead)"
+	   d="M 0,0 Q 0 0 0 0"
+	   class="paths"></path>
   
   <g>
 	<path id="motionPath"
