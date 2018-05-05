@@ -1,5 +1,5 @@
 # Firmament-Wars
-[Firmament Wars is a multiplayer real-time strategy game](https://nevergrind.com/games/firmament-wars). Firmament Wars will be released on March 14th, 2017. Check our [About Firmament Wars](https://nevergrind.com/blog/about-firmament-wars/) page to learn more about the project.
+[Firmament Wars is a multiplayer real-time strategy game](https://nevergrind.com/games/firmament-wars). Firmament Wars was originally released as an HTML5 browser game. It has been converted into a client-installed application for release on Steam using nw.js. Check our [About Firmament Wars](https://nevergrind.com/blog/about-firmament-wars/) page to learn more about the game. 
 
 # Firmament Wars Technology Stack
 
