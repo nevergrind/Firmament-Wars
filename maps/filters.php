@@ -19,12 +19,12 @@
     <path id="arrowhead-tip-head" 
     	d="M0,0 V4.2 L2.1,2.1 Z" />
   </marker>
-	
-	<filter id="emboss" filterUnits="objectBoundingBox" color-interpolation-filters="sRGB">  
+    	
+	<filter id="emboss" color-interpolation-filters="sRGB">  
 		<feGaussianBlur 
 			in="SourceAlpha" 
 			result="result0" 
-			stdDeviation="2"></feGaussianBlur>        
+			stdDeviation="2"/>        
 		<feSpecularLighting 
 			in="result0" 
 			result="result1" 
@@ -32,19 +32,19 @@
 			surfaceScale="5" 
 			specularConstant=".15" 
 			specularExponent="50">  
-			  <feDistantLight azimuth="235" elevation="70"></feDistantLight>  
+			  <feDistantLight azimuth="235" elevation="70"/>  
 		 </feSpecularLighting>  
 		 <feComposite 
 			k2="1" 
 			k3="1" 
 			in="SourceGraphic" 
 			result="result4" 
-			operator="arithmetic"></feComposite>  
+			operator="arithmetic"/>  
 		 <feComposite 
 			in2="SourceAlpha" 
 			in="result4" 
 			result="result2" 
-			operator="in"></feComposite>  
+			operator="in"/>  
 	</filter>
 	
 	<pattern id="smallGrid" width="22" height="22" patternUnits="userSpaceOnUse">

@@ -5,9 +5,9 @@ $.ajaxSetup({
 });
 TweenMax.defaultEase = Quad.easeOut;
 var g = {
+	Msg: document.getElementById('Msg'),
 	msg: function(msg, d) {
-		var e = document.getElementById('Msg');
-		e.innerHTML = msg;
+		g.Msg.innerHTML = msg;
 		if (d === 0){
 			TweenMax.set(e, {
 				overwrite: 1,
@@ -19,7 +19,7 @@ var g = {
 			if (!d || d < .5){
 				d = 2;
 			}
-			TweenMax.to(e, ui.delay(d), {
+			TweenMax.to(g.Msg, ui.delay(d), {
 				overwrite: 1,
 				startAt: {
 					opacity: 1
@@ -33,7 +33,7 @@ var g = {
 		}
 		// split text animation
 		var tl = new TimelineMax();
-		var split = new SplitText(e, {
+		var split = new SplitText(g.Msg, {
 			type: "words,chars"
 		});
 		var chars = split.chars;
@@ -44,6 +44,11 @@ var g = {
 			delay: .1,
 			alpha: 1
 		}, .01);
+	},
+	msgClose: function() {
+		TweenMax.set(g.Msg, {
+			opacity: 0
+		})
 	},
 	gameDuration: 0,
 	spectateStatus: 0,
@@ -355,6 +360,11 @@ var g = {
 			placement: 'left',
 			container: 'body'
 		});
+		$('.game-options').tooltip({
+			animation: false,
+			placement: 'top',
+			container: 'body'
+		});
 		$('[title]').tooltip({
 			animation: false,
 			placement: 'bottom',
@@ -379,6 +389,7 @@ var g = {
 			my.rating = data.rating;
 			g.checkPlayerData();
 			title.friendGetCallback(data.friends);
+			g.msgClose();
 		}
 		else {
 			notLoggedIn();
@@ -417,7 +428,6 @@ g.init = (function(){
 			title.exitGame();
 			// $("#endTurn").css('display', 'none');
 		});
-		$("#resync").remove();
 	}
 	else {
 		// $("#exit-game, #options-app-only").remove();
@@ -1240,6 +1250,7 @@ function initDom(){
 		titleChatInput: d.getElementById("title-chat-input"),
 		worldWrap: d.getElementById('worldWrap'),
 		motionPath: d.getElementById('motionPath'),
+		troopIcon: d.getElementById('troop-icon'),
 		targetLine: d.getElementById('targetLine'),
 		targetLineBorder: d.getElementById('targetLineBorder'),
 		arrowheadTip: d.getElementById('arrowhead-tip'),

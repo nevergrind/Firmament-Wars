@@ -345,18 +345,21 @@ function updateTileInfo(tileId){
 			'reduce weapon damage by 3',
 			'reduce weapon damage by 6'
 		];
-	if (ind < 0) return;
-	if (ind > 2){
+	DOM.upgradeTileDefense.style.display = 'none';
+	if (ind < 0 || !my.tech.masonry) {
 		DOM.upgradeTileDefense.style.display = 'none';
-	} else {
-		DOM.upgradeTileDefense.style.display = 'flex';
-		DOM.buildWord.textContent = defWord[ind];
-		console.info('buildCost ', ind, g.upgradeCost[ind], my.buildCost, g.upgradeCost[ind] * my.buildCost);
-		DOM.buildCost.textContent = g.upgradeCost[ind] * my.buildCost;
-		if (ind === 2){
-			defWord[2] = 'Fortresse';
-		}
-		if (!isMobile && isLoggedIn){
+	}
+	else {
+		if (ind > 2){
+			DOM.upgradeTileDefense.style.display = 'none';
+		} else {
+			DOM.upgradeTileDefense.style.display = 'flex';
+			DOM.buildWord.textContent = defWord[ind];
+			console.info('buildCost ', ind, g.upgradeCost[ind], my.buildCost, g.upgradeCost[ind] * my.buildCost);
+			DOM.buildCost.textContent = g.upgradeCost[ind] * my.buildCost;
+			if (ind === 2){
+				defWord[2] = 'Fortresse';
+			}
 			var tooltip = defWord[ind] + 's boost tile defense +'+ defBonus[ind] +' and ' + defTooltip[ind];
 			$('#upgradeTileDefense')
 				.attr('title', tooltip)
@@ -368,10 +371,10 @@ function updateTileInfo(tileId){
 					container: 'body'
 				});
 		}
+		// actions panel
+		// DOM.tileActionsOverlay.style.display = my.player === t.player ? 'none' : 'block';
+		action.setMenu();
 	}
-	// actions panel
-	// DOM.tileActionsOverlay.style.display = my.player === t.player ? 'none' : 'block';
-	action.setMenu();
 };
 function setTileUnits(i, unitColor){
 	DOM['unit' + i].textContent = game.tiles[i].units === 0 ? "" : ~~game.tiles[i].units;

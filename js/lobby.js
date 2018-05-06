@@ -36,7 +36,7 @@ var lobby = {
 		if (government === "Despotism"){
 			str = '<div id="lobbyGovName" class="text-primary">Despotism</div>\
 				<div id="lobbyGovPerks">\
-					<div>Start with 3x production</div>\
+					<div>2x Maximum Army Size Per Attack</div>\
 					<div>Start with gunpowder</div>\
 					<div>Start with a bunker</div>\
 					<div>Free movement through own tiles</div>\
@@ -441,7 +441,7 @@ var lobby = {
 				data.flag;
 			document.getElementById("lobbyFlag" + i).src = 'images/flags/'+ flag;
 			
-			if (!isMobile && isLoggedIn){
+			if (!isLoggedIn){
 				$('#lobbyFlag' + i)
 					.attr('title', data.flag.split(".").shift())
 					.tooltip({
@@ -1134,22 +1134,11 @@ function loadGameState(){
 						ui.showTarget(that);
 					}
 				}
-				var zug = $("#gameWrap");
 				// map events
-				if (isMSIE || isMSIE11){
-					zug.on('mousedown', ".land", function(){
-						triggerAction(this);
-						TweenMax.set(this, {
-							fill: "hsl(+=0%, +=0%, -=5%)"
-						});
-					});
-				} else {
-					zug.on('click', ".land", function(e){
-						location.host === 'localhost' && console.info(this.id, e.offsetX, e.offsetY);
-						triggerAction(this);
-					});
-				}
-				zug.on("mouseenter", ".land", function(){
+				$("#gameWrap").on('click', ".land", function(e){
+					//location.host === 'localhost' && console.info(this.id, e.offsetX, e.offsetY);
+					triggerAction(this);
+				}).on("mouseenter", ".land", function(){
 					my.lastTarget = this;
 					if (my.attackOn){
 						ui.showTarget(this, true);
@@ -1175,9 +1164,9 @@ function loadGameState(){
 				ui.setCurrentYear(data.resourceTick);
 				animate.paths();
 			}, 350);
-			TweenMax.set('.land', {
+			/*TweenMax.set('.land', {
 				filter: 'url(#emboss)'
-			})
+			})*/
 		}).fail(function(data){
 			setTimeout(function(){
 				loadGameState();

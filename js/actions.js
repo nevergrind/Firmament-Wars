@@ -74,7 +74,8 @@ var action = {
 			my.clearHud();
 			return;
 		}
-		if (my.government === 'Despotism' && game.tiles[defender].player === my.player){
+		if (my.government === 'Despotism' &&
+			game.tiles[defender].player === my.player){
 			// nothing
 		} else {
 			if ((my.moves < 2 && !my.splitAttack) ||
@@ -396,8 +397,6 @@ var action = {
 	// updates currently visible buttons after research/targeting
 	setMenu: function(){
 		// show/hide research
-		if (my.tech.masonry){
-		}
 		DOM.researchMasonry.style.display = !my.tech.masonry ? 'flex' : 'none';
 		DOM.researchConstruction.style.display = my.tech.masonry && !my.tech.construction ? 'flex' : 'none';
 		DOM.researchEngineering.style.display = my.tech.construction && !my.tech.engineering ? 'flex' : 'none';
@@ -430,7 +429,9 @@ var action = {
 				}
 				DOM.upgradeTileDefense.style.display = display;
 			}
-		} else {
+		}
+		else {
+			console.info("SETTING TO FLEX 434");
 			DOM.upgradeTileDefense.style.display = 'flex';
 		}
 		DOM.fireCannons.style.display = my.tech.gunpowder ? 'flex' : 'none';

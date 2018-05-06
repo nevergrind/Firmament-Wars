@@ -1051,7 +1051,7 @@ var title = {
 	if (e1 !== null){
 		e1.innerHTML = str;
 	}
-	if (!isMobile && isLoggedIn){
+	if (isLoggedIn){
 		$('[title]').tooltip({
 			animation: false
 		});

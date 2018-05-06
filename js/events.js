@@ -101,6 +101,7 @@ var events = {
 			}
 			// e3.val(my.account +'_'+ ~~(Math.random()*999999)).select();
 			e3.val('').select();
+			$("#gamePassword").val('');
 			TweenMax.to("#createGameWrap", g.modalSpeed, {
 				startAt: {
 					visibility: 'visible',
@@ -153,10 +154,10 @@ var events = {
 				alpha: 1
 			});
 			title.showBackdrop();
-		}).on(ui.click, '#resync', function(){
-			window.onbeforeunload = null;
-			localStorage.setItem('resync', 1);
-			location.reload();
+		}).on(ui.click, '#hide-ui', function() {
+			game.toggleGameWindows(1);
+		}).on(ui.click, '#surrender', function(e){
+			surrenderMenu();
 		});
 		$("#hotkeysDone, #optionsDone, #cancelCreateGame").on(ui.click, function(){
 			title.closeModal();
@@ -267,7 +268,7 @@ var events = {
 				alpha: 1
 			});
 			title.showBackdrop();
-			title.getLeaderboard('FFA');
+			title.getLeaderboard('Ranked');
 		});
 		// leaderboard buttons
 		$("#leaderboardFFABtn").on(ui.click, function(){
@@ -532,9 +533,6 @@ var events = {
 				setMousePosition(e.offsetX, e.offsetY);
 				//console.info(e.offsetX, e.offsetY);
 			}
-		});
-		$("#diplomacy-ui").on(ui.click, '#surrender', function(e){
-			surrenderMenu(); 
 		});
 		$("#createGameWrap").on(ui.click, '.mapSelect', function(e){
 			var x = $(this).text();
