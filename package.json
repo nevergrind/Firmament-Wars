@@ -33,7 +33,7 @@
     "min_height": 720,
     "max_width": 1920,
     "max_height": 1080,
-    "resizeable": false,
+    "resizeable": true,
     "fullscreen": true
   },
   "permissions": [
@@ -59,7 +59,7 @@
     "linux",
     "mac"
   ],
-  "chromium-args": "--allow-file-access-from-files",
+  "chromium-args": "--allow-file-access-from-files --enable-experimental-web-platform-features",
   "requires": true,
   "lockfileVersion": 1,
   "dependencies": {

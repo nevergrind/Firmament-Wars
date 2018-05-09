@@ -39,7 +39,7 @@ var animate = {
 		production: {
 			audio: '',
 			image: 'production.png',
-			color: '#d60'
+			color: '#7cf'
 		},
 		culture: {
 			audio: '',
@@ -217,7 +217,7 @@ var animate = {
 				svg.setAttributeNS(null,"y1",y);
 				svg.setAttributeNS(null,"x2",x + productionWidth);
 				svg.setAttributeNS(null,"y2",y);
-				svg.setAttributeNS(null,"stroke","#d60");
+				svg.setAttributeNS(null,"stroke","#7cf");
 				svg.setAttributeNS(null,"stroke-width",widthPerTick);
 				svg.setAttributeNS(null,"opacity",1);
 				svg.setAttributeNS(null,"class","mapBars mapBars2x mapBars" + i);
@@ -331,6 +331,7 @@ var animate = {
 		image.setAttributeNS(null,"width",'200px');
 		image.setAttributeNS(null,"height",'200px');
 		image.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","images/flash.png");
+		image.setAttributeNS(null, 'class', 'no-pointer');
 		image.setAttributeNS(null,"x",o.x);
 		image.setAttributeNS(null,"y",o.y);
 		DOM.world.appendChild(image);
@@ -350,6 +351,7 @@ var animate = {
 		image.setAttributeNS(null,"width",'200px');
 		image.setAttributeNS(null,"height",'200px');
 		image.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","images/flash.png");
+		image.setAttributeNS(null, 'class', 'no-pointer');
 		image.setAttributeNS(null,"x",o.x);
 		image.setAttributeNS(null,"y",o.y);
 		DOM.world.appendChild(image);
@@ -374,7 +376,8 @@ var animate = {
 			box3 = DOM['unit' + defTile].getBBox()
 			delay = delay === undefined ? .08 : delay;
 
-		if (game.tiles[defTile].player === my.player){
+		if (game.tiles[atkTile].player === my.player ||
+			game.tiles[defTile].player === my.player){
 			var a = [5, 6, 8];
 			var sfx = ~~(Math.random() * 3);
 			playSound && audio.play('grenade' + a[sfx]);
@@ -395,6 +398,7 @@ var animate = {
 				circ.setAttributeNS(null,"cy",y1);
 				circ.setAttributeNS(null,"r",4);
 				circ.setAttributeNS(null,"fill",g.color[game.player[game.tiles[atkTile].player].playerColor]);
+				circ.setAttributeNS(null, 'class', 'no-pointer');
 				circ.setAttributeNS(null,"stroke",animate.randomColor());
 				circ.setAttributeNS(null,"strokeWidth",1);
 				DOM.mapAnimations.appendChild(circ);
@@ -429,6 +433,14 @@ var animate = {
 							ease: Linear.easeNone,
 							onComplete: function(){
 							// explode fades from inner
+								if (i % 2 === 0) {
+									animate.flash({
+										d: .25,
+										scale: 1,
+										x: x2 - 100,
+										y: y2 - 100,
+									});
+								}
 								TweenMax.to(circ, d2, {
 									attr: {
 										r: s1
@@ -447,14 +459,6 @@ var animate = {
 						});
 					}
 				});
-				if (i % 2 === 0) {
-					animate.flash({
-						d: .25,
-						scale: 1.2,
-						x: x2 - 100,
-						y: y2 - 100,
-					});
-				}
 				if (i === 0) {
 					animate.flash({
 						d: 1,
@@ -493,13 +497,38 @@ var animate = {
 					+ my.motionPath[4] +" "+ my.motionPath[5]
 			}
 		});
+		// missile flash
+		var flash = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+		flash.setAttributeNS(null,"width",'200px');
+		flash.setAttributeNS(null,"height",'200px');
+		flash.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","images/flash-orange.png");
+		flash.setAttributeNS(null, 'class', 'no-pointer');
+		flash.setAttributeNS(null,"x",x1);
+		flash.setAttributeNS(null,"y",y1);
+		console.info('1', x1, y1);
+		console.info('2', x2, y2);
+		DOM.mapAnimations.appendChild(flash);
+		TweenMax.to(flash, 1, {
+			startAt: {
+				xPercent: -50,
+				yPercent: -50
+			},
+			x: x2 - x1 - 24,
+			y: y2 - y1 - 24,
+			ease: Power2.easeIn,
+			onComplete: function() {
+				this.target.parentNode.removeChild(this.target);
+			}
+		});
+
 		var mis = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 		mis.setAttributeNS(null, "cx", x1);
 		mis.setAttributeNS(null, "cy", y1);
 		mis.setAttributeNS(null, "r", 12);
-		mis.setAttributeNS(null,"fill",g.color[game.player[game.tiles[attacker].player].playerColor]);
+		mis.setAttributeNS(null, "fill", g.color[game.player[game.tiles[attacker].player].playerColor]);
 		mis.setAttributeNS(null,"stroke","#ffddaa");
 		mis.setAttributeNS(null,"stroke-width",2);
+		mis.setAttributeNS(null, 'class', 'no-pointer');
 		DOM.mapAnimations.appendChild(mis);
 		var count = 0;
 		TweenMax.to(mis, .1, {
@@ -529,6 +558,7 @@ var animate = {
 					svg.setAttributeNS(null, 'opacity', 1);
 					svg.setAttributeNS(null, "x", mis.getAttribute('cx')-10);
 					svg.setAttributeNS(null, "y", mis.getAttribute('cy')-10);
+					svg.setAttributeNS(null, 'class', 'no-pointer');
 					svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/smoke.png');
 					DOM.mapAnimations.appendChild(svg);
 					TweenMax.to(svg, .3, {
@@ -570,6 +600,7 @@ var animate = {
 			a = [5, 6, 8],
 			sfx = ~~(Math.random() * 3);
 		audio.play('grenade' + a[sfx]);
+		animate.screenShake(5, 3, .016);
 		var x = 0,
 			y = 0;
 		for (var i=0; i<5; i++){
@@ -592,6 +623,7 @@ var animate = {
 				circ.setAttributeNS(null,"cx",x);
 				circ.setAttributeNS(null,"cy",y);
 				circ.setAttributeNS(null,"r",0);
+				circ.setAttributeNS(null, 'class', 'no-pointer');
 				circ.setAttributeNS(null,"fill",misColor);
 				circ.setAttributeNS(null,"stroke",'#ffffaa');
 				DOM.mapAnimations.appendChild(circ);
@@ -663,9 +695,9 @@ var animate = {
 		bomb.setAttributeNS(null, "r", 15);
 		bomb.setAttributeNS(null,"fill",g.color[game.player[attacker].playerColor]);
 		bomb.setAttributeNS(null,"stroke","#ffddaa");
+		bomb.setAttributeNS(null, 'class', 'no-pointer');
 		bomb.setAttributeNS(null,"stroke-width",2);
 		DOM.mapAnimations.appendChild(bomb);
-		var count = 0;
 		TweenMax.to(bomb, .1, {
 			attr: {
 				r: 3
@@ -689,6 +721,8 @@ var animate = {
 		TweenMax.to(g, 1, {
 			onComplete: function(){
 				audio.play('bomb9');
+				animate.screenShake(33, 7, .033, 1);
+				animate.sepia();
 				animate.flashNuke({
 					d: 2.5,
 					scale: 5,
@@ -731,6 +765,7 @@ var animate = {
 				circ.setAttributeNS(null,"r",1);
 				circ.setAttributeNS(null,"fill",g.color[game.player[attacker].playerColor]);
 				circ.setAttributeNS(null,"stroke",'#ffdd88');
+				circ.setAttributeNS(null, 'class', 'no-pointer');
 				DOM.mapAnimations.appendChild(circ);
 				
 				TweenMax.to(circ, 1.5, {
@@ -771,6 +806,26 @@ var animate = {
 			}
 		});
 	},
+	sepia: function() {
+		var o = {
+			sepia: 50,
+			brightness: 200,
+			blur: 3
+		};
+
+		TweenMax.to(o, 2.5, {
+			sepia: 0,
+			brightness: 100,
+			blur: 0,
+			onUpdate: function() {
+				TweenMax.set(DOM.worldWrap, {
+					filter: 'sepia(' + o.sepia +'%) brightness(' +
+						o.brightness +'%) blur(' +
+						o.blur +'px)'
+				})
+			}
+		})
+	},
 	smoke: function(tile, x, y, scale){
 		if (x === undefined){
 			var o = animate.getXY(tile);
@@ -786,6 +841,7 @@ var animate = {
 		smoke.setAttributeNS(null,"x",x);
 		smoke.setAttributeNS(null,"y",y);
 		smoke.setAttributeNS(null,"opacity",0);
+		smoke.setAttributeNS(null, 'class', 'no-pointer');
 		smoke.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","images/smoke.png");
 		DOM.mapUpgrades.appendChild(smoke);
 		TweenMax.to(smoke, 3, {
@@ -897,8 +953,14 @@ var animate = {
 			ease: Linear.easeNone
 		});
 	},
+	brightness: function(e, brightness) {
+		TweenMax.set(e, {
+			filter: 'brightness('+ brightness +'%)'
+		});
+	},
 	energyBar: function(){
-		TweenMax.to(DOM.energyIndicator, g.speed + 1.5, {
+		// 2.7? Don't ask why
+		TweenMax.to(DOM.energyIndicator, g.speed * 2.7, {
 			startAt: {
 				strokeDasharray: '0,100'
 			},
@@ -911,7 +973,7 @@ var animate = {
 			color: '#fff',
 		});
 		var o = {
-			blur: 10
+			blur: 4
 		}
 		TweenMax.to(o, 1, {
 			blur: 0,

@@ -9,7 +9,7 @@ var g = {
 	msg: function(msg, d) {
 		g.Msg.innerHTML = msg;
 		if (d === 0){
-			TweenMax.set(e, {
+			TweenMax.set(g.Msg, {
 				overwrite: 1,
 				startAt: {
 					opacity: 1
@@ -22,11 +22,13 @@ var g = {
 			TweenMax.to(g.Msg, ui.delay(d), {
 				overwrite: 1,
 				startAt: {
+					skewX: 0,
 					opacity: 1
 				},
 				onComplete: function(){
-					TweenMax.to(this.target, .2, {
-						opacity: 0
+					TweenMax.to(this.target, .3, {
+						skewX: 90,
+						opacity: 0,
 					});
 				}
 			});
@@ -86,7 +88,7 @@ var g = {
 	titleFlashing: false,
 	name: "",
 	password: "",
-	speed: 30,
+	speed: 15,
 	focusUpdateNationName: false,
 	focusGameName: false,
 	view: "title",
@@ -355,14 +357,9 @@ var g = {
 
 		console.info('init-game', data.account, data);
 		my.channel = data.initChannel;
-		$('.timer-tooltips, #currentYear, .actionButtons').tooltip({
+		$('.actionButtons').tooltip({
 			animation: false,
 			placement: 'left',
-			container: 'body'
-		});
-		$('.game-options').tooltip({
-			animation: false,
-			placement: 'top',
 			container: 'body'
 		});
 		$('[title]').tooltip({
@@ -934,6 +931,7 @@ var game = {
 		}
 		
 		my.tgt === i && ui.showTarget(DOM['land' + i]);
+		ui.drawDiplomacyPanel();
 	},
 	setSumValues: function(){
 		var o = {

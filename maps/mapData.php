@@ -14,8 +14,8 @@
 			'Argentina', 'Turkey', 'Romania', 'Australia', 'Austria', 
 			'Tanzania', 'Germany', 'Ghana', 'India', 'Belarus', //10
 			'Panama', 'Bolivia', 'Brazil', 'Indonesia', 'Botswana', 
-			'Central African Republic', 'Canada', 'Italy', 'China', 'Liberia', //20
-			'Nigeria', 'Democratic Republic of the Congo', 'Colombia', 'Cuba', 'Ethiopia', 
+			'Cameroon', 'Canada', 'Italy', 'China', 'Liberia', //20
+			'Nigeria', 'Congo', 'Colombia', 'Cuba', 'Ethiopia',
 			'Algeria', 'Peru', 'Egypt', 'Finland', 'United Kingdom', //30
 			'Greenland', 'Guyana', 'Iran', 'Iraq', 'Iceland', 
 			'Israel', 'Japan', 'Kazakhastan', 'Uzbekistan', 'Cambodia', //40

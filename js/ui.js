@@ -1,6 +1,64 @@
 // ui.js
 
 var ui = {
+	getTeamIcon: function(team) {
+		return g.teamMode ? '<span class="diploTeam">'+ team +'</span>' : '';
+	},
+	getDiploRow: function(p) {
+		var account = p.cpu ? p.difficulty : p.account,
+			icon = lobby.governmentIcon(p),
+			color = game.player[p.player].playerColor;
+
+		var str =
+		'<div id="diplomacyPlayer' + color + '" class="diplomacyPlayers alive pb'+ color +'">'+
+			// bg
+			'<div class="diplo-pipe pbar'+ color +'"></div>'+
+			'<img src="images/flags/'+ p.flagSrc +'" class="diplo-flag no-select">'+
+			// row 1
+			'<div class="diplo-data-col"' +
+				'<div>'+
+					'<div class="nowrap">'+ icon + account +'</div>' +
+					'<div class="nowrap">'+ ui.getTeamIcon(p.team) + p.nation + '</div>'+
+				'</div>'+
+				// row 2
+			'</div>' +
+
+		'</div>';
+		return str;
+	},
+	getPlayersByTileRank: function() {
+		var arr = [0,0,0,0,0,0,0,0,0];
+		game.tiles.forEach(function(t) {
+			t.player && arr[t.player]++;
+		});
+		return arr;
+	},
+	drawDiplomacyPanel: function() {
+		var strArr = [],
+			p,
+			i=0,
+			len=game.player.length;
+		// get ranks first
+		var arr = ui.getPlayersByTileRank();
+		console.info(arr);
+
+		for (; i<len; i++){
+			p = game.player[i];
+			if (p.account){
+				p.flagArr = p.flag.split("."),
+				p.flagShort = p.flagArr[0],
+				p.flagSrc = p.flag === 'Default.jpg' ?
+					'Player'+ game.player[p.player].playerColor +'.jpg' :
+					p.flag;
+
+				while (strArr[arr[i]] !== undefined) {
+					arr[i]++;
+				}
+				strArr[arr[i]] = ui.getDiploRow(p);
+			}
+		}
+		document.getElementById('diplomacy-body').innerHTML = strArr.reverse().join("");
+	},
 	resizeWindow: function() {
 		g.view === 'game' && worldMap[0].applyBounds();
 		g.screen.resizeMap();
@@ -327,11 +385,10 @@ function updateTileInfo(tileId){
 		o.defense = ~~((t.defense / 4) * 99);
 	}
 	var resources =
-	'<div>' + t.food + '<img src="images/icons/food.png" class="fw-icon"></div>'+
-	(t.production ? '<div>' + t.production + '<img src="images/icons/production.png" class="fw-icon"></div>' : '') +
-	(t.culture ? '<div>' + t.culture + '<img src="images/icons/culture.png" class="fw-icon"></div>' : '') +
-	(t.defense ?
-		'<div>' + t.defense + '<img src="images/icons/tile-defense.png" class="fw-icon"></div>' : '');
+		'<span>' + t.food + '<img src="images/icons/food.png" class="fw-icon-sm"></span>'+
+		(t.production ? '<span>' + t.production + '<img src="images/icons/production.png" class="fw-icon-sm"></span>' : '') +
+		(t.culture ? '<span>' + t.culture + '<img src="images/icons/culture.png" class="fw-icon-sm"></span>' : '') +
+		(t.defense ? '<span>' + t.defense + '<img src="images/icons/tile-defense.png" class="fw-icon-sm"></span>' : '');
 	// DOM.targetCapStar.style.display = t.capital ? 'inline' : 'none';
 	DOM.targetNameWrap.innerHTML = name;
 	DOM.targetResources.innerHTML = resources;

@@ -489,7 +489,7 @@ var stats = {
 	},
 	statResources: function(){
 		// head
-		var str = stats.playerHead(['Energy', 'Production', 'Food', 'Culture']);
+		var str = stats.playerHead(['Energy', 'Science', 'Food', 'Culture']);
 		// player rows
 		for (var i=1; i<=8; i++){
 			var d = stats.data[i];
@@ -621,6 +621,7 @@ var stats = {
 			stats.data = data;
 			stats.init(data);
 			stats.notifyRibbons(data.ribbons);
+			stats.notifySteam(data.ribbons);
 		});
 	},
 	achievements: [],
@@ -643,6 +644,17 @@ var stats = {
 					greenworks.init();
 					// send achievement data
 				}
+			}
+		}
+	},
+	notifySteam: function(data) {
+		if (app.isApp) {
+			var greenworks = require('./greenworks');
+			if (greenworks.initAPI()) {
+				greenworks.init();
+				data.forEach(function(i) {
+					greenworks.activateAchievement('medal' + i, function(){});
+				});
 			}
 		}
 	},

@@ -44,7 +44,7 @@ var lobby = {
 		} else if (government === "Monarchy"){
 			str = '<div id="lobbyGovName" class="text-primary">Monarchy</div>\
 				<div id="lobbyGovPerks">\
-					<div>3x capital culture</div>\
+					<div>Food resources also yield one culture</div>\
 					<div>50% starting culture bonus</div>\
 					<div>Start with two great tacticians: +2 defense</div>\
 					<div>1/2 cost structures</div>\
@@ -579,7 +579,6 @@ var lobby = {
 		var str = '',
 			playerClass = 'player-icon' + game.player[p.player].playerColor;
 
-		console.info('government: ', p.government);
 		if (p.cpu) {
 			str += '<img src="images/icons/computer.png" class="fw-icon-sm '+ playerClass +'">';
 		}
@@ -819,6 +818,7 @@ function loadGameState(){
 			type: "GET",
 			url: app.url +"php/loadGameState.php"
 		}).done(function(data){
+			$("#login-modal").remove();
 			setTimeout(function() {
 				$("#title-bg-wrap").remove();
 			}, 2000);
@@ -1036,64 +1036,11 @@ function loadGameState(){
 				animate.initMapBars(i);
 			}
 			//lobby.initRibbons(data.ribbons);
-			var str = '';
-			// init diplomacyPlayers
-			function diploRow(p){
-				// <i class="' + icon + ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right"></i>
-				var account = p.cpu ? p.difficulty : p.account,
-					icon = lobby.governmentIcon(p),
-					gov = p.cpu ? 'Computer' : p.government;
-				function teamIcon(team){
-					return g.teamMode ? 
-						'<span class="diploTeam">'+ team +'</span>' : '';
-				}
-				var str = 
-				'<div id="diplomacyPlayer' + p.player + '" class="diplomacyPlayers alive pb'+ p.player +'">'+
-					// bg 
-					'<div class="diplo-pipe pbar'+ p.player +'"></div>'+
-					'<img src="images/flags/'+ p.flagSrc +'" class="diplo-flag no-select">'+
-					// row 1
-					'<div class="diplo-data-col"' +
-						'<div>'+
-							'<div class="nowrap">'+ icon + account +'</div>' +
-							'<div class="nowrap">'+ teamIcon(p.team) + p.nation + '</div>'+
-						'</div>'+
-						// row 2
-					'</div>' +
-					
-				'</div>';
-				return str;
-			}
-			var teamArr = [str];
-			for (var i=0, len=game.player.length; i<len; i++){
-				var p = game.player[i];
-				if (p.account){
-					p.flagArr = p.flag.split("."),
-					p.flagShort = p.flagArr[0],
-					p.flagSrc = p.flag === 'Default.jpg' ? 
-						'Player'+ game.player[p.player].playerColor +'.jpg' : 
-						p.flag;
-					if (g.teamMode){
-						var foo = diploRow(p);
-						// 100 just in case the players/game are increased later
-						teamArr[p.team*100 + i] = foo;
-					} else {
-						str += diploRow(p);
-					}
-				}
-			}
-			var diploHead =
-
-			'<div id="game-mode">' +
-				'<div>Game Mode:</div>' +
-				'<div class="'+ g.gameMode.toLowerCase() +'">'+ g.gameMode +'</div>' +
-			'</div>';
-			
-			if (g.teamMode){
-				document.getElementById('diplomacy-body').innerHTML = diploHead + teamArr.join("");
-			} else {
-				document.getElementById('diplomacy-body').innerHTML = diploHead + str;
-			}
+			ui.drawDiplomacyPanel();
+			// write diplo head
+			var e = document.getElementById('game-mode-name');
+			e.className = g.gameMode.toLowerCase();
+			e.textContent = g.gameMode;
 			initResources(data);
 			// set images
 			setTimeout(function(){
@@ -1135,10 +1082,10 @@ function loadGameState(){
 					}
 				}
 				// map events
-				$("#gameWrap").on('click', ".land", function(e){
+				$("#gameWrap").on('click', '.land', function(e){
 					//location.host === 'localhost' && console.info(this.id, e.offsetX, e.offsetY);
 					triggerAction(this);
-				}).on("mouseenter", ".land", function(){
+				}).on("mouseenter", '.land', function(){
 					my.lastTarget = this;
 					if (my.attackOn){
 						ui.showTarget(this, true);
@@ -1146,7 +1093,7 @@ function loadGameState(){
 					TweenMax.set(this, {
 						fill: "hsl(+=0%, +=0%, -=5%)"
 					});
-				}).on("mouseleave", ".land", function(){
+				}).on("mouseleave", '.land', function(){
 					var land = this.id.slice(4)*1;
 					if (game.tiles.length > 0){
 						var player = game.tiles[land] !== undefined ? game.tiles[land].player : 0,

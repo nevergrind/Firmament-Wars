@@ -853,6 +853,23 @@ var title = {
 			}
 		});
 		g.isModalOpen = true;
+		var filter = {
+			blur: 0
+		};
+		TweenMax.to(filter, .3, {
+			blur: 3,
+			onUpdate: function() {
+				animate.blur('#mainWrap, #gameWrap', filter.blur);
+			}
+		});
+	},
+	toggleModal: function() {
+		if (g.isModalOpen) {
+			title.closeModal();
+		}
+		else {
+			title.showModal();
+		}
 	},
 	showModal: function() {
 		TweenMax.to("#optionsModal", g.modalSpeed, {
@@ -865,14 +882,15 @@ var title = {
 			alpha: 1
 		});
 		title.showBackdrop();
-	},
-	toggleModal: function() {
-		if (g.isModalOpen) {
-			title.closeModal();
-		}
-		else {
-			title.showModal();
-		}
+		var filter = {
+			blur: 0
+		};
+		TweenMax.to(filter, .3, {
+			blur: 3,
+			onUpdate: function() {
+				animate.blur('#mainWrap, #gameWrap', filter.blur);
+			}
+		});
 	},
 	closeModal: function(){
 		TweenMax.set('.title-modals, #titleViewBackdrop', {
@@ -880,6 +898,15 @@ var title = {
 			visibility: 'hidden'
 		});
 		g.isModalOpen = false;
+		var filter = {
+			blur: 3
+		};
+		TweenMax.to(filter, .3, {
+			blur: 0,
+			onUpdate: function() {
+				animate.blur('#mainWrap, #gameWrap', filter.blur);
+			}
+		});
 	},
 	exitGame: function() {
 		// exit from app

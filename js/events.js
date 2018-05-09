@@ -415,7 +415,7 @@ var events = {
 					});
 				} else {
 					if (!g.joinedGame && g.searchingGame){
-						g.msg("No ranked games found! Try creating a ranked game instead.", 5);
+						g.msg("No ranked games found!<br>Try creating a ranked game instead.", 5);
 						g.unlock();
 						g.searchingGame = false;
 					}

@@ -570,8 +570,8 @@ a:hover {
     text-shadow: .5px .5px #443, 1px 1px #443
 }
 .chat-production {
-    color: #d60;
-    text-shadow: .5px .5px #420, 1px 1px #420
+    color: #7cf;
+    text-shadow: .5px .5px #245, 1px 1px #245
 }
 .chat-food {
     color: #b5ff00;
@@ -952,6 +952,7 @@ tbody {
 	justify-content: space-between;
 }
 .resource-child {
+	display: flex;
 	z-index: 1;
 }
 .nobg {
@@ -1045,27 +1046,28 @@ tbody {
 	z-index: 2;
 }
 .targetFlag {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: .5;
-    z-index: 0
+    width: 6rem;
+    height: 4rem;
+}
+#target-details-column {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+    background: -webkit-radial-gradient(top center, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
 }
 #targetWrap {
 	display: flex;
-    position: absolute;
-    top: 3rem;
-    right: 21rem;
-    z-index: 9999;
-    background: rgba(0, 0, 0, 0);
-	border: 0!important;
+	border: .2rem ridge #048;
+	padding: .2rem 0;
 	color: #fff;
+	border-radius: 0 0 5px 5px;
 	font-size: 1.5rem;
 }
 #targetNameWrap {
     position: relative;
+	text-align: center;
+	padding: 0 .1rem;
+	width: 14.3rem;
 	z-index: 2;
 }
 #ribbonBackdrop {
@@ -1120,19 +1122,8 @@ tbody {
 	display: flex;
 	justify-content: space-around;
 	align-content: center;
-}
-#targetResources i {
-    margin-left: .3rem
-}
-#targetNameAnchor {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-	line-height: 1;
-    height: 100%
+	word-spacing: .3rem;
+	padding: 0 .2rem;
 }
 .ribbonName {
     font-size: 2.5rem;
@@ -1277,6 +1268,7 @@ tbody {
 	padding: .2rem 1rem;
 	color: #bef;
 	justify-content: space-between;
+	align-items: center;
 }
 #available-troops {
 	position: relative;
@@ -1303,7 +1295,7 @@ tbody {
 	align-content: center;
 	font-size: 1.8rem;
 	height: 3rem;
-	width: 40rem;
+	width: 75rem;
 	top: 0;
 	right: 0;
     color: #fff;
@@ -1357,15 +1349,10 @@ tbody {
     z-index: 9999
 }
 #resourceHead {
-	position: relative;
 	display: flex;
-	width: 100%;
-	justify-content: flex-end;
+	justify-content: space-around;
+	align-items: center;
     color: #aef;
-    padding-top: .4rem;
-    font-size: 2rem;
-	background: #013;
-	background: -webkit-radial-gradient(top left, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 0) 75%);
 }
 .game-options {
 	padding-left: 1.5rem;
@@ -1383,6 +1370,13 @@ tbody {
     padding: .25rem .375rem;
     margin: 1px;
 	overflow: hidden;
+}
+@keyframes flash-outline {
+	0% { filter: brightness(100%); }
+	100% { filter: brightness(150%); }
+}
+.diplomacyPlayers:first-child {
+	animation: flash-outline .7s ease-out infinite alternate;
 }
 .diplo-data-col {
 	padding: 0 .5rem;
@@ -1406,7 +1400,6 @@ tbody {
     color: #fff;
     text-align: left;
     z-index: 9999;
-    overflow: hidden;
     line-height: 1.3;
 }
 .tight {
@@ -1421,7 +1414,7 @@ tbody {
     padding-left: 5px
 }
 .blueBg {
-    border: 2px ridge #357;
+    border: .2rem ridge #357;
     border-radius: 4px;
     background: rgba(0, 8, 33, 1)
 }
@@ -1460,7 +1453,7 @@ tbody {
     color: #b5ff00
 }
 .production {
-    color: #d60
+    color: #7cf
 }
 .culture {
     color: #d2d
@@ -1468,6 +1461,7 @@ tbody {
 .fw-icon {
 	width: 2rem;
 	height: 2rem;
+	padding-left: .1rem;
 	align-self: center;
 }
 .fw-icon-sm {
@@ -1530,7 +1524,7 @@ table td,
 }
 #prod-wrap {
 	background: #013;
-	border: .2rem outset #d60;
+	border: .2rem outset #7cf;
 	padding: .2rem .5rem;
 	margin-bottom: 1px;
 }
@@ -1761,7 +1755,7 @@ text {
     stroke: #b5ff00
 }
 .targetBarsProduction {
-    stroke: #d60
+    stroke: #7cf
 }
 .targetBarsCulture {
     stroke: #d2d
@@ -2076,7 +2070,7 @@ circle {
     -webkit-border-image: -webkit-linear-gradient(right, rgba(4, 67, 136, 0) 0%, rgba(4, 67, 136, .9) 20%, rgba(4, 67, 136, .9) 80%, rgba(4, 67, 136, 0) 100%);
     border-image-slice: 1;
     z-index: 999999;
-    pointer-events: none
+    pointer-events: none;
 }
 #hud {
     position: absolute;
@@ -2653,25 +2647,6 @@ table {
     overflow: hidden;
     margin: .25rem
 }
-#currentYearWrap {
-    position: absolute;
-	bottom: 1rem;
-	right: 1rem;
-	width: 15rem;
-	margin: 0;
-	color: #fff;
-    letter-spacing: .125rem;
-	text-align: right;
-    font-family: Cinzel, Palatino Linotype, serif;
-    z-index: 9999;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-end;
-}
-#currentYear {
-    font-size: 3rem;
-	height: 4rem;
-}
 .resourceBar {
     position: absolute;
 	top: 0;
@@ -2693,49 +2668,28 @@ table {
 	z-index: 1;
 	width: 100%;
 }
-#energy-wrap {
-	position: relative;
-	z-index: 9999;
-}
 #energy-timer-wrap {
-	border: .2rem groove #444;
-	background: #025;
+	background: #5a5215;
 	transform-origin: center;
 	border-radius: 50%;
-	margin: 0 auto;
 	display: block;
 	overflow: hidden;
-	width: 60px;
-	height: 60px;
+	width: 2rem;
+	height: 2rem;
 	transform: rotate(-90deg);
 }
 #energyIndicator {
 	opacity: 1;
-	stroke: #aef;
+	stroke: #faf2a5;
 	fill: transparent;
-	r: 15px;
-	cx: 30px;
-	cy: 30px;
-	stroke-width: 30;
+	r: .5rem;
+	cx: 1rem;
+	cy: 1rem;
+	stroke-width: 1rem;
 	transform-origin: center;
 }
 #energy-label-wrap {
 	display: flex;
-}
-#moves {
-	font-size: 3.5rem;
-}
-#move-wrap {
-	position: absolute;
-	margin: 0 auto;
-	left: 0;
-	right: 0;
-	top: 30px;
-	font-size: 24px;
-	transform: translate(0%, -50%);
-	z-index: 1;
-	text-shadow: 0 0 2px #000, 0 0 3px #000, 0 0 4px #000, 0 0 4px #000;
-	text-shadow: 1px 1px #000, -1px 0 #000, 1px 0 #000, -1px 1px #000, 1px -1px #000, -1px -1px #000, 0 0 4px #ff0, 0 0 4px #ff0, 0 0 4px #ff0;
 }
 .resourceRight {
     text-align: right;
@@ -2752,7 +2706,7 @@ table {
 }
 #productionBar {
     margin: 0;
-    background: #d60;
+    background: #7cf;
     border: none;
     width: 0;
     border-radius: 0

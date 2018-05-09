@@ -13,7 +13,7 @@ function Target(o){
 var action = {
 	error: function(msg){
 		if (msg === undefined){
-			msg = "Not enough production!";
+			msg = "Not enough science!";
 		}
 		g.msg(msg, 1.5);
 		my.clearHud();
@@ -93,6 +93,15 @@ var action = {
 				}
 			}
 		}
+		var filter = {
+			brightness: 200
+		}, element = my.splitAttack ? '#splitAttack' : '#attack';
+		TweenMax.to(filter, .5, {
+			brightness: 100,
+			onUpdate: function() {
+				animate.brightness(element, filter.brightness);
+			}
+		});
 		// send attack to server
 		$.ajax({
 			url: app.url + 'php/attackTile.php',
@@ -190,7 +199,17 @@ var action = {
 		}
 		if (t.units <= 254){
 			// do it
-			var tgt = my.tgt;
+			var tgt = my.tgt,
+				filter = {
+					brightness: 200
+				};
+
+			TweenMax.to(filter, .5, {
+				brightness: 100,
+				onUpdate: function() {
+					animate.brightness('#deploy', filter.brightness);
+				}
+			});
 			$.ajax({
 				url: app.url + 'php/deploy.php',
 				data: {
@@ -221,6 +240,15 @@ var action = {
 			return;
 		}
 		if (t.units <= 254){
+			var filter = {
+				brightness: 200
+			};
+			TweenMax.to(filter, .5, {
+				brightness: 100,
+				onUpdate: function() {
+					animate.brightness('#rush', filter.brightness);
+				}
+			});
 			$.ajax({
 				url: app.url + 'php/rush.php',
 				data: {
@@ -251,6 +279,15 @@ var action = {
 			action.error();
 			return;
 		}
+		var filter = {
+				brightness: 200
+			};
+		TweenMax.to(filter, .5, {
+			brightness: 100,
+			onUpdate: function() {
+				animate.brightness('#upgradeTileDefense', filter.brightness);
+			}
+		});
 		$.ajax({
 			url: app.url + 'php/upgradeTileDefense.php',
 			data: {
@@ -282,6 +319,15 @@ var action = {
 		my.clearHud();
 		ui.showTarget(DOM['land' + attacker]);
 		// send attack to server
+		var filter = {
+				brightness: 200
+			};
+		TweenMax.to(filter, .5, {
+			brightness: 100,
+			onUpdate: function() {
+				animate.brightness('#fireCannons', filter.brightness);
+			}
+		});
 		$.ajax({
 			url: app.url + 'php/fireCannons.php',
 			data: {
@@ -316,6 +362,15 @@ var action = {
 		my.clearHud();
 		ui.showTarget(DOM['land' + attacker]);
 		// send attack to server
+		var filter = {
+				brightness: 200
+			};
+		TweenMax.to(filter, .5, {
+			brightness: 100,
+			onUpdate: function() {
+				animate.brightness('#launchMissile', filter.brightness);
+			}
+		});
 		$.ajax({
 			url: app.url + 'php/launchMissile.php',
 			data: {
@@ -369,6 +424,15 @@ var action = {
 		my.clearHud();
 		ui.showTarget(DOM['land' + attacker]);
 		// send attack to server
+		var filter = {
+				brightness: 200
+			};
+		TweenMax.to(filter, .5, {
+			brightness: 100,
+			onUpdate: function() {
+				animate.brightness('#launchNuke', filter.brightness);
+			}
+		});
 		$.ajax({
 			url: app.url + 'php/launchNuke.php',
 			data: {
@@ -562,6 +626,7 @@ $("#gameWrap").on(ui.click, '#attack', function(){
 
 var research = {
 	masonry: function(){
+		if (my.production < 40) return;
 		$.ajax({
 			type: 'GET',
 			url: app.url + 'php/researchMasonry.php'
@@ -571,6 +636,7 @@ var research = {
 		});
 	},
 	construction: function(){
+		if (my.production < 60) return;
 		$.ajax({
 			type: 'GET',
 			url: app.url + 'php/researchConstruction.php'
@@ -580,6 +646,7 @@ var research = {
 		});
 	},
 	gunpowder: function(){
+		if (my.production < 60) return;
 		$.ajax({
 			type: 'GET',
 			url: app.url + 'php/researchGunpowder.php'
@@ -589,6 +656,7 @@ var research = {
 		});
 	},
 	engineering: function(){
+		if (my.production < 80) return;
 		$.ajax({
 			type: 'GET',
 			url: app.url + 'php/researchEngineering.php'
@@ -598,6 +666,7 @@ var research = {
 		});
 	},
 	rocketry: function(){
+		if (my.production < 200) return;
 		$.ajax({
 			type: 'GET',
 			url: app.url + 'php/researchRocketry.php'
@@ -607,6 +676,7 @@ var research = {
 		});
 	},
 	atomicTheory: function(){
+		if (my.production < 500) return;
 		$.ajax({
 			type: 'GET',
 			url: app.url + 'php/researchAtomicTheory.php'
@@ -616,6 +686,7 @@ var research = {
 		});
 	},
 	futureTech: function(){
+		if (my.production < 800) return;
 		$.ajax({
 			type: 'GET',
 			url: app.url + 'php/researchFutureTech.php'
