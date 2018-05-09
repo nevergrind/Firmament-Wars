@@ -40,7 +40,6 @@ var ui = {
 			len=game.player.length;
 		// get ranks first
 		var arr = ui.getPlayersByTileRank();
-		console.info(arr);
 
 		for (; i<len; i++){
 			p = game.player[i];
