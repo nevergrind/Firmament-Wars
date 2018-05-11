@@ -148,11 +148,14 @@ var stats = {
 		if (g.victory){
 			audio.play('bell-8');
 			audio.play('TheAssault', 1);
-			document.getElementById('statGameResult').textContent = "Victory in "+ ui.transformYear(stats.data.resourceTick);
-		} else {
+			document.getElementById('statGameResult').textContent =
+				"Victory in "+ ui.transformYear(stats.data.resourceTick);
+		}
+		else {
 			audio.play('defeat');
 			audio.play("JourneyOfForgottenSoldiers", 1);
 		}
+		console.warn("GOING VISIBLE");
 		document.getElementById('statWrap').style.visibility = 'visible';
 		TweenMax.to('#gameWrap', .5, {
 			startAt: {
@@ -336,7 +339,7 @@ var stats = {
 					},
 				]
 				stats.animate(a, 1.5);
-				str += '<tr class="statRow">' +
+				str += '<tr class="statRow no-pointer">' +
 					stats.playerCell(d, i);
 					var color = game.player[i].playerColor,
 						a = ['units', 'structures', 'weapons', 'resources', 'total'],
@@ -384,7 +387,7 @@ var stats = {
 					},
 				]
 				stats.animate(a, 1.5);
-				str += '<tr class="stagBlue statRow">' +
+				str += '<tr class="stagBlue statRow no-pointer">' +
 					stats.playerCell(d, i);
 					var color = game.player[i].playerColor,
 						a = ['earned', 'deployed', 'killed', 'lost'],
@@ -427,7 +430,7 @@ var stats = {
 					}
 				]
 				stats.animate(a, 1);
-				str += '<tr class="stagBlue statRow">' +
+				str += '<tr class="stagBlue statRow no-pointer">' +
 					stats.playerCell(d, i);
 					var color = game.player[i].playerColor,
 						a = ['bunkers', 'walls', 'fortresses'],
@@ -470,7 +473,7 @@ var stats = {
 					}
 				]
 				stats.animate(a, 1);
-				str += '<tr class="stagBlue statRow">'+
+				str += '<tr class="stagBlue statRow no-pointer">'+
 					stats.playerCell(d, i);
 					var color = game.player[i].playerColor,
 						a = ['cannons', 'missiles', 'nukes'],
@@ -517,7 +520,7 @@ var stats = {
 					}
 				]
 				stats.animate(a, 1.5);
-				str += '<tr class="stagBlue statRow">' +
+				str += '<tr class="stagBlue statRow no-pointer">' +
 					stats.playerCell(d, i);
 					var color = game.player[i].playerColor;
 					str += '<td class="stagBlue statTD">\

@@ -474,7 +474,8 @@ function gameDefeat(){
 			<div id="ceaseFire" class="endBtn">\
 				<div class="modalBtnChild">Cease Fire</div>\
 			</div>';
-		} else if (data.gameDone){
+		}
+		else if (data.gameDone){
 			msg =
 			'<p>Defeat!</p>\
 			<div>Your campaign for world domination has failed!</div>';
@@ -515,7 +516,8 @@ function gameVictory(){
 					<div class="modalBtnChild">Cease Fire</div>\
 				</div>';
 				audio.play('shotgun2');
-			} else if (data.gameDone){
+			}
+			else if (data.gameDone){
 				msg =
 				'<p>Congratulations!</p>\
 				<div>Your campaign for global domination has succeeded!</div>\
@@ -557,18 +559,16 @@ function triggerEndGame(msg, victory){
 		} else {
 			audio.play('shotgun2');
 		}
-		$("#endWar").on('mousedown', function(e){
-			if (e.which === 1){
-				$("#endWar").off();
-				g.view = 'stats';
-				TweenMax.to('#gameWrap', .05, {
-					alpha: 0,
-					onComplete: function(){
-						$("#diplomacy-ui, #ui2, #resources-ui, #chat-input-open, #chat-ui, #chat-input-wrap, #hud, #worldWrap, #victoryScreen").remove();
-						stats.show();
-					}
-				});
-			}
+		$("#endWar").on(ui.click, function(){
+			$("#endWar").off();
+			g.view = 'stats';
+			TweenMax.to('#gameWrap', .05, {
+				alpha: 0,
+				onComplete: function(){
+					$("#ui2-head, #diplomacy-ui, #chat-input-open, #chat-ui, #chat-input-wrap, #hud, #worldWrap, #victoryScreen").remove();
+					stats.show();
+				}
+			});
 		});
 		$("#ceaseFire").on(ui.click, function(){
 			location.reload();

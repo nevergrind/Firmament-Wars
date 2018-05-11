@@ -1379,6 +1379,7 @@ tbody {
 }
 .diplo-data-col {
 	padding: 0 .5rem;
+	width: 100%;
 	max-width: 22rem;
 }
 .diplomacyPlayers:first-child .diplo-data-col {
@@ -2821,7 +2822,7 @@ header #options {
 	height: 100%;
     margin: 0;
     right: 0;
-    z-index: 9999;
+    z-index: 999;
     padding: 0;
     background: #000;
 	overflow-x: hidden;

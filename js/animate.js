@@ -106,14 +106,14 @@ var animate = {
 		this.updateMapBars(tile);
 	},
 	paths: function() {
-		TweenMax.to('.paths > path', 2, {
+		/*TweenMax.to('.paths > path', 2, {
 			startAt: {
 				strokeDashoffset: 0
 			},
 			strokeDashoffset: -12,
 			repeat: -1,
 			ease: Linear.easeNone
-		});
+		});*/
 	},
 	rifle: function() {
 		TweenMax.to(DOM.troopIcon, .05, {
@@ -311,7 +311,7 @@ var animate = {
 				if (i % 4 === 0) {
 					animate.flash({
 						d: .1,
-						scale: 1,
+						scale: 2,
 						x: x2 - 100,
 						y: y2 - 100,
 					});
