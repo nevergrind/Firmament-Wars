@@ -67,6 +67,7 @@ var ui = {
 		var size = localStorage.getItem('window-size');
 		if (size === null) {
 			localStorage.setItem('window-size', ui.windowDefault);
+			size = ui.windowDefault;
 		}
 		ui.setWindow(size);
 	},
@@ -537,7 +538,7 @@ function gameVictory(){
 	})();
 }
 function triggerEndGame(msg, victory){
-	$("*").off('click mousedown keydown keyup keypress');
+	$("body, #gameWrap").off('click mousedown keydown keyup keypress');
 	g.gameDuration = ~~((Date.now()- ((sessionStorage.getItem('gameDuration') * 1))) / 1000);
 	$("#chat-input-open, #chat-input-wrap").remove();
 	window.onbeforeunload = null;
@@ -546,9 +547,7 @@ function triggerEndGame(msg, victory){
 		g.over = 1;
 	}, 1500);
 	stats.get();
-	if (!isMSIE && !isMSIE11 && !isMobile){
-		new Image('images/FlatWorld90.jpg');
-	}
+	new Image('images/FlatWorld90.jpg');
 	setTimeout(function(){
 		var e = document.getElementById('victoryScreen');
 		e.innerHTML = msg;

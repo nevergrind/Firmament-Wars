@@ -555,6 +555,10 @@
 					 class="timer-tooltips"
 					 title="Turn ends when time expires or when all players have spent their energy">
 					<circle id="energyIndicator"
+							r=".5rem"
+							cx="1rem"
+							cy="1rem"
+							stroke-width="1rem"
 							stroke-dasharray="0,100"></circle>
 
 				</svg>
@@ -564,7 +568,7 @@
 				 data-placement="top"
 				 title="It's the current year!">4000 B.C.</div>
 
-			<div title="Energy is used to move and rush troops.">
+			<div title="Energy is used to attack, move, deploy, and rush troops.">
 				<img src="images/icons/energy.png" class="fw-icon">
 				<span id="moves">0</span>
 			</div>
@@ -574,7 +578,7 @@
 				<span id="food">0</span>/<span id="foodMax">25</span><!--(+<span id="sumFood">0</span>)-->
 			</div>
 
-			<div title="Science is used to deploy troops, build structures, and research technology.">
+			<div title="Science is used to build structures, weapons, and research technology.">
 				<img src="images/icons/production.png" class="fw-icon">
 				<span id="production">0</span>
 			</div>
@@ -597,6 +601,22 @@
 		<div id="resources-ui" class="shadow4 blueBg gameWindow  no-select">
 
 			<div id="targetWrap" class="no-select gameWindow">
+				<svg id="target-ui-wrap">
+					<g id="target-ui">
+						<path stroke="black" stroke-width="8"
+						   d="m 384.645,256 c 0,70.942 -57.702,128.655 -128.655,128.655 -70.942,0 -128.655,-57.712 -128.655,-128.655 0,-70.912 57.723,-128.635 128.655,-128.635 70.963,0 128.655,57.713 128.655,128.635 z M 255.99,98.969 c -86.558,0 -157.02,70.42 -157.02,157.031 0,86.611 70.462,157.041 157.02,157.041 86.579,0 157.061,-70.441 157.061,-157.041 0,-86.61 -70.482,-157.03 -157.061,-157.03 z"></path>
+						<path stroke="black" stroke-width="8"
+						   d="m 270.192,216.75 0,-206.428 -28.395,0 0,206.418 c 4.485,-1.607 9.196,-2.631 14.203,-2.631 5.007,0 9.707,1.024 14.192,2.642 z"></path>
+						<path stroke="black" stroke-width="8"
+						   d="m 241.787,295.26 0,206.418 28.395,0 0,-206.418 c -4.485,1.608 -9.195,2.642 -14.203,2.642 -5.008,0 -9.708,-1.034 -14.192,-2.642 z"></path>
+						<path stroke="black" stroke-width="8"
+						   d="m 216.73,241.808 -212.121,0 0,28.375 212.121,0 c -1.618,-4.454 -2.642,-9.185 -2.642,-14.213 0,-4.976 1.024,-9.718 2.642,-14.162 z"></path>
+						<path stroke="black" stroke-width="8"
+						   d="m 507.392,241.808 -212.142,0 c 1.618,4.444 2.642,9.175 2.642,14.172 0,5.018 -1.024,9.758 -2.642,14.213 l 212.142,0 0,-28.386 z"></path>
+					</g>
+				</svg>
+
+
 				<img id="targetFlag"
 					 class="targetFlag"
 					 src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
@@ -967,52 +987,61 @@
 		<div id="optionsFormWrap" class="container w100">
 		
 			<div class='row buffer2'>
-				<div class='col-xs-4'>
+				<div class='col-xs-6'>
 					Music Volume
 				</div>
-				<div class='col-xs-8 text-right'>
+				<div class='col-xs-6 text-right'>
 					<input id="musicSlider" class="sliders" type="text"/>
 				</div>
-				<div class='col-xs-4 buffer2'>
+				<div class='col-xs-6 buffer'>
 					Sound Effect Volume
 				</div>
-				<div class='col-xs-8 text-right buffer2'>
+				<div class='col-xs-6 text-right buffer'>
 					<input id="soundSlider" class="sliders" type="text"/>
 				</div>
 			</div>
-			<div id="options-app-only">
-				<div class="row">
-					<div class='col-xs-6 buffer2'>
-						Window Size
-					</div>
-					<div class='col-xs-6 buffer'>
+			<div class="row buffer">
+				<div class='col-xs-6'>
+					Muh Bible Mode
+				</div>
+				<div class='col-xs-6 text-center'>
+					<input type="checkbox" id="bible-status">
+				</div>
+			</div>
+			<div class="row buffer">
+				<div class='col-xs-6'>
+					Window Size
+				</div>
+				<div class='col-xs-6'>
 
-						<div id="window-select-wrap" class="dropdown">
-							<button class="btn dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">
-								<span id="window-size">Full Screen</span>
-								<i class="fa fa-caret-down text-warning lobbyCaret"></i>
-							</button>
-							<ul class="dropdown-menu fwDropdown">
-								<li id="window-full-screen" class="window-select">
-									<a href="#">Full Screen</a>
-								</li>
-								<li id="window-1920-1080" class="window-select">
-									<a href="#">1920 x 1080</a>
-								</li>
-								<li id="window-1600-900" class="window-select">
-									<a href="#">1600 x 900</a>
-								</li>
-								<li id="window-1360-768" class="window-select">
-									<a href="#">1360 x 768</a>
-								</li>
-								<li id="window-1280-720" class="window-select">
-									<a href="#">1280 x 720</a>
-								</li>
-							</ul>
-						</div>
+					<div id="window-select-wrap" class="dropdown">
+						<button class="btn dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">
+							<span id="window-size">Full Screen</span>
+							<i class="fa fa-caret-down text-warning lobbyCaret"></i>
+						</button>
+						<ul class="dropdown-menu fwDropdown">
+							<li id="window-full-screen" class="window-select">
+								<a href="#">Full Screen</a>
+							</li>
+							<li id="window-1920-1080" class="window-select">
+								<a href="#">1920 x 1080</a>
+							</li>
+							<li id="window-1600-900" class="window-select">
+								<a href="#">1600 x 900</a>
+							</li>
+							<li id="window-1360-768" class="window-select">
+								<a href="#">1360 x 768</a>
+							</li>
+							<li id="window-1280-720" class="window-select">
+								<a href="#">1280 x 720</a>
+							</li>
+						</ul>
 					</div>
 				</div>
-				<div id='exit-game' class='shadow4'>Exit Game</div>
+			</div>
+			<div id='exit-game' class='shadow4'>Exit Game</div>
+			<div id="version">
+				<script>document.write('Version ' + app.version);</script>
 			</div>
 		</div>
 	</div>

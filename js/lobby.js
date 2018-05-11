@@ -296,7 +296,7 @@ var lobby = {
 		var str = 
 		'<div id="gov-dropdown-cpu'+ player +'" class="dropdown govDropdown none">\
 			<button class="btn btn-primary btn-responsive dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">\
-				<span id="lobby-difficulty-cpu'+ player +'">Computer: Very Easy</span>\
+				<span id="lobby-difficulty-cpu'+ player +'">CPU: Very Easy</span>\
 				<i id="lobby-caret-cpu'+ player +'" class="fa fa-caret-down text-warning lobbyCaret"></i>\
 			</button>\
 			<ul class="governmentDropdown dropdown-menu no-select">';
@@ -470,7 +470,7 @@ var lobby = {
 			lobby.data[i] = data;
 			lobby.updatePlayerColor(data);
 			document.getElementById('lobbyGovernment'+ i).innerHTML = 
-				data.cpu ? ('Computer: '+ data.difficulty) : 'Despotism';
+				data.cpu ? ('CPU: '+ data.difficulty) : 'Despotism';
 			
 			$("#lobbyCaret"+ i)
 				.removeClass("text-warning text-disabled")
@@ -484,7 +484,7 @@ var lobby = {
 			// remove
 			//console.info("REMOVE PLAYER: ", data);
 			document.getElementById("lobbyRow" + i).style.display = 'none';
-			document.getElementById('lobby-difficulty-cpu' + i).innerHTML = 'Computer: Very Easy';
+			document.getElementById('lobby-difficulty-cpu' + i).innerHTML = 'CPU: Very Easy';
 			lobby.data[i] = { account: '', cpu: 0 };
 		}
 		lobby.styleStartGame();
@@ -522,7 +522,7 @@ var lobby = {
 	},
 	updateDifficulty: function(data){
 		var i = data.player;
-		document.getElementById('lobby-difficulty-cpu' + i).innerHTML = 'Computer: '+ data.difficulty;
+		document.getElementById('lobby-difficulty-cpu' + i).innerHTML = 'CPU: '+ data.difficulty;
 		lobby.data[i].difficulty = data.difficulty;
 	},
 	styleStartGame: function(){

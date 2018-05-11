@@ -190,7 +190,7 @@ var action = {
 		}
 		var t = game.tiles[my.tgt];
 		if (my.moves < my.deployCost){
-			action.error();
+			action.error('Not enough energy!');
 			return;
 		}
 		if (!my.manpower){

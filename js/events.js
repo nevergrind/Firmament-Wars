@@ -289,13 +289,13 @@ var events = {
 		$("#leaderboardTeamBtn").on(ui.click, function(){
 			title.getLeaderboard('Team');
 		});
-		/*$("#endTurn").on(ui.click, function(){
-			action.endTurn();
-		});*/
 
 		$("#window-select-wrap").on(ui.click, '.window-select', function() {
 			my.window = this.textContent.trim();
 			ui.setWindow(my.window);
+		});
+		$("#bible-status").on(ui.click, function() {
+			stats.setBibleMode($(this).prop('checked'));
 		});
 		$("#flagDropdown").on(ui.click, '.flagSelect', function(e){
 			my.selectedFlag = $(this).text().trim();

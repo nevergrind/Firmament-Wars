@@ -96,7 +96,7 @@ var stats = {
 		<div id="statFooter" class="container-fluid">\
 			<div class="row">\
 				<div id="statQuote" class="col-xs-7 shadow4 stagBlue">\
-					<div>'+ stats.data.quote +'</div>\
+					<div id="muh-bible">'+ stats.data.quote +'</div>\
 					<div id="statVerse" class="text-right">'+ stats.data.verse +'</div>\
 				</div>\
 				<div id="statDuration" class="col-xs-4 stagBlue text-center">\
@@ -115,29 +115,32 @@ var stats = {
 		</div>';
 		document.getElementById('statWrap').innerHTML = str;
 		stats.events();
-		if (isMobile){
-			document.getElementById('statWorld').style.display = 'none';
-			TweenMax.set('#statWorld', {
+		animate.muhBible();
+		TweenMax.to("#statWorld", 300, {
+			startAt: {
 				xPercent: -50,
 				yPercent: -50,
-				top: '50%',
-				left: '50%',
-				width: '1600px',
-				height: '1600px'
-			});
-		} else {
-			TweenMax.to("#statWorld", 300, {
-				startAt: {
-					xPercent: -50,
-					yPercent: -50,
-					rotation: -360
-				},
-				rotation: 0,
-				repeat: -1,
-				ease: Linear.easeNone
-			});
-		}
+				rotation: -360
+			},
+			rotation: 0,
+			repeat: -1,
+			ease: Linear.easeNone
+		});
 		stats.setLeaderValues();
+	},
+	setBibleMode: function(state) {
+		var e = document.createElement('style');
+		e.id = 'bible-state';
+		e.type = 'text/css';
+		e.innerHTML = '#statQuote { visibility: visible!important }';
+
+		if (!state) {
+			e.innerHTML = '#statQuote { visibility: hidden }';
+		}
+		$("#bible-state").remove();
+		document.head.appendChild(e);
+		console.info(state);
+		localStorage.setItem('bible', state ? 1 : 0);
 	},
 	show: function(){
 		DOM.bgmusic.loop = true;

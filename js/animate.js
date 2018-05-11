@@ -287,7 +287,7 @@ var animate = {
 				path.setAttributeNS(null,"stroke",animate.randomColor());
 				path.setAttributeNS(null,"stroke-width",1);
 				DOM.world.appendChild(path);
-				TweenMax.to(path, .075, {
+				TweenLite.to(path, .1, {
 					delay: (i / shots) * delay[sfx],
 					startAt: {
 						attr: {
@@ -298,7 +298,7 @@ var animate = {
 					drawSVG: '0% 100%',
 					ease: Power2.easeIn,
 					onComplete: function(){
-						TweenMax.to(path, .125, {
+						TweenLite.to(path, .15, {
 							drawSVG: '100% 100%',
 							ease: Power2.easeOut,
 							onComplete: function(){
@@ -307,6 +307,7 @@ var animate = {
 						});
 					}
 				});
+
 				if (i % 4 === 0) {
 					animate.flash({
 						d: .1,
@@ -323,6 +324,7 @@ var animate = {
 						y: y1 - 100,
 					});
 				}
+
 			})();
 		}
 	},
@@ -335,7 +337,7 @@ var animate = {
 		image.setAttributeNS(null,"x",o.x);
 		image.setAttributeNS(null,"y",o.y);
 		DOM.world.appendChild(image);
-		TweenMax.to(image, o.d, {
+		TweenLite.to(image, o.d, {
 			startAt: {
 				transformOrigin: '50% 50%',
 				scale: o.scale
@@ -355,7 +357,7 @@ var animate = {
 		image.setAttributeNS(null,"x",o.x);
 		image.setAttributeNS(null,"y",o.y);
 		DOM.world.appendChild(image);
-		TweenMax.to(image, o.d, {
+		TweenLite.to(image, o.d, {
 			startAt: {
 				transformOrigin: '50% 50%',
 				scale: 0
@@ -365,7 +367,7 @@ var animate = {
 				this.target.parentNode.removeChild(this.target);
 			}
 		});
-		TweenMax.to(image, o.d - 1.8, {
+		TweenLite.to(image, o.d - 1.8, {
 			delay: 1.8,
 			opacity: 0,
 		})
@@ -403,7 +405,7 @@ var animate = {
 				circ.setAttributeNS(null,"strokeWidth",1);
 				DOM.mapAnimations.appendChild(circ);
 				
-				TweenMax.to(circ, delay, {
+				TweenLite.to(circ, delay, {
 					delay: i * .0125,
 					startAt: {
 						alpha: 1
@@ -418,7 +420,7 @@ var animate = {
 						var d1 = Math.random()*.5 + .3,
 							d2 = delay2 === undefined ? d1/2 : delay2,
 							s1 = (d1 * 10) + 3;
-						TweenMax.to(circ, d2, {
+						TweenLite.to(circ, d2, {
 							startAt: {
 								fill: 'none',
 								strokeWidth: 0,
@@ -441,14 +443,14 @@ var animate = {
 										y: y2 - 100,
 									});
 								}
-								TweenMax.to(circ, d2, {
+								TweenLite.to(circ, d2, {
 									attr: {
 										r: s1
 									},
 									strokeWidth: 0,
 									ease: Sine.easeOut
 								});
-								TweenMax.to(circ, d2, {
+								TweenLite.to(circ, d2, {
 									alpha: 0,
 									onComplete: function(){
 										this.target.parentNode.removeChild(this.target);
@@ -508,7 +510,7 @@ var animate = {
 		console.info('1', x1, y1);
 		console.info('2', x2, y2);
 		DOM.mapAnimations.appendChild(flash);
-		TweenMax.to(flash, 1, {
+		TweenLite.to(flash, 1, {
 			startAt: {
 				xPercent: -50,
 				yPercent: -50
@@ -537,7 +539,7 @@ var animate = {
 			},
 			repeat: -1
 		});
-		TweenMax.to(mis, 1, {
+		TweenLite.to(mis, 1, {
 			startAt: {
 				alpha: 1,
 				xPercent: -50,
@@ -561,7 +563,7 @@ var animate = {
 					svg.setAttributeNS(null, 'class', 'no-pointer');
 					svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/smoke.png');
 					DOM.mapAnimations.appendChild(svg);
-					TweenMax.to(svg, .3, {
+					TweenLite.to(svg, .3, {
 						startAt: {
 							xPercent: -50,
 							yPercent: -50,
@@ -572,7 +574,7 @@ var animate = {
 							this.target.parentNode.removeChild(this.target);
 						}
 					});
-					TweenMax.to(svg, .5, {
+					TweenLite.to(svg, .5, {
 						alpha: 0
 					});
 				}
@@ -629,7 +631,7 @@ var animate = {
 				DOM.mapAnimations.appendChild(circ);
 				
 				var delay = i * .05;
-				TweenMax.to(circ, .75, {
+				TweenLite.to(circ, .75, {
 					delay: delay,
 					attr: {
 						r: 32
@@ -651,7 +653,7 @@ var animate = {
 					fill: "hsl(+=0%, +=0%, +="+ ~~(Math.random()*100) +"%)",
 					repeat: -1
 				});
-				TweenMax.to(circ, 1.75, {
+				TweenLite.to(circ, 1.75, {
 					startAt:{
 						alpha: 1
 					},
@@ -698,14 +700,14 @@ var animate = {
 		bomb.setAttributeNS(null, 'class', 'no-pointer');
 		bomb.setAttributeNS(null,"stroke-width",2);
 		DOM.mapAnimations.appendChild(bomb);
-		TweenMax.to(bomb, .1, {
+		TweenLite.to(bomb, .1, {
 			attr: {
 				r: 3
 			},
 			ease: Linear.easeIn,
 			repeat: -1
 		});
-		TweenMax.to(bomb, 1, {
+		TweenLite.to(bomb, 1, {
 			startAt: {
 				alpha: 1,
 			},
@@ -718,7 +720,7 @@ var animate = {
 			}
 		});
 		// start bomb explosion sequence
-		TweenMax.to(g, 1, {
+		TweenLite.to(g, 1, {
 			onComplete: function(){
 				audio.play('bomb9');
 				animate.screenShake(33, 7, .033, 1);
@@ -768,7 +770,7 @@ var animate = {
 				circ.setAttributeNS(null, 'class', 'no-pointer');
 				DOM.mapAnimations.appendChild(circ);
 				
-				TweenMax.to(circ, 1.5, {
+				TweenLite.to(circ, 1.5, {
 					startAt: {
 						alpha: 1
 					},
@@ -791,7 +793,7 @@ var animate = {
 					yoyo: true,
 					ease: SteppedEase.config(6)
 				});
-				TweenMax.to(circ, 2.5, {
+				TweenLite.to(circ, 2.5, {
 					alpha: 0,
 					ease: Power4.easeIn,
 					onComplete: function(){
@@ -808,15 +810,16 @@ var animate = {
 	},
 	sepia: function() {
 		var o = {
-			sepia: 50,
+			sepia: 100,
 			brightness: 200,
 			blur: 3
 		};
 
-		TweenMax.to(o, 2.5, {
+		TweenLite.to(o, 2.5, {
 			sepia: 0,
 			brightness: 100,
 			blur: 0,
+			ease: Power3.easeOut,
 			onUpdate: function() {
 				TweenMax.set(DOM.worldWrap, {
 					filter: 'sepia(' + o.sepia +'%) brightness(' +
@@ -844,7 +847,7 @@ var animate = {
 		smoke.setAttributeNS(null, 'class', 'no-pointer');
 		smoke.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","images/smoke.png");
 		DOM.mapUpgrades.appendChild(smoke);
-		TweenMax.to(smoke, 3, {
+		TweenLite.to(smoke, 3, {
 			startAt: {
 				alpha: 1,
 				transformOrigin: '50% 50%',
@@ -855,7 +858,7 @@ var animate = {
 			ease: Power4.easeOut,
 			scale: scale
 		});
-		TweenMax.to(smoke, 3, {
+		TweenLite.to(smoke, 3, {
 			alpha: 0,
 			onComplete: function(){
 				this.target.parentNode.removeChild(this.target);
@@ -876,7 +879,7 @@ var animate = {
 					}
 				}
 			}
-			TweenMax.to(e, interval, {
+			TweenLite.to(e, interval, {
 				x: ~~(M.random()*(d)-d2),
 				y: ~~(M.random()*(d)-d2),
 				onComplete:function(){
@@ -907,7 +910,7 @@ var animate = {
 		})(count, d, interval, DOM.gameWrap, Math);
 	},
 	selectTile: function(oldTgt, newTgt){
-		TweenMax.set(DOM['land' + oldTgt], {
+		TweenLite.set(DOM['land' + oldTgt], {
 			fill: g.color[game.player[game.tiles[oldTgt].player].playerColor],
 			stroke: game.tiles[oldTgt].player ? g.color[game.player[game.tiles[oldTgt].player].playerColor] : '#aaa',
 			strokeDasharray: 'none',
@@ -933,7 +936,7 @@ var animate = {
 			my.player : game.tiles[newTgt].player].playerColor];
 		var newFill = g.color[game.player[!game.tiles[newTgt].player ? 
 			0 : game.tiles[newTgt].player].playerColor];
-		TweenMax.set(DOM['land'+ newTgt], {
+		TweenLite.set(DOM['land'+ newTgt], {
 			fill: newFill,
 			stroke: newStroke,
 			onComplete: function(){
@@ -954,13 +957,27 @@ var animate = {
 		});
 	},
 	brightness: function(e, brightness) {
-		TweenMax.set(e, {
+		TweenLite.set(e, {
 			filter: 'brightness('+ brightness +'%)'
 		});
 	},
+	muhBible: function() {
+		var tl = new TimelineMax();
+		var split = new SplitText(document.getElementById('muh-bible'), {
+			type: "words,chars"
+		});
+		var chars = split.chars;
+		tl.staggerFromTo(chars, .2, {
+			immediateRender: true,
+			alpha: 0
+		}, {
+			delay: .1,
+			alpha: 1
+		}, .033);
+	},
 	energyBar: function(){
 		// 2.7? Don't ask why
-		TweenMax.to(DOM.energyIndicator, g.speed * 2.7, {
+		TweenLite.to(DOM.energyIndicator, g.speed * 2.7, {
 			startAt: {
 				strokeDasharray: '0,100'
 			},
@@ -968,14 +985,14 @@ var animate = {
 			strokeDasharray: '100,100',
 			ease: Linear.easeNone
 		});
-		TweenMax.to(DOM.currentYear, 3, {
+		TweenLite.to(DOM.currentYear, 3, {
 			startAt: { color: '#ff0' },
 			color: '#fff',
 		});
 		var o = {
 			blur: 4
 		}
-		TweenMax.to(o, 1, {
+		TweenLite.to(o, 1, {
 			blur: 0,
 			onUpdate: function() {
 				animate.blur(DOM.currentYear, o.blur);
@@ -984,7 +1001,7 @@ var animate = {
 		})
 	},
 	blur: function(e, blur) {
-		TweenMax.set(e, {
+		TweenLite.set(e, {
 			filter: 'blur('+ blur +'px)'
 		})
 	}

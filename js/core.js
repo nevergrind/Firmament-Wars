@@ -7,7 +7,6 @@ TweenMax.defaultEase = Quad.easeOut;
 var g = {
 	Msg: document.getElementById('Msg'),
 	msg: function(msg, d) {
-		g.Msg.innerHTML = msg;
 		if (d === 0){
 			TweenMax.set(g.Msg, {
 				overwrite: 1,
@@ -15,30 +14,32 @@ var g = {
 					opacity: 1
 				}
 			});
-		} else {
+		}
+		else {
 			if (!d || d < .5){
 				d = 2;
 			}
 			TweenMax.to(g.Msg, ui.delay(d), {
 				overwrite: 1,
 				startAt: {
-					skewX: 0,
+					scaleY: 1,
 					opacity: 1
 				},
 				onComplete: function(){
 					TweenMax.to(this.target, .3, {
-						skewX: 90,
-						opacity: 0,
+						scaleY: 0
 					});
 				}
 			});
 		}
+		g.Msg.innerHTML = msg;
 		// split text animation
-		var tl = new TimelineMax();
-		var split = new SplitText(g.Msg, {
-			type: "words,chars"
-		});
-		var chars = split.chars;
+		var tl = new TimelineMax(),
+			split = new SplitText(g.Msg, {
+				type: "words,chars"
+			}),
+			chars = split.chars;
+
 		tl.staggerFromTo(chars, .01, {
 			immediateRender: true,
 			alpha: 0
@@ -88,7 +89,7 @@ var g = {
 	titleFlashing: false,
 	name: "",
 	password: "",
-	speed: 15,
+	speed: 12,
 	focusUpdateNationName: false,
 	focusGameName: false,
 	view: "title",
@@ -206,11 +207,14 @@ var g = {
 			var foo = [];
 			localStorage.setItem('ignore', JSON.stringify(foo));
 		}
+		var bible = localStorage.getItem('bible') * 1;
+		$("#bible-status").prop('checked', !!bible);
+		stats.setBibleMode(bible);
 	},
 	config: {
 		audio: {
 			musicVolume: 10,
-			soundVolume: 50
+			soundVolume: 20
 		}
 	},
 	geo: {},
@@ -425,10 +429,6 @@ g.init = (function(){
 			title.exitGame();
 			// $("#endTurn").css('display', 'none');
 		});
-	}
-	else {
-		// $("#exit-game, #options-app-only").remove();
-		// $("#endTurn").css('display', 'none');
 	}
 	// build map drop-down 
 	// <li><a class='flagSelect'>Default</a></li>
@@ -956,20 +956,8 @@ var game = {
 		game.getGameState();
 		game.energyTimer = setInterval(game.updateResources, g.speed * 1000);
 		animate.energyBar();
-		delete game.startGameState;
 	},
-	countAlivePlayers: function(){
-		// count alive players remaining
-		var x = 0;
-		game.player.forEach(function(e){
-			if (e.alive && e.account){ 
-				x++;
-			}
-		});
-		return x;
-	},
-	
-	triggerNextTurn: function(data){ 
+	triggerNextTurn: function(data){
 		//console.info("TRIGGERING NEXT TURN!", data);
 		clearInterval(game.energyTimer);
 		game.energyTimer = setInterval(game.updateResources, g.speed * 1000);
