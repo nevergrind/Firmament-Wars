@@ -244,8 +244,10 @@ var animate = {
 			// defense
 			if (game.tiles[i].defense){
 				y += barHeight + barPad;
-				var defWidth = game.tiles[i].defense * (widthPerTick * 2);
-				var svg = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+				var defWidth =
+					(game.tiles[i].defense - (game.tiles[i].capital ? 1 : 0)) * (widthMax/3),
+					svg = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+
 				svg.setAttributeNS(null,"x1",x);
 				svg.setAttributeNS(null,"y1",y);
 				svg.setAttributeNS(null,"x2",x + defWidth);
@@ -253,7 +255,7 @@ var animate = {
 				svg.setAttributeNS(null,"stroke","#ffff00");
 				svg.setAttributeNS(null,"stroke-width",barHeight);
 				svg.setAttributeNS(null,"opacity",1);
-				svg.setAttributeNS(null,"class","mapBars mapBars2x mapBars" + i);
+				svg.setAttributeNS(null,"class","mapBars mapBars3x mapBars" + i);
 				DOM.mapBars.appendChild(svg);
 			}
 		}
@@ -975,9 +977,9 @@ var animate = {
 			alpha: 1
 		}, .033);
 	},
-	energyBar: function(){
-		// 2.7? Don't ask why
-		TweenLite.to(DOM.energyIndicator, g.speed * 2.7, {
+	energyBar: function(year){
+		// 2.7 for 12? 2.9 for 15?
+		TweenLite.to(DOM.energyIndicator, g.speed * 2.9, {
 			startAt: {
 				strokeDasharray: '0,100'
 			},
@@ -989,20 +991,76 @@ var animate = {
 			startAt: { color: '#ff0' },
 			color: '#fff',
 		});
-		var o = {
-			blur: 4
+		if (year) {
+			DOM.currentYear.textContent = ui.transformYear(year);
+			var o = {
+				blur: 20
+			};
+			TweenLite.to(o, 1.5, {
+				blur: 0,
+				ease: Linear.easeIn,
+				onUpdate: function() {
+					animate.blur(DOM.currentYear, o.blur);
+				}
+			});
+			/*TweenLite.to(DOM.currentYear, 2, {
+				scrambleText:{
+					text: ui.transformYear(year),
+      				chars: "1234567890ABCD.",
+					tweenLength: false,
+					ease: Linear.easeIn
+				}
+			});*/
 		}
-		TweenLite.to(o, 1, {
-			blur: 0,
-			onUpdate: function() {
-				animate.blur(DOM.currentYear, o.blur);
-			},
-			ease: Linear.easeIn
-		})
 	},
 	blur: function(e, blur) {
 		TweenLite.set(e, {
 			filter: 'blur('+ blur +'px)'
 		})
+	},
+	research: function(o) { // element, duration, tech, method
+		// create new DOM element
+		var e = document.createElement('div'),
+			e2 = document.createElement('div'),
+			e3 = document.createElement('div'),
+			ref = document.getElementById(o.element);
+
+		e.className = 'research-progress';
+
+		e2.className = 'research-label';
+		e2.innerHTML = o.tech;
+
+		e3.className = 'research-bar';
+
+		ref.parentNode.insertBefore(e, ref.nextSibling);
+		e.appendChild(e2);
+		e.appendChild(e3);
+
+		TweenMax.to(e3, o.duration, {
+			startAt: { width: 0 },
+			width: '100%',
+			ease: Linear.easeIn,
+			onComplete: function() {
+				e.parentNode.removeChild(e);
+				research[o.method]();
+				if (o.tech === 'Future Tech') {
+					$("#researchFutureTech").css('display', 'flex');
+				}
+			}
+		});
+		TweenMax.to(e3, 1, {
+			opacity: .8,
+			repeat: -1,
+			yoyo: true
+		})
+		// remove original element
+		if (o.tech === 'Future Tech') {
+			$("#researchFutureTech").css('display', 'none');
+		}
+		else {
+			ref.parentNode.removeChild(ref);
+		}
+		// remove stale tooltip
+		$(".tooltip.in").remove();
 	}
 }

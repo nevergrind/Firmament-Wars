@@ -1559,6 +1559,39 @@ table td,
     -webkit-user-select: none;
     user-select: none
 }
+.research-progress {
+	position: relative;
+    display: flex;
+	justify-content: center;
+	align-content: center;
+	font-size: 1.8rem;
+    line-height: 1.5;
+    margin: .2rem;
+    border: .1rem outset #aaa;
+	overflow: hidden;
+    background: -webkit-linear-gradient(top, rgba(23, 23, 23, 1) 0%, rgba(23, 23, 23, 1) 100%);
+    -webkit-user-select: none;
+    user-select: none
+}
+.research-label {
+	position: relative;
+	z-index: 1;
+}
+.research-bar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 0%;
+	height: 100%;
+	opacity: .3;
+	background: #1d1;
+	box-shadow:
+		0 1.4rem rgba(0,0,0,.5) inset,
+		-1px -1px #000 inset,
+		1px -1px #000 inset,
+		-1px 1px #000 inset,
+		1px 1px #000 inset;
+}
 .actionButtons:hover {
 	cursor: url('cursor/hover.png'), pointer;
     background: -webkit-linear-gradient(top, rgba(32, 100, 177, 1) 0%, rgba(32, 100, 177, 1) 50%, rgba(32, 177, 232, 1) 50%, rgba(32, 177, 232, 1) 100%);
@@ -1743,6 +1776,9 @@ text {
 }
 .mapBars2x {
     stroke-dasharray: 9, 1
+}
+.mapBars3x {
+	stroke-dasharray: 12.333, 1
 }
 .targetBarsWrap {
     position: relative;

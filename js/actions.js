@@ -631,9 +631,23 @@ var research = {
 			type: 'GET',
 			url: app.url + 'php/researchMasonry.php'
 		}).done(function(data) {
+			setProduction(data);
+			animate.research({
+				element: 'researchMasonry',
+				duration: 20,
+				tech: 'Masonry',
+				method: 'masonryDone'
+			});
+		});
+	},
+	masonryDone: function() {
+		$.ajax({
+			type: 'GET',
+			url: app.url + 'php/researchMasonryDone.php'
+		}).done(function(data) {
 			my.tech.masonry = 1;
 			research.report(data, "Masonry");
-		});
+		})
 	},
 	construction: function(){
 		if (my.production < 60) return;
@@ -641,9 +655,23 @@ var research = {
 			type: 'GET',
 			url: app.url + 'php/researchConstruction.php'
 		}).done(function(data) {
+			setProduction(data);
+			animate.research({
+				element: 'researchConstruction',
+				duration: 30,
+				tech: 'Construction',
+				method: 'constructionDone'
+			});
+		});
+	},
+	constructionDone: function() {
+		$.ajax({
+			type: 'GET',
+			url: app.url + 'php/researchConstructionDone.php'
+		}).done(function(data) {
 			my.tech.construction = 1;
 			research.report(data, "Construction");
-		});
+		})
 	},
 	gunpowder: function(){
 		if (my.production < 60) return;
@@ -651,9 +679,23 @@ var research = {
 			type: 'GET',
 			url: app.url + 'php/researchGunpowder.php'
 		}).done(function(data) {
+			setProduction(data);
+			animate.research({
+				element: 'researchGunpowder',
+				duration: 25,
+				tech: 'Gunpowder',
+				method: 'gunpowderDone'
+			});
+		});
+	},
+	gunpowderDone: function() {
+		$.ajax({
+			type: 'GET',
+			url: app.url + 'php/researchGunpowderDone.php'
+		}).done(function(data) {
 			my.tech.gunpowder = 1;
 			research.report(data, "Gunpowder");
-		});
+		})
 	},
 	engineering: function(){
 		if (my.production < 80) return;
@@ -661,9 +703,23 @@ var research = {
 			type: 'GET',
 			url: app.url + 'php/researchEngineering.php'
 		}).done(function(data) {
+			setProduction(data);
+			animate.research({
+				element: 'researchEngineering',
+				duration: 45,
+				tech: 'Engineering',
+				method: 'engineeringDone'
+			});
+		});
+	},
+	engineeringDone: function() {
+		$.ajax({
+			type: 'GET',
+			url: app.url + 'php/researchEngineeringDone.php'
+		}).done(function(data) {
 			my.tech.engineering = 1;
 			research.report(data, "Engineering");
-		});
+		})
 	},
 	rocketry: function(){
 		if (my.production < 200) return;
@@ -671,9 +727,23 @@ var research = {
 			type: 'GET',
 			url: app.url + 'php/researchRocketry.php'
 		}).done(function(data) {
+			setProduction(data);
+			animate.research({
+				element: 'researchRocketry',
+				duration: 40,
+				tech: 'Rocketry',
+				method: 'rocketryDone'
+			});
+		});
+	},
+	rocketryDone: function() {
+		$.ajax({
+			type: 'GET',
+			url: app.url + 'php/researchRocketryDone.php'
+		}).done(function(data) {
 			my.tech.rocketry = 1;
 			research.report(data, "Rocketry");
-		});
+		})
 	},
 	atomicTheory: function(){
 		if (my.production < 500) return;
@@ -681,9 +751,23 @@ var research = {
 			type: 'GET',
 			url: app.url + 'php/researchAtomicTheory.php'
 		}).done(function(data) {
+			setProduction(data);
+			animate.research({
+				element: 'researchAtomicTheory',
+				duration: 60,
+				tech: 'Atomic Theory',
+				method: 'atomicTheoryDone'
+			});
+		});
+	},
+	atomicTheoryDone: function() {
+		$.ajax({
+			type: 'GET',
+			url: app.url + 'php/researchAtomicTheoryDone.php'
+		}).done(function(data) {
 			my.tech.atomicTheory = 1;
 			research.report(data, "Atomic Theory");
-		});
+		})
 	},
 	futureTech: function(){
 		if (my.production < 800) return;
@@ -691,11 +775,24 @@ var research = {
 			type: 'GET',
 			url: app.url + 'php/researchFutureTech.php'
 		}).done(function(data) {
-			research.report(data, "Future Tech");
+			setProduction(data);
+			animate.research({
+				element: 'researchFutureTech',
+				duration: 90,
+				tech: 'Future Tech',
+				method: 'futureTechDone'
+			});
 		});
 	},
+	futureTechDone: function() {
+		$.ajax({
+			type: 'GET',
+			url: app.url + 'php/researchFutureTechDone.php'
+		}).done(function(data) {
+			research.report(data, "Future Tech");
+		})
+	},
 	report: function(data, tech){
-		setProduction(data);
 		var o = {
 			message: 'You have finished researching ' + tech + '.'
 		}

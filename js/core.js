@@ -89,7 +89,7 @@ var g = {
 	titleFlashing: false,
 	name: "",
 	password: "",
-	speed: 12,
+	speed: 15,
 	focusUpdateNationName: false,
 	focusGameName: false,
 	view: "title",
@@ -962,7 +962,6 @@ var game = {
 		clearInterval(game.energyTimer);
 		game.energyTimer = setInterval(game.updateResources, g.speed * 1000);
 		game.updateResources();
-		animate.energyBar();
 	},
 	updateResources: function(){
 		if (!g.over){
@@ -994,9 +993,8 @@ var game = {
 			}).done(function(data){
 				g.resourceTick = data.resourceTick;
 				setResources(data);
-				ui.setCurrentYear(data.resourceTick);
 				game.reportMilestones(data);
-				animate.energyBar();
+				animate.energyBar(data.resourceTick);
 			}).fail(function(data){
 				console.info(data.responseText);
 				serverError(data);
