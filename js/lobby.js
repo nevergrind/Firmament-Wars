@@ -1110,6 +1110,7 @@ function loadGameState(){
 				game.startGameState();
 				ui.setCurrentYear(data.resourceTick);
 				animate.paths();
+				action.setMenu();
 			}, 350);
 			/*TweenMax.set('.land', {
 				filter: 'url(#emboss)'

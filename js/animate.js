@@ -147,7 +147,17 @@ var animate = {
 			y = box.y + box.height/2 + 10;
 		$(".mapBars" + tile).remove();
 		this.initMapBars(tile, x, y);
-		// console.info("UPDATING MAP BARS");
+	},
+	target: function() {
+		var o = {
+			brightness: 200
+		};
+		TweenMax.to(o, .5, {
+			brightness: 100,
+			onUpdate: function() {
+				animate.brightness(DOM.targetUiWrap, o.brightness);
+			}
+		})
 	},
 	initMapBars: function(i, x, y){
 		var e = DOM['unit' + i],
@@ -168,7 +178,7 @@ var animate = {
 		if (game.tiles[i].culture){
 			boxHeight += barHeight + barPad; 
 		}
-		if (game.tiles[i].defense){
+		if (game.tiles[i].defense - (game.tiles[i].capital ? 1 : 0)){
 			boxHeight += barHeight + barPad;
 		}
 		var foodWidth = game.tiles[i].food * widthPerTick;
@@ -1023,6 +1033,7 @@ var animate = {
 		var e = document.createElement('div'),
 			e2 = document.createElement('div'),
 			e3 = document.createElement('div'),
+			e4 = document.createElement('div'),
 			ref = document.getElementById(o.element);
 
 		e.className = 'research-progress';
@@ -1032,11 +1043,14 @@ var animate = {
 
 		e3.className = 'research-bar';
 
+		e4.className = 'research-bar-bg';
+
 		ref.parentNode.insertBefore(e, ref.nextSibling);
 		e.appendChild(e2);
 		e.appendChild(e3);
+		e3.appendChild(e4);
 
-		TweenMax.to(e3, o.duration, {
+		TweenMax.to(e4, o.duration, {
 			startAt: { width: 0 },
 			width: '100%',
 			ease: Linear.easeIn,
@@ -1048,11 +1062,6 @@ var animate = {
 				}
 			}
 		});
-		TweenMax.to(e3, 1, {
-			opacity: .8,
-			repeat: -1,
-			yoyo: true
-		})
 		// remove original element
 		if (o.tech === 'Future Tech') {
 			$("#researchFutureTech").css('display', 'none');

@@ -432,6 +432,7 @@ function updateTileInfo(tileId){
 		// DOM.tileActionsOverlay.style.display = my.player === t.player ? 'none' : 'block';
 		action.setMenu();
 	}
+	animate.target();
 };
 function setTileUnits(i, unitColor){
 	DOM['unit' + i].textContent = game.tiles[i].units === 0 ? "" : ~~game.tiles[i].units;

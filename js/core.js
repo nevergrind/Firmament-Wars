@@ -89,7 +89,7 @@ var g = {
 	titleFlashing: false,
 	name: "",
 	password: "",
-	speed: 15,
+	speed: 12,
 	focusUpdateNationName: false,
 	focusGameName: false,
 	view: "title",
@@ -1196,6 +1196,7 @@ var DOM;
 function initDom(){
 	var d = document;
 	DOM = {
+		targetUiWrap: d.getElementById('target-ui-wrap'),
 		endTurn: d.getElementById('endTurn'),
 		energyIndicator: d.getElementById('energyIndicator'),
 		currentYear: d.getElementById('currentYear'),

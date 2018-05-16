@@ -1562,9 +1562,9 @@ table td,
 .research-progress {
 	position: relative;
     display: flex;
+	flex-direction: column;
 	justify-content: center;
-	align-content: center;
-	font-size: 1.8rem;
+	align-items: center;
     line-height: 1.5;
     margin: .2rem;
     border: .1rem outset #aaa;
@@ -1574,23 +1574,28 @@ table td,
     user-select: none
 }
 .research-label {
-	position: relative;
+	font-size: 1.25rem;
 	z-index: 1;
 }
 .research-bar {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 0%;
+	background: #000;
+	width: 95%;
+	height: .75rem;
+    border: .1rem solid #000;
+	border-radius: 6px;
+	margin-bottom: .2rem;
+	overflow: hidden;
+}
+
+.research-bar-bg {
+	width: 0;
 	height: 100%;
-	opacity: .3;
-	background: #1d1;
-	box-shadow:
-		0 1.4rem rgba(0,0,0,.5) inset,
-		-1px -1px #000 inset,
-		1px -1px #000 inset,
-		-1px 1px #000 inset,
-		1px 1px #000 inset;
+	background-image: -webkit-linear-gradient(left, #1a1 75%, rgba(0,0,0,0) 100%);
+	background-position: left;
+	background-size: 8px 1rem;
+	background-repeat: repeat-x;
+	box-shadow: 0 .3rem .3rem rgba(0,0,0,.5) inset;
+	animation: flash-outline .7s ease-out infinite alternate;
 }
 .actionButtons:hover {
 	cursor: url('cursor/hover.png'), pointer;
@@ -1839,15 +1844,15 @@ text {
 }
 #target-ui-wrap {
 	position: absolute;
-	top: -.5rem;
-	left: 7.5rem;
-	width: 12rem;
-	height: 12rem;
-	transform: rotate(45deg)
+	top: -1rem;
+	right: 0;
+	width: 6.21rem;
+	height: 6.21rem;
+	transform: rotate(45deg);
 }
 #target-ui {
     fill: #048;
-	transform: scale(.2, .2);
+	transform: scale(.15, .15);
 }
 .crosshair {
     stroke: "#1a1a1a";
@@ -2709,7 +2714,9 @@ table {
 	left: 0;
     height: 100%;
 	box-shadow: 0 1.5rem rgba(0,0,0,.3) inset;
-    background: #777
+	background-position: left;
+	background-size: 5px 3rem;
+	background-repeat: repeat-x;
 }
 .resourceBarParent {
 	display: flex;
@@ -2761,10 +2768,10 @@ table {
 }
 #foodBar {
     margin: 0;
-    background: #b5ff00;
     border: none;
     width: 0;
-    border-radius: 0
+    border-radius: 0;
+	background-image: -webkit-linear-gradient(left, #b5ff00 80%, #88bb00 100%);
 }
 #productionBar {
     margin: 0;
@@ -2775,10 +2782,10 @@ table {
 }
 #cultureBar {
     margin: 0;
-    background: #d2d;
     border: none;
     width: 0;
-    border-radius: 0
+    border-radius: 0;
+	background-image: -webkit-linear-gradient(left, #d2d 80%, #a1a 100%);
 }
 #countdown {
     display: none;
