@@ -248,7 +248,6 @@ var ui = {
 				my.lastTgt = cacheOldTgt;
 			}
 			updateTileInfo(tileId);
-			my.flashTile(tileId);
 		} else {
 			my.attackOn = false;
 			my.attackName = '';
@@ -288,6 +287,54 @@ var ui = {
 	},
 	setCurrentYear: function(tick){
 		DOM.currentYear.textContent = ui.transformYear(tick);
+	},
+	setTileUnits: function(i, unitColor){
+		DOM['unit' + i].textContent = game.tiles[i].units === 0 ? "" : ~~game.tiles[i].units;
+		if (unitColor === '#00ff00'){
+			/*
+			TweenMax.to(DOM['unit' + i], .05, {
+				startAt: {
+					transformOrigin: (game.tiles[i].units.length * 3) + ' 12',
+					fill: unitColor
+				},
+				fill: '#ffffff',
+				ease: SteppedEase.config(1),
+				repeat: 12,
+				yoyo: true
+			});
+			*/
+		} else {
+			TweenMax.to(DOM['unit' + i], ui.delay(.5), {
+				startAt: {
+					fill: '#ff0000'
+				},
+				ease: Power4.easeIn,
+				fill: '#ffffff'
+			});
+		}
+		ui.setUnitVisibility(i);
+		ui.updateAdjacentTileVisibility(i);
+	},
+	updateAdjacentTileVisibility: function(i) {
+		game.tiles[i].adj.forEach(function(v) {
+			var adjacent = game.isMineOrAdjacent(v);
+			TweenMax.to(DOM['unit' + v], .5, {
+				startAt: {
+					visibility: adjacent ? 'visible' : 'hidden'
+				},
+				opacity: adjacent ? 1 : 0
+			});
+		});
+	},
+	setUnitVisibility: function(i) {
+		// player visibility logic
+		var adjacent = game.isMineOrAdjacent(i);
+		TweenMax.to(DOM['unit' + i], .5, {
+			startAt: {
+				visibility: adjacent ? 'visible' : 'hidden'
+			},
+			opacity: adjacent ? 1 : 0
+		});
 	}
 };
 function checkMobile(){
@@ -403,7 +450,7 @@ function updateTileInfo(tileId){
 			'reduce weapon damage by 6'
 		];
 	DOM.upgradeTileDefense.style.display = 'none';
-	if (ind < 0 || !my.tech.masonry) {
+	if (ind <= 0 || !my.tech.masonry) {
 		DOM.upgradeTileDefense.style.display = 'none';
 	}
 	else {
@@ -433,31 +480,6 @@ function updateTileInfo(tileId){
 		action.setMenu();
 	}
 	animate.target();
-};
-function setTileUnits(i, unitColor){
-	DOM['unit' + i].textContent = game.tiles[i].units === 0 ? "" : ~~game.tiles[i].units;
-	if (unitColor === '#00ff00'){
-		/*
-		TweenMax.to(DOM['unit' + i], .05, {
-			startAt: {
-				transformOrigin: (game.tiles[i].units.length * 3) + ' 12',
-				fill: unitColor
-			},
-			fill: '#ffffff',
-			ease: SteppedEase.config(1),
-			repeat: 12,
-			yoyo: true
-		});
-		*/
-	} else {
-		TweenMax.to(DOM['unit' + i], ui.delay(.5), {
-			startAt: {
-				fill: '#ff0000'
-			},
-			ease: Power4.easeIn,
-			fill: '#ffffff'
-		});
-	}
 };
 
 function gameDefeat(){

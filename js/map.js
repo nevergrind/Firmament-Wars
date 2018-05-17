@@ -5,7 +5,7 @@ function mouseZoomIn(){
 	if (g.mouse.zoom > 150){
 		g.mouse.zoom = 150;
 	}
-	TweenMax.to(DOM.worldWrap, 0, {
+	TweenMax.to(DOM.worldWrap, .3, {
 		transformOrigin: g.mouse.transX + "% " + g.mouse.transY + "%",
 		force3D: false,
 		smoothOrigin: true,
@@ -23,7 +23,7 @@ function mouseZoomOut(){
 	if (g.mouse.zoom < 100){
 		g.mouse.zoom = 100;
 	}
-	TweenMax.to(DOM.worldWrap, 0, {
+	TweenMax.to(DOM.worldWrap, .3, {
 		force3D: false,
 		smoothOrigin: true,
 		transformOrigin: g.mouse.transX + "% " + g.mouse.transY + "%",

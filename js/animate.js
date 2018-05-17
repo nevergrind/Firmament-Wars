@@ -178,7 +178,8 @@ var animate = {
 		if (game.tiles[i].culture){
 			boxHeight += barHeight + barPad; 
 		}
-		if (game.tiles[i].defense - (game.tiles[i].capital ? 1 : 0)){
+		var totalDef = game.tiles[i].defense - (game.tiles[i].capital ? 1 : 0);
+		if (totalDef){
 			boxHeight += barHeight + barPad;
 		}
 		var foodWidth = game.tiles[i].food * widthPerTick;
@@ -252,10 +253,10 @@ var animate = {
 				DOM.mapBars.appendChild(svg);
 			}
 			// defense
-			if (game.tiles[i].defense){
+			if (totalDef){
 				y += barHeight + barPad;
 				var defWidth =
-					(game.tiles[i].defense - (game.tiles[i].capital ? 1 : 0)) * (widthMax/3),
+					totalDef * (widthMax/3),
 					svg = document.createElementNS('http://www.w3.org/2000/svg', 'line');
 
 				svg.setAttributeNS(null,"x1",x);
@@ -989,7 +990,7 @@ var animate = {
 	},
 	energyBar: function(year){
 		// 2.7 for 12? 2.9 for 15?
-		TweenLite.to(DOM.energyIndicator, g.speed * 2.9, {
+		TweenLite.to(DOM.energyIndicator, g.speed * 2.7, {
 			startAt: {
 				strokeDasharray: '0,100'
 			},
@@ -1004,9 +1005,9 @@ var animate = {
 		if (year) {
 			DOM.currentYear.textContent = ui.transformYear(year);
 			var o = {
-				blur: 20
+				blur: 15
 			};
-			TweenLite.to(o, 1.5, {
+			TweenLite.to(o, 1, {
 				blur: 0,
 				ease: Linear.easeIn,
 				onUpdate: function() {

@@ -863,7 +863,7 @@ var game = {
 						// defender won
 						updateTargetStatus = true;
 					}
-					setTileUnits(i, unitColor);
+					ui.setTileUnits(i, unitColor);
 				}
 				
 				updateTargetStatus && ui.showTarget(DOM['land' + i]); 
@@ -915,16 +915,11 @@ var game = {
 			if (d.units !== game.tiles[i].units){
 				var unitColor = d.units > game.tiles[i].units ? '#00ff00' : '#ff0000';
 				game.tiles[i].units = d.units;
-				setTileUnits(i, unitColor);
+				ui.setTileUnits(i, unitColor);
 			}
-			// set text visible
-			TweenMax.set(DOM['unit' + i], {
-				visibility: 'visible'
-			});
 		} else {
 			// dead/surrender
 			game.tiles[i].units = 0;
-			// hide mapBars and unit values
 			TweenMax.set(DOM['unit' + i], {
 				visibility: 'hidden'
 			});
@@ -932,6 +927,24 @@ var game = {
 		
 		my.tgt === i && ui.showTarget(DOM['land' + i]);
 		ui.drawDiplomacyPanel();
+	},
+	isMineOrAdjacent: function(tile) {
+		if (game.tiles[tile].player === my.player) return 1;
+		if (!game.tiles[tile].units) return 0;
+		var foo = 0;
+		game.tiles[tile].adj.forEach(function(v) {
+			if (game.tiles[v].player === my.player) {
+				foo = 1;
+			}
+		});
+		return foo;
+	},
+	setVisibilityAll: function() {
+		game.tiles.forEach(function(tile) {
+			tile.adj.forEach(function(v) {
+				ui.setUnitVisibility(v);
+			});
+		});
 	},
 	setSumValues: function(){
 		var o = {
@@ -1173,18 +1186,6 @@ var my = {
 				y: y * g.resizeY
 			});
 			ui.showTarget(DOM['land' + tile], false, 1);
-			my.flashTile(tile);
-		}
-	},
-	// flash text in land
-	flashTile: function(tile){
-		if (!my.attackOn){
-			// flag unit text
-			if (game.tiles[tile].units){
-				TweenMax.set(DOM['unit' + tile], {
-					visibility: 'visible'
-				});
-			}
 		}
 	}
 };

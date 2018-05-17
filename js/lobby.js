@@ -36,17 +36,17 @@ var lobby = {
 		if (government === "Despotism"){
 			str = '<div id="lobbyGovName" class="text-primary">Despotism</div>\
 				<div id="lobbyGovPerks">\
-					<div>2x Maximum Army Size Per Attack</div>\
+					<div>Free movement through own tiles</div>\
 					<div>Start with gunpowder</div>\
 					<div>Start with a bunker</div>\
-					<div>Free movement through own tiles</div>\
+					<div>2x maximum army size per attack</div>\
 				</div>';
 		} else if (government === "Monarchy"){
 			str = '<div id="lobbyGovName" class="text-primary">Monarchy</div>\
 				<div id="lobbyGovPerks">\
-					<div>Food resources also yield one culture</div>\
+					<div>+2 defense</div>\
+					<div>+1 culture from 3 food</div>\
 					<div>50% starting culture bonus</div>\
-					<div>Start with two great tacticians: +2 defense</div>\
 					<div>1/2 cost structures</div>\
 				</div>';
 		} else if (government === "Democracy"){
@@ -55,39 +55,39 @@ var lobby = {
 					<div>4x maximum troop deployment</div>\
 					<div>50% starting production bonus</div>\
 					<div>Reduced culture milestone requirement</div>\
-					<div>Patriotism: +3 troops when you lose a tile</div>\
+					<div>+3 troops when you lose a tile</div>\
 				</div>';
 		} else if (government === "Fundamentalism"){
 			str = '<div id="lobbyGovName" class="text-primary">Fundamentalism</div>\
 				<div id="lobbyGovPerks">\
-					<div>Overrun ability: Instant win with 4x advantage</div>\
-					<div>Infiltration: -3 structure defense</div>\
-					<div>Faster growth: Reduced growth milestone requirement</div>\
+					<div>Overrun: Instant win with 4x advantage</div>\
+					<div>Infiltration: -1 structure defense</div>\
+					<div>Fast growth: Reduced food milestone requirement</div>\
 					<div>+2 troop reward bonus</div>\
 				</div>';
 		} else if (government === "Fascism"){
 			str = '<div id="lobbyGovName" class="text-primary">Fascism</div>\
 				<div id="lobbyGovPerks">\
-					<div>2x production rewards from barbarians</div>\
-					<div>Start with 4 bonus energy</div>\
-					<div>Start with great general: +1 attack</div>\
+					<div>+1 attack</div>\
+					<div>+4 attack vs barbarians</div>\
 					<div>Bonus troop with each deployment</div>\
+					<div>2x production rewards from barbarians</div>\
 				</div>';
 		} else if (government === "Republic"){
 			str = '<div id="lobbyGovName" class="text-primary">Republic</div>\
 				<div id="lobbyGovPerks">\
-					<div>+50% plundered reward bonus from barbarians</div>\
-					<div>Start with masonry</div>\
-					<div>+1 energy per turn</div>\
+					<div>+1 energy</div>\
 					<div>Combat medics: Recover 1/2 of lost troops after victory</div>\
+					<div>Start with masonry</div>\
+					<div>+50% plunder reward bonus from barbarians</div>\
 				</div>';
 		} else if (government === "Communism"){
 			str = '<div id="lobbyGovName" class="text-primary">Communism</div>\
 				<div id="lobbyGovPerks">\
-					<div>2x discovered reward bonus from barbarians</div>\
-					<div>Can deploy troops to uninhabited territory</div>\
-					<div>3/4 cost weapons</div>\
 					<div>Start with a great person</div>\
+					<div>3/4 cost weapons</div>\
+					<div>Can deploy troops to uninhabited territory</div>\
+					<div>2x discovered reward bonus from barbarians</div>\
 				</div>';
 		}
 		document.getElementById('lobbyGovernment' + my.player).innerHTML = government;
@@ -576,14 +576,13 @@ var lobby = {
 	},
 	governmentIcon: function(p){
 		// <i class="' + icon + ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right"></i>
-		var str = '',
-			playerClass = 'player-icon' + game.player[p.player].playerColor;
+		var str = '';
 
 		if (p.cpu) {
-			str += '<img src="images/icons/computer.png" class="fw-icon-sm '+ playerClass +'">';
+			str += '<img src="images/icons/computer.png" class="fw-icon-sm">';
 		}
 		else {
-			str += '<img src="images/icons/'+ p.government +'.png" class="fw-icon-sm '+ playerClass +'">';
+			str += '<img src="images/icons/'+ p.government +'.png" class="fw-icon-sm">';
 		}
 		return str;
 	},
@@ -720,7 +719,7 @@ function setResources(d){
 			my.cultureMax = d.cultureMax;
 		}
 	}
-	if (d.sumFood !== undefined){
+	/*if (d.sumFood !== undefined){
 		if (d.sumFood && d.sumFood !== my.sumFood){
 			//DOM.sumFood.textContent = d.sumFood;
 			my.sumFood = d.sumFood;
@@ -737,7 +736,7 @@ function setResources(d){
 			//DOM.sumCulture.textContent = d.sumCulture;
 			my.sumCulture = d.sumCulture;
 		}
-	}
+	}*/
 	// bonus values
 	if (d.oBonus !== undefined){
 		if (my.oBonus !== d.oBonus){
@@ -996,7 +995,7 @@ function loadGameState(){
 				svg.setAttributeNS(null, 'height', 40);
 				svg.setAttributeNS(null, 'width', 40);
 				svg.setAttributeNS(null,"x",x);
-				svg.setAttributeNS(null,"y",y + 5);
+				svg.setAttributeNS(null,"y",y);
 				svg.setAttributeNS(null,"class","mapFlag");
 				svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/flags/' + flag);
 				mapFlagWrap.appendChild(svg);
@@ -1066,6 +1065,7 @@ function loadGameState(){
 				});
 				
 				function triggerAction(that){
+					console.info(that.id);
 					if (my.attackOn){
 						var o = my.targetData;
 						if (o.attackName === 'attack' || o.attackName === 'splitAttack'){
@@ -1111,6 +1111,8 @@ function loadGameState(){
 				ui.setCurrentYear(data.resourceTick);
 				animate.paths();
 				action.setMenu();
+				updateTileInfo(my.lastTgt);
+				game.setVisibilityAll();
 			}, 350);
 			/*TweenMax.set('.land', {
 				filter: 'url(#emboss)'

@@ -1567,9 +1567,10 @@ table td,
 	align-items: center;
     line-height: 1.5;
     margin: .2rem;
-    border: .1rem outset #aaa;
+    border: .1rem groove #aaa;
 	overflow: hidden;
-    background: -webkit-linear-gradient(top, rgba(23, 23, 23, 1) 0%, rgba(23, 23, 23, 1) 100%);
+    border-radius: 8px 0 8px 0;
+    background: -webkit-radial-gradient(top center, farthest-side, rgba(64, 64, 64, 1) 0%, rgba(16, 16, 16, 1) 100%);
     -webkit-user-select: none;
     user-select: none
 }
@@ -1581,7 +1582,7 @@ table td,
 	background: #000;
 	width: 95%;
 	height: .75rem;
-    border: .1rem solid #000;
+    border: .1rem outset #777;
 	border-radius: 6px;
 	margin-bottom: .2rem;
 	overflow: hidden;
@@ -1590,9 +1591,10 @@ table td,
 .research-bar-bg {
 	width: 0;
 	height: 100%;
+	border-radius: none;
 	background-image: -webkit-linear-gradient(left, #1a1 75%, rgba(0,0,0,0) 100%);
 	background-position: left;
-	background-size: 8px 1rem;
+	background-size: 8px 2rem;
 	background-repeat: repeat-x;
 	box-shadow: 0 .3rem .3rem rgba(0,0,0,.5) inset;
 	animation: flash-outline .7s ease-out infinite alternate;
@@ -1767,6 +1769,7 @@ text {
 }
 .unit {
     visibility: hidden;
+	opacity: 0;
     margin-left: 1rem;
     white-space: nowrap;
     font-size: 2.5rem;
@@ -2713,7 +2716,7 @@ table {
 	top: 0;
 	left: 0;
     height: 100%;
-	box-shadow: 0 1.5rem rgba(0,0,0,.3) inset;
+	box-shadow: 0 1.5rem 1.5rem rgba(0,0,0,.5) inset;
 	background-position: left;
 	background-size: 5px 3rem;
 	background-repeat: repeat-x;
