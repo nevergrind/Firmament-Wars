@@ -19,6 +19,14 @@
     <path id="arrowhead-tip-head" 
     	d="M0,0 V4.2 L2.1,2.1 Z" />
   </marker>
+  
+	<filter id="darken">
+		<feColorMatrix type="matrix"
+    	values=".2   0   0   0   0
+        	     0  .2   0   0   0
+            	 0   0  .2   0   0
+             	 0   0   0   1   0 "/>
+	</filter>
     	
 	<filter id="emboss" color-interpolation-filters="sRGB">  
 		<feGaussianBlur 

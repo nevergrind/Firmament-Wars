@@ -863,7 +863,7 @@ var game = {
 						// defender won
 						updateTargetStatus = true;
 					}
-					ui.setTileUnits(i, unitColor);
+					ui.setTileUnits(i);
 				}
 				
 				updateTargetStatus && ui.showTarget(DOM['land' + i]); 
@@ -915,7 +915,7 @@ var game = {
 			if (d.units !== game.tiles[i].units){
 				var unitColor = d.units > game.tiles[i].units ? '#00ff00' : '#ff0000';
 				game.tiles[i].units = d.units;
-				ui.setTileUnits(i, unitColor);
+				ui.setTileUnits(i);
 			}
 		} else {
 			// dead/surrender

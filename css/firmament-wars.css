@@ -1780,7 +1780,7 @@ text {
 }
 .mapBars {
     stroke-dasharray: 4, 1;
-    overflow: hidden
+    overflow: hidden;
 }
 .mapBars2x {
     stroke-dasharray: 9, 1

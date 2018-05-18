@@ -224,7 +224,7 @@ var action = {
 			}).fail(function(e){
 				audio.play('error');
 			}).always(function(){
-				ui.setTileUnits(tgt, '#00ff00');
+				ui.setTileUnits(tgt);
 			});
 			TweenMax.set('#manpower', {
 			  color: '#fff'
@@ -259,7 +259,7 @@ var action = {
 				setMoves(data);
 				game.tiles[tgt].units = data.units;
 				//setProduction(data);
-				ui.setTileUnits(tgt, '#00ff00');
+				ui.setTileUnits(tgt);
 			}).fail(function(e){
 				audio.play('error');
 			}).always(function(data){

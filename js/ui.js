@@ -288,30 +288,15 @@ var ui = {
 	setCurrentYear: function(tick){
 		DOM.currentYear.textContent = ui.transformYear(tick);
 	},
-	setTileUnits: function(i, unitColor){
+	setTileUnits: function(i){
 		DOM['unit' + i].textContent = game.tiles[i].units === 0 ? "" : ~~game.tiles[i].units;
-		if (unitColor === '#00ff00'){
-			/*
-			TweenMax.to(DOM['unit' + i], .05, {
-				startAt: {
-					transformOrigin: (game.tiles[i].units.length * 3) + ' 12',
-					fill: unitColor
-				},
-				fill: '#ffffff',
-				ease: SteppedEase.config(1),
-				repeat: 12,
-				yoyo: true
-			});
-			*/
-		} else {
-			TweenMax.to(DOM['unit' + i], ui.delay(.5), {
-				startAt: {
-					fill: '#ff0000'
-				},
-				ease: Power4.easeIn,
-				fill: '#ffffff'
-			});
-		}
+		TweenMax.to(DOM['unit' + i], ui.delay(.5), {
+			startAt: {
+				fill: '#ff0000'
+			},
+			ease: Power4.easeIn,
+			fill: '#ffffff'
+		});
 		ui.setUnitVisibility(i);
 		ui.updateAdjacentTileVisibility(i);
 	},
@@ -324,6 +309,9 @@ var ui = {
 				},
 				opacity: adjacent ? 1 : 0
 			});
+			game.tiles[v].units & TweenMax.set(DOM['land' + v], {
+				filter: adjacent ? '' : 'url(#darken)'
+			});
 		});
 	},
 	setUnitVisibility: function(i) {
@@ -334,6 +322,9 @@ var ui = {
 				visibility: adjacent ? 'visible' : 'hidden'
 			},
 			opacity: adjacent ? 1 : 0
+		});
+		game.tiles[i].units & TweenMax.set(DOM['land' + i], {
+			filter: adjacent ? '' : 'url(#darken)'
 		});
 	}
 };
