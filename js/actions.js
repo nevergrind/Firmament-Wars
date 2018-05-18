@@ -469,38 +469,48 @@ var action = {
 		DOM.researchAtomicTheory.style.display =
 			my.tech.rocketry && my.tech.engineering && !my.tech.atomicTheory ? 'flex' : 'none';
 		DOM.researchFutureTech.style.display = my.tech.atomicTheory ? 'flex' : 'none';
+		action.setBuildButton();
+		DOM.fireCannons.style.display = my.tech.gunpowder ? 'flex' : 'none';
+		DOM.launchMissile.style.display = my.tech.rocketry ? 'flex' : 'none';
+		DOM.launchNuke.style.display = my.tech.atomicTheory ? 'flex' : 'none';
+	},
+	setBuildButton: function() {
 		if (my.tech.masonry){
 			// masonry unlocked
-			if (!game.tiles[my.tgt].defense){
+			if (!game.tiles[my.tgt].defense) {
 				// zero defense
-				DOM.upgradeTileDefense.style.display = 'flex';
-			} else {
+				DOM.upgradeTileDefense.style.display = game.tiles[my.tgt].player === my.player ?
+					'flex' : 'none';
+			}
+			else {
 				// bunker built
-				var capValue = game.tiles[my.tgt].capital ? 1 : 0,
-					dMinusPalace = game.tiles[my.tgt].defense - capValue,
+				var dMinusPalace = game.tiles[my.tgt].defense - game.tiles[my.tgt].capital ? 1 : 0,
 					display = 'flex';
-				
-				console.info('dMinusPalace ', dMinusPalace);
+
+				console.warn('dMinusPalace ', dMinusPalace);
 				if (my.tech.engineering){
 					if (dMinusPalace < 3){
 						display = 'flex';
 					}
-				} else if (my.tech.construction){
-					if (!dMinusPalace){
+				}
+				else if (my.tech.construction){
+					if (dMinusPalace < 2){
 						// nothing built
 						display = 'flex';
 					}
 				}
+				if (game.tiles[my.tgt].player !== my.player) {
+					display = 'none';
+				}
+
+				console.info("SETTING TO 3", display);
 				DOM.upgradeTileDefense.style.display = display;
 			}
 		}
 		else {
-			console.info("SETTING TO FLEX 434");
+			console.info("SETTING TO FLEX 2");
 			DOM.upgradeTileDefense.style.display = 'flex';
 		}
-		DOM.fireCannons.style.display = my.tech.gunpowder ? 'flex' : 'none';
-		DOM.launchMissile.style.display = my.tech.rocketry ? 'flex' : 'none';
-		DOM.launchNuke.style.display = my.tech.atomicTheory ? 'flex' : 'none';
 	},
 	/*endTurn: function(){
 		if (my.moves){

@@ -1495,14 +1495,6 @@ tbody {
 #tileResearch {
     font-size: .625rem
 }
-#tileActionsOverlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, .7)
-}
 #menuSelect {
     width: 100%
 }
@@ -1786,7 +1778,7 @@ text {
     stroke-dasharray: 9, 1
 }
 .mapBars3x {
-	stroke-dasharray: 12.333, 1
+    stroke-dasharray: 9, 1
 }
 .targetBarsWrap {
     position: relative;

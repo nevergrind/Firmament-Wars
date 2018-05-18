@@ -278,10 +278,10 @@ var lobby = {
 				'<div id="lobby-cpu-row" class="row buffer2">\
 					<div class="col-xs-12">\
 						<button id="cpu-remove-player" type="button" class="btn fwBlue btn-responsive shadow4 pull-right cpu-button">\
-							<i class="fa fa-minus-circle"></i> Remove CPU\
+							Remove CPU\
 						</button>\
 						<button id="cpu-add-player" type="button" class="btn fwBlue btn-responsive shadow4 pull-right cpu-button">\
-							<i class="fa fa-plus-circle"></i> Add CPU\
+							Add CPU\
 						</button>\
 					</div>\
 				</div>';
@@ -1065,7 +1065,8 @@ function loadGameState(){
 				});
 				
 				function triggerAction(that){
-					console.info(that.id);
+					var id = that.id.slice(4)*1;
+					console.info('tile: ', game.tiles[id].units);
 					if (my.attackOn){
 						var o = my.targetData;
 						if (o.attackName === 'attack' || o.attackName === 'splitAttack'){

@@ -349,7 +349,7 @@ var events = {
 		$("#refreshGameWrap").on("blur", "#gameName", function(){
 			g.focusGameName = false;
 		});
-		$("#titleViewBackdrop").on(ui.click, function(){
+		$("#titleViewBackdrop, .close-btn").on(ui.click, function(){
 			title.closeModal();
 		});
 		$("#mainWrap").on(ui.click, '#unlockGameDone, #configureNationDone, #leaderboardDone', function(){

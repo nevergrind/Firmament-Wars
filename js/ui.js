@@ -37,13 +37,12 @@ var ui = {
 		var strArr = [],
 			p,
 			i=0,
-			len=game.player.length;
-		// get ranks first
-		var arr = ui.getPlayersByTileRank();
+			len=game.player.length,
+			arr = ui.getPlayersByTileRank();
 
 		for (; i<len; i++){
 			p = game.player[i];
-			if (p.account){
+			if (p.account && arr[i]){
 				p.flagArr = p.flag.split("."),
 				p.flagShort = p.flagArr[0],
 				p.flagSrc = p.flag === 'Default.jpg' ?
@@ -379,8 +378,6 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
 function updateTileInfo(tileId){
 	var t = game.tiles[tileId],
 		flag = "Default.jpg",
-		name = t.name,
-		account = "",
 		name = t.name;
 	
 	if (t.player === 0){
@@ -393,22 +390,9 @@ function updateTileInfo(tileId){
 		}
 	}
 	else {
-		if (t.flag === "Default.jpg"){
-			flag = "Player" + game.player[t.player].playerColor + ".jpg";
-			flag = t.flag;
-		} else {
-			flag = t.flag;
-		}
+		flag = t.flag;
 		name = t.name;
-		account = t.account;
 	}
-	// avatar
-	/*if (game.player[t.player].avatar){
-		DOM.avatar.style.display = 'block';
-		DOM.avatar.src = game.player[t.player].avatar;
-	} else {
-		DOM.avatar.style.display = 'none';
-	}*/
 	// tileName and bars
 	var o = {
 		food: 0,
@@ -433,24 +417,19 @@ function updateTileInfo(tileId){
 	DOM.targetFlag.src = 'images/flags/' + flag;
 	
 	var defWord = ['Bunker', 'Wall', 'Fortress'],
-		defBonus = [5, 15, 30],
-		ind = t.defense - (t.capital ? 1 : 0);
-		var defTooltip = [
-			'reduce weapon damage by 1',
-			'reduce weapon damage by 3',
-			'reduce weapon damage by 6'
+		defBonus = [1, 2, 3],
+		ind = t.defense - (t.capital ? 1 : 0),
+		defTooltip = [
+			'reduces weapon damage by 1',
+			'reduces weapon damage by 3',
+			'reduces weapon damage by 6'
 		];
-	DOM.upgradeTileDefense.style.display = 'none';
-	if (ind <= 0 || !my.tech.masonry) {
-		DOM.upgradeTileDefense.style.display = 'none';
-	}
-	else {
-		if (ind > 2){
-			DOM.upgradeTileDefense.style.display = 'none';
-		} else {
-			DOM.upgradeTileDefense.style.display = 'flex';
+
+	if (t.player === my.player && my.tech.masonry) {
+		if (ind < 3) {
+			// fortress present
 			DOM.buildWord.textContent = defWord[ind];
-			console.info('buildCost ', ind, g.upgradeCost[ind], my.buildCost, g.upgradeCost[ind] * my.buildCost);
+			// console.info('buildCost ', ind, g.upgradeCost[ind], my.buildCost, g.upgradeCost[ind] * my.buildCost);
 			DOM.buildCost.textContent = g.upgradeCost[ind] * my.buildCost;
 			if (ind === 2){
 				defWord[2] = 'Fortresse';
@@ -467,9 +446,8 @@ function updateTileInfo(tileId){
 				});
 		}
 		// actions panel
-		// DOM.tileActionsOverlay.style.display = my.player === t.player ? 'none' : 'block';
-		action.setMenu();
 	}
+	action.setBuildButton();
 	animate.target();
 };
 

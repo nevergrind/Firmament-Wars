@@ -178,7 +178,7 @@ var animate = {
 		if (game.tiles[i].culture){
 			boxHeight += barHeight + barPad; 
 		}
-		var totalDef = game.tiles[i].defense - (game.tiles[i].capital ? 1 : 0);
+		var totalDef = game.tiles[i].defense;
 		if (totalDef){
 			boxHeight += barHeight + barPad;
 		}
@@ -256,7 +256,7 @@ var animate = {
 			if (totalDef){
 				y += barHeight + barPad;
 				var defWidth =
-					totalDef * (widthMax/3),
+					totalDef * (widthMax/4),
 					svg = document.createElementNS('http://www.w3.org/2000/svg', 'line');
 
 				svg.setAttributeNS(null,"x1",x);
@@ -321,7 +321,7 @@ var animate = {
 					}
 				});
 
-				if (i % 4 === 0) {
+				if (i % 8 === 0) {
 					animate.flash({
 						d: .1,
 						scale: 2,
@@ -329,7 +329,7 @@ var animate = {
 						y: y2 - 100,
 					});
 				}
-				else if (i % 4 === 2) {
+				else if (i % 8 === 4) {
 					animate.flash({
 						d: .15,
 						scale: 1,
@@ -520,8 +520,8 @@ var animate = {
 		flash.setAttributeNS(null, 'class', 'no-pointer');
 		flash.setAttributeNS(null,"x",x1);
 		flash.setAttributeNS(null,"y",y1);
-		console.info('1', x1, y1);
-		console.info('2', x2, y2);
+		//console.info('1', x1, y1);
+		//console.info('2', x2, y2);
 		DOM.mapAnimations.appendChild(flash);
 		TweenLite.to(flash, 1, {
 			startAt: {
@@ -615,7 +615,7 @@ var animate = {
 			a = [5, 6, 8],
 			sfx = ~~(Math.random() * 3);
 		audio.play('grenade' + a[sfx]);
-		animate.screenShake(5, 3, .016);
+		// animate.screenShake(5, 3, .016);
 		var x = 0,
 			y = 0;
 		for (var i=0; i<5; i++){

@@ -769,13 +769,13 @@ var game = {
 			}
 		}
 		// remove
-		TweenMax.to('#diplomacyPlayer' + i, 1, {
+		TweenMax.set('#diplomacyPlayer' + i, {
 			autoAlpha: 0,
 			onComplete: function(){
 				$("#diplomacyPlayer" + i).css('display', 'none');
 			}
 		});
-		TweenMax.to('#diplomacyPlayer' + i, 1, {
+		TweenMax.set('#diplomacyPlayer' + i, 0, {
 			startAt: { 
 				transformPerspective: 400,
 				transformOrigin: '50% 0',
@@ -1258,7 +1258,6 @@ function initDom(){
 		world: d.getElementById('world'),
 		bgmusic: d.getElementById('bgmusic'),
 		tileName: d.getElementById('tileName'),
-		tileActionsOverlay: d.getElementById('tileActionsOverlay'),
 		buildWord: d.getElementById('buildWord'),
 		buildCost: d.getElementById('buildCost'),
 		cannonsCost: d.getElementById('cannonsCost'),

@@ -1,5 +1,5 @@
 var ai = {
-	structureDefense: [0, 5, 15, 30],
+	structureDefense: [1, 1.5, 2, 2.5, 3],
 	scoreTargetAttack: function(o){
 		var score = 50;
 		// score player
@@ -15,39 +15,33 @@ var ai = {
 				score -= 10;
 			}
 		} else {
-			// 
-			if (o.defender === 0){
-				// barb/empty
+			//
+			if (!o.defenderUnits) {
+				// empty
+				score += 50;
+			}
+			else if (o.defender === 0){
+				// barb
 				score += 10;
-			} else if (game.player[o.attacker].team !== game.player[o.defender].team){
+			}
+			else if (game.player[o.attacker].team !== game.player[o.defender].team){
 				// enemy
 				score += 25;
-			} else if (o.attacker === o.defender){
+			}
+			else if (o.attacker === o.defender){
 				// mine
 				score -= 5;
-			} else {
+			}
+			else {
 				// ally
 				score -= 25;
 			}
 		}
 		// defense
 		if (o.attacker !== o.defender){
-			score += o.unitDiff;
-			/*
-			if (o.unitDiff > 20){
-				score += 20;
-			} else if (o.unitDiff > 5){
-				score += 10;
-			} else if (o.unitDiff > -5){
-				score -= 10;
-			} else {
-				score -= 20;
-			}
-			*/
-			score -= ai.structureDefense[o.defense];
-			score -= o.capital ? 10 : 0;
+			score -= o.defenderUnits * (ai.structureDefense[o.defense + o.capital]);
 			// food
-			score += ~~((o.food) + Math.random()*10 - 5);
+			score += ~~((o.food) + Math.random() * 10 - 5);
 		}
 		return score;
 	},
@@ -58,6 +52,11 @@ var ai = {
 		
 		game.tiles.forEach(function(d, index){
 			if (d.player === player && d.units >= 5){
+				var tileScore = 0;
+
+				if (d.capital) {
+					tileScore -= 10;
+				}
 				// cpu's tile
 				d.adj.forEach(function(defender){
 					var z = game.tiles[defender];
@@ -65,6 +64,7 @@ var ai = {
 						attacker: player,
 						defender: z.player,
 						attackerUnits: d.units,
+						defenderUnits: z.units,
 						unitDiff: (d.units - z.units),
 						defense: z.defense,
 						food: z.food,
@@ -72,7 +72,7 @@ var ai = {
 						culture: z.culture,
 						capital: z.capital
 					});
-					if (score > maxScore){
+					if (tileScore + score > maxScore){
 						maxScore = score;
 						atkTile = index;
 						defTile = defender;
@@ -208,18 +208,22 @@ var ai = {
 	},
 	scoreTargetDeploy: function(o){
 		var score = 50;
+		//console.info('scoreTargetDeploy', o);
+		// adjacent tile stuff
 		if (!o.player){
 			// barb/empty
+			score += 20;
+		}
+		else if (!o.sameTeam){
+			// enemy player - try to get him!
 			score += 10;
-		} else if (!o.sameTeam){
-			// enemy player
-			score += 25;
 			// where are units needed?
 			if (o.player && !o.unitDiff){
 				score += o.unitDiff * -1;
 			}
-		} else if (o.sameTeam){
-			// my tile
+		}
+		else if (o.sameTeam){
+			// my tile - don't care about this dude!
 			score -= 10;
 		}
 		// food
@@ -233,20 +237,28 @@ var ai = {
 		game.tiles.forEach(function(d, index){
 			var cpuUnits = game.tiles[index].units,
 				score = 0,
-				adjTiles = 0;
+				tileScore = 0,
+				adjTiles = 0,
+				tileDefense = d.defense + (d.capital ? 1 : 0);
 			//console.info(index, d.player === cpuPlayer, d.units, d.flag);
 			if (d.player === cpuPlayer && d.units < 255 && d.flag){
 				// cpu's tile
 				// less than 255
 				// not a barb or empty
+				// original tile
+				if (tileDefense && cpuUnits < 24) {
+					tileScore += tileDefense * 10;
+				}
 				d.adj.forEach(function(defender){
 					adjTiles++;
 					var z = game.tiles[defender];
 					z.sameTeam = cpuPlayer === z.player;
 					z.unitDiff = cpuUnits - z.units;
+					z.cpuUnits = cpuUnits;
+					z.tileDefense = tileDefense;
 					score += ai.scoreTargetDeploy(z);
 				});
-				var sum = ~~(score/adjTiles);
+				var sum = tileScore + ~~(score/adjTiles);
 				if (sum > maxScore){
 					maxScore = sum;
 					tile = index;
@@ -306,7 +318,7 @@ var ai = {
 		return o;
 	},
 	weaponDelay: function(){
-		return Math.random()*4000 + 1000;
+		return Math.random()*11000 + 1000;
 	},
 	fireCannons: function(d){
 		var tiles = ai.getWeaponTarget(d.player);
@@ -488,6 +500,9 @@ var ai = {
 			}
 		});
 	},
+	randomTime: function() {
+		return Math.random() * (g.speed * 1000)
+	},
 	takeTurn: function(d){
 		var o = ai.getResourceTotal(d.player);
 		// deploy
@@ -512,7 +527,7 @@ var ai = {
 			(function(delay, d){
 				setTimeout(function(){
 					ai.attack(d); 
-				}, ((delay * 500) + 500) );
+				}, ((delay * (g.speed * 100)) + 500) );
 			})(i, d);
 		}
 		var usingNuke = 0;
