@@ -475,42 +475,22 @@ var action = {
 		DOM.launchNuke.style.display = my.tech.atomicTheory ? 'flex' : 'none';
 	},
 	setBuildButton: function() {
-		if (my.tech.masonry){
+		var t = game.tiles[my.tgt],
+			defense = t.defense - (t.capital ? 1 : 0),
+			display = 'none';
+
+		if (my.tech.masonry && t.player === my.player){
 			// masonry unlocked
-			if (!game.tiles[my.tgt].defense) {
+			console.warn("upgradeTileDefense: ", defense, my.tech);
+			if (defense === 0 ||
+				defense === 1 && my.tech.construction ||
+				defense === 2 && my.tech.engineering) {
 				// zero defense
-				DOM.upgradeTileDefense.style.display = game.tiles[my.tgt].player === my.player ?
-					'flex' : 'none';
-			}
-			else {
-				// bunker built
-				var dMinusPalace = game.tiles[my.tgt].defense - game.tiles[my.tgt].capital ? 1 : 0,
-					display = 'none';
-
-				console.warn('dMinusPalace ', dMinusPalace);
-				if (my.tech.engineering){
-					if (dMinusPalace < 3){
-						display = 'flex';
-					}
-				}
-				else if (my.tech.construction){
-					if (dMinusPalace < 2){
-						// nothing built
-						display = 'flex';
-					}
-				}
-				if (game.tiles[my.tgt].player !== my.player) {
-					display = 'none';
-				}
-
-				console.info("SETTING TO 3", display);
-				DOM.upgradeTileDefense.style.display = display;
+				display = 'flex';
+				console.info("SETTING TO FLEX: ", defense, my.tech);
 			}
 		}
-		else {
-			console.info("SETTING TO FLEX 2");
-			DOM.upgradeTileDefense.style.display = 'none';
-		}
+		DOM.upgradeTileDefense.style.display = display;
 	},
 	/*endTurn: function(){
 		if (my.moves){
