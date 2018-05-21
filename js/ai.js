@@ -1,6 +1,7 @@
 var ai = {
 	structureDefense: [1, 1.5, 2, 2.5, 3],
 	scoreTargetAttack: function(o){
+		// should AI attack this adjacent target?
 		var score = 50;
 		// score player
 		if (!g.teamMode){
@@ -14,7 +15,8 @@ var ai = {
 				// mine
 				score -= 10;
 			}
-		} else {
+		}
+		else {
 			//
 			if (!o.defenderUnits) {
 				// empty
@@ -55,7 +57,7 @@ var ai = {
 				var tileScore = 0;
 
 				if (d.capital) {
-					tileScore -= 10;
+					tileScore -= 20;
 				}
 				// cpu's tile
 				d.adj.forEach(function(defender){
@@ -208,8 +210,6 @@ var ai = {
 	},
 	scoreTargetDeploy: function(o){
 		var score = 50;
-		//console.info('scoreTargetDeploy', o);
-		// adjacent tile stuff
 		if (!o.player){
 			// barb/empty
 			score += 20;
@@ -246,8 +246,8 @@ var ai = {
 				// less than 255
 				// not a barb or empty
 				// original tile
-				if (tileDefense && cpuUnits < 24) {
-					tileScore += tileDefense * 10;
+				if (d.capital && cpuUnits < 24) {
+					tileScore += 20;
 				}
 				d.adj.forEach(function(defender){
 					adjTiles++;
@@ -527,7 +527,7 @@ var ai = {
 			(function(delay, d){
 				setTimeout(function(){
 					ai.attack(d); 
-				}, ((delay * (g.speed * 100)) + 500) );
+				}, ((delay * (g.speed * 100)) + (Math.random() * 1000) - 500) );
 			})(i, d);
 		}
 		var usingNuke = 0;

@@ -6,7 +6,9 @@ $.ajaxSetup({
 TweenMax.defaultEase = Quad.easeOut;
 var g = {
 	Msg: document.getElementById('Msg'),
+	msgTimer: new TweenMax.delayedCall(0, ''),
 	msg: function(msg, d) {
+		if (!msg.trim()) return;
 		if (d === 0){
 			TweenMax.set(g.Msg, {
 				overwrite: 1,
@@ -16,23 +18,23 @@ var g = {
 			});
 		}
 		else {
-			if (!d || d < .5){
+			if (d === undefined || d < 2){
 				d = 2;
 			}
-			TweenMax.to(g.Msg, ui.delay(d), {
-				overwrite: 1,
+			g.msgTimer.kill();
+			g.msgTimer = TweenMax.to(g.Msg, d, {
 				startAt: {
 					scaleY: 1,
 					opacity: 1
 				},
 				onComplete: function(){
-					TweenMax.to(this.target, .3, {
-						scaleY: 0
-					});
+					g.msgClose();
 				}
 			});
 		}
-		g.Msg.innerHTML = msg;
+		if (msg) {
+			g.Msg.innerHTML = msg;
+		}
 		// split text animation
 		var tl = new TimelineMax(),
 			split = new SplitText(g.Msg, {
@@ -49,9 +51,9 @@ var g = {
 		}, .01);
 	},
 	msgClose: function() {
-		TweenMax.set(g.Msg, {
-			opacity: 0
-		})
+		TweenMax.to(g.Msg, .3, {
+			scaleY: 0
+		});
 	},
 	gameDuration: 0,
 	spectateStatus: 0,
@@ -188,15 +190,17 @@ var g = {
 		}
 	},
 	checkPlayerData: function(){
-		var geo = localStorage.getItem(my.account+ '_geo');
-		var geoTime = localStorage.getItem(my.account+ '_geoTime');
-		var geoSeason = localStorage.getItem(my.account+ '_geoSeason');
+		var geo = localStorage.getItem(my.account+ '_geo'),
+			geoTime = localStorage.getItem(my.account+ '_geoTime'),
+			geoSeason = localStorage.getItem(my.account+ '_geoSeason');
+
 		if (geoTime !== null || geoSeason === null){
 			// longer than 90 days?
 			if ((Date.now() - geoTime) > 7776000 || geoSeason === null){
 				g.updateUserInfo();
 			}
-		} else if (geo === null){
+		}
+		else if (geo === null){
 			g.updateUserInfo();
 		}
 		// ignore list
@@ -204,6 +208,8 @@ var g = {
 		if (ignore !== null){
 			g.ignore = JSON.parse(ignore);
 		} else {
+			// first time user... open configure nation
+			app.isApp && title.configureNation();
 			var foo = [];
 			localStorage.setItem('ignore', JSON.stringify(foo));
 		}
@@ -510,7 +516,7 @@ g.init = (function(){
 					g.initGameCallback(data);
 					greenworks.cancelAuthTicket(steam.handle);
 				}).fail(function(data) {
-					g.msg(data.responseText);
+					data.responseText && g.msg(data.responseText);
 				});
 			});
 		}
@@ -692,7 +698,7 @@ var game = {
 		setTimeout(function(){
 			if (z !== undefined){
 				if (z.parentNode !== null){
-					TweenMax.to(z, ui.delay(.125), {
+					TweenMax.to(z, .125, {
 						alpha: 0,
 						onComplete: function(){
 							if (z.parentNode !== null){
@@ -913,11 +919,11 @@ var game = {
 		// check unit value
 		if (d.units){
 			if (d.units !== game.tiles[i].units){
-				var unitColor = d.units > game.tiles[i].units ? '#00ff00' : '#ff0000';
 				game.tiles[i].units = d.units;
 				ui.setTileUnits(i);
 			}
-		} else {
+		}
+		else {
 			// dead/surrender
 			game.tiles[i].units = 0;
 			TweenMax.set(DOM['unit' + i], {
@@ -940,10 +946,10 @@ var game = {
 		return foo;
 	},
 	setVisibilityAll: function() {
-		game.tiles.forEach(function(tile) {
-			tile.adj.forEach(function(v) {
-				ui.setUnitVisibility(v);
-			});
+		game.tiles.forEach(function(o, i) {
+			//tile.adj.forEach(function(v) {
+				ui.setUnitVisibility(i);
+			//});
 		});
 	},
 	setSumValues: function(){
@@ -1074,7 +1080,7 @@ var my = {
 	rushCost: 2,
 	weaponCost: 1,
 	maxDeployment: 12,
-	buildCost: 1,
+	cannonBonus: 0,
 	targetData: {},
 	selectedFlag: "Default",
 	selectedFlagFull: "Default.jpg",
@@ -1180,7 +1186,7 @@ var my = {
 			if (y < yMin){ 
 				y = yMin;
 			}
-			TweenMax.to(DOM.worldWrap, ui.delay(d), {
+			TweenMax.to(DOM.worldWrap, d, {
 				force3D: false,
 				x: x * g.resizeX,
 				y: y * g.resizeY

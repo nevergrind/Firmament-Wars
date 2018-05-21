@@ -133,9 +133,6 @@ var ui = {
 		'</style>');
 	},
 	click: isMobile ? 'mousedown' : 'click',
-	delay: function(d){
-		return isMobile ? 0 : d;
-	},
 	showTarget: function(e, hover, skipOldTgtUpdate){
 		if (e.id === undefined){
 			e.id = 'land0';
@@ -288,19 +285,20 @@ var ui = {
 		DOM.currentYear.textContent = ui.transformYear(tick);
 	},
 	setTileUnits: function(i){
-		DOM['unit' + i].textContent = game.tiles[i].units === 0 ? "" : ~~game.tiles[i].units;
-		TweenMax.to(DOM['unit' + i], ui.delay(.5), {
+		DOM['unit' + i].textContent = game.tiles[i].units === 0
+			? "" : ~~game.tiles[i].units;
+		TweenMax.to(DOM['unit' + i], .5, {
 			startAt: {
-				fill: '#ff0000'
+				visibility: 'visible',
 			},
-			ease: Power4.easeIn,
-			fill: '#ffffff'
+			opacity: 1,
+			ease: Power4.easeIn
 		});
-		ui.setUnitVisibility(i);
-		ui.updateAdjacentTileVisibility(i);
+		/*ui.setUnitVisibility(i);
+		ui.updateAdjacentTileVisibility(i);*/
 	},
 	updateAdjacentTileVisibility: function(i) {
-		game.tiles[i].adj.forEach(function(v) {
+		/*game.tiles[i].adj.forEach(function(v) {
 			var adjacent = game.isMineOrAdjacent(v);
 			TweenMax.to(DOM['unit' + v], .5, {
 				startAt: {
@@ -311,20 +309,21 @@ var ui = {
 			game.tiles[v].units & TweenMax.set(DOM['land' + v], {
 				filter: adjacent ? '' : 'url(#darken)'
 			});
-		});
+		});*/
 	},
 	setUnitVisibility: function(i) {
 		// player visibility logic
-		var adjacent = game.isMineOrAdjacent(i);
-		TweenMax.to(DOM['unit' + i], .5, {
+		TweenMax.set(DOM['unit' + i], {
 			startAt: {
-				visibility: adjacent ? 'visible' : 'hidden'
+				fill: '#ffffff',
+				visibility: game.tiles[i].units ? 'visible' : 'hidden'
 			},
-			opacity: adjacent ? 1 : 0
+			opacity: 1
 		});
+		/*
 		game.tiles[i].units & TweenMax.set(DOM['land' + i], {
 			filter: adjacent ? '' : 'url(#darken)'
-		});
+		});*/
 	}
 };
 function checkMobile(){
@@ -429,8 +428,8 @@ function updateTileInfo(tileId){
 		if (ind < 3) {
 			// fortress present
 			DOM.buildWord.textContent = defWord[ind];
-			// console.info('buildCost ', ind, g.upgradeCost[ind], my.buildCost, g.upgradeCost[ind] * my.buildCost);
-			DOM.buildCost.textContent = g.upgradeCost[ind] * my.buildCost;
+			// console.info('buildCost ', ind, g.upgradeCost[ind], my.buildCost, g.upgradeCost[ind]);
+			DOM.buildCost.textContent = g.upgradeCost[ind];
 			if (ind === 2){
 				defWord[2] = 'Fortresse';
 			}

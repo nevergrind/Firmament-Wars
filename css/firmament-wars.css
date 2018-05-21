@@ -1761,7 +1761,7 @@ text {
 }
 .unit {
     visibility: hidden;
-	opacity: 0;
+	opacity: 1;
     margin-left: 1rem;
     white-space: nowrap;
     font-size: 2.5rem;
@@ -1931,6 +1931,7 @@ circle {
     right: 0
 }
 #lobby-cpu-row {
+	flex: 0;
 	margin-bottom: .5rem;
 }
 #lobbyLeftCol {
@@ -1951,7 +1952,10 @@ circle {
     font-size: 1.8rem;
 }
 #lobbyPlayers {
+	display: flex;
+	flex-direction: column;
 	flex: 1;
+    padding: 0 1rem .5rem 0;
 }
 #lobbyChatLogWrap {
 	display: flex;
@@ -2313,8 +2317,9 @@ table {
     max-height: 160px
 }
 #lobbyWrap {
-    width: 96%;
-    padding: 0
+	display: flex;
+	flex-direction: column;
+	flex: 1;
 }
 .lobbyFlags {
     width: 7.2rem;
@@ -2326,15 +2331,21 @@ table {
     margin: .2rem 0 0 1rem;
 }
 .lobby-row-col-1 {
-	flex-basis: 17%;
+	flex-basis: 15%;
 }
 .lobby-row-col-2 {
-	flex-basis: 53%;
+	flex: 1;
 	font-size: 1.75rem;
 	padding-left: 1.5rem;
 }
 .lobby-row-col-3 {
 	flex-basis: 30%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+.lobby-row-col-3 > * {
+	width: 100%;
 }
 .cpu-button {
     margin-left: 5px
@@ -2389,7 +2400,8 @@ table {
 .governmentDropdown {
     text-shadow: none;
     background: #00061a;
-    border: 2px groove #204d74
+	width: 100%;
+    border: 2px groove #204d74;
 }
 .governmentDropdown>li>a {
     color: #aef
@@ -2400,6 +2412,7 @@ table {
 .fwDropdown {
     text-shadow: none;
     background: #00061a;
+	width: 100%;
     border: 2px groove #204d74
 }
 .fwDropdown>li>a {

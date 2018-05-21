@@ -275,7 +275,7 @@ var action = {
 		if (ind > 2){
 			return;
 		}
-		if (my.production < (g.upgradeCost[ind] * my.buildCost)){
+		if (my.production < (g.upgradeCost[ind])){
 			action.error();
 			return;
 		}
@@ -485,7 +485,7 @@ var action = {
 			else {
 				// bunker built
 				var dMinusPalace = game.tiles[my.tgt].defense - game.tiles[my.tgt].capital ? 1 : 0,
-					display = 'flex';
+					display = 'none';
 
 				console.warn('dMinusPalace ', dMinusPalace);
 				if (my.tech.engineering){
@@ -509,7 +509,7 @@ var action = {
 		}
 		else {
 			console.info("SETTING TO FLEX 2");
-			DOM.upgradeTileDefense.style.display = 'flex';
+			DOM.upgradeTileDefense.style.display = 'none';
 		}
 	},
 	/*endTurn: function(){

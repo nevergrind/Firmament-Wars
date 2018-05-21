@@ -34,7 +34,8 @@ var lobby = {
 		// updates government description
 		var str = '';
 		if (government === "Despotism"){
-			str = '<div id="lobbyGovName" class="text-primary">Despotism</div>\
+			str = '<div id="lobbyGovName" class="text-primary">\
+				<img src="images/icons/Despotism.png" class="fw-icon-sm">Despotism</div>\
 				<div id="lobbyGovPerks">\
 					<div>Free movement through own tiles</div>\
 					<div>Start with gunpowder</div>\
@@ -42,15 +43,17 @@ var lobby = {
 					<div>2x maximum army size per attack</div>\
 				</div>';
 		} else if (government === "Monarchy"){
-			str = '<div id="lobbyGovName" class="text-primary">Monarchy</div>\
+			str = '<div id="lobbyGovName" class="text-primary">\
+				<img src="images/icons/Monarchy.png" class="fw-icon-sm">Monarchy</div>\
 				<div id="lobbyGovPerks">\
 					<div>+2 defense</div>\
 					<div>+1 culture from 3 food</div>\
 					<div>50% starting culture bonus</div>\
-					<div>1/2 cost structures</div>\
+					<div>+2 cannon damage</div>\
 				</div>';
 		} else if (government === "Democracy"){
-			str = '<div id="lobbyGovName" class="text-primary">Democracy</div>\
+			str = '<div id="lobbyGovName" class="text-primary">\
+				<img src="images/icons/Democracy.png" class="fw-icon-sm">Democracy</div>\
 				<div id="lobbyGovPerks">\
 					<div>4x maximum troop deployment</div>\
 					<div>50% starting production bonus</div>\
@@ -58,7 +61,8 @@ var lobby = {
 					<div>+3 troops when you lose a tile</div>\
 				</div>';
 		} else if (government === "Fundamentalism"){
-			str = '<div id="lobbyGovName" class="text-primary">Fundamentalism</div>\
+			str = '<div id="lobbyGovName" class="text-primary">\
+				<img src="images/icons/Fundamentalism.png" class="fw-icon-sm">Fundamentalism</div>\
 				<div id="lobbyGovPerks">\
 					<div>Overrun: Instant win with 4x advantage</div>\
 					<div>Infiltration: -1 structure defense</div>\
@@ -66,7 +70,8 @@ var lobby = {
 					<div>+2 troop reward bonus</div>\
 				</div>';
 		} else if (government === "Fascism"){
-			str = '<div id="lobbyGovName" class="text-primary">Fascism</div>\
+			str = '<div id="lobbyGovName" class="text-primary">\
+				<img src="images/icons/Fascism.png" class="fw-icon-sm">Fascism</div>\
 				<div id="lobbyGovPerks">\
 					<div>+1 attack</div>\
 					<div>+4 attack vs barbarians</div>\
@@ -74,15 +79,17 @@ var lobby = {
 					<div>2x production rewards from barbarians</div>\
 				</div>';
 		} else if (government === "Republic"){
-			str = '<div id="lobbyGovName" class="text-primary">Republic</div>\
+			str = '<div id="lobbyGovName" class="text-primary">\
+				<img src="images/icons/Republic.png" class="fw-icon-sm">Republic</div>\
 				<div id="lobbyGovPerks">\
 					<div>+1 energy</div>\
-					<div>Combat medics: Recover 1/2 of lost troops after victory</div>\
+					<div>Combat medics heal 50% troops when you conquer a tile</div>\
 					<div>Start with masonry</div>\
 					<div>+50% plunder reward bonus from barbarians</div>\
 				</div>';
 		} else if (government === "Communism"){
-			str = '<div id="lobbyGovName" class="text-primary">Communism</div>\
+			str = '<div id="lobbyGovName" class="text-primary">\
+				<img src="images/icons/Communism.png" class="fw-icon-sm">Communism</div>\
 				<div id="lobbyGovPerks">\
 					<div>Start with a great person</div>\
 					<div>3/4 cost weapons</div>\
@@ -90,7 +97,8 @@ var lobby = {
 					<div>2x discovered reward bonus from barbarians</div>\
 				</div>';
 		}
-		document.getElementById('lobbyGovernment' + my.player).innerHTML = government;
+		document.getElementById('lobbyGovernment' + my.player).innerHTML = government === 'Random' ?
+			government : '<img src="images/icons/'+ government +'.png" class="fw-icon-sm">' + government;
 		document.getElementById('lobbyGovernmentDescription').innerHTML = government === 'Random' ?
 			'<div id="lobbyGovName" class="text-primary">Random</div>\
 				<div id="lobbyGovPerks">\
@@ -273,20 +281,20 @@ var lobby = {
 					str += '</div>\
 					</div>';
 			}
+			str += '</div>';
 			if (my.player === 1 && !g.rankedMode){
-				str += 
+				str +=
 				'<div id="lobby-cpu-row" class="row buffer2">\
 					<div class="col-xs-12">\
 						<button id="cpu-remove-player" type="button" class="btn fwBlue btn-responsive shadow4 pull-right cpu-button">\
-							Remove CPU\
+							<img src="images/icons/computer.png" class="fw-icon-sm"> Remove CPU\
 						</button>\
 						<button id="cpu-add-player" type="button" class="btn fwBlue btn-responsive shadow4 pull-right cpu-button">\
-							Add CPU\
+							<img src="images/icons/computer.png" class="fw-icon-sm"> Add CPU\
 						</button>\
 					</div>\
 				</div>';
 			}
-			str += '</div>';
 			document.getElementById("lobbyPlayers").innerHTML = str;
 			lobby.updateGovernmentWindow(my.government);
 		}
@@ -296,7 +304,8 @@ var lobby = {
 		var str = 
 		'<div id="gov-dropdown-cpu'+ player +'" class="dropdown govDropdown none">\
 			<button class="btn btn-primary btn-responsive dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">\
-				<span id="lobby-difficulty-cpu'+ player +'">CPU: Very Easy</span>\
+				<img src="images/icons/computer.png" class="fw-icon-sm">\
+				<span id="lobby-difficulty-cpu'+ player +'">Very Easy</span>\
 				<i id="lobby-caret-cpu'+ player +'" class="fa fa-caret-down text-warning lobbyCaret"></i>\
 			</button>\
 			<ul class="governmentDropdown dropdown-menu no-select">';
@@ -333,12 +342,12 @@ var lobby = {
 			x: '-100%',
 			ease: Quad.easeIn,
 			onComplete: function(){
-				TweenMax.to(['#titleMain', '#logoWrap', '#firmamentWarsLogoWrap'], ui.delay(.5), {
+				TweenMax.to(['#titleMain', '#logoWrap', '#firmamentWarsLogoWrap'], .5, {
 					alpha: 0,
 					onComplete: function(){
 						$("#titleMain, #title-bg-wrap").remove();
 						g.unlock(1);
-						TweenMax.fromTo('#joinGameLobby', ui.delay(d), {
+						TweenMax.fromTo('#joinGameLobby', d, {
 							autoAlpha: 0
 						}, {
 							autoAlpha: 1
@@ -469,8 +478,8 @@ var lobby = {
 			lobby.updateGovernment(data);
 			lobby.data[i] = data;
 			lobby.updatePlayerColor(data);
-			document.getElementById('lobbyGovernment'+ i).innerHTML = 
-				data.cpu ? ('CPU: '+ data.difficulty) : 'Despotism';
+			document.getElementById('lobbyGovernment'+ i).innerHTML = data.cpu ?
+				('<img src="images/icons/computer.png" class="fw-icon-sm">'+ data.difficulty) : '<img src="images/icons/Despotism.png" class="fw-icon-sm">Despotism';
 			
 			$("#lobbyCaret"+ i)
 				.removeClass("text-warning text-disabled")
@@ -484,7 +493,7 @@ var lobby = {
 			// remove
 			//console.info("REMOVE PLAYER: ", data);
 			document.getElementById("lobbyRow" + i).style.display = 'none';
-			document.getElementById('lobby-difficulty-cpu' + i).innerHTML = 'CPU: Very Easy';
+			document.getElementById('lobby-difficulty-cpu' + i).innerHTML = 'Very Easy';
 			lobby.data[i] = { account: '', cpu: 0 };
 		}
 		lobby.styleStartGame();
@@ -517,12 +526,13 @@ var lobby = {
 	updateGovernment: function(data){
 		// update button & window
 		var i = data.player;
-		document.getElementById('lobbyGovernment' + i).innerHTML = data.government;
+		document.getElementById('lobbyGovernment' + i).innerHTML = data.government === 'Random' ?
+			data.government : '<img src="images/icons/'+ data.government +'.png" class="fw-icon-sm">' + data.government;
 		lobby.data[i].government = data.government;
 	},
 	updateDifficulty: function(data){
 		var i = data.player;
-		document.getElementById('lobby-difficulty-cpu' + i).innerHTML = 'CPU: '+ data.difficulty;
+		document.getElementById('lobby-difficulty-cpu' + i).innerHTML = data.difficulty;
 		lobby.data[i].difficulty = data.difficulty;
 	},
 	styleStartGame: function(){
@@ -664,7 +674,7 @@ function setMoves(d){
 }
 function setProduction(d){
 	if (d.production !== undefined){
-		TweenMax.to(my, ui.delay(.3), {
+		TweenMax.to(my, .3, {
 			production: d.production,
 			ease: Quad.easeIn,
 			onUpdate: function(){
@@ -677,7 +687,7 @@ function setResources(d){
 	//console.info(d);
 	setMoves(d);
 	setProduction(d);
-	TweenMax.to(my, ui.delay(.3), {
+	TweenMax.to(my, .3, {
 		food: d.food === undefined ? my.food : d.food,
 		culture: d.culture === undefined ? my.culture : d.culture,
 		ease: Quad.easeIn,
@@ -696,7 +706,7 @@ function setResources(d){
 				yoyo: true
 				
 			});
-			TweenMax.to(my, ui.delay(.5), {
+			TweenMax.to(my, .5, {
 				manpower: d.manpower,
 				onUpdate: function(){
 					DOM.manpower.textContent = ~~my.manpower;
@@ -775,10 +785,10 @@ function setResources(d){
 }
 function setBars(d){
 	// animate bars
-	TweenMax.to(DOM.foodBar, ui.delay(.3), {
+	TweenMax.to(DOM.foodBar, .3, {
 		width: ((d.food / d.foodMax) * 100) + '%'
 	});
-	TweenMax.to(DOM.cultureBar, ui.delay(.3), {
+	TweenMax.to(DOM.cultureBar, .3, {
 		width: ((d.culture / d.cultureMax) * 100) + '%'
 	});
 }
@@ -873,11 +883,11 @@ function loadGameState(){
 			my.cultureMax = data.cultureMax;
 			my.moves = data.moves;
 			my.government = data.government;
-			my.buildCost = data.buildCost;
+			my.cannonBonus = data.cannonBonus;
 			lobby.updateGovernmentWindow(my.government);
 			// global government bonuses
 			if (my.government === 'Monarchy'){
-				my.buildCost = .5;
+				my.cannonsBonus = 2;
 			} else if (my.government === 'Democracy'){
 				my.maxDeployment = 48;
 			} else if (my.government === 'Republic'){

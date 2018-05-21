@@ -309,12 +309,12 @@ var title = {
 			tiles: 83,
 			players: 8
 		},
-		*/
+		*//*
 		FlatEarth: {
 			name: 'Flat Earth',
 			tiles: 78,
 			players: 8
-		},
+		},*/
 		France: {
 			name: 'France',
 			tiles: 81,
@@ -840,7 +840,7 @@ var title = {
 		$("#title-chat-input").focus();
 	},
 	showBackdrop: function(e){
-		TweenMax.to('#titleViewBackdrop', ui.delay(.3), {
+		TweenMax.to('#titleViewBackdrop', .3, {
 			startAt: {
 				visibility: 'visible',
 				alpha: 0
