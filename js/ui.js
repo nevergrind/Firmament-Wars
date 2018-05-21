@@ -285,8 +285,11 @@ var ui = {
 		DOM.currentYear.textContent = ui.transformYear(tick);
 	},
 	setTileUnits: function(i){
-		DOM['unit' + i].textContent = game.tiles[i].units === 0
-			? "" : ~~game.tiles[i].units;
+		var unitVal = game.tiles[i].capital ?
+			'<tspan class="unit-star">\t&#10028;</tspan>' + ~~game.tiles[i].units :
+			~~game.tiles[i].units;
+		DOM['unit' + i].innerHTML = game.tiles[i].units === 0
+			? "" : unitVal;
 		TweenMax.to(DOM['unit' + i], .5, {
 			startAt: {
 				visibility: 'visible',

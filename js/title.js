@@ -328,7 +328,7 @@ var title = {
 		Japan: {
 			name: "Japan",
 			tiles: 47,
-			players: 4
+			players: 3
 		},
 		Turkey: {
 			name: "Turkey",
@@ -343,7 +343,7 @@ var title = {
 		UnitedStates: {
 			name: 'United States',
 			tiles: 48,
-			players: 3
+			players: 2
 		}
 	},
 	chatDrag: false,

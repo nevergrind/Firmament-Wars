@@ -7,7 +7,7 @@ var ai = {
 		if (!g.teamMode){
 			if (o.defender === 0){
 				// barb/empty
-				score += 10;
+				score += 50;
 			} else if (o.attacker !== o.defender){
 				// another player
 				score += 25;
@@ -18,25 +18,26 @@ var ai = {
 		}
 		else {
 			//
-			if (!o.defenderUnits) {
-				// empty
-				score += 50;
-			}
-			else if (o.defender === 0){
-				// barb
-				score += 10;
-			}
-			else if (game.player[o.attacker].team !== game.player[o.defender].team){
-				// enemy
-				score += 25;
-			}
-			else if (o.attacker === o.defender){
-				// mine
-				score -= 5;
+			if (game.player[o.attacker].team === game.player[o.defender].team) {
+				score -= 25;
 			}
 			else {
-				// ally
-				score -= 25;
+				if (!o.defenderUnits) {
+					// empty
+					score += 50;
+				}
+				else if (o.defender === 0){
+					// barb
+					score += 10;
+				}
+				else if (game.player[o.attacker].team !== game.player[o.defender].team){
+					// enemy
+					score += 25;
+				}
+				else if (o.attacker === o.defender){
+					// mine
+					score -= 5;
+				}
 			}
 		}
 		// defense
@@ -99,20 +100,22 @@ var ai = {
 				// mine
 				score -= 10;
 			}
-		} else {
-			// 
-			if (o.defender === 0){
-				// barb/empty
-				score -= 10;
-			} else if (game.player[o.attacker].team !== game.player[o.defender].team){
-				// enemy
-				score += 30;
-			} else if (o.attacker === o.defender){
-				// mine
-				score -= 5;
-			} else {
-				// ally
+		}
+		else {
+			if (game.player[o.attacker].team === game.player[o.defender].team) {
 				score -= 25;
+			}
+			else {
+				if (o.defender === 0){
+					// barb/empty
+					score -= 10;
+				} else if (game.player[o.attacker].team !== game.player[o.defender].team){
+					// enemy
+					score += 30;
+				} else if (o.attacker === o.defender){
+					// mine
+					score -= 5;
+				}
 			}
 		}
 		// defense
@@ -163,19 +166,25 @@ var ai = {
 		game.tiles.forEach(function(tile, index){
 			if (tile.player !== player){
 				var score = 50;
-				score += tile.units;
-				score += tile.defense * 20;
-				if (tile.capital){
-					score += 5;
+				if (g.teamMode && game.player[tile.player].team === game.player[player].team) {
+					score -= 25;
 				}
-				if (!tile.player){
-					score = 0;
+				else {
+					score += tile.units;
+					score += tile.defense * 20;
+					if (tile.capital){
+						score += 5;
+					}
+					if (!tile.player){
+						score = 0;
+					}
 				}
 				if (score > maxScore){
 					maxScore = score;
 					defTile = index;
 				}
-			} else {
+			}
+			else {
 				atkTile = index;
 			}
 		});
@@ -196,17 +205,6 @@ var ai = {
 				}
 			});
 		}
-	},
-	getRandomTile: function(player){
-		var a = [],
-			i = 0;
-		game.tiles.forEach(function(d, index){
-			if (d.player === player && d.units < 255){
-				a[i++] = index;
-			}
-		});
-		var randVal = ~~(Math.random() * i);
-		return a[randVal];
 	},
 	scoreTargetDeploy: function(o){
 		var score = 50;
@@ -232,6 +230,7 @@ var ai = {
 	},
 	getDeployTarget: function(cpuPlayer){
 		var tile = -1,
+			cpuTeam = g.team ? game.player[cpuPlayer].team : 0,
 			maxScore = 0;
 		
 		game.tiles.forEach(function(d, index){
@@ -252,7 +251,8 @@ var ai = {
 				d.adj.forEach(function(defender){
 					adjTiles++;
 					var z = game.tiles[defender];
-					z.sameTeam = cpuPlayer === z.player;
+					z.sameTeam = g.teamMode ?
+						cpuTeam === game.player[z.player].team : cpuPlayer === z.player;
 					z.unitDiff = cpuUnits - z.units;
 					z.cpuUnits = cpuUnits;
 					z.tileDefense = tileDefense;

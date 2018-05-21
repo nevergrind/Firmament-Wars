@@ -56,7 +56,7 @@ var lobby = {
 				<img src="images/icons/Democracy.png" class="fw-icon-sm">Democracy</div>\
 				<div id="lobbyGovPerks">\
 					<div>4x maximum troop deployment</div>\
-					<div>50% starting production bonus</div>\
+					<div>50% starting science bonus</div>\
 					<div>Reduced culture milestone requirement</div>\
 					<div>+3 troops when you lose a tile</div>\
 				</div>';
@@ -76,7 +76,7 @@ var lobby = {
 					<div>+1 attack</div>\
 					<div>+4 attack vs barbarians</div>\
 					<div>Bonus troop with each deployment</div>\
-					<div>2x production rewards from barbarians</div>\
+					<div>2x science rewards from barbarians</div>\
 				</div>';
 		} else if (government === "Republic"){
 			str = '<div id="lobbyGovName" class="text-primary">\
@@ -961,7 +961,10 @@ function loadGameState(){
 				// init flag unit values
 				var zig = document.getElementById('unit' + i);
 				if (zig !== null){
-					zig.textContent = d.units === 0 ? 0 : d.units; 
+					var unitVal = game.tiles[i].capital ?
+						'<tspan class="unit-star">&#10028;</tspan>' + game.tiles[i].units :
+						game.tiles[i].units;
+					zig.innerHTML = d.units === 0 ? 0 : unitVal;
 					if (d.units){
 						zig.style.visibility = 'visible';
 					}
@@ -1016,16 +1019,12 @@ function loadGameState(){
 						var svg = document.createElementNS('http://www.w3.org/2000/svg', 'path');
 						svg.id = 'mapCapital' + i;
 						svg.setAttributeNS(null,'class','mapStar');
-						svg.setAttributeNS(null,'d','m '+ x +','+ y +' 5.79905,17.10796 18.05696,0.50749 -14.47863,10.80187 5.09725,17.33001 -14.74733,-10.43203 -14.90668,10.20304 5.36427,-17.24922 -14.31008,-11.02418 18.06264,-0.22858 z');
-						mapCapitals.appendChild(svg);
-						if (!isMobile){
-							TweenMax.to(svg, 60, {
-								transformOrigin: '50% 50%',
-								rotation: 360,
-								repeat: -1,
-								ease: Linear.easeNone
-							});
-						}
+						svg.setAttributeNS(null,'d','m '+ (x + 20) +','+ y +' 5.79905,17.10796 18.05696,0.50749 -14.47863,10.80187 5.09725,17.33001 -14.74733,-10.43203 -14.90668,10.20304 5.36427,-17.24922 -14.31008,-11.02418 18.06264,-0.22858 z');
+						// mapCapitals.appendChild(svg);
+						/*TweenMax.set(svg, {
+							scale: 1.8,
+							transformOrigin: '50% 50%',
+						});*/
 					}
 				} else {
 					console.warn("COULD NOT FIND: ", i);

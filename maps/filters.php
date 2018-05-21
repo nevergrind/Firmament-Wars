@@ -38,8 +38,8 @@
 			result="result1" 
 			lighting-color="#fff" 
 			surfaceScale="5" 
-			specularConstant=".15" 
-			specularExponent="50">  
+			specularConstant=".3" 
+			specularExponent="33">  
 			  <feDistantLight azimuth="235" elevation="70"/>  
 		 </feSpecularLighting>  
 		 <feComposite 

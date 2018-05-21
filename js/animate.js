@@ -924,6 +924,7 @@ var animate = {
 	},
 	selectTile: function(oldTgt, newTgt){
 		TweenLite.set(DOM['land' + oldTgt], {
+			filter: '',
 			fill: g.color[game.player[game.tiles[oldTgt].player].playerColor],
 			stroke: game.tiles[oldTgt].player ? g.color[game.player[game.tiles[oldTgt].player].playerColor] : '#aaa',
 			strokeDasharray: 'none',
@@ -960,6 +961,7 @@ var animate = {
 		});
 		TweenMax.to(DOM['land' + newTgt], .4, {
 			startAt: {
+				filter: 'url(#emboss)',
 				strokeDasharray: '5,5',
 				strokeWidth: 3,
 				strokeDashoffset: 0

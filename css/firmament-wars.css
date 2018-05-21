@@ -1760,6 +1760,7 @@ text {
     paint-order: stroke
 }
 .unit {
+	position: relative;
     visibility: hidden;
 	opacity: 1;
     margin-left: 1rem;
@@ -1769,6 +1770,9 @@ text {
     pointer-events: none;
     text-anchor: middle;
     alignment-baseline: center
+}
+.unit-star {
+	fill: #fd0;
 }
 .mapBars {
     stroke-dasharray: 4, 1;
@@ -1878,8 +1882,8 @@ circle {
     position: relative;
     margin: 0 auto
 }
-.w33 {
-    width: 33%
+.w40 {
+    width: 40%
 }
 .w66 {
     width: 66%
@@ -2171,6 +2175,7 @@ circle {
 .mapStar {
     fill: #ffc500;
     stroke: #000;
+	transform: transformOrigin(50%, 50%), scale(2, 2);
     stroke-width: 2
 }
 span.unlockGameBtn {
