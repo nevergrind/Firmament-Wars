@@ -621,9 +621,10 @@ var lobby = {
 };
 
 function initOffensiveTooltips(){
-	if (!isMobile && isLoggedIn){
+	if (isLoggedIn){
+		var cannonBonus = my.government === 'Monarchy' ? 2 : 0;
 		$('#fireCannons')
-			.attr('title', 'Fire cannons at an adjacent tile. Kills ' + (2 + my.oBonus) +'-'+ (4 + my.oBonus) +' troops. Boosted by Great Generals.')
+			.attr('title', 'Fire cannons at an adjacent tile. Kills ' + (2 + my.oBonus + cannonBonus) +'-'+ (4 + my.oBonus + cannonBonus) +' troops. Boosted by Great Generals.')
 			.tooltip('fixTitle')
 			.tooltip({ animation: false });
 		$('#launchMissile')

@@ -1139,7 +1139,7 @@ var my = {
 			if (my.tgt < 0){
 				my.tgt = len-1;
 			}
-			while (count < 255 && my.player !== game.tiles[my.tgt % len].player){
+			while (count < 65535 && my.player !== game.tiles[my.tgt % len].player){
 				backwards ? my.tgt-- : my.tgt++;
 				if (my.tgt < 0){
 					my.tgt = len-1;

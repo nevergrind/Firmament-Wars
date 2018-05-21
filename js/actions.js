@@ -60,7 +60,7 @@ var action = {
 		}
 		// can't move to maxed friendly tile
 		if (game.tiles[defender].player === my.player){
-			if (game.tiles[defender].units >= 255){
+			if (game.tiles[defender].units >= 65535){
 				g.msg("That territory has the maximum number of units!", 1.5);
 				my.clearHud();
 				return;
@@ -197,7 +197,7 @@ var action = {
 			action.error("No troops available for deployment!");
 			return;
 		}
-		if (t.units <= 254){
+		if (t.units < 65535){
 			// do it
 			var tgt = my.tgt,
 				filter = {
@@ -239,7 +239,7 @@ var action = {
 			action.error('Not enough energy!');
 			return;
 		}
-		if (t.units <= 254){
+		if (t.units < 65535){
 			var filter = {
 				brightness: 200
 			};

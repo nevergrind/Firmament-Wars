@@ -241,9 +241,9 @@ var ai = {
 				adjTiles = 0,
 				tileDefense = d.defense + (d.capital ? 1 : 0);
 			//console.info(index, d.player === cpuPlayer, d.units, d.flag);
-			if (d.player === cpuPlayer && d.units < 255 && d.flag){
+			if (d.player === cpuPlayer && d.units < 65535 && d.flag){
 				// cpu's tile
-				// less than 255
+				// less than 65535
 				// not a barb or empty
 				// original tile
 				if (d.capital && cpuUnits < 24) {
@@ -275,9 +275,9 @@ var ai = {
 		game.tiles.forEach(function(d, index){
 			var score = 0;
 			//console.info(index, d.player === cpuPlayer, d.units, d.flag);
-			if (d.player === player && d.units < 255 && d.flag){
+			if (d.player === player && d.units < 65535 && d.flag){
 				// cpu's tile
-				// less than 255
+				// less than 65535
 				// not a barb or empty
 				score += d.units;
 				score += ( (3 - d.defense) * 10);
