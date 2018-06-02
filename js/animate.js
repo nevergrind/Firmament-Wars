@@ -271,14 +271,14 @@ var animate = {
 			}
 		}
 	},
-	gunfire: function(atkTile, defTile, playSound){
+	gunfire: function(atkTile, defTile, volume){
 		var box1 = DOM['unit' + atkTile].getBBox(),
 			box2 = DOM['unit' + defTile].getBBox();
 		var sfx = ~~(Math.random()*9);
 		var delay = [.6, .6, .43, .43, .43, .43, .9, .43, .76, .43];
-		if (playSound){
+		if (volume){
 			//console.info(delay, sfx)
-			audio.play('machine' + sfx, null, .7);
+			audio.play('machine' + sfx, null, volume);
 			game.tiles[atkTile].player === my.player && animate.rifle();
 		}
 		var shots = 30,
@@ -289,8 +289,8 @@ var animate = {
 		for (var i=0; i<shots; i++){
 			(function(){
 				var path = document.createElementNS("http://www.w3.org/2000/svg","path"),
-					x2 = box2.x + (Math.random() * w1) - w2,
-					y2 = box2.y + (Math.random() * h1) - h2,
+					x2 = box2.x + (Math.random() * w1),
+					y2 = box2.y + (Math.random() * h1),
 					x1 = box1.x + ~~(Math.random()*16)-8,
 					y1 = box1.y + ~~(Math.random()*16)-8,
 					drawPath = Math.random() > .5 ?

@@ -40,7 +40,7 @@ var lobby = {
 					<div>Free movement through own tiles</div>\
 					<div>Start with gunpowder</div>\
 					<div>Start with a bunker</div>\
-					<div>2x maximum army size per attack</div>\
+					<div>2x maximum army attack size</div>\
 				</div>';
 		} else if (government === "Monarchy"){
 			str = '<div id="lobbyGovName" class="text-primary">\
@@ -83,7 +83,7 @@ var lobby = {
 				<img src="images/icons/Republic.png" class="fw-icon-sm">Republic</div>\
 				<div id="lobbyGovPerks">\
 					<div>+1 energy</div>\
-					<div>Combat medics heal 50% troops when you conquer a tile</div>\
+					<div>Combat medics heal 50% troops upon victory</div>\
 					<div>Start with masonry</div>\
 					<div>+50% plunder reward bonus from barbarians</div>\
 				</div>';

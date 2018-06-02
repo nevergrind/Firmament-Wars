@@ -380,13 +380,6 @@ var events = {
 			}
 		});
 		*/
-		$("#overlay").on(ui.click, function(){
-			g.searchingGame = false;
-			TweenMax.set(DOM.Msg, {
-				opacity: 0
-			});
-			g.unlock();
-		});
 		$("#joinRankedGame").on(ui.click, function(){
 			audio.play('click');
 			g.lock(1);
@@ -598,10 +591,6 @@ $(document).on('keydown', function(e){
 			return false;
 		}
 	} else {
-		// F12
-		if (x === 123 && app.isApp && my.account.indexOf('maelfyn') === -1) {
-			return false;
-		}
 
 		if (g.view === 'title'){
 			if (!g.isModalOpen && isLoggedIn){

@@ -1084,22 +1084,6 @@ tbody {
     font-family: Cinzel, Palatino Linotype, serif;
     text-align: center
 }
-.ribbon {
-    display: inline-block;
-    background-image: url(../images/ribbons/ribbonMap2.jpg);
-    background-size: 135px 36px;
-    height: 6px;
-    width: 23px;
-    background-position: 0 0;
-    margin: 0;
-    padding: 0
-}
-.narrowRack {
-    width: 69px
-}
-.wideRack {
-    width: 92px
-}
 #worldWater {
 	position: absolute;
 	top: 0;
@@ -2206,41 +2190,23 @@ span.unlockGameBtn {
 	flex-basis: 66%;
 }
 .who-wrap-right {
+	display: flex;
+	flex-direction: column;
 	flex-basis: 34%;
+	justify-content: flex-start;
+}
+.ribbon-wrap {
 	display: flex;
 	justify-content: center;
+	flex-wrap: wrap-reverse;
+	align-content: flex-start;
 }
-.who-avatar-wrap {
-    position: relative;
-    margin-left: .25vw
-}
-.who-avatar-img {
-	display: none;
-    position: relative;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
-    width: 100%;
-    max-width: 150px
-}
-.who-ribbon-wrap {
-    position: relative
-}
-.who-ribbon-chat {
-    position: relative;
-    margin: 0 auto;
-    margin-top: .5vh;
-    text-align: center;
-    font-size: 0
-}
-#configureAvatarImage {
-    width: 15rem;
-    height: 15rem
-}
-#dictatorAvatar {
-	display: inline;
-	font-size: 1.5rem;
-	width: 24rem;
+.ribbon {
+	flex-basis: 33%;
+	align-self: flex-start;
+	width: 1%;
+	height: auto;
+	padding: 1px;
 }
 #configure-nation-avatar-col-1 {
 	flex-basis: 60%;

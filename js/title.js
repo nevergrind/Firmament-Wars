@@ -512,8 +512,9 @@ var title = {
 				game.updateDefense(data);
 			} else if (data.type === 'gunfire'){
 				// defender tile update
-				animate.gunfire(data.attackerTile, data.tile, data.player === my.player || data.playerB === my.player); 
-				animate.cannons(data.attackerTile, data.tile, false, 0, .175, 10);  
+				var volume = data.player === my.player || data.playerB === my.player ?
+					.7 : .2;
+				animate.gunfire(data.attackerTile, data.tile, volume);
 				game.updateTile(data);
 				if (data.rewardUnits){
 					animate.upgrade(data.tile, 'troops', data.rewardUnits);
@@ -612,12 +613,16 @@ var title = {
 			function getRibbonStr(){
 				var str = '';
 				if (data.ribbons !== undefined){
-					var len = data.ribbons.length;
+					data.ribbons.reverse();
+					var i = 0,
+						len = data.ribbons.length,
+						z;
+
 					if (len){
-						str += '<div class="who-ribbon-chat '+ (len >= 24 ? 'wideRack' : 'narrowRack') +'">';
-						for (var i=0, len=data.ribbons.length; i<len; i++){
-							var z = data.ribbons[i];
-							str += '<div class="pointer ribbon ribbon'+ z +'" data-ribbon="'+ z +'"></div>';
+						str += '<div class="ribbon-wrap">';
+						for (; i<len; i++){
+							z = data.ribbons[i];
+							str += '<img class="pointer ribbon" data-ribbon="'+ z +'" src="images/ribbons/ribbon'+ z +'.jpg">';
 						}
 						str += '</div>';
 					}
@@ -637,13 +642,7 @@ var title = {
 				'</div>'+
 				'<div class="who-wrap-right">';
 				// right col
-				str += 
-					'<div class="who-avatar-wrap">'+
-						// data.img +
-						'<div class="who-ribbon-wrap">'+
-							getRibbonStr()+
-						'</div>'+
-					'</div>'+
+				str += getRibbonStr() +
 				'</div>'+
 			'</div>';
 			g.chat(str);

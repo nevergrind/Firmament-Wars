@@ -521,7 +521,7 @@ g.init = (function(){
 			});
 		}
 		else {
-			g.msg("Unable to detect Steam. Run Steam prior to launching!");
+			g.msg("Unable to detect Steam. Please launch Steam and try again!", 999);
 		}
 	}
 	else {
@@ -595,7 +595,7 @@ var game = {
 		'Strategic Warfare Award',
 		'Combat Service Award', //15
 		'Combat Gallantry Award',
-		'Stalwart Campaign Medal', /* campaign */
+		"Stalwart Conqueror's Medal",
 		"Dictator's Sword",
 		"King's Regalia",
 		"Archon's Scales",//20
@@ -633,7 +633,7 @@ var game = {
 		'Win a game with a 2-to-1 kill ratio',
 		'Won 10 games in a row', // 15
 		'Won 25 games in a row',
-		'Completed all scenarios',// 17 /* replace */
+		'Conquered a tile with a fortress',// 17
 		"Won a game under Despotism",
 		'Won a game as a Monarchy',
 		'Won a game as a Democracy',//20
