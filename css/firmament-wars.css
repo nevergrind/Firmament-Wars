@@ -2208,6 +2208,9 @@ span.unlockGameBtn {
 	height: auto;
 	padding: 1px;
 }
+.ribbon:hover {
+	outline: 1px solid #8ff;
+}
 #configure-nation-avatar-col-1 {
 	flex-basis: 60%;
 }

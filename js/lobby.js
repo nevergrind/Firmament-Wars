@@ -47,7 +47,7 @@ var lobby = {
 				<img src="images/icons/Monarchy.png" class="fw-icon-sm">Monarchy</div>\
 				<div id="lobbyGovPerks">\
 					<div>+2 defense</div>\
-					<div>+1 culture from 3 food</div>\
+					<div>+1 culture from 2 food</div>\
 					<div>50% starting culture bonus</div>\
 					<div>+2 cannon damage</div>\
 				</div>';
@@ -92,7 +92,7 @@ var lobby = {
 				<img src="images/icons/Communism.png" class="fw-icon-sm">Communism</div>\
 				<div id="lobbyGovPerks">\
 					<div>Start with a great person</div>\
-					<div>3/4 cost weapons</div>\
+					<div>+1 science from 4 food</div>\
 					<div>Can deploy troops to uninhabited territory</div>\
 					<div>2x discovered reward bonus from barbarians</div>\
 				</div>';
@@ -445,9 +445,7 @@ var lobby = {
 			// different player account
 			document.getElementById("lobbyAccountName" + i).innerHTML = data.cpu ? 'Computer' : data.account;
 			document.getElementById("lobbyName" + i).innerHTML = data.nation;
-			var flag = data.flag === 'Default.jpg' ? 
-				'Player'+ i +'.jpg' : 
-				data.flag;
+			var flag = data.flag;
 			document.getElementById("lobbyFlag" + i).src = 'images/flags/'+ flag;
 			
 			if (!isLoggedIn){
@@ -518,14 +516,12 @@ var lobby = {
 			.addClass(str)
 			.data('playerColor', data.playerColor);
 		lobby.data[i].playerColor = data.playerColor;
-		if (data.flag === 'Default.jpg'){
-			document.getElementById('lobbyFlag' + i).src = 'images/flags/Player' + data.playerColor + '.jpg';
-		}
 	},
 	// update player's government only
 	updateGovernment: function(data){
 		// update button & window
 		var i = data.player;
+		console.info('government', data.government);
 		document.getElementById('lobbyGovernment' + i).innerHTML = data.government === 'Random' ?
 			data.government : '<img src="images/icons/'+ data.government +'.png" class="fw-icon-sm">' + data.government;
 		lobby.data[i].government = data.government;
@@ -905,7 +901,6 @@ function loadGameState(){
 				DOM.cannonsCost.textContent = 18;
 				DOM.missileCost.textContent = 38;
 				DOM.nukeCost.textContent = 113;
-				my.weaponCost = .75;
 			}
 			// initialize player data
 			game.initialized = true;

@@ -312,7 +312,7 @@ var action = {
 		}
 		my.attackOn = false;
 		my.attackName = '';
-		if (my.production < Math.ceil(24 * my.weaponCost)){
+		if (my.production < 24){
 			action.error();
 			return;
 		}
@@ -355,7 +355,7 @@ var action = {
 		}
 		my.attackOn = false;
 		my.attackName = '';
-		if (my.production < Math.ceil(50 * my.weaponCost)){
+		if (my.production < 50){
 			action.error();
 			return;
 		}
@@ -417,7 +417,7 @@ var action = {
 		}
 		my.attackOn = false;
 		my.attackName = '';
-		if (my.production < Math.ceil(150 * my.weaponCost)){
+		if (my.production < 150){
 			action.error();
 			return;
 		}

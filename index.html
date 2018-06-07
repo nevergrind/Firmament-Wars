@@ -16,7 +16,7 @@
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
 	<script>
 		var app = {
-			version: '1.0.7',
+			version: '0.1.0',
 			initialized: 0, // init-game returned
 			isApp: location.protocol === 'chrome-extension:' ? 1 : 0,
 			account: ''
@@ -1038,17 +1038,19 @@
 	var login = {
 		lock: 0,
 		init: function() {
+			function getLoginHtml() {
+				$('#login-form-contents').html(login.getLoginHtml());
+				$("#loginWrap").attr('onSubmit', 'return loginAuthenticate(this)');
+			}
 			if (app.isLocal) {
 				setTimeout(function(){
-					$('#login-form-contents').html(login.getLoginHtml());
-					$("#loginWrap").attr('onSubmit', 'return loginAuthenticate(this)');
+					getLoginHtml();
 				});
 				$("#gotoAccount").on('click', function(){
-					$('#login-form-contents').html(login.getLoginHtml());
-					$("#loginWrap").attr('onSubmit', 'return loginAuthenticate(this)');
+					getLoginHtml();
 				});
 				$("#createAccount").on('click', function(){
-					$('#login-form-contents').html(login.getLoginHtml());
+					$('#login-form-contents').html(login.getCreateHtml());
 					$("#loginWrap").attr('onSubmit', 'return login.createAccount(this)');
 				});
 			}
@@ -1145,10 +1147,13 @@
 				return false;
 			}
 			var tempAcc = acc.replace('_', '');
+			/*tempAcc = acc.replace(' ', '');
+			tempAcc = acc.replace('(', '');
+			tempAcc = acc.replace(')', '');
 			if (tempAcc.match(/[a-z0-9]/gi, '').length < tempAcc.length) {
 				loginMsg("Your account name should only contain letters, numbers, and underscores.");
 				return false;
-			}
+			}*/
 			if (pw.length < 6) {
 				loginMsg("Your password must be at least six characters long.");
 				return false;

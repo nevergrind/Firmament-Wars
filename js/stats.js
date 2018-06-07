@@ -67,7 +67,7 @@
 
 var stats = {
 	init: function(data){
-		var flag = my.flag === 'Default.jpg' ? 'Player'+ game.player[my.player].playerColor +'.jpg' : my.flag;
+		var flag = my.flag;
 		if (isMobile){
 			var str = '<img id="statWorld" style="display: none">';
 		} else {
@@ -568,7 +568,7 @@ var stats = {
 	playerCell: function(p, i){
 		var z = game.player[i],
 			color = z.playerColor,
-			flag = p.flag === 'Default.jpg' ? 'Player'+ color +'.jpg' : p.flag;
+			flag = p.flag;
 		var str = '<td class="stat-detail-wrap">\
 			<div class="statWrapper">\
 				<img class="statFlagBG" src="images/flags/'+ flag +'">\

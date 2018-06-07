@@ -107,7 +107,7 @@ var g = {
 	startTime: Date.now(),
 	keyLock: false,
 	loadAttempts: 0,
-	upgradeCost: [40, 80, 120],
+	upgradeCost: [40, 50, 60],
 	isModalOpen: false,
 	lock: function(clear){
 		g.overlay.style.display = "block";
@@ -342,9 +342,8 @@ var g = {
 		},
 		Miscellaneous: {
 			group: "Miscellaneous",
-			name: ['Anarcho-Capitalist', 'Anarcho-Syndicalist', 'Cascadia', 'European Union', 'ISIS', 'Jefferson State', 'Jolly Roger', 'Northwest Front', 'Pan-African Flag', 'Rainbow Flag', 'Sicily', 'United Nations']
-			/*
-			name: ['Anarcho-Capitalist', 'Anarcho-Syndicalist', 'Cascadia', 'Christian', 'Edgemaster', 'European Union', 'High Energy', 'ISIS', 'Jefferson State', 'Jolly Roger', 'Kekistan', 'Northwest Front', 'Pan-African Flag', 'pol', 'Rainbow Flag', 'Sicily', 'United Nations'] */
+			/*name: ['Anarcho-Capitalist', 'Anarcho-Syndicalist', 'Cascadia', 'European Union', 'ISIS', 'Jefferson State', 'Jolly Roger', 'Northwest Front', 'Pan-African Flag', 'Rainbow Flag', 'Sicily', 'United Nations']*/
+			name: ['Anarcho-Capitalist', 'Anarcho-Syndicalist', 'Cascadia', 'Christian', 'Edgemaster', 'European Union', 'High Energy', 'ISIS', 'Jefferson State', 'Jolly Roger', 'Kekistan', 'Northwest Front', 'Pan-African Flag', 'pol', 'Rainbow Flag', 'Sicily', 'United Nations']
 		},
 		SouthAmerica: {
 			group: "South America",
@@ -500,10 +499,8 @@ g.init = (function(){
 			var z = greenworks.getSteamId();
 			steam.screenName = z.screenName;
 			steam.steamid = z.steamId;
-
-			greenworks.getAuthSessionTicket(function(data) {
+			greenworks.getAuthSessionTicket(function (data) {
 				steam.handle = data.handle;
-
 				$.ajax({
 					type: 'POST',
 					url: app.url + 'php/init-game.php',
@@ -540,6 +537,7 @@ g.init = (function(){
 			g.msg(data.responseText);
 		});
 	}
+
 	// TODO separate this confusing logic a bit
 	if ((location.hostname === 'localhost' && location.hash !== '#stop') || 
 		localStorage.getItem('resync') && 
@@ -1078,7 +1076,6 @@ var my = {
 	attackCost: 2,
 	deployCost: 1,
 	rushCost: 2,
-	weaponCost: 1,
 	maxDeployment: 12,
 	cannonBonus: 0,
 	targetData: {},

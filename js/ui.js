@@ -45,9 +45,7 @@ var ui = {
 			if (p.account && arr[i]){
 				p.flagArr = p.flag.split("."),
 				p.flagShort = p.flagArr[0],
-				p.flagSrc = p.flag === 'Default.jpg' ?
-					'Player'+ game.player[p.player].playerColor +'.jpg' :
-					p.flag;
+				p.flagSrc = p.flag;
 
 				while (strArr[arr[i]] !== undefined) {
 					arr[i]++;
