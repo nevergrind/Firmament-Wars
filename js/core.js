@@ -5,6 +5,9 @@ $.ajaxSetup({
 });
 TweenMax.defaultEase = Quad.easeOut;
 var g = {
+	cannonTimer: 0,
+	missileTimer: 0,
+	nukeTimer: 0,
 	Msg: document.getElementById('Msg'),
 	msgTimer: new TweenMax.delayedCall(0, ''),
 	msg: function(msg, d) {
@@ -886,12 +889,16 @@ var game = {
 	},
 	updateTile: function(d){
 		var i = d.tile * 1,
-			p = d.player;
+			p = d.player,
+			timestamp = d.timestamp * 1000;
+		// this update happened on the server earlier than most recent update... ignore!
+		if (timestamp < game.tiles[i].timestamp) return;
 		// only update client data
 		game.tiles[i].player = p;
 		game.tiles[i].account = game.player[p].account;
 		game.tiles[i].nation = game.player[p].nation;
 		game.tiles[i].flag = game.player[p].flag;
+		game.tiles[i].timestamp = timestamp;
 		// set flag
 		var newFlag = !game.player[p].flag ? 
 			game.tiles[i].units ? 'Player0.jpg' : 'blank.png' 

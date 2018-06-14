@@ -203,7 +203,7 @@ audio.init = (function(){
 			}
 		}
 	}).on('slideStop', function(val){
-		audio.play('machine0');
+		audio.play('machine0', null, .7);
 	}).slider('setValue', g.config.audio.soundVolume);
 	initComplete = true;
 })();

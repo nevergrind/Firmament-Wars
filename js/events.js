@@ -468,10 +468,10 @@ var events = {
 			}).fail(function(data){
 				g.msg(data.statusText, 1.5);
 			});
-		}).on(ui.click, '.teamChoice', function(e){
+		}).on(ui.click, '.teamChoice', function(){
 			var team = $(this).text().slice(5),
 				player = $(this).data('player');
-			console.info("TEAM: ", team, player);
+			console.info("TEAM: ", player, team);
 			$.ajax({
 				url: app.url + 'php/changeTeam.php',
 				data: {
@@ -479,7 +479,9 @@ var events = {
 					player: player
 				}
 			}).done(function(data) {
-				my.team = data.team;
+				if (my.player === data.player * 1) {
+					my.team = data.team;
+				}
 			});
 			
 		}).on(ui.click, '#cpu-add-player', function(e){

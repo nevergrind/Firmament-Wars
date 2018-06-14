@@ -824,6 +824,7 @@ function loadGameState(){
 			type: "GET",
 			url: app.url +"php/loadGameState.php"
 		}).done(function(data){
+			console.warn("loadGameState", data);
 			$("#login-modal").remove();
 			setTimeout(function() {
 				$("#title-bg-wrap").remove();
@@ -897,10 +898,6 @@ function loadGameState(){
 				my.deployCost = 1;
 				document.getElementById('deployCost').textContent = my.deployCost;
 			} else if (my.government === 'Communism'){
-				// weapons
-				DOM.cannonsCost.textContent = 18;
-				DOM.missileCost.textContent = 38;
-				DOM.nukeCost.textContent = 113;
 			}
 			// initialize player data
 			game.initialized = true;
@@ -936,7 +933,8 @@ function loadGameState(){
 			
 			// initialize client tile data
 			var mapCapitals = document.getElementById('mapCapitals'),
-				mapUpgrades = document.getElementById('mapUpgrades');
+				mapUpgrades = document.getElementById('mapUpgrades'),
+				now = Date.now();
 			for (var i=0, len=data.tiles.length; i<len; i++){
 				var d = data.tiles[i];
 				game.tiles[i] = {
@@ -951,7 +949,8 @@ function loadGameState(){
 					production: d.production,
 					culture: d.culture,
 					defense: d.defense,
-					adj: data.adj[i]
+					adj: data.adj[i],
+					timestamp: now
 				}
 				// init flag unit values
 				var zig = document.getElementById('unit' + i);
@@ -1071,7 +1070,7 @@ function loadGameState(){
 				
 				function triggerAction(that){
 					var id = that.id.slice(4)*1;
-					console.info('tile: ', game.tiles[id].units);
+					console.info('tile: ', id, game.tiles[id]);
 					if (my.attackOn){
 						var o = my.targetData;
 						if (o.attackName === 'attack' || o.attackName === 'splitAttack'){

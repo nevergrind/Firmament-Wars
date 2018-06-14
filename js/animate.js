@@ -277,15 +277,14 @@ var animate = {
 		var sfx = ~~(Math.random()*9);
 		var delay = [.6, .6, .43, .43, .43, .43, .9, .43, .76, .43];
 		if (volume){
-			//console.info(delay, sfx)
 			audio.play('machine' + sfx, null, volume);
 			game.tiles[atkTile].player === my.player && animate.rifle();
 		}
 		var shots = 30,
 			w1 = 50,
-			h1 = 50,
-			w2 = w1/2,
-			h2 = h1/2 - 10;
+			h1 = 50;
+			//w2 = w1/2,
+			//h2 = h1/2 - 10;
 		for (var i=0; i<shots; i++){
 			(function(){
 				var path = document.createElementNS("http://www.w3.org/2000/svg","path"),

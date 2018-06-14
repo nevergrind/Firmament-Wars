@@ -89,6 +89,7 @@ var action = {
 		if (g.teamMode && game.tiles[defender].player){
 			if (my.account !== game.tiles[defender].account){
 				if (my.team === game.player[game.tiles[defender].player].team){
+					console.warn(my.team, game.tiles[defender].player, game.player[game.tiles[defender].player].team)
 					g.msg("Friendly fire! That's your teammate!");
 				}
 			}
@@ -301,7 +302,38 @@ var action = {
 			audio.play('error');
 		});
 	},
+	timeoutWeaponButton: function(id, dur) {
+		var overlay = document.getElementById(id + 'Overlay'),
+			reload = document.getElementById(id + 'Reload');
+
+		TweenMax.set(overlay, {
+			opacity: 1
+		});
+		TweenMax.to(reload, (dur/1000), {
+			startAt: {
+				opacity: 1,
+				width: '0%'
+			},
+			width: '100%',
+			ease: Linear.easeIn,
+			onComplete: function() {
+				TweenMax.set(reload, {
+					opacity: 0
+				});
+			}
+		});
+		setTimeout(function() {
+			TweenMax.set(overlay, {
+				opacity: 0
+			});
+		}, dur);
+	},
 	fireCannons: function(that){
+		var now = Date.now(),
+			dur = 2000;
+		if (now - g.cannonTimer < dur) {
+			return;
+		}
 		var attacker = my.tgt;
 		var defender = that.id.slice(4)*1;
 		if (my.tgt === defender){
@@ -316,18 +348,11 @@ var action = {
 			action.error();
 			return;
 		}
+		action.timeoutWeaponButton('fireCannons', dur);
+		g.cannonTimer = now;
 		my.clearHud();
 		ui.showTarget(DOM['land' + attacker]);
 		// send attack to server
-		var filter = {
-				brightness: 200
-			};
-		TweenMax.to(filter, .5, {
-			brightness: 100,
-			onUpdate: function() {
-				animate.brightness('#fireCannons', filter.brightness);
-			}
-		});
 		$.ajax({
 			url: app.url + 'php/fireCannons.php',
 			data: {
@@ -345,6 +370,11 @@ var action = {
 		});
 	},
 	launchMissile: function(that){
+		var now = Date.now(),
+			dur = 5000;
+		if (now - g.missileTimer < dur) {
+			return;
+		}
 		var attacker = my.tgt;
 		var defender = that.id.slice(4)*1;
 		if (my.tgt === defender){
@@ -359,18 +389,11 @@ var action = {
 			action.error();
 			return;
 		}
+		action.timeoutWeaponButton('launchMissile', dur);
+		g.missileTimer = now;
 		my.clearHud();
 		ui.showTarget(DOM['land' + attacker]);
 		// send attack to server
-		var filter = {
-				brightness: 200
-			};
-		TweenMax.to(filter, .5, {
-			brightness: 100,
-			onUpdate: function() {
-				animate.brightness('#launchMissile', filter.brightness);
-			}
-		});
 		$.ajax({
 			url: app.url + 'php/launchMissile.php',
 			data: {
@@ -407,6 +430,11 @@ var action = {
 		
 	},
 	launchNuke: function(that){
+		var now = Date.now(),
+			dur = 30000;
+		if (now - g.nukeTimer < dur) {
+			return;
+		}
 		var attacker = my.tgt;
 		var defender = that.id.slice(4)*1;
 		if (my.tgt === defender){
@@ -421,18 +449,11 @@ var action = {
 			action.error();
 			return;
 		}
+		action.timeoutWeaponButton('launchNuke', dur);
+		g.nukeTimer = now;
 		my.clearHud();
 		ui.showTarget(DOM['land' + attacker]);
 		// send attack to server
-		var filter = {
-				brightness: 200
-			};
-		TweenMax.to(filter, .5, {
-			brightness: 100,
-			onUpdate: function() {
-				animate.brightness('#launchNuke', filter.brightness);
-			}
-		});
 		$.ajax({
 			url: app.url + 'php/launchNuke.php',
 			data: {
@@ -481,13 +502,13 @@ var action = {
 
 		if (my.tech.masonry && t.player === my.player){
 			// masonry unlocked
-			console.warn("upgradeTileDefense: ", defense, my.tech);
+			//console.warn("upgradeTileDefense: ", defense, my.tech);
 			if (defense === 0 ||
 				defense === 1 && my.tech.construction ||
 				defense === 2 && my.tech.engineering) {
 				// zero defense
 				display = 'flex';
-				console.info("SETTING TO FLEX: ", defense, my.tech);
+				//console.info("SETTING TO FLEX: ", defense, my.tech);
 			}
 		}
 		DOM.upgradeTileDefense.style.display = display;

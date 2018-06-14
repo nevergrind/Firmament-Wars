@@ -16,7 +16,7 @@
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
 	<script>
 		var app = {
-			version: '0.1.0',
+			version: '0.1.2',
 			initialized: 0, // init-game returned
 			isApp: location.protocol === 'chrome-extension:' ? 1 : 0,
 			account: ''
@@ -716,6 +716,8 @@
 
 				<div id="fireCannons" class="actionButtons none"
 					title="Fire cannons at an adjacent tile. Kills 2-4 troops. Boosted by Great Generals.">
+					<div id="fireCannonsOverlay" class="weapon-overlay no-pointer"></div>
+					<div id="fireCannonsReload" class="weapon-reload no-pointer"></div>
 					<div>
 						Fire <span class='text-hotkey'>C</span>annons
 					</div>
@@ -727,6 +729,8 @@
 
 				<div id="launchMissile" class="actionButtons none"
 					title="Launch a missile at any territory. Kills 7-12 troops. Boosted by Great Generals.">
+					<div id="launchMissileOverlay" class="weapon-overlay no-pointer"></div>
+					<div id="launchMissileReload" class="weapon-reload no-pointer"></div>
 					<div>
 						Launch <span class='text-hotkey'>M</span>issile
 					</div>
@@ -738,6 +742,8 @@
 
 				<div id="launchNuke" class="actionButtons none"
 					title="Launch a nuclear weapon at any enemy territory. Kills 80-99% of troops and destroys all structures.">
+					<div id="launchNukeOverlay" class="weapon-overlay no-pointer"></div>
+					<div id="launchNukeReload" class="weapon-reload no-pointer"></div>
 					<div>
 						Launch <span class='text-hotkey'>N</span>uke
 					</div>

@@ -1516,6 +1516,7 @@ table td,
 	border: .2rem outset #d2d;
 }
 .actionButtons {
+	position: relative;
     display: flex;
 	justify-content: space-between;
 	align-content: center;
@@ -1534,6 +1535,23 @@ table td,
 	background: rgba(4, 67, 136, 1);
     -webkit-user-select: none;
     user-select: none
+}
+.weapon-reload {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 2px;
+	opacity: 0;
+	background: #0f0;
+}
+.weapon-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	background: rgba(0,0,0,.7);
 }
 .research-progress {
 	position: relative;
