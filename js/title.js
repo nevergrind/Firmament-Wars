@@ -537,15 +537,19 @@ var title = {
 				if (data.account.indexOf(my.account) > -1){
 					audio.play('hup2');
 				}
-			} else if (data.type === 'upgrade'){
+			}
+			else if (data.type === 'upgrade'){
 				// fetch updated tile defense data
 				game.updateDefense(data);
 				animate.upgrade(data.tile, 'shield');
-			} else if (data.type === 'eliminated'){
+			}
+			else if (data.type === 'eliminated'){
 				game.eliminatePlayer(data);
-			} else if (data.type === 'endTurnCheck'){
+			}
+			else if (data.type === 'endTurnCheck'){
 				game.triggerNextTurn(data);
-			} else if (data.type === 'disconnect'){
+			}
+			else if (data.type === 'disconnect'){
 				game.eliminatePlayer(data);
 			}
 			

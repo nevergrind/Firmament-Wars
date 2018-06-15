@@ -725,6 +725,7 @@ var game = {
 			playerCount = 0,
 			cpuCount = 0,
 			teams = [];
+
 		game.player[i].alive = false;
 		// count alive players remaining
 		game.player.forEach(function(e, index){
@@ -732,14 +733,14 @@ var game = {
 				if (e.alive){
 					if (!e.cpu){
 						// only counts human players
-						//console.info('Human player found at: '+ index);
+						console.info('Human player found at: '+ index);
 						playerCount++;
 						if (teams.indexOf(e.team) === -1){
 							teams.push(e.team);
 						}
 					}
 					if (e.cpu){
-						//console.info('CPU player found at: '+ index);
+						console.info('CPU player found at: '+ index);
 						cpuCount++;
 					}
 				}
@@ -747,13 +748,14 @@ var game = {
 		});
 		// found 2 players on diplomacy panel
 		$("#diplomacyPlayer" + i).removeClass('alive');
-		// console.info(playerCount, cpuCount, teams);
+		console.info(playerCount, cpuCount, teams);
 		if (g.teamMode){
 			if (teams.length <= 1){
 				// disables spectate button
 				g.showSpectateButton = 0;
 			}
-		} else {
+		}
+		else {
 			if (playerCount <= 1){
 				// disables spectate button
 				g.showSpectateButton = 0;
@@ -762,10 +764,11 @@ var game = {
 		// game over - insurance check to avoid multiples somehow happening
 		if (!g.over){
 			// it's not over... check with server
-			//console.info('ELIMINATED: ', count, teams.length);
+			console.info('ELIMINATED: ', playerCount, teams.length);
 			if (i === my.player){
 				gameDefeat();
-			} else {
+			}
+			else {
 				// check if I won
 				// cpus must be dead
 				if (g.teamMode){
@@ -774,7 +777,8 @@ var game = {
 							gameVictory();
 						}, 1000);
 					}
-				} else {
+				}
+				else {
 					if (playerCount <= 1 && !cpuCount){
 						setTimeout(function(){
 							gameVictory();
@@ -801,7 +805,7 @@ var game = {
 			height: 0,
 			rotationX: -90
 		});
-		game.removePlayer(i);
+		data.eliminateType !== 'byPlayer' && game.removePlayer(i);
 	},
 	removePlayer: function(p){
 		game.tiles[p].account = '';
@@ -898,7 +902,8 @@ var game = {
 	updateTile: function(d){
 		var i = d.tile * 1,
 			p = d.player,
-			timestamp = d.timestamp * 1000;
+			timestamp = d.timestamp * 10000;
+		console.warn(i, timestamp, game.tiles[i].timestamp, timestamp < game.tiles[i].timestamp);
 		// this update happened on the server earlier than most recent update... ignore!
 		if (timestamp < game.tiles[i].timestamp) return;
 		// only update client data
