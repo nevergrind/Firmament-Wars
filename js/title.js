@@ -136,8 +136,7 @@ var title = {
 						// replace player flag
 						var flagElement = document.getElementById("titlePlayerFlag_" + account);
 						if (flagElement !== null){
-							var flagClass = flag.split(".");
-							flagElement.className = 'flag ' + flagClass[0].replace(/ /g, "-");
+							flagElement.src = 'images/flags/' + flag;
 						}
 					}
 					foundPlayers.push(account);
@@ -204,9 +203,10 @@ var title = {
 		var e = document.createElement('div');
 		e.className = "titlePlayer";
 		e.id = "titlePlayer" + account;
-		var flagClass = flag.split(".");
-		flagClass = flagClass[0].replace(/ /g, "-");
-		e.innerHTML = '<div id="titlePlayerFlag_'+ account +'" class="flag ' + flagClass +'"></div><span class="chat-rating">['+ rating +']</span> <span class="titlePlayerAccount">'+ account +'</span>';
+		e.innerHTML =
+			'<img id="titlePlayerFlag_'+ account +'" class="flag" src="images/flags/'+ flag +'">' +
+			'<span class="chat-rating">['+ rating +']</span> '+
+			'<span class="titlePlayerAccount">'+ account +'</span>';
 		if (account && flag && title.titleUpdate){
 			DOM.titleChatBody.appendChild(e);
 		}
@@ -529,7 +529,11 @@ var title = {
 				if (data.sfx === 'sniper0'){
 					animate.upgrade(data.tile, 'culture');
 				}
-			} else if (data.type === 'food'){
+			}
+			else if (data.type === 'democracy-units') {
+				my.player === data.player && action.democracyUnits();
+			}
+			else if (data.type === 'food'){
 				if (data.account.indexOf(my.account) > -1){
 					audio.play('hup2');
 				}
@@ -564,21 +568,16 @@ var title = {
 	},
 	sendWhisper: function(msg, splitter){
 		// account
-		var arr = msg.split(splitter);
-		var account = arr[1].split(" ").shift();
-		// message
-		var splitLen = splitter.length;
-		var accountLen = account.length;
-		var msg = msg.substr(splitLen + accountLen + 1);
-		var flag = my.flag.split(".");
-		flag = flag[0].replace(/ /g, "-");
+		var msg = msg.split(splitter),
+			msg = msg[1].split(" "),
+			account = msg.shift();
 		$.ajax({
 			url: app.url + 'php/insertWhisper.php',
 			data: {
 				account: account,
-				flag: flag,
+				flag: my.flag,
 				playerColor: my.playerColor,
-				message: msg,
+				message: msg[0],
 				action: 'send'
 			}
 		});
@@ -732,52 +731,66 @@ var title = {
 				// is it a command?
 				if (msg === '/friend'){
 					title.listFriends();
-				} else if (msg.indexOf('/friend ') === 0){
+				}
+				else if (msg.indexOf('/friend ') === 0){
 					title.toggleFriend(msg.slice(8));
-				} else if (msg.indexOf('/unignore ') === 0){
+				}
+				else if (msg.indexOf('/unignore ') === 0){
 					var account = msg.slice(10);
 					title.removeIgnore(account);
-				} else if (msg === '/ignore'){
+				}
+				else if (msg === '/ignore'){
 					title.listIgnore();
-				} else if (msg.indexOf('/ignore ') === 0){
+				}
+				else if (msg.indexOf('/ignore ') === 0){
 					var account = msg.slice(8);
 					title.addIgnore(account);
-				} else if (msg.indexOf('/join ') === 0){
+				}
+				else if (msg.indexOf('/join ') === 0){
 					title.changeChannel(msg, '/join ');
-				} else if (msg.indexOf('#') === 0){
+				}
+				else if (msg.indexOf('#') === 0){
 					title.changeChannel(msg, '#');
-				} else if (msg.indexOf('/j ') === 0){
+				}
+				else if (msg.indexOf('/j ') === 0){
 					title.changeChannel(msg, '/j ');
-				} else if (msg.indexOf('/whisper ') === 0){
-					title.sendWhisper(msg , '/whisper ');
-				} else if (msg.indexOf('/w ') === 0){
-					title.sendWhisper(msg , '/w ');
-				} else if (msg.indexOf('@') === 0){
+				}
+				else if (msg.indexOf('@') === 0){
 					title.sendWhisper(msg , '@');
-				} else if (msg.indexOf('/who ') === 0){
+				}
+				else if (msg.indexOf('/who ') === 0){
 					title.who(msg);
-				} else if (msg.indexOf('/broadcast ') === 0){
+				}
+				else if (msg.indexOf('/broadcast ') === 0){
 					title.broadcast(msg);
-				} else if (msg.indexOf('/closeApp') === 0){
+				}
+				else if (msg.indexOf('/closeApp') === 0){
 					title.closeApp();
-				} else if (msg.indexOf('/url ') === 0){
+				}
+				else if (msg.indexOf('/url ') === 0){
 					title.url(msg);
-				} else if (msg.indexOf('/img ') === 0){
+				}
+				else if (msg.indexOf('/img ') === 0){
 					title.img(msg);
-				} else if (msg.indexOf('/video ') === 0){
+				}
+				else if (msg.indexOf('/video ') === 0){
 					title.video(msg);
-				} else if (msg.indexOf('/fw-paid ') === 0){
+				}
+				else if (msg.indexOf('/fw-paid ') === 0){
 					var account = msg.slice(8);
 					title.fwpaid(account);
-				} else if (msg.indexOf('/fw-add-ribbon ') === 0){
+				}
+				else if (msg.indexOf('/fw-add-ribbon ') === 0){
 					var a = msg.split(" "),
 						account = a[1],
 						ribbon = a[2];
 					title.addRibbon(account, ribbon);
-				} else {
+				}
+				else {
 					if (msg.charAt(0) === '/' && msg.indexOf('/me') !== 0 || msg === '/me'){
 						// skip
-					} else {
+					}
+					else {
 						$.ajax({
 							url: app.url + 'php/insertTitleChat.php',
 							data: {
@@ -1059,8 +1072,9 @@ var title = {
 			data: {
 				name: x
 			}
-		}).done(function(data) {
-			g.msg("Your new nation name is: " + x);
+		}).done(function(name) {
+			g.msg("Your new nation name is: " + name);
+			$("#updateNationName").val(name);
 		}).fail(function(e){
 			g.msg(e.statusText);
 		}).always(function(){

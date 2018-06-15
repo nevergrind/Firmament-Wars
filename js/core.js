@@ -444,7 +444,10 @@ g.init = (function(){
 	for (var key in g.flagData){
 		s += "<li class='dropdown-header'>" + g.flagData[key].group + "</li>";
 		g.flagData[key].name.forEach(function(e){
-			s += "<li><a class='flagSelect no-select'>" + e + "</a></li>";
+			s += "<li class='flex-row flagSelect'>" +
+					"<img class='flag' src='images/flags/"+ e +".jpg'" +
+					"<a class='flex-1 no-select'>" + e + "</a>" +
+				"</li>";
 		});
 	}
 	document.getElementById("flagDropdown").innerHTML = s;
@@ -657,7 +660,6 @@ var game = {
 	],
 	toggleGameWindows: function(){
 		var x = $("#targetWrap").css('visibility') === 'visible';
-		console.info("visible? ", x);
 		TweenMax.set(DOM.gameWindows, {
 		  	visibility: x ? 'hidden' : 'visible'
 		});
@@ -675,6 +677,12 @@ var game = {
 				visibility: 'hidden'
 			});
 		}
+	},
+	toggleFlags: function(){
+		var x = $("#diplomacy-body").css('display') === 'block';
+		TweenMax.set('#diplomacy-body', {
+		  	display: x ? 'none' : 'block'
+		});
 	},
 	player: [0,0,0,0,0,0,0,0,0], // cached values on client to reduce DB load
 	initMap: function(){

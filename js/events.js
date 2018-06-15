@@ -156,6 +156,8 @@ var events = {
 			title.showBackdrop();
 		}).on(ui.click, '#hide-ui', function() {
 			game.toggleGameWindows(1);
+		}).on(ui.click, '#toggle-flags', function() {
+			game.toggleFlags();
 		}).on(ui.click, '#surrender', function(e){
 			surrenderMenu();
 		});

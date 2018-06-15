@@ -58,7 +58,7 @@ var lobby = {
 					<div>4x maximum troop deployment</div>\
 					<div>50% starting science bonus</div>\
 					<div>Reduced culture milestone requirement</div>\
-					<div>+3 troops when you lose a tile</div>\
+					<div>+2 available troops when you lose a tile</div>\
 				</div>';
 		} else if (government === "Fundamentalism"){
 			str = '<div id="lobbyGovName" class="text-primary">\
@@ -134,25 +134,28 @@ var lobby = {
 				// is it a command?
 				if (msg === '/friend'){
 					title.listFriends();
-				} else if (msg.indexOf('/friend ') === 0){
+				}
+				else if (msg.indexOf('/friend ') === 0){
 					title.toggleFriend(msg.slice(8));
-				} else if (msg.indexOf('/unignore ') === 0){
+				}
+				else if (msg.indexOf('/unignore ') === 0){
 					var account = msg.slice(10);
 					title.removeIgnore(account);
-				} else if (msg === '/ignore'){
+				}
+				else if (msg === '/ignore'){
 					title.listIgnore();
-				} else if (msg.indexOf('/ignore ') === 0){
+				}
+				else if (msg.indexOf('/ignore ') === 0){
 					var account = msg.slice(8);
 					title.addIgnore(account);
-				} else if (msg.indexOf('/whisper ') === 0){
-					title.sendWhisper(msg, '/whisper ');
-				} else if (msg.indexOf('/w ') === 0){
-					title.sendWhisper(msg, '/w ');
-				} else if (msg.indexOf('@') === 0){
+				}
+				else if (msg.indexOf('@') === 0){
 					title.sendWhisper(msg , '@');
-				} else if (msg.indexOf('/who ') === 0){
+				}
+				else if (msg.indexOf('/who ') === 0){
 					title.who(msg);
-				} else {
+				}
+				else {
 					// send ajax chat msg
 					if (msg.charAt(0) === '/' && msg.indexOf('/me') !== 0){
 						// skip
@@ -680,6 +683,29 @@ function setProduction(d){
 		});
 	}
 }
+function setManpower(d) {
+	if (d.manpower !== undefined){
+		if (d.manpower > my.manpower){
+			TweenMax.fromTo('#manpower', .5, {
+				color: '#ffaa33'
+			}, {
+				color: '#ffff00',
+				repeat: -1,
+				yoyo: true
+
+			});
+			TweenMax.to(my, .5, {
+				manpower: d.manpower,
+				onUpdate: function(){
+					DOM.manpower.textContent = ~~my.manpower;
+				}
+			});
+		} else {
+			my.manpower = d.manpower;
+			DOM.manpower.textContent = my.manpower;
+		}
+	}
+}
 function setResources(d){
 	//console.info(d);
 	setMoves(d);
@@ -693,27 +719,7 @@ function setResources(d){
 			DOM.culture.textContent = ~~my.culture;
 		}
 	});
-	if (d.manpower !== undefined){
-		if (d.manpower > my.manpower){
-			TweenMax.fromTo('#manpower', .5, {
-				color: '#ffaa33'
-			}, {
-				color: '#ffff00',
-				repeat: -1,
-				yoyo: true
-				
-			});
-			TweenMax.to(my, .5, {
-				manpower: d.manpower,
-				onUpdate: function(){
-					DOM.manpower.textContent = ~~my.manpower;
-				}
-			});
-		} else {
-			my.manpower = d.manpower;
-			DOM.manpower.textContent = my.manpower;
-		}
-	}
+	setManpower(d);
 	if (d.foodMax !== undefined){
 		if (d.foodMax && d.foodMax > my.foodMax){
 			DOM.foodMax.textContent = d.foodMax;

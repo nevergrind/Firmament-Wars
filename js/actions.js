@@ -269,6 +269,16 @@ var action = {
 			});
 		}
 	},
+	democracyUnits: function() {
+		console.info('democracyUnits ', Date.now());
+		$.ajax({
+			url: app.url + 'php/democracy-units.php'
+		}).done(function(data) {
+		}).always(function(data){
+			console.info("ALWAYS", data);
+			setManpower(data);
+		});
+	},
 	upgradeTileDefense: function(){
 		my.checkSelectLastTarget();
 		var t = game.tiles[my.tgt],
@@ -541,25 +551,28 @@ function toggleChatMode(bypass){
 			// send ajax chat msg
 			if (msg === '/friend'){
 				title.listFriends();
-			} else if (msg.indexOf('/friend ') === 0){
+			}
+			else if (msg.indexOf('/friend ') === 0){
 				title.toggleFriend(msg.slice(8));
-			} else if (msg.indexOf('/unignore ') === 0){
+			}
+			else if (msg.indexOf('/unignore ') === 0){
 				var account = msg.slice(10);
 				title.removeIgnore(account);
-			} else if (msg === '/ignore'){
+			}
+			else if (msg === '/ignore'){
 				title.listIgnore();
-			} else if (msg.indexOf('/ignore ') === 0){
+			}
+			else if (msg.indexOf('/ignore ') === 0){
 				var account = msg.slice(8);
 				title.addIgnore(account);
-			} else if (msg.indexOf('/whisper ') === 0){
-				title.sendWhisper(msg, '/whisper ');
-			} else if (msg.indexOf('/w ') === 0){
-				title.sendWhisper(msg, '/w ');
-			} else if (msg.indexOf('@') === 0){
+			}
+			else if (msg.indexOf('@') === 0){
 				title.sendWhisper(msg , '@');
-			} else if (msg.indexOf('/who ') === 0){
+			}
+			else if (msg.indexOf('/who ') === 0){
 				title.who(msg);
-			} else {
+			}
+			else {
 				if (msg.charAt(0) === '/' && msg.indexOf('/me') !== 0){
 					// skip
 				} else {

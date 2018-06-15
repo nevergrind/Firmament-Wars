@@ -1380,6 +1380,7 @@ tbody {
 	flex-direction: column;
     left: 0;
     top: 0;
+	min-width: 20rem;
 	font-size: 1.6rem;
     border-radius: 0 0 4px 0;
     border-top: none;
@@ -2229,6 +2230,14 @@ span.unlockGameBtn {
 .ribbon:hover {
 	outline: 1px solid #8ff;
 }
+.flex-row {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.flex-1 {
+	flex: 1;
+}
 #configure-nation-avatar-col-1 {
 	flex-basis: 60%;
 }
@@ -2280,7 +2289,7 @@ table {
 }
 #flagDropdown {
     width: 100%;
-    max-height: 30rem;
+    max-height: 40rem;
     overflow: auto
 }
 .dropdown-menu {
@@ -2407,11 +2416,13 @@ table {
 	width: 100%;
     border: 2px groove #204d74
 }
-.fwDropdown>li>a {
+.fwDropdown>li>a,
+.flagSelect {
     color: #aef;
     padding-left: 1em
 }
-.fwDropdown>li>a:hover {
+.fwDropdown>li>a:hover,
+.flagSelect:hover {
     background: #135;
     color: #aef
 }
@@ -3203,8 +3214,6 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .flag {
 	display: inline-block;
-    background-image: url(../images/flags/flagMap4.jpg);
-    background-size: 480px 120px;
     margin-right: .5rem;
 	margin-top: .2rem;
     height: 15px;
