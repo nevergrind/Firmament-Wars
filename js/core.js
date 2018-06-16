@@ -500,6 +500,8 @@ g.init = (function(){
 				steamid: '',
 				handle: 0
 			};
+		my.lang = greenworks.getCurrentGameLanguage();
+
 		if (greenworks.initAPI()) {
 			greenworks.init();
 			var z = greenworks.getSteamId();
@@ -1308,8 +1310,6 @@ function initDom(){
 		lobbyChatLog: d.getElementById('lobbyChatLog'),
 		titleChatLog: d.getElementById('titleChatLog'),
 		mapAnimations: d.getElementById('mapAnimations'),
-		mapCapitals: d.getElementById('mapCapitals'),
-		mapUpgrades: d.getElementById('mapUpgrades'),
 		mapBars: d.getElementById('mapBars'),
 		titleChatBody: d.getElementById('titleChatBody')
 	}

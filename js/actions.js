@@ -358,8 +358,6 @@ var action = {
 			action.error();
 			return;
 		}
-		action.timeoutWeaponButton('fireCannons', dur);
-		g.cannonTimer = now;
 		my.clearHud();
 		ui.showTarget(DOM['land' + attacker]);
 		// send attack to server
@@ -370,6 +368,8 @@ var action = {
 				defender: defender
 			}
 		}).done(function(data) {
+			action.timeoutWeaponButton('fireCannons', dur);
+			g.cannonTimer = now;
 			setProduction(data);
 		}).fail(function(e){
 			console.info('error: ', e);
@@ -399,8 +399,6 @@ var action = {
 			action.error();
 			return;
 		}
-		action.timeoutWeaponButton('launchMissile', dur);
-		g.missileTimer = now;
 		my.clearHud();
 		ui.showTarget(DOM['land' + attacker]);
 		// send attack to server
@@ -412,6 +410,8 @@ var action = {
 			}
 		}).done(function(data) {
 			console.info('launchMissile', data);
+			action.timeoutWeaponButton('launchMissile', dur);
+			g.missileTimer = now;
 			// animate attack
 			if (data.production !== undefined){
 				setProduction(data);
@@ -459,8 +459,6 @@ var action = {
 			action.error();
 			return;
 		}
-		action.timeoutWeaponButton('launchNuke', dur);
-		g.nukeTimer = now;
 		my.clearHud();
 		ui.showTarget(DOM['land' + attacker]);
 		// send attack to server
@@ -471,6 +469,8 @@ var action = {
 				defender: defender
 			}
 		}).done(function(data) {
+			action.timeoutWeaponButton('launchNuke', dur);
+			g.nukeTimer = now;
 			setTimeout(function(){
 				$.ajax({
 					url: app.url + 'php/launchNukeHit.php',

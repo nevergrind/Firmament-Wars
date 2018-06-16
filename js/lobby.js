@@ -56,9 +56,9 @@ var lobby = {
 				<img src="images/icons/Democracy.png" class="fw-icon-sm">Democracy</div>\
 				<div id="lobbyGovPerks">\
 					<div>4x maximum troop deployment</div>\
+					<div>+3 available troops when you lose a tile</div>\
 					<div>50% starting science bonus</div>\
 					<div>Reduced culture milestone requirement</div>\
-					<div>+2 available troops when you lose a tile</div>\
 				</div>';
 		} else if (government === "Fundamentalism"){
 			str = '<div id="lobbyGovName" class="text-primary">\
@@ -74,9 +74,9 @@ var lobby = {
 				<img src="images/icons/Fascism.png" class="fw-icon-sm">Fascism</div>\
 				<div id="lobbyGovPerks">\
 					<div>+1 attack</div>\
+					<div>+1 attack from tiles for each defensive structure</div>\
 					<div>+4 attack vs barbarians</div>\
 					<div>Bonus troop with each deployment</div>\
-					<div>2x science rewards from barbarians</div>\
 				</div>';
 		} else if (government === "Republic"){
 			str = '<div id="lobbyGovName" class="text-primary">\
@@ -938,9 +938,7 @@ function loadGameState(){
 			}
 			
 			// initialize client tile data
-			var mapCapitals = document.getElementById('mapCapitals'),
-				mapUpgrades = document.getElementById('mapUpgrades'),
-				now = Date.now();
+			var now = Date.now();
 			for (var i=0, len=data.tiles.length; i<len; i++){
 				var d = data.tiles[i];
 				game.tiles[i] = {
@@ -1020,11 +1018,6 @@ function loadGameState(){
 						svg.id = 'mapCapital' + i;
 						svg.setAttributeNS(null,'class','mapStar');
 						svg.setAttributeNS(null,'d','m '+ (x + 20) +','+ y +' 5.79905,17.10796 18.05696,0.50749 -14.47863,10.80187 5.09725,17.33001 -14.74733,-10.43203 -14.90668,10.20304 5.36427,-17.24922 -14.31008,-11.02418 18.06264,-0.22858 z');
-						// mapCapitals.appendChild(svg);
-						/*TweenMax.set(svg, {
-							scale: 1.8,
-							transformOrigin: '50% 50%',
-						});*/
 					}
 				} else {
 					console.warn("COULD NOT FIND: ", i);

@@ -661,11 +661,13 @@ $(document).on('keydown', function(e){
 				// enter/esc - sends chat
 				toggleChatMode(true);
 			}
-		} else {
+		}
+		else {
 			if (x === 13){
 				// enter
 				toggleChatMode();
-			}  else if (x === 27){
+			}
+			else if (x === 27){
 				// esc
 				if (my.attackOn) {
 					my.attackOn = false;
@@ -673,11 +675,13 @@ $(document).on('keydown', function(e){
 					my.clearHud();
 					ui.showTarget(DOM['land' + my.tgt]);
 				}
-			} else if (x === 65){
+			}
+			else if (x === 65){
 				// a
 				var o = new Target();
 				action.target(o);
-			} else if (x === 83){
+			}
+			else if (x === 83){
 				// s
 				var o = new Target({
 					cost: 1, 
@@ -687,12 +691,14 @@ $(document).on('keydown', function(e){
 				});
 				console.info(o.cost);
 				action.target(o);
-			} else if (x === 68){
+			}
+			else if (x === 68){
 				// d
 				if (!g.keyLock){
 					action.deploy();
 				}
-			} else if (x === 82){
+			}
+			else if (x === 82){
 				// r
 				if (!g.keyLock){
 					if (e.ctrlKey){
@@ -700,9 +706,11 @@ $(document).on('keydown', function(e){
 						if (x){
 							if (g.view === 'title'){
 								$("#title-chat-input").val('/w ' + x + ' ').focus();
-							} else if (g.view === 'lobby'){
+							}
+							else if (g.view === 'lobby'){
 								$("#lobby-chat-input").val('/w ' + x + ' ').focus();
-							} else {
+							}
+							else {
 								if (!g.chatOn){
 									toggleChatMode();
 								}
@@ -710,35 +718,45 @@ $(document).on('keydown', function(e){
 							}
 						}
 						return false;
-					} else {
+					}
+					else {
 						action.rush();
 					}
 				}
-			} else if (x === 89){
+			}
+			else if (x === 89){
 				// y
 				research.masonry();
-			} else if (x === 79){
+			}
+			else if (x === 79){
 				// o
 				research.construction();
-			} else if (x === 69){
+			}
+			else if (x === 69){
 				// e
 				research.engineering();
-			} else if (x === 71){
+			}
+			else if (x === 71){
 				// g
 				research.gunpowder();
-			} else if (x === 75){
+			}
+			else if (x === 75){
 				// k
 				research.rocketry();
-			} else if (x === 84){
+			}
+			else if (x === 84){
 				// t
 				research.atomicTheory();
-			} else if (x === 70){
+			}
+			else if (x === 70){
 				// f
 				research.futureTech();
-			} else if (x === 66){
+			}
+			else if (x === 66){
 				// b
 				action.upgradeTileDefense();
-			} else if (x === 67){
+			}
+			else if (x === 67 && my.tech.gunpowder){
 				// c
 				var o = new Target({
 					cost: 0,
@@ -747,7 +765,8 @@ $(document).on('keydown', function(e){
 					hudMsg: 'Fire Cannons'
 				});
 				action.target(o);
-			} else if (x === 77){
+			}
+			else if (x === 77 && my.tech.rocketry){
 				// m
 				var o = new Target({
 					cost: 0,
@@ -756,7 +775,8 @@ $(document).on('keydown', function(e){
 					hudMsg: 'Launch Missile'
 				});
 				action.target(o);
-			} else if (x === 78){
+			}
+			else if (x === 78 && my.tech.atomicTheory){
 				// n
 				var o = new Target({
 					cost: 0,

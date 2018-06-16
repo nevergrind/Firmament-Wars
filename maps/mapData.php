@@ -109,7 +109,7 @@
 		'key' => 'France',
 		'tiles' => 81,
 		'maxPlayers' => 8,
-		'startTiles' => [19, 42, 38, 67, 78, 30, 63, 11],
+		'startTiles' => [34, 42, 38, 67, 78, 30, 63, 11],
 		'sizeX' => 1920,
 		'sizeY' => 1592,
 		'tileNames' => array(

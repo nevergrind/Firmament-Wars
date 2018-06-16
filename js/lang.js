@@ -1,0 +1,5 @@
+var lang = {
+	'english': {
+		test: ''
+	}
+};

@@ -522,12 +522,7 @@ function gameVictory(){
 				triggerEndGame(msg, 1);
 			}
 		}).fail(function(data){
-			console.info("FAIL: ", data);
-			if (++count < 5){
-				setTimeout(function(){
-					repeat();
-				}, 2500);
-			}
+			console.warn(data.responseText);
 		});
 	})();
 }

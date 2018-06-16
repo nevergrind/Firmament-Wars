@@ -858,7 +858,7 @@ var animate = {
 		smoke.setAttributeNS(null,"opacity",0);
 		smoke.setAttributeNS(null, 'class', 'no-pointer');
 		smoke.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","images/smoke.png");
-		DOM.mapUpgrades.appendChild(smoke);
+		DOM.mapAnimations.appendChild(smoke);
 		TweenLite.to(smoke, 3, {
 			startAt: {
 				alpha: 1,
