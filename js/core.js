@@ -685,7 +685,7 @@ var game = {
 			});
 		}
 		else {
-			TweenMax.to('#hotkey-ui', .5, {
+			TweenMax.set('#hotkey-ui', {
 				visibility: 'hidden'
 			});
 		}

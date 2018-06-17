@@ -655,8 +655,7 @@
 					</div>
 				</div>
 
-				<div id="fireCannons" class="actionButtons none"
-					title="Fire cannons at an adjacent tile. Kills 2-4 troops. Boosted by Great Generals.">
+				<div id="fireCannons" class="actionButtons none">
 					<div id="fireCannonsOverlay" class="weapon-overlay no-pointer"></div>
 					<div id="fireCannonsReload" class="weapon-reload no-pointer"></div>
 					<div>
@@ -668,8 +667,7 @@
 					</div>
 				</div>
 
-				<div id="launchMissile" class="actionButtons none"
-					title="Launch a missile at any territory. Kills 7-12 troops. Boosted by Great Generals.">
+				<div id="launchMissile" class="actionButtons none">
 					<div id="launchMissileOverlay" class="weapon-overlay no-pointer"></div>
 					<div id="launchMissileReload" class="weapon-reload no-pointer"></div>
 					<div>
@@ -681,8 +679,7 @@
 					</div>
 				</div>
 
-				<div id="launchNuke" class="actionButtons none"
-					title="Launch a nuclear weapon at any enemy territory. Kills 80-99% of troops and destroys all structures.">
+				<div id="launchNuke" class="actionButtons none">
 					<div id="launchNukeOverlay" class="weapon-overlay no-pointer"></div>
 					<div id="launchNukeReload" class="weapon-reload no-pointer"></div>
 					<div>
@@ -696,8 +693,7 @@
 				<!-- research -->
 				<div class="row actionHead shadow4">Research</div>
 
-				<div id="researchMasonry" class="actionButtons"
-					title="Research masonry to unlock bunkers (20 seconds)">
+				<div id="researchMasonry" class="actionButtons">
 					<div>
 						Masonr<span class='text-hotkey'>y</span>
 					</div>
@@ -707,8 +703,7 @@
 					</div>
 				</div>
 
-				<div id="researchConstruction" class="actionButtons none"
-					title="Research construction to unlock walls (30 seconds)">
+				<div id="researchConstruction" class="actionButtons none">
 					<div>
 						C<span class='text-hotkey'>o</span>nstruction
 					</div>
@@ -718,8 +713,7 @@
 					</div>
 				</div>
 
-				<div id="researchEngineering" class="actionButtons none"
-					title="Research engineering to unlock fortresses (45 seconds)">
+				<div id="researchEngineering" class="actionButtons none">
 					<div>
 						<span class='text-hotkey'>E</span>ngineering
 					</div>
@@ -729,8 +723,7 @@
 					</div>
 				</div>
 
-				<div id="researchGunpowder" class="actionButtons"
-					title="Research gunpowder to unlock cannons (25 seconds)">
+				<div id="researchGunpowder" class="actionButtons">
 					<div>
 						<span class='text-hotkey'>G</span>unpowder
 					</div>
@@ -740,8 +733,7 @@
 					</div>
 				</div>
 
-				<div id="researchRocketry" class="actionButtons none"
-					title="Research rocketry to unlock missiles (40 seconds)">
+				<div id="researchRocketry" class="actionButtons none">
 					<div>
 						Roc<span class='text-hotkey'>k</span>etry
 					</div>
@@ -751,8 +743,7 @@
 					</div>
 				</div>
 
-				<div id="researchAtomicTheory" class="actionButtons none"
-					title="Research atomic theory to unlock nuclear weapons (60 seconds)">
+				<div id="researchAtomicTheory" class="actionButtons none">
 					<div>
 						A<span class='text-hotkey'>t</span>omic Theory
 					</div>
@@ -762,8 +753,7 @@
 					</div>
 				</div>
 
-				<div id="researchFutureTech" class="actionButtons none"
-					title="Research future technology (90 seconds)">
+				<div id="researchFutureTech" class="actionButtons none">
 					<div>
 						<span class='text-hotkey'>F</span>uture Tech
 					</div>
@@ -776,7 +766,7 @@
 			</div>
 		</div>
 		
-		<div id="hotkey-ui" class="shadow4">Press V to toggle the UI</div>
+		<div id="hotkey-ui" class="shadow4"></div>
 
 		<div id="diplomacy-ui" class="shadow4 blueBg gameWindow no-select">
 			<div id="game-mode">
@@ -812,12 +802,12 @@
 		<div id="hud" class="shadow4">Select Target</div>
 		
 		<div id="surrenderScreen" class="fw-primary fw-text">
-			<p>Surrender? Are You Sure?</p>
+			<p id="confirmSurrenderPrompt"></p>
 			<div id="cancelSurrenderButton" class="endBtn">
-				<div class="modalBtnChild">Cancel</div>
+				<div id="canceSurrenderButtonCancel" class="modalBtnChild"></div>
 			</div>
 			<div id="surrenderButton" class="endBtn">
-				<div class="modalBtnChild">Surrender</div>
+				<div id="canceSurrenderButtonConfirm" class="modalBtnChild"></div>
 			</div>
 		</div>
 		
@@ -962,6 +952,7 @@
 
 </body>
 
+<script src="js/libs/lodash.min.js"></script>
 <script src="js/libs/TweenMax.min.js"></script>
 <script src="js/libs/jquery.min.js"></script>
 <script src="js/libs/Draggable.min.js"></script>

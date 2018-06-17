@@ -593,7 +593,7 @@ function initOffensiveTooltips(){
 			.tooltip('fixTitle')
 			.tooltip({ animation: false });
 		$('#launchMissile')
-			.attr('title', 'Launch a missile at any territory. Kills '+ (7 + (my.oBonus * 2)) +'-'+ (12 + (my.oBonus * 2)) +' troops. Boosted by Great Generals.').tooltip('fixTitle')
+			.attr('title', ui.missileTooltip()).tooltip('fixTitle')
 			.tooltip({ animation: false });
 		$('#rush')
 			.attr('title', ui.rushTooltip())

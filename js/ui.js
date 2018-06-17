@@ -3,12 +3,18 @@
 var ui = {
 	defenseBonus: [1, 2, 3],
 	defenseReductionAmount: [1, 3, 6],
-	cannonDamageRange: function() {
+	cannonDamage: function() {
 		var cannonBonus = my.government === 'Monarchy' ? 2 : 0;
-		return '('+ (2 + my.oBonus + cannonBonus) +'-'+ (4 + my.oBonus + cannonBonus) +')';
+		return (2 + my.oBonus + cannonBonus) +'-'+ (4 + my.oBonus + cannonBonus) +' damage';
 	},
 	cannonTooltip: function() {
-		return lang[my.lang].fireCannons + ui.cannonDamageRange();
+		return lang[my.lang].fireCannons + ui.cannonDamage();
+	},
+	missileDamage: function() {
+		return (7 + (my.oBonus * 2)) +'-'+ (12 + (my.oBonus * 2)) +' damage';
+	},
+	missileTooltip: function() {
+		return lang[my.lang].launchMissile + ui.missileDamage();
 	},
 	rushTooltip: function(ind) {
 		return lang[my.lang].rush + '('+ ui.cultureBonus() +')';
