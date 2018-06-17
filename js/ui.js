@@ -1,6 +1,24 @@
 // ui.js
 
 var ui = {
+	defenseBonus: [1, 2, 3],
+	defenseReductionAmount: [1, 3, 6],
+	cannonDamageRange: function() {
+		var cannonBonus = my.government === 'Monarchy' ? 2 : 0;
+		return '('+ (2 + my.oBonus + cannonBonus) +'-'+ (4 + my.oBonus + cannonBonus) +')';
+	},
+	cannonTooltip: function() {
+		return lang[my.lang].fireCannons + ui.cannonDamageRange();
+	},
+	rushTooltip: function(ind) {
+		return lang[my.lang].rush + '('+ ui.cultureBonus() +')';
+	},
+	defenseTooltip: function(ind) {
+		return lang[my.lang].boostsTileDefenses + ui.defenseBonus[ind] + lang[my.lang].reducesWeaponsBy + ui.defenseReductionAmount[ind];
+	},
+	cultureBonus: function() {
+		return (2 + ~~(my.cultureBonus / 50));
+	},
 	getTeamIcon: function(team) {
 		return g.teamMode ? '<span class="diploTeam">'+ team +'</span>' : '';
 	},
@@ -59,7 +77,7 @@ var ui = {
 		g.view === 'game' && worldMap[0].applyBounds();
 		g.screen.resizeMap();
 	},
-	windowDefault: 'Full Screen',
+	windowDefault: 'window-full-screen',
 	initWindow: function() {
 		var size = localStorage.getItem('window-size');
 		if (size === null) {
@@ -74,63 +92,38 @@ var ui = {
 				win = gui.Window.get();
 			// ??????? reasons
 			setTimeout(function() {
-				if (size === 'Full Screen') {
+				if (size === 'window-full-screen') {
 					!win.isFullscreen && win.enterFullscreen();
 				}
-				else if (size === '1920 x 1080') {
+				else if (size === 'window-1920-1080') {
 					win.isFullscreen && win.leaveFullscreen();
 					win.resizeTo(1920, 1080);
 					win.maximize();
 				}
-				else if (size === '1600 x 900') {
+				else if (size === 'window-1600-900') {
 					win.isFullscreen && win.leaveFullscreen();
 					win.resizeTo(1600, 900);
 				}
-				else if (size === '1360 x 768') {
+				else if (size === 'window-1360-768') {
 					win.isFullscreen && win.leaveFullscreen();
 					win.resizeTo(1360, 768);
 				}
-				else if (size === '1280 x 720') {
+				else if (size === 'window-1280-720') {
 					win.isFullscreen && win.leaveFullscreen();
 					win.resizeTo(1280, 720);
 				}
 				else {
 					// just in case do this
+					size = 'window-full-screen';
 					!win.isFullscreen && win.enterFullScreen();
 				}
 				// always do this
-				$("#window-size").text(size);
+				$("#current-window-size").text(lang[my.lang][g.camel(size)]);
 				localStorage.setItem('window-size', size);
 			}, 100);
 		}
 	},
-	setMobile: function(){
-		 /*$("head").append('<style>'+
-			'*{ box-shadow: none !important; border-radius: 0 !important; } '+
-			'.fw-primary{ background: #04061a; border: 1px solid #357; } '+
-			'#titleChatPlayers,#statWrap, #joinGameLobby{ background: rgba(0,12,32,1); } '+
-			'#refreshGameWrap{ background: none; } '+
-			'#hud{ top: 40px; }'+
-			'#diplomacy-ui, #ui2{ top: .25vh; }'+
-			'#resources-ui{ bottom: .5vh; }'+
-			'#lobbyLeftCol, #lobbyRightCol{ top: 1vh; }'+
-			'#chat-ui{ bottom: 4vh; }'+
-			'#refreshGameWrap{ height: 64vh; }'+
-			/!*'.titlePanelLeft{ height: 80vh; } '+
-			'#chat-input{ bottom: 3vh; }'+
-			'#titleMenu, #titleChat{ bottom: 7vh; } '+*!/
-			'.lobbyButtons, .fwDropdown, .govDropdown{ font-size: 1.25em; }'+
-			'#targetLineShadow, .chat-img{ display: none; }'+
-			'.chat-hidden{ color: #fff; }'+
-		'</style>');*/
-	},
-	setWorkSafe: function(){
-		 $("head").append('<style>'+
-			'.chat-img{ display: none; } '+
-			'#statQuote{ visibility: hidden; } '+
-		'</style>');
-	},
-	click: isMobile ? 'mousedown' : 'click',
+	click: 'click',
 	showTarget: function(e, hover, skipOldTgtUpdate){
 		if (e.id === undefined){
 			e.id = 'land0';
@@ -337,7 +330,6 @@ function checkMobile(){
 var isXbox = /Xbox/i.test(navigator.userAgent),
     isPlaystation = navigator.userAgent.toLowerCase().indexOf("playstation") >= 0,
     isNintendo = /Nintendo/i.test(navigator.userAgent),
-    isMobile = checkMobile(),
     isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0,
     isFirefox = typeof InstallTrigger !== 'undefined',
     isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0,
@@ -346,7 +338,6 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
     isMSIE11 = !!navigator.userAgent.match(/Trident\/7\./);
 // browser dependent
 (function(){
-	var x = localStorage.getItem('isMobile');
 	if (isMSIE || isMSIE11){
 		//alert("Firmament Wars does not support Internet Explorer. Consider using Chrome or Firefox for an enjoyable experience.");
 		//window.stop();
@@ -362,13 +353,6 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
 		}
 		$("head").append('<style> text { fill: #ffffff; stroke: none; stroke-width: 0px; } </style>');
 	}
-	if (isMobile || location.hash === '#mobiletest'){
-		ui.setMobile();
-	}
-	if (location.hash === '#synergist' || location.hash === '#sfw'){
-		ui.setWorkSafe();
-	}
-	localStorage.setItem('isMobile', isMobile);
 	setTimeout(function(){
 		$("script").remove();
 	}, 1000);
@@ -383,9 +367,9 @@ function updateTileInfo(tileId){
 	if (t.player === 0){
 		flag = "Player0.jpg";
 		if (t.units > 0){
-			name = "Barbarian Tribe";
+			name = lang[my.lang].barbarianTribe;
 		} else {
-			name = "Uninhabited";
+			name = lang[my.lang].uninhabited;
 			flag = "Default.jpg";
 		}
 	}
@@ -415,26 +399,16 @@ function updateTileInfo(tileId){
 	DOM.targetNameWrap.innerHTML = name;
 	DOM.targetResources.innerHTML = resources;
 	DOM.targetFlag.src = 'images/flags/' + flag;
-	
-	var defWord = ['Bunker', 'Wall', 'Fortress'],
-		defBonus = [1, 2, 3],
-		ind = t.defense - (t.capital ? 1 : 0),
-		defTooltip = [
-			'reduces weapon damage by 1',
-			'reduces weapon damage by 3',
-			'reduces weapon damage by 6'
-		];
+
 
 	if (t.player === my.player && my.tech.masonry) {
+		var ind = t.defense - (t.capital ? 1 : 0);
 		if (ind < 3) {
 			// fortress present
-			DOM.buildWord.textContent = defWord[ind];
 			// console.info('buildCost ', ind, g.upgradeCost[ind], my.buildCost, g.upgradeCost[ind]);
+			DOM.buildWord.textContent = lang[my.lang].defenseLabel[ind];
 			DOM.buildCost.textContent = g.upgradeCost[ind];
-			if (ind === 2){
-				defWord[2] = 'Fortresse';
-			}
-			var tooltip = defWord[ind] + 's boost tile defense +'+ defBonus[ind] +' and ' + defTooltip[ind];
+			var tooltip = ui.defenseTooltip(ind);
 			$('#upgradeTileDefense')
 				.attr('title', tooltip)
 				.tooltip('fixTitle')

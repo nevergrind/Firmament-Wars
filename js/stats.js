@@ -68,11 +68,7 @@
 var stats = {
 	init: function(data){
 		var flag = my.flag;
-		if (isMobile){
-			var str = '<img id="statWorld" style="display: none">';
-		} else {
-			var str = '<img id="statWorld" src="images/FlatWorld90.jpg">';
-		}
+		var str = '<img id="statWorld" src="images/FlatWorld90.jpg">';
 		str +=
 		'<div id="statResult" class="no-select">\
 			<img class="statResultFlag" src="images/flags/'+ flag +'">\

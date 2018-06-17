@@ -36,67 +36,36 @@ var lobby = {
 		if (government === "Despotism"){
 			str = '<div id="lobbyGovName" class="text-primary">\
 				<img src="images/icons/Despotism.png" class="fw-icon-sm">Despotism</div>\
-				<div id="lobbyGovPerks">\
-					<div>Free movement through own tiles</div>\
-					<div>Start with gunpowder</div>\
-					<div>Start with a bunker</div>\
-					<div>2x maximum army attack size</div>\
-				</div>';
+				<div id="lobbyGovPerks">';
 		} else if (government === "Monarchy"){
 			str = '<div id="lobbyGovName" class="text-primary">\
 				<img src="images/icons/Monarchy.png" class="fw-icon-sm">Monarchy</div>\
-				<div id="lobbyGovPerks">\
-					<div>+2 defense</div>\
-					<div>+1 culture from 2 food</div>\
-					<div>50% starting culture bonus</div>\
-					<div>+2 cannon damage</div>\
-				</div>';
+				<div id="lobbyGovPerks">';
 		} else if (government === "Democracy"){
 			str = '<div id="lobbyGovName" class="text-primary">\
 				<img src="images/icons/Democracy.png" class="fw-icon-sm">Democracy</div>\
-				<div id="lobbyGovPerks">\
-					<div>4x maximum troop deployment</div>\
-					<div>+3 available troops when you lose a tile</div>\
-					<div>50% starting science bonus</div>\
-					<div>Reduced culture milestone requirement</div>\
-				</div>';
+				<div id="lobbyGovPerks">';
 		} else if (government === "Fundamentalism"){
 			str = '<div id="lobbyGovName" class="text-primary">\
 				<img src="images/icons/Fundamentalism.png" class="fw-icon-sm">Fundamentalism</div>\
-				<div id="lobbyGovPerks">\
-					<div>Overrun: Instant win with 4x advantage</div>\
-					<div>Infiltration: -1 structure defense</div>\
-					<div>Fast growth: Reduced food milestone requirement</div>\
-					<div>+2 troop reward bonus</div>\
-				</div>';
+				<div id="lobbyGovPerks">';
 		} else if (government === "Fascism"){
 			str = '<div id="lobbyGovName" class="text-primary">\
 				<img src="images/icons/Fascism.png" class="fw-icon-sm">Fascism</div>\
-				<div id="lobbyGovPerks">\
-					<div>+1 attack</div>\
-					<div>+1 attack from tiles for each defensive structure</div>\
-					<div>+4 attack vs barbarians</div>\
-					<div>Bonus troop with each deployment</div>\
-				</div>';
+				<div id="lobbyGovPerks">';
 		} else if (government === "Republic"){
 			str = '<div id="lobbyGovName" class="text-primary">\
 				<img src="images/icons/Republic.png" class="fw-icon-sm">Republic</div>\
-				<div id="lobbyGovPerks">\
-					<div>+1 energy</div>\
-					<div>Combat medics heal 50% troops upon victory</div>\
-					<div>Start with masonry</div>\
-					<div>+50% plunder reward bonus from barbarians</div>\
-				</div>';
+				<div id="lobbyGovPerks">';
 		} else if (government === "Communism"){
 			str = '<div id="lobbyGovName" class="text-primary">\
 				<img src="images/icons/Communism.png" class="fw-icon-sm">Communism</div>\
-				<div id="lobbyGovPerks">\
-					<div>Start with a great person</div>\
-					<div>+1 science from 4 food</div>\
-					<div>Can deploy troops to uninhabited territory</div>\
-					<div>2x discovered reward bonus from barbarians</div>\
-				</div>';
+				<div id="lobbyGovPerks">';
 		}
+		lang[my.lang][government].forEach(function(v) {
+			str += '<div>' + v + '</div>';
+		});
+		str += '</div>';
 		document.getElementById('lobbyGovernment' + my.player).innerHTML = government === 'Random' ?
 			government : '<img src="images/icons/'+ government +'.png" class="fw-icon-sm">' + government;
 		document.getElementById('lobbyGovernmentDescription').innerHTML = government === 'Random' ?
@@ -195,8 +164,6 @@ var lobby = {
 				document.getElementById('lobbyGamePasswordWrap').style.display = 'block';
 				document.getElementById('lobbyGamePassword').innerHTML = x.password;
 			}
-			/*g.speed = x.speed;
-			document.getElementById("lobbyGameSpeed").innerHTML = x.speed;*/
 			document.getElementById("lobbyGameMap").innerHTML = x.map;
 			document.getElementById("lobbyGameMax").innerHTML = x.max;
 			document.getElementById("startGame").style.display = x.player === 1 ? "block" : "none";
@@ -218,7 +185,7 @@ var lobby = {
 								str += '<span><div id="lobbyTeam'+ i +'" data-placement="right" class="lobbyTeams dropdown-toggle pointer2" data-toggle="dropdown">';
 								
 								str += '<i class="fa fa-flag pointer2 lobbyTeamFlag"></i> <span id="lobbyTeamNumber'+ i +'" class="lobbyTeamNumbers">' + i +'</span></div>';
-								str += 
+								str +=
 								'<ul id="teamDropdown" class="dropdown-menu">\
 									<li class="header text-center selectTeamHeader">Team</li>';
 									for (var j=1; j<=8; j++){
@@ -290,10 +257,10 @@ var lobby = {
 				'<div id="lobby-cpu-row" class="row buffer2">\
 					<div class="col-xs-12">\
 						<button id="cpu-remove-player" type="button" class="btn fwBlue btn-responsive shadow4 pull-right cpu-button">\
-							<img src="images/icons/computer.png" class="fw-icon-sm"> Remove CPU\
+							<img src="images/icons/computer.png" class="fw-icon-sm">'+ lang[my.lang].removeCPU +'\
 						</button>\
 						<button id="cpu-add-player" type="button" class="btn fwBlue btn-responsive shadow4 pull-right cpu-button">\
-							<img src="images/icons/computer.png" class="fw-icon-sm"> Add CPU\
+							<img src="images/icons/computer.png" class="fw-icon-sm">'+ lang[my.lang].addCPU +'\
 						</button>\
 					</div>\
 				</div>';
@@ -462,7 +429,7 @@ var lobby = {
 			}
 			
 			if (my.player === i){
-				if (!isMobile && isLoggedIn){
+				if (isLoggedIn){
 					$("#lobbyPlayerColor" + i).attr('title', 'Select Player Color')
 						.tooltip({
 							container: 'body',
@@ -621,16 +588,15 @@ var lobby = {
 
 function initOffensiveTooltips(){
 	if (isLoggedIn){
-		var cannonBonus = my.government === 'Monarchy' ? 2 : 0;
 		$('#fireCannons')
-			.attr('title', 'Fire cannons at an adjacent tile. Kills ' + (2 + my.oBonus + cannonBonus) +'-'+ (4 + my.oBonus + cannonBonus) +' troops. Boosted by Great Generals.')
+			.attr('title', ui.cannonTooltip())
 			.tooltip('fixTitle')
 			.tooltip({ animation: false });
 		$('#launchMissile')
 			.attr('title', 'Launch a missile at any territory. Kills '+ (7 + (my.oBonus * 2)) +'-'+ (12 + (my.oBonus * 2)) +' troops. Boosted by Great Generals.').tooltip('fixTitle')
 			.tooltip({ animation: false });
 		$('#rush')
-			.attr('title', 'Rush ' + (2 + ~~(my.cultureBonus / 50)) + ' troops from your citizenry. Boosted by culture bonus.')
+			.attr('title', ui.rushTooltip())
 			.tooltip('fixTitle')
 			.tooltip({ animation: false });
 	}
@@ -1039,10 +1005,6 @@ function loadGameState(){
 			}
 			//lobby.initRibbons(data.ribbons);
 			ui.drawDiplomacyPanel();
-			// write diplo head
-			var e = document.getElementById('game-mode-name');
-			e.className = g.gameMode.toLowerCase();
-			e.textContent = g.gameMode;
 			initResources(data);
 			// set images
 			setTimeout(function(){

@@ -143,35 +143,14 @@
 			
 			<header class="shadow4 text-primary fw-primary">
 				<div>
-					<a id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">
-						Configure Nation
-					</a>
-					<a id="leaderboardBtn" type="button" class="btn fwBlue btn-responsive shadow4">
-						Leaderboard
-					</a>
+					<a id="toggleNation" type="button" class="btn fwBlue btn-responsive shadow4">&nbsp;</a>
+					<a id="leaderboardBtn" type="button" class="btn fwBlue btn-responsive shadow4">&nbsp;</a>
 					<a id="logout" class="btn fwBlue btn-responsive shadow4">&nbsp;</a>
 				</div>
 				<div style="display: flex; align-items: center;">&ensp;
 					<i id="options" class="pointer options fa fa-gear" title="Options"></i>
 					<img src="images/neverworks-txt.png">
 				</div>
-				<!--div id="social-links" class="text-primary">
-					<a href="//twitch.tv/maelfyn" target="_blank">
-						<i class="fa fa-twitch text-primary pointer"></i>
-					</a>
-					<a href="//youtube.com/c/Maelfyn" target="_blank">
-						<i class="fa fa-youtube text-primary pointer"></i>
-					</a>
-					<a href="//discord.gg/n2gp8rC" target="_blank">
-						<i class="fa fa-discord text-primary pointer"></i>
-					</a>
-					<a href="//www.facebook.com/maelfyn" target="_blank">
-						<i class="fa fa-facebook text-primary pointer"></i>
-					</a>
-					<a href="//twitter.com/maelfyn" target="_blank">
-						<i class="fa fa-twitter text-primary pointer"></i>
-					</a>
-				</div-->
 				
 			</header>
 
@@ -185,12 +164,12 @@
 						<div id="title-action-row-bg-left" class="title-action-bg"></div>
 						<div id="title-action-row-bg-right" class="title-action-bg"></div>
 						<div id="action-button-wrap" class="no-select">
-							<div id="play-now-btn" class="action-btn shadow4">Play Now</div>
-							<div id="create" class="gameSelect action-btn shadow4">Free For All</div>
-							<div id="createTeamBtn" class="gameSelect action-btn shadow4">Team Game</div>
-							<div id="joinPrivateGameBtn" class="action-btn shadow4">Join Private Game</div>
-							<div id="createRankedBtn" class="gameSelect action-btn shadow4">Create Ranked Match</div>
-							<div id="joinRankedGame" class="gameSelect action-btn shadow4">Join Ranked Match</div>
+							<div id="play-now-btn" class="action-btn shadow4"></div>
+							<div id="create" class="gameSelect action-btn shadow4"></div>
+							<div id="createTeamBtn" class="gameSelect action-btn shadow4"></div>
+							<div id="joinPrivateGameBtn" class="action-btn shadow4"></div>
+							<div id="createRankedBtn" class="gameSelect action-btn shadow4"></div>
+							<div id="joinRankedGame" class="gameSelect action-btn shadow4"></div>
 						</div>
 					</div>
 
@@ -198,11 +177,13 @@
 						<table id="gameTable" class="table table-condensed table-borderless">
 							<thead>
 								<tr id="gameTableHead">
-									<th class="gameTableCol1 warCells">Game Name</th>
-									<th class="gameTableCol2 warCells">Map</th>
+									<th id="gameTableName" class="gameTableCol1 warCells"></th>
+									<th id="gameTableMap" class="gameTableCol2 warCells"></th>
 									<th class="gameTableCol4 warCells">
 										<i id="refresh-game-button"
-										   class="shadow4 pull-right fa fa-refresh"></i>Type</th>
+										   class="shadow4 pull-right fa fa-refresh"></i>
+										<span id="gameTableType"></span>
+									</th>
 								</tr>
 							</thead>
 							<tbody id="gameTableBody"></tbody>
@@ -220,20 +201,20 @@
 							</div>
 							<div id="titleChatBody"></div>
 							<div id="title-chat-btn-wrap" class="text-center no-select">
-								<div id="friend-status" class="title-utils shadow4">Show Friend List</div>
-								<div id="add-friend" class="title-utils shadow4">Toggle Friend</div>
-								<div id="ignore-status" class="title-utils shadow4">Show Ignore List</div>
-								<div id="ignore-user" class="title-utils shadow4">Ignore Account</div>
-								<div id="who-account" class="title-utils shadow4">Query Account</div>
-								<div id="whisper-account" class="title-utils shadow4">Private Message</div>
-								<div id="change-channel" class="title-utils shadow4">Change Channel</div>
-								<div id="get-help" class="title-utils shadow4">Chat Commands</div>
+								<div id="friend-status" class="title-utils shadow4">&nbsp;</div>
+								<div id="add-friend" class="title-utils shadow4">&nbsp;</div>
+								<div id="ignore-status" class="title-utils shadow4">&nbsp;</div>
+								<div id="ignore-user" class="title-utils shadow4">&nbsp;</div>
+								<div id="who-account" class="title-utils shadow4">&nbsp;</div>
+								<div id="whisper-account" class="title-utils shadow4">&nbsp;</div>
+								<div id="change-channel" class="title-utils shadow4">&nbsp;</div>
+								<div id="get-help" class="title-utils shadow4">&nbsp;</div>
 							</div>
 						</div>
 						<!-- col 2 -->
 						<div id="title-chat-players-log" class="shadow4">
 							<div id="titleChatLog" class="titlePanelLeft">
-								<div>Welcome to Broken.net!</div>
+								<div id="brokenNet"></div>
 							</div>
 							<input id="title-chat-input"
 								   class="fw-text noselect nobg form-control"
@@ -273,22 +254,20 @@
 			
 				<div id="lobbyGame" class="fw-primary">
 					<img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" id="lobbyFirmamentWarsLogo">
-					<div id="lobbyRankedMatch" class="shadow4 ranked">Ranked Match</div> 
+					<div id="lobbyRankedMatch" class="shadow4 ranked"></div>
 					<div id="lobbyGameNameWrap">
-						<div class='text-primary margin-top'>Game Name:</div> 
+						<div id="lobbyGameNameLabel" class='text-primary margin-top'></div>
 						<div id='lobbyGameName'></div>
 					</div>
 					<div id="lobbyGamePasswordWrap" class="none">
-						<div class='text-primary margin-top'>Password:</div> 
+						<div id="lobbyGamePasswordLabel" class='text-primary margin-top'></div>
 						<div id='lobbyGamePassword'></div>
 					</div>
-					<div class='text-primary margin-top'>Game Mode:</div> 
+					<div id="lobbyGameModeLabel" class='text-primary margin-top'></div>
 					<div id='lobbyGameMode'></div>
-					<div class='text-primary margin-top'>Map:</div>
+					<div id="lobbyGameMapLabel" class='text-primary margin-top'></div>
 					<div id='lobbyGameMap'></div>
-					<div class='text-primary margin-top'>Speed:</div>
-					<div id='lobbyGameSpeed'></div>
-					<div class='text-primary margin-top'>Max Players:</div>
+					<div id="lobbyMaxPlayersLabel" class='text-primary margin-top'></div>
 					<div id='lobbyGameMax'></div>
 				</div>
 				
@@ -432,7 +411,7 @@
 
 			<div class="text-center">
 				<div>
-					<h2 class='header'>Nation Name</h2>
+					<h2 id="setNationName" class='header'></h2>
 					<hr class="fancyhr">
 				</div>
 			</div>
@@ -446,15 +425,13 @@
 					   size="24"
 					   aria-describedby="updateNationNameStatus"
 					   placeholder="Enter New Nation Name">
-				<button id="submitNationName" class="btn fwBlue shadow4" type="button">
-					Update Nation Name
-				</button>
+				<button id="submitNationName" class="btn fwBlue shadow4" type="button"></button>
 			</div>
 
 			<div class="text-center">
 				<div>
 					<hr class="fancyhr">
-					<h2 class='header'>National Flag</h2>
+					<h2 id="setNationFlag" class='header'></h2>
 					<hr class="fancyhr">
 				</div>
 			</div>
@@ -475,32 +452,7 @@
 					<img id="updateNationFlag" class="w100 block center no-select" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 				</div>
 			</div>
-
-
-			<!--div class="text-center">
-				<div>
-					<hr class="fancyhr">
-					<h2 class='header'>Update Avatar</h2>
-					<hr class="fancyhr">
-				</div>
-			</div>
-
-			<div id="configure-nation-avatar">
-				<div id="configure-nation-avatar-col-1">
-					<p>Upload your dictator avatar.<br>A 100x100 image is recommended.<br>Image should be a jpg < 50 KB:</p>
-					<p>
-						<input id="dictatorAvatar" class="btn btn-primary fwBlue shadow4" type="file" accept=".jpg" name="image">
-					</p>
-					<p id="uploadErr" class="text-warning"></p>
-				</div>
-				<div id="configure-nation-avatar-col-2">
-					<img id="configureAvatarImage" class="dictator no-select">
-				</div>
-			</div-->
 		</div>
-
-
-
 
 		<div id="leaderboard" class="fw-primary title-modals">
 			<button id='leaderboardDone'
@@ -510,9 +462,9 @@
 			</button>
 			<div id="leaderboard-head">
 				<div>
-					<button id="leaderboardRankedBtn" type="button" class="btn fwBlue btn-responsive shadow4 ranked">Ranked</button>
-					<button id="leaderboardFFABtn" type="button" class="btn fwBlue btn-responsive shadow4">FFA</button>
-					<button id="leaderboardTeamBtn" type="button" class="btn fwBlue btn-responsive shadow4">Team</button>
+					<button id="leaderboardRankedBtn" type="button" class="btn fwBlue btn-responsive shadow4 ranked"></button>
+					<button id="leaderboardFFABtn" type="button" class="btn fwBlue btn-responsive shadow4"></button>
+					<button id="leaderboardTeamBtn" type="button" class="btn fwBlue btn-responsive shadow4"></button>
 					<button id="leaderboard-trips-btn" type="button" class="btn fwBlue btn-responsive shadow4">Trips</button>
 					<button id="leaderboard-quads-btn" type="button" class="btn fwBlue btn-responsive shadow4">Quads</button>
 					<button id="leaderboard-pents-btn" type="button" class="btn fwBlue btn-responsive shadow4">Pents</button>
@@ -528,10 +480,9 @@
 	<div id="gameWrap">
 
 		<div id="ui2-head" class="stagBlue no-select gameWindow">
-			<div>
+			<div id="energy-timer-base">
 				<svg id="energy-timer-wrap"
-					 class="timer-tooltips"
-					 title="Turn ends when time expires or when all players have spent their energy">
+					 class="timer-tooltips">
 					<circle id="energyIndicator"
 							r=".5rem"
 							cx="1rem"
@@ -543,34 +494,33 @@
 			</div>
 
 			<div id="currentYear"
-				 data-placement="top"
-				 title="It's the current year!">4000 B.C.</div>
+				 data-placement="top">4000 B.C.</div>
 
-			<div title="Energy is used to attack, move, deploy, and rush troops.">
+			<div id="energyWrap">
 				<img src="images/icons/energy.png" class="fw-icon">
 				<span id="moves">0</span>
 			</div>
 
-			<div title="Food milestones produce available troops">
+			<div id="foodWrap">
 				<img src="images/icons/food.png" class="fw-icon">
 				<span id="food">0</span>/<span id="foodMax">25</span><!--(+<span id="sumFood">0</span>)-->
 			</div>
 
-			<div title="Science is used to build structures, weapons, and research technology.">
+			<div id="scienceWrap">
 				<img src="images/icons/production.png" class="fw-icon">
 				<span id="production">0</span>
 			</div>
 
-			<div title="Culture milestones produce special rewards">
+			<div id="cultureWrap">
 				<img src="images/icons/culture.png" class="fw-icon">
 				<span id="culture">0</span>/<span id="cultureMax">300</span>
 				<!--(+<span id="sumCulture">0</span>)-->
 			</div>
-			<div data-placement="bottom" title="Great Generals boost troop attack">
+			<div id="generalWrap">
 				<img id="energy-icon" src="images/icons/general.png" class="fw-icon">
 				<span id="oBonus">0</span>
 			</div>
-			<div data-placement="bottom" title="Great Tacticians boost troop defense">
+			<div id="tacticianWrap">
 				<img id="energy-icon" src="images/icons/tactician.png" class="fw-icon">
 				<span id="dBonus">0</span>
 			</div>
@@ -599,7 +549,6 @@
 					 class="targetFlag"
 					 src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 				<div id="target-details-column" class="shadow4">
-					<!--i id="targetCapStar" class="glyphicon glyphicon-star capitalStar shadow4 none"></i-->
 					<div id="targetNameWrap" class="ellipsis"></div>
 					<div id="targetResources"></div>
 				</div>
@@ -607,11 +556,10 @@
 
 			<div id="resourceBody">
 
-				<div id="troop-flex" title="Deploy troops to conquered territories">
+				<div id="troop-flex">
+					<div>Reserve Troops</div>
 					<div id="available-troops">
 						<img id="troop-icon" src="images/icons/troops.png">
-						<div>Available</div>
-						<div>Troops</div>
 					</div>
 					<div id="manpower">0</div>
 				</div>
@@ -619,10 +567,10 @@
 				<div id="food-wrap">
 					<div id="foodBarWrap" class="barWrap resourceBarParent resource-flex">
 						<div id="foodBar" class="resourceBar"></div>
-						<div title="Food Bonus" class="resource-child">
+						<div id="foodBonusTitle" class="resource-child">
 							+<span id="foodBonus">0</span>%
 						</div>
-						<div title="Food milestones produce available troops"
+						<div id="foodMilestoneTitle"
 							 class="resource-child">
 							Food <img src="images/icons/food.png" class="fw-icon">
 						</div>
@@ -631,11 +579,10 @@
 
 				<div id="prod-wrap">
 					<div class="production resource-flex">
-						<span title="Science Bonus">
+						<span id="scienceBonusTitle">
 							+<span id="productionBonus">0</span>%
 						</span>
-						<span class="resource-child"
-							  title="Science is used to build structures, fire weapons, and research technology.">
+						<span id="scienceMilestoneTitle" class="resource-child">
 							Science <img src="images/icons/production.png" class="fw-icon resourceIcon">
 						</span>
 					</div>
@@ -644,11 +591,10 @@
 				<div id="culture-wrap">
 					<div id="cultureBarWrap" class="barWrap resourceBarParent resource-flex">
 						<div id="cultureBar" class="resourceBar"></div>
-						<span title="Culture Bonus" class="resource-child">
+						<span id="cultureBonusTitle" class="resource-child">
 							+<span id="cultureBonus">0</span>%
 						</span>
-							<span title="Culture milestones produce special rewards"
-								  class="resource-child">
+						<span id="cultureMilestoneTitle" class="resource-child">
 							Culture <img src="images/icons/culture.png" class="fw-icon">
 						</span>
 					</div>
@@ -658,8 +604,7 @@
 
 			<div id="ui2" class="blueBg">
 
-				<div id="attack" class="actionButtons"
-					title="Attack with all troops">
+				<div id="attack" class="actionButtons">
 					<div>
 						<span class='text-hotkey'>A</span>ttack
 					</div>
@@ -669,8 +614,7 @@
 					</div>
 				</div>
 
-				<div id="splitAttack" class="actionButtons"
-					title="Attack with half of your troops">
+				<div id="splitAttack" class="actionButtons">
 					<div>
 						<span class='text-hotkey'>S</span>plit Attack
 					</div>
@@ -680,8 +624,7 @@
 					</div>
 				</div>
 
-				<div id="deploy" class="actionButtons"
-					title="Deploy available troops to a tile">
+				<div id="deploy" class="actionButtons">
 					<div>
 						<span class='text-hotkey'>D</span>eploy Troops
 					</div>
@@ -691,8 +634,7 @@
 					</div>
 				</div>
 
-				<div id="rush" class="actionButtons"
-					title="Rush 2 troops from your citizenry. Boosted by culture bonus.">
+				<div id="rush" class="actionButtons">
 					<div>
 						<span class='text-hotkey'>R</span>ush Troops
 					</div>
@@ -703,8 +645,7 @@
 				</div>
 
 				<!-- build -->
-				<div id="upgradeTileDefense" class="actionButtons"
-					title="Bunkers boost tile defense +5">
+				<div id="upgradeTileDefense" class="actionButtons">
 					<div>
 						<span class='text-hotkey'>B</span>uild <span id="buildWord">Bunker</span>
 					</div>
@@ -839,13 +780,12 @@
 
 		<div id="diplomacy-ui" class="shadow4 blueBg gameWindow no-select">
 			<div id="game-mode">
-				<i id="hide-ui" class="pointer game-options fa fa-window-close-o" title="Hide UI"></i>
-				<i id="toggle-flags" class="pointer game-options fa fa-window-maximize" title="Toggle Flags"></i>
-				<i id="hotkeys" class="pointer game-options fa fa-keyboard-o" title="Hotkeys"></i>
-				<i id="options" class="pointer game-options fa fa-gear" title="Options"></i>
-				<i id="surrender" class="pointer game-options fa fa-flag" title="Surrender"></i>
+				<i id="hide-ui" class="pointer game-options fa fa-window-close-o"></i>
+				<i id="toggle-flags" class="pointer game-options fa fa-window-maximize"></i>
+				<i id="hotkeys" class="pointer game-options fa fa-keyboard-o"></i>
+				<i id="gameOptions" class="pointer game-options fa fa-gear"></i>
+				<i id="surrender" class="pointer game-options fa fa-flag"></i>
 				<i id="exitSpectate" class="pointer game-options fa fa-times-circle none"></i>
-				<div id="game-mode-name"></div>
 			</div>
 			<div id="diplomacy-body"></div>
 		</div>
@@ -968,58 +908,50 @@
 		<button id='optionsDone' type='button' class='close-btn-wrap btn btn-sm fwBlue shadow4'>
 			<span class="close-btn sharp-x">&times;</span>
 		</button>
-		<h2 style="margin-bottom: .5rem;" class='header text-center'>Options</h2>
+		<h2 id="optionsHeader" style="margin-bottom: .5rem;" class='header text-center'></h2>
 		<hr class="fancyhr">
 		<div id="optionsFormWrap" class="container w100">
 		
 			<div class='row buffer2'>
-				<div class='col-xs-6'>Music Volume</div>
+				<div id="musicVolume" class='col-xs-6'></div>
 				<div class='col-xs-6 text-right'>
 					<input id="musicSlider" class="sliders" type="text"/>
 				</div>
-				<div class='col-xs-6 buffer'>Sound Effect Volume</div>
+				<div id="soundVolume" class='col-xs-6 buffer'></div>
 				<div class='col-xs-6 text-right buffer'>
 					<input id="soundSlider" class="sliders" type="text"/>
 				</div>
 			</div>
 			<div class="row buffer">
-				<div class='col-xs-6'>Muh Bible Mode</div>
+				<div id="bibleMode" class='col-xs-6'></div>
 				<div class='col-xs-6 text-center'>
 					<input type="checkbox" id="bible-status">
 				</div>
 			</div>
 			<div class="row buffer">
-				<div class='col-xs-6'>Window Size</div>
+				<div id="windowSize" class='col-xs-6'>Window Size</div>
 				<div class='col-xs-6'>
 
 					<div id="window-select-wrap" class="dropdown">
-						<button class="btn dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">
-							<span id="window-size">Full Screen</span>
+						<button class="btn dropdown-toggle shadow4 fwDropdownButton"
+								type="button"
+								data-toggle="dropdown">
+							<span id="current-window-size"></span>
 							<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 						</button>
 						<ul class="dropdown-menu fwDropdown">
-							<li id="window-full-screen" class="window-select">
-								<a href="#">Full Screen</a>
-							</li>
-							<li id="window-1920-1080" class="window-select">
-								<a href="#">1920 x 1080</a>
-							</li>
-							<li id="window-1600-900" class="window-select">
-								<a href="#">1600 x 900</a>
-							</li>
-							<li id="window-1360-768" class="window-select">
-								<a href="#">1360 x 768</a>
-							</li>
-							<li id="window-1280-720" class="window-select">
-								<a href="#">1280 x 720</a>
-							</li>
+							<li id="window-full-screen" class="window-select"></li>
+							<li id="window-1920-1080" class="window-select"></li>
+							<li id="window-1600-900" class="window-select"></li>
+							<li id="window-1360-768" class="window-select"></li>
+							<li id="window-1280-720" class="window-select"></li>
 						</ul>
 					</div>
 				</div>
 			</div>
-			<div id='exit-game' class='shadow4'>Exit Game</div>
-			<div id="version">
-				<script>document.write('Version ' + app.version);</script>
+			<div id='exit-game' class='shadow4'></div>
+			<div id="version"><span id="versionSpan"></span>
+				<script>document.write(app.version);</script>
 			</div>
 		</div>
 	</div>
@@ -1542,6 +1474,7 @@ function notLoggedIn() {
 			'lang',
 			'stats',
 			'animate',
+			'my',
 			'core',
 			'title',
 			'lobby',

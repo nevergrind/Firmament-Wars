@@ -1086,9 +1086,8 @@ tbody {
 	left: 0;
 	height: 100%;
 	width: 100%;
-	background: url(../images/tiny-water-6.gif);
+	background: url(../images/water7.gif);
 	background-size: 400px 400px;
-	transform: translate3d(0,0,0);
 
 }
 #targetName {
@@ -1240,28 +1239,15 @@ tbody {
 	display: flex;
 	justify-content: space-between;
 	align-content: center;
+	align-items: center;
 	font-size: 2.25rem;
 	line-height: 2.25rem;
 	font-family: Cinzel;
 	text-align: center;
 }
-#game-mode {
-	display: flex;
-	font-family: Cinzel;
-	padding: .2rem 1rem;
-	color: #bef;
-	justify-content: space-between;
-	align-items: center;
-}
 #available-troops {
 	position: relative;
-	padding: .5rem;
-	font-size: 2rem;
-}
-#troop-icon {
-	position: absolute;
-	right: -3.25rem;
-	top: .5rem;
+	padding: .5rem 0;
 }
 #manpower {
 	padding: 0 .5rem 0 0;
@@ -1270,6 +1256,13 @@ tbody {
 	text-align: right;
 	align-self: center;
 	z-index: 1;
+}
+#game-mode {
+	display: flex;
+	font-family: Cinzel;
+	padding: .5rem 1.5rem;
+	color: #bef;
+	justify-content: space-between;
 }
 #ui2-head {
     position: absolute;
@@ -1708,7 +1701,6 @@ audio,
     position: absolute;
     top: 0%;
     left: 0%;
-    background: #0a246a;
 }
 #world {
     position: absolute;
@@ -2126,7 +2118,6 @@ circle {
     text-align: center;
     font-size: 2rem;
     color: #fff;
-	transform: translate3d(0,0,0);
 	backdrop-filter: brightness(50%) blur(5px);
     border-image-slice: 1;
     z-index: 999999;
@@ -2142,7 +2133,6 @@ circle {
     color: #bef;
     z-index: 999999;
     pointer-events: none;
-	transform: translate3d(0,0,0);
     visibility: hidden
 }
 #createGameFormWrap {
@@ -2848,6 +2838,14 @@ header #options {
 }
 #window-size-wrap {
 	width: 100%;
+}
+.window-select {
+	color: #aef;
+	padding-left: 1em;
+	padding: 3px 20px;
+}
+.window-select:hover {
+	background: #135;
 }
 .no-point,
 .no-pointer {

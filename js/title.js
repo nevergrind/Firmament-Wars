@@ -575,6 +575,7 @@ var title = {
 		var msg = msg.split(splitter),
 			msg = msg[1].split(" "),
 			account = msg.shift();
+		console.info('sendWhisper', account, msg[0]);
 		$.ajax({
 			url: app.url + 'php/insertWhisper.php',
 			data: {

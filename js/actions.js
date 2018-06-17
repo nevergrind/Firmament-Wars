@@ -186,10 +186,15 @@ var action = {
 	deploy: function(){
 		if (my.government === 'Communism' && !game.tiles[my.tgt].player && !game.tiles[my.tgt].units){
 			// skip for commie bonus
-		} else {
-			my.checkSelectLastTarget();
+		}
+		else {
+			// my.checkSelectLastTarget();
 		}
 		var t = game.tiles[my.tgt];
+		if (my.player !== t.player) {
+			action.error('You do not own that tile.');
+			return;
+		}
 		if (my.moves < my.deployCost){
 			action.error('Not enough energy!');
 			return;
@@ -233,9 +238,13 @@ var action = {
 		}
 	},
 	rush: function(){
-		my.checkSelectLastTarget();
+		//my.checkSelectLastTarget();
 		var t = game.tiles[my.tgt],
 			tgt = my.tgt;
+		if (my.player !== t.player) {
+			action.error('You do not own that tile.');
+			return;
+		}
 		if (my.moves < my.rushCost){
 			action.error('Not enough energy!');
 			return;
@@ -280,9 +289,13 @@ var action = {
 		});
 	},
 	upgradeTileDefense: function(){
-		my.checkSelectLastTarget();
+		//my.checkSelectLastTarget();
 		var t = game.tiles[my.tgt],
 			ind = t.defense - t.capital ? 1 : 0;
+		if (my.player !== t.player) {
+			action.error('You do not own that tile.');
+			return;
+		}
 		if (ind > 2){
 			return;
 		}

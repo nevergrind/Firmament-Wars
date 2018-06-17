@@ -15,28 +15,16 @@ var events = {
 				})
 			}, 100);
 			// background map
-			if (isMobile){
-				document.getElementById('worldTitle').style.display = 'none';
-				TweenMax.set('#worldTitle', {
+			TweenMax.to("#worldTitle", 600, {
+				startAt: {
 					xPercent: -50,
 					yPercent: -50,
-					top: '50%',
-					left: '50%',
-					width: '1600px',
-					height: '1600px'
-				});
-			} else {
-				TweenMax.to("#worldTitle", 600, {
-					startAt: {
-						xPercent: -50,
-						yPercent: -50,
-						rotation: -360
-					},
-					rotation: 0,
-					repeat: -1,
-					ease: Linear.easeNone
-				});
-			}
+					rotation: -360
+				},
+				rotation: 0,
+				repeat: -1,
+				ease: Linear.easeNone
+			});
 		}).on('resize', function() {
 			ui.resizeWindow();
 		});
@@ -141,7 +129,7 @@ var events = {
 		if (!app.isLocal) {
 			$(document).on('contextmenu', function(){ return false; });
 		}
-		$("body").on(ui.click, '#options', function(){
+		$("body").on(ui.click, '#options, #gameOptions', function(){
 			title.showModal();
 		}).on(ui.click, '#hotkeys', function(){
 			TweenMax.to("#hotkeysModal", g.modalSpeed, {
@@ -293,8 +281,7 @@ var events = {
 		});
 
 		$("#window-select-wrap").on(ui.click, '.window-select', function() {
-			my.window = this.textContent.trim();
-			ui.setWindow(my.window);
+			ui.setWindow(this.id);
 		});
 		$("#bible-status").on(ui.click, function() {
 			stats.setBibleMode($(this).prop('checked'));
