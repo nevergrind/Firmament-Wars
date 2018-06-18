@@ -85,7 +85,7 @@ var events = {
 			}
 			if (mode === 'team'){
 				g.teamMode = 1;
-				e1.textContent = 'Create Team Game';
+				e1.textContent = lang[my.lang].createTeamGameHeadLabel;
 			}
 			// e3.val(my.account +'_'+ ~~(Math.random()*999999)).select();
 			e3.val('').select();
@@ -156,7 +156,7 @@ var events = {
 
 		// cached values on client to reduce DB load
 
-		$("#joinPrivateGameModal").on(ui.click, "#joinPrivateGameBtn", function(){
+		$("#joinPrivateGameModal").on(ui.click, "#joinPrivateGameBtnConfirm", function(){
 			title.joinGame();
 		});
 
@@ -209,7 +209,7 @@ var events = {
 			title.toggleFriend($(this).data('account'));
 		}).on(ui.click, '.ribbon', function(){
 			var x = $(this).data('ribbon') * 1;
-			g.chat(game.ribbonTitle[x] +": "+ game.ribbonDescription[x], 'chat-warning'); 
+			g.chat(lang[my.lang].ribbonTitle[x] +": "+ lang[my.lang].ribbonDescription[x], 'chat-warning');
 		});
 		$("#toggleNation").on(ui.click, function(){
 			title.configureNation();
@@ -305,7 +305,7 @@ var events = {
 					src: "images/flags/" + my.selectedFlagFull,
 					title: my.selectedFlag
 				});
-				g.msg("Your nation's flag is now: " + my.selectedFlag);
+				g.msg(lang[my.lang].flagChanged + my.selectedFlag);
 				document.getElementById('selectedFlag').textContent = my.selectedFlag;
 				$("[title]")
 					.tooltip('fixTitle')
@@ -373,7 +373,7 @@ var events = {
 			audio.play('click');
 			g.lock(1);
 			g.searchingGame = true;
-			g.msg("Searching for ranked games...", 0);
+			g.msg(lang[my.lang].rankedSearch, 0);
 			(function repeat(count){
 				if (count < 4 && !g.joinedGame){
 					setTimeout(function(){
@@ -397,7 +397,7 @@ var events = {
 					});
 				} else {
 					if (!g.joinedGame && g.searchingGame){
-						g.msg("No ranked games found!<br>Try creating a ranked game instead.", 5);
+						g.msg(lang[my.lang].noRankedFound, 5);
 						g.unlock();
 						g.searchingGame = false;
 					}

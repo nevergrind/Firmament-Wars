@@ -399,7 +399,7 @@ var lobby = {
 	},
 	hostLeft: function(){
 		setTimeout(function(){
-			g.msg("The host has left the lobby.");
+			g.msg(lang[my.lang].hostLeft);
 			setTimeout(function(){
 				exitGame(true);
 			}, 1000);
@@ -580,7 +580,7 @@ var lobby = {
 					g.unlock();
 				});
 			} else {
-				g.msg("You need two players to start a game! Wait for players to join or add a computer player to begin.");
+				g.msg(lang[my.lang].needTwoPlayers);
 			}
 		}
 	}
@@ -819,7 +819,7 @@ function loadGameState(){
 						loadGameState(); // try again
 					}, 500);
 				} else {
-					g.msg("Failed to load game data");
+					g.msg(lang[my.lang].failedToLoad);
 					localStorage.setItem('reload', false);
 					setTimeout(function(){
 						window.onbeforeunload = null;

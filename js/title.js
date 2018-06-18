@@ -952,12 +952,12 @@ var title = {
 			speed = g.speed;
 			
 		if (!g.rankedMode && (name.length < 4 || name.length > 32)){
-			g.msg("Game name must be at least 4-32 characters.", 1);
+			g.msg(lang[my.lang].badGameName, 1);
 			setTimeout(function(){
 				$("#gameName").focus().select();
 			}, 100);
 		} else if (!g.rankedMode && (max < 2 || max > 8 || max % 1 !== 0)){
-			g.msg("Game must have 2-8 players.", 1);
+			g.msg(lang[my.lang].notEnoughPlayers, 1);
 		} else {
 			title.createGameService(
 				name,
@@ -1029,7 +1029,7 @@ var title = {
 	joinGame: function(){
 		g.name = $("#joinGame").val();
 		if (!g.name){
-			g.msg("Game name is not valid!", 1.5);
+			g.msg(lang[my.lang].gameNameNotValid, 1.5);
 			$("#joinGame").focus().select();
 			return;
 		}
@@ -1078,7 +1078,7 @@ var title = {
 				name: x
 			}
 		}).done(function(name) {
-			g.msg("Your new nation name is: " + name);
+			g.msg(lang[my.lang].newNationName + name);
 			$("#updateNationName").val(name);
 		}).fail(function(e){
 			g.msg(e.statusText);

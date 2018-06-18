@@ -502,7 +502,7 @@ g.init = (function(){
 	my.lang = 'english';
 	if (app.isApp) {
 		g.lock(1);
-		g.msg("Verifying Steam Credentials...");
+		g.msg(lang[my.lang].verifyingSteam);
 		// app login, check for steam ticket
 		var greenworks = require('./greenworks'),
 			steam = {
@@ -522,6 +522,7 @@ g.init = (function(){
 					type: 'POST',
 					url: app.url + 'php/init-game.php',
 					data: {
+						version: app.version,
 						screenName: steam.screenName,
 						steamid: steam.steamid,
 						ticket: data.ticket.toString('hex')
@@ -531,12 +532,14 @@ g.init = (function(){
 					my.lang = greenworks.getCurrentGameLanguage();
 					greenworks.cancelAuthTicket(steam.handle);
 				}).fail(function(data) {
-					data.responseText && g.msg(data.responseText);
+					g.lock(1);
+					data.responseText && g.msg(data.responseText, 0);
 				});
 			});
 		}
 		else {
-			g.msg("Unable to detect Steam. Please launch Steam and try again!", 999);
+			g.lock(1);
+			g.msg(lang[my.lang].steamNotFound, 0);
 		}
 	}
 	else {
@@ -545,6 +548,7 @@ g.init = (function(){
 			type: "POST",
 			url: app.url + 'php/init-game.php',
 			data: {
+				version: app.version,
 				screenName: '',
 				steamid: '',
 				ticket: ''
@@ -552,7 +556,8 @@ g.init = (function(){
 		}).done(function(data) {
 			g.initGameCallback(data);
 		}).fail(function(data) {
-			g.msg(data.responseText);
+			g.lock(1);
+			data.responseText && g.msg(data.responseText, 0);
 		});
 	}
 
@@ -594,82 +599,6 @@ var game = {
 	name: '',
 	tiles: [],
 	initialized: false,
-	ribbonTitle: ['',
-		'National Combat Medal',
-		'Tactical Nuke Recognition Award',
-		'Good Conduct Award',
-		"Patriot's Service Ribbon",
-		'Civic Service Ribbon',//5
-		'Bronze Meritorious Medal',
-		'Bronze Service Medal',
-		'Bronze Expeditionary Medal',
-		'Bronze Cross',
-		'Silver Cross',//10
-		'Golden Cross',
-		'Platinum Cross',
-		'Revolutionary Cause Award',
-		'Strategic Warfare Award',
-		'Combat Service Award', //15
-		'Combat Gallantry Award',
-		"Stalwart Conqueror's Medal",
-		"Dictator's Sword",
-		"King's Regalia",
-		"Archon's Scales",//20
-		'Divine Covenant',
-		"Emperor's Fasces",
-		"Eagle's Branch",
-		"Comrade's Sickle",
-		'Golden Expeditionary Medal',//25
-		'Golden Meritorious Medal',
-		'Golden Service Medal',
-		"Champion's Medal",
-		"Conqueror's Medal",
-		"Commander's Medal",//30
-		"Intrepid Heroism Award",
-		'Global War Expeditionary Medal',
-		'Silver Expeditionary Medal',
-		'Silver Meritorious Medal',
-		'Silver Service Medal',//35
-		"Engineer's Service Ribbon",
-	],
-	ribbonDescription: ['', // 0
-		'Established your nation',
-		'Destroyed a fortress with a nuclear weapon',
-		'Added two comrades to your friend list',
-		'Updated your national flag',
-		"Updated your nation's name",//5
-		'Won 10 ranked games',
-		'Won 10 team games',
-		'Won 10 FFA games',
-		'Achieved 1800+ rating',
-		'Achieved 2100+ rating',//10
-		'Achieved 2400+ rating',
-		'Achieved 2700+ rating',
-		'Great Revolutionary conquered a tile with 100+ units', //13
-		'Win a game with a 2-to-1 kill ratio',
-		'Won 10 games in a row', // 15
-		'Won 25 games in a row',
-		'Conquered a tile with a fortress',// 17
-		"Won a game under Despotism",
-		'Won a game as a Monarchy',
-		'Won a game as a Democracy',//20
-		'Won a game under Fundamentalism',
-		'Won a game under Fascism',
-		'Won a game as a Republic',
-		'Won a game under Communism',
-		'Won 500 FFA games',//25
-		'Won 500 ranked games',
-		'Won 500 team games',
-		"Hit top #10 on the ranked leaderboard",
-		"Hit top #100 on the ranked leaderboard",
-		"Hit top #1000 on the ranked leaderboard",//30
-		"Defeated the Juggernaut",
-		'Win an 8-player FFA game',
-		'Won 100 FFA games',
-		'Won 100 ranked games',
-		'Won 100 team games',//35
-		'Build a fortress',
-	],
 	toggleGameWindows: function(){
 		var x = $("#targetWrap").css('visibility') === 'visible';
 		TweenMax.set(DOM.gameWindows, {
@@ -1229,9 +1158,9 @@ function playerLogout(){
 		}).done(function(data) {
 			localStorage.removeItem('token');
 			location.reload();
-			g.msg("Logout successful");
+			g.msg(lang[my.lang].logoutSuccess);
 		}).fail(function() {
-			g.msg("Logout failed.");
+			g.msg(lang[my.lang].logoutFailed);
 		});
 	}, 1000);
 }

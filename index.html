@@ -148,7 +148,7 @@
 					<a id="logout" class="btn fwBlue btn-responsive shadow4">&nbsp;</a>
 				</div>
 				<div style="display: flex; align-items: center;">&ensp;
-					<i id="options" class="pointer options fa fa-gear" title="Options"></i>
+					<i id="options" class="pointer options fa fa-gear"></i>
 					<img src="images/neverworks-txt.png">
 				</div>
 				
@@ -299,15 +299,15 @@
 				<span class="close-btn sharp-x">&times;</span>
 			</button>
 			<div class='header text-center'>
-				<h2 id="createGameHead" class="header">Create FFA Game</h2>
-				<h2 id="createRankedGameHead" class='header ranked'>Create Ranked Game</h2>
+				<h2 id="createGameHead" class="header"></h2>
+				<h2 id="createRankedGameHead" class='header ranked'></h2>
 			</div>
 			<hr class="fancyhr">
 			<div id="createGameFormWrap">
 
 				<div id="createGameNameWrap">
 					<div class='buffer2'>
-						<label>Game Name</label>
+						<label id="createGameNameLabel"></label>
 					</div>
 					<div class='buffer'>
 						<input id='gameName' class='form-control createGameInput' type='text' maxlength='32' auto-complete='disabled'>
@@ -316,7 +316,7 @@
 
 				<div id="createGamePasswordWrap">
 					<div class='buffer2'>
-						<label>Password (optional for private games)</label>
+						<label id="createGamePasswordLabel"></label>
 					</div>
 
 					<div class='buffer'>
@@ -328,7 +328,7 @@
 
 					<div id="createGameMaxPlayerWrap" class="pull-right">
 						<div class='buffer2'>
-							<label class='control-label'>Maximum Players:</label>
+							<label id="createGameMaxPlayerLabel" class='control-label'></label>
 							<span id='createGamePlayers'>8</span>
 						</div>
 
@@ -338,7 +338,7 @@
 					</div>
 
 					<div class='buffer2'>
-						<label class='control-label'>Map</label>
+						<label id="createGameMapLabel" class='control-label'></label>
 					</div>
 
 					<div class='buffer w40'>
@@ -356,7 +356,7 @@
 				<hr class='fancyhr'>
 			</div>
 			<div id="create-game-form-foot" class='text-center'>
-				<button id='createGame' type='button' class='btn btn-md fwGreen btn-responsive shadow4'>Create Game</button>
+				<button id='createGame' type='button' class='btn btn-md fwGreen btn-responsive shadow4'></button>
 			</div>
 		</div>
 
@@ -375,29 +375,29 @@
 
 			<div class="row privateRow">
 				<div class='col-xs-4 privateLabel'>
-					<label class="control-label">Game Name</label>
+					<label id="privateGameNameLabel" class="control-label"></label>
 				</div>
 				<div class='col-xs-8'>
-					<input type="text" class="joinGameInputs fwBlueInput" id="joinGame" maxlength="32" placeholder="Game Name">
+					<input type="text" class="joinGameInputs fwBlueInput" id="joinGame" maxlength="32">
 				</div>
 			</div>
 
 			<div class="row buffer2 privateRow">
 				<div class='col-xs-4 privateLabel'>
-					<label class="control-label">Password</label>
+					<label id="privateGamePasswordLabel" class="control-label"></label>
 				</div>
 				<div class='col-xs-8'>
-					<input type="text" class="joinGameInputs fwBlueInput" id="joinGamePassword" maxlength="16" placeholder="Password (Private Game)">
+					<input type="text" class="joinGameInputs fwBlueInput" id="joinGamePassword" maxlength="16">
 				</div>
 			</div>
 
 			<div class='row buffer text-center'>
 				<div class='col-xs-12'>
 					<hr class="fancyhr">
-					<button id="joinPrivateGameBtn"
+					<button id="joinPrivateGameBtnConfirm"
 							type="button"
 							style="margin-top: 5px"
-							class="btn btn-md fwGreen btn-responsive shadow4">Join Game</button>
+							class="btn btn-md fwGreen btn-responsive shadow4"></button>
 				</div>
 			</div>
 		</div>

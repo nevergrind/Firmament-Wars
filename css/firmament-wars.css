@@ -357,6 +357,7 @@ h1{
 .header {
     font-family: Cinzel, Palatino Linotype, serif;
     letter-spacing: .2em;
+	padding-bottom: .2rem;
     color: #aef;
     background: -webkit-radial-gradient(center center, farthest-side, rgba(32, 64, 124, .5) 0%, rgba(0, 0, 0, .1) 100%);
 }

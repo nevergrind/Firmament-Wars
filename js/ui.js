@@ -441,24 +441,24 @@ function gameDefeat(){
 		var msg = '';
 		if (data.ceaseFire){
 			msg =
-			'<p>Armistice!</p>\
-			<div>The campaign has been suspended!</div>\
+			'<p>'+ lang[my.lang].armistice +'</p>\
+			<div>'+ lang[my.lang].gameArmistice +'</div>\
 			<div id="ceaseFire" class="endBtn">\
-				<div class="modalBtnChild">Cease Fire</div>\
+				<div class="modalBtnChild">'+ lang[my.lang].ceaseFire +'</div>\
 			</div>';
 		}
 		else if (data.gameDone){
 			msg =
-			'<p>Defeat!</p>\
-			<div>Your campaign for world domination has failed!</div>';
+			'<p>'+ lang[my.lang].defeat +'</p>\
+			<div>'+ lang[my.lang].gameDefeat +'</div>';
 			if (g.showSpectateButton){
 				msg +=
 				'<div id="spectate" class="endBtn">\
-					<div class="modalBtnChild">Spectate</div>\
+					<div class="modalBtnChild">'+ lang[my.lang].spectate +'</div>\
 				</div>';
 			}
 			msg += '<div id="endWar" class="endBtn">\
-				<div class="modalBtnChild">Concede Defeat</div>\
+				<div class="modalBtnChild">'+ lang[my.lang].concedeDefeat +'</div>\
 			</div>';
 		}
 		if (msg){
@@ -482,19 +482,19 @@ function gameVictory(){
 			console.info('VICTORY: ', data);
 			if (data.ceaseFire){
 				msg =
-				'<p>Armistice!</p>\
-				<div>The campaign has been suspended!</div>\
+				'<p>'+ lang[my.lang].armistice +'</p>\
+				<div>'+ lang[my.lang].gameArmistice +'</div>\
 				<div id="ceaseFire" class="endBtn">\
-					<div class="modalBtnChild">Cease Fire</div>\
+					<div class="modalBtnChild">'+ lang[my.lang].ceaseFire +'</div>\
 				</div>';
 				audio.play('shotgun2');
 			}
 			else if (data.gameDone){
 				msg =
-				'<p>Congratulations!</p>\
-				<div>Your campaign for global domination has succeeded!</div>\
+				'<p>'+ lang[my.lang].congratulations +'</p>\
+				<div>'+ lang[my.lang].gameVictory +'</div>\
 				<div id="endWar" class="endBtn">\
-					<div class="modalBtnChild">Victory</div>\
+					<div class="modalBtnChild">'+ lang[my.lang].victory +'</div>\
 				</div>';
 				g.victory = true;
 			}

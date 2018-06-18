@@ -72,20 +72,20 @@ var stats = {
 		str +=
 		'<div id="statResult" class="no-select">\
 			<img class="statResultFlag" src="images/flags/'+ flag +'">\
-			<span id="statGameResult">Defeat in '+ ui.transformYear(data.resourceTick) +'</span>\
+			<span id="statGameResult">'+ lang[my.lang].defeatIn + ui.transformYear(data.resourceTick) +'</span>\
 			<img class="statResultFlag" src="images/flags/'+ flag +'">\
 		</div>\
 		<div id="statTabWrap" class="no-select shadow4">\
 			<div id="statOverview" class="statTabs active">\
-				Overview\
+				'+ lang[my.lang].statOverview +'\
 			</div><div id="statUnits" class="statTabs">\
-				Units\
+				'+ lang[my.lang].statUnits +'\
 			</div><div id="statStructures" class="statTabs">\
-				Structures\
+				'+ lang[my.lang].statStructures +'\
 			</div><div id="statWeapons" class="statTabs">\
-				Weapons\
+				'+ lang[my.lang].statWeapons +'\
 			</div><div id="statResources" class="statTabs">\
-				Resources\
+				'+ lang[my.lang].statResources +'\
 			</div>\
 		</div>\
 		<table id="gameStatsTable" class="table"></table>\
@@ -96,8 +96,8 @@ var stats = {
 					<div id="statVerse" class="text-right">'+ stats.data.verse +'</div>\
 				</div>\
 				<div id="statDuration" class="col-xs-4 stagBlue text-center">\
-					<div id="gameDuration">Game Duration '+ stats.gameDuration(g.gameDuration) +'</div>\
-					<button id="statsEndGame" class="btn btn-md btn-block btn-responsive shadow4 lobbyButtons">End Game</button>\
+					<div id="gameDuration">'+ lang[my.lang].gameDuration + stats.gameDuration(g.gameDuration) +'</div>\
+					<button id="statsEndGame" class="btn btn-md btn-block btn-responsive shadow4 lobbyButtons">'+ lang[my.lang].endGame +'</button>\
 				</div>\
 			</div>\
 		</div>\
@@ -305,7 +305,13 @@ var stats = {
 	},
 	statOverview: function(){
 		// head
-		var str = stats.playerHead(['Units', 'Structures', 'Weapons', 'Resources', 'Total Score']);
+		var str = stats.playerHead([
+			lang[my.lang].tabUnits,
+			lang[my.lang].tabStructures,
+			lang[my.lang].tabWeapons,
+			lang[my.lang].tabResources,
+			lang[my.lang].tabTotalScore
+		]);
 		// player rows
 		var animate = [];
 		for (var i=1; i<=8; i++){
@@ -358,7 +364,12 @@ var stats = {
 	},
 	statUnits: function(){
 		// head
-		var str = stats.playerHead(['Earned', 'Deployed', 'Killed', 'Lost']);
+		var str = stats.playerHead([
+			lang[my.lang].tabEarned,
+			lang[my.lang].tabDeployed,
+			lang[my.lang].tabKilled,
+			lang[my.lang].tabLost,
+		]);
 		// player rows
 		for (var i=1; i<=8; i++){
 			var d = stats.data[i];
@@ -405,7 +416,11 @@ var stats = {
 	},
 	statStructures: function(){
 		// head
-		var str = stats.playerHead(['Bunkers', 'Walls', 'Fortresses']);
+		var str = stats.playerHead([
+			lang[my.lang].tabBunkers,
+			lang[my.lang].tabWalls,
+			lang[my.lang].tabFortresses
+		]);
 		// player rows
 		for (var i=1; i<=8; i++){
 			var d = stats.data[i];
@@ -448,7 +463,11 @@ var stats = {
 	},
 	statWeapons: function(){
 		// head
-		var str = stats.playerHead(['Cannons', 'Missiles', 'Nukes']);
+		var str = stats.playerHead([
+			lang[my.lang].tabCannons,
+			lang[my.lang].tabMissiles,
+			lang[my.lang].tabNukes
+		]);
 		// player rows
 		for (var i=1; i<=8; i++){
 			var d = stats.data[i];
@@ -491,7 +510,12 @@ var stats = {
 	},
 	statResources: function(){
 		// head
-		var str = stats.playerHead(['Energy', 'Science', 'Food', 'Culture']);
+		var str = stats.playerHead([
+			lang[my.lang].tabEnergy,
+			lang[my.lang].tabScience,
+			lang[my.lang].tabFood,
+			lang[my.lang].tabCulture
+		]);
 		// player rows
 		for (var i=1; i<=8; i++){
 			var d = stats.data[i];
@@ -631,8 +655,8 @@ var stats = {
 		var str = '';
 		data.forEach(function(e){
 			str += 
-			'<div class="ribbonName ranked">'+ game.ribbonTitle[e] +'</div>\
-			<div class="ribbonDescription ranked">'+ game.ribbonDescription[e] +'</div>\
+			'<div class="ribbonName ranked">'+ lang[my.lang].ribbonTitle[e] +'</div>\
+			<div class="ribbonDescription ranked">'+ lang[my.lang].ribbonDescription[e] +'</div>\
 			<img class="giantRibbon block" src="images/ribbons/ribbon'+ e +'.jpg">';  
 		});
 		document.getElementById('ribbonBody').innerHTML = str;

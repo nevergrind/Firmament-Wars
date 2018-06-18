@@ -13,7 +13,7 @@ function Target(o){
 var action = {
 	error: function(msg){
 		if (msg === undefined){
-			msg = "Not enough science!";
+			msg = lang[my.lang].notScience;
 		}
 		g.msg(msg, 1.5);
 		my.clearHud();
@@ -30,7 +30,7 @@ var action = {
 			return;
 		}
 		if (game.tiles[my.tgt].units < o.minimum){
-			g.msg("You need at least " + o.minimum + " troops to attack!", 1.5);
+			g.msg(lang[my.lang].needTwoUnits, 1.5);
 			my.clearHud();
 			return;
 		}
@@ -61,7 +61,7 @@ var action = {
 		// can't move to maxed friendly tile
 		if (game.tiles[defender].player === my.player){
 			if (game.tiles[defender].units >= 65535){
-				g.msg("That territory has the maximum number of units!", 1.5);
+				g.msg(lang[my.lang].maxUnits, 1.5);
 				my.clearHud();
 				return;
 			}
@@ -70,7 +70,7 @@ var action = {
 		my.attackOn = false;
 		my.attackName = '';
 		if (game.tiles[my.tgt].units === 1){
-			g.msg("You need at least 2 troops to move/attack!", 1.5);
+			g.msg(lang[my.lang].needTwoUnits, 1.5);
 			my.clearHud();
 			return;
 		}
@@ -80,7 +80,7 @@ var action = {
 		} else {
 			if ((my.moves < 2 && !my.splitAttack) ||
 				(my.moves < 1 && my.splitAttack) ){
-				action.error('Not enough energy!');
+				action.error(lang[my.lang].notEnoughEnergy);
 				return;
 			}
 		}
@@ -90,7 +90,7 @@ var action = {
 			if (my.account !== game.tiles[defender].account){
 				if (my.team === game.player[game.tiles[defender].player].team){
 					console.warn(my.team, game.tiles[defender].player, game.player[game.tiles[defender].player].team)
-					g.msg("Friendly fire! That's your teammate!");
+					g.msg(lang[my.lang].friendlyFire);
 				}
 			}
 		}
@@ -192,15 +192,15 @@ var action = {
 		}
 		var t = game.tiles[my.tgt];
 		if (my.player !== t.player) {
-			action.error('You do not own that tile.');
+			action.error(lang[my.lang].notYourTile);
 			return;
 		}
 		if (my.moves < my.deployCost){
-			action.error('Not enough energy!');
+			action.error(lang[my.lang].notEnoughEnergy);
 			return;
 		}
 		if (!my.manpower){
-			action.error("No troops available for deployment!");
+			action.error(lang[my.lang].noTroopsAvailable);
 			return;
 		}
 		if (t.units < 65535){
@@ -242,11 +242,11 @@ var action = {
 		var t = game.tiles[my.tgt],
 			tgt = my.tgt;
 		if (my.player !== t.player) {
-			action.error('You do not own that tile.');
+			action.error(lang[my.lang].notYourTile);
 			return;
 		}
 		if (my.moves < my.rushCost){
-			action.error('Not enough energy!');
+			action.error(lang[my.lang].notEnoughEnergy);
 			return;
 		}
 		if (t.units < 65535){
@@ -293,7 +293,7 @@ var action = {
 		var t = game.tiles[my.tgt],
 			ind = t.defense - t.capital ? 1 : 0;
 		if (my.player !== t.player) {
-			action.error('You do not own that tile.');
+			action.error(lang[my.lang].notYourTile);
 			return;
 		}
 		if (ind > 2){
