@@ -135,7 +135,6 @@ var stats = {
 		}
 		$("#bible-state").remove();
 		document.head.appendChild(e);
-		console.info(state);
 		localStorage.setItem('bible', state ? 1 : 0);
 	},
 	show: function(){

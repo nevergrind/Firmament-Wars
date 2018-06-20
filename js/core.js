@@ -499,7 +499,7 @@ g.init = (function(){
 		}
 	});
 	// default
-	my.lang = 'portuguese';
+	my.lang = 'spanish';
 	if (app.isApp) {
 		g.lock(1);
 		g.msg(lang[my.lang].verifyingSteam);
@@ -528,13 +528,16 @@ g.init = (function(){
 						ticket: data.ticket.toString('hex')
 					}
 				}).done(function(data) {
-					g.initGameCallback(data);
-					var langPref = greenworks.getCurrentGameLanguage();
+					var langPref = greenworks.getCurrentUILanguage();
 					var index = lang.alternateSupportedLanguages.indexOf(langPref);
+					title.chat({
+						message: 'Detected language: ' + langPref
+					});
 					if (index > -1) {
 						my.lang = lang.alternateSupportedLanguages[index];
 					}
 					greenworks.cancelAuthTicket(steam.handle);
+					g.initGameCallback(data);
 				}).fail(function(data) {
 					g.lock(1);
 					data.responseText && g.msg(data.responseText, 0);
