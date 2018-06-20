@@ -26,7 +26,7 @@ All projects shown helped create Firmament Wars.
 
 * [YouTube](https://www.youtube.com/user/Maelfyn)
 * [Twitter](https://twitter.com/maelfyn)
-* [Facebook](https://www.facebook.com/neverworksgames)
+* [Facebook](https://www.facebook.com/maelfyn)
 * [GitHub](https://github.com/Maelfyn)
 * [LinkedIn](https://www.linkedin.com/company/neverworks-games-llc)
 * [Google+](https://plus.google.com/+Maelfyn)
