@@ -1063,6 +1063,7 @@ var title = {
 		game.name = data.gameName;
 		g.map = data.mapData;
 		// g.speed = data.speed;
+		console.info('joinGameCallback', data);
 		lobby.init(data);
 		lobby.join(); // normal join
 		//$("#titleMenu, #titleChat").remove();

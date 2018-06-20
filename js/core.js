@@ -499,7 +499,7 @@ g.init = (function(){
 		}
 	});
 	// default
-	my.lang = 'english';
+	my.lang = 'portuguese';
 	if (app.isApp) {
 		g.lock(1);
 		g.msg(lang[my.lang].verifyingSteam);
@@ -529,7 +529,11 @@ g.init = (function(){
 					}
 				}).done(function(data) {
 					g.initGameCallback(data);
-					my.lang = greenworks.getCurrentGameLanguage();
+					var langPref = greenworks.getCurrentGameLanguage();
+					var index = lang.alternateSupportedLanguages.indexOf(langPref);
+					if (index > -1) {
+						my.lang = lang.alternateSupportedLanguages[index];
+					}
 					greenworks.cancelAuthTicket(steam.handle);
 				}).fail(function(data) {
 					g.lock(1);

@@ -261,7 +261,7 @@ var events = {
 			title.getLeaderboard('Ranked');
 		});
 		// leaderboard buttons
-		$("#leaderboardFFABtn").on(ui.click, function(){
+		$("#leaderboardFfaBtn").on(ui.click, function(){
 			title.getLeaderboard('FFA');
 		});
 		$("#leaderboardRankedBtn").on(ui.click, function(){
@@ -375,7 +375,7 @@ var events = {
 			g.searchingGame = true;
 			g.msg(lang[my.lang].rankedSearch, 0);
 			(function repeat(count){
-				if (count < 4 && !g.joinedGame){
+				if (count < 1 && !g.joinedGame){
 					setTimeout(function(){
 						if (g.searchingGame){
 							repeat(++count);
@@ -428,7 +428,7 @@ var events = {
 		});
 		$("#joinGameLobby").on(ui.click, '.governmentChoice', function(e){
 			// changes player's own government only
-			var government = $(this).text();
+			var government = $(this).data('government');
 			lobby.updateGovernmentWindow(government);
 			$.ajax({
 				url: app.url + "php/changeGovernment.php",
@@ -437,7 +437,8 @@ var events = {
 				}
 			});
 		}).on(ui.click, '.cpu-choice', function(e){
-			var difficulty = $(this).text();
+			var difficulty = $(this).data('difficulty');
+			console.info('cpu-choice', difficulty);
 			$.ajax({
 				url: app.url + "php/change-cpu-difficulty.php",
 				data: {
@@ -673,7 +674,7 @@ $(document).on('keydown', function(e){
 				var o = new Target({
 					cost: 1, 
 					attackName: 'splitAttack',
-					hudMsg: 'Split Attack: Select Target',
+					hudMsg: lang[my.lang].hudSplitAttack,
 					splitAttack: true
 				});
 				console.info(o.cost);
@@ -749,7 +750,7 @@ $(document).on('keydown', function(e){
 					cost: 0,
 					minimum: 0,
 					attackName: 'cannons',
-					hudMsg: 'Fire Cannons'
+					hudMsg: lang[my.lang].hudFireCannons
 				});
 				action.target(o);
 			}
@@ -759,7 +760,7 @@ $(document).on('keydown', function(e){
 					cost: 0,
 					minimum: 0,
 					attackName: 'missile',
-					hudMsg: 'Launch Missile'
+					hudMsg: lang[my.lang].hudLaunchMissile
 				});
 				action.target(o);
 			}
@@ -769,7 +770,7 @@ $(document).on('keydown', function(e){
 					cost: 0,
 					minimum: 0,
 					attackName: 'nuke',
-					hudMsg: 'Launch Nuclear Weapon'
+					hudMsg: lang[my.lang].hudLaunchNuke
 				});
 				action.target(o);
 			}

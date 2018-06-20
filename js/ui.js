@@ -5,13 +5,13 @@ var ui = {
 	defenseReductionAmount: [1, 3, 6],
 	cannonDamage: function() {
 		var cannonBonus = my.government === 'Monarchy' ? 2 : 0;
-		return (2 + my.oBonus + cannonBonus) +'-'+ (4 + my.oBonus + cannonBonus) +' damage';
+		return (2 + my.oBonus + cannonBonus) +'-'+ (4 + my.oBonus + cannonBonus) + lang[my.lang].damage;
 	},
 	cannonTooltip: function() {
 		return lang[my.lang].fireCannons + ui.cannonDamage();
 	},
 	missileDamage: function() {
-		return (7 + (my.oBonus * 2)) +'-'+ (12 + (my.oBonus * 2)) +' damage';
+		return (7 + (my.oBonus * 2)) +'-'+ (12 + (my.oBonus * 2)) + lang[my.lang].damage;
 	},
 	missileTooltip: function() {
 		return lang[my.lang].launchMissile + ui.missileDamage();
@@ -29,7 +29,7 @@ var ui = {
 		return g.teamMode ? '<span class="diploTeam">'+ team +'</span>' : '';
 	},
 	getDiploRow: function(p) {
-		var account = p.cpu ? p.difficulty : p.account,
+		var account = p.cpu ? lang[my.lang].difficulties[p.difficulty] : p.account,
 			icon = lobby.governmentIcon(p),
 			color = game.player[p.player].playerColor;
 
@@ -398,9 +398,9 @@ function updateTileInfo(tileId){
 	}
 	var resources =
 		'<span>' + t.food + '<img src="images/icons/food.png" class="fw-icon-sm"></span>'+
-		(t.production ? '<span>' + t.production + '<img src="images/icons/production.png" class="fw-icon-sm"></span>' : '') +
-		(t.culture ? '<span>' + t.culture + '<img src="images/icons/culture.png" class="fw-icon-sm"></span>' : '') +
-		(t.defense ? '<span>' + t.defense + '<img src="images/icons/tile-defense.png" class="fw-icon-sm"></span>' : '');
+		'<span>' + t.production + '<img src="images/icons/production.png" class="fw-icon-sm"></span>'+
+		'<span>' + t.culture + '<img src="images/icons/culture.png" class="fw-icon-sm"></span>'+
+		'<span>' + t.defense + '<img src="images/icons/tile-defense.png" class="fw-icon-sm"></span>';
 	// DOM.targetCapStar.style.display = t.capital ? 'inline' : 'none';
 	DOM.targetNameWrap.innerHTML = name;
 	DOM.targetResources.innerHTML = resources;
@@ -458,7 +458,7 @@ function gameDefeat(){
 				</div>';
 			}
 			msg += '<div id="endWar" class="endBtn">\
-				<div class="modalBtnChild">'+ lang[my.lang].concedeDefeat +'</div>\
+				<div class="modalBtnChild">'+ lang[my.lang].concede +'</div>\
 			</div>';
 		}
 		if (msg){

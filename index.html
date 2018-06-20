@@ -16,7 +16,7 @@
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
 	<script>
 		var app = {
-			version: '0.1.5',
+			version: '0.1.6',
 			initialized: 0, // init-game returned
 			isApp: location.protocol === 'chrome-extension:' ? 1 : 0,
 			account: ''
@@ -463,7 +463,7 @@
 			<div id="leaderboard-head">
 				<div>
 					<button id="leaderboardRankedBtn" type="button" class="btn fwBlue btn-responsive shadow4 ranked"></button>
-					<button id="leaderboardFFABtn" type="button" class="btn fwBlue btn-responsive shadow4"></button>
+					<button id="leaderboardFfaBtn" type="button" class="btn fwBlue btn-responsive shadow4"></button>
 					<button id="leaderboardTeamBtn" type="button" class="btn fwBlue btn-responsive shadow4"></button>
 					<button id="leaderboard-trips-btn" type="button" class="btn fwBlue btn-responsive shadow4">Trips</button>
 					<button id="leaderboard-quads-btn" type="button" class="btn fwBlue btn-responsive shadow4">Quads</button>
@@ -557,7 +557,10 @@
 			<div id="resourceBody">
 
 				<div id="troop-flex">
-					<div>Reserve Troops</div>
+					<div id="availableTroopsLabel" class="flex-column">
+						<div id="reserveLabel" class="text-center">Reserve</div>
+						<div id="troopsLabel" class="text-center">Troops</div>
+					</div>
 					<div id="available-troops">
 						<img id="troop-icon" src="images/icons/troops.png">
 					</div>
@@ -605,40 +608,32 @@
 			<div id="ui2" class="blueBg">
 
 				<div id="attack" class="actionButtons">
-					<div>
-						<span class='text-hotkey'>A</span>ttack
-					</div>
-					<div class="action-button-cost tight2 text-right productionCost">
+					<div id="abAttack"></div>
+					<div class="action-button-cost tight2 productionCost">
 						<img src="images/icons/energy.png" class="fw-icon resourceIcon">
 						<span id='attackCost'>2</span>
 					</div>
 				</div>
 
 				<div id="splitAttack" class="actionButtons">
-					<div>
-						<span class='text-hotkey'>S</span>plit Attack
-					</div>
-					<div class="action-button-cost tight2 text-right productionCost">
+					<div id="abSplitAttack"></div>
+					<div class="action-button-cost tight2 productionCost">
 						<img src="images/icons/energy.png" class="fw-icon resourceIcon">
 						</i><span id="splitAttackCost">1</span>
 					</div>
 				</div>
 
 				<div id="deploy" class="actionButtons">
-					<div>
-						<span class='text-hotkey'>D</span>eploy Troops
-					</div>
-					<div class="action-button-cost tight2 text-right productionCost">
+					<div id="abDeploy"></div>
+					<div class="action-button-cost tight2 productionCost">
 						<img src="images/icons/energy.png" class="fw-icon resourceIcon">
 						<span id='deployCost'>1</span>
 					</div>
 				</div>
 
 				<div id="rush" class="actionButtons">
-					<div>
-						<span class='text-hotkey'>R</span>ush Troops
-					</div>
-					<div class="action-button-cost tight2 text-right productionCost">
+					<div id="abRush"></div>
+					<div class="action-button-cost tight2 productionCost">
 						<img src="images/icons/energy.png" class="fw-icon resourceIcon">
 						</i><span id="rushCost">2</span>
 					</div>
@@ -647,9 +642,10 @@
 				<!-- build -->
 				<div id="upgradeTileDefense" class="actionButtons">
 					<div>
-						<span class='text-hotkey'>B</span>uild <span id="buildWord">Bunker</span>
+						<span id="abBuild"></span>
+						<span id="buildWord">Bunker</span>
 					</div>
-					<div class="action-button-cost tight2 text-right productionCost">
+					<div class="action-button-cost tight2 productionCost">
 						<img src="images/icons/production.png" class="fw-icon resourceIcon">
 						<span id="buildCost">40</span>
 					</div>
@@ -658,10 +654,8 @@
 				<div id="fireCannons" class="actionButtons none">
 					<div id="fireCannonsOverlay" class="weapon-overlay no-pointer"></div>
 					<div id="fireCannonsReload" class="weapon-reload no-pointer"></div>
-					<div>
-						Fire <span class='text-hotkey'>C</span>annons
-					</div>
-					<div class="action-button-cost tight2 text-right productionCost">
+					<div id="abCannons"></div>
+					<div class="action-button-cost tight2 productionCost">
 						<img src="images/icons/production.png" class="fw-icon resourceIcon">
 						<span id='cannonsCost'>24</span>
 					</div>
@@ -670,10 +664,8 @@
 				<div id="launchMissile" class="actionButtons none">
 					<div id="launchMissileOverlay" class="weapon-overlay no-pointer"></div>
 					<div id="launchMissileReload" class="weapon-reload no-pointer"></div>
-					<div>
-						Launch <span class='text-hotkey'>M</span>issile
-					</div>
-					<div class="action-button-cost tight2 text-right productionCost">
+					<div id="abMissile"></div>
+					<div class="action-button-cost tight2 productionCost">
 						<img src="images/icons/production.png" class="fw-icon resourceIcon">
 						<span id='missileCost'>50</span>
 					</div>
@@ -682,82 +674,66 @@
 				<div id="launchNuke" class="actionButtons none">
 					<div id="launchNukeOverlay" class="weapon-overlay no-pointer"></div>
 					<div id="launchNukeReload" class="weapon-reload no-pointer"></div>
-					<div>
-						Launch <span class='text-hotkey'>N</span>uke
-					</div>
-					<div class="action-button-cost tight2 text-right productionCost">
+					<div id="abNuke"></div>
+					<div class="action-button-cost tight2 productionCost">
 						<img src="images/icons/production.png" class="fw-icon resourceIcon">
 						<span id='nukeCost'>150</span>
 					</div>
 				</div>
 				<!-- research -->
-				<div class="row actionHead shadow4">Research</div>
+				<div id="abResearch" class="row actionHead shadow4"></div>
 
 				<div id="researchMasonry" class="actionButtons">
-					<div>
-						Masonr<span class='text-hotkey'>y</span>
-					</div>
-					<div class="action-button-cost tight2 text-right productionCost">
+					<div id="abMasonry"></div>
+					<div class="action-button-cost tight2 productionCost">
 						<img src="images/icons/production.png" class="fw-icon resourceIcon">
 						<span id='masonryCost'>40</span>
 					</div>
 				</div>
 
 				<div id="researchConstruction" class="actionButtons none">
-					<div>
-						C<span class='text-hotkey'>o</span>nstruction
-					</div>
-					<div class="action-button-cost tight2 text-right productionCost">
+					<div id="abConstruction"></div>
+					<div class="action-button-cost tight2 productionCost">
 						<img src="images/icons/production.png" class="fw-icon resourceIcon">
 						<span id='constructionCost'>60</span>
 					</div>
 				</div>
 
 				<div id="researchEngineering" class="actionButtons none">
-					<div>
-						<span class='text-hotkey'>E</span>ngineering
-					</div>
-					<div class="action-button-cost tight2 text-right productionCost">
+					<div id="abEngineering"></div>
+					<div class="action-button-cost tight2 productionCost">
 						<img src="images/icons/production.png" class="fw-icon resourceIcon">
 						<span id='engineeringCost'>80</span>
 					</div>
 				</div>
 
 				<div id="researchGunpowder" class="actionButtons">
-					<div>
-						<span class='text-hotkey'>G</span>unpowder
-					</div>
-					<div class="action-button-cost tight2 text-right productionCost">
+					<div id="abGunpowder"></div>
+					<div class="action-button-cost tight2 productionCost">
 						<img src="images/icons/production.png" class="fw-icon resourceIcon">
 						<span id='gunpowderCost'>60</span>
 					</div>
 				</div>
 
 				<div id="researchRocketry" class="actionButtons none">
-					<div>
-						Roc<span class='text-hotkey'>k</span>etry
-					</div>
-					<div class="action-button-cost tight2 text-right productionCost">
+					<div id="abRocketry"></div>
+					<div class="action-button-cost tight2 productionCost">
 						<img src="images/icons/production.png" class="fw-icon resourceIcon">
 						<span id='rocketryCost'>200</span>
 					</div>
 				</div>
 
 				<div id="researchAtomicTheory" class="actionButtons none">
-					<div>
-						A<span class='text-hotkey'>t</span>omic Theory
-					</div>
-					<div class="action-button-cost tight2 text-right productionCost">
+					<div id="abAtomic"></div>
+					<div class="action-button-cost tight2 productionCost">
 						<img src="images/icons/production.png" class="fw-icon resourceIcon">
 						<span id='atomicTheoryCost'>500</span>
 					</div>
 				</div>
 
 				<div id="researchFutureTech" class="actionButtons none">
-					<div>
-						<span class='text-hotkey'>F</span>uture Tech
-					</div>
-					<div class="action-button-cost tight2 text-right productionCost">
+					<div id="abFuture"></div>
+					<div class="action-button-cost tight2 productionCost">
 						<img src="images/icons/production.png" class="fw-icon resourceIcon">
 						<span id='futureTechCost'>800</span>
 					</div>
@@ -799,7 +775,7 @@
 		<div id="worldWrap">
 		</div>
 		
-		<div id="hud" class="shadow4">Select Target</div>
+		<div id="hud" class="shadow4"></div>
 		
 		<div id="surrenderScreen" class="fw-primary fw-text">
 			<p id="confirmSurrenderPrompt"></p>

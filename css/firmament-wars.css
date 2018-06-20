@@ -452,7 +452,6 @@ a:hover {
 	position: relative;
 	margin-top: 4rem;
 	z-index: 2;
-	width: 50%;
 	min-height: 19rem;
 }
 .action-btn {
@@ -493,7 +492,7 @@ a:hover {
 	font-size: 2rem;
     bottom: 5vh;
     left: 1vh;
-    width: 50%;
+    width: 60%;
     max-width: 640px;
     padding: .5rem;
     z-index: 9999;
@@ -621,12 +620,14 @@ a:hover {
 	right: 0;
 }
 .action-btn {
+	opacity: 0;
 	font-size: 2.5rem;
 	line-height: 3.25rem;
 	white-space: nowrap;
 	cursor: url('cursor/hover.png'), pointer;
 	transition: box-shadow ease-out .15s, color ease-out .3s;
 	text-align: center;
+	padding: 0 1.5rem;
 }
 .action-btn:hover {
 	color: #ff0;
@@ -1048,6 +1049,7 @@ tbody {
 }
 #target-details-column {
 	display: flex;
+	flex: 1;
 	flex-direction: column;
 	justify-content: space-around;
     background: -webkit-radial-gradient(top center, farthest-side, rgba(0, 48, 96, 1) 0%, rgba(0, 0, 0, 1) 100%);
@@ -1066,7 +1068,6 @@ tbody {
     position: relative;
 	text-align: center;
 	padding: 0 .1rem;
-	width: 14.3rem;
 	z-index: 2;
 }
 #ribbonBackdrop {
@@ -1246,6 +1247,9 @@ tbody {
 	font-family: Cinzel;
 	text-align: center;
 }
+#availableTroopsLabel {
+	flex-basis: 50%;
+}
 #available-troops {
 	position: relative;
 	padding: .5rem 0;
@@ -1299,13 +1303,13 @@ tbody {
     position: absolute;
     top: 3rem;
     right: 0;
+	width: 22rem;
 	font-size: 1.8rem;
     border-right: none;
     border-bottom: none;
     text-overflow: ellipsis;
     color: #fff;
 	border-radius: 0;
-	width: 21rem;
     z-index: 9999
 }
 #resources-ui>.row,
@@ -1526,7 +1530,13 @@ table td,
     background: -webkit-linear-gradient(top, rgba(23, 42, 84, 1) 0%, rgba(23, 42, 84, 1) 50%, rgba(4, 67, 136, 1) 50%, rgba(4, 67, 136, 1) 100%);
 	background: rgba(4, 67, 136, 1);
     -webkit-user-select: none;
-    user-select: none
+    user-select: none;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.actionButtons > * {
+	flex-shrink: 0;
 }
 .weapon-reload {
 	position: absolute;
@@ -1598,7 +1608,7 @@ table td,
 }
 .action-button-cost  {
 	display: flex;
-	flex-basis: 30%;
+	flex-basis: 6rem;
 	align-items: center;
 	justify-content: space-between;
 }
@@ -2217,6 +2227,12 @@ span.unlockGameBtn {
 }
 .flex-row {
 	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.flex-column {
+	display: flex;
+	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
 }

@@ -7,7 +7,7 @@ function Target(o){
 	this.minimum = o.minimum !== undefined ? o.minimum : 2;
 	this.attackName = o.attackName ? o.attackName : 'attack';
 	this.splitAttack = o.splitAttack ? o.splitAttack : false;
-	this.hudMsg = o.hudMsg ? o.hudMsg : 'Attack: Select Target';
+	this.hudMsg = o.hudMsg ? o.hudMsg : lang[my.lang].hudAttack;
 }
 
 var action = {
@@ -74,7 +74,7 @@ var action = {
 			my.clearHud();
 			return;
 		}
-		if (my.government === 'Despotism' &&
+		if (my.government === lang[my.lang].governments.Despotism &&
 			game.tiles[defender].player === my.player){
 			// nothing
 		} else {
@@ -613,7 +613,7 @@ $("#gameWrap").on(ui.click, '#attack', function(){
 	var o = new Target({
 		cost: 1,
 		attackName: 'splitAttack',
-		hudMsg: 'Split Attack: Select Target',
+		hudMsg: lang[my.lang].hudSplitAttack,
 		splitAttack: true
 	});
 	action.target(o);
@@ -640,7 +640,7 @@ $("#gameWrap").on(ui.click, '#attack', function(){
 		cost: 0,
 		minimum: 0,
 		attackName: 'cannons',
-		hudMsg: 'Fire Cannons'
+		hudMsg: lang[my.lang].hudFireCannons
 	});
 	action.target(o);
 }).on(ui.click, '#launchMissile', function(){
@@ -648,7 +648,7 @@ $("#gameWrap").on(ui.click, '#attack', function(){
 		cost: 0,
 		minimum: 0,
 		attackName: 'missile',
-		hudMsg: 'Launch Missile'
+		hudMsg: lang[my.lang].hudLaunchMissile
 	});
 	action.target(o);
 }).on(ui.click, '#launchNuke', function(){
@@ -656,7 +656,7 @@ $("#gameWrap").on(ui.click, '#attack', function(){
 		cost: 0,
 		minimum: 0,
 		attackName: 'nuke',
-		hudMsg: 'Launch Nuclear Weapon'
+		hudMsg: lang[my.lang].hudLaunchNuke
 	});
 	action.target(o);
 });
@@ -672,7 +672,7 @@ var research = {
 			animate.research({
 				element: 'researchMasonry',
 				duration: 20,
-				tech: 'Masonry',
+				tech: lang[my.lang].abMasonry,
 				method: 'masonryDone'
 			});
 		});
@@ -696,7 +696,7 @@ var research = {
 			animate.research({
 				element: 'researchConstruction',
 				duration: 30,
-				tech: 'Construction',
+				tech: lang[my.lang].abConstruction,
 				method: 'constructionDone'
 			});
 		});
@@ -720,7 +720,7 @@ var research = {
 			animate.research({
 				element: 'researchGunpowder',
 				duration: 25,
-				tech: 'Gunpowder',
+				tech: lang[my.lang].abGunpowder,
 				method: 'gunpowderDone'
 			});
 		});
@@ -744,7 +744,7 @@ var research = {
 			animate.research({
 				element: 'researchEngineering',
 				duration: 45,
-				tech: 'Engineering',
+				tech: lang[my.lang].abEngineering,
 				method: 'engineeringDone'
 			});
 		});
@@ -768,7 +768,7 @@ var research = {
 			animate.research({
 				element: 'researchRocketry',
 				duration: 40,
-				tech: 'Rocketry',
+				tech: lang[my.lang].abRocketry,
 				method: 'rocketryDone'
 			});
 		});
@@ -792,7 +792,7 @@ var research = {
 			animate.research({
 				element: 'researchAtomicTheory',
 				duration: 60,
-				tech: 'Atomic Theory',
+				tech: lang[my.lang].abAtomic,
 				method: 'atomicTheoryDone'
 			});
 		});
@@ -816,7 +816,7 @@ var research = {
 			animate.research({
 				element: 'researchFutureTech',
 				duration: 90,
-				tech: 'Future Tech',
+				tech: lang[my.lang].abFuture,
 				method: 'futureTechDone'
 			});
 		});

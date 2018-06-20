@@ -2,12 +2,12 @@
 var animate = {
 	colors: [
 		'#ffffff',
-		'#ffaa66',
-		'#ffcc99',
-		'#ffddaa',
-		'#ffff99',
-		'#ff5555',
-		'#ffff55'
+		'#fff',
+		'#eeffee',
+		'#ffffee',
+		'#99ff99',
+		'#eefff3',
+		'#ddddff'
 	],
 	randomColor: function(){
 		return animate.colors[~~(Math.random()*6)];
@@ -299,7 +299,7 @@ var animate = {
 				path.setAttributeNS(null,"stroke",animate.randomColor());
 				path.setAttributeNS(null,"stroke-width",1);
 				DOM.world.appendChild(path);
-				TweenLite.to(path, .1, {
+				/*TweenLite.to(path, .1, {
 					delay: (i / shots) * delay[sfx],
 					startAt: {
 						attr: {
@@ -318,11 +318,31 @@ var animate = {
 							}
 						});
 					}
+				});*/
+				TweenLite.to(path, .08, {
+					delay: (i / shots) * delay[sfx],
+					startAt: {
+						attr: {
+							d: drawPath
+						},
+						drawSVG: '0% 25%'
+					},
+					drawSVG: '75% 100%',
+					ease: Linear.easeIn,
+					onComplete: function(){
+						TweenLite.to(path, .033, {
+							drawSVG: '100% 100%',
+							ease: Linear.easeOut,
+							onComplete: function(){
+								this.target.parentNode.removeChild(this.target);
+							}
+						});
+					}
 				});
 
 				if (i % 8 === 0) {
 					animate.flash({
-						d: .1,
+						d: .2,
 						scale: 2,
 						x: x2 - 100,
 						y: y2 - 100,
@@ -331,7 +351,7 @@ var animate = {
 				else if (i % 8 === 4) {
 					animate.flash({
 						d: .15,
-						scale: 1,
+						scale: 1.5,
 						x: x1 - 100,
 						y: y1 - 100,
 					});

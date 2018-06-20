@@ -30,52 +30,39 @@ var lobby = {
 			}
 		});
 	},
-	updateGovernmentWindow: function(government){
+	updateGovernmentWindow: function(government){ // key value in
 		// updates government description
 		var str = '';
-		if (government === "Despotism"){
-			str = '<div id="lobbyGovName" class="text-primary">\
-				<img src="images/icons/Despotism.png" class="fw-icon-sm">Despotism</div>\
-				<div id="lobbyGovPerks">';
-		} else if (government === "Monarchy"){
-			str = '<div id="lobbyGovName" class="text-primary">\
-				<img src="images/icons/Monarchy.png" class="fw-icon-sm">Monarchy</div>\
-				<div id="lobbyGovPerks">';
-		} else if (government === "Democracy"){
-			str = '<div id="lobbyGovName" class="text-primary">\
-				<img src="images/icons/Democracy.png" class="fw-icon-sm">Democracy</div>\
-				<div id="lobbyGovPerks">';
-		} else if (government === "Fundamentalism"){
-			str = '<div id="lobbyGovName" class="text-primary">\
-				<img src="images/icons/Fundamentalism.png" class="fw-icon-sm">Fundamentalism</div>\
-				<div id="lobbyGovPerks">';
-		} else if (government === "Fascism"){
-			str = '<div id="lobbyGovName" class="text-primary">\
-				<img src="images/icons/Fascism.png" class="fw-icon-sm">Fascism</div>\
-				<div id="lobbyGovPerks">';
-		} else if (government === "Republic"){
-			str = '<div id="lobbyGovName" class="text-primary">\
-				<img src="images/icons/Republic.png" class="fw-icon-sm">Republic</div>\
-				<div id="lobbyGovPerks">';
-		} else if (government === "Communism"){
-			str = '<div id="lobbyGovName" class="text-primary">\
-				<img src="images/icons/Communism.png" class="fw-icon-sm">Communism</div>\
-				<div id="lobbyGovPerks">';
+		console.info('Government selected: ', government);
+		if (government === 'Random') {
+			document.getElementById('lobbyGovernment' + my.player).innerHTML = lang[my.lang].governments[government];
+			document.getElementById('lobbyGovernmentDescription').innerHTML =
+				'<div id="lobbyGovName" class="text-primary">Random</div>'+
+				'<div id="lobbyGovPerks">'+
+					'<div>???</div>'+
+					'<div>???</div>'+
+					'<div>???</div>'+
+					'<div>???</div>'+
+				'</div>';
 		}
-		lang[my.lang][government].forEach(function(v) {
-			str += '<div>' + v + '</div>';
-		});
-		str += '</div>';
-		document.getElementById('lobbyGovernment' + my.player).innerHTML = government === 'Random' ?
-			government : '<img src="images/icons/'+ government +'.png" class="fw-icon-sm">' + government;
-		document.getElementById('lobbyGovernmentDescription').innerHTML = government === 'Random' ?
-			'<div id="lobbyGovName" class="text-primary">Random</div>\
-				<div id="lobbyGovPerks">\
-					<div>???</div>\
-					<div>???</div>\
-					<div>???</div>\
-					<div>???</div>\
-				</div>' : str;
+		else {
+			str =
+			'<div id="lobbyGovName" class="text-primary">' +
+				'<img src="images/icons/'+ government +'.png" '+
+				'class="fw-icon-sm">'+ lang[my.lang].governments[government] +
+			'</div>';
+			// perks
+			str += '<div id="lobbyGovPerks">';
+			console.warn('lang[my.lang][government]', lang[my.lang][government]);
+			for (var key in lang[my.lang][government]) {
+				str += '<div>' + lang[my.lang][government][key] + '</div>';
+			}
+			str += '</div>';
+
+			document.getElementById('lobbyGovernment' + my.player).innerHTML =
+				'<img src="images/icons/'+ government +'.png" class="fw-icon-sm">' + lang[my.lang].governments[government];
+			document.getElementById('lobbyGovernmentDescription').innerHTML = str;
+		}
 	},
 	chat: function (data){
 		while (DOM.lobbyChatLog.childNodes.length > 200) {
@@ -141,16 +128,10 @@ var lobby = {
 			$DOM.lobbyChatInput.val('');
 		}
 	},
-	difficulties: [
-		'Very Easy', 'Easy', 'Normal', 'Hard', 'Very Hard', 'Mania', 'Juggernaut'
-	],
-	governments: [
-		'Despotism', 'Monarchy', 'Democracy', 'Fundamentalism', 'Fascism', 'Republic', 'Communism', 'Random'
-	],
 	init: function(x){
 		// build the lobby DOM
 		if (lobby.initialized) return;
-		document.getElementById('lobbyChatLog').innerHTML = 'You have joined the game: '+ x.name;
+		document.getElementById('lobbyChatLog').innerHTML = lang[my.lang].youHaveJoined + x.name;
 		lobby.sendMsg();
 		var e1 = document.getElementById("lobbyGameName");
 		if (e1 !== null){
@@ -187,13 +168,13 @@ var lobby = {
 								str += '<i class="fa fa-flag pointer2 lobbyTeamFlag"></i> <span id="lobbyTeamNumber'+ i +'" class="lobbyTeamNumbers">' + i +'</span></div>';
 								str +=
 								'<ul id="teamDropdown" class="dropdown-menu">\
-									<li class="header text-center selectTeamHeader">Team</li>';
+									<li class="header text-center selectTeamHeader">'+ lang[my.lang].team +'</li>';
 									for (var j=1; j<=8; j++){
-										str += '<li class="teamChoice" data-player="'+ i +'">Team '+ j +'</li>';
+										str += '<li class="teamChoice" data-player="'+ i +'">'+ lang[my.lang].team +' '+ j +'</li>';
 									}
 								str += '</ul></span>';
 							}
-							
+							// square
 							str += '<span><i id="lobbyPlayerColor'+ i +'" class="fa fa-square player'+ i +' lobbyPlayer dropdown-toggle';
 							
 							if (i === my.player){
@@ -205,7 +186,7 @@ var lobby = {
 							if (i === my.player){
 								str += 
 								'<ul id="teamColorDropdown" class="dropdown-menu">\
-									<li class="header text-center selectTeamHeader">Player Color</li>' +
+									<li class="header text-center selectTeamHeader">'+ lang[my.lang].playerColor +'</li>' +
 									'<li id="team-color-flex">';
 								for (var j=1; j<=20; j++){
 									str += '<div class="pbar'+ j +' playerColorChoice" data-playercolor="'+ j +'"></div>';
@@ -224,25 +205,26 @@ var lobby = {
 						str += 
 						'<div id="gov-dropdown-player'+ i +'" class="dropdown govDropdown">\
 							<button class="btn btn-primary btn-responsive dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">\
-								<span id="lobbyGovernment' +i+ '">Despotism</span>\
+								<span id="lobbyGovernment' +i+ '">'+ lang[my.lang].governments.Despotism +'</span>\
 								<i id="lobbyCaret' +i+ '" class="fa fa-caret-down text-warning lobbyCaret"></i>\
 							</button>\
 							<ul class="governmentDropdown dropdown-menu no-select">';
-								for (var z=0, len=lobby.governments.length; z<len; z++){
-									str += 
-									'<li class="governmentChoice">'+
-										'<a>'+ lobby.governments[z] +'</a>'+
+								for (var key in lang[my.lang].governments) {
+									str +=
+									'<li class="governmentChoice" data-government="'+ key +'">'+
+										'<a>'+ lang[my.lang].governments[key] +'</a>'+
 									'</li>';
 								}
 							str += '</ul>\
 						</div>' + 
 						lobby.getCpuDropdown(i);
-					} else {
+					}
+					else {
 						// not me - gov dropdown
 						str += 
 						'<div id="gov-dropdown-player'+ i +'" class="dropdown govDropdown">\
 							<button style="cursor: default" class="btn btn-primary btn-responsive dropdown-toggle shadow4 fwDropdownButton fwDropdownButtonEnemy" type="button">\
-								<span id="lobbyGovernment' +i+ '" class="pull-left">Despotism</span>\
+								<span id="lobbyGovernment' +i+ '" class="pull-left">'+ lang[my.lang].governments.Despotism +'</span>\
 								<i id="lobbyCaret' +i+ '" class="fa fa-caret-down text-disabled lobbyCaret"></i>\
 							</button>\
 						</div>' + 
@@ -275,14 +257,14 @@ var lobby = {
 		'<div id="gov-dropdown-cpu'+ player +'" class="dropdown govDropdown none">\
 			<button class="btn btn-primary btn-responsive dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">\
 				<img src="images/icons/computer.png" class="fw-icon-sm">\
-				<span id="lobby-difficulty-cpu'+ player +'">Very Easy</span>\
+				<span id="lobby-difficulty-cpu'+ player +'">'+ lang[my.lang].difficulties['Very Easy'] +'</span>\
 				<i id="lobby-caret-cpu'+ player +'" class="fa fa-caret-down text-warning lobbyCaret"></i>\
 			</button>\
 			<ul class="governmentDropdown dropdown-menu no-select">';
-				for (var i=0, len=lobby.difficulties.length; i<len; i++){
+				for (var key in lang[my.lang].difficulties){
 					str += 
-					'<li class="cpu-choice" data-player="'+ player +'">'+
-						'<a>'+ lobby.difficulties[i] +'</a>'+
+					'<li class="cpu-choice" data-player="'+ player +'" data-difficulty="'+ key +'">'+
+						'<a>'+ lang[my.lang].difficulties[key] +'</a>'+
 					'</li>';
 				}
 			str += '</ul>\
@@ -417,37 +399,27 @@ var lobby = {
 			document.getElementById("lobbyName" + i).innerHTML = data.nation;
 			var flag = data.flag;
 			document.getElementById("lobbyFlag" + i).src = 'images/flags/'+ flag;
-			
-			if (!isLoggedIn){
-				$('#lobbyFlag' + i)
-					.attr('title', data.flag.split(".").shift())
-					.tooltip({
-						animation: false,
-						placement: 'right',
-						container: 'body'
-					});
-			}
-			
+
 			if (my.player === i){
 				if (isLoggedIn){
-					$("#lobbyPlayerColor" + i).attr('title', 'Select Player Color')
+					$("#lobbyPlayerColor" + i).attr('title', lang[my.lang].selectPlayerColor)
 						.tooltip({
 							container: 'body',
 							animation: false
 						});
-					$("#lobbyTeam" + i).attr('title', 'Select Team')
+					$("#lobbyTeam" + i).attr('title', lang[my.lang].selectTeam)
 						.tooltip({
 							container: 'body',
 							animation: false
 						});
 				}
 			}
-			
+			console.info('LOBBY: updatePlayer', data);
 			lobby.updateGovernment(data);
 			lobby.data[i] = data;
 			lobby.updatePlayerColor(data);
 			document.getElementById('lobbyGovernment'+ i).innerHTML = data.cpu ?
-				('<img src="images/icons/computer.png" class="fw-icon-sm">'+ data.difficulty) : '<img src="images/icons/Despotism.png" class="fw-icon-sm">Despotism';
+				('<img src="images/icons/computer.png" class="fw-icon-sm">'+ data.difficulty) : '<img src="images/icons/Despotism.png" class="fw-icon-sm">'+ lang[my.lang].governments.Despotism;
 			
 			$("#lobbyCaret"+ i)
 				.removeClass("text-warning text-disabled")
@@ -461,7 +433,7 @@ var lobby = {
 			// remove
 			//console.info("REMOVE PLAYER: ", data);
 			document.getElementById("lobbyRow" + i).style.display = 'none';
-			document.getElementById('lobby-difficulty-cpu' + i).innerHTML = 'Very Easy';
+			document.getElementById('lobby-difficulty-cpu' + i).innerHTML = lang[my.lang].difficulties['Very Easy'];
 			lobby.data[i] = { account: '', cpu: 0 };
 		}
 		lobby.styleStartGame();
@@ -491,14 +463,17 @@ var lobby = {
 	updateGovernment: function(data){
 		// update button & window
 		var i = data.player;
-		console.info('government', data.government);
-		document.getElementById('lobbyGovernment' + i).innerHTML = data.government === 'Random' ?
-			data.government : '<img src="images/icons/'+ data.government +'.png" class="fw-icon-sm">' + data.government;
-		lobby.data[i].government = data.government;
+		console.info('updateGovernment', data.government);
+		document.getElementById('lobbyGovernment' + i).innerHTML =
+			data.government === 'Random' ?
+				lang[my.lang].governments[data.government] :
+				'<img src="images/icons/'+ data.government +'.png" class="fw-icon-sm">' + lang[my.lang].governments[data.government];
+		lobby.data[i].government = lang[my.lang].governments[data.government];
 	},
 	updateDifficulty: function(data){
 		var i = data.player;
-		document.getElementById('lobby-difficulty-cpu' + i).innerHTML = data.difficulty;
+		console.info('updateDifficulty', i, data.difficulty);
+		$('#lobby-difficulty-cpu' + i).html(lang[my.lang].difficulties[data.difficulty]);
 		lobby.data[i].difficulty = data.difficulty;
 	},
 	styleStartGame: function(){
@@ -521,7 +496,7 @@ var lobby = {
 			// normal countdown
 			countdown.style.display = 'block';
 			(function repeating(secondsToStart){
-				countdown.textContent = "Starting game in " + secondsToStart--;
+				countdown.textContent = lang[my.lang].startingGame + secondsToStart--;
 				if (secondsToStart >= 0){
 					audio.play('beep');
 					setTimeout(repeating, 1000, secondsToStart);
@@ -1079,6 +1054,8 @@ function loadGameState(){
 				action.setMenu();
 				updateTileInfo(my.lastTgt);
 				game.setVisibilityAll();
+				// language width adjustment
+				document.getElementById('resources-ui').style.width = lang[my.lang].resourceUiWidth;
 			}, 350);
 			/*TweenMax.set('.land', {
 				filter: 'url(#emboss)'

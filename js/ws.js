@@ -63,7 +63,7 @@ var socket = {
 						delete title.players[key];
 					}
 					data.skip = true;
-					data.message = "You have joined channel: " + data.channel;
+					data.message = lang[my.lang].joinedChannel + data.channel;
 					data.type = "chat-warning";
 					// send message to my chat log
 					title.chat(data);
@@ -111,7 +111,7 @@ var socket = {
 					});
 					data.type = 'chat-whisper';
 					data.msg = data.message;
-					data.message = data.chatFlag + data.account + ' whispers: ' + data.message;
+					data.message = data.chatFlag + data.account + lang[my.lang].whispers + data.message;
 					title.receiveWhisper(data);
 				} else {
 					// message receive confirmation to original sender
@@ -128,7 +128,7 @@ var socket = {
 						title.lastWhisper.message = data.message;
 						// send message
 						data.msg = data.message;
-						data.message = data.chatFlag + 'To ' + data.account + ': ' + data.message;
+						data.message = data.chatFlag + lang[my.lang].to + data.account + ': ' + data.message;
 						data.type = 'chat-whisper';
 						title.receiveWhisper(data);
 					}
