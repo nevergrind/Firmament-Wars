@@ -5,6 +5,8 @@ $.ajaxSetup({
 });
 TweenMax.defaultEase = Quad.easeOut;
 var g = {
+	attackTimer: 0,
+	splitAttackTimer: 0,
 	cannonTimer: 0,
 	missileTimer: 0,
 	nukeTimer: 0,
@@ -499,10 +501,9 @@ g.init = (function(){
 		}
 	});
 	// default
-	my.lang = 'spanish';
+	my.lang = 'english';
 	if (app.isApp) {
 		g.lock(1);
-		g.msg(lang[my.lang].verifyingSteam);
 		// app login, check for steam ticket
 		var greenworks = require('./greenworks'),
 			steam = {
@@ -513,7 +514,11 @@ g.init = (function(){
 
 		if (greenworks.initAPI()) {
 			greenworks.init();
-			var z = greenworks.getSteamId();
+			var langPref = greenworks.getCurrentUILanguage(),
+				z = greenworks.getSteamId();
+
+			g.msg(lang[my.lang].verifyingSteam);
+
 			steam.screenName = z.screenName;
 			steam.steamid = z.steamId;
 			greenworks.getAuthSessionTicket(function (data) {
@@ -528,7 +533,6 @@ g.init = (function(){
 						ticket: data.ticket.toString('hex')
 					}
 				}).done(function(data) {
-					var langPref = greenworks.getCurrentUILanguage();
 					var index = lang.alternateSupportedLanguages.indexOf(langPref);
 					title.chat({
 						message: 'Detected language: ' + langPref

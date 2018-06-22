@@ -1514,6 +1514,7 @@ table td,
 .actionButtons {
 	position: relative;
     display: flex;
+	text-transform: capitalize;
 	justify-content: space-between;
 	align-content: center;
 	font-size: 1.8rem;

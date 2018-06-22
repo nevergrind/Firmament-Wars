@@ -49,6 +49,14 @@ var action = {
 		}
 	},
 	attack: function(that){
+		var isSplit = my.splitAttack ? 1 : 0,
+			timerKey = isSplit ? 'splitAttackTimer' : 'attackTimer',
+			attackElement = isSplit ? 'splitAttack' : 'attack',
+			now = Date.now(),
+			dur = 1000;
+		if (now - g[timerKey] < dur) {
+			return;
+		}
 		var attacker = my.tgt;
 		var defender = that.id.slice(4)*1;
 		if (my.tgt === defender){
@@ -78,8 +86,8 @@ var action = {
 			game.tiles[defender].player === my.player){
 			// nothing
 		} else {
-			if ((my.moves < 2 && !my.splitAttack) ||
-				(my.moves < 1 && my.splitAttack) ){
+			if ((my.moves < 2 && !isSplit) ||
+				(my.moves < 1 && isSplit) ){
 				action.error(lang[my.lang].notEnoughEnergy);
 				return;
 			}
@@ -95,8 +103,10 @@ var action = {
 			}
 		}
 		var filter = {
-			brightness: 200
-		}, element = my.splitAttack ? '#splitAttack' : '#attack';
+				brightness: 200
+			},
+			element = isSplit ? '#splitAttack' : '#attack';
+
 		TweenMax.to(filter, .5, {
 			brightness: 100,
 			onUpdate: function() {
@@ -109,13 +119,15 @@ var action = {
 			data: {
 				attacker: attacker,
 				defender: defender,
-				split: my.splitAttack ? 1 : 0,
+				split: isSplit,
 				randomTile: action.getRandomDemocracyTile(defender, game.tiles[defender].player),
 				defGovernment: game.player[game.tiles[defender].player].government
 			}
 		}).done(function(data){
 			//console.info('attackTile', data);
 			// animate attack
+			action.timeoutWeaponButton(attackElement, dur);
+			g[timerKey] = Date.now();
 			if (game.tiles[defender].player !== my.player){
 				if (!game.tiles[defender].units){
 					audio.move();

@@ -1011,14 +1011,18 @@ function loadGameState(){
 						var o = my.targetData;
 						if (o.attackName === 'attack' || o.attackName === 'splitAttack'){
 							action.attack(that);
-						} else if (o.attackName === 'cannons'){
+						}
+						else if (o.attackName === 'cannons'){
 							action.fireCannons(that);
-						} else if (o.attackName === 'missile'){
+						}
+						else if (o.attackName === 'missile'){
 							action.launchMissile(that);
-						} else if (o.attackName === 'nuke'){
+						}
+						else if (o.attackName === 'nuke'){
 							action.launchNuke(that);
 						}
-					} else {
+					}
+					else {
 						ui.showTarget(that);
 					}
 				}

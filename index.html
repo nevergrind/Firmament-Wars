@@ -575,7 +575,8 @@
 						</div>
 						<div id="foodMilestoneTitle"
 							 class="resource-child">
-							Food <img src="images/icons/food.png" class="fw-icon">
+							<span id="foodMilestoneLabel">Food</span>
+							<img src="images/icons/food.png" class="fw-icon">
 						</div>
 					</div>
 				</div>
@@ -586,7 +587,8 @@
 							+<span id="productionBonus">0</span>%
 						</span>
 						<span id="scienceMilestoneTitle" class="resource-child">
-							Science <img src="images/icons/production.png" class="fw-icon resourceIcon">
+							<span id="scienceMilestoneLabel">Science</span>
+							<img src="images/icons/production.png" class="fw-icon resourceIcon">
 						</span>
 					</div>
 				</div>
@@ -598,7 +600,8 @@
 							+<span id="cultureBonus">0</span>%
 						</span>
 						<span id="cultureMilestoneTitle" class="resource-child">
-							Culture <img src="images/icons/culture.png" class="fw-icon">
+							<span id="cultureMilestoneLabel">Culture</span>
+							<img src="images/icons/culture.png" class="fw-icon">
 						</span>
 					</div>
 				</div>
@@ -608,6 +611,8 @@
 			<div id="ui2" class="blueBg">
 
 				<div id="attack" class="actionButtons">
+					<div id="attackOverlay" class="weapon-overlay no-pointer"></div>
+					<div id="attackReload" class="weapon-reload no-pointer"></div>
 					<div id="abAttack"></div>
 					<div class="action-button-cost tight2 productionCost">
 						<img src="images/icons/energy.png" class="fw-icon resourceIcon">
@@ -616,6 +621,8 @@
 				</div>
 
 				<div id="splitAttack" class="actionButtons">
+					<div id="splitAttackOverlay" class="weapon-overlay no-pointer"></div>
+					<div id="splitAttackReload" class="weapon-reload no-pointer"></div>
 					<div id="abSplitAttack"></div>
 					<div class="action-button-cost tight2 productionCost">
 						<img src="images/icons/energy.png" class="fw-icon resourceIcon">
