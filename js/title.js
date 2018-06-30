@@ -303,13 +303,12 @@ var title = {
 			tiles: 78,
 			players: 8
 		},
-		/*
-		EarthAlpha: {
+		/*EarthAlpha: {
 			name: 'Earth Alpha',
 			tiles: 83,
 			players: 8
-		},
-		*//*
+		},*/
+		/*
 		FlatEarth: {
 			name: 'Flat Earth',
 			tiles: 78,
@@ -318,6 +317,11 @@ var title = {
 		France: {
 			name: 'France',
 			tiles: 81,
+			players: 8
+		},
+		Germany: {
+			name: 'Germany',
+			tiles: 499,
 			players: 8
 		},
 		Italy: {

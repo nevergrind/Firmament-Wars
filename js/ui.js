@@ -28,6 +28,71 @@ var ui = {
 	getTeamIcon: function(team) {
 		return g.teamMode ? '<span class="diploTeam">'+ team +'</span>' : '';
 	},
+	updateTileInfo: function(tileId) {
+		var t = game.tiles[tileId],
+			flag = "Default.jpg",
+			name = t.name;
+
+		if (t.player === 0){
+			flag = "Player0.jpg";
+			if (t.units > 0){
+				name = lang[my.lang].barbarianTribe;
+			} else {
+				name = lang[my.lang].uninhabited;
+				flag = "Default.jpg";
+			}
+		}
+		else {
+			flag = t.flag;
+			name = t.name;
+		}
+		// tileName and bars
+		var o = {
+			food: 0,
+			culture: 0,
+			production: 0,
+			defense: 0
+		};
+		if (t.player){
+			o.food = ~~(((t.food > 8 ? 8 : t.food) / 8) * 99);
+			o.production = ~~(((t.production > 8 ? 8 : t.production) / 8) * 99);
+			o.culture = ~~(((t.culture > 8 ? 8 : t.culture) / 8) * 99);
+			o.defense = ~~((t.defense / 4) * 99);
+		}
+		var resources =
+			'<span>' + t.food + '<img src="images/icons/food.png" class="fw-icon-sm"></span>'+
+			'<span>' + t.production + '<img src="images/icons/production.png" class="fw-icon-sm"></span>'+
+			'<span>' + t.culture + '<img src="images/icons/culture.png" class="fw-icon-sm"></span>'+
+			'<span>' + t.defense + '<img src="images/icons/tile-defense.png" class="fw-icon-sm"></span>';
+		// DOM.targetCapStar.style.display = t.capital ? 'inline' : 'none';
+		DOM.targetNameWrap.innerHTML = name;
+		DOM.targetResources.innerHTML = resources;
+		DOM.targetFlag.src = 'images/flags/' + flag;
+
+
+		if (t.player === my.player && my.tech.masonry) {
+			var ind = t.defense - (t.capital ? 1 : 0);
+			if (ind < 3) {
+				// fortress present
+				// console.info('buildCost ', ind, g.upgradeCost[ind], my.buildCost, g.upgradeCost[ind]);
+				DOM.buildWord.textContent = lang[my.lang].defenseLabel[ind];
+				DOM.buildCost.textContent = g.upgradeCost[ind];
+				var tooltip = ui.defenseTooltip(ind);
+				$('#upgradeTileDefense')
+					.attr('title', tooltip)
+					.tooltip('fixTitle')
+					.tooltip('hide')
+					.tooltip({
+						animation: false,
+						placement: 'bottom',
+						container: 'body'
+					});
+			}
+			// actions panel
+		}
+		action.setBuildButton();
+		animate.target();
+	},
 	getDiploRow: function(p) {
 		var account = p.cpu ? lang[my.lang].difficulties[p.difficulty] : p.account,
 			icon = lobby.governmentIcon(p),
@@ -240,7 +305,7 @@ var ui = {
 			if (!skipOldTgtUpdate){
 				my.lastTgt = cacheOldTgt;
 			}
-			updateTileInfo(tileId);
+			ui.updateTileInfo(tileId);
 		} else {
 			my.attackOn = false;
 			my.attackName = '';
@@ -365,71 +430,6 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
 	ui.initWindow();
 })();
 
-function updateTileInfo(tileId){
-	var t = game.tiles[tileId],
-		flag = "Default.jpg",
-		name = t.name;
-	
-	if (t.player === 0){
-		flag = "Player0.jpg";
-		if (t.units > 0){
-			name = lang[my.lang].barbarianTribe;
-		} else {
-			name = lang[my.lang].uninhabited;
-			flag = "Default.jpg";
-		}
-	}
-	else {
-		flag = t.flag;
-		name = t.name;
-	}
-	// tileName and bars
-	var o = {
-		food: 0,
-		culture: 0,
-		production: 0,
-		defense: 0
-	};
-	if (t.player){
-		o.food = ~~(((t.food > 8 ? 8 : t.food) / 8) * 99);
-		o.production = ~~(((t.production > 8 ? 8 : t.production) / 8) * 99);
-		o.culture = ~~(((t.culture > 8 ? 8 : t.culture) / 8) * 99);
-		o.defense = ~~((t.defense / 4) * 99);
-	}
-	var resources =
-		'<span>' + t.food + '<img src="images/icons/food.png" class="fw-icon-sm"></span>'+
-		'<span>' + t.production + '<img src="images/icons/production.png" class="fw-icon-sm"></span>'+
-		'<span>' + t.culture + '<img src="images/icons/culture.png" class="fw-icon-sm"></span>'+
-		'<span>' + t.defense + '<img src="images/icons/tile-defense.png" class="fw-icon-sm"></span>';
-	// DOM.targetCapStar.style.display = t.capital ? 'inline' : 'none';
-	DOM.targetNameWrap.innerHTML = name;
-	DOM.targetResources.innerHTML = resources;
-	DOM.targetFlag.src = 'images/flags/' + flag;
-
-
-	if (t.player === my.player && my.tech.masonry) {
-		var ind = t.defense - (t.capital ? 1 : 0);
-		if (ind < 3) {
-			// fortress present
-			// console.info('buildCost ', ind, g.upgradeCost[ind], my.buildCost, g.upgradeCost[ind]);
-			DOM.buildWord.textContent = lang[my.lang].defenseLabel[ind];
-			DOM.buildCost.textContent = g.upgradeCost[ind];
-			var tooltip = ui.defenseTooltip(ind);
-			$('#upgradeTileDefense')
-				.attr('title', tooltip)
-				.tooltip('fixTitle')
-				.tooltip('hide')
-				.tooltip({
-					animation: false,
-					placement: 'bottom',
-					container: 'body'
-				});
-		}
-		// actions panel
-	}
-	action.setBuildButton();
-	animate.target();
-};
 
 function gameDefeat(){
 	new Audio('sound/shotgun2.mp3');

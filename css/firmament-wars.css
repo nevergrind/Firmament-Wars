@@ -1744,7 +1744,9 @@ audio,
     stroke: #aaa;
     stroke-opacity: 1;
     stroke-width: 1;
-    stroke-linejoin: round;
+	stroke-linecap: round;
+	stroke-linejoin: bevel;
+    /*stroke-linejoin: round;*/
     overflow: visible;
 	cursor: url('cursor/hover.png'), pointer;
 	transition: fill ease-out .2s;

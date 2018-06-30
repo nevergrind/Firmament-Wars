@@ -11,6 +11,28 @@ function Target(o){
 }
 
 var action = {
+	triggerAction: function(that) {
+		var id = that.id.slice(4)*1;
+		console.info('tile: ', id, game.tiles[id]);
+		if (my.attackOn){
+			var o = my.targetData;
+			if (o.attackName === 'attack' || o.attackName === 'splitAttack'){
+				action.attack(that);
+			}
+			else if (o.attackName === 'cannons'){
+				action.fireCannons(that);
+			}
+			else if (o.attackName === 'missile'){
+				action.launchMissile(that);
+			}
+			else if (o.attackName === 'nuke'){
+				action.launchNuke(that);
+			}
+		}
+		else {
+			ui.showTarget(that);
+		}
+	},
 	error: function(msg){
 		if (msg === undefined){
 			msg = lang[my.lang].notScience;

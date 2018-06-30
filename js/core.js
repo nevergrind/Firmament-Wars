@@ -534,9 +534,9 @@ g.init = (function(){
 					}
 				}).done(function(data) {
 					var index = lang.alternateSupportedLanguages.indexOf(langPref);
-					title.chat({
+					/*title.chat({
 						message: 'Detected language: ' + langPref
-					});
+					});*/
 					if (index > -1) {
 						my.lang = lang.alternateSupportedLanguages[index];
 					}

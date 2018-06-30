@@ -1,0 +1,12 @@
+// how to make a map:
+
+- Add map data to title.js
+- get map from source
+- strip unnecessary tags
+- size it appropriately and put padding around it
+- add requires into file
+- add class and id
+- add paths if applicable
+- add text (unit) for each path
+- Get map - get tile names, size, startTiles
+- Add map data to mapData.php

@@ -759,317 +759,305 @@ function loadGameState(){
 	}
 	// load map
 	// console.warn("Loading: " + g.map.key + ".php");
-	$.ajax({
+	/*$.ajax({
 		type: 'GET',
 		url: app.url +'maps/' + g.map.key + '.php'
 	}).done(function(data){
-		DOM.worldWrap.innerHTML =
-			'<div id="worldWater"></div>' +
-			data;
-			
-		$.ajax({
-			type: "GET",
-			url: app.url +"php/loadGameState.php"
-		}).done(function(data){
-			console.warn("loadGameState", data);
-			$("#login-modal").remove();
-			setTimeout(function() {
-				$("#title-bg-wrap").remove();
-			}, 2000);
 
-			g.resourceTick = data.resourceTick;
-			g.startGame = data.startGame * 1;
-			g.teamMode = data.teamMode;
-			g.gameMode = data.gameMode;
-			// set map data
-			g.map.sizeX = data.mapData.sizeX;
-			g.map.sizeY = data.mapData.sizeY;
-			g.map.name = data.mapData.name;
-			g.map.tiles = data.mapData.tiles;
-			//console.warn(data.tiles.length, g.map.tiles);
-			if (data.tiles.length < g.map.tiles){
-				if (g.loadAttempts < 20){
-					setTimeout(function(){
-						g.loadAttempts++;
-						loadGameState(); // try again
-					}, 500);
-				} else {
-					g.msg(lang[my.lang].failedToLoad);
-					localStorage.setItem('reload', false);
-					setTimeout(function(){
-						window.onbeforeunload = null;
-						location.reload();
-					}, 3000);
+	DOM.worldWrap.innerHTML =
+		'<div id="worldWater"></div>' + data;*/
+
+	DOM.worldWrap.innerHTML = maps.getMap(g.map.key);
+
+	// init map DOM stuff here
+	// programmatically set land elements' id and class
+	var e = document.querySelectorAll('#landWrap > path');
+
+	for (var i=0, len = e.length; i<len; i++) {
+		e[i].setAttributeNS(null, 'id', 'land'+i);
+		e[i].setAttributeNS(null, 'class', 'land');
+	}
+
+	// programmatically set text elements' id and class
+	e = document.querySelectorAll('text');
+	for (i=0, len = e.length; i<len; i++) {
+	  e[i].setAttributeNS(null, 'id', 'unit'+i);
+	  e[i].setAttributeNS(null, 'class', 'unit');
+	}
+	initDom();
+
+
+	$.ajax({
+		type: "GET",
+		url: app.url +"php/loadGameState.php"
+	}).done(function(data){
+		console.info("loadGameState", data);
+		$("#login-modal").remove();
+		setTimeout(function() {
+			$("#title-bg-wrap").remove();
+		}, 2000);
+
+		g.resourceTick = data.resourceTick;
+		g.startGame = data.startGame * 1;
+		g.teamMode = data.teamMode;
+		g.gameMode = data.gameMode;
+		// set map data
+		g.map.sizeX = data.mapData.sizeX;
+		g.map.sizeY = data.mapData.sizeY;
+		g.map.name = data.mapData.name;
+		g.map.tiles = data.mapData.tiles;
+		//console.warn(data.tiles.length, g.map.tiles);
+		if (data.tiles.length < g.map.tiles){
+			if (g.loadAttempts < 20){
+				setTimeout(function(){
+					g.loadAttempts++;
+					loadGameState(); // try again
+				}, 500);
+			} else {
+				g.msg(lang[my.lang].failedToLoad);
+				localStorage.setItem('reload', false);
+				setTimeout(function(){
+					window.onbeforeunload = null;
+					location.reload();
+				}, 3000);
+			}
+			return;
+		}
+		$("meta").remove();
+		g.screen.resizeMap();
+
+		audio.gameMusicInit();
+		// only when refreshing page while testing
+		audio.load.game();
+		video.load.game();
+		// done
+		my.player = data.player;
+		my.team = data.team;
+		my.account = data.account;
+		my.oBonus = data.oBonus;
+		my.dBonus = data.dBonus;
+		my.cultureBonus = data.cultureBonus;
+		my.tech = data.tech;
+		my.capital = data.capital;
+		my.flag = data.flag;
+		my.nation = data.nation;
+		my.foodMax = data.foodMax;
+		my.production = data.production;
+		my.sumProduction = data.sumProduction;
+		my.cultureMax = data.cultureMax;
+		my.moves = data.moves;
+		my.government = data.government;
+		my.cannonBonus = data.cannonBonus;
+		lobby.updateGovernmentWindow(my.government);
+		// global government bonuses
+		if (my.government === 'Monarchy'){
+			my.cannonsBonus = 2;
+		}
+		else if (my.government === 'Democracy'){
+			my.maxDeployment = 48;
+		}
+		else if (my.government === 'Republic'){
+			my.sumMoves = data.sumMoves;
+			document.getElementById('moves').textContent = my.sumMoves;
+			// DOM.sumMoves.textContent = my.sumMoves;
+			//console.info('sumMoves ', my.government, my.sumMoves, data.sumMoves);
+		}
+		else if (my.government === 'Fascism'){
+			document.getElementById('moves').textContent = 8;
+			my.deployCost = 1;
+			document.getElementById('deployCost').textContent = my.deployCost;
+		}
+		// initialize player data
+		game.initialized = true;
+		for (var z=0, len=game.player.length; z<len; z++){
+			// initialize diplomacy-ui
+			game.player[z] = new Nation();
+		}
+
+		g.removeContainers();
+		g.unlock();
+		g.view = "game";
+		TweenMax.fromTo(gameWrap, 1, {
+			autoAlpha: 0
+		}, {
+			autoAlpha: 1
+		});
+		// init game player data
+		for (var i=0, len=data.players.length; i<len; i++){
+			var d = data.players[i],
+				z = game.player[d.player];
+			z.account = d.account;
+			z.flag = d.flag;
+			z.nation = d.nation;
+			z.player = d.player;
+			z.playerColor = d.playerColor;
+			z.team = d.team;
+			z.government = d.government;
+			// z.avatar = d.avatar;
+			z.cpu = d.cpu;
+			z.difficulty = d.difficulty;
+			z.difficultyShort = d.difficulty.replace(/ /g, '');
+		}
+
+		// initialize client tile data
+		var now = Date.now();
+		for (var i=0, len=data.tiles.length; i<len; i++){
+			var d = data.tiles[i];
+			game.tiles[i] = {
+				name: d.tileName,
+				account: d.account,
+				player: d.player,
+				nation: d.nation,
+				flag: d.flag,
+				capital: data.capitalTiles.indexOf(i) > -1 && d.flag ? true : false,
+				units: d.units,
+				food: d.food,
+				production: d.production,
+				culture: d.culture,
+				defense: d.defense,
+				adj: data.adj[i],
+				timestamp: now
+			}
+			// init flag unit values
+			var zig = document.getElementById('unit' + i);
+			if (zig !== null){
+				var unitVal = game.tiles[i].capital ?
+					'<tspan class="unit-star">&#10028;</tspan>' + game.tiles[i].units :
+					game.tiles[i].units;
+				zig.innerHTML = d.units === 0 ? 0 : unitVal;
+				if (d.units){
+					zig.style.visibility = 'visible';
 				}
-				return;
 			}
-			initDom();
-			$("meta").remove();
-			g.screen.resizeMap();
-			
-			audio.gameMusicInit();
-			// only when refreshing page while testing
-			audio.load.game();
-			video.load.game();
-			// done
-			my.player = data.player;
-			my.team = data.team;
-			my.account = data.account;
-			my.oBonus = data.oBonus;
-			my.dBonus = data.dBonus;
-			my.cultureBonus = data.cultureBonus;
-			my.tech = data.tech;
-			my.capital = data.capital;
-			my.flag = data.flag;
-			my.nation = data.nation;
-			my.foodMax = data.foodMax;
-			my.production = data.production;
-			my.sumProduction = data.sumProduction;
-			my.cultureMax = data.cultureMax;
-			my.moves = data.moves;
-			my.government = data.government;
-			my.cannonBonus = data.cannonBonus;
-			lobby.updateGovernmentWindow(my.government);
-			// global government bonuses
-			if (my.government === 'Monarchy'){
-				my.cannonsBonus = 2;
-			} else if (my.government === 'Democracy'){
-				my.maxDeployment = 48;
-			} else if (my.government === 'Republic'){
-				my.sumMoves = data.sumMoves;
-				document.getElementById('moves').textContent = my.sumMoves;
-				// DOM.sumMoves.textContent = my.sumMoves;
-				//console.info('sumMoves ', my.government, my.sumMoves, data.sumMoves);
-			} else if (my.government === 'Fascism'){
-				document.getElementById('moves').textContent = 8;
-				my.deployCost = 1;
-				document.getElementById('deployCost').textContent = my.deployCost;
-			} else if (my.government === 'Communism'){
-			}
-			// initialize player data
-			game.initialized = true;
-			for (var z=0, len=game.player.length; z<len; z++){
-				// initialize diplomacy-ui
-				game.player[z] = new Nation();
-			}
-			
-			g.removeContainers();
-			g.unlock();
-			g.view = "game";
-			TweenMax.fromTo(gameWrap, 1, {
-				autoAlpha: 0
-			}, {
-				autoAlpha: 1
-			});
-			// init game player data
-			for (var i=0, len=data.players.length; i<len; i++){
-				var d = data.players[i],
-					z = game.player[d.player];
-				z.account = d.account;
-				z.flag = d.flag;
-				z.nation = d.nation;
-				z.player = d.player;
-				z.playerColor = d.playerColor;
-				z.team = d.team;
-				z.government = d.government;
-				// z.avatar = d.avatar;
-				z.cpu = d.cpu;
-				z.difficulty = d.difficulty;
-				z.difficultyShort = d.difficulty.replace(/ /g, '');
-			}
-			
-			// initialize client tile data
-			var now = Date.now();
-			for (var i=0, len=data.tiles.length; i<len; i++){
-				var d = data.tiles[i];
-				game.tiles[i] = {
-					name: d.tileName,
-					account: d.account,
-					player: d.player,
-					nation: d.nation,
-					flag: d.flag,
-					capital: data.capitalTiles.indexOf(i) > -1 && d.flag ? true : false,
-					units: d.units,
-					food: d.food,
-					production: d.production,
-					culture: d.culture,
-					defense: d.defense,
-					adj: data.adj[i],
-					timestamp: now
-				}
-				// init flag unit values
-				var zig = document.getElementById('unit' + i);
-				if (zig !== null){
-					var unitVal = game.tiles[i].capital ?
-						'<tspan class="unit-star">&#10028;</tspan>' + game.tiles[i].units :
-						game.tiles[i].units;
-					zig.innerHTML = d.units === 0 ? 0 : unitVal;
-					if (d.units){
-						zig.style.visibility = 'visible';
-					}
-				}
-				if (d.player){
-					// init map appearance
-					TweenMax.set('#land' + i, {
-						fill: g.color[game.player[d.player].playerColor],
-						stroke: g.color[game.player[d.player].playerColor],
-						strokeWidth: 1,
-						onComplete: function(){
-							if (d.player){
-								TweenMax.set(this.target, {
-									stroke: "hsl(+=0%, +=0%, -=30%)"
-								});
-							}
+			if (d.player){
+				// init map appearance
+				TweenMax.set('#land' + i, {
+					fill: g.color[game.player[d.player].playerColor],
+					stroke: g.color[game.player[d.player].playerColor],
+					strokeWidth: 1,
+					onComplete: function(){
+						if (d.player){
+							TweenMax.set(this.target, {
+								stroke: "hsl(+=0%, +=0%, -=30%)"
+							});
 						}
-					});
-				}
-			}
-			g.tileCount = len;
-			// init map flags
-			var a = document.getElementsByClassName('unit'),
-				mapBars = document.getElementById('mapBars'),
-				mapFlagWrap = document.getElementById('mapFlagWrap');
-			for (var i=0, len=a.length; i<len; i++){
-				// set flag position and value
-				var t = game.tiles[i];
-				var x = a[i].getAttribute('x') - 20;
-				var y = a[i].getAttribute('y') - 30;
-				var flag = 'blank.png';
-				if (t !== undefined){
-					if (!t.flag && t.units){ // FIX TODO??
-						flag = "Player0.jpg";
-					} else if (t.flag){
-						flag = t.flag;
 					}
-				}
-				// dynamically add svg flag image to the map
-				var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-				svg.id = 'flag' + i;
-				svg.setAttributeNS(null, 'height', 40);
-				svg.setAttributeNS(null, 'width', 40);
-				svg.setAttributeNS(null,"x",x);
-				svg.setAttributeNS(null,"y",y);
-				svg.setAttributeNS(null,"class","mapFlag");
-				svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/flags/' + flag);
-				mapFlagWrap.appendChild(svg);
-				// add star for capital to map
-				if (game.tiles[i] !== undefined){
-					if (game.tiles[i].capital){
-						var svg = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-						svg.id = 'mapCapital' + i;
-						svg.setAttributeNS(null,'class','mapStar');
-						svg.setAttributeNS(null,'d','m '+ (x + 20) +','+ y +' 5.79905,17.10796 18.05696,0.50749 -14.47863,10.80187 5.09725,17.33001 -14.74733,-10.43203 -14.90668,10.20304 5.36427,-17.24922 -14.31008,-11.02418 18.06264,-0.22858 z');
-					}
-				} else {
-					console.warn("COULD NOT FIND: ", i);
-				}
-				var svgTgt = document.getElementById('targetCrosshair');
-				TweenMax.to(svgTgt, 10, {
-					force3D: true,
-					transformOrigin: '50% 50%',
-					rotation: 360,
-					repeat: -1,
-					ease: Linear.easeNone
 				});
 			}
-			// init map DOM elements
-			game.initMap();
-			// food, culture, def bars
-			for (var i=0; i<len; i++){
-				animate.initMapBars(i);
-			}
-			//lobby.initRibbons(data.ribbons);
-			ui.drawDiplomacyPanel();
-			initResources(data);
-			// set images
-			setTimeout(function(){
-				// init draggable map
-				worldMap = Draggable.create(DOM.worldWrap, {
-					minimumMovement: 4,
-					type: 'x,y',
-					bounds: "#gameWrap"
-				});
-				
-				initOffensiveTooltips();
-				TweenMax.set(DOM.targetLine, {
-					stroke: g.color[game.player[my.player].playerColor]
-				});
-				TweenMax.set(DOM.targetLine, {
-					stroke: "hsl(+=0%, +=0%, -=5%)"
-				});
-				TweenMax.set(DOM.arrowheadTip, {
-					fill: g.color[game.player[my.player].playerColor]
-				});
-				TweenMax.set(DOM.arrowheadTip, {
+		}
+		g.tileCount = len;
+		var svgTgt = document.getElementById('targetCrosshair');
+		TweenMax.to(svgTgt, 10, {
+			force3D: true,
+			transformOrigin: '50% 50%',
+			rotation: 360,
+			repeat: -1,
+			ease: Linear.easeNone
+		});
+		//lobby.initRibbons(data.ribbons);
+		ui.drawDiplomacyPanel();
+		initResources(data);
+		// set images
+		setTimeout(function(){
+			// init draggable map
+			worldMap = Draggable.create(DOM.worldWrap, {
+				minimumMovement: 4,
+				type: 'x,y',
+				bounds: "#gameWrap"
+			});
+
+			initOffensiveTooltips();
+			TweenMax.set(DOM.targetLine, {
+				stroke: g.color[game.player[my.player].playerColor]
+			});
+			TweenMax.set(DOM.targetLine, {
+				stroke: "hsl(+=0%, +=0%, -=5%)"
+			});
+			TweenMax.set(DOM.arrowheadTip, {
+				fill: g.color[game.player[my.player].playerColor]
+			});
+			TweenMax.set(DOM.arrowheadTip, {
+				fill: "hsl(+=0%, +=0%, -=5%)"
+			});
+
+			// map events
+			$("#gameWrap").on('click', '.land', function(e){
+				//location.host === 'localhost' && console.info(this.id, e.offsetX, e.offsetY);
+				action.triggerAction(this);
+			}).on("mouseenter", '.land', function(){
+				my.lastTarget = this;
+				if (my.attackOn){
+					ui.showTarget(this, true);
+				}
+				TweenMax.set(this, {
 					fill: "hsl(+=0%, +=0%, -=5%)"
 				});
-				
-				function triggerAction(that){
-					var id = that.id.slice(4)*1;
-					console.info('tile: ', id, game.tiles[id]);
-					if (my.attackOn){
-						var o = my.targetData;
-						if (o.attackName === 'attack' || o.attackName === 'splitAttack'){
-							action.attack(that);
-						}
-						else if (o.attackName === 'cannons'){
-							action.fireCannons(that);
-						}
-						else if (o.attackName === 'missile'){
-							action.launchMissile(that);
-						}
-						else if (o.attackName === 'nuke'){
-							action.launchNuke(that);
-						}
-					}
-					else {
-						ui.showTarget(that);
-					}
-				}
-				// map events
-				$("#gameWrap").on('click', '.land', function(e){
-					//location.host === 'localhost' && console.info(this.id, e.offsetX, e.offsetY);
-					triggerAction(this);
-				}).on("mouseenter", '.land', function(){
-					my.lastTarget = this;
-					if (my.attackOn){
-						ui.showTarget(this, true);
-					}
+			}).on("mouseleave", '.land', function(){
+				var land = this.id.slice(4)*1;
+				if (game.tiles.length > 0){
+					var player = game.tiles[land] !== undefined ? game.tiles[land].player : 0,
+						fillNum = player ? game.player[player].playerColor : 0;
 					TweenMax.set(this, {
-						fill: "hsl(+=0%, +=0%, -=5%)"
+						fill: g.color[fillNum]
 					});
-				}).on("mouseleave", '.land', function(){
-					var land = this.id.slice(4)*1;
-					if (game.tiles.length > 0){
-						var player = game.tiles[land] !== undefined ? game.tiles[land].player : 0,
-							fillNum = player ? game.player[player].playerColor : 0;
-						TweenMax.set(this, {
-							fill: g.color[fillNum]
-						});
-					}
-				});
-				
-				// focus on player home
-				my.focusTile(my.capital);
-				// add warning for players
-				game.startGameState();
-				ui.setCurrentYear(data.resourceTick);
-				animate.paths();
-				action.setMenu();
-				updateTileInfo(my.lastTgt);
-				game.setVisibilityAll();
-				// language width adjustment
-				document.getElementById('resources-ui').style.width = lang[my.lang].resourceUiWidth;
-			}, 350);
-			/*TweenMax.set('.land', {
-				filter: 'url(#emboss)'
-			})*/
-		}).fail(function(data){
-			setTimeout(function(){
-				loadGameState();
-			}, 1500);
-		}).always(function(){
-			g.unlock();
-		});
+				}
+			});
+
+			// focus on player home
+			my.focusTile(my.capital);
+			// add warning for players
+			game.startGameState();
+			ui.setCurrentYear(data.resourceTick);
+			animate.paths();
+			action.setMenu();
+			ui.updateTileInfo(my.lastTgt);
+			game.setVisibilityAll();
+			// language width adjustment
+			document.getElementById('resources-ui').style.width = lang[my.lang].resourceUiWidth;
+		}, 350);
+		/*TweenMax.set('.land', {
+			filter: 'url(#emboss)'
+		})*/
+		// init map flags
+		var a = document.querySelectorAll('#world text'),
+			mapFlagWrap = document.getElementById('mapFlagWrap');
+		for (var i=0, len=a.length; i<len; i++){
+			// set flag position and value
+			var t = game.tiles[i];
+			var x = a[i].getAttribute('x') - 20;
+			var y = a[i].getAttribute('y') - 30;
+			var flag = 'blank.png';
+			if (t !== undefined){
+				if (!t.flag && t.units){
+					flag = "Player0.jpg";
+				}
+				else if (t.flag){
+					flag = t.flag;
+				}
+			}
+			// dynamically add svg flag image to the map
+			var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+			svg.id = 'flag' + i;
+			svg.setAttributeNS(null, 'height', 40);
+			svg.setAttributeNS(null, 'width', 40);
+			svg.setAttributeNS(null,"x",x);
+			svg.setAttributeNS(null,"y",y);
+			svg.setAttributeNS(null,"class","mapFlag");
+			svg.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/flags/' + flag);
+			mapFlagWrap.appendChild(svg);
+		}
+
+		// init map DOM elements
+		game.initMap();
+		// food, culture, def bars
+		for (var i=0; i<len; i++){
+			animate.initMapBars(i);
+		}
+	}).fail(function(data){
+		setTimeout(function(){
+			loadGameState();
+		}, 1500);
+	}).always(function(){
+		g.unlock();
 	});
 };

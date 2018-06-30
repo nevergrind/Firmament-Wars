@@ -88,7 +88,7 @@
 		'key' => 'UnitedStates',
 		'tiles' => 48,
 		'maxPlayers' => 2,
-		'startTiles' => [7, 28, 46], 
+		'startTiles' => [7, 28, 46],
 		'sizeX' => 1920,
 		'sizeY' => 1391,
 		'tileNames' => array(
@@ -129,6 +129,34 @@
 			'Evreux', 'Vichy', 'Bayonne', 'Perpignan', 'Dijon', 
 			'Alencon', 'Meaux', 'Le Havre', 'Amiens', 'Rodez', //70
 			'Mulhouse', 'Cannes', 'La Roche-sur-Yon', 'Poitiers', 'Nancy', 
+			'Nangis' //80
+		)
+	);
+	$mapData['France'] = (object) array(
+		'name' => 'France',
+		'key' => 'France',
+		'tiles' => 81,
+		'maxPlayers' => 8,
+		'startTiles' => [34, 42, 38, 67, 78, 30, 63, 11],
+		'sizeX' => 1920,
+		'sizeY' => 1592,
+		'tileNames' => array(
+			'Oyonnax', 'Maubeuge', 'Nevers', 'Digne', 'Nice', //0
+			'Lyon', 'Charleville-Mezieres', 'Toulouse', 'Chalons-en-Champagne', 'Narbonne',
+			'Saint-Flour', 'Haguenau', 'Marseille', 'Caen', 'Egletons', //10
+			'Angouleme', 'Rochefort', 'Melun', 'Limoges', 'Ajaccio',
+			'Langres', 'Saint-Brieuc', 'La Souterraine', 'Cholet', 'Bergerac', //20
+			'Besancon', 'Valence', 'Paris', 'Lisieux', 'Versailles',
+			'Brest', 'Nimes', 'Orthez', 'Bordeaux', 'Bastia', //30
+			'Saint-Etienne', 'Bar-le-Duc', 'Langres', 'Thonon-les-Bains', 'Bellac',
+			'Briancon', 'Larrau', 'Montpellier', 'St-Malo', 'Chateauroux', //40
+			'Tours', 'Grenoble', 'Champagnole', 'Sabres', 'Chartres',
+			'Lyon', 'Nantes', 'Evry', 'Montauban', 'Agen', //50
+			'Le Puy', 'Angers', 'Saulces-Monclin', 'Gorron', 'Metz',
+			'Verdun', 'Lorient', 'Auxerre', 'Calais', 'Montdidier', //60
+			'Evreux', 'Vichy', 'Bayonne', 'Perpignan', 'Dijon',
+			'Alencon', 'Meaux', 'Le Havre', 'Amiens', 'Rodez', //70
+			'Mulhouse', 'Cannes', 'La Roche-sur-Yon', 'Poitiers', 'Nancy',
 			'Nangis' //80
 		)
 	);

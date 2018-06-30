@@ -1,0 +1,157 @@
+<h2 class="text-center header">Free For All Leaderboard</h2>
+			<table class="table tight"><tr>
+					<th style="width: 8rem">Rank</th>
+					<th style="width: 28rem">Account</th>
+					<th>Nation</th>
+					<th style="width: 12rem">Record</th>
+				</tr><tr>
+						<td>1</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/Iceland.jpg">firefox</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/Cape Verde.jpg">Imperial Japan</td>
+						<td>447-216</td>
+					</tr><tr>
+						<td>2</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/United States.jpg">chrome</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/Cameroon.jpg">ffu239f</td>
+						<td>198-580</td>
+					</tr><tr>
+						<td>3</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/United States.jpg">vivaldi</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/Finland.jpg">Kingdom of Finland</td>
+						<td>91-21</td>
+					</tr><tr>
+						<td>4</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/United States.jpg">brave</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/Canada.jpg">Just A Leaf</td>
+						<td>32-28</td>
+					</tr><tr>
+						<td>5</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/blank.jpg">chrome10</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/United States.jpg">United States</td>
+						<td>27-47</td>
+					</tr><tr>
+						<td>6</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/blank.jpg">firefox2</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/United States.jpg">Kingdom of Firefox2</td>
+						<td>14-3</td>
+					</tr><tr>
+						<td>7</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/blank.jpg">firefox3</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/United States.jpg">Kingdom of Firefox3</td>
+						<td>7-1</td>
+					</tr><tr>
+						<td>8</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/United States.jpg">opera</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/Saudi Arabia.jpg">Umayyad Caliphate</td>
+						<td>5-17</td>
+					</tr><tr>
+						<td>9</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/United States.jpg">ie</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/China.jpg">Ching Chong Ding Dong</td>
+						<td>3-12</td>
+					</tr><tr>
+						<td>10</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/blank.jpg">vivaldi2</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/United States.jpg">Kingdom of Vivaldi2</td>
+						<td>2-0</td>
+					</tr><tr>
+						<td>11</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/United States.jpg">safari</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/North Korea.jpg">Worst Korea</td>
+						<td>2-4</td>
+					</tr><tr>
+						<td>12</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/blank.jpg">steam1</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/United States.jpg">Kingdom of Steam1</td>
+						<td>2-4</td>
+					</tr><tr>
+						<td>13</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/blank.jpg">chromium</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/France.jpg">France</td>
+						<td>1-0</td>
+					</tr><tr>
+						<td>14</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/blank.jpg">vivaldir</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/Denmark.jpg">Kingdom of Vivaldir</td>
+						<td>0-0</td>
+					</tr><tr>
+						<td>15</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/blank.jpg">lunascape</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/Saudi Arabia.jpg">Saudi Arabia</td>
+						<td>0-0</td>
+					</tr><tr>
+						<td>16</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/blank.jpg">maxthon</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/Gadsden Flag.jpg">Muh Liberty</td>
+						<td>0-0</td>
+					</tr><tr>
+						<td>17</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/blank.jpg">Guest_2</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/Algeria.jpg">Kingdom of Guest_2</td>
+						<td>0-0</td>
+					</tr><tr>
+						<td>18</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/blank.jpg">chrome5</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/United States.jpg">Kingdom of Chrome5</td>
+						<td>0-0</td>
+					</tr><tr>
+						<td>19</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/blank.jpg">guest_105</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/United States.jpg">Kingdom of Guest_105</td>
+						<td>0-0</td>
+					</tr><tr>
+						<td>20</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/blank.jpg">mtl25 (ok)</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/United States.jpg">Kingdom of Mtl25 (ok)</td>
+						<td>0-0</td>
+					</tr><tr>
+						<td>21</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/blank.jpg">midori</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/Ireland.jpg">Ireland</td>
+						<td>0-1</td>
+					</tr><tr>
+						<td>22</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/blank.jpg">seamonkey</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/Israel.jpg">Kingdom of Judah</td>
+						<td>0-2</td>
+					</tr><tr>
+						<td>23</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/blank.jpg">epic</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/USSR.jpg">U.S.S.R.</td>
+						<td>0-2</td>
+					</tr><tr>
+						<td>24</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/blank.jpg">tester</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/United States.jpg">Kingdom of Tester</td>
+						<td>0-2</td>
+					</tr><tr>
+						<td>25</td>
+						<td class="ellipsis"><img class="flag" src="images/flags/United States.jpg">torch</td>
+						<td class="ellipsis">
+							<img class="flag" src="images/flags/Anarcho-Capitalist.jpg">Not An Argument</td>
+						<td>0-5</td>
+					</tr></table>
