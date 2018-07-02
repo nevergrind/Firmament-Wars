@@ -792,6 +792,10 @@ function loadGameState(){
 		url: app.url +"php/loadGameState.php"
 	}).done(function(data){
 		console.info("loadGameState", data);
+		// data.mapData.sizeX data.mapData.sizeX
+		document.getElementById('world')
+			.setAttribute('viewBox', '0 0 ' + data.mapData.sizeX + ' ' + data.mapData.sizeY);
+
 		$("#login-modal").remove();
 		setTimeout(function() {
 			$("#title-bg-wrap").remove();

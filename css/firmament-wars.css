@@ -1717,10 +1717,13 @@ audio,
 #world {
     position: absolute;
     top: 0%;
+    left: 0%;
+	padding: 100px 200px;
 	overflow: visible!important;
-    left: 0%
 }
 #grid {
+	position: absolute;
+	transform: translate(-50%, -50%);
 	width: 500%;
 	height: 500%;
 }
@@ -1733,6 +1736,9 @@ audio,
     overflow: visible;
     z-index: 9999;
     pointer-events: none
+}
+#howToPlay {
+	font-size: 1.75rem;
 }
 .hole {
     fill-rule: evenodd

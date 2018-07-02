@@ -7,8 +7,8 @@
 		'tiles' => 78,
 		'maxPlayers' => 8,
 		'startTiles' => [72, 5, 77, 69, 47, 66, 41, 8], 
-		'sizeX' => 3200,
-		'sizeY' => 1500,
+		'sizeX' => 3600,
+		'sizeY' => 1700,
 		'tileNames' => array(
 			'Afghanistan', 'Angola', 'Gabon', 'Greece', 'Oman', //0
 			'Argentina', 'Turkey', 'Romania', 'Australia', 'Austria', 
@@ -34,8 +34,8 @@
 		'tiles' => 83,
 		'maxPlayers' => 8,
 		'startTiles' => [40, 44, 58, 51, 5, 52, 63, 62],
-		'sizeX' => 2000,
-		'sizeY' => 1100,
+		'sizeX' => 2400,
+		'sizeY' => 1300,
 		'tileNames' => array(
 			'Chicago', 'Pakistan', 'Namibia', 'Congo', 'Greece', 
 			'Oman', 'Patagonia', 'Buenos Aires', 'Turkey', 'Sydney', 
@@ -62,8 +62,8 @@
 		'tiles' => 78,
 		'maxPlayers' => 8,
 		'startTiles' => [13, 14, 52, 23, 54, 47, 36, 59],
-		'sizeX' => 1920,
-		'sizeY' => 1920,
+		'sizeX' => 2320,
+		'sizeY' => 2120,
 		'tileNames' => array(
 			'Santiago', 'Montevideo', 'Salvador', 'Sao Paolo', 'Amazon', //0
 			'Georgetown', 'Los Angeles', 'Mexico City', 'Lima', 'Seattle', 
@@ -89,8 +89,8 @@
 		'tiles' => 48,
 		'maxPlayers' => 2,
 		'startTiles' => [7, 28, 46],
-		'sizeX' => 1920,
-		'sizeY' => 1391,
+		'sizeX' => 2320,
+		'sizeY' => 1591,
 		'tileNames' => array(
 			'Massachusetts', 'Minnesota', 'Montana', 'North Dakota', 'Idaho', 
 			'Washington', 'Arizona', 'California', 'Colorado', 'Nevada', 
@@ -110,8 +110,8 @@
 		'tiles' => 81,
 		'maxPlayers' => 8,
 		'startTiles' => [34, 42, 38, 67, 78, 30, 63, 11],
-		'sizeX' => 1920,
-		'sizeY' => 1592,
+		'sizeX' => 2320,
+		'sizeY' => 1792,
 		'tileNames' => array(
 			'Oyonnax', 'Maubeuge', 'Nevers', 'Digne', 'Nice', //0
 			'Lyon', 'Charleville-Mezieres', 'Toulouse', 'Chalons-en-Champagne', 'Narbonne', 
@@ -138,8 +138,8 @@
 		'tiles' => 81,
 		'maxPlayers' => 8,
 		'startTiles' => [34, 42, 38, 67, 78, 30, 63, 11],
-		'sizeX' => 1920,
-		'sizeY' => 1592,
+		'sizeX' => 2320,
+		'sizeY' => 1792,
 		'tileNames' => array(
 			'Oyonnax', 'Maubeuge', 'Nevers', 'Digne', 'Nice', //0
 			'Lyon', 'Charleville-Mezieres', 'Toulouse', 'Chalons-en-Champagne', 'Narbonne',
@@ -166,8 +166,8 @@
 		'tiles' => 81,
 		'maxPlayers' => 8,
 		'startTiles' => [45, 39, 13, 29, 6, 9, 72, 73],
-		'sizeX' => 1920,
-		'sizeY' => 2006,
+		'sizeX' => 2320,
+		'sizeY' => 2206,
 		'tileNames' => array(
 			'Bologna', 'Parma', 'Varzi', 'Chioggia', 'Ferrara', //0
 			'Rimini', 'Pesaro', 'Genoa', 'Savona', 'Ventimiglia', 
@@ -194,8 +194,8 @@
 		'tiles' => 47,
 		'maxPlayers' => 3,
 		'startTiles' => [11, 37, 31, 29], 
-		'sizeX' => 1920,
-		'sizeY' => 1920,
+		'sizeX' => 2320,
+		'sizeY' => 2120,
 		'tileNames' => array(
 			'Aichi', 'Akita', 'Aomori', 'Chiba', 'Ehime', 
 			'Fukui', 'Fukuoka', 'Fukushima', 'Gifu', 'Gunma', 
@@ -215,8 +215,8 @@
 		'tiles' => 75,
 		'maxPlayers' => 7,
 		'startTiles' => [48,10,74,36,60,9,65],
-		'sizeX' => 2250,
-		'sizeY' => 1080,
+		'sizeX' => 2650,
+		'sizeY' => 1280,
 		'tileNames' => array(
 			'Adana', 'Adiyaman', 'Afyonkarahisar', 'Agri', 'Aksaray', //0
 			'Amasya', 'Ankara', 'Antalya', 'Ardahan', 'Artvin', 
@@ -241,8 +241,8 @@
 		'tiles' => 69,
 		'maxPlayers' => 8,
 		'startTiles' => [35, 55, 50, 33, 40, 45, 5, 62],
-		'sizeX' => 1920,
-		'sizeY' => 2200,
+		'sizeX' => 2320,
+		'sizeY' => 2400,
 		'tileNames' => array(
 			'Paisley', 'Stirling', 'Glasgow', 'Aberdeen', 'Dundee', //0
 			'Edinburgh', 'Middlesbrough', 'Alnwick', 'Southampton', 'Northampton', 
@@ -266,8 +266,8 @@
 		'tiles' => 99,
 		'maxPlayers' => 2,
 		'startTiles' => [0, 1],
-		'sizeX' => 1920,
-		'sizeY' => 1080,
+		'sizeX' => 2320,
+		'sizeY' => 1280,
 		'tileNames' => array(
 			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //0
 			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
