@@ -95,6 +95,7 @@ var lang = {
 			'foodMilestoneLabel',
 			'scienceMilestoneLabel',
 			'cultureMilestoneLabel',
+			'updateNationBtn',
 		].forEach(function(v) {
 			document.getElementById(v).innerHTML = lang[my.lang][_.camelCase(v)];
 		});
@@ -141,6 +142,7 @@ var lang = {
 
 	},
 	english: {
+		updateNationBtn: 'Done',
 		playerColor: 'Player Color',
 		team: 'Team',
 		damage: ' damage',
@@ -484,6 +486,7 @@ var lang = {
 		cultureMilestoneLabel: 'Culture',
 	},
 	russian: {
+		updateNationBtn: 'Готово',
 		playerColor: 'Цвет игрока',
 		team: 'команда',
 		damage: ' наносить ущерб',
@@ -827,6 +830,7 @@ var lang = {
 		cultureMilestoneLabel: 'культура',
 	},
 	schinese: {
+		updateNationBtn: '完成',
 		playerColor: '球员颜色',
 		team: '球队',
 		damage: ' 损伤',
@@ -1171,6 +1175,7 @@ var lang = {
 		cultureMilestoneLabel: '文化',
 	},
 	german: {
+		updateNationBtn: 'Erledigt',
 		playerColor: 'Spielerfarbe',
 		team: 'Mannschaft',
 		damage: ' Beschädigung',
@@ -1514,6 +1519,7 @@ var lang = {
 		cultureMilestoneLabel: 'Kultur',
 	},
 	portuguese: {
+		updateNationBtn: 'Feito',
 		playerColor: 'Cor do Jogador',
 		team: 'Equipe',
 		damage: ' danificar',
@@ -1857,6 +1863,7 @@ var lang = {
 		cultureMilestoneLabel: 'Cultura',
 	},
 	spanish: {
+		updateNationBtn: 'Hecho',
 		playerColor: 'Color del jugador',
 		team: 'Equipo',
 		damage: ' dañar',
@@ -2200,6 +2207,7 @@ var lang = {
 		cultureMilestoneLabel: 'Cultura',
 	},
 	french: {
+		updateNationBtn: 'Terminé',
 		playerColor: 'Couleur du joueur',
 		team: 'Équipe',
 		damage: ' dommage',
@@ -2543,6 +2551,7 @@ var lang = {
 		cultureMilestoneLabel: 'Culture',
 	},
 	koreana: {
+		updateNationBtn: '끝난',
 		playerColor: '플레이어 색상',
 		team: '팀',
 		damage: ' 손해',
@@ -2886,6 +2895,7 @@ var lang = {
 		cultureMilestoneLabel: '문화',
 	},
 	japanese: {
+		updateNationBtn: '完了',
 		playerColor: 'プレーヤーの色',
 		team: 'チーム',
 		damage: ' 損傷',
@@ -3229,6 +3239,7 @@ var lang = {
 		cultureMilestoneLabel: '文化',
 	},
 	turkish: {
+		updateNationBtn: 'Tamam',
 		playerColor: 'Oyuncu Rengi',
 		team: 'Takım',
 		damage: ' hasar',
@@ -3572,6 +3583,7 @@ var lang = {
 		cultureMilestoneLabel: 'Kültür',
 	},
 	polish: {
+		updateNationBtn: 'Gotowe',
 		playerColor: 'Kolor gracza',
 		team: 'Zespół',
 		damage: ' uszkodzić',
@@ -3915,6 +3927,7 @@ var lang = {
 		cultureMilestoneLabel: 'Kultura',
 	},
 	italian: {
+		updateNationBtn: 'Fatto',
 		playerColor: 'Colore del giocatore',
 		team: 'Squadra',
 		damage: ' danno',

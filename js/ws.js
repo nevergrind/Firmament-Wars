@@ -14,6 +14,7 @@ var socket = {
 	},
 	addPlayer: function(account, flag){
 		// instant update of clients
+		console.info("socket addPlayer 2", account, flag);
 		if (account) {
 			socket.zmq.publish('title:' + my.channel, {
 				type: 'add',
@@ -182,6 +183,7 @@ var socket = {
 			if (socket.initialConnection){
 				g.unlock();
 				socket.zmq.subscribe('title:refreshGames', function(topic, data) {
+					console.info("title:refreshGames");
 					title.updateGame(data);
 				});
 				socket.zmq.subscribe('admin:broadcast', function(topic, data) {
@@ -209,7 +211,7 @@ var socket = {
 			document.getElementById('titleChatHeaderChannel').innerHTML = my.channel;
 			socket.setChannel(my.channel); // should be usa-1
 		}
-		if (g.view === 'game'){
+		else if (g.view === 'game'){
 			game.getGameState();
 		}
 	},

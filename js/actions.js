@@ -142,7 +142,6 @@ var action = {
 				attacker: attacker,
 				defender: defender,
 				split: isSplit,
-				randomTile: action.getRandomDemocracyTile(defender, game.tiles[defender].player),
 				defGovernment: game.player[game.tiles[defender].player].government
 			}
 		}).done(function(data){
@@ -199,7 +198,7 @@ var action = {
 		}).fail(function(data){
 			action.targetNotAdjacent(data.statusText, attacker);
 		});
-	},
+	},/*
 	getRandomDemocracyTile: function(tile, player){
 		var a = [],
 			i = 0;
@@ -210,7 +209,7 @@ var action = {
 		});
 		var len = a.length;
 		return a[~~(Math.random() * len)];
-	},
+	},*/
 	targetNotAdjacent: function(msg, attacker){
 		audio.play('error');
 		g.msg(msg, 1.5);

@@ -53,7 +53,7 @@ var lobby = {
 			'</div>';
 			// perks
 			str += '<div id="lobbyGovPerks">';
-			console.warn('lang[my.lang][government]', lang[my.lang][government]);
+			// console.warn('lang[my.lang][government]', lang[my.lang][government]);
 			for (var key in lang[my.lang][government]) {
 				str += '<div>' + lang[my.lang][government][key] + '</div>';
 			}

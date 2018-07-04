@@ -1761,6 +1761,10 @@ audio,
     fill: #666;
     stroke: #111
 }
+.modalFooter {
+	margin: .5rem 0 1rem;
+	text-align: center;
+}
 #logout {
 	display: none;
 }

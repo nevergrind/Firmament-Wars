@@ -338,13 +338,12 @@ var events = {
 		$("#refreshGameWrap").on("blur", "#gameName", function(){
 			g.focusGameName = false;
 		});
-		$("#titleViewBackdrop, .close-btn").on(ui.click, function(){
-			title.closeModal();
-		});
-		$("#mainWrap").on(ui.click, '#unlockGameDone, #configureNationDone, #leaderboardDone', function(){
-			audio.play('click');
-			title.closeModal();
-		});
+		$("#titleViewBackdrop, .close-btn").on(ui.click, title.closeModal);
+
+		$("#body").on(ui.click,
+			'#updateNationBtn, #configureNationDone, #leaderboardDone',
+			title.closeModal
+		);
 		/*
 		$("#autoJoinGame").on(ui.click, function(){
 			$("#joinGame").val('');

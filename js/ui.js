@@ -125,9 +125,18 @@ var ui = {
 	drawDiplomacyPanel: function() {
 		var strArr = [],
 			p,
-			i=0,
-			len=game.player.length,
+			i = 0,
+			len = game.player.length,
 			arr = ui.getPlayersByTileRank();
+
+		ui.currentLoser = 99;
+		arr.forEach(function(v, loop) {
+			if (loop) {
+				if (v && v < ui.currentLoser) {
+					ui.currentLoser = v;
+				}
+			}
+		});
 
 		for (; i<len; i++){
 			p = game.player[i];
@@ -144,6 +153,7 @@ var ui = {
 		}
 		document.getElementById('diplomacy-body').innerHTML = strArr.reverse().join("");
 	},
+	currentLoser: 0,
 	resizeWindow: function() {
 		g.view === 'game' && worldMap[0].applyBounds();
 		g.screen.resizeMap();

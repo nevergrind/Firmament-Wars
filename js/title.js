@@ -95,6 +95,8 @@ var title = {
 		clearTimeout(title.updateTimer);
 		title.titleUpdate = $("#titleChatPlayers").length; // player is logged in
 		if (title.titleUpdate) {
+			// see self in lobby upon login
+			title.addPlayer(my.account, my.flag, my.rating);
 			// title chat loop
 			(function repeat(){
 				if (isLoggedIn && g.view === 'title'){
@@ -105,6 +107,8 @@ var title = {
 							channel: my.channel
 						}
 					}).done(function(data){
+						console.info('titleUpdate.php', JSON.parse(JSON.stringify(title.players)));
+						console.info('data', data);
 						title.updatePlayerCallback(data);
 					}).always(function(){
 						if (!once){
@@ -130,9 +134,10 @@ var title = {
 						flag = p[i].flag,
 						rating = p[i].rating;
 					if (title.players[account] === undefined){
-						//console.info("ADDING PLAYER: ", p[i]);
+						console.info("ADDING PLAYER: ", p[i]);
 						title.addPlayer(account, flag, rating);
-					} else if (title.players[account].flag !== flag){
+					}
+					else if (title.players[account].flag !== flag){
 						// replace player flag
 						var flagElement = document.getElementById("titlePlayerFlag_" + account);
 						if (flagElement !== null){
@@ -174,7 +179,8 @@ var title = {
 					}
 					console.info("REMOVING: ", o);
 					title.removeGame(o);
-				} else {
+				}
+				else {
 					// found game
 					if (serverGames[ind].players !== title.games[ind]){
 						// player count does not match... fixing
@@ -192,7 +198,7 @@ var title = {
 	},
 	// adds player to chat room
 	addPlayer: function(account, flag, rating){
-		//console.info("title.addPlayer 2", account, flag, rating);
+		console.info("title.addPlayer 2", account, flag, rating);
 		title.players[account] = {
 			flag: flag
 		}
@@ -220,6 +226,7 @@ var title = {
 		}
 	},
 	updateGame: function(data){
+		console.info("title.updateGame");
 		if (data.type === 'addToGame'){
 			title.addToGame(data);
 		} else if (data.type === 'removeFromGame'){
@@ -914,6 +921,7 @@ var title = {
 		});
 	},
 	closeModal: function(){
+		audio.play('click');
 		TweenMax.set('.title-modals, #titleViewBackdrop', {
 			alpha: 0,
 			visibility: 'hidden'

@@ -517,6 +517,14 @@ g.init = (function(){
 			var langPref = greenworks.getCurrentUILanguage(),
 				z = greenworks.getSteamId();
 
+			var index = lang.alternateSupportedLanguages.indexOf(langPref);
+			/*title.chat({
+				message: 'Detected language: ' + langPref
+			});*/
+			if (index > -1) {
+				my.lang = lang.alternateSupportedLanguages[index];
+			}
+
 			g.msg(lang[my.lang].verifyingSteam);
 
 			steam.screenName = z.screenName;
@@ -533,13 +541,6 @@ g.init = (function(){
 						ticket: data.ticket.toString('hex')
 					}
 				}).done(function(data) {
-					var index = lang.alternateSupportedLanguages.indexOf(langPref);
-					/*title.chat({
-						message: 'Detected language: ' + langPref
-					});*/
-					if (index > -1) {
-						my.lang = lang.alternateSupportedLanguages[index];
-					}
 					greenworks.cancelAuthTicket(steam.handle);
 					g.initGameCallback(data);
 				}).fail(function(data) {
@@ -685,14 +686,14 @@ var game = {
 				if (e.alive){
 					if (!e.cpu){
 						// only counts human players
-						console.info('Human player found at: '+ index);
+						//console.info('Human player found at: '+ index);
 						playerCount++;
 						if (teams.indexOf(e.team) === -1){
 							teams.push(e.team);
 						}
 					}
 					if (e.cpu){
-						console.info('CPU player found at: '+ index);
+						//console.info('CPU player found at: '+ index);
 						cpuCount++;
 					}
 				}
@@ -855,9 +856,11 @@ var game = {
 		var i = d.tile * 1,
 			p = d.player,
 			timestamp = d.timestamp * 10000;
-		console.warn(i, timestamp, game.tiles[i].timestamp, timestamp < game.tiles[i].timestamp);
 		// this update happened on the server earlier than most recent update... ignore!
-		if (timestamp < game.tiles[i].timestamp) return;
+		if (timestamp < game.tiles[i].timestamp) {
+			console.warn('did not update', i, timestamp, game.tiles[i].timestamp, timestamp < game.tiles[i].timestamp);
+			return;
+		}
 		// only update client data
 		game.tiles[i].player = p;
 		game.tiles[i].account = game.player[p].account;
@@ -952,6 +955,35 @@ var game = {
 		game.energyTimer = setInterval(game.updateResources, g.speed * 1000);
 		game.updateResources();
 	},
+	lowestPlayerIsMe: function() {
+		var lowestId = my.player;
+		game.player.forEach(function(v) {
+			if (v.alive && v.player < lowestId) {
+				lowestId = v.player;
+			}
+		});
+		return lowestId === my.player;
+	},
+	playerActivatesCpuTurn: function(cpu) {
+		var count = 0,
+			alivePlayers = [];
+
+		game.player.forEach(function(v, i) {
+			//console.info('alivePlayers status: ', v.alive, v.cpu);
+			if (v.alive && v.cpu === 0) {
+				// add human players only
+				//console.info('alivePlayers PUSH: ', i);
+				alivePlayers.push(i);
+				count++;
+			}
+		});
+		var result = alivePlayers[cpu % count];
+		/*console.info('alivePlayers: ', alivePlayers);
+		console.info('cpu: ', cpu);
+		console.info('count: ', count);*/
+		console.info('result: ', result);
+		return result === my.player;
+	},
 	updateResources: function(){
 		if (!g.over){
 			var firstPlayer = 0,
@@ -959,8 +991,10 @@ var game = {
 			game.player.forEach(function(d){
 				if (d.alive){
 					if (d.cpu){
-						ai.takeTurn(d);
-					} else if (d.cpu === 0){
+						// game.lowestPlayerIsMe() && ai.takeTurn(d);
+						game.playerActivatesCpuTurn(d.player) && ai.takeTurn(d);
+					}
+					else if (d.cpu === 0){
 						// 0 means player, null means barb
 						if (!firstPlayer){
 							firstPlayer = 1;

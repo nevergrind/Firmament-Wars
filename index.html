@@ -295,190 +295,197 @@
 
 
 
-		<div id='createGameWrap' class='fw-primary title-modals'>
-			<button id='cancelCreateGame'
-					type='button'
-					class='close-btn-wrap btn btn-sm fwBlue shadow4'>
-				<span class="close-btn sharp-x">&times;</span>
-			</button>
-			<div class='header text-center'>
-				<h2 id="createGameHead" class="header"></h2>
-				<h2 id="createRankedGameHead" class='header ranked'></h2>
-			</div>
-			<hr class="fancyhr">
-			<div id="createGameFormWrap">
-
-				<div id="createGameNameWrap">
-					<div class='buffer2'>
-						<label id="createGameNameLabel"></label>
-					</div>
-					<div class='buffer'>
-						<input id='gameName' class='form-control createGameInput' type='text' maxlength='32' auto-complete='disabled'>
-					</div>
-				</div>
-
-				<div id="createGamePasswordWrap">
-					<div class='buffer2'>
-						<label id="createGamePasswordLabel"></label>
-					</div>
-
-					<div class='buffer'>
-						<input id='gamePassword' class='form-control createGameInput' type='text' maxlength='16' auto-complete='disabled'>
-					</div>
-				</div>
-
-				<div id="create-map-select">
-
-					<div id="createGameMaxPlayerWrap" class="pull-right">
-						<div class='buffer2'>
-							<label id="createGameMaxPlayerLabel" class='control-label'></label>
-							<span id='createGamePlayers'>8</span>
-						</div>
-
-						<div class='buffer'>
-							<input id='gamePlayers' type='number' class='form-control createGameInput' id='gamePlayers' value='8' min='2' max='8'>
-						</div>
-					</div>
-
-					<div class='buffer2'>
-						<label id="createGameMapLabel" class='control-label'></label>
-					</div>
-
-					<div class='buffer w40'>
-						<div class='dropdown'>
-							<button class='btn btn-primary dropdown-toggle shadow4 fwDropdownButton' type='button' data-toggle='dropdown'>
-								<span id='createGameMap'>Earth Omega</span>
-								<i class="fa fa-caret-down text-warning lobbyCaret"></i>
-							</button>
-							<ul id='mapDropdown' class='dropdown-menu fwDropdown createGameInput'></ul>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div>
-				<hr class='fancyhr'>
-			</div>
-			<div id="create-game-form-foot" class='text-center'>
-				<button id='createGame' type='button' class='btn btn-md fwGreen btn-responsive shadow4'></button>
-			</div>
+	<div id='createGameWrap' class='fw-primary title-modals'>
+		<button id='cancelCreateGame'
+				type='button'
+				class='close-btn-wrap btn btn-sm fwBlue shadow4'>
+			<span class="close-btn sharp-x">&times;</span>
+		</button>
+		<div class='header text-center'>
+			<h2 id="createGameHead" class="header"></h2>
+			<h2 id="createRankedGameHead" class='header ranked'></h2>
 		</div>
+		<hr class="fancyhr">
+		<div id="createGameFormWrap">
 
-		<div id="joinPrivateGameModal" class="fw-primary container title-modals">
-			<button id='cancelCreateGame'
-					type='button'
-					class='close-btn-wrap btn btn-sm fwBlue shadow4'>
-				<span class="close-btn sharp-x">&times;</span>
-			</button>
-			<div class="row text-center">
-				<div class='col-xs-12'>
-					<h2 class='header'>Join Private Game</h2>
-					<hr class="fancyhr">
+			<div id="createGameNameWrap">
+				<div class='buffer2'>
+					<label id="createGameNameLabel"></label>
+				</div>
+				<div class='buffer'>
+					<input id='gameName' class='form-control createGameInput' type='text' maxlength='32' auto-complete='disabled'>
 				</div>
 			</div>
 
-			<div class="row privateRow">
-				<div class='col-xs-4 privateLabel'>
-					<label id="privateGameNameLabel" class="control-label"></label>
+			<div id="createGamePasswordWrap">
+				<div class='buffer2'>
+					<label id="createGamePasswordLabel"></label>
 				</div>
-				<div class='col-xs-8'>
-					<input type="text" class="joinGameInputs fwBlueInput" id="joinGame" maxlength="32">
-				</div>
-			</div>
 
-			<div class="row buffer2 privateRow">
-				<div class='col-xs-4 privateLabel'>
-					<label id="privateGamePasswordLabel" class="control-label"></label>
-				</div>
-				<div class='col-xs-8'>
-					<input type="text" class="joinGameInputs fwBlueInput" id="joinGamePassword" maxlength="16">
+				<div class='buffer'>
+					<input id='gamePassword' class='form-control createGameInput' type='text' maxlength='16' auto-complete='disabled'>
 				</div>
 			</div>
 
-			<div class='row buffer text-center'>
-				<div class='col-xs-12'>
-					<hr class="fancyhr">
-					<button id="joinPrivateGameBtnConfirm"
-							type="button"
-							style="margin-top: 5px"
-							class="btn btn-md fwGreen btn-responsive shadow4"></button>
+			<div id="create-map-select">
+
+				<div id="createGameMaxPlayerWrap" class="pull-right">
+					<div class='buffer2'>
+						<label id="createGameMaxPlayerLabel" class='control-label'></label>
+						<span id='createGamePlayers'>8</span>
+					</div>
+
+					<div class='buffer'>
+						<input id='gamePlayers' type='number' class='form-control createGameInput' id='gamePlayers' value='8' min='2' max='8'>
+					</div>
 				</div>
-			</div>
-		</div>
 
-		<div id="configureNation" class="fw-primary container title-modals">
-			<button id='configureNationDone'
-					type='button'
-					class='close-btn-wrap btn btn-sm fwBlue shadow4'>
-				<span class="close-btn sharp-x">&times;</span>
-			</button>
-
-			<div class="text-center">
-				<div>
-					<h2 id="setNationName" class='header'></h2>
-					<hr class="fancyhr">
+				<div class='buffer2'>
+					<label id="createGameMapLabel" class='control-label'></label>
 				</div>
-			</div>
 
-			<div id="configure-nation-name">
-				<input id="updateNationName"
-					   class="form-control"
-					   type="text"
-					   maxlength="32"
-					   auto-complete="disabled"
-					   size="24"
-					   aria-describedby="updateNationNameStatus"
-					   placeholder="Enter New Nation Name">
-				<button id="submitNationName" class="btn fwBlue shadow4" type="button"></button>
-			</div>
-
-			<div class="text-center">
-				<div>
-					<hr class="fancyhr">
-					<h2 id="setNationFlag" class='header'></h2>
-					<hr class="fancyhr">
-				</div>
-			</div>
-
-			<div id="configure-nation-flag-flex" class="text-center">
-				<div>
-					<div class="dropdown">
-						<button class="btn dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">
-							<span id="selectedFlag"></span>
+				<div class='buffer w40'>
+					<div class='dropdown'>
+						<button class='btn btn-primary dropdown-toggle shadow4 fwDropdownButton' type='button' data-toggle='dropdown'>
+							<span id='createGameMap'>Earth Omega</span>
 							<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 						</button>
-						<ul id="flagDropdown" class="dropdown-menu fwDropdown"></ul>
+						<ul id='mapDropdown' class='dropdown-menu fwDropdown createGameInput'></ul>
 					</div>
-					<div id="flagPurchased" class="flagPurchasedStatus"></div>
-				</div>
-
-				<div>
-					<img id="updateNationFlag" class="w100 block center no-select" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 				</div>
 			</div>
 		</div>
+		<div>
+			<hr class='fancyhr'>
+		</div>
+		<div id="create-game-form-foot" class='text-center'>
+			<button id='createGame' type='button' class='btn btn-md fwGreen btn-responsive shadow4'></button>
+		</div>
+	</div>
 
-		<div id="leaderboard" class="fw-primary title-modals">
-			<button id='leaderboardDone'
-					type='button'
-					class='close-btn-wrap btn btn-sm fwBlue shadow4'>
-				<span class="close-btn sharp-x">&times;</span>
-			</button>
-			<div id="leaderboard-head">
-				<div>
-					<button id="leaderboardRankedBtn" type="button" class="btn fwBlue btn-responsive shadow4 ranked"></button>
-					<button id="leaderboardFfaBtn" type="button" class="btn fwBlue btn-responsive shadow4"></button>
-					<button id="leaderboardTeamBtn" type="button" class="btn fwBlue btn-responsive shadow4"></button>
-					<button id="leaderboard-trips-btn" type="button" class="btn fwBlue btn-responsive shadow4">Trips</button>
-					<button id="leaderboard-quads-btn" type="button" class="btn fwBlue btn-responsive shadow4">Quads</button>
-					<button id="leaderboard-pents-btn" type="button" class="btn fwBlue btn-responsive shadow4">Pents</button>
-				</div>
-			</div>
-
-			<hr class="fancyhr">
-			<div id="leaderboardBody">
-				<div class="text-center">Loading...</div>
+	<div id="joinPrivateGameModal" class="fw-primary container title-modals">
+		<button id='cancelCreateGame'
+				type='button'
+				class='close-btn-wrap btn btn-sm fwBlue shadow4'>
+			<span class="close-btn sharp-x">&times;</span>
+		</button>
+		<div class="row text-center">
+			<div class='col-xs-12'>
+				<h2 class='header'>Join Private Game</h2>
+				<hr class="fancyhr">
 			</div>
 		</div>
+
+		<div class="row privateRow">
+			<div class='col-xs-4 privateLabel'>
+				<label id="privateGameNameLabel" class="control-label"></label>
+			</div>
+			<div class='col-xs-8'>
+				<input type="text" class="joinGameInputs fwBlueInput" id="joinGame" maxlength="32">
+			</div>
+		</div>
+
+		<div class="row buffer2 privateRow">
+			<div class='col-xs-4 privateLabel'>
+				<label id="privateGamePasswordLabel" class="control-label"></label>
+			</div>
+			<div class='col-xs-8'>
+				<input type="text" class="joinGameInputs fwBlueInput" id="joinGamePassword" maxlength="16">
+			</div>
+		</div>
+
+		<div class='row buffer text-center'>
+			<div class='col-xs-12'>
+				<hr class="fancyhr">
+				<button id="joinPrivateGameBtnConfirm"
+						type="button"
+						style="margin-top: 5px"
+						class="btn btn-md fwGreen btn-responsive shadow4"></button>
+			</div>
+		</div>
+	</div>
+
+	<div id="configureNation" class="fw-primary container title-modals">
+		<button id='configureNationDone'
+				type='button'
+				class='close-btn-wrap btn btn-sm fwBlue shadow4'>
+			<span class="close-btn sharp-x">&times;</span>
+		</button>
+
+		<div class="text-center">
+			<div>
+				<h2 id="setNationName" class='header'></h2>
+				<hr class="fancyhr">
+			</div>
+		</div>
+
+		<div id="configure-nation-name">
+			<input id="updateNationName"
+				   class="form-control"
+				   type="text"
+				   maxlength="32"
+				   auto-complete="disabled"
+				   size="24"
+				   aria-describedby="updateNationNameStatus"
+				   placeholder="Enter New Nation Name">
+			<button id="submitNationName" class="btn fwBlue shadow4" type="button"></button>
+		</div>
+
+		<div class="text-center">
+			<div>
+				<hr class="fancyhr">
+				<h2 id="setNationFlag" class='header'></h2>
+				<hr class="fancyhr">
+			</div>
+		</div>
+
+		<div id="configure-nation-flag-flex" class="text-center">
+			<div>
+				<div class="dropdown">
+					<button class="btn dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">
+						<span id="selectedFlag"></span>
+						<i class="fa fa-caret-down text-warning lobbyCaret"></i>
+					</button>
+					<ul id="flagDropdown" class="dropdown-menu fwDropdown"></ul>
+				</div>
+				<div id="flagPurchased" class="flagPurchasedStatus"></div>
+			</div>
+
+			<div>
+				<img id="updateNationFlag" class="w100 block center no-select" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
+			</div>
+		</div>
+
+		<div>
+			<hr class='fancyhr'>
+		</div>
+		<div class='modalFooter text-center'>
+			<button id='updateNationBtn' type='button' class='btn btn-md fwGreen btn-responsive shadow4'></button>
+		</div>
+	</div>
+
+	<div id="leaderboard" class="fw-primary title-modals">
+		<button id='leaderboardDone'
+				type='button'
+				class='close-btn-wrap btn btn-sm fwBlue shadow4'>
+			<span class="close-btn sharp-x">&times;</span>
+		</button>
+		<div id="leaderboard-head">
+			<div>
+				<button id="leaderboardRankedBtn" type="button" class="btn fwBlue btn-responsive shadow4 ranked"></button>
+				<button id="leaderboardFfaBtn" type="button" class="btn fwBlue btn-responsive shadow4"></button>
+				<button id="leaderboardTeamBtn" type="button" class="btn fwBlue btn-responsive shadow4"></button>
+				<button id="leaderboard-trips-btn" type="button" class="btn fwBlue btn-responsive shadow4">Trips</button>
+				<button id="leaderboard-quads-btn" type="button" class="btn fwBlue btn-responsive shadow4">Quads</button>
+				<button id="leaderboard-pents-btn" type="button" class="btn fwBlue btn-responsive shadow4">Pents</button>
+			</div>
+		</div>
+
+		<hr class="fancyhr">
+		<div id="leaderboardBody">
+			<div class="text-center">Loading...</div>
+		</div>
+	</div>
 
 	<div id="gameWrap">
 
