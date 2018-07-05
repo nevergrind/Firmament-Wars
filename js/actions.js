@@ -217,16 +217,17 @@ var action = {
 		ui.showTarget(DOM['land' + attacker]);
 	},
 	deploy: function(){
-		if (my.government === 'Communism' && !game.tiles[my.tgt].player && !game.tiles[my.tgt].units){
-			// skip for commie bonus
-		}
-		else {
-			// my.checkSelectLastTarget();
-		}
 		var t = game.tiles[my.tgt];
 		if (my.player !== t.player) {
-			action.error(lang[my.lang].notYourTile);
-			return;
+			if (my.government === 'Communism' &&
+				!game.tiles[my.tgt].player &&
+				!game.tiles[my.tgt].units){
+				// uninhabited - skip for commie bonus
+			}
+			else {
+				action.error(lang[my.lang].notYourTile);
+				return;
+			}
 		}
 		if (my.moves < my.deployCost){
 			action.error(lang[my.lang].notEnoughEnergy);

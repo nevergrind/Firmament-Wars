@@ -1000,7 +1000,21 @@ var title = {
 				alpha: 0
 			},
 			y: 30,
-			alpha: 1
+			alpha: 1,
+			onComplete: function() {
+				// populate dropdown
+				var s = "";
+				for (var key in g.flagData){
+					s += "<li class='dropdown-header'>" + g.flagData[key].group + "</li>";
+					g.flagData[key].name.forEach(function(e){
+						s += "<li class='flex-row flagSelect'>" +
+								"<img class='flag' src='images/flags/"+ e +".jpg'" +
+								"<a class='flex-1 no-select'>" + e + "</a>" +
+							"</li>";
+					});
+				}
+				document.getElementById("flagDropdown").innerHTML = s;
+			}
 		});
 		title.showBackdrop();
 	},

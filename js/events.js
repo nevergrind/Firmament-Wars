@@ -575,14 +575,14 @@ var events = {
 
 $(document).on('keydown', function(e){
 	var x = e.keyCode;
-	console.info('key: ', x);
+	console.info('keydown: ', x);
 	if (e.ctrlKey){
 		if (x === 82){
 			// ctrl+r refresh
 			return false;
 		}
-	} else {
-
+	}
+	else {
 		if (g.view === 'title'){
 			if (!g.isModalOpen && isLoggedIn){
 				$("#title-chat-input").focus();
@@ -590,13 +590,23 @@ $(document).on('keydown', function(e){
 			if (x === 27) {
 				title.toggleModal();
 			}
-		} else if (g.view === 'lobby'){
+		}
+		else if (g.view === 'lobby'){
 			$("#lobby-chat-input").focus();
 			if (x === 27) {
 				title.toggleModal();
 			}
-		} else {
+		}
+		else {
 			// game
+			if (x === 86){
+				// v
+				if (!g.chatOn){
+					game.toggleGameWindows(1);
+				}
+			}
+			// STUFF BEFORE HERE CAN BE DONE IN SPECTATE MODE
+			if (g.spectateStatus) return;
 			if (x === 9){
 				// tab
 				if (!e.shiftKey){
@@ -605,11 +615,6 @@ $(document).on('keydown', function(e){
 					my.nextTarget(true);
 				}
 				e.preventDefault();
-			} else if (x === 86){
-				// v
-				if (g.view === 'game' && !g.chatOn){
-					game.toggleGameWindows(1);
-				}
 			}
 			else if (x === 27) {
 				!my.attackOn && !g.chatOn && title.toggleModal();
@@ -618,7 +623,7 @@ $(document).on('keydown', function(e){
 	}
 }).on('keyup', function(e) {
 	var x = e.keyCode;
-	//console.info(x);
+	console.info('keyup: ', x);
 	if (g.view === 'title'){
 		if (x === 13){
 			if (g.focusUpdateNationName){
@@ -634,7 +639,8 @@ $(document).on('keydown', function(e){
 				title.createGame();
 			}
 		}
-	} else if (g.view === 'lobby'){
+	}
+	else if (g.view === 'lobby'){
 		if (lobby.chatOn){
 			if (x === 13){
 				// enter - sends chat
@@ -642,7 +648,8 @@ $(document).on('keydown', function(e){
 			}
 		}
 	// game hotkeys
-	} else if (g.view === 'game'){
+	}
+	else if (g.view === 'game'){
 		if (g.chatOn){
 			if (x === 13 || x === 27){
 				// enter/esc - sends chat
@@ -654,7 +661,7 @@ $(document).on('keydown', function(e){
 				// enter
 				toggleChatMode();
 			}
-			else if (x === 27){
+			if (x === 27){
 				// esc
 				if (my.attackOn) {
 					my.attackOn = false;
@@ -663,7 +670,9 @@ $(document).on('keydown', function(e){
 					ui.showTarget(DOM['land' + my.tgt]);
 				}
 			}
-			else if (x === 65){
+			// STUFF BEFORE HERE CAN BE DONE IN SPECTATE MODE
+			if (g.spectateStatus) return;
+			if (x === 65){
 				// a
 				var o = new Target();
 				action.target(o);
@@ -777,7 +786,7 @@ $(document).on('keydown', function(e){
 	}
 });
 
- $("#dictatorAvatar").on('change', function(e){
+/*$("#dictatorAvatar").on('change', function(e){
 	 var e2 = $("#uploadErr");
 	 function imgError(msg){
 		e2.html(msg);
@@ -813,7 +822,7 @@ $(document).on('keydown', function(e){
 			}
 		 }, false);
 	 }
- });
+ });*/
 if (app.isApp) {
 	var gui = require('nw.gui');
 	win = gui.Window.get();

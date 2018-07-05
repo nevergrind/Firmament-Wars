@@ -517,7 +517,7 @@ function gameVictory(){
 	})();
 }
 function triggerEndGame(msg, victory){
-	$("body, #gameWrap").off('click mousedown keydown keyup keypress');
+	// $("body, #gameWrap").off('click mousedown keydown keyup keypress');
 	g.gameDuration = ~~((Date.now()- ((sessionStorage.getItem('gameDuration') * 1))) / 1000);
 	$("#chat-input-open, #chat-input-wrap").remove();
 	window.onbeforeunload = null;

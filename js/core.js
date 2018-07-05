@@ -436,6 +436,8 @@ var g = {
 				applyFilter(o);
 			}
 		});
+		// handle setting accounts and config nation for new players
+		console.info('setAccountName', data.setAccountName);
 		socket.init();
 		data.isNewAccount && title.configureNation();
 	}
@@ -448,19 +450,6 @@ g.init = (function(){
 			// $("#endTurn").css('display', 'none');
 		});
 	}
-	// build map drop-down 
-	// <li><a class='flagSelect'>Default</a></li>
-	var s = "";
-	for (var key in g.flagData){
-		s += "<li class='dropdown-header'>" + g.flagData[key].group + "</li>";
-		g.flagData[key].name.forEach(function(e){
-			s += "<li class='flex-row flagSelect'>" +
-					"<img class='flag' src='images/flags/"+ e +".jpg'" +
-					"<a class='flex-1 no-select'>" + e + "</a>" +
-				"</li>";
-		});
-	}
-	document.getElementById("flagDropdown").innerHTML = s;
 	TweenMax.to('#title-stars-1', 50, {
 		startAt: { backgroundPosition: '0'},
 		force3D: true,
@@ -612,7 +601,7 @@ var game = {
 	tiles: [],
 	initialized: false,
 	toggleGameWindows: function(){
-		var x = $("#targetWrap").css('visibility') === 'visible';
+		var x = $("#ui2-head").css('visibility') === 'visible';
 		TweenMax.set(DOM.gameWindows, {
 		  	visibility: x ? 'hidden' : 'visible'
 		});
