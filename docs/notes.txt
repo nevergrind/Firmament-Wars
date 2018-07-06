@@ -5,8 +5,345 @@
 - strip unnecessary tags
 - size it appropriately and put padding around it
 - add requires into file
-- add class and id
 - add paths if applicable
 - add text (unit) for each path
 - Get map - get tile names, size, startTiles
 - Add map data to mapData.php
+
+Text copy pasta:
+        <text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">5</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">10</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">15</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">20</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">25</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">30</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">35</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">40</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">45</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">50</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">55</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">60</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">65</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">70</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">75</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">80</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">85</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">90</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">95</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">100</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">105</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">110</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">115</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">120</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">125</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">130</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">135</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">140</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="000">145</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+		<text x="000" y="150">150</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
+
+
+Adj copy pasta:
+<?php $adj = [[], [],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	];

@@ -15,7 +15,7 @@ var ai = {
 				// mine
 				score -= 10;
 			}
-			if (o.defender === ui.currentLoser) {
+			if (o.defender === ui.currentLoser && ui.currentLoser !== o.attacker) {
 				score += 250;
 			}
 		}
@@ -37,7 +37,7 @@ var ai = {
 					// mine
 					score -= 5;
 				}
-				if (o.defender === ui.currentLoser) {
+				if (o.defender === ui.currentLoser && ui.currentLoser !== o.attacker) {
 					score += 250;
 				}
 			}
@@ -77,7 +77,7 @@ var ai = {
 						culture: z.culture,
 						capital: z.capital
 					});
-					if (z.player === ui.currentLoser) {
+					if (z.player === ui.currentLoser && ui.currentLoser !== player) {
 						// try to eliminate last place player
 						score += 250;
 					}

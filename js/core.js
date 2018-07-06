@@ -355,7 +355,7 @@ var g = {
 		Miscellaneous: {
 			group: "Miscellaneous",
 			/*name: ['Anarcho-Capitalist', 'Anarcho-Syndicalist', 'Cascadia', 'European Union', 'ISIS', 'Jefferson State', 'Jolly Roger', 'Northwest Front', 'Pan-African Flag', 'Rainbow Flag', 'Sicily', 'United Nations']*/
-			name: ['Anarcho-Capitalist', 'Anarcho-Syndicalist', 'Cascadia', 'Christian', 'Edgemaster', 'European Union', 'High Energy', 'ISIS', 'Jefferson State', 'Jolly Roger', 'Kekistan', 'Northwest Front', 'Pan-African Flag', 'pol', 'Rainbow Flag', 'Sicily', 'United Nations']
+			name: ['Anarcho-Capitalist', 'Anarcho-Syndicalist', 'Antifa', 'Cascadia', 'Christian', 'Edgemaster', 'European Union', 'High Energy', 'ISIS', 'Jefferson State', 'Jolly Roger', 'Kekistan', 'Northwest Front', 'Pan-African Flag', 'pol', 'Rainbow Flag', 'Sicily', 'United Nations']
 		},
 		SouthAmerica: {
 			group: "South America",

@@ -37,9 +37,13 @@ function mouseZoomOut(){
 	});
 	worldMap[0].applyBounds();
 }
+var reportMousePosition = _.debounce(function(x, y) {
+	console.info(x - 300, y - 200);
+}, 200);
 function setMousePosition(X, Y){
 	var x = ~~((X / g.map.sizeX) * 100);
 	var y = ~~((Y / g.map.sizeY) * 100);
 	g.mouse.transX = x;
 	g.mouse.transY = y;
+	//reportMousePosition(X, Y);
 }

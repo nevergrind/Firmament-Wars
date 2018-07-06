@@ -11,9 +11,9 @@ function Target(o){
 }
 
 var action = {
-	triggerAction: function(that) {
+	triggerAction: function(that, event) {
 		var id = that.id.slice(4)*1;
-		console.info('tile: ', id, game.tiles[id]);
+		console.log('%c tile: '+ id + ' adj: '+ game.tiles[id].adj.length, 'background: #015; color: #0ff');
 		if (my.attackOn){
 			var o = my.targetData;
 			if (o.attackName === 'attack' || o.attackName === 'splitAttack'){

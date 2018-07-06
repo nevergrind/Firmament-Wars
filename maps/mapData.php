@@ -7,8 +7,8 @@
 		'tiles' => 78,
 		'maxPlayers' => 8,
 		'startTiles' => [72, 5, 77, 69, 47, 66, 41, 8], 
-		'sizeX' => 3600,
-		'sizeY' => 1700,
+		'sizeX' => 3800,
+		'sizeY' => 1900,
 		'tileNames' => array(
 			'Afghanistan', 'Angola', 'Gabon', 'Greece', 'Oman', //0
 			'Argentina', 'Turkey', 'Romania', 'Australia', 'Austria', 
@@ -34,8 +34,8 @@
 		'tiles' => 83,
 		'maxPlayers' => 8,
 		'startTiles' => [40, 44, 58, 51, 5, 52, 63, 62],
-		'sizeX' => 2400,
-		'sizeY' => 1300,
+		'sizeX' => 2600,
+		'sizeY' => 1500,
 		'tileNames' => array(
 			'Chicago', 'Pakistan', 'Namibia', 'Congo', 'Greece', 
 			'Oman', 'Patagonia', 'Buenos Aires', 'Turkey', 'Sydney', 
@@ -62,8 +62,8 @@
 		'tiles' => 78,
 		'maxPlayers' => 8,
 		'startTiles' => [13, 14, 52, 23, 54, 47, 36, 59],
-		'sizeX' => 2320,
-		'sizeY' => 2120,
+		'sizeX' => 2520,
+		'sizeY' => 2320,
 		'tileNames' => array(
 			'Santiago', 'Montevideo', 'Salvador', 'Sao Paolo', 'Amazon', //0
 			'Georgetown', 'Los Angeles', 'Mexico City', 'Lima', 'Seattle', 
@@ -83,35 +83,14 @@
 			'Bangui', 'Lusaka', 'Gaborone'
 		)
 	);
-	$mapData['UnitedStates'] = (object) array(
-		'name' => 'United States',
-		'key' => 'UnitedStates',
-		'tiles' => 48,
-		'maxPlayers' => 2,
-		'startTiles' => [7, 28, 46],
-		'sizeX' => 2320,
-		'sizeY' => 1591,
-		'tileNames' => array(
-			'Massachusetts', 'Minnesota', 'Montana', 'North Dakota', 'Idaho', 
-			'Washington', 'Arizona', 'California', 'Colorado', 'Nevada', 
-			'New Mexico', 'Oregon', 'Utah', 'Wyoming', 'Arkansas', // 10
-			'Iowa', 'Kansas', 'Missouri', 'Nebraska', 'Oklahoma', 
-			'South Dakota', 'Louisiana', 'Texas', 'Connecticut', 'New Hampshire', // 20
-			'Rhode Island', 'Vermont', 'Alabama', 'Florida', 'Georgia', 
-			'Mississippi', 'South Carolina', 'Illinois', 'Indiana', 'Kentucky', // 30
-			'North Carolina', 'Ohio', 'Tennessee', 'Virginia', 'Wisconsin', 
-			'West Virginia', 'Delaware', 'Maryland', 'New Jersey', 'New York', // 40
-			'Pennsylvania', 'Maine', 'Michigan'
-		)
-	);
-	$mapData['France'] = (object) array(
-		'name' => 'France',
-		'key' => 'France',
-		'tiles' => 81,
+	$mapData['Germany'] = (object) array(
+		'name' => 'Germany',
+		'key' => 'Germany',
+		'tiles' => 150,
 		'maxPlayers' => 8,
-		'startTiles' => [34, 42, 38, 67, 78, 30, 63, 11],
-		'sizeX' => 2320,
-		'sizeY' => 1792,
+		'startTiles' => [24, 6, 116, 75, 137, 66, 130, 43],
+		'sizeX' => 3591,
+		'sizeY' => 2939,
 		'tileNames' => array(
 			'Oyonnax', 'Maubeuge', 'Nevers', 'Digne', 'Nice', //0
 			'Lyon', 'Charleville-Mezieres', 'Toulouse', 'Chalons-en-Champagne', 'Narbonne', 
@@ -129,7 +108,20 @@
 			'Evreux', 'Vichy', 'Bayonne', 'Perpignan', 'Dijon', 
 			'Alencon', 'Meaux', 'Le Havre', 'Amiens', 'Rodez', //70
 			'Mulhouse', 'Cannes', 'La Roche-sur-Yon', 'Poitiers', 'Nancy', 
-			'Nangis' //80
+			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',  //80
+			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',
+			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',  //90
+			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',
+			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',  //100
+			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',
+			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',  //110
+			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',
+			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',  //120
+			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',
+			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',  //130
+			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',
+			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',  //140
+			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis'
 		)
 	);
 	$mapData['France'] = (object) array(
@@ -138,8 +130,8 @@
 		'tiles' => 81,
 		'maxPlayers' => 8,
 		'startTiles' => [34, 42, 38, 67, 78, 30, 63, 11],
-		'sizeX' => 2320,
-		'sizeY' => 1792,
+		'sizeX' => 2520,
+		'sizeY' => 1992,
 		'tileNames' => array(
 			'Oyonnax', 'Maubeuge', 'Nevers', 'Digne', 'Nice', //0
 			'Lyon', 'Charleville-Mezieres', 'Toulouse', 'Chalons-en-Champagne', 'Narbonne',
@@ -166,8 +158,8 @@
 		'tiles' => 81,
 		'maxPlayers' => 8,
 		'startTiles' => [45, 39, 13, 29, 6, 9, 72, 73],
-		'sizeX' => 2320,
-		'sizeY' => 2206,
+		'sizeX' => 2520,
+		'sizeY' => 2406,
 		'tileNames' => array(
 			'Bologna', 'Parma', 'Varzi', 'Chioggia', 'Ferrara', //0
 			'Rimini', 'Pesaro', 'Genoa', 'Savona', 'Ventimiglia', 
@@ -194,8 +186,8 @@
 		'tiles' => 47,
 		'maxPlayers' => 3,
 		'startTiles' => [11, 37, 31, 29], 
-		'sizeX' => 2320,
-		'sizeY' => 2120,
+		'sizeX' => 2520,
+		'sizeY' => 2320,
 		'tileNames' => array(
 			'Aichi', 'Akita', 'Aomori', 'Chiba', 'Ehime', 
 			'Fukui', 'Fukuoka', 'Fukushima', 'Gifu', 'Gunma', 
@@ -215,8 +207,8 @@
 		'tiles' => 75,
 		'maxPlayers' => 7,
 		'startTiles' => [48,10,74,36,60,9,65],
-		'sizeX' => 2650,
-		'sizeY' => 1280,
+		'sizeX' => 2850,
+		'sizeY' => 1480,
 		'tileNames' => array(
 			'Adana', 'Adiyaman', 'Afyonkarahisar', 'Agri', 'Aksaray', //0
 			'Amasya', 'Ankara', 'Antalya', 'Ardahan', 'Artvin', 
@@ -241,8 +233,8 @@
 		'tiles' => 69,
 		'maxPlayers' => 8,
 		'startTiles' => [35, 55, 50, 33, 40, 45, 5, 62],
-		'sizeX' => 2320,
-		'sizeY' => 2400,
+		'sizeX' => 2520,
+		'sizeY' => 2600,
 		'tileNames' => array(
 			'Paisley', 'Stirling', 'Glasgow', 'Aberdeen', 'Dundee', //0
 			'Edinburgh', 'Middlesbrough', 'Alnwick', 'Southampton', 'Northampton', 
@@ -258,6 +250,27 @@
 			'Brighton', 'Kettering', 'Coventry', 'Reading', 'Guildford', 
 			'Bath', 'Nottingham', 'Stornoway', 'Liverpool', 'Worcester', //60
 			'Oxford', 'Birmingham', 'Leeds', 'Doncaster'
+		)
+	);
+	$mapData['UnitedStates'] = (object) array(
+		'name' => 'United States',
+		'key' => 'UnitedStates',
+		'tiles' => 48,
+		'maxPlayers' => 2,
+		'startTiles' => [7, 28, 46],
+		'sizeX' => 2520,
+		'sizeY' => 1791,
+		'tileNames' => array(
+			'Massachusetts', 'Minnesota', 'Montana', 'North Dakota', 'Idaho',
+			'Washington', 'Arizona', 'California', 'Colorado', 'Nevada',
+			'New Mexico', 'Oregon', 'Utah', 'Wyoming', 'Arkansas', // 10
+			'Iowa', 'Kansas', 'Missouri', 'Nebraska', 'Oklahoma',
+			'South Dakota', 'Louisiana', 'Texas', 'Connecticut', 'New Hampshire', // 20
+			'Rhode Island', 'Vermont', 'Alabama', 'Florida', 'Georgia',
+			'Mississippi', 'South Carolina', 'Illinois', 'Indiana', 'Kentucky', // 30
+			'North Carolina', 'Ohio', 'Tennessee', 'Virginia', 'Wisconsin',
+			'West Virginia', 'Delaware', 'Maryland', 'New Jersey', 'New York', // 40
+			'Pennsylvania', 'Maine', 'Michigan'
 		)
 	);
 	$mapData['TEMPLATE'] = (object) array(

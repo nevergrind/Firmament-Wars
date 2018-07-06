@@ -810,14 +810,15 @@ function loadGameState(){
 		g.map.sizeY = data.mapData.sizeY;
 		g.map.name = data.mapData.name;
 		g.map.tiles = data.mapData.tiles;
-		//console.warn(data.tiles.length, g.map.tiles);
 		if (data.tiles.length < g.map.tiles){
+			console.warn(data.tiles.length, g.map.tiles);
 			if (g.loadAttempts < 20){
 				setTimeout(function(){
 					g.loadAttempts++;
 					loadGameState(); // try again
 				}, 500);
-			} else {
+			}
+			else {
 				g.msg(lang[my.lang].failedToLoad);
 				localStorage.setItem('reload', false);
 				setTimeout(function(){
@@ -987,7 +988,7 @@ function loadGameState(){
 			// map events
 			$("#gameWrap").on('click', '.land', function(e){
 				//location.host === 'localhost' && console.info(this.id, e.offsetX, e.offsetY);
-				action.triggerAction(this);
+				action.triggerAction(this, e);
 			}).on("mouseenter", '.land', function(){
 				my.lastTarget = this;
 				if (my.attackOn){

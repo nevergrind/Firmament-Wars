@@ -511,12 +511,12 @@ var events = {
 		}
 
 		$("#worldWrap").on("mousemove", function(e){
-			if (isFirefox){
+			/*if (isFirefox){
 				setMousePosition(e.originalEvent.layerX, e.originalEvent.layerY);
-			} else {
+			} else {*/
 				setMousePosition(e.offsetX, e.offsetY);
 				//console.info(e.offsetX, e.offsetY);
-			}
+			//}
 		});
 		$("#createGameWrap").on(ui.click, '.mapSelect', function(e){
 			var x = $(this).text();

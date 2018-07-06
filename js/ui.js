@@ -568,3 +568,16 @@ function triggerEndGame(msg, victory){
 		});
 	}, 2500);
 };
+function testMap() {
+	game.tiles.forEach(function(v, i) {
+		if (!v.adj.length) {
+			TweenMax.set(DOM['land' + i], {
+				stroke: "#0f0",
+				strokeWidth: 3
+			});
+		}
+	});
+	setTimeout(function() {
+		testMap();
+	}, 1000);
+}
