@@ -261,7 +261,6 @@ var g = {
 							type = ' whispers: ';
 						}
 						var prefix = data.account + type;
-						var flagFile = data.flag.replace(/-/g, ' ') + (data.flag === 'Nepal' ? '.png' : '.jpg');
 						g.notification = new Notification(prefix, {
 							icon: 'images/flags/' + flagFile,
 							tag: "Firmament Wars",
@@ -334,7 +333,7 @@ var g = {
 		},
 		Historic: {
 			group: "Historic",
-			name: ['Benin Empire', 'Byzantine Empire', 'Confederate Flag', 'Flanders', 'Gadsden Flag', 'Holy Roman Empire', 'Isle of Man', 'Rising Sun Flag', 'NSDAP Flag', 'NSDAP War Ensign', 'Ottoman Empire', 'Rhodesia', 'Shahanshahi', 'USSR', 'Veneto', 'Welsh']
+			name: ['Benin Empire', 'Byzantine Empire', 'Confederate Flag', 'Flanders', 'Gadsden Flag', 'Holy Roman Empire', 'Isle of Man', 'Rising Sun Flag', 'NSDAP Flag', 'NSDAP War Ensign', 'Ottoman Empire', 'Rhodesia', 'Roman Empire', 'Shahanshahi', 'USSR', 'Veneto', 'Welsh']
 		},
 		MiddleEast: {
 			group: "Middle East",
@@ -348,14 +347,18 @@ var g = {
 			group: "Oceania",
 			name: ['Australia', 'New Zealand']
 		},
-		US_States: {
-			group: "US States",
-			name: ['Alaska', 'Alabama', 'Arkansas', 'Arizona', 'California', 'Maryland', 'Mississippi', 'Montana', 'South Carolina', 'Texas', 'Virginia']
-		},
 		Miscellaneous: {
 			group: "Miscellaneous",
 			/*name: ['Anarcho-Capitalist', 'Anarcho-Syndicalist', 'Cascadia', 'European Union', 'ISIS', 'Jefferson State', 'Jolly Roger', 'Northwest Front', 'Pan-African Flag', 'Rainbow Flag', 'Sicily', 'United Nations']*/
-			name: ['Anarcho-Capitalist', 'Anarcho-Syndicalist', 'Antifa', 'Cascadia', 'Christian', 'Edgemaster', 'European Union', 'High Energy', 'ISIS', 'Jefferson State', 'Jolly Roger', 'Kekistan', 'Northwest Front', 'Pan-African Flag', 'pol', 'Rainbow Flag', 'Sicily', 'United Nations']
+			name: ['Anarcho-Capitalist', 'Anarcho-Syndicalist', 'Antifa', 'Cascadia', 'Christian', 'European Union', 'High Energy', 'ISIS', 'Jefferson State', 'Jolly Roger', 'Kekistan', 'Northwest Front', 'Pan-African Flag', 'pol', 'Rainbow Flag', 'Sicily', 'United Nations']
+		},
+		US_States: {
+			group: "State Flags",
+			name: ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
+		},
+		US_Territories: {
+			group: "US Territories",
+			name: ['American Samoa', 'Guam', 'Johnston Atoll', 'Midway Islands', 'Navassa Island', 'Northern Mariana Islands', 'Palmyra Atoll', 'Puerto Rico', 'Virgin Islands', 'Wake Island']
 		},
 		SouthAmerica: {
 			group: "South America",
@@ -447,9 +450,11 @@ g.init = (function(){
 	if (app.isApp) {
 		$("#exit-game").on('click', function() {
 			title.exitGame();
-			// $("#endTurn").css('display', 'none');
 		});
 	}
+	$("#reset-game").on('click', function() {
+		location.reload();
+	});
 	TweenMax.to('#title-stars-1', 50, {
 		startAt: { backgroundPosition: '0'},
 		force3D: true,
@@ -798,8 +803,7 @@ var game = {
 						updateTargetStatus = true;
 					}
 					var newFlag = !game.player[d.player].flag ? 
-						'blank.png' : 
-						game.player[d.player].flag;
+						'blank.png' : game.player[d.player].flag;
 					if (DOM['flag' + i] !== null){
 						DOM['flag' + i].href.baseVal = "images/flags/" + newFlag;
 					}
@@ -857,11 +861,9 @@ var game = {
 		game.tiles[i].flag = game.player[p].flag;
 		game.tiles[i].timestamp = timestamp;
 		// set flag
-		var newFlag = !game.player[p].flag ? 
-			game.tiles[i].units ? 'Player0.jpg' : 'blank.png' 
-			: game.player[p].flag;
+		var newFlag = game.player[p].flag;
 		// change flag
-		if (DOM['flag' + i] !== null){
+		if (DOM['flag' + i] !== null && newFlag){
 			DOM['flag' + i].href.baseVal = "images/flags/" + newFlag;
 		}
 		// land color
@@ -970,7 +972,7 @@ var game = {
 		/*console.info('alivePlayers: ', alivePlayers);
 		console.info('cpu: ', cpu);
 		console.info('count: ', count);*/
-		console.info('result: ', result);
+		console.info('Player '+ result + ' taking turn for cpu ' + cpu);
 		return result === my.player;
 	},
 	updateResources: function(){

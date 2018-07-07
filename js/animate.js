@@ -1010,8 +1010,8 @@ var animate = {
 		}, .033);
 	},
 	energyBar: function(year){
-		// 2.7 for 12? 2.9 for 15?
-		TweenLite.to(DOM.energyIndicator, g.speed * 2.7, {
+		// 2.7 for 12? 2.9 for 15? this is really confusing
+		TweenLite.to(DOM.energyIndicator, g.speed * 2.8, {
 			startAt: {
 				strokeDasharray: '0,100'
 			},

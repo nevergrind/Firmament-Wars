@@ -1,0 +1,74 @@
+// pusherd service
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          testone
+# Required-Start:    $local_fs
+# Required-Stop:     $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# X-Interactive:     false
+# Short-Description: Example init script
+# Description:       Start/stop an example script
+### END INIT INFO
+
+DESC="pusherd"
+NAME=pusherd
+#DAEMON=
+
+do_start()
+{
+   pkill -f push-server.php
+   echo "Starting pusherd service..."
+   php /home/nevergrind2/public_html/games/firmament-wars/socket/bin/push-server.php &
+}
+
+do_stop()
+{
+  echo "Stopping pusherd service..."
+  pkill -f push-server.php
+  echo "Service stopped!"
+}
+do_status()
+{
+  ps -ef | grep push-server.php
+}
+
+
+case "$1" in
+   start)
+     do_start
+     ;;
+   stop)
+     do_stop
+     ;;
+   status)
+     do_status
+     ;;
+esac
+
+exit 0
+
+// pusherd_restart
+#!/bin/bash
+service=pusherd
+
+if (( $(ps -ef | grep -v grep | grep push-server.php | wc -l) > 0 ))
+then
+echo "$service is running!!!"
+else
+echo "Service down! Starting pusherd service!"
+/etc/init.d/$service start
+fi
+
+
+// crontab
+
+# * * * * * /etc/init.d/pusherd_restart; sleep 20; /etc/init.d/pusherd_restart; sleep 20; /etc/init.d/pusherd_restart
+
+# database back-ups
+# delete files older than 10 days
+10 8 * * * find /home/nevergrind2/dump/ -mtime 10 -exec rm {} \;
+
+# dump db status
+0 8 * * * mysqldump nevergri_ngLocal | gzip > /home/nevergrind2/dump/db_$(date +\%F).sql.gz
+

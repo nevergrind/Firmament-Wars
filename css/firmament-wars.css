@@ -797,8 +797,7 @@ tbody {
 }
 #leaderboard {
 	position: absolute;
-    width: 85%;
-    max-width: 1024px;
+    min-width: 80%;
     background: #000;
 }
 #leaderboardBody {
@@ -986,16 +985,14 @@ tbody {
 }
 #configure-nation-flag-flex {
 	display: flex;
+	justify-content: center;
 }
 #configure-nation-flag-flex > div{
 	flex-basis: 50%;
-	padding: 1rem;
+	padding: .5rem;
 }
-#configure-nation-avatar {
-	display: flex;
-}
-#configure-nation-avatar > div {
-	padding: 1rem;
+#updateNationFlag {
+	margin: 0 auto;
 }
 #create-game-form-foot {
 	padding-top: .5rem;
@@ -1047,7 +1044,6 @@ tbody {
     width: 6rem;
     height: 4rem;
 	margin: 1px;
-	outline: 1px solid #222;
 }
 #target-details-column {
 	display: flex;
@@ -1071,6 +1067,7 @@ tbody {
 	text-align: center;
 	padding: 0 .1rem;
 	z-index: 2;
+	font-size: 1.5rem;
 }
 #ribbonBackdrop {
     visibility: hidden
@@ -1952,9 +1949,32 @@ circle {
     left: 0;
     right: 0
 }
+#cpuSelectWrap {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: auto;
+}
+#cpuFlag {
+	padding-right: 3rem;
+}
+#selectCpuFlag {
+	width: 26rem;
+}
+#cpuFlagDropdown {
+	max-height: 25rem;
+	overflow: hidden;
+	overflow-y: auto;
+	width: auto;
+}
 #lobby-cpu-row {
-	flex: 0;
-	margin-bottom: .5rem;
+	display: flex;
+	margin-bottom: 0 0 .5rem;
+	justify-content: flex-end;
+	align-items: flex-end;
+}
+.flex-caret {
+	font-size: 1.5rem;
 }
 #lobbyLeftCol {
     position: absolute;
@@ -2274,7 +2294,7 @@ span.unlockGameBtn {
     right: 0;
     margin: 0 auto;
     width: 50%;
-    max-width: 600px;
+    max-width: 800px;
     z-index: 999999
 }
 .wars {
@@ -2306,7 +2326,8 @@ table {
 #flagDropdown {
     width: 100%;
     max-height: 40rem;
-    overflow: auto
+    overflow: auto;
+	overflow-x: hidden;
 }
 .dropdown-menu {
 	font-size: 1.8rem;
@@ -2435,7 +2456,10 @@ table {
 .fwDropdown>li>a,
 .flagSelect {
     color: #aef;
-    padding-left: 1em
+    padding-left: 1rem
+}
+.flagSelect > a {
+	padding: 0 .5rem!important;
 }
 .fwDropdown>li>a:hover,
 .flagSelect:hover {
@@ -2464,9 +2488,6 @@ table {
 }
 #buyFlag:hover {
     color: #0b0
-}
-#flagPurchased {
-    margin: .25em .5em
 }
 #teamDropdown {
     width: 8rem!important;
@@ -2856,7 +2877,7 @@ header #options {
 	font-size: 2rem;
     padding: 1rem 2rem
 }
-#exit-game {
+#exit-game, #reset-game {
 	font-size: 2rem;
 	cursor: url('cursor/hover.png'), pointer;
 	text-align: center;
@@ -2864,7 +2885,10 @@ header #options {
 	margin: 3rem auto 1rem;
 	transition: box-shadow ease-out .2s;
 }
-#exit-game:hover {
+#exit-game {
+	margin: 1rem auto;
+}
+#exit-game:hover, #reset-game:hover {
 	color: #ff0;
 	box-shadow: 0 0 0 2rem rgba(255,255,0,.3) inset;
 }
@@ -2997,13 +3021,13 @@ header #options {
     top: 50%;
 	transform: translate(0%,-50%);
     width: 100%;
-    opacity: .2
+    opacity: .3
 }
 .statRow {
     border: 1px solid #037;
     border-left: none;
     border-right: none;
-    background: #000;
+    background: transparent;
 	overflow: hidden;
 }
 .statRow > td {
@@ -3238,19 +3262,15 @@ input[type=number]::-webkit-outer-spin-button {
     cursor: crosshair
 }
 .flag {
-	display: inline-block;
     margin-right: .5rem;
-	margin-top: .2rem;
     height: 15px;
     width: 24px;
-    overflow: hidden;
 	flex-shrink: 0;
 }
 .diplo-flag {
     width: 6rem;
     height: 4rem;
 	z-index: 1;
-	outline: 1px solid #222;
 }
 .flagSelect {
 	cursor: url('cursor/hover.png'), pointer;

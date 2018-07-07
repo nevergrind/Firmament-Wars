@@ -16,7 +16,7 @@
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
 	<script>
 		var app = {
-			version: '0.2.0',
+			version: '0.2.1',
 			initialized: 0, // init-game returned
 			isApp: location.protocol === 'chrome-extension:' ? 1 : 0,
 			account: ''
@@ -448,12 +448,11 @@
 					</button>
 					<ul id="flagDropdown" class="dropdown-menu fwDropdown"></ul>
 				</div>
-				<div id="flagPurchased" class="flagPurchasedStatus"></div>
 			</div>
+		</div>
 
-			<div>
-				<img id="updateNationFlag" class="w100 block center no-select" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
-			</div>
+		<div>
+			<img id="updateNationFlag" class="block center no-select" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 		</div>
 
 		<div>
@@ -537,7 +536,7 @@
 		</div>
 		
 		<div id="resources-ui" class="shadow4 blueBg gameWindow  no-select">
-
+			<div id="targetNameWrap" class="ellipsis"></div>
 			<div id="targetWrap" class="no-select gameWindow">
 				<svg id="target-ui-wrap">
 					<g id="target-ui">
@@ -559,7 +558,6 @@
 					 class="targetFlag"
 					 src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
 				<div id="target-details-column" class="shadow4">
-					<div id="targetNameWrap" class="ellipsis"></div>
 					<div id="targetResources"></div>
 				</div>
 			</div>
@@ -932,6 +930,7 @@
 					</div>
 				</div>
 			</div>
+			<div id='reset-game' class='shadow4'></div>
 			<div id='exit-game' class='shadow4'></div>
 			<div id="version"><span id="versionSpan"></span>
 				<script>document.write(app.version);</script>

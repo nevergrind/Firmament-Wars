@@ -30,21 +30,24 @@ var ui = {
 	},
 	updateTileInfo: function(tileId) {
 		var t = game.tiles[tileId],
-			flag = "Default.jpg",
+			flag = "blank.png",
 			name = t.name;
 
 		if (t.player === 0){
-			flag = "Player0.jpg";
+			flag = "Barbarian.jpg";
 			if (t.units > 0){
 				name = lang[my.lang].barbarianTribe;
-			} else {
+			}
+			else {
 				name = lang[my.lang].uninhabited;
-				flag = "Default.jpg";
+				flag = "blank.png";
 			}
 		}
 		else {
 			flag = t.flag;
 			name = t.name;
+			flag = flag.split('.')[0];
+			flag = flag + ui.getFlagExt(flag);
 		}
 		// tileName and bars
 		var o = {
@@ -399,6 +402,13 @@ var ui = {
 		game.tiles[i].units & TweenMax.set(DOM['land' + i], {
 			filter: adjacent ? '' : 'url(#darken)'
 		});*/
+	},
+	pngFlags: ['Ohio', 'Nepal'],
+	isFlagPng: function(flag) {
+		return this.pngFlags.indexOf(flag) > -1;
+	},
+	getFlagExt: function(flag) {
+		return this.pngFlags.indexOf(flag) > -1 ? '.png' : '.jpg';
 	}
 };
 function checkMobile(){
@@ -485,8 +495,11 @@ function gameVictory(){
 	var count = 0;
 	(function repeat(){
 		$.ajax({
-			type: "GET",
-			url: app.url + "php/gameVictory.php"
+			type: "POST",
+			url: app.url + "php/gameVictory.php",
+			data: {
+				juggernautValid: action.isJuggernautValid(),
+			}
 		}).done(function(data){
 			var msg = '';
 			console.info('VICTORY: ', data);
@@ -571,6 +584,14 @@ function triggerEndGame(msg, victory){
 function testMap() {
 	game.tiles.forEach(function(v, i) {
 		if (!v.adj.length) {
+			TweenMax.set(DOM['land' + i], {
+				stroke: "#0f0",
+				strokeWidth: 3
+			});
+		}
+	});
+	g.map.tileNames.forEach(function(v, i) {
+		if (v === 'Nangis') {
 			TweenMax.set(DOM['land' + i], {
 				stroke: "#0f0",
 				strokeWidth: 3

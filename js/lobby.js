@@ -1,5 +1,6 @@
 // lobby.js
 var lobby = {
+	cpuFlag: 'Random',
 	data: [
 		{ account: '' }, 
 		{ account: '' }, 
@@ -23,14 +24,17 @@ var lobby = {
 		return count;
 	},
 	addCpuPlayer: function(){
+		var flag = lobby.cpuFlag === 'Random' ?
+			g.getRandomFlag() : lobby.cpuFlag + ui.getFlagExt(lobby.cpuFlag)
 		$.ajax({
 			url: app.url +'php/cpu-add-player.php',
 			data: {
-				flag: g.getRandomFlag()
+				flag: flag
 			}
 		});
 	},
 	updateGovernmentWindow: function(government){ // key value in
+		if (g.view !== 'lobby') return;
 		// updates government description
 		var str = '';
 		console.info('Government selected: ', government);
@@ -236,18 +240,26 @@ var lobby = {
 			str += '</div>';
 			if (my.player === 1 && !g.rankedMode){
 				str +=
-				'<div id="lobby-cpu-row" class="row buffer2">\
-					<div class="col-xs-12">\
-						<button id="cpu-remove-player" type="button" class="btn fwBlue btn-responsive shadow4 pull-right cpu-button">\
-							<img src="images/icons/computer.png" class="fw-icon-sm">'+ lang[my.lang].removeCPU +'\
+				'<div id="lobby-cpu-row" class="buffer2">\
+					<span id="selectCpuFlag" class="dropdown">\
+						<button id="cpuSelectWrap" class="btn dropdown-toggle shadow4 fwDropdownButton" \type="button" data-toggle="dropdown">\
+							<span id="cpuFlag"></span>\
+							<i class="fa fa-caret-down text-warning flex-caret"></i>\
 						</button>\
-						<button id="cpu-add-player" type="button" class="btn fwBlue btn-responsive shadow4 pull-right cpu-button">\
-							<img src="images/icons/computer.png" class="fw-icon-sm">'+ lang[my.lang].addCPU +'\
-						</button>\
-					</div>\
+						<ul id="cpuFlagDropdown" class="dropdown-menu fwDropdown"></ul>\
+					</span>\
+					<button id="cpu-add-player" type="button" class="btn fwBlue btn-responsive shadow4 cpu-button">\
+						<img src="images/icons/computer.png" class="fw-icon-sm">'+ lang[my.lang].addCPU +'\
+					</button>\
+					<button id="cpu-remove-player" type="button" class="btn fwBlue btn-responsive shadow4 cpu-button">\
+						<img src="images/icons/computer.png" class="fw-icon-sm">'+ lang[my.lang].removeCPU +'\
+					</button>\
 				</div>';
 			}
 			document.getElementById("lobbyPlayers").innerHTML = str;
+			// default setting
+			$('#cpuFlag').html(lang[my.lang].random);
+			title.setFlagDropdown('cpuFlagDropdown', 1);
 			lobby.updateGovernmentWindow(my.government);
 		}
 	},
@@ -397,8 +409,9 @@ var lobby = {
 			// different player account
 			document.getElementById("lobbyAccountName" + i).innerHTML = data.cpu ? 'Computer' : data.account;
 			document.getElementById("lobbyName" + i).innerHTML = data.nation;
-			var flag = data.flag;
-			document.getElementById("lobbyFlag" + i).src = 'images/flags/'+ flag;
+			var flag = data.flag.split('.')[0];
+			document.getElementById("lobbyFlag" + i).src =
+				'images/flags/'+ flag + ui.getFlagExt(flag);
 
 			if (my.player === i){
 				if (isLoggedIn){
@@ -500,7 +513,8 @@ var lobby = {
 				if (secondsToStart >= 0){
 					audio.play('beep');
 					setTimeout(repeating, 1000, secondsToStart);
-				} else {
+				}
+				else {
 					audio.play('beepHi');
 					audio.load.game();
 					video.load.game();
@@ -511,11 +525,7 @@ var lobby = {
 						alpha: 0,
 						ease: Linear.easeNone,
 						onComplete: function(){
-							var delay = my.player === 1 ? 0 : 750;
-							setTimeout(function(){
-								loadGameState(); // countdown down 
-							}, delay);
-							sessionStorage.setItem('gameDuration', Date.now());
+							my.player === 1 && loadGameState();
 						}
 					});
 					audio.fade();
@@ -740,7 +750,7 @@ function setBars(d){
 function Nation(){
 	this.account = "";
 	this.nation = "";
-	this.flag = "";
+	this.flag = "Barbarian.jpg";
 	this.playerColor = 0;
 	this.team = 1;
 	this.alive = true;
@@ -750,6 +760,7 @@ function Nation(){
 }
 
 function loadGameState(){
+	sessionStorage.setItem('gameDuration', Date.now());
 	g.lock(1);
 	var e1 = document.getElementById("mainWrap");
 	if (e1 !== null){
@@ -792,6 +803,7 @@ function loadGameState(){
 		url: app.url +"php/loadGameState.php"
 	}).done(function(data){
 		console.info("loadGameState", data);
+		console.info("player data:", data.players);
 		// data.mapData.sizeX data.mapData.sizeX
 		document.getElementById('world')
 			.setAttribute('viewBox', '0 0 ' + data.mapData.sizeX + ' ' + data.mapData.sizeY);
@@ -810,6 +822,7 @@ function loadGameState(){
 		g.map.sizeY = data.mapData.sizeY;
 		g.map.name = data.mapData.name;
 		g.map.tiles = data.mapData.tiles;
+		g.map.tileNames = data.mapData.tileNames;
 		if (data.tiles.length < g.map.tiles){
 			console.warn(data.tiles.length, g.map.tiles);
 			if (g.loadAttempts < 20){
@@ -890,9 +903,10 @@ function loadGameState(){
 		// init game player data
 		for (var i=0, len=data.players.length; i<len; i++){
 			var d = data.players[i],
-				z = game.player[d.player];
+				z = game.player[d.player],
+				flag = d.flag.split('.')[0];
 			z.account = d.account;
-			z.flag = d.flag;
+			z.flag = flag + ui.getFlagExt(flag);
 			z.nation = d.nation;
 			z.player = d.player;
 			z.playerColor = d.playerColor;
@@ -1034,12 +1048,14 @@ function loadGameState(){
 			var flag = 'blank.png';
 			if (t !== undefined){
 				if (!t.flag && t.units){
-					flag = "Player0.jpg";
+					flag = "Barbarian.jpg";
 				}
 				else if (t.flag){
 					flag = t.flag;
 				}
 			}
+			flag = flag.split('.')[0];
+			flag = flag + ui.getFlagExt(flag);
 			// dynamically add svg flag image to the map
 			var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
 			svg.id = 'flag' + i;

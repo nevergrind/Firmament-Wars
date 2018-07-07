@@ -587,7 +587,8 @@ var stats = {
 	playerCell: function(p, i){
 		var z = game.player[i],
 			color = z.playerColor,
-			flag = p.flag;
+			flag = p.flag.split('.')[0];
+		flag = flag + ui.getFlagExt(flag);
 		var str = '<td class="stat-detail-wrap">\
 			<div class="statWrapper">\
 				<img class="statFlagBG" src="images/flags/'+ flag +'">\

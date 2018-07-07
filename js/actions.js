@@ -11,9 +11,21 @@ function Target(o){
 }
 
 var action = {
+	isJuggernautValid: function() {
+		var juggernautValid = 1;
+		if (g.teamMode) {
+			game.player.forEach(function (v, i) {
+				if (!juggernautValid) return;
+				if (my.team === v.team && v.cpu) {
+					juggernautValid = 0;
+				}
+			});
+		}
+		return juggernautValid;
+	},
 	triggerAction: function(that, event) {
 		var id = that.id.slice(4)*1;
-		console.log('%c tile: '+ id + ' adj: '+ game.tiles[id].adj.length, 'background: #015; color: #0ff');
+		console.log('%c tile: '+ id + ' adj: '+ game.tiles[id].adj.length + ' name: '+ g.map.tileNames[id], 'background: #015; color: #0ff');
 		if (my.attackOn){
 			var o = my.targetData;
 			if (o.attackName === 'attack' || o.attackName === 'splitAttack'){

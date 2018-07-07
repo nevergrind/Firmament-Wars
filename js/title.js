@@ -449,7 +449,7 @@ var title = {
 					localStorage.setItem('ignore', JSON.stringify(g.ignore));
 					g.chat('Now ignoring account: ' + account, 'chat-muted');
 				} else {
-					g.chat("<div>You can't ignore yourself!</div><img src='images/chat/random/autism.jpg'>", 'chat-muted');
+					g.chat("<div>You can't ignore yourself!</div><img src='"+ app.url +"images/chat/random/autism.jpg'>", 'chat-muted');
 				}
 			} else {
 				g.chat('You cannot ignore more than 20 accounts!', 'chat-muted');
@@ -499,14 +499,17 @@ var title = {
 				lobby.countdown(data);
 			} else if (data.type === 'updateLobbyPlayer'){
 				lobby.updatePlayer(data);
-			} else if (data.type === 'updateLobbyCPU'){
+			} else if (data.type === 'updateLobbyCPU') {
 				lobby.updateCPU(data);
+			} else if (data.type === 'loadGameState'){
+				loadGameState();
 			} else {
 				if (data.message !== undefined){
 					lobby.chat(data);
 				}
 			}
-		} else {
+		}
+		else {
 			// game
 			// console.info('game receive: ', data);
 			if (data.type === 'cannons'){
@@ -530,7 +533,8 @@ var title = {
 				if (data.rewardUnits){
 					animate.upgrade(data.tile, 'troops', data.rewardUnits);
 				}
-			} else if (data.type === 'updateTile'){
+			}
+			else if (data.type === 'updateTile'){
 				// attacker tile update 
 				game.updateTile(data);
 				game.setSumValues();
@@ -921,7 +925,6 @@ var title = {
 		});
 	},
 	closeModal: function(){
-		audio.play('click');
 		TweenMax.set('.title-modals, #titleViewBackdrop', {
 			alpha: 0,
 			visibility: 'hidden'
@@ -1002,25 +1005,33 @@ var title = {
 			y: 30,
 			alpha: 1,
 			onComplete: function() {
-				// populate dropdown
-				var s = "";
-				for (var key in g.flagData){
-					s += "<li class='dropdown-header'>" + g.flagData[key].group + "</li>";
-					g.flagData[key].name.forEach(function(e){
-						s += "<li class='flex-row flagSelect'>" +
-								"<img class='flag' src='images/flags/"+ e +".jpg'" +
-								"<a class='flex-1 no-select'>" + e + "</a>" +
-							"</li>";
-					});
-				}
-				document.getElementById("flagDropdown").innerHTML = s;
+				title.setFlagDropdown();
 			}
 		});
 		title.showBackdrop();
 	},
+	setFlagDropdown: function(id, random) {
+		// populate dropdown
+		id = id || 'flagDropdown';
+		var s = "";
+		if (random) {
+			s += '<li class="flex-row flagSelect">'+
+					'<a class="flex-1 no-select" data-flag="Random">'+ lang[my.lang].random +'</a>'+
+				'</li>';
+		}
+		for (var key in g.flagData){
+			s += "<li class='dropdown-header'>" + g.flagData[key].group + "</li>";
+			g.flagData[key].name.forEach(function(e){
+				s += "<li class='flex-row flagSelect'>" +
+						"<img class='flag' src='images/flags/"+ e + ui.getFlagExt(e) +"'>" +
+						"<a class='flex-1 no-select' data-flag='"+ e +"'>" + e + "</a>" +
+					"</li>";
+			});
+		}
+		$('#'+ id).html(s);
+	},
 	createGameService: function(name, pw, map, max, rankedMode, teamMode, speed){
 		g.lock(1);
-		audio.play('click');
 		g.rankedMode = rankedMode;
 		g.teamMode = teamMode;
 		// g.speed = speed;

@@ -42,8 +42,8 @@ var my = {
 	maxDeployment: 12,
 	cannonBonus: 0,
 	targetData: {},
-	selectedFlag: "Default",
-	selectedFlagFull: "Default.jpg",
+	selectedFlag: "blank",
+	selectedFlagFull: "blank.png",
 	government: 'Despotism',
 	tech: {
 		masonry: 0,
@@ -94,7 +94,8 @@ var my = {
 			if (setTgt === undefined){
 				// TAB targeting
 				backwards ? my.tgt-- : my.tgt++;
-			} else {
+			}
+			else {
 				my.tgt = setTgt;
 			}
 			if (my.tgt < 0){
@@ -103,7 +104,7 @@ var my = {
 			while (count < len && my.player !== game.tiles[my.tgt % len].player){
 				backwards ? my.tgt-- : my.tgt++;
 				if (my.tgt < 0){
-					my.tgt = len-1;
+					my.tgt = len - 1;
 				}
 				count++;
 			}
@@ -111,10 +112,12 @@ var my = {
 				// TAB targeting
 				if (!backwards){
 					my.tgt = my.tgt % len;
-				} else {
+				}
+				else {
 					my.tgt = Math.abs(my.tgt);
 				}
-			} else {
+			}
+			else {
 				my.tgt = setTgt;
 			}
 			my.focusTile(my.tgt, .1);
@@ -129,8 +132,8 @@ var my = {
 			if (d === undefined){
 				d = .5;
 			}
-			// init map position & check max/min values
-			var x = -box.x + 512;
+			// 300 is left padding; 200 top padding
+			var x = -box.x - (box.width/2) - 300 + (window.innerWidth/2);
 			if (x > 0){
 				x = 0;
 			}
@@ -139,7 +142,7 @@ var my = {
 				x = xMin;
 			}
 
-			var y = -box.y + 234; // 384 is dead center
+			var y = -box.y - (box.height/2) - 200 + (window.innerHeight/2);
 			if (y > 0){
 				y = 0;
 			}

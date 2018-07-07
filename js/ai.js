@@ -536,7 +536,7 @@ var ai = {
 		Juggernaut: 0
 	},
 	takeTurn: function(d){
-		console.info('TAKING TURN', d);
+		//console.info('TAKING TURN', d.player, d.account);
 		var o = ai.getResourceTotal(d.player);
 		// attack
 		var turns = Math.ceil(o.food / ai.attackFood[d.difficultyShort]) + ai.attackBaseTurns[d.difficultyShort];
@@ -554,7 +554,7 @@ var ai = {
 						o = Object.assign(deployObj, o);
 					}
 					ai.attack(i, d, o);
-					console.info('executing turn: ', Date.now());
+					//console.info('executing turn: ', Date.now());
 				}, ai.attackDelay(i, d));
 			})(i, d);
 		}

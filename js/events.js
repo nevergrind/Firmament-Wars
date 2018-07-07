@@ -123,7 +123,7 @@ var events = {
 		});
 		$("#play-now-btn").on(ui.click, function(){
 			title.addCpu = 1;
-			title.createGameService(my.account +'_'+ ~~(Math.random()*999999), '', 'Earth Omega', 8, 0, 0, 20);
+			title.createGameService(my.account +'_'+ Date.now(), '', 'Earth Omega', 8, 0, 0, 20);
 
 		});
 		if (!app.isLocal) {
@@ -287,9 +287,8 @@ var events = {
 			stats.setBibleMode($(this).prop('checked'));
 		});
 		$("#flagDropdown").on(ui.click, '.flagSelect', function(e){
-			my.selectedFlag = $(this).text().trim();
-			my.selectedFlagFull = my.selectedFlag === "Nepal" ? my.selectedFlag+".png" : my.selectedFlag+".jpg";
-			$(".flagPurchaseStatus").css("display", "none");
+			my.selectedFlag = $(this).find('a').data('flag').trim();
+			my.selectedFlagFull = my.selectedFlag + ui.getFlagExt(my.selectedFlag);
 			$("#updateNationFlag")
 				.attr("src", "images/flags/" + my.selectedFlagFull)
 				.css("display", "block");
@@ -321,6 +320,14 @@ var events = {
 					alpha: 1
 				});
 			});
+			e.preventDefault();
+		});
+
+		$("#lobbyPlayers").on(ui.click, '.flagSelect', function(e){
+			var val = $(this).find('a').data('flag').trim();
+			console.info(val);
+			lobby.cpuFlag = val;
+			$("#cpuFlag").html(val);
 			e.preventDefault();
 		});
 

@@ -69,7 +69,7 @@ var socket = {
 					// send message to my chat log
 					title.chat(data);
 					socket.zmq.subscribe('title:' + my.channel, function(topic, data) {
-						//console.info("Data IN title:", data);
+						console.info("Data IN ", topic, data);
 						if (g.ignore.indexOf(data.account) === -1){
 							title.chatReceive(data);
 						}
@@ -136,13 +136,22 @@ var socket = {
 				}
 			}
 		});
+		socket.zmq.subscribe('fw:hb:' + my.account, function(topic, data) {
+			console.log('%c fw:hb:' + my.account, 'background: #0f0; color: #f00');
+			if (data.msg){
+				g.chat(data.msg, data.type);
+			}
+		});
 		if (location.host !== 'localhost'){
 			setInterval(console.clear, 600000); // 10 min
 		}
-		(function keepAliveWs(){
-			socket.zmq.publish('fw:hb', {});
-			setTimeout(keepAliveWs, 20000);
-		})();
+		setTimeout(function() {
+			setInterval(socket.keepAliveWs, 20000);
+		})
+	},
+	keepAliveWs: function() {
+		if (g.view === game) return;
+		socket.zmq.publish('fw:hb:' + my.account, {});
 	},
 	joinGame: function(){
 		(function repeat(){
@@ -192,11 +201,6 @@ var socket = {
 					}
 					else if (data.category === 'close-app') {
 						title.exitGame();
-					}
-				});
-				socket.zmq.subscribe('fw:hb', function(topic, data) {
-					if (data.msg){
-						g.chat(data.msg, data.type);
 					}
 				});
 				(function repeat(){

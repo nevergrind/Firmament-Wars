@@ -35,6 +35,7 @@ var lang = {
 			'window-1600-900',
 			'window-1360-768',
 			'window-1280-720',
+			'reset-game',
 			'exit-game',
 			'versionSpan',
 			'leaderboardRankedBtn',
@@ -142,6 +143,7 @@ var lang = {
 
 	},
 	english: {
+		resetGame: 'Reset Game',
 		updateNationBtn: 'Done',
 		playerColor: 'Player Color',
 		team: 'Team',
@@ -486,6 +488,7 @@ var lang = {
 		cultureMilestoneLabel: 'Culture',
 	},
 	russian: {
+		resetGame: 'Сбросить игру',
 		updateNationBtn: 'Готово',
 		playerColor: 'Цвет игрока',
 		team: 'команда',
@@ -830,6 +833,7 @@ var lang = {
 		cultureMilestoneLabel: 'культура',
 	},
 	schinese: {
+		resetGame: '重置游戏',
 		updateNationBtn: '完成',
 		playerColor: '球员颜色',
 		team: '球队',
@@ -1175,6 +1179,7 @@ var lang = {
 		cultureMilestoneLabel: '文化',
 	},
 	german: {
+		resetGame: 'Spiel Zurücksetzen',
 		updateNationBtn: 'Erledigt',
 		playerColor: 'Spielerfarbe',
 		team: 'Mannschaft',
@@ -1519,6 +1524,7 @@ var lang = {
 		cultureMilestoneLabel: 'Kultur',
 	},
 	portuguese: {
+		resetGame: 'Redefinir Jogo',
 		updateNationBtn: 'Feito',
 		playerColor: 'Cor do Jogador',
 		team: 'Equipe',
@@ -1863,6 +1869,7 @@ var lang = {
 		cultureMilestoneLabel: 'Cultura',
 	},
 	spanish: {
+		resetGame: 'Reiniciar el Juego',
 		updateNationBtn: 'Hecho',
 		playerColor: 'Color del jugador',
 		team: 'Equipo',
@@ -2207,6 +2214,7 @@ var lang = {
 		cultureMilestoneLabel: 'Cultura',
 	},
 	french: {
+		resetGame: 'Réinitialiser le Jeu',
 		updateNationBtn: 'Terminé',
 		playerColor: 'Couleur du joueur',
 		team: 'Équipe',
@@ -2551,6 +2559,7 @@ var lang = {
 		cultureMilestoneLabel: 'Culture',
 	},
 	koreana: {
+		resetGame: '게임 다시 설정',
 		updateNationBtn: '끝난',
 		playerColor: '플레이어 색상',
 		team: '팀',
@@ -2895,6 +2904,7 @@ var lang = {
 		cultureMilestoneLabel: '문화',
 	},
 	japanese: {
+		resetGame: 'リセットゲーム',
 		updateNationBtn: '完了',
 		playerColor: 'プレーヤーの色',
 		team: 'チーム',
@@ -3239,6 +3249,7 @@ var lang = {
 		cultureMilestoneLabel: '文化',
 	},
 	turkish: {
+		resetGame: 'Oyunu Sıfırla',
 		updateNationBtn: 'Tamam',
 		playerColor: 'Oyuncu Rengi',
 		team: 'Takım',
@@ -3583,6 +3594,7 @@ var lang = {
 		cultureMilestoneLabel: 'Kültür',
 	},
 	polish: {
+		resetGame: 'Zresetuj Grę',
 		updateNationBtn: 'Gotowe',
 		playerColor: 'Kolor gracza',
 		team: 'Zespół',
@@ -3927,6 +3939,7 @@ var lang = {
 		cultureMilestoneLabel: 'Kultura',
 	},
 	italian: {
+		resetGame: 'Reimposta il Gioco',
 		updateNationBtn: 'Fatto',
 		playerColor: 'Colore del giocatore',
 		team: 'Squadra',

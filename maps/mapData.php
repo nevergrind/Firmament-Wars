@@ -92,36 +92,36 @@
 		'sizeX' => 3591,
 		'sizeY' => 2939,
 		'tileNames' => array(
-			'Oyonnax', 'Maubeuge', 'Nevers', 'Digne', 'Nice', //0
-			'Lyon', 'Charleville-Mezieres', 'Toulouse', 'Chalons-en-Champagne', 'Narbonne', 
-			'Saint-Flour', 'Haguenau', 'Marseille', 'Caen', 'Egletons', //10
-			'Angouleme', 'Rochefort', 'Melun', 'Limoges', 'Ajaccio', 
-			'Langres', 'Saint-Brieuc', 'La Souterraine', 'Cholet', 'Bergerac', //20
-			'Besancon', 'Valence', 'Paris', 'Lisieux', 'Versailles', 
-			'Brest', 'Nimes', 'Orthez', 'Bordeaux', 'Bastia', //30
-			'Saint-Etienne', 'Bar-le-Duc', 'Langres', 'Thonon-les-Bains', 'Bellac', 
-			'Briancon', 'Larrau', 'Montpellier', 'St-Malo', 'Chateauroux', //40
-			'Tours', 'Grenoble', 'Champagnole', 'Sabres', 'Chartres', 
-			'Lyon', 'Nantes', 'Evry', 'Montauban', 'Agen', //50
-			'Le Puy', 'Angers', 'Saulces-Monclin', 'Gorron', 'Metz', 
-			'Verdun', 'Lorient', 'Auxerre', 'Calais', 'Montdidier', //60
-			'Evreux', 'Vichy', 'Bayonne', 'Perpignan', 'Dijon', 
-			'Alencon', 'Meaux', 'Le Havre', 'Amiens', 'Rodez', //70
-			'Mulhouse', 'Cannes', 'La Roche-sur-Yon', 'Poitiers', 'Nancy', 
-			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',  //80
-			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',
-			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',  //90
-			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',
-			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',  //100
-			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',
-			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',  //110
-			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',
-			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',  //120
-			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',
-			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',  //130
-			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',
-			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis',  //140
-			'Nangis', 'Nangis', 'Nangis', 'Nangis', 'Nangis'
+			'Darmstadt', 'Ortenaukreis', 'Rems-Murr-Kreis', 'Neckar-Odenwald-Kreis', 'Konstanz',  //0
+			'Freudenstadt', 'Lörrach', 'Schwarzwald-Baar-Kreis', 'Fürth', 'Cham',
+			'Augsburg', 'Ostalbkreis', 'Bamberg', 'Erding', 'Landshut',  //10
+			'Kronach', 'Ravensburg', 'Altötting', 'Ebersberg', 'Miesbach',
+			'Wetteraukreis', 'Bayreuth', 'Erlangen-Höchstadt', 'Oberallgäu', 'Freyung-Grafenau',  //20
+			'Eichstätt', 'Regen', 'Regensburg', 'Rhön-Grabfeld', 'Rosenheim',
+			'Rottal-Inn', 'Neumarkt In Der Oberpfalz', 'Schwandorf', 'Haßberge', 'Starnberg',  //30
+			'Straubing-Bogen', 'Wunsiedel', 'Berchtesgadener Land', 'Ulm', 'Unterallgäu',
+			'Würzburg', 'Weißenburg-Gunzenhausen', 'Garmisch-Partenkirchen', 'Hof', 'Märkisch-Oderland',  //40
+			'Barnim', 'Elbe-Elster', 'Oder-Spree', 'Ostprignitz-Ruppin', 'Potsdam-Mittelmark',
+			'Prignitz', 'Cottbus', 'Teltow-Fläming', 'Uckermark', 'Bad-Kissingen',  //50
+			'Rastatt', 'Lahn-Dill-Kreis', 'Vogelsbergkreis', 'Waldeck-Frankenberg', 'Werra-Meißner-Kreis',
+			'Main-Kinzig-Kreis', 'Mecklenburgische-Seenplatte', 'Nordwestmecklenburg', 'Rostock', 'Ludwigslust-Parchim',  //60
+			'Vorpommern-Greifswald', 'Vorpommern-Rügen', 'Cloppenburg', 'Cloppenburg', 'Cuxhaven',
+			'Gifhorn', 'Emsland', 'Harburg', 'Hildesheim', 'Lüchow-Dannenberg',  //70
+			'Leer', 'Hameln-Pyrmont', 'Oldenburg', 'Osterholz', 'Osterode am Harz',
+			'Hannover Region', 'Rotenburg', 'Stade', 'Heidekreis', 'Uelzen',  //80
+			'Osnabrück', 'Diepholz', 'Wesermarsch', 'Wittmund', 'Wolfenbüttel',
+			'Borken', 'Euskirchen', 'Gütersloh', 'Hochsauerlandkreis', 'Schaumburg',  //90
+			'Minden-Lübbecke', 'Märkischer Kreis', 'Höxter', 'Soest', 'Städteregion Aachen',
+			'Steinfurt', 'Recklinghausen', 'Heinsberg', 'Warendorf', 'Kleve',  //100
+			'Mettmann', 'Siegen-Wittgenstein', 'Eifelkreis Bitburg-Prüm', 'Birkenfeld', 'Alzey-Worms',
+			'Mayen-Koblenz', 'Rhein-Hunsrück-Kreis', 'Südliche-Weinstraße', 'Bernkastel-Wittlich', 'Kreisverwaltung',  //110
+			'Donnersbergkreis', 'Trier-Saarburg', 'Südwestpfalz', 'Altmarkkreis-Salzwedel', 'Kyffhäuserkreis',
+			'Anhalt Bitterfeld', 'Harz', 'Jerichower Land', 'Saalekreis', 'Salzlandkreis',  //120
+			'Börde', 'Stendal', 'Wittenberg', 'Bautzen', 'Erzgebirgskreis',
+			'Görlitz', 'Meißen', 'Mittelsachsen', 'Nordsachsen', 'Sächsische Schweiz-Osterzgebirge',  //130
+			'Vogtlandkreis', 'Dithmarschen', 'Nordfriesland', 'Ostholstein', 'Rendsburg-Eckernförde',
+			'Schleswig-Flensburg', 'Steinburg', 'Pinneberg', 'Zwickau', 'Greiz',  //140
+			'Saalfeld-Rudolstadt', 'Schmalkalden-Meiningen', 'Hildburghausen', 'Eichsfeld', 'Unstrut-Hainich-Kreis'
 		)
 	);
 	$mapData['France'] = (object) array(
