@@ -123,7 +123,7 @@ var events = {
 		});
 		$("#play-now-btn").on(ui.click, function(){
 			title.addCpu = 1;
-			title.createGameService(my.account +'_'+ Date.now(), '', 'Earth Omega', 8, 0, 0, 20);
+			title.createGameService(my.account +'_'+ Date.now(), '', 'Alpha Earth', 8, 0, 0, 20);
 
 		});
 		if (!app.isLocal) {

@@ -34,7 +34,7 @@ var lobby = {
 		});
 	},
 	updateGovernmentWindow: function(government){ // key value in
-		if (g.view !== 'lobby') return;
+		if (g.view === 'game') return;
 		// updates government description
 		var str = '';
 		console.info('Government selected: ', government);
@@ -327,7 +327,7 @@ var lobby = {
 			// load game
 			//console.info(localStorage.getItem('reload'));
 			if (localStorage.getItem('reload') !== false){
-				loadGameState(); // page refresh
+				setTimeout(loadGameState, 100); // page refresh
 			}
 		} else {
 			// load lobby
@@ -407,7 +407,12 @@ var lobby = {
 			//console.info("ADD PLAYER: ", data);
 			document.getElementById("lobbyRow" + i).style.display = 'flex';
 			// different player account
-			document.getElementById("lobbyAccountName" + i).innerHTML = data.cpu ? 'Computer' : data.account;
+			document.getElementById("lobbyAccountName" + i).innerHTML = data.cpu ?
+				'Computer' : data.account;
+			// nation name
+			if (data.cpu) {
+				data.nation = data.nation.split('.')[0];
+			}
 			document.getElementById("lobbyName" + i).innerHTML = data.nation;
 			var flag = data.flag.split('.')[0];
 			document.getElementById("lobbyFlag" + i).src =
@@ -442,7 +447,8 @@ var lobby = {
 				data.cpu ? 'none' : 'block';
 			document.getElementById('gov-dropdown-cpu'+ data.player).style.display = 
 				data.cpu ? 'block' : 'none';
-		} else {
+		}
+		else {
 			// remove
 			//console.info("REMOVE PLAYER: ", data);
 			document.getElementById("lobbyRow" + i).style.display = 'none';
@@ -750,7 +756,7 @@ function setBars(d){
 function Nation(){
 	this.account = "";
 	this.nation = "";
-	this.flag = "Barbarian.jpg";
+	this.flag = "blank.png";
 	this.playerColor = 0;
 	this.team = 1;
 	this.alive = true;
@@ -769,15 +775,6 @@ function loadGameState(){
 		});
 	}
 	// load map
-	// console.warn("Loading: " + g.map.key + ".php");
-	/*$.ajax({
-		type: 'GET',
-		url: app.url +'maps/' + g.map.key + '.php'
-	}).done(function(data){
-
-	DOM.worldWrap.innerHTML =
-		'<div id="worldWater"></div>' + data;*/
-
 	DOM.worldWrap.innerHTML = maps.getMap(g.map.key);
 
 	// init map DOM stuff here
@@ -796,7 +793,8 @@ function loadGameState(){
 	  e[i].setAttributeNS(null, 'class', 'unit');
 	}
 	initDom();
-
+	clearInterval(socket.keepAliveInterval);
+	$("#leaderboard, #configureNation, joinPrivateGameModal, #createGameWrap").remove();
 
 	$.ajax({
 		type: "GET",
@@ -980,9 +978,11 @@ function loadGameState(){
 		setTimeout(function(){
 			// init draggable map
 			worldMap = Draggable.create(DOM.worldWrap, {
-				minimumMovement: 4,
-				type: 'x,y',
-				bounds: "#gameWrap"
+				minimumMovement: 6,
+				type: 'top,left',
+				bounds: DOM.gameWrap,
+				throwProps: true,
+				edgeResistance: 1
 			});
 
 			initOffensiveTooltips();
@@ -1042,10 +1042,11 @@ function loadGameState(){
 			mapFlagWrap = document.getElementById('mapFlagWrap');
 		for (var i=0, len=a.length; i<len; i++){
 			// set flag position and value
-			var t = game.tiles[i];
-			var x = a[i].getAttribute('x') - 20;
-			var y = a[i].getAttribute('y') - 30;
-			var flag = 'blank.png';
+			var t = game.tiles[i],
+				x = a[i].getAttribute('x') - 20,
+				y = a[i].getAttribute('y') - 30,
+				flag = 'blank.png';
+
 			if (t !== undefined){
 				if (!t.flag && t.units){
 					flag = "Barbarian.jpg";

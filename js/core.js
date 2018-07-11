@@ -165,16 +165,18 @@ var g = {
 		}
 	},
 	mouse: {
+		x: 0,
+		y: 0,
 		zoom: 100,
 		mouseTransX: 50,
 		mouseTransY: 50
 	},
 	map: {
-		sizeX: 3200,
-		sizeY: 1500,
-		name: 'Earth Omega',
-		key: 'EarthOmega',
-		tiles: 85
+		sizeX: 5099,
+		sizeY: 2627,
+		name: 'Alpha Earth',
+		key: 'AlphaEarth',
+		tiles: 143
 	},
 	updateUserInfo: function(){
 		if (location.host !== 'localhost'){
@@ -317,52 +319,51 @@ var g = {
 	flagData: {
 		Africa: {
 			group: "Africa",
-			name: ['Algeria', 'Botswana', 'Cameroon', 'Cape Verde', 'Ivory Coast', 'Egypt', 'Ghana', 'Kenya', 'Liberia', 'Morocco', 'Mozambique', 'Namibia', 'Nigeria', 'South Africa', 'Uganda']
+			name: ['Algeria', 'Angola', 'Benin', 'Botswana', 'Burkina Faso', 'Burundi', 'Cameroon', 'Cape Verde', 'Central African Republic', 'Chad', 'The Comoros', 'The Congo', 'Democratic Republic of the Congo', 'Djibouti', 'Equatorial Guinea', 'Eritrea', 'Gabon', 'The Gambia', 'Guinea', 'Guinea-Bissau', 'Ivory Coast', 'Egypt', 'Ethiopia', 'Ghana', 'Kenya', 'Lesotho', 'Liberia', 'Libya', 'Madagascar', 'Malawi', 'Mali', 'Mauritania', 'Mauritius', 'Morocco', 'Mozambique', 'Namibia', 'Niger', 'Nigeria', 'Rwanda', 'Sao Tome and Príncipe', 'Senegal', 'Seychelles', 'Sierra Leone', 'Somalia', 'South Africa', 'South Sudan', 'Sudan', 'Swaziland', 'Tanzania', 'Togo', 'Tunisia', 'Uganda', 'Zambia', 'Zimbabwe']
 		},
 		Asia: {
 			group: "Asia",
-			name: ['Bangladesh', 'Cambodia', 'China', 'Hong Kong', 'India', 'Indonesia', 'Iran', 'Japan', 'Malaysia', 'Mongolia', 'Myanmar', 'Nepal', 'North Korea', 'Pakistan', 'Philippines', 'Singapore', 'South Korea', 'Sri Lanka', 'Suriname', 'Taiwan', 'Thailand', 'Vietnam']
+			name: ['Bangladesh', 'Bhutan', 'Brunei', 'Cambodia', 'China', 'East Timor', 'Hong Kong', 'India', 'Indonesia', 'Japan', 'Laos', 'Malaysia', 'Maldives', 'Mongolia', 'Myanmar', 'Nepal', 'North Korea', 'Pakistan', 'Philippines', 'Singapore', 'South Korea', 'Sri Lanka', 'Suriname', 'Taiwan', 'Thailand', 'Vietnam']
+		},
+		CentralAsia: {
+			group: "Central Asia",
+			name: ['Armenia', 'Azerbaijan', 'Georgia', 'Kazakhstan', 'Kyrgyzstan', 'Tajikistan', 'Turkmenistan', 'Uzbekistan']
 		},
 		Europe: {
 			group: "Europe",
-			name: ['Albania', 'Austria', 'Belgium', 'Bosnia and Herzegovina', 'Bulgaria', 'Croatia', 'Czech Republic', 'Denmark', 'England', 'Estonia', 'Finland', 'France', 'Germany', 'Greece', 'Hungary', 'Iceland', 'Ireland', 'Italy', 'Kosovo', 'Latvia', 'Lithuania', 'Macedonia', 'Montenegro', 'Netherlands', 'Norway', 'Poland', 'Portugal', 'Romania', 'Russia', 'Scotland', 'Serbia', 'Slovakia', 'Slovenia', 'Spain', 'Sweden', 'Switzerland', 'Ukraine', 'United Kingdom', 'Vatican City']
-		},
-		Eurasia: {
-			group: "Eurasia",
-			name: ['Armenia', 'Azerbaijan', 'Georgia', 'Kazakhstan', 'Uzbekistan']
+			name: ['Albania', 'Andorra', 'Austria', 'Belarus', 'Belgium', 'Bosnia and Herzegovina', 'Bulgaria', 'Croatia', 'Cyprus', 'Czech Republic', 'Denmark', 'Estonia', 'Finland', 'France', 'Germany', 'Greece', 'Hungary', 'Iceland', 'Ireland', 'Italy', 'Kosovo', 'Latvia', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macedonia', 'Malta', 'Moldova', 'Monaco', 'Montenegro', 'Netherlands', 'Norway', 'Poland', 'Portugal', 'Romania', 'Russia', 'San Marino', 'Scotland', 'Serbia', 'Slovakia', 'Slovenia', 'Spain', 'Sweden', 'Switzerland', 'Ukraine', 'United Kingdom', 'Vatican City']
 		},
 		Historic: {
 			group: "Historic",
-			name: ['Benin Empire', 'Byzantine Empire', 'Confederate Flag', 'Flanders', 'Gadsden Flag', 'Holy Roman Empire', 'Isle of Man', 'Rising Sun Flag', 'NSDAP Flag', 'NSDAP War Ensign', 'Ottoman Empire', 'Rhodesia', 'Roman Empire', 'Shahanshahi', 'USSR', 'Veneto', 'Welsh']
+			name: ['Benin Empire', 'Byzantine Empire', 'Confederate Flag', 'England', 'Flanders', 'Gadsden Flag', 'Holy Roman Empire', 'Isle of Man', 'Rising Sun Flag', 'NSDAP Flag', 'NSDAP War Ensign', 'Ottoman Empire', 'Rhodesia', 'Roman Empire', 'Shahanshahi', 'USSR', 'Veneto', 'Welsh']
 		},
 		MiddleEast: {
 			group: "Middle East",
-			name: ['Israel', 'Jerusalem', 'Jordan', 'Kurdistan', 'Lebanon', 'Palestine', 'Qatar', 'Saudi Arabia', 'Syria', 'Turkey']
-		},
-		NorthAmerica: {
-			group: "North America",
-			name: ['Bahamas', 'Barbados', 'Canada', 'Costa Rica', 'Cuba', 'Haiti', 'Honduras', 'Mexico', 'Saint Lucia', 'Trinidad and Tobago', 'United States']
-		},
-		Oceania: {
-			group: "Oceania",
-			name: ['Australia', 'New Zealand']
+			name: ['Afghanistan', 'Bahrain', 'Iran', 'Iraq', 'Israel', 'Jerusalem', 'Jordan', 'Kurdistan', 'Kuwait', 'Lebanon', 'Oman', 'Palestine', 'Qatar', 'Saudi Arabia', 'Syria', 'Turkey', 'United Arab Emirates', 'Yemen']
 		},
 		Miscellaneous: {
 			group: "Miscellaneous",
-			/*name: ['Anarcho-Capitalist', 'Anarcho-Syndicalist', 'Cascadia', 'European Union', 'ISIS', 'Jefferson State', 'Jolly Roger', 'Northwest Front', 'Pan-African Flag', 'Rainbow Flag', 'Sicily', 'United Nations']*/
 			name: ['Anarcho-Capitalist', 'Anarcho-Syndicalist', 'Antifa', 'Cascadia', 'Christian', 'European Union', 'High Energy', 'ISIS', 'Jefferson State', 'Jolly Roger', 'Kekistan', 'Northwest Front', 'Pan-African Flag', 'pol', 'Rainbow Flag', 'Sicily', 'United Nations']
 		},
-		US_States: {
-			group: "State Flags",
-			name: ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
+		NorthAmerica: {
+			group: "North America",
+			name: ['Antigua and Barbuda', 'Bahamas', 'Barbados', 'Belize', 'Canada', 'Costa Rica', 'Cuba', 'Dominica', 'Dominican Republic', 'El Salvador', 'Grenada', 'Guatemala', 'Jamaica', 'Haiti', 'Honduras', 'Mexico', 'Panama', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines', 'Trinidad and Tobago', 'United States']
 		},
-		US_Territories: {
-			group: "US Territories",
-			name: ['American Samoa', 'Guam', 'Johnston Atoll', 'Midway Islands', 'Navassa Island', 'Northern Mariana Islands', 'Palmyra Atoll', 'Puerto Rico', 'Virgin Islands', 'Wake Island']
+		Oceania: {
+			group: "Oceania",
+			name: ['Australia', 'Fiji', 'Kiribati', 'Marshall Islands', 'Federated States of Micronesia', 'Nauru', 'New Zealand', 'Palau', 'Papua New Guinea', 'Samoa', 'Solomon Islands', 'Tonga', 'Tuvalu', 'Vanuatu']
 		},
 		SouthAmerica: {
 			group: "South America",
-			name: ['Argentina', 'Bolivia', 'Brazil', 'Chile', 'Colombia', 'Ecuador', 'Paraguay', 'Peru', 'Uruguay', 'Venezuela']
+			name: ['Argentina', 'Bolivia', 'Brazil', 'Chile', 'Colombia', 'Ecuador', 'Guyana', 'Nicaragua', 'Paraguay', 'Peru', 'Uruguay', 'Venezuela']
+		},
+		US_States: {
+			group: "State Flags",
+			name: ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia State', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
+		},
+		US_Territories: {
+			group: "US Territories",
+			name: ['American Samoa', 'District of Columbia', 'Guam', 'Johnston Atoll', 'Midway Islands', 'Navassa Island', 'Northern Mariana Islands', 'Palmyra Atoll', 'Puerto Rico', 'Virgin Islands', 'Wake Island']
 		},
 	},
 	initGameCallback: function(data) {
@@ -822,7 +823,6 @@ var game = {
 				}
 				// check unit value
 				if (d.units !== game.tiles[i].units){
-					var unitColor = d.units > game.tiles[i].units ? '#00ff00' : '#ff0000';
 					game.tiles[i].units = d.units;
 					if (my.tgt === i){
 						// defender won
@@ -860,10 +860,14 @@ var game = {
 		game.tiles[i].nation = game.player[p].nation;
 		game.tiles[i].flag = game.player[p].flag;
 		game.tiles[i].timestamp = timestamp;
-		// set flag
 		var newFlag = game.player[p].flag;
 		// change flag
 		if (DOM['flag' + i] !== null && newFlag){
+			// check barb
+			if (newFlag === 'blank.png' && d.units) {
+				newFlag = 'Barbarian.jpg';
+			}
+			console.info('newFlag', newFlag, d.units);
 			DOM['flag' + i].href.baseVal = "images/flags/" + newFlag;
 		}
 		// land color

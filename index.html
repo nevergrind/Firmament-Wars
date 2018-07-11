@@ -1,22 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head id='head'>
-	<title>Firmament Wars | Multiplayer Strategic Warfare</title>
 	<meta charset="utf-8">
 	<meta http-equiv="Cache-control" content="no-cache">
-	<meta name="keywords" content="free, cooperative, browser, multiplayer, online, strategy, html5">
-	<meta name="description" content="A free multiplayer strategy game with Team, FFA, and Ranked modes!">
-	<meta name="author" content="Joe Leonard">
-	<meta name="referrer" content="always">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-	
-	<meta name="mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="google-signin-client_id" content="1015425037202-g5ri6qnj14b8vrk33lnu130ver9f43ef.apps.googleusercontent.com">
-	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
 	<script>
 		var app = {
-			version: '0.2.1',
+			version: '0.2.2',
 			initialized: 0, // init-game returned
 			isApp: location.protocol === 'chrome-extension:' ? 1 : 0,
 			account: ''
@@ -39,7 +28,7 @@
 			display: none;
 		}
 	</style>
-	
+
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-slider.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
@@ -346,8 +335,9 @@
 
 				<div class='buffer w40'>
 					<div class='dropdown'>
-						<button class='btn btn-primary dropdown-toggle shadow4 fwDropdownButton' type='button' data-toggle='dropdown'>
-							<span id='createGameMap'>Earth Omega</span>
+						<button class='btn btn-primary dropdown-toggle shadow4 fwDropdownButton'
+								data-toggle='dropdown'>
+							<span id='createGameMap'>Alpha Earth</span>
 							<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 						</button>
 						<ul id='mapDropdown' class='dropdown-menu fwDropdown createGameInput'></ul>
@@ -442,7 +432,10 @@
 		<div id="configure-nation-flag-flex" class="text-center">
 			<div>
 				<div class="dropdown">
-					<button class="btn dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">
+					<button id="select-national-flag"
+							class="btn dropdown-toggle shadow4 fwDropdownButton"
+							type="button"
+							data-toggle="dropdown">
 						<span id="selectedFlag"></span>
 						<i class="fa fa-caret-down text-warning lobbyCaret"></i>
 					</button>
@@ -931,7 +924,7 @@
 				</div>
 			</div>
 			<div id='reset-game' class='shadow4'></div>
-			<div id='exit-game' class='shadow4'></div>
+			<div id='exit-game' class='shadow4'>Exit Game</div>
 			<div id="version"><span id="versionSpan"></span>
 				<script>document.write(app.version);</script>
 			</div>
@@ -949,6 +942,7 @@
 <script src="js/libs/jquery.min.js"></script>
 <script src="js/libs/Draggable.min.js"></script>
 <script src="js/libs/DrawSVGPlugin.min.js"></script>
+<script src="js/libs/ThrowPropsPlugin.min.js"></script>
 <script src="js/libs/SplitText.min.js"></script>
 <script src="js/libs/ScrambleTextPlugin.min.js"></script>
 <script src="js/libs/autobahn.min.js"></script>
@@ -1453,9 +1447,9 @@ function notLoggedIn() {
 	if (location.hostname === 'localhost' && location.hash !== '#test'){
 		x = ".js";
 		s = [
+			'maps',
 			'ui',
 			'lang',
-			'maps',
 			'stats',
 			'animate',
 			'my',
@@ -1478,6 +1472,22 @@ function notLoggedIn() {
 		e.async = false;
 		d.head.appendChild(e);
 	}
+	// no minification here because muh backticks
+	['maps/AlphaEarth',
+	'maps/EarthOmega',
+	'maps/France',
+	'maps/Germany',
+	'maps/Italy',
+	'maps/Japan',
+	'maps/Turkey',
+	'maps/UnitedKingdom',
+	'maps/UnitedStates'].forEach(function(v) {
+		var e = d.createElement("script");
+		var js = "js/" + v + ".js?v="+ app.version;
+		e.src = js;
+		e.async = false;
+		d.head.appendChild(e);
+	})
 
 })(document, ["firmament-wars"], ".min.js");
 </script>

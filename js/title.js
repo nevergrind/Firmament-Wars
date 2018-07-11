@@ -48,7 +48,7 @@ var title = {
 		// body
 		for (var i=0, len=data.length; i<len; i++){
 			var d = data[i];
-			title.games[d.id] = d.players * 1;
+			title.games[d.id] = 1;
 			str +=
 			"<tr id='game_"+ d.id +"' class='shadow4 wars wars-"+ d.gameMode +" no-select' data-name='" + d.name + "'>\
 				<td class='warCells'>"+ d.name + "</td>\
@@ -133,7 +133,7 @@ var title = {
 					var account = p[i].account,
 						flag = p[i].flag,
 						rating = p[i].rating;
-					if (title.players[account] === undefined){
+					if (!title.players[account]){
 						console.info("ADDING PLAYER: ", p[i]);
 						title.addPlayer(account, flag, rating);
 					}
@@ -179,7 +179,7 @@ var title = {
 					}
 					console.info("REMOVING: ", o);
 					title.removeGame(o);
-				}
+				}/*
 				else {
 					// found game
 					if (serverGames[ind].players !== title.games[ind]){
@@ -192,7 +192,7 @@ var title = {
 						}
 						title.setToGame(o);
 					}
-				}
+				}*/
 			});
 		}
 	},
@@ -219,7 +219,7 @@ var title = {
 	},
 	removePlayer: function(data){
 		// fix this
-		delete title.players[data.account];
+		title.players[data.account] = null;
 		var z = document.getElementById('titlePlayer' + data.account);
 		if (z !== null){
 			z.parentNode.removeChild(z);
@@ -247,6 +247,7 @@ var title = {
 		// refreshGames corrects player values
 		// console.info("setToGame", data);
 		var id = data.id;
+		console.info(data);
 		title.games[id] = data.players;
 		// title.updatePlayerText(id);
 	},
@@ -298,17 +299,22 @@ var title = {
 	removeGame: function(data){
 		// game countdown started or exited
 		// console.info("removeGame", data);
-		delete title.games[data.id];
+		title.games[data.id] = null;
 		var e = document.getElementById('game_' + data.id);
 		if (e !== null){
 			e.parentNode.removeChild(e);
 		}
 	},
 	mapData: {
+		AlphaEarth: {
+			name: 'Alpha Earth',
+			tiles: 143,
+			players: 8
+		},
 		EarthOmega: {
 			name: 'Earth Omega',
 			tiles: 78,
-			players: 8
+			players: 6
 		},
 		/*EarthAlpha: {
 			name: 'Earth Alpha',
@@ -339,17 +345,17 @@ var title = {
 		Japan: {
 			name: "Japan",
 			tiles: 47,
-			players: 3
+			players: 2
 		},
 		Turkey: {
 			name: "Turkey",
 			tiles: 75,
-			players: 7
+			players: 4
 		},
 		UnitedKingdom: {
 			name: "United Kingdom",
 			tiles: 69,
-			players: 8
+			players: 6
 		},
 		UnitedStates: {
 			name: 'United States',
@@ -502,7 +508,7 @@ var title = {
 			} else if (data.type === 'updateLobbyCPU') {
 				lobby.updateCPU(data);
 			} else if (data.type === 'loadGameState'){
-				loadGameState();
+				my.player !== 1 && loadGameState();
 			} else {
 				if (data.message !== undefined){
 					lobby.chat(data);
@@ -1020,11 +1026,11 @@ var title = {
 				'</li>';
 		}
 		for (var key in g.flagData){
-			s += "<li class='dropdown-header'>" + g.flagData[key].group + "</li>";
+			s += "<li class='dropdown-header shadow4'>" + g.flagData[key].group + "</li>";
 			g.flagData[key].name.forEach(function(e){
 				s += "<li class='flex-row flagSelect'>" +
 						"<img class='flag' src='images/flags/"+ e + ui.getFlagExt(e) +"'>" +
-						"<a class='flex-1 no-select' data-flag='"+ e +"'>" + e + "</a>" +
+						"<a class='flex-1 no-select flag-name' data-flag='"+ e +"'>" + e + "</a>" +
 					"</li>";
 			});
 		}

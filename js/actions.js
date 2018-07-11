@@ -25,7 +25,11 @@ var action = {
 	},
 	triggerAction: function(that, event) {
 		var id = that.id.slice(4)*1;
-		console.log('%c tile: '+ id + ' adj: '+ game.tiles[id].adj.length + ' name: '+ g.map.tileNames[id], 'background: #015; color: #0ff');
+		console.log('%c tile: '+ id +
+			' x: '+ (g.mouse.x - 300) +' y: '+ (g.mouse.y - 200) +
+			' adj: '+ game.tiles[id].adj.length +
+			' name: '+ g.map.tileNames[id],
+			'background: #015; color: #0ff');
 		if (my.attackOn){
 			var o = my.targetData;
 			if (o.attackName === 'attack' || o.attackName === 'splitAttack'){

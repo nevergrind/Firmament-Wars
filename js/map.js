@@ -2,7 +2,7 @@
 // map zooming and scrolling
 function mouseZoomIn(){
 	g.mouse.zoom += 10;
-	if (g.mouse.zoom > 150){
+	if (g.mouse.zoom >= 150){
 		g.mouse.zoom = 150;
 	}
 	TweenMax.to(DOM.worldWrap, .3, {
@@ -20,8 +20,8 @@ function mouseZoomIn(){
 }
 function mouseZoomOut(){
 	g.mouse.zoom -= 10;
-	if (g.mouse.zoom < 100){
-		g.mouse.zoom = 100;
+	if (g.mouse.zoom <= 70){
+		g.mouse.zoom = 70;
 	}
 	TweenMax.to(DOM.worldWrap, .3, {
 		force3D: false,
@@ -37,13 +37,11 @@ function mouseZoomOut(){
 	});
 	worldMap[0].applyBounds();
 }
-var reportMousePosition = _.debounce(function(x, y) {
-	console.info(x - 300, y - 200);
-}, 200);
 function setMousePosition(X, Y){
 	var x = ~~((X / g.map.sizeX) * 100);
 	var y = ~~((Y / g.map.sizeY) * 100);
 	g.mouse.transX = x;
 	g.mouse.transY = y;
-	//reportMousePosition(X, Y);
+	g.mouse.x = X;
+	g.mouse.y = Y;
 }

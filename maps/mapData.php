@@ -1,29 +1,69 @@
 <?php
 	// viewbox must match sizeX, sizeY
 	$mapData = [];
+	$mapData['AlphaEarth'] = (object) array(
+		'name' => 'Alpha Earth',
+		'key' => 'AlphaEarth',
+		'tiles' => 143,
+		'maxPlayers' => 8,
+		'startTiles' => [135, 4, 65, 81, 100, 13, 73, 21],
+		'sizeX' => 5099,
+		'sizeY' => 2627,
+		'tileNames' => array(
+			'Kabul', 'Luanda', 'Libreville', 'Muscat', 'Rio Gallegos', //0
+			'Puerto Montt', 'Santiago', 'Athens', 'Istanbul', 'Gaziantep',
+			'Tbilisi', 'Volgograd', 'Adelaide', 'Sydney', 'Darwin', //10
+			'Perth', 'Brisbane', 'Zagreb', 'Dar es Salaam', 'Berlin',
+			'Abidjan', 'Mumbai', 'New Delhi', 'Dhaka', 'Minsk', //20
+			'Guatemala City', 'Asuncion', 'São Luís', 'Rio de Janeiro', 'Brasilia',
+			'Fortaleza', 'Manaus', 'Kashgar', 'Ulaanbaatar', 'Kathmandu', //30
+			'Wuwei', 'Shanghai', 'Hong Kong', 'Kunming', 'Chengdu',
+			'Beijing', 'Changchun', 'Gaborone', 'Yaounde', 'Vancouver', //40
+			'Calgary', 'Toronto', 'Manitoba', 'Quebec', "St. John's",
+			'Yellowknife', 'Whitehorse', 'Iqaluit', 'Resolute', 'Rome', //50
+			'Conakry', 'Kinshasa', 'Bogota', 'Addis Ababa', 'Algiers',
+			'Lima', 'Quito', 'Cairo', 'Jerusalem', 'Helsinki', //60
+			'London', 'Nuuk', 'Narsaq', 'Daneborg', 'Paramaribo',
+			'Tehran', 'Baghdad', 'Reykjavik', 'Tokyo', 'Astana', //70
+			'Aktau', 'Nairobi', 'Ashgabat', 'Hanoi', 'Seoul',
+			'Tripoli', 'Cape Town', 'Bucharest', 'Antananarivo', 'Mexico City', //80
+			'Ciudad Juarez', 'Bamako', 'Mandalay', 'Maputo', 'Windhoek',
+			'Niamey', 'Abuja', 'Oslo', 'Svalbard', 'Wellington', //90
+			'Karachi', 'Manila', 'Port Moresby', 'Warsaw', 'Madrid',
+			'Mecca', 'Abu Dhabi', 'Riyadh', 'Medina', 'Yakutsk', //100
+			'Kamchatka', 'Chita', 'Irkutsk', 'Moscow', 'St. Petersburg',
+			'Novgorod', 'Novosibirsk', 'Novy Urengoy', 'Syktyvkar', 'Krasnoyarsk', //110
+			'Abakan', 'Chatanga', 'Norilsk', 'Nordvik', 'Sklad',
+			'Rabat', 'Khartoum', 'Stockholm', "N'Djamena", 'Bangkok', //120
+			'Sorong', 'Jakarta', 'Kiev', 'Los Angeles', 'Seattle',
+			'Austin', 'Atlanta', 'New York City', 'Denver', 'Chicago', //130
+			'Juneau', 'Caracas', "Sana'a", 'Lusaka', 'Mogadishu',
+			'Paris', 'Havana', 'Kuala Lumpur'
+		)
+	);
 	$mapData['EarthOmega'] = (object) array(
 		'name' => 'Earth Omega',
 		'key' => 'EarthOmega',
 		'tiles' => 78,
-		'maxPlayers' => 8,
-		'startTiles' => [72, 5, 77, 69, 47, 66, 41, 8], 
+		'maxPlayers' => 6,
+		'startTiles' => [72, 5, 47, 77, 66, 8],
 		'sizeX' => 3800,
 		'sizeY' => 1900,
 		'tileNames' => array(
 			'Afghanistan', 'Angola', 'Gabon', 'Greece', 'Oman', //0
-			'Argentina', 'Turkey', 'Romania', 'Australia', 'Austria', 
+			'Argentina', 'Turkey', 'Romania', 'Australia', 'Austria',
 			'Tanzania', 'Germany', 'Ghana', 'India', 'Belarus', //10
-			'Panama', 'Bolivia', 'Brazil', 'Indonesia', 'Botswana', 
+			'Panama', 'Bolivia', 'Brazil', 'Indonesia', 'Botswana',
 			'Cameroon', 'Canada', 'Italy', 'China', 'Liberia', //20
 			'Nigeria', 'Congo', 'Colombia', 'Cuba', 'Ethiopia',
 			'Algeria', 'Peru', 'Egypt', 'Finland', 'United Kingdom', //30
-			'Greenland', 'Guyana', 'Iran', 'Iraq', 'Iceland', 
+			'Greenland', 'Guyana', 'Iran', 'Iraq', 'Iceland',
 			'Israel', 'Japan', 'Kazakhastan', 'Uzbekistan', 'Cambodia', //40
-			'Korea', 'Libya', 'South Africa', 'Morocco', 'Madagascar', 
+			'Korea', 'Libya', 'South Africa', 'Morocco', 'Madagascar',
 			'Mexico', 'Mali', 'Thailand', 'Mongolia', 'Mozambique', //50
-			'Namibia', 'Niger', 'Norway', 'Svalbard', 'New Zealand', 
+			'Namibia', 'Niger', 'Norway', 'Svalbard', 'New Zealand',
 			'Pakistan', 'Philippines', 'Papua New Guinea', 'Poland', 'Spain', //60
-			'Paraguay', 'Saudi Arabia', 'Russia', 'Sudan', 'Sweden', 
+			'Paraguay', 'Saudi Arabia', 'Russia', 'Sudan', 'Sweden',
 			'Chad', 'Ukraine', 'United States', 'Alaska', 'Venezuela', // 70
 			'Yemen', 'Somalia', 'France'
 		)
@@ -184,8 +224,8 @@
 		'name' => 'Japan',
 		'key' => 'Japan',
 		'tiles' => 47,
-		'maxPlayers' => 3,
-		'startTiles' => [11, 37, 31, 29], 
+		'maxPlayers' => 2,
+		'startTiles' => [11, 29],
 		'sizeX' => 2520,
 		'sizeY' => 2320,
 		'tileNames' => array(
@@ -205,8 +245,8 @@
 		'name' => 'Turkey',
 		'key' => 'Turkey',
 		'tiles' => 75,
-		'maxPlayers' => 7,
-		'startTiles' => [48,10,74,36,60,9,65],
+		'maxPlayers' => 4,
+		'startTiles' => [56,40,65,9],
 		'sizeX' => 2850,
 		'sizeY' => 1480,
 		'tileNames' => array(
@@ -231,8 +271,8 @@
 		'name' => 'United Kingdom',
 		'key' => 'UnitedKingdom',
 		'tiles' => 69,
-		'maxPlayers' => 8,
-		'startTiles' => [35, 55, 50, 33, 40, 45, 5, 62],
+		'maxPlayers' => 6,
+		'startTiles' => [35, 52, 45, 62, 33, 38],
 		'sizeX' => 2520,
 		'sizeY' => 2600,
 		'tileNames' => array(
@@ -247,7 +287,7 @@
 			'Preston', 'Rhyl', 'Holyhead', 'Colwyn Bay', 'Bangor', //40
 			'Enniskillen', 'Dumfries', 'Carlisle', 'Chelmsford', 'Ipswich', 
 			'Norwich', 'Hastings', 'Canterbury', 'Inverness', 'Oban', //50
-			'Brighton', 'Kettering', 'Coventry', 'Reading', 'Guildford', 
+			'Brighton', 'Kettering', 'Coventry', 'West Berkshire', 'Guildford',
 			'Bath', 'Nottingham', 'Stornoway', 'Liverpool', 'Worcester', //60
 			'Oxford', 'Birmingham', 'Leeds', 'Doncaster'
 		)
@@ -301,6 +341,17 @@
 			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //80
 			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
 			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //90
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX'
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //100
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //110
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //120
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //130
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //140
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //150
 		)
 	);

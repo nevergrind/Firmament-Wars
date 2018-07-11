@@ -10,7 +10,7 @@ var socket = {
 		}
 		// removes id
 		socket.zmq.publish('title:' + my.channel, o);
-		delete title.players[account];
+		title.players[account] = null;
 	},
 	addPlayer: function(account, flag){
 		// instant update of clients
@@ -61,7 +61,7 @@ var socket = {
 					// set new channel data
 					my.channel = data.channel;
 					for (var key in title.players){
-						delete title.players[key];
+						title.players[key] = null;
 					}
 					data.skip = true;
 					data.message = lang[my.lang].joinedChannel + data.channel;
@@ -142,15 +142,15 @@ var socket = {
 				g.chat(data.msg, data.type);
 			}
 		});
-		if (location.host !== 'localhost'){
-			setInterval(console.clear, 600000); // 10 min
-		}
+		setInterval(function() {
+			console.clear();
+		}, 300000); // 5 min
 		setTimeout(function() {
-			setInterval(socket.keepAliveWs, 20000);
+			socket.keepAliveInterval = setInterval(socket.keepAliveWs, 20000);
 		})
 	},
+	keepAliveInterval: 0,
 	keepAliveWs: function() {
-		if (g.view === game) return;
 		socket.zmq.publish('fw:hb:' + my.account, {});
 	},
 	joinGame: function(){

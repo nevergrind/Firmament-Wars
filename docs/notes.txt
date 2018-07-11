@@ -6,11 +6,11 @@
 - get map from source
 - strip unnecessary tags
 - size it appropriately and put padding around it
-- add requires into file
+- position text nodes x, y - reportMousePosition
 - add paths if applicable
-- add text (unit) for each path
-- Get map - get tile names, size, startTiles
-- Add map data to mapData.php
+- add adjacent values
+- name the tiles
+- set startTiles
 
 Text copy pasta:
         <text x="000" y="000">0</text>
@@ -167,6 +167,7 @@ Text copy pasta:
 		<text x="000" y="000">0</text>
 		<text x="000" y="000">0</text>
 		<text x="000" y="000">0</text>
+		<text x="000" y="000">0</text>
 
 		<text x="000" y="000">130</text>
 		<text x="000" y="000">0</text>
@@ -187,6 +188,7 @@ Text copy pasta:
 		<text x="000" y="000">0</text>
 
 		<text x="000" y="000">145</text>
+		<text x="000" y="000">0</text>
 		<text x="000" y="000">0</text>
 		<text x="000" y="000">0</text>
 		<text x="000" y="000">0</text>

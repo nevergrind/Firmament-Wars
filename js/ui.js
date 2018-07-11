@@ -602,3 +602,13 @@ function testMap() {
 		testMap();
 	}, 1000);
 }
+function testNames() {
+	g.map.tileNames.forEach(function(v, i) {
+		if (v === 'XXXXXXXX') {
+			TweenMax.set(DOM['land' + i], {
+				stroke: "#0f0",
+				strokeWidth: 3
+			});
+		}
+	})
+}

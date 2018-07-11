@@ -993,6 +993,8 @@ tbody {
 }
 #updateNationFlag {
 	margin: 0 auto;
+	width: 90%;
+	max-width: 480px;
 }
 #create-game-form-foot {
 	padding-top: .5rem;
@@ -1959,10 +1961,10 @@ circle {
 	padding-right: 3rem;
 }
 #selectCpuFlag {
-	width: 26rem;
+	width: 33rem;
 }
 #cpuFlagDropdown {
-	max-height: 25rem;
+	max-height: 20rem;
 	overflow: hidden;
 	overflow-y: auto;
 	width: auto;
@@ -2340,7 +2342,6 @@ table {
     color: #fff
 }
 .dropdown-header {
-    font-weight: 700;
     font-size: 2rem;
     background: #357;
     border-top: 1px solid #016;
@@ -2453,12 +2454,15 @@ table {
 	width: 100%;
     border: 2px groove #204d74
 }
+#select-national-flag {
+	width: 33rem;
+}
 .fwDropdown>li>a,
 .flagSelect {
     color: #aef;
-    padding-left: 1rem
+    padding-left: 1rem;
 }
-.flagSelect > a {
+.flag-name {
 	padding: 0 .5rem!important;
 }
 .fwDropdown>li>a:hover,
@@ -3263,8 +3267,8 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .flag {
     margin-right: .5rem;
-    height: 15px;
-    width: 24px;
+    height: 1.6rem;
+    width: 2.4rem;
 	flex-shrink: 0;
 }
 .diplo-flag {
