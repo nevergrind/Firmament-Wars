@@ -316,6 +316,11 @@ var title = {
 			tiles: 78,
 			players: 6
 		},
+		EuropeMena: {
+			name: 'Europe Mena',
+			tiles: 137,
+			players: 8
+		},
 		/*EarthAlpha: {
 			name: 'Earth Alpha',
 			tiles: 83,

@@ -1443,6 +1443,7 @@ function notLoggedIn() {
 	$("#logout").remove();
 }
 
+var maps = {};
 (function(d, s, x){
 	if (location.hostname === 'localhost' && location.hash !== '#test'){
 		x = ".js";
@@ -1475,6 +1476,7 @@ function notLoggedIn() {
 	// no minification here because muh backticks
 	['maps/AlphaEarth',
 	'maps/EarthOmega',
+	'maps/EuropeMena',
 	'maps/France',
 	'maps/Germany',
 	'maps/Italy',
