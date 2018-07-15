@@ -316,6 +316,5 @@ maps.EuropeMena = {
 		<text x="641" y="2036">0</text>
 
 		<text x="847" y="2023">135</text>
-		<text x="527" y="1857">0</text>
-		<text x="974" y="1661">0</text>`
+		<text x="527" y="1857">0</text>`
 };

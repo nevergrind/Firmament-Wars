@@ -101,40 +101,38 @@
 		'key' => 'EuropeMena',
 		'tiles' => 137,
 		'maxPlayers' => 8,
-		'startTiles' => [41,105,66,78,92,124,117,59],
+		'startTiles' => [40,56,134,31,107,86,114,96],
 		'sizeX' => 4930,
 		'sizeY' => 4132,
 		'tileNames' => array(
 			'Tirana', 'Yerevan', 'Baku', 'Vienna', 'Brussels', //0
-			'Sofia', 'Sarajevo', 'Tuzla', 'Zagreb', 'Minsk',
-			'Algiers', 'Prague', 'Bremen', 'XXXXXXXX', 'Berlin', //10
-			'Stuttgart', 'Munich', 'Cologne', 'Hanover', 'Greifswald',
-			'Hamburg', 'Copenhagen', 'Béchar', 'Tinduf', 'Timiaouine', //20
-			'Tamanrasset', 'Ain Salah', 'Illizi', 'Ghardaia', 'Oran',
-			'Constantine', 'Hasna', 'Cairo', 'Aswan', 'Luxor', //30
-			'Marsa Matruh', 'Tallinn', 'Helsinki', 'Oulu', 'Dublin',
-			'Cardiff', 'London', 'Edinburgh', 'Tbilisi', 'Athens', //40
-			'Thessaloniki', 'Budapest', 'Kuwait City', 'XXXXXXXX', 'XXXXXXXX',
-			'Baghdad', 'Rutba', 'Amarah', 'Tikrit', 'Mosul', //50
-			'Reykjavik', 'Jerusalem', 'Syracuse', 'Naples', 'Rome',
-			'Florence', 'Genoa', 'Venice', 'Amman', 'Beirut', //60
-			'Al Jaghbub', 'Benghazi', 'Wath', 'Al-Jawf', 'Tmassah',
-			'Muzruq', 'Sirte', 'XXXXXXXX', 'XXXXXXXX', 'Sinawin', //70
-			'Tripoli', 'Riga', 'XXXXXXXX', 'Marrakesh', 'Rabat',
-			'Chisinau', 'Skopje', 'Amsterdam', 'Oslo', 'Krakow', //80
-			'Warsaw', 'Szczecin', 'Lisbon', 'Porto', 'Bucharest',
-			'Cluj-Napoca', 'Suceava', 'Moscow', 'XXXXXXXX', 'XXXXXXXX', //90
-			'XXXXXXXX', 'Grozny', 'Krasnodar', 'Volgograd', 'Voronezh',
-			'Nizhny Novgorod', 'Yaroslavl', 'St. Petersburg', 'Murmansk', 'Vilnius', //100
-			'Mecca', 'Medina', 'XXXXXXXX', "Sana'a", 'Muscat',
-			'Abu Dhabi', 'Riyadh', 'Tabuk', 'Belgrade', 'Bratislava', //110
-			'Ljubljana', 'Gotherburg', 'Stockholm', 'Skellefteå', 'Bratislava',
-			'Tunis', 'Kars', 'Gaziantep', 'Izmir', 'Istanbul', //120
+			'Sofia', 'Sarajevo', 'Osijek', 'Zagreb', 'Smolensk',
+			'Geneva', 'Prague', 'Bremen', 'Dresden', 'Stuttgart', //10
+			'Munich', 'Cologne', 'Hanover', 'Berlin', 'Hamburg',
+			'Copenhagen', 'Mazzer', 'Tinduf', 'Tinzaouten', 'Tamanrasset', //20
+			'El Menia', 'Illizi', 'Touggourt', 'Oran', 'Algiers',
+			'Suez', 'Cairo', 'Aswan', 'Luxor', 'Marsa Matruh', //30
+			'Helsinki', 'Helsinki', 'Oulu', 'Dublin', 'Cardiff',
+			'London', 'Edinburgh', 'Tbilisi', 'Athens', 'Thessaloniki', //40
+			'Budapest', 'Kuwait City', 'Al Salman', 'Rutba', 'Kut',
+			'Baghdad', 'Erbil', 'Reykjavik', 'Jerusalem', 'Syracuse', //50
+			'Naples', 'Rome', 'Florence', 'Turin', 'Venice',
+			'Amman', 'Beirut', 'Al Jaghbub', 'Benghazi', 'Wath', //60
+			'Buzaymah', 'Tmassah', 'Ghat', 'Maradah', 'Sinawin',
+			'Tripoli', 'Riga', 'Marrakesh', 'Rabat', 'Iasi', //70
+			'Skopje', 'Amsterdam', 'Oslo', 'Kraków', 'Warsaw',
+			'Szczecin', 'Lisbon', 'Porto', 'Bucharest', 'Timisoara', //80
+			'Cluj-Napoca', 'Moscow', 'Grozny', 'Krasnodar', 'Volgograd',
+			'Voronezh', 'Tambov', 'Yaroslavl', 'St. Petersburg', 'Murmansk', //90
+			'Vilnius', 'Mecca', 'Medina', "Sana'a", 'Muscat',
+			'Abu Dhabi', 'Riyadh', 'Tabuk', 'Belgrade', 'Košice', //100
+			'Ljubljana', 'Gothenburg', 'Stockholm', 'Skellefteå', 'Damascus',
+			'Tunis', 'Erzurum', 'Gaziantep', 'Izmir', 'Istanbul', //110
 			'Konya', 'Ankara', 'Lutsk', 'Sevastopol', 'Odesa',
-			'Donetsk', 'Kiev', 'Cagliari', 'Toulouse', 'Marseilles', //130
-			'Nantes', 'Paris', 'Tours', 'Lyon', 'Amiens',
-			'Bilbao', 'Barcelona', 'Seville', 'Murcia', 'Madrid', //140
-			'Valencia', 'Lugo', 'XXXXXXXX', 'XXXXXXXX'
+			'Donetsk', 'Kiev', 'Cagliari', 'Toulouse', 'Marseilles', //120
+			'Nantes', 'Paris', 'Limoges', 'Lyon', 'Lille',
+			'Bilbao', 'Barcelona', 'Seville', 'Murcia', 'Madrid', //130
+			'Valencia', 'Vigo'
 		)
 	);
 	$mapData['FlatEarth'] = (object) array(

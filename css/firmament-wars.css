@@ -1961,7 +1961,8 @@ circle {
 	padding-right: 3rem;
 }
 #selectCpuFlag {
-	width: 33rem;
+	flex: 1;
+	margin-left: 1rem;
 }
 #cpuFlagDropdown {
 	max-height: 20rem;
