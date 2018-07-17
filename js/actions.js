@@ -412,7 +412,7 @@ var action = {
 		if (my.tgt === defender){
 			return;
 		}
-		if (game.tiles[my.tgt].units === 0){
+		if (game.tiles[my.tgt].units <= 1){
 			return;
 		}
 		my.attackOn = false;
@@ -453,7 +453,7 @@ var action = {
 		if (my.tgt === defender){
 			return;
 		}
-		if (game.tiles[my.tgt].units === 0){
+		if (game.tiles[my.tgt].units <= 1){
 			return;
 		}
 		my.attackOn = false;
@@ -513,7 +513,7 @@ var action = {
 		if (my.tgt === defender){
 			return;
 		}
-		if (game.tiles[my.tgt].units === 0){
+		if (game.tiles[my.tgt].units <= 1){
 			return;
 		}
 		my.attackOn = false;

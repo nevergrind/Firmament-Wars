@@ -2456,7 +2456,7 @@ table {
     border: 2px groove #204d74
 }
 #select-national-flag {
-	width: 33rem;
+	width: 38rem;
 }
 .fwDropdown>li>a,
 .flagSelect {
@@ -3337,7 +3337,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 ::-webkit-scrollbar {
 	/* addresses the background of the bar itself. It is usually covered by the other elements */
-	width: .5rem;
+	width: 1rem;
 }
 ::-webkit-scrollbar-button {
 	/* addresses the directional buttons on the scrollbar */

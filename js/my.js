@@ -135,10 +135,12 @@ var my = {
 			// 300 is left padding; 200 top padding
 			var x = -box.x - (box.width/2) - 300 + (window.innerWidth/2);
 			if (x > 0){
+				// if positive, it's too far left
 				x = 0;
 			}
 			var xMin = (g.map.sizeX - window.innerWidth) * -1;
 			if (x < xMin){
+				// if negative it's too high
 				x = xMin;
 			}
 
@@ -150,10 +152,10 @@ var my = {
 			if (y < yMin){
 				y = yMin;
 			}
+			console.info('focusTile: ', ~~x, ~~y);
 			TweenMax.to(DOM.worldWrap, d, {
-				force3D: false,
-				x: x * g.resizeX,
-				y: y * g.resizeY
+				left: ~~x,
+				top: ~~y
 			});
 			ui.showTarget(DOM['land' + tile], false, 1);
 		}

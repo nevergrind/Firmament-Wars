@@ -13,8 +13,7 @@ var title = {
 			}
 		}).done(function(data) {
 			e.innerHTML = data.str;
-			g.unlock();
-		});
+		}).always(g.unlock);
 	},
 	refreshTimer: 0,
 	refreshGames: function(){
@@ -339,7 +338,7 @@ var title = {
 		},
 		Germany: {
 			name: 'Germany',
-			tiles: 499,
+			tiles: 150,
 			players: 8
 		},
 		Italy: {

@@ -59,7 +59,7 @@
     "linux",
     "mac"
   ],
-  "chromium-args": "--allow-file-access-from-files --enable-experimental-web-platform-features --disable-raf-throttling --disable-extensions-http-throttling",
+  "chromium-args": "--allow-file-access-from-files --enable-experimental-web-platform-features --disable-raf-throttling --disable-extensions-http-throttling --num-raster-threads=4",
   "requires": true,
   "lockfileVersion": 1,
   "dependencies": {

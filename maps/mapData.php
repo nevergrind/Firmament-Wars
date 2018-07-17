@@ -265,8 +265,8 @@
 		'tiles' => 47,
 		'maxPlayers' => 2,
 		'startTiles' => [11, 29],
-		'sizeX' => 2520,
-		'sizeY' => 2320,
+		'sizeX' => 3881,
+		'sizeY' => 3859,
 		'tileNames' => array(
 			'Aichi', 'Akita', 'Aomori', 'Chiba', 'Ehime', 
 			'Fukui', 'Fukuoka', 'Fukushima', 'Gifu', 'Gunma', 

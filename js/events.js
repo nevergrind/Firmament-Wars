@@ -126,9 +126,6 @@ var events = {
 			title.createGameService(my.account +'_'+ Date.now(), '', 'Alpha Earth', 8, 0, 0, 20);
 
 		});
-		if (!app.isLocal) {
-			$(document).on('contextmenu', function(){ return false; });
-		}
 		$("body").on(ui.click, '#options, #gameOptions', function(){
 			title.showModal();
 		}).on(ui.click, '#hotkeys', function(){
@@ -266,6 +263,12 @@ var events = {
 		});
 		$("#leaderboardRankedBtn").on(ui.click, function(){
 			title.getLeaderboard('Ranked');
+		});
+		$("#leaderboard-nation-rank").on(ui.click, function(){
+			title.getLeaderboard('Nations');
+		});
+		$("#leaderboard-flag-rank").on(ui.click, function(){
+			title.getLeaderboard('Flags');
 		});
 		$("#leaderboard-trips-btn").on(ui.click, function(){
 			title.getLeaderboard('Trips');
@@ -493,37 +496,19 @@ var events = {
 		});
 	})(),
 	map: (function(){
-		if (!isFirefox){
-			$("body").on("mousewheel", function(e){
-				if (g.view === 'game'){
-					setMousePosition(e.offsetX, e.offsetY);
-					worldMap[0].applyBounds();
-				}
-			});
-			$("#worldWrap").on("mousewheel", function(e){
-				e.originalEvent.wheelDelta > 0 ? mouseZoomIn(e) : mouseZoomOut(e);
+		$("body").on("mousewheel", function(e){
+			if (g.view === 'game'){
+				setMousePosition(e.offsetX, e.offsetY);
 				worldMap[0].applyBounds();
-			});
-		} else {
-			$("body").on("DOMMouseScroll", function(e){
-				if (g.view === 'game'){
-					setMousePosition(e.originalEvent.layerX, e.originalEvent.layerY);
-					worldMap[0].applyBounds();
-				}
-			});
-			$("#worldWrap").on("DOMMouseScroll", function(e){
-				e.originalEvent.detail > 0 ? mouseZoomOut(e) : mouseZoomIn(e);
-				worldMap[0].applyBounds();
-			});
-		}
+			}
+		});
+		$("#worldWrap").on("mousewheel", function(e){
+			e.originalEvent.wheelDelta > 0 ? mouseZoomIn(e) : mouseZoomOut(e);
+			worldMap[0].applyBounds();
+		});
 
 		$("#worldWrap").on("mousemove", function(e){
-			/*if (isFirefox){
-				setMousePosition(e.originalEvent.layerX, e.originalEvent.layerY);
-			} else {*/
-				setMousePosition(e.offsetX, e.offsetY);
-				//console.info(e.offsetX, e.offsetY);
-			//}
+			setMousePosition(e.offsetX, e.offsetY);
 		});
 		$("#createGameWrap").on(ui.click, '.mapSelect', function(e){
 			var x = $(this).text();
@@ -543,13 +528,6 @@ var events = {
 		$("#mainWrap").on(ui.click, '.gameSelect', function(e){
 			e.preventDefault();
 		});
-		/*$("#mainWrap").on(ui.click, '.speedSelect', function(e){
-			var x = $(this).text()*1;
-			g.speed = x;
-			$("#createGameSpeed").text(x);
-			localStorage.setItem('gameSpeed2', x);
-			e.preventDefault();
-		});*/
 	})(),
 	audio: (function(){
 		$("#bgmusic").on('ended', function() {
