@@ -158,7 +158,7 @@ var ui = {
 	},
 	currentLoser: 0,
 	resizeWindow: function() {
-		g.view === 'game' && worldMap[0].applyBounds();
+		g.view === 'game' && applyBounds();
 		g.screen.resizeMap();
 	},
 	windowDefault: 'window-full-screen',
@@ -581,7 +581,7 @@ function triggerEndGame(msg, victory){
 		});
 	}, 2500);
 };
-function testMap() {
+function testAdj() {
 	game.tiles.forEach(function(v, i) {
 		if (!v.adj.length) {
 			TweenMax.set(DOM['land' + i], {
@@ -590,25 +590,18 @@ function testMap() {
 			});
 		}
 	});
-	g.map.tileNames.forEach(function(v, i) {
-		if (v === 'Nangis') {
-			TweenMax.set(DOM['land' + i], {
-				stroke: "#0f0",
-				strokeWidth: 3
-			});
-		}
-	});
 	setTimeout(function() {
-		testMap();
-	}, 1000);
+		testAdj();
+	}, 3000);
 }
 function testNames() {
 	g.map.tileNames.forEach(function(v, i) {
+		console.info(v, i);
 		if (v === 'XXXXXXXX') {
 			TweenMax.set(DOM['land' + i], {
 				stroke: "#0f0",
 				strokeWidth: 3
 			});
 		}
-	})
+	});
 }

@@ -355,8 +355,7 @@ var stats = {
 							</div>\
 						</td>';
 					}
-				str += '</tr>\
-				<tr class="statSpacer"></tr>';
+				str += '</tr>';
 			}
 		}
 		return str;
@@ -407,8 +406,7 @@ var stats = {
 							</div>\
 						</td>';
 					}
-				str += '</tr>\
-				<tr class="statSpacer"></tr>';
+				str += '</tr>';
 			}
 		}
 		return str;
@@ -454,8 +452,7 @@ var stats = {
 							</div>\
 						</td>';
 					}
-					str += '</tr>\
-				<tr class="statSpacer"></tr>';
+					str += '</tr>';
 			}
 		}
 		return str;
@@ -501,8 +498,7 @@ var stats = {
 							</div>\
 						</td>';
 					}
-					str += '</tr>\
-				<tr class="statSpacer"></tr>';
+					str += '</tr>';
 			}
 		}
 		return str;
@@ -566,8 +562,7 @@ var stats = {
 							<div id="p'+ i +'-culture" class="statVal">0</div>\
 						</div>\
 					</td>\
-				</tr>\
-				<tr class="statSpacer"></tr>';
+				</tr>';
 			}
 		}
 		return str;
@@ -605,7 +600,7 @@ var stats = {
 				'</div>\
 				<div class="statsNation nowrap">'+ p.nation +'</div>\
 			</div>\
-		</td>'
+		</td>';
 		return str;
 	},
 	data: {},
@@ -685,7 +680,6 @@ var stats = {
 		}
 	},
 	overviewTotal: function(i){
-		var x = stats.data[i];
 		return this.unitsTotal(i) + this.structuresTotal(i) + this.weaponsTotal(i) + this.resourcesTotal(i);
 	},
 	unitsTotal: function(i){

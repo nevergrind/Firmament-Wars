@@ -944,7 +944,7 @@ var animate = {
 	},
 	selectTile: function(oldTgt, newTgt){
 		TweenLite.set(DOM['land' + oldTgt], {
-			filter: '',
+			filter: 'none',
 			fill: g.color[game.player[game.tiles[oldTgt].player].playerColor],
 			stroke: game.tiles[oldTgt].player ? g.color[game.player[game.tiles[oldTgt].player].playerColor] : '#aaa',
 			strokeDasharray: 'none',

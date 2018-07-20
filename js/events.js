@@ -499,12 +499,16 @@ var events = {
 		$("body").on("mousewheel", function(e){
 			if (g.view === 'game'){
 				setMousePosition(e.offsetX, e.offsetY);
-				worldMap[0].applyBounds();
+				applyBounds();
 			}
 		});
 		$("#worldWrap").on("mousewheel", function(e){
-			e.originalEvent.wheelDelta > 0 ? mouseZoomIn(e) : mouseZoomOut(e);
-			worldMap[0].applyBounds();
+			if (e.originalEvent.wheelDelta > 0) {
+				mouseZoomIn(e);
+			}
+			else if (e.originalEvent.wheelDelta < 0) {
+				mouseZoomOut(e);
+			}
 		});
 
 		$("#worldWrap").on("mousemove", function(e){

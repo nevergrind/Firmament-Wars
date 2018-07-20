@@ -11,15 +11,8 @@ maps.getMap = function(key) {
 	return str;
 };
 maps.head = `
-<?xml version="1.1" encoding="UTF-8" standalone="no"?> 
-	<svg
-	   xmlns:dc="http://purl.org/dc/elements/1.1/"
-	   xmlns:cc="http://creativecommons.org/ns#"
-	   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-	   xmlns:svg="http://www.w3.org/2000/svg"
-	   xmlns="http://www.w3.org/2000/svg"
-	   version="1.1" 
-	   id="world">`;
+<?xml version="1.1" encoding="UTF-8" standalone="no"> 
+	<svg id="world">`;
 
 maps.filters = `
 		<defs>  
@@ -42,13 +35,13 @@ maps.filters = `
 				d="M0,0 V4.2 L2.1,2.1 Z" />
 		  </marker>
 		  
-			<filter id="darken">
+			<!--<filter id="darken">
 				<feColorMatrix type="matrix"
 				values=".2   0   0   0   0
 						 0  .2   0   0   0
 						 0   0  .2   0   0
 						 0   0   0   1   0 "/>
-			</filter>
+			</filter>-->
 				
 			<filter id="emboss" color-interpolation-filters="sRGB">  
 				<feGaussianBlur 
@@ -82,7 +75,7 @@ maps.filters = `
 			</pattern>
 			
 		</defs>
-		<rect id="grid" fill="url(#smallGrid)" width="100%" height="100%" />`;
+		<rect id="grid" fill="url(#smallGrid)" width="200%" height="200%" x="-400px" y="-300px"/>`;
 
 maps.mapLayers = `
 		<g id="mapFlagWrap" class="no-pointer"></g>

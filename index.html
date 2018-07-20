@@ -5,7 +5,7 @@
 	<meta http-equiv="Cache-control" content="no-cache">
 	<script>
 		var app = {
-			version: '0.2.4',
+			version: '0.2.5',
 			initialized: 0, // init-game returned
 			isApp: location.protocol === 'chrome-extension:' ? 1 : 0,
 			account: ''
@@ -159,9 +159,9 @@
 							<div id="play-now-btn" class="action-btn shadow4"></div>
 							<div id="create" class="gameSelect action-btn shadow4"></div>
 							<div id="createTeamBtn" class="gameSelect action-btn shadow4"></div>
-							<div id="joinPrivateGameBtn" class="action-btn shadow4"></div>
 							<div id="createRankedBtn" class="gameSelect action-btn shadow4"></div>
 							<div id="joinRankedGame" class="gameSelect action-btn shadow4"></div>
+							<div id="joinPrivateGameBtn" class="action-btn shadow4"></div>
 						</div>
 					</div>
 
@@ -1477,6 +1477,7 @@ var maps = {};
 	}
 	// no minification here because muh backticks
 	['maps/AlphaEarth',
+	'maps/China',
 	'maps/EarthOmega',
 	'maps/EuropeMena',
 	'maps/France',

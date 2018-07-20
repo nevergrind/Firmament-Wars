@@ -310,6 +310,11 @@ var title = {
 			tiles: 143,
 			players: 8
 		},
+		China: {
+			name: 'China',
+			tiles: 126,
+			players: 8
+		},
 		EarthOmega: {
 			name: 'Earth Omega',
 			tiles: 78,

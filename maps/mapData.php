@@ -41,6 +41,43 @@
 			'Paris', 'Havana', 'Kuala Lumpur'
 		)
 	);
+	$mapData['China'] = (object) [
+		'name' => 'China',
+		'key' => 'China',
+		'tiles' => 126,
+		'maxPlayers' => 6,
+		'startTiles' => [94,110,119,125,51,16],
+		'sizeX' => 4273,
+		'sizeY' => 2525,
+		'tileNames' => array(
+			'Xiamen', 'Nanping', 'Shantou', 'Guazhou', 'Shanwei', //0
+			'Shenzhen', 'Wenshan', 'Guangzhou', 'Guilin', 'Baise',
+			'Yangjiang', 'Zhanjiang', 'Anshun', 'Qianxinan', 'Haikou', //10
+			'Zhengzhou', 'Da Hinggan Ling', 'Harbin', 'Sunwu', 'Mudanjiang',
+			'Qiqihar', 'Shuangyashan', 'Suihua', 'Yichun', 'Changsha', //20
+			'Tongren', 'Jining', 'Fuyang', 'Huaihua', 'Qiandongnan',
+			'Qiannan', 'Shaoguan', 'Hechi', 'Guiyang', 'Xuzhou', //30
+			'Linyi', 'Nantong', 'Sanming', 'Laibin', 'Hefei',
+			'Baicheng', 'Jilin', 'Changchun', 'Baishan', 'Yanbian', //40
+			'Qinhuangdao', 'Fuxin', 'Dalian', 'Dandong', 'Wuwei',
+			'Jiuquan', 'Bayan Nur', 'Chifeng', 'Baotou', 'Daonan', //50
+			'Nenjiang', 'Hulun Buir', 'Tongliao', 'Hohhot', 'Hanzhong',
+			'Ulanqab', 'Xilin Gol', 'Hinggan', 'Guangyuan', 'Dege', //60
+			'Yushu', 'Amdo', 'Gyaring', 'Luobubozhen', 'Baima',
+			'Golog', 'Mianyang', 'Zunyi', 'Yibin', 'Shiyan', //70
+			'Ankang', 'Baoding', 'Yancheng', 'Qiangdao', 'Jinan',
+			'Dongying', 'Zhumadian', 'Sanmenxia', 'Nanyang', 'Xiangyang', //80
+			'Batang', 'Liupanshui', 'Liangshan', 'Bijie', 'Chongqing',
+			'Aba', 'Zhaotong', 'Chengdu', 'Beijing', 'Altay', //90
+			'Bayingol', 'Turpan', 'Dushanzi', 'Kumul', 'Aksu',
+			'Hotan', 'Kashgar', 'Alashankou', 'Urumqi', 'Qamdo', //100
+			'Nagqu', 'Aru', 'Heishi', 'Nyingchi', 'Xigaze',
+			'Zhongba', 'Sirenshou', 'Ngari', 'Dongruxiang', 'Lijiang', //110
+			'Dehong', 'Deqen', 'Kunming', 'Honghe', 'Xishuangbanna',
+			'Jiangcheng', 'Qujing', 'Hangzhou', 'Shanghai', 'Jinhua', //120
+			'Ningbo'
+		)
+	];
 	$mapData['EarthOmega'] = (object) array(
 		'name' => 'Earth Omega',
 		'key' => 'EarthOmega',
@@ -352,12 +389,12 @@
 			'Pennsylvania', 'Maine', 'Michigan'
 		)
 	);
-	$mapData['TEMPLATE'] = (object) array(
+	$mapData['TEMPLATE'] = (object) [
 		'name' => 'TEMPLATE',
 		'key' => 'TEMPLATE',
 		'tiles' => 99,
-		'maxPlayers' => 2,
-		'startTiles' => [0, 1],
+		'maxPlayers' => 8,
+		'startTiles' => [0,1,2,3,4,5,6,7],
 		'sizeX' => 2320,
 		'sizeY' => 1280,
 		'tileNames' => array(
@@ -393,4 +430,4 @@
 			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
 			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //150
 		)
-	);
+	];

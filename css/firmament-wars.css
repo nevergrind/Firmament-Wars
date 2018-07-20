@@ -493,7 +493,7 @@ a:hover {
     bottom: 5vh;
     left: 1vh;
     width: 60%;
-    max-width: 640px;
+    max-width: 800px;
     padding: .5rem;
     z-index: 9999;
     vertical-align: bottom
@@ -1091,6 +1091,7 @@ tbody {
 	width: 100%;
 	background: url(../images/water7.gif);
 	background-size: 400px 400px;
+	transform: translateZ(0);
 
 }
 #targetName {
@@ -1724,9 +1725,8 @@ audio,
 }
 #grid {
 	position: absolute;
-	transform: translate(-50%, -50%);
-	width: 500%;
-	height: 500%;
+	transform: translateZ(0);
+	cursor: url('cursor/default.png'), pointer;
 }
 #mapUnits {
     text-shadow: 1px 1px #000;
@@ -2996,9 +2996,6 @@ header #options {
     font-size: 2rem;
     text-shadow: 1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000
 }
-#grid {
-	cursor: url('cursor/default.png'), pointer;
-}
 .statSum {
     color: #ffff1a
 }
@@ -3032,14 +3029,11 @@ header #options {
     border: 1px solid #037;
     border-left: none;
     border-right: none;
-    background: transparent;
+    background: #000;
 	overflow: hidden;
 }
 .statRow > td {
 	padding: .5rem 0;
-}
-.statSpacer {
-    height: 2px
 }
 .statSpacer2 {
     height: 0
