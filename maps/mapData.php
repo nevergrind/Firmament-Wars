@@ -175,28 +175,40 @@
 	$mapData['FlatEarth'] = (object) array(
 		'name' => 'Flat Earth',
 		'key' => 'FlatEarth',
-		'tiles' => 78,
+		'tiles' => 136,
 		'maxPlayers' => 8,
-		'startTiles' => [13, 14, 52, 23, 54, 47, 36, 59],
-		'sizeX' => 2520,
-		'sizeY' => 2320,
+		'startTiles' => [0,1,2,3,4,5,6,7],
+		'sizeX' => 4423,
+		'sizeY' => 4487,
 		'tileNames' => array(
-			'Santiago', 'Montevideo', 'Salvador', 'Sao Paolo', 'Amazon', //0
-			'Georgetown', 'Los Angeles', 'Mexico City', 'Lima', 'Seattle', 
-			'Chicago', 'New York', 'Bogota', 'Patagonia', 'Havana', //10
-			'Anchorage', 'Edmonton', 'Iceland', 'Thule Air Base', 'Montreal', 
-			'Irkutsk', 'Tomsk', 'Ural', 'Stockholm', 'Moscow', // 20
-			'Warsaw', 'Madrid', 'Rabat', 'Bamako', 'Abuja', 
-			'Kinshasa', 'Luanda', 'Johannesburg', 'Mogadishu', 'Addis Ababa', //30
-			'Cairo', "Sana'a", 'Mecca', 'Tehran', 'Kabul', 
-			'Singapore', 'Bangkok', 'Kamchatka', 'Ankara', 'Nairobi', // 40
-			'Harare', 'Yakutsk', 'Antananorivo', 'Jerusalem', 'Athens', 
-			'Berlin', 'Paris', 'London', 'Shanghai', 'Tokyo', //50
-			'Hong Kong', 'Manila', 'Jakarta', 'Port Moresby', 'Wellington',
-			'Perth', 'Sydney', 'Adelaide', 'Gibson Desert', 'Mumbai', // 60
-			'Tbilisi', 'Tashkent', 'New Delhi', 'Kathmandu', 'Chongqing', 
-			'Ulaanbaatar', 'Urumqi', 'Tibet', 'Tripoli', 'Algiers', // 70
-			'Bangui', 'Lusaka', 'Gaborone'
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //0
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //10
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //20
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //30
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //40
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //50
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //60
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //70
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //80
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //90
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //100
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //110
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //120
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //130
+			'XXXXXXXX', 'XXXXXXXX'
 		)
 	);
 	$mapData['Germany'] = (object) array(

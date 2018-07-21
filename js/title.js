@@ -336,6 +336,11 @@ var title = {
 			tiles: 78,
 			players: 8
 		},*/
+		FlatEarth: {
+			name: 'Flat Earth',
+			tiles: 136,
+			players: 8
+		},
 		France: {
 			name: 'France',
 			tiles: 81,

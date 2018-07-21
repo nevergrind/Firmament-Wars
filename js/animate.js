@@ -757,7 +757,7 @@ var animate = {
 			onComplete: function(){
 				audio.play('bomb9');
 				animate.screenShake(33, 7, .033, 1);
-				animate.sepia();
+				//animate.sepia();
 				animate.flashNuke({
 					d: 2.5,
 					scale: 5,
@@ -793,7 +793,6 @@ var animate = {
 					ease: Expo.easeOut
 				});
 				// shake
-				// animate.screenShake(16, 10, .016, true);
 				var circ = document.createElementNS("http://www.w3.org/2000/svg","circle");
 				circ.setAttributeNS(null,"cx",x);
 				circ.setAttributeNS(null,"cy",y);
@@ -808,7 +807,7 @@ var animate = {
 						alpha: 1
 					},
 					attr: {
-						r: 80
+						r: 100
 					},
 					onComplete: function(){
 						TweenMax.to(circ, 1, {
@@ -1010,7 +1009,7 @@ var animate = {
 			alpha: 1
 		}, .033);
 	},
-	energyBar: function(year){
+	energyBar: function(tick){
 		// 2.7 for 12? 2.9 for 15? this is really confusing
 		TweenLite.to(DOM.energyIndicator, g.speed * 2.8, {
 			startAt: {
@@ -1024,18 +1023,18 @@ var animate = {
 			startAt: { color: '#ff0' },
 			color: '#fff',
 		});
-		if (year) {
-			DOM.currentYear.textContent = ui.transformYear(year);
+		if (tick) {
+			DOM.currentYear.textContent = ui.transformYear(tick);
 			var o = {
 				blur: 15
 			};
-			TweenLite.to(o, 1, {
+			/*TweenLite.to(o, 1, {
 				blur: 0,
 				ease: Linear.easeIn,
 				onUpdate: function() {
 					animate.blur(DOM.currentYear, o.blur);
 				}
-			});
+			});*/
 			/*TweenLite.to(DOM.currentYear, 2, {
 				scrambleText:{
 					text: ui.transformYear(year),

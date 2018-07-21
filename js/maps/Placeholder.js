@@ -150,5 +150,47 @@ maps.Placeholder = {
     <text x="000" y="000">0</text>
     <text x="000" y="000">0</text>
     <text x="000" y="000">0</text>
+
+    <text x="000" y="000">120</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
+
+    <text x="000" y="000">125</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
+
+    <text x="000" y="000">130</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
+
+    <text x="000" y="000">135</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
+
+    <text x="000" y="000">140</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
+
+    <text x="000" y="000">145</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
+
+    <text x="000" y="150">150</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
+    <text x="000" y="000">0</text>
 `,
 }

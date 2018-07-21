@@ -168,8 +168,8 @@ maps.EuropeMena = {
 		<text x="1376" y="1579">10</text>
 		<text x="1736" y="1372">0</text>
 		<text x="1365" y="1176">0</text>
-		<text x="1423" y="1455">0</text>
-		<text x="1618" y="1267">0</text>
+		<text x="1616" y="1264">0</text>
+		<text x="1418" y="1453">0</text>
 
 		<text x="1564" y="1438">15</text>
 		<text x="1310" y="1324">0</text>

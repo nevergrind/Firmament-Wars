@@ -554,7 +554,7 @@ var ai = {
 						o = Object.assign(deployObj, o);
 					}
 					ai.attack(i, d, o);
-					//console.info('executing turn: ', Date.now());
+					console.info('executing turn: ', d.player, Date.now());
 				}, ai.attackDelay(i, d));
 			})(i, d);
 		}

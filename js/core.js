@@ -865,7 +865,7 @@ var game = {
 			if (newFlag === 'blank.png' && d.units) {
 				newFlag = 'Barbarian.jpg';
 			}
-			console.info('newFlag', newFlag, d.units);
+			//console.info('newFlag', newFlag, d.units);
 			DOM['flag' + i].href.baseVal = "images/flags/" + newFlag;
 		}
 		// land color
@@ -974,7 +974,7 @@ var game = {
 		/*console.info('alivePlayers: ', alivePlayers);
 		console.info('cpu: ', cpu);
 		console.info('count: ', count);*/
-		console.info('Player '+ result + ' taking turn for cpu ' + cpu);
+		// console.info('Player '+ result + ' taking turn for cpu ' + cpu);
 		return result === my.player;
 	},
 	updateResources: function(){

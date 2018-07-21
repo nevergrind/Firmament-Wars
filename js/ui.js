@@ -356,6 +356,9 @@ var ui = {
 		}
 		return year + foo;
 	},
+	transformEra: function(tick) {
+
+	},
 	setCurrentYear: function(tick){
 		DOM.currentYear.textContent = ui.transformYear(tick);
 	},

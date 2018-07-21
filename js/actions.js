@@ -91,7 +91,7 @@ var action = {
 			timerKey = isSplit ? 'splitAttackTimer' : 'attackTimer',
 			attackElement = isSplit ? 'splitAttack' : 'attack',
 			now = Date.now(),
-			dur = 1000;
+			dur = 500;
 		if (now - g[timerKey] < dur) {
 			return;
 		}
