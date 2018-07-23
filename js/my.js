@@ -155,7 +155,8 @@ var my = {
 			console.info('focusTile: ', ~~x, ~~y);
 			TweenMax.to(DOM.worldWrap, d, {
 				left: ~~x,
-				top: ~~y
+				top: ~~y,
+				onUpdate: applyBounds
 			});
 			ui.showTarget(DOM['land' + tile], false, 1);
 		}

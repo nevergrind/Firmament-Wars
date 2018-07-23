@@ -160,6 +160,7 @@ var g = {
 					'height: ' + ((g.map.sizeY / window.innerHeight) * 100) + '%; '+
 				'}</style>';
 			$DOM.head.append(css);
+			setTimeout(applyBounds);
 		}
 	},
 	mouse: {
@@ -567,15 +568,13 @@ g.init = (function(){
 	}
 
 	// TODO separate this confusing logic a bit
-	if ((location.hostname === 'localhost' && location.hash !== '#stop') || 
-		localStorage.getItem('resync') && 
-		localStorage.getItem('reload') !== false){
-		localStorage.setItem('resync', 0);
+	console.info(location.hash);
+	if (location.hostname === 'localhost' && location.hash !== '#stop'){
 		$.ajax({
 			type: "GET",
 			url: app.url + 'php/rejoinGame.php' // check if already in a game
 		}).done(function(data) {
-			//console.info('rejoin ', data.gameId, data.team);
+			console.info('rejoin ', data.gameId, data.team);
 			if (data.gameId > 0){
 				my.player = data.player;
 				my.playerColor = data.player;
@@ -1040,6 +1039,7 @@ var DOM;
 function initDom(){
 	var d = document;
 	DOM = {
+		diplomacyBody: d.getElementById("diplomacy-body"),
 		targetUiWrap: d.getElementById('target-ui-wrap'),
 		endTurn: d.getElementById('endTurn'),
 		energyIndicator: d.getElementById('energyIndicator'),

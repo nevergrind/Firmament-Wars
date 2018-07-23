@@ -256,7 +256,7 @@ maps.AlphaEarth = {
 
 	<text x="2815" y="760">70</text>
 	<text x="2648" y="749">0</text>
-	<text x="1803" y="298">0</text>
+	<text x="1803" y="285">0</text>
 	<text x="3952" y="707">0</text>
 	<text x="3003" y="508">0</text>
 

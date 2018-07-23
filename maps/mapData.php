@@ -7,7 +7,7 @@
 		'tiles' => 143,
 		'maxPlayers' => 8,
 		'startTiles' => [135, 4, 65, 81, 100, 13, 73, 21],
-		'sizeX' => 5099,
+		'sizeX' => 5299,
 		'sizeY' => 2627,
 		'tileNames' => array(
 			'Kabul', 'Luanda', 'Libreville', 'Muscat', 'Rio Gallegos', //0
@@ -47,7 +47,7 @@
 		'tiles' => 126,
 		'maxPlayers' => 6,
 		'startTiles' => [94,110,119,125,51,16],
-		'sizeX' => 4273,
+		'sizeX' => 4473,
 		'sizeY' => 2525,
 		'tileNames' => array(
 			'Xiamen', 'Nanping', 'Shantou', 'Guazhou', 'Shanwei', //0
@@ -70,7 +70,7 @@
 			'Batang', 'Liupanshui', 'Liangshan', 'Bijie', 'Chongqing',
 			'Aba', 'Zhaotong', 'Chengdu', 'Beijing', 'Altay', //90
 			'Bayingol', 'Turpan', 'Dushanzi', 'Kumul', 'Aksu',
-			'Hotan', 'Kashgar', 'Alashankou', 'Urumqi', 'Qamdo', //100
+			'Hotan', 'Kashgar', 'Alashankou', 'Ürümqi', 'Qamdo', //100
 			'Nagqu', 'Aru', 'Heishi', 'Nyingchi', 'Xigaze',
 			'Zhongba', 'Sirenshou', 'Ngari', 'Dongruxiang', 'Lijiang', //110
 			'Dehong', 'Deqen', 'Kunming', 'Honghe', 'Xishuangbanna',
@@ -84,7 +84,7 @@
 		'tiles' => 78,
 		'maxPlayers' => 6,
 		'startTiles' => [72, 5, 47, 77, 66, 8],
-		'sizeX' => 3800,
+		'sizeX' => 4000,
 		'sizeY' => 1900,
 		'tileNames' => array(
 			'Afghanistan', 'Angola', 'Gabon', 'Greece', 'Oman', //0
@@ -111,7 +111,7 @@
 		'tiles' => 83,
 		'maxPlayers' => 8,
 		'startTiles' => [40, 44, 58, 51, 5, 52, 63, 62],
-		'sizeX' => 2600,
+		'sizeX' => 2800,
 		'sizeY' => 1500,
 		'tileNames' => array(
 			'Chicago', 'Pakistan', 'Namibia', 'Congo', 'Greece', 
@@ -139,7 +139,7 @@
 		'tiles' => 137,
 		'maxPlayers' => 8,
 		'startTiles' => [40,56,134,31,107,86,114,96],
-		'sizeX' => 4930,
+		'sizeX' => 5130,
 		'sizeY' => 4132,
 		'tileNames' => array(
 			'Tirana', 'Yerevan', 'Baku', 'Vienna', 'Brussels', //0
@@ -175,40 +175,39 @@
 	$mapData['FlatEarth'] = (object) array(
 		'name' => 'Flat Earth',
 		'key' => 'FlatEarth',
-		'tiles' => 136,
+		'tiles' => 135,
 		'maxPlayers' => 8,
-		'startTiles' => [0,1,2,3,4,5,6,7],
-		'sizeX' => 4423,
+		'startTiles' => [133,19,39,134,56,74,85,128],
+		'sizeX' => 4623,
 		'sizeY' => 4487,
 		'tileNames' => array(
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //0
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //10
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //20
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //30
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //40
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //50
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //60
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //70
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //80
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //90
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //100
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //110
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //120
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //130
-			'XXXXXXXX', 'XXXXXXXX'
+			'Santiago', 'La Paz', 'Asuncion', 'Rio de Janiero', 'Salvador', //0
+			'Brasília', 'São Luís', 'Lima', 'Paramaribo', 'Belém',
+			'Manaus', 'Caracas', 'Bogotá', 'Panama', 'Guatemala', //10
+			'Mexico City', 'Los Angeles', 'Austin', 'Atlanta', 'New York City',
+			'Chicago', 'Winnipeg', 'Edmonton', 'Havana', 'Vancouver', //20
+			'Yukon', 'Anchorage', 'Northwest Territories', 'Nunavut', 'Nuuk',
+			'Daneborg', 'Qaanaaq', 'Resolute', 'Toronto', 'Reykjavik', //30
+			'Auckland', 'Makassar', 'Jakarta', 'Manila', 'Tokyo',
+			'Medan', 'Paris', 'Sofia', 'Bucharest', 'Sarajevo', //40
+			'Warsaw', 'Vienna', 'Kiev', 'Belarus', 'Istanbul',
+			'Gaziantep', 'Damascus', 'Tripoli', 'Rabat', 'Bamako', //50
+			'Dakar', 'Abidjan', 'Ouagadougou', 'Niamey', 'Accra',
+			'Lome', 'Abuja', 'Addis Ababa', "N'Djamena", 'Libreville', //60
+			'Brazzaville', 'Luanda', 'Windhoek', 'Pretoria', 'Gaborone',
+			'Maputo', 'Lusaka', 'Lubumbashi', 'Dar es Salaam', 'Nairobi', //70
+			'Bangui', 'Kisangani', 'Kampala', 'Khartoum', 'Mogadishu',
+			'Algiers', 'Tunis', 'Cairo', 'Jerusalem', "Sana'a", //80
+			'Mecca', 'Medina', 'Riyadh', 'Doha', 'Abu Dhabi',
+			'Phnom Penh', 'Hanoi', 'Mandalay', 'Dhaka', 'New Delhi', //90
+			'Karachi', 'Kabul', 'Baghdad', 'Tehran', 'Tbilisi',
+			'Ashgabat', 'Helsinki', 'Tashkent', 'Islamabad', 'Astana', //100
+			'Ulaanbaatar', 'Ürümqi', 'Qinghai', 'Beijing', 'Hong Kong',
+			'Shanghai', 'Seoul', 'Singapore', 'Ankara', 'Rome', //110
+			'Madrid', 'Berlin', 'Stockholm', 'Antananarivo', 'Mumbai',
+			'Moscow', 'Ural', 'Siberia', 'Yakutsk', 'Vladivostok', //120
+			'Kamchatka', 'Yaounde', 'Athens', 'Perth', 'Brisbane',
+			'Sydney', 'Jayapura', 'Port Moresby', 'Buenos Aires', 'London'
 		)
 	);
 	$mapData['Germany'] = (object) array(
@@ -217,7 +216,7 @@
 		'tiles' => 150,
 		'maxPlayers' => 8,
 		'startTiles' => [24, 6, 116, 75, 137, 66, 130, 43],
-		'sizeX' => 3591,
+		'sizeX' => 3791,
 		'sizeY' => 2939,
 		'tileNames' => array(
 			'Darmstadt', 'Ortenaukreis', 'Rems-Murr-Kreis', 'Neckar-Odenwald-Kreis', 'Konstanz',  //0
@@ -258,7 +257,7 @@
 		'tiles' => 81,
 		'maxPlayers' => 8,
 		'startTiles' => [34, 42, 38, 67, 78, 30, 63, 11],
-		'sizeX' => 2520,
+		'sizeX' => 2720,
 		'sizeY' => 1992,
 		'tileNames' => array(
 			'Oyonnax', 'Maubeuge', 'Nevers', 'Digne', 'Nice', //0
@@ -286,7 +285,7 @@
 		'tiles' => 81,
 		'maxPlayers' => 8,
 		'startTiles' => [45, 39, 13, 29, 6, 9, 72, 73],
-		'sizeX' => 2520,
+		'sizeX' => 2720,
 		'sizeY' => 2406,
 		'tileNames' => array(
 			'Bologna', 'Parma', 'Varzi', 'Chioggia', 'Ferrara', //0
@@ -314,7 +313,7 @@
 		'tiles' => 47,
 		'maxPlayers' => 2,
 		'startTiles' => [11, 29],
-		'sizeX' => 3881,
+		'sizeX' => 4081,
 		'sizeY' => 3859,
 		'tileNames' => array(
 			'Aichi', 'Akita', 'Aomori', 'Chiba', 'Ehime', 
@@ -335,7 +334,7 @@
 		'tiles' => 75,
 		'maxPlayers' => 4,
 		'startTiles' => [56,40,65,9],
-		'sizeX' => 2850,
+		'sizeX' => 3050,
 		'sizeY' => 1480,
 		'tileNames' => array(
 			'Adana', 'Adiyaman', 'Afyonkarahisar', 'Agri', 'Aksaray', //0
@@ -361,7 +360,7 @@
 		'tiles' => 69,
 		'maxPlayers' => 6,
 		'startTiles' => [35, 52, 45, 62, 33, 38],
-		'sizeX' => 2520,
+		'sizeX' => 2720,
 		'sizeY' => 2600,
 		'tileNames' => array(
 			'Paisley', 'Stirling', 'Glasgow', 'Aberdeen', 'Dundee', //0
@@ -386,7 +385,7 @@
 		'tiles' => 48,
 		'maxPlayers' => 2,
 		'startTiles' => [7, 28, 46],
-		'sizeX' => 2520,
+		'sizeX' => 2720,
 		'sizeY' => 1791,
 		'tileNames' => array(
 			'Massachusetts', 'Minnesota', 'Montana', 'North Dakota', 'Idaho',
@@ -411,23 +410,23 @@
 		'sizeY' => 1280,
 		'tileNames' => array(
 			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //0
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
 			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //10
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
 			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //20
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
 			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //30
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
 			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //40
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
 			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //50
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
 			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //60
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
 			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //70
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
 			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //80
-			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 
+			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
 			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //90
 			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX',
 			'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', 'XXXXXXXX', //100

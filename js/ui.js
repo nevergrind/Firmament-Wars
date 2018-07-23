@@ -120,41 +120,37 @@ var ui = {
 	},
 	getPlayersByTileRank: function() {
 		var arr = [0,0,0,0,0,0,0,0,0];
-		game.tiles.forEach(function(t) {
-			t.player && arr[t.player]++;
-		});
+		for (var i=0, len=game.tiles.length; i<len; i++) {
+			game.tiles[i].player && arr[game.tiles[i].player]++;
+		}
 		return arr;
 	},
 	drawDiplomacyPanel: function() {
 		var strArr = [],
-			p,
-			i = 0,
-			len = game.player.length,
-			arr = ui.getPlayersByTileRank();
+			p, i, len,
+			rankedPlayers = ui.getPlayersByTileRank();
 
 		ui.currentLoser = 99;
-		arr.forEach(function(v, loop) {
-			if (loop) {
-				if (v && v < ui.currentLoser) {
-					ui.currentLoser = v;
-				}
-			}
-		});
-
-		for (; i<len; i++){
-			p = game.player[i];
-			if (p.account && arr[i]){
-				p.flagArr = p.flag.split("."),
-				p.flagShort = p.flagArr[0],
-				p.flagSrc = p.flag;
-
-				while (strArr[arr[i]] !== undefined) {
-					arr[i]++;
-				}
-				strArr[arr[i]] = ui.getDiploRow(p);
+		for (i=1, len=rankedPlayers.length; i<len; i++) {
+			if (rankedPlayers[i] && rankedPlayers[i] < ui.currentLoser) {
+				ui.currentLoser = rankedPlayers[i];
 			}
 		}
-		document.getElementById('diplomacy-body').innerHTML = strArr.reverse().join("");
+
+		for (i=0, len = game.player.length; i<len; i++){
+			p = game.player[i];
+			if (p.account && rankedPlayers[i]){
+				p.flagArr = p.flag.split(".");
+				p.flagShort = p.flagArr[0];
+				p.flagSrc = p.flag;
+
+				while (strArr[rankedPlayers[i]] !== undefined) {
+					rankedPlayers[i]++;
+				}
+				strArr[rankedPlayers[i]] = ui.getDiploRow(p);
+			}
+		}
+		DOM.diplomacyBody.innerHTML = strArr.reverse().join("");
 	},
 	currentLoser: 0,
 	resizeWindow: function() {

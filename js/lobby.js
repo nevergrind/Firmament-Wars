@@ -324,12 +324,10 @@ var lobby = {
 			}
 		});
 		if (!d){
-			// load game
-			//console.info(localStorage.getItem('reload'));
-			if (localStorage.getItem('reload') !== false){
-				setTimeout(loadGameState, 100); // page refresh
-			}
-		} else {
+			// rejoin game
+			setTimeout(loadGameState, 100); // page refresh
+		}
+		else {
 			// load lobby
 			(function repeat(){
 				if (g.view === "lobby"){
@@ -349,7 +347,6 @@ var lobby = {
 						}
 					}).done(function(x){
 						if (g.view === "lobby"){
-							localStorage.setItem('reload', true);
 							// reality check of presence data every 5 seconds
 							var hostFound = false
 							for (var i=1; i<=8; i++){
@@ -831,7 +828,6 @@ function loadGameState(){
 			}
 			else {
 				g.msg(lang[my.lang].failedToLoad);
-				localStorage.setItem('reload', false);
 				setTimeout(function(){
 					window.onbeforeunload = null;
 					location.reload();
@@ -981,8 +977,11 @@ function loadGameState(){
 				minimumMovement: 6,
 				type: 'top,left',
 				bounds: DOM.gameWrap,
+				edgeResistance: 1,
 				throwProps: true,
-				edgeResistance: 1
+				onDrag: function(e) {
+					setMousePosition(e.offsetX, e.offsetY);
+				}
 			});
 
 			initOffensiveTooltips();

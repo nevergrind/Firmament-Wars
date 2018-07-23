@@ -1047,7 +1047,7 @@ var animate = {
 	},
 	blur: function(e, blur) {
 		TweenLite.set(e, {
-			filter: 'blur('+ blur +'px)'
+			filter: blur === 0 ? 'none' : 'blur('+ blur +'px)'
 		})
 	},
 	research: function(o) { // element, duration, tech, method

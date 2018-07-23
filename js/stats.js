@@ -67,8 +67,9 @@
 
 var stats = {
 	init: function(data){
-		var flag = my.flag;
-		var str = '<img id="statWorld" src="images/FlatWorld90.jpg">';
+		var flag = my.flag,
+			str = '<img id="statWorld" src="images/FlatWorld90.jpg">',
+			kjv = bible.getRandomQuoteAndVerse();
 		str +=
 		'<div id="statResult" class="no-select">\
 			<img class="statResultFlag" src="images/flags/'+ flag +'">\
@@ -92,8 +93,8 @@ var stats = {
 		<div id="statFooter" class="container-fluid">\
 			<div class="row">\
 				<div id="statQuote" class="col-xs-7 shadow4 stagBlue">\
-					<div id="muh-bible">'+ stats.data.quote +'</div>\
-					<div id="statVerse" class="text-right">'+ stats.data.verse +'</div>\
+					<div id="muh-bible">'+ kjv.quote +'</div>\
+					<div id="statVerse" class="text-right">'+ kjv.verse +'</div>\
 				</div>\
 				<div id="statDuration" class="col-xs-4 stagBlue text-center">\
 					<div id="gameDuration">'+ lang[my.lang].gameDuration + stats.gameDuration(g.gameDuration) +'</div>\

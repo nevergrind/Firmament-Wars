@@ -68,7 +68,7 @@ maps.filters = '<defs>\
 				<path d="M 22 0 L 0 0 0 22" fill="none" stroke="rgba(32, 64, 96, 1)"\ stroke-width="2" />\
 			</pattern>\
 		</defs>\
-		<rect id="grid" fill="url(#smallGrid)" width="200%" height="200%" x="-400px" y="-300px"/>';
+		<rect id="grid" fill="url(#smallGrid)" width="100%" height="100%" x="-400px" y="-200px"/>';
 
 maps.mapLayers = '\
 		<g id="mapFlagWrap" class="no-pointer"></g>\
