@@ -95,8 +95,8 @@ var action = {
 		if (now - g[timerKey] < dur) {
 			return;
 		}
-		var attacker = my.tgt;
-		var defender = that.id.slice(4)*1;
+		var attacker = my.tgt,
+			defender = that.id.slice(4)*1;
 		if (my.tgt === defender){
 			return;
 		}
@@ -123,7 +123,8 @@ var action = {
 		if (my.government === lang[my.lang].governments.Despotism &&
 			game.tiles[defender].player === my.player){
 			// nothing
-		} else {
+		}
+		else {
 			if ((my.moves < 2 && !isSplit) ||
 				(my.moves < 1 && isSplit) ){
 				action.error(lang[my.lang].notEnoughEnergy);
@@ -157,6 +158,8 @@ var action = {
 			data: {
 				attacker: attacker,
 				defender: defender,
+				attackRow: game.tiles[attacker].row,
+				defendRow: game.tiles[defender].row,
 				split: isSplit,
 				defGovernment: game.player[game.tiles[defender].player].government
 			}
@@ -269,6 +272,7 @@ var action = {
 			$.ajax({
 				url: app.url + 'php/deploy.php',
 				data: {
+					deployRow: game.tiles[tgt].row,
 					target: tgt
 				}
 			}).done(function(data) {
@@ -312,6 +316,7 @@ var action = {
 			$.ajax({
 				url: app.url + 'php/rush.php',
 				data: {
+					rushRow: game.tiles[tgt].row,
 					target: tgt
 				}
 			}).done(function(data) {

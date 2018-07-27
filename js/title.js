@@ -532,7 +532,10 @@ var title = {
 		else {
 			// game
 			// console.info('game receive: ', data);
-			if (data.type === 'cannons'){
+			if (data.type === 'statUpdate') {
+				stats.update(data);
+			}
+			else if (data.type === 'cannons'){
 				animate.cannons(data.attackerTile, data.tile, true);
 				game.updateTile(data);
 			} else if (data.type === 'missile'){

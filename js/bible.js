@@ -1,4 +1,5 @@
-bible = {
+// muh quotes
+var bible = {
 	quotes: [
 		{
 			quote: "And God said, Let there be lights in the firmament of the heaven to divide the day from the night; and let them be for signs, and for seasons, and for days, and years:",
@@ -264,4 +265,4 @@ bible = {
 		var index = ~~(Math.random() * this.quotes.length);
 		return this.quotes[index];
 	}
-}
+};

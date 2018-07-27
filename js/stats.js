@@ -604,7 +604,43 @@ var stats = {
 		</td>';
 		return str;
 	},
-	data: {},
+	initStats: function() {
+		stats.data = [];
+		for (var i=0; i<8; i++) {
+			stats.data[i] = {
+				account: '',
+				nation: '',
+				flag: '',
+				cpu: '',
+				earned: 0,
+				deployed: 0,
+				killed: 0,
+				lost: 0,
+				bunkers: 0,
+				walls: 0,
+				fortresses: 0,
+				cannons: 0,
+				missiles: 0,
+				nukes: 0,
+				moves: 0,
+				food: 0,
+				culture: 0,
+				production: 0,
+			}
+		}
+	},
+	update: function(data) {
+		console.info("stats.update", data);
+		for (var player in data.contents) {
+			var pObj = data.contents[player];
+			for (var key in pObj) {
+				console.info('adding: player', player, key, pObj[key]);
+				stats.data[player][key] += pObj[key];
+			}
+		};
+		sessionStorage.setItem('stats', JSON.stringify(stats.data));
+	},
+	data: [],
 	gameDuration: function(data){
 		return stats.hours(data) + stats.minutes(data) +':'+ stats.seconds(data)
 	},

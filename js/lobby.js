@@ -797,6 +797,15 @@ function loadGameState(){
 		type: "GET",
 		url: app.url +"php/loadGameState.php"
 	}).done(function(data){
+
+		if (sessionStorage.getItem('stats') !== null) {
+			// load if it's there
+			stats.data = JSON.parse(sessionStorage.getItem('stats'));
+			console.info("LOADING stats.data: ", stats.data);
+		}
+		else {
+			stats.initStats();
+		}
 		console.info("loadGameState", data);
 		console.info("player data:", data.players);
 		// data.mapData.sizeX data.mapData.sizeX
@@ -899,17 +908,18 @@ function loadGameState(){
 			var d = data.players[i],
 				z = game.player[d.player],
 				flag = d.flag.split('.')[0];
-			z.account = d.account;
-			z.flag = flag + ui.getFlagExt(flag);
-			z.nation = d.nation;
+			z.account = stats.data[d.player].account = d.account;
+			z.flag = stats.data[d.player].flag = flag + ui.getFlagExt(flag);
+			z.nation = stats.data[d.player].nation = d.nation;
 			z.player = d.player;
 			z.playerColor = d.playerColor;
 			z.team = d.team;
 			z.government = d.government;
 			// z.avatar = d.avatar;
-			z.cpu = d.cpu;
+			z.cpu = stats.data[d.player].cpu = d.cpu;
 			z.difficulty = d.difficulty;
 			z.difficultyShort = d.difficulty.replace(/ /g, '');
+
 		}
 
 		// initialize client tile data
@@ -917,6 +927,7 @@ function loadGameState(){
 		for (var i=0, len=data.tiles.length; i<len; i++){
 			var d = data.tiles[i];
 			game.tiles[i] = {
+				row: d.row,
 				name: d.tileName,
 				account: d.account,
 				player: d.player,

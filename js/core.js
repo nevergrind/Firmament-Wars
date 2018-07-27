@@ -598,6 +598,9 @@ g.init = (function(){
 			g.msg(data.responseText);
 		});
 	}
+	else {
+		sessionStorage.removeItem('stats');
+	}
 })();
 var game = {
 	name: '',
