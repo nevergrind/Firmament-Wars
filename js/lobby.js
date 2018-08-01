@@ -283,6 +283,59 @@ var lobby = {
 		</div>';
 		return str;
 	},
+	presence: {
+		list: {},
+		hb: function(data) {
+			data.timestamp = Date.now();
+			console.log('%c lobbyHeartbeat: '+ data.account, 'background: #0f0; color: #f00');
+			if (typeof this.list[data.account] === 'undefined') {
+				this.add(data);
+			}
+			else {
+				this.update(data);
+			}
+			this.audit(data.timestamp);
+		},
+		add: function(data) {
+			//data
+			this.update(data);
+			//dom
+			var e = document.getElementById('titlePlayer' + data.account);
+			if (e !== null){
+				e.parentNode.removeChild(e);
+			}
+			e = document.createElement('div');
+			e.className = "titlePlayer";
+			e.id = "titlePlayer" + data.account;
+			e.innerHTML =
+				'<img id="titlePlayerFlag_'+ data.account +'" class="flag" src="images/flags/'+ data.flag +'">' +
+				'<span class="chat-rating">['+ data.rating +']</span> '+
+				'<span class="titlePlayerAccount">'+ data.account +'</span>';
+			DOM.titleChatBody.appendChild(e);
+
+		},
+		update: function(data) {
+			this.list[data.account] = data;
+		},
+		remove: function(account) {
+			console.log("remove: ", account);
+			this.list[account] = void 0;
+			var z = document.getElementById('titlePlayer' + account);
+			if (z !== null){
+				z.parentNode.removeChild(z);
+			}
+		},
+		reset: function() {
+			this.list = {};
+		},
+		audit: function(now) {
+			for (var key in this.list) {
+				this.list[key] !== void 0 &&
+					now - this.list[key].timestamp > 5000 &&
+					this.remove(key);
+			}
+		}
+	},
 	join: function(d){
 		// transition to game lobby
 		if (d === undefined){

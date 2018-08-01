@@ -381,7 +381,9 @@ var g = {
 		}, .1);
 
 		console.info('init-game', data.account, data);
-		my.channel = data.initChannel;
+		var lastChannel = localStorage.getItem('channel') === null ?
+			'usa-1' : localStorage.getItem('channel');
+		my.channel = lastChannel;
 		$('.actionButtons').tooltip({
 			animation: false,
 			placement: 'left',
@@ -613,6 +615,60 @@ var game = {
 	name: '',
 	tiles: [],
 	initialized: false,
+	presence: {
+		list: {},
+		hb: function(data) {
+			data.timestamp = Date.now();
+			console.log('%c gameHeartbeat: ', 'background: #0f0; color: #f00');
+			console.info(data);
+			if (typeof this.list[data.account] === 'undefined') {
+				this.add(data);
+			}
+			else {
+				this.update(data);
+			}
+			this.audit(data.timestamp);
+		},
+		add: function(data) {
+			//data
+			this.update(data);
+			//dom
+			var e = document.getElementById('titlePlayer' + data.account);
+			if (e !== null){
+				e.parentNode.removeChild(e);
+			}
+			e = document.createElement('div');
+			e.className = "titlePlayer";
+			e.id = "titlePlayer" + data.account;
+			e.innerHTML =
+				'<img id="titlePlayerFlag_'+ data.account +'" class="flag" src="images/flags/'+ data.flag +'">' +
+				'<span class="chat-rating">['+ data.rating +']</span> '+
+				'<span class="titlePlayerAccount">'+ data.account +'</span>';
+			//DOM.titleChatBody.appendChild(e);
+
+		},
+		update: function(data) {
+			this.list[data.account] = data;
+		},
+		remove: function(account) {
+			console.log("remove: ", account);
+			this.list[account] = void 0;
+			var z = document.getElementById('titlePlayer' + account);
+			if (z !== null){
+				z.parentNode.removeChild(z);
+			}
+		},
+		reset: function() {
+			this.list = {};
+		},
+		audit: function(now) {
+			for (var key in this.list) {
+				this.list[key] !== void 0 &&
+					now - this.list[key].timestamp > 5000 &&
+					this.remove(key);
+			}
+		}
+	},
 	toggleGameWindows: function(){
 		var x = $("#ui2-head").css('visibility') === 'visible';
 		TweenMax.set(DOM.gameWindows, {
@@ -665,9 +721,7 @@ var game = {
 					TweenMax.to(z, .125, {
 						alpha: 0,
 						onComplete: function(){
-							if (z.parentNode !== null){
-								z.parentNode.removeChild(z);
-							}
+							z.parentNode !== null && z.parentNode.removeChild(z);
 						}
 					});
 				}
@@ -1175,7 +1229,7 @@ var video = {
 function playerLogout(){
 	
     g.lock();
-	title.presence.remove(my.account);
+	socket.publish.title.remove(my.account);
     /*$.ajax({
 		type: 'GET',
 		url: app.url + 'php/deleteFromFwtitle.php'

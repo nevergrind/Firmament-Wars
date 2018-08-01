@@ -119,7 +119,7 @@ var events = {
 		});
 		$("#play-now-btn").on(ui.click, function(){
 			title.addCpu = 1;
-			title.createGameService(my.account +'_'+ Date.now(), '', 'Alpha Earth', 8, 0, 0, 20);
+			title.createGameService('', '', 'Alpha Earth', 8, 0, 0, 20);
 
 		});
 		$("body").on(ui.click, '#options, #gameOptions', function(){

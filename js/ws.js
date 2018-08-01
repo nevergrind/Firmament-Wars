@@ -3,23 +3,29 @@
 var socket = {
 	receive: {
 		title: function(data) {
-			if (data.type === 'remove'){
+			if (data.type === 'hb'){
+				title.presence.hb(data);
+			}
+			else if (data.type === 'remove'){
 				title.presence.remove(data.account);
 			}
 			else if (data.type === 'add'){
 				title.presence.add(data);
 			}
-			else if (data.type === 'hb'){
-				title.presence.hb(data);
-			}
 			else {
-				if (data.message !== undefined){
-					title.chat(data);
+				if (data.message !== void 0){
+					if (g.ignore.indexOf(data.account) === -1) {
+						title.chat(data);
+					}
 				}
 			}
 		},
 		lobby: function(data) {
-			if (data.type === 'hostLeft'){
+			console.info("LOBBY: ", data);
+			if (data.type === 'hb'){
+				lobby.presence.hb(data);
+			}
+			else if (data.type === 'hostLeft'){
 				lobby.hostLeft();
 			}
 			else if (data.type === 'lobby-set-cpu-difficulty'){
@@ -40,20 +46,23 @@ var socket = {
 			else if (data.type === 'updateLobbyPlayer'){
 				lobby.updatePlayer(data);
 			}
-			else if (data.type === 'updateLobbyCPU') {
-				lobby.updateCPU(data);
-			}
 			else if (data.type === 'loadGameState'){
+				// trigger game start for non-hosts
 				my.player !== 1 && loadGameState();
 			}
 			else {
-				if (data.message !== undefined){
-					lobby.chat(data);
+				if (data.message !== void 0){
+					if (g.ignore.indexOf(data.account) === -1) {
+						lobby.chat(data);
+					}
 				}
 			}
 		},
 		game: function(data) {
-			if (data.type === 'statUpdate') {
+			if (data.type === 'hb'){
+				game.presence.hb(data);
+			}
+			else if (data.type === 'statUpdate') {
 				stats.update(data);
 			}
 			else if (data.type === 'cannons'){
@@ -120,8 +129,11 @@ var socket = {
 						game.chat(data);
 					}
 					// lost attack
-				} else {
-					game.chat(data);
+				}
+				else {
+					if (g.ignore.indexOf(data.account) === -1){
+						game.chat(data);
+					}
 				}
 			}
 			if (data.sfx){
@@ -130,6 +142,7 @@ var socket = {
 		}
 	},
 	publish: {
+		// remove this account for all players in title
 		title: {
 			remove: function(account) {
 				socket.zmq.publish('title:' + my.channel, {
@@ -138,6 +151,9 @@ var socket = {
 				});
 				title.players[account] = void 0;
 			}
+		},
+		lobby: {
+
 		}
 	},
 	initialConnection: true,
@@ -173,6 +189,7 @@ var socket = {
 					socket.unsubscribe('title:' + my.channel);
 					// set new channel data
 					my.channel = data.channel;
+					localStorage.setItem('channel', my.channel);
 					title.presence.reset();
 					data.skip = true;
 					data.message = lang[my.lang].joinedChannel + data.channel;
@@ -180,13 +197,11 @@ var socket = {
 					// send message to my chat log
 					title.chat(data);
 					socket.zmq.subscribe('title:' + my.channel, function(topic, data) {
-						if (g.ignore.indexOf(data.account) === -1){
-							socket.receive[g.view](data);
-						}
+						socket.receive[g.view](data);
 					});
 					// update display of channel
 					if (g.view === 'title'){
-						document.getElementById('titleChatHeaderChannel').textContent = data.channel;
+						title.presence.setHeader();
 						document.getElementById('titleChatBody').innerHTML = '';
 					}
 					// update browser hash
@@ -196,6 +211,10 @@ var socket = {
 				});
 			}
 		}
+	},
+	enableHeartbeat: function() {
+		clearInterval(this.sendHeartbeatInterval);
+		this.sendHeartbeatInterval = setInterval(this.sendHeartbeat, 1000);
 	},
 	enableWhisper: function(){
 		var channel = 'account:' + my.account;
@@ -221,14 +240,16 @@ var socket = {
 					data.msg = data.message;
 					data.message = data.chatFlag + data.account + lang[my.lang].whispers + data.message;
 					title.receiveWhisper(data);
-				} else {
+				}
+				else {
 					// message receive confirmation to original sender
 					// console.info("CALLBACK: ", data);
 					if (data.timestamp - title.lastWhisper.timestamp < 500 &&
 						data.account === title.lastWhisper.account &&
 						data.message === title.lastWhisper.message){
 						// skip message
-					} else {
+					}
+					else {
 						// reference values to avoid receiving double messages when a player is in the lobby multiple times
 						// this causes multiple response callbacks
 						title.lastWhisper.account = data.account;
@@ -244,20 +265,12 @@ var socket = {
 			}
 		});
 	},
-	enableHeartbeat: function() {
-		socket.zmq.subscribe('fw:hb:' + my.account, function(topic, data) {
-			if (data.msg){
-				g.chat(data.msg, data.type);
-			}
-		});
-	},
 	sendHeartbeatInterval: 0,
 	socketSendTime: 0,
 	sendHeartbeat: function() {
 		socket.socketSendTime = Date.now();
-		if (socket.zmq !== null) {
+		if (socket.zmq) {
 			if (g.view === 'title') {
-
 				socket.zmq.publish('title:' + my.channel, {
 					type: 'hb',
 					account: my.account,
@@ -266,24 +279,44 @@ var socket = {
 				});
 
 			}
+			else if (g.view === 'lobby') {
+				socket.zmq.publish('game:' + game.id, {
+					type: 'hb',
+					account: my.account,
+					flag: my.flag
+				});
+			}
+			else {
+				socket.zmq.publish('game:' + game.id, {
+					type: 'hb',
+					account: my.account,
+					flag: my.flag,
+					government: my.government,
+					nation: my.nation,
+					playerColor: my.playerColor
+				});
+			}
 		}
 	},
 	joinGame: function(){
 		(function repeat(){
 			if (socket.enabled){
-				socket.unsubscribe('title:' + my.channel);
-				socket.unsubscribe('game:' + game.id);
-				// game updates
-				// console.info("Subscribing to game:" + game.id);
-				socket.zmq.subscribe('game:' + game.id, function(topic, data) {
-					if (g.ignore.indexOf(data.account) === -1){
-						socket.receive[g.view](data);
-					}
-				});
-			} else {
+				socket.connectGame();
+			}
+			else {
 				setTimeout(repeat, 100);
 			}
 		})();
+	},
+	connectGame: function() {
+		socket.unsubscribe('title:' + my.channel);
+		socket.unsubscribe('game:' + game.id);
+		title.presence.reset();
+		// game updates
+		// console.info("Subscribing to game:" + game.id);
+		socket.zmq.subscribe('game:' + game.id, function(topic, data) {
+			socket.receive[g.view](data);
+		});
 	},
 	enabled: false,
 	init: function(){
@@ -304,38 +337,34 @@ var socket = {
 				console.info("title:refreshGames");
 				title.updateGame(data);
 			});
-			socket.zmq.subscribe('admin:broadcast', function(topic, data) {
-				if (data.msg){
-					g.chat(data.msg, data.type);
-				}
-				else if (data.category === 'close-app') {
-					title.exitGame();
-				}
-			});
-			(function repeat(){
-				if (my.account){
-					// do this stuff once we detect account data
-					socket.enableWhisper();
-					socket.enableHeartbeat();
-					setInterval(console.clear, 300000); // 5 min
-					// so it happens after the object initializes
-					setTimeout(function() {
-						clearInterval(socket.sendHeartbeatInterval);
-						socket.sendHeartbeatInterval = setInterval(socket.sendHeartbeat, 1000);
-					})
-				}
-				else {
-					setTimeout(repeat, 100);
-				}
-			})();
 			socket.setChannel(my.channel, true); // should be usa-1
 		}
 		else if (g.view === 'lobby') {
-
+			socket.connectGame();
 		}
 		else if (g.view === 'game'){
+			socket.connectGame();
 			game.getGameState();
 		}
+		socket.zmq.subscribe('admin:broadcast', function(topic, data) {
+			if (data.msg){
+				g.chat(data.msg, data.type);
+			}
+			else if (data.category === 'close-app') {
+				title.exitGame();
+			}
+		});
+		(function repeat(){
+			if (my.account){
+				// do this stuff once we detect account data
+				socket.enableWhisper();
+				setInterval(console.clear, 300000); // 5 min
+				socket.enableHeartbeat();
+			}
+			else {
+				setTimeout(repeat, 100);
+			}
+		})();
 		g.unlock();
 	},
 	connectionTries: 0,

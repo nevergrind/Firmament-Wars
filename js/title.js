@@ -341,20 +341,35 @@ var title = {
 	},
 	presence: {
 		list: {},
+		setHeader: function() {
+			if (g.view === 'title') {
+				document.getElementById('titleChatHeaderChannel').textContent =
+					my.channel + ' ('+ this.getListLength() + ')';
+			}
+		},
+		getListLength: function() {
+			var count = 0;
+			for (var key in this.list) {
+				if (this.list[key] !== void 0) {
+					count++;
+				}
+			}
+			return count;
+		},
 		hb: function(data) {
 			data.timestamp = Date.now();
 			console.log('%c titleHeartbeat: '+ data.account, 'background: #0f0; color: #f00');
-			if (typeof title.presence.list[data.account] === 'undefined') {
-				title.presence.add(data);
+			if (typeof this.list[data.account] === 'undefined') {
+				this.add(data);
 			}
 			else {
-				title.presence.update(data);
+				this.update(data);
 			}
-			title.presence.audit(data.timestamp);
+			this.auditTry(data.timestamp);
 		},
 		add: function(data) {
 			//data
-			title.presence.update(data);
+			this.update(data);
 			//dom
 			var e = document.getElementById('titlePlayer' + data.account);
 			if (e !== null){
@@ -368,30 +383,35 @@ var title = {
 				'<span class="chat-rating">['+ data.rating +']</span> '+
 				'<span class="titlePlayerAccount">'+ data.account +'</span>';
 			DOM.titleChatBody.appendChild(e);
+			this.setHeader();
 
 		},
 		update: function(data) {
-			title.presence.list[data.account] = data;
+			this.list[data.account] = data;
 		},
 		remove: function(account) {
 			console.log("remove: ", account)
-			title.presence.list[account] = void 0;
+			this.list[account] = void 0;
 			var z = document.getElementById('titlePlayer' + account);
 			if (z !== null){
 				z.parentNode.removeChild(z);
 			}
+			this.setHeader();
 		},
 		reset: function() {
-			title.presence.list = {};
+			this.list = {};
+			this.setHeader();
 		},
 		audit: function(now) {
-			for (var key in title.presence.list) {
-				console.info('audit ', title.presence.list);
-				title.presence.list[key] !== void 0 &&
-					now - title.presence.list[key].timestamp > 5000 &&
-					title.presence.remove(key);
+			for (var key in this.list) {
+				this.list[key] !== void 0 &&
+					now - this.list[key].timestamp > 5000 &&
+					this.remove(key);
 			}
-		}
+		},
+		auditTry: _.throttle(function(data) {
+			this.audit(data);
+		}, 1000)
 	},
 	sendWhisper: function(msg, splitter){
 		// account
@@ -416,13 +436,17 @@ var title = {
 		timestamp: 0
 	},
 	receiveWhisper: function(data){
-		//console.info('receiveWhisper ', data);
-		if (g.view === 'title'){
-			title.chat(data);
-		} else if (g.view === 'lobby'){
-			lobby.chat(data);
-		} else {
-			game.chat(data);
+		// console.info('receiveWhisper ', data);
+		if (g.ignore.indexOf(data.account) === -1) {
+			if (g.view === 'title') {
+				title.chat(data);
+			}
+			else if (g.view === 'lobby') {
+				lobby.chat(data);
+			}
+			else {
+				game.chat(data);
+			}
 		}
 	},
 	changeChannel: function(msg, splitter){
@@ -769,19 +793,15 @@ var title = {
 	addCpu: 0,
 	createGameFocus: false,
 	createGame: function(){
-		var name = $("#gameName").val(),
+		var name = $("#gameName").val().slice(0, 32),
 			pw = $("#gamePassword").val(),
 			max = $("#gamePlayers").val() * 1,
 			speed = g.speed;
 			
-		if (!g.rankedMode && (name.length < 4 || name.length > 32)){
-			g.msg(lang[my.lang].badGameName, 1);
-			setTimeout(function(){
-				$("#gameName").focus().select();
-			}, 100);
-		} else if (!g.rankedMode && (max < 2 || max > 8 || max % 1 !== 0)){
+		if (!g.rankedMode && (max < 2 || max > 8 || max % 1 !== 0)){
 			g.msg(lang[my.lang].notEnoughPlayers, 1);
-		} else {
+		}
+		else {
 			title.createGameService(
 				name,
 				pw,
@@ -855,7 +875,7 @@ var title = {
 				speed: speed
 			}
 		}).done(function(data) {
-			title.presence.remove(my.account);
+			socket.publish.title.remove(my.account);
 			my.player = data.player;
 			my.playerColor = data.playerColor;
 			my.team = data.team;
@@ -897,7 +917,7 @@ var title = {
 		});
 	},
 	joinGameCallback: function(data){
-		title.presence.remove(my.account);
+		socket.publish.title.remove(my.account);
 		// console.info(data);
 		my.player = data.player;
 		my.playerColor = data.player;
