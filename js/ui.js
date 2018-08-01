@@ -498,6 +498,7 @@ function gameVictory(){
 			url: app.url + "php/gameVictory.php",
 			data: {
 				juggernautValid: action.isJuggernautValid(),
+				playerCount: action.getPlayerCount()
 			}
 		}).done(function(data){
 			var msg = '';

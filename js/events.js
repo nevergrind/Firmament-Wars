@@ -45,11 +45,7 @@ var events = {
 			return false;
 		});
 		$("#login").on(ui.click, function(){
-			socket.removePlayer(my.account);
-			$.ajax({
-				type: 'GET',
-				url: app.url + 'php/deleteFromFwtitle.php'
-			});
+			title.presence.remove(my.account);
 		});
 
 		$("#titleMenu").on(ui.click, '.wars', function(){

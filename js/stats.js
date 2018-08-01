@@ -213,7 +213,7 @@ var stats = {
 	setLeaderValues: function(){
 		for (var i=1; i<=8; i++){
 			var d = stats.data[i];
-			if (d !== undefined){
+			if (typeof d !== 'undefined' && d.account){
 				for (var key in d){
 					if (i === 1){
 						stats.maxValue[key] = d[key];
@@ -316,7 +316,7 @@ var stats = {
 		var animate = [];
 		for (var i=1; i<=8; i++){
 			var d = stats.data[i];
-			if (stats.data[i] !== undefined){
+			if (typeof stats.data[i] !== 'undefined' && stats.data[i].account){
 				// player data exists
 				var a = [{}, {
 						id: 'p'+ i +'-units',
@@ -372,7 +372,7 @@ var stats = {
 		// player rows
 		for (var i=1; i<=8; i++){
 			var d = stats.data[i];
-			if (d !== undefined){
+			if (typeof d !== 'undefined' && d.account){
 				// player data exists
 				var a = [{}, {
 						id: 'p'+ i +'-earned',
@@ -422,7 +422,7 @@ var stats = {
 		// player rows
 		for (var i=1; i<=8; i++){
 			var d = stats.data[i];
-			if (d !== undefined){
+			if (typeof d !== 'undefined' && d.account){
 				// player data exists
 				var a = [{}, {
 						id: 'p'+ i +'-bunkers',
@@ -468,7 +468,7 @@ var stats = {
 		// player rows
 		for (var i=1; i<=8; i++){
 			var d = stats.data[i];
-			if (d !== undefined){
+			if (typeof d !== 'undefined' && d.account){
 				// player data exists
 				var a = [{}, {
 						id: 'p'+ i +'-cannons',
@@ -515,7 +515,7 @@ var stats = {
 		// player rows
 		for (var i=1; i<=8; i++){
 			var d = stats.data[i];
-			if (d !== undefined){
+			if (typeof d !== 'undefined' && d.account){
 				// player data exists
 				var a = [{}, {
 						id: 'p'+ i +'-moves',
@@ -606,7 +606,7 @@ var stats = {
 	},
 	initStats: function() {
 		stats.data = [];
-		for (var i=0; i<8; i++) {
+		for (var i=0; i<=8; i++) {
 			stats.data[i] = {
 				account: '',
 				nation: '',
@@ -628,6 +628,10 @@ var stats = {
 				production: 0,
 			}
 		}
+	},
+	delete: function() {
+		console.info("sessionStorage.removeItem('stats');");
+		sessionStorage.removeItem('stats');
 	},
 	update: function(data) {
 		console.info("stats.update", data);
@@ -675,8 +679,10 @@ var stats = {
 	get: function(){
 		$.ajax({
 			url: app.url + 'php/stats.php',
+			data: {
+				killRatio: ~~action.getKillRatio()
+			}
 		}).done(function(data){
-			stats.data = data;
 			stats.init(data);
 			stats.notifyRibbons(data.ribbons);
 			stats.notifySteam(data.ribbons);

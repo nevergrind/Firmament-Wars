@@ -23,6 +23,24 @@ var action = {
 		}
 		return juggernautValid;
 	},
+	getPlayerCount: function() {
+		var count = 0;
+		game.player.forEach(function(p) {
+			if (p.account) {
+				count++;
+			}
+		});
+		return count;
+	},
+	getKillRatio: function(player) {
+		player = player || my.player;
+		if (stats.data[player].lost === 0) {
+			return 2;
+		}
+		else {
+			return stats.data[player].killed / stats.data[player].lost;
+		}
+	},
 	triggerAction: function(that, event) {
 		var id = that.id.slice(4)*1;
 		console.log('%c tile: '+ id +
@@ -370,6 +388,7 @@ var action = {
 		$.ajax({
 			url: app.url + 'php/upgradeTileDefense.php',
 			data: {
+				targetRow: game.tiles[my.tgt].row,
 				target: my.tgt
 			}
 		}).done(function(data) {
@@ -433,7 +452,9 @@ var action = {
 			url: app.url + 'php/fireCannons.php',
 			data: {
 				attacker: attacker,
-				defender: defender
+				defender: defender,
+				attackRow: game.tiles[attacker].row,
+				defendRow: game.tiles[defender].row,
 			}
 		}).done(function(data) {
 			action.timeoutWeaponButton('fireCannons', dur);
@@ -474,7 +495,9 @@ var action = {
 			url: app.url + 'php/launchMissile.php',
 			data: {
 				attacker: attacker,
-				defender: defender
+				defender: defender,
+				attackRow: game.tiles[attacker].row,
+				defendRow: game.tiles[defender].row,
 			}
 		}).done(function(data) {
 			console.info('launchMissile', data);
@@ -488,8 +511,8 @@ var action = {
 				$.ajax({
 					url: app.url + 'php/launchMissileHit.php',
 					data: {
-						attacker: attacker,
-						defender: defender
+						defender: defender,
+						defendRow: game.tiles[defender].row,
 					}
 				}).fail(function(e){
 					console.info('error: ', e);
@@ -534,7 +557,9 @@ var action = {
 			url: app.url + 'php/launchNuke.php',
 			data: {
 				attacker: attacker,
-				defender: defender
+				defender: defender,
+				attackRow: game.tiles[attacker].row,
+				defendRow: game.tiles[defender].row,
 			}
 		}).done(function(data) {
 			action.timeoutWeaponButton('launchNuke', dur);
@@ -543,7 +568,8 @@ var action = {
 				$.ajax({
 					url: app.url + 'php/launchNukeHit.php',
 					data: {
-						defender: defender
+						defender: defender,
+						defendRow: game.tiles[defender].row,
 					}
 				});
 			}, 6000);

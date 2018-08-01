@@ -1,32 +1,146 @@
 // ws.js 
 // client-side web sockets
 var socket = {
-	initialConnection: true,
-	removePlayer: function(account){
-		// instant update of clients
-		var o = {
-			type: 'remove',
-			account: my.account
-		}
-		// removes id
-		socket.zmq.publish('title:' + my.channel, o);
-		title.players[account] = null;
-	},
-	addPlayer: function(account, flag){
-		// instant update of clients
-		console.info("socket addPlayer 2", account, flag);
-		if (account) {
-			socket.zmq.publish('title:' + my.channel, {
-				type: 'add',
-				account: my.account,
-				flag: my.flag,
-				rating: my.rating
-			});
-			title.players[account] = {
-				flag: flag
+	receive: {
+		title: function(data) {
+			if (data.type === 'remove'){
+				title.presence.remove(data.account);
+			}
+			else if (data.type === 'add'){
+				title.presence.add(data);
+			}
+			else if (data.type === 'hb'){
+				title.presence.hb(data);
+			}
+			else {
+				if (data.message !== undefined){
+					title.chat(data);
+				}
+			}
+		},
+		lobby: function(data) {
+			if (data.type === 'hostLeft'){
+				lobby.hostLeft();
+			}
+			else if (data.type === 'lobby-set-cpu-difficulty'){
+				lobby.updateDifficulty(data);
+			}
+			else if (data.type === 'updateGovernment'){
+				lobby.updateGovernment(data);
+			}
+			else if (data.type === 'updatePlayerColor'){
+				lobby.updatePlayerColor(data);
+			}
+			else if (data.type === 'updateTeamNumber'){
+				lobby.updateTeamNumber(data);
+			}
+			else if (data.type === 'countdown'){
+				lobby.countdown(data);
+			}
+			else if (data.type === 'updateLobbyPlayer'){
+				lobby.updatePlayer(data);
+			}
+			else if (data.type === 'updateLobbyCPU') {
+				lobby.updateCPU(data);
+			}
+			else if (data.type === 'loadGameState'){
+				my.player !== 1 && loadGameState();
+			}
+			else {
+				if (data.message !== undefined){
+					lobby.chat(data);
+				}
+			}
+		},
+		game: function(data) {
+			if (data.type === 'statUpdate') {
+				stats.update(data);
+			}
+			else if (data.type === 'cannons'){
+				animate.cannons(data.attackerTile, data.tile, true);
+				game.updateTile(data);
+			} else if (data.type === 'missile'){
+				animate.missile(data.attacker, data.defender, true);
+			} else if (data.type === 'nuke'){
+				setTimeout(function(){
+					animate.nuke(data.tile, data.attacker);
+				}, 5000);
+			} else if (data.type === 'nukeHit'){
+				game.updateTile(data);
+				game.updateDefense(data);
+			} else if (data.type === 'gunfire'){
+				// defender tile update
+				var volume = data.player === my.player || data.playerB === my.player ?
+					.7 : .2;
+				animate.gunfire(data.attackerTile, data.tile, volume);
+				game.updateTile(data);
+				if (data.rewardUnits){
+					animate.upgrade(data.tile, 'troops', data.rewardUnits);
+				}
+			}
+			else if (data.type === 'updateTile'){
+				// attacker tile update
+				game.updateTile(data);
+				game.setSumValues();
+				if (data.rewardUnits){
+					animate.upgrade(data.tile, 'troops', data.rewardUnits);
+				}
+				if (data.sfx === 'sniper0'){
+					animate.upgrade(data.tile, 'culture');
+				}
+			}
+			else if (data.type === 'democracy-units') {
+				my.player === data.player && action.democracyUnits();
+			}
+			else if (data.type === 'food'){
+				if (data.account.indexOf(my.account) > -1){
+					audio.play('hup2');
+				}
+			}
+			else if (data.type === 'upgrade'){
+				// fetch updated tile defense data
+				game.updateDefense(data);
+				animate.upgrade(data.tile, 'shield');
+			}
+			else if (data.type === 'eliminated'){
+				game.eliminatePlayer(data);
+			}
+			else if (data.type === 'endTurnCheck'){
+				game.triggerNextTurn(data);
+			}
+			else if (data.type === 'disconnect'){
+				game.eliminatePlayer(data);
+			}
+
+			if (data.message){
+				if (data.type === 'gunfire'){
+					// ? when I'm attacked?
+					if (data.defender === my.account){
+						// display msg?
+						game.chat(data);
+					}
+					// lost attack
+				} else {
+					game.chat(data);
+				}
+			}
+			if (data.sfx){
+				audio.play(data.sfx);
 			}
 		}
 	},
+	publish: {
+		title: {
+			remove: function(account) {
+				socket.zmq.publish('title:' + my.channel, {
+					type: 'remove',
+					account: account
+				});
+				title.players[account] = void 0;
+			}
+		}
+	},
+	initialConnection: true,
 	unsubscribe: function(channel){
 		try {
 			socket.zmq.unsubscribe(channel);
@@ -34,18 +148,18 @@ var socket = {
 			// console.info(err);
 		}
 	},
-	firstInit: 0,
-	setChannel: function(channel){
+	setChannel: function(channel, bypass){
 		// change channel on title screen
 		if (g.view === 'title'){
 			// remove from channel
 			channel = channel.trim();
+			console.info("CHANNEL: ", channel);
 			// first character must be alphanumeric
 			if (!channel) {
 				g.chat("That channel name is not valid. Channel names may only contain alphanumeric values.");
 			}
-			else if (!socket.firstInit || channel !== my.channel){
-				socket.firstInit = 1;
+			else if (bypass || channel !== my.channel){
+				socket.publish.title.remove(my.account);
 				$.ajax({
 					type: "POST",
 					url: app.url + "php/titleChangeChannel.php",
@@ -54,34 +168,27 @@ var socket = {
 					}
 				}).done(function(data){
 					// removes id
-					socket.removePlayer(my.account);
+					title.presence.remove(my.account);
 					// unsubs
 					socket.unsubscribe('title:' + my.channel);
-
 					// set new channel data
 					my.channel = data.channel;
-					for (var key in title.players){
-						title.players[key] = null;
-					}
+					title.presence.reset();
 					data.skip = true;
 					data.message = lang[my.lang].joinedChannel + data.channel;
 					data.type = "chat-warning";
 					// send message to my chat log
 					title.chat(data);
 					socket.zmq.subscribe('title:' + my.channel, function(topic, data) {
-						console.info("Data IN ", topic, data);
 						if (g.ignore.indexOf(data.account) === -1){
-							title.chatReceive(data);
+							socket.receive[g.view](data);
 						}
 					});
-					// add id
-					socket.addPlayer(my.account, my.flag);
 					// update display of channel
 					if (g.view === 'title'){
 						document.getElementById('titleChatHeaderChannel').textContent = data.channel;
 						document.getElementById('titleChatBody').innerHTML = '';
 					}
-					title.updatePlayers(0);
 					// update browser hash
 					location.hash = my.channel;
 				}).fail(function() {
@@ -136,22 +243,30 @@ var socket = {
 				}
 			}
 		});
+	},
+	enableHeartbeat: function() {
 		socket.zmq.subscribe('fw:hb:' + my.account, function(topic, data) {
-			console.log('%c fw:hb:' + my.account, 'background: #0f0; color: #f00');
 			if (data.msg){
 				g.chat(data.msg, data.type);
 			}
 		});
-		setInterval(function() {
-			console.clear();
-		}, 300000); // 5 min
-		setTimeout(function() {
-			socket.keepAliveInterval = setInterval(socket.keepAliveWs, 20000);
-		})
 	},
-	keepAliveInterval: 0,
-	keepAliveWs: function() {
-		socket.zmq.publish('fw:hb:' + my.account, {});
+	sendHeartbeatInterval: 0,
+	socketSendTime: 0,
+	sendHeartbeat: function() {
+		socket.socketSendTime = Date.now();
+		if (socket.zmq !== null) {
+			if (g.view === 'title') {
+
+				socket.zmq.publish('title:' + my.channel, {
+					type: 'hb',
+					account: my.account,
+					flag: my.flag,
+					rating: my.rating
+				});
+
+			}
+		}
 	},
 	joinGame: function(){
 		(function repeat(){
@@ -162,7 +277,7 @@ var socket = {
 				// console.info("Subscribing to game:" + game.id);
 				socket.zmq.subscribe('game:' + game.id, function(topic, data) {
 					if (g.ignore.indexOf(data.account) === -1){
-						title.chatReceive(data);
+						socket.receive[g.view](data);
 					}
 				});
 			} else {
@@ -173,13 +288,9 @@ var socket = {
 	enabled: false,
 	init: function(){
 		// is player logged in?
-		socket.zmq = new ab.Session('wss://' + app.socketUrl + '/wss2/', function () {
-			// on open
-			socket.connectionSuccess();
-		}, function(){
-			// on close/fail
-			socket.reconnect();
-		}, {
+		socket.zmq = new ab.Session('wss://' + app.socketUrl + '/wss2/',
+			socket.connectionSuccess,
+			socket.reconnect, {
 			// options
 			'skipSubprotocolCheck': true
 		});
@@ -189,40 +300,49 @@ var socket = {
 		console.info("Socket connection established with server");
 		// chat updates
 		if (g.view === 'title'){
-			if (socket.initialConnection){
-				g.unlock();
-				socket.zmq.subscribe('title:refreshGames', function(topic, data) {
-					console.info("title:refreshGames");
-					title.updateGame(data);
-				});
-				socket.zmq.subscribe('admin:broadcast', function(topic, data) {
-					if (data.msg){
-						g.chat(data.msg, data.type);
-					}
-					else if (data.category === 'close-app') {
-						title.exitGame();
-					}
-				});
-				(function repeat(){
-					if (my.account){
-						socket.enableWhisper();
-					} else {
-						setTimeout(repeat, 200);
-					}
-				})();
-			}
-			socket.initialConnection = false;
-			document.getElementById('titleChatHeaderChannel').innerHTML = my.channel;
-			socket.setChannel(my.channel); // should be usa-1
+			socket.zmq.subscribe('title:refreshGames', function(topic, data) {
+				console.info("title:refreshGames");
+				title.updateGame(data);
+			});
+			socket.zmq.subscribe('admin:broadcast', function(topic, data) {
+				if (data.msg){
+					g.chat(data.msg, data.type);
+				}
+				else if (data.category === 'close-app') {
+					title.exitGame();
+				}
+			});
+			(function repeat(){
+				if (my.account){
+					// do this stuff once we detect account data
+					socket.enableWhisper();
+					socket.enableHeartbeat();
+					setInterval(console.clear, 300000); // 5 min
+					// so it happens after the object initializes
+					setTimeout(function() {
+						clearInterval(socket.sendHeartbeatInterval);
+						socket.sendHeartbeatInterval = setInterval(socket.sendHeartbeat, 1000);
+					})
+				}
+				else {
+					setTimeout(repeat, 100);
+				}
+			})();
+			socket.setChannel(my.channel, true); // should be usa-1
+		}
+		else if (g.view === 'lobby') {
+
 		}
 		else if (g.view === 'game'){
 			game.getGameState();
 		}
+		g.unlock();
 	},
 	connectionTries: 0,
 	connectionRetryDuration: 100,
 	reconnect: function(){
 		console.warn('WebSocket connection failed. Retrying...');
+		socket.zmq = void 0;
 		socket.enabled = false;
 		setTimeout(socket.init, socket.connectionRetryDuration);
 	}

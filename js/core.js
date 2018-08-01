@@ -398,9 +398,9 @@ var g = {
 			$('#logout').text('Logout ' + data.account);
 			app.isApp && $("#login-modal").remove();
 			// people playing firmament wars:
-			title.chat({
+			/*title.chat({
 				message: 'There are '+ data.currentPlayers +' people playing Firmament Wars.'
-			});
+			});*/
 			// set flag
 			document.getElementById('updateNationFlag').src = 'images/flags/'+ data.flag;
 			document.getElementById('selectedFlag').textContent = data.flagShort;
@@ -568,38 +568,45 @@ g.init = (function(){
 	}
 
 	// TODO separate this confusing logic a bit
-	console.info(location.hash);
-	if (location.hostname === 'localhost' && location.hash !== '#stop'){
-		$.ajax({
-			type: "GET",
-			url: app.url + 'php/rejoinGame.php' // check if already in a game
-		}).done(function(data) {
-			console.info('rejoin ', data.gameId, data.team);
-			if (data.gameId > 0){
-				my.player = data.player;
-				my.playerColor = data.player;
-				g.teamMode = data.teamMode;
-				g.rankedMode = data.rankedMode;
-				my.team = data.team;
-				game.id = data.gameId;
-				g.map = data.mapData;
-				// g.speed = data.speed;
-				// join lobby in progress
-				setTimeout(function(){
-					lobby.init(data);
-					lobby.join(0); // autojoin
-					initResources(data); // setResources(data);
-					my.government = data.government;
-					lobby.updateGovernmentWindow(my.government);
-					socket.joinGame();
-				}, 111);
-			}
-		}).fail(function(data){
-			g.msg(data.responseText);
-		});
+	if (location.hostname === 'localhost'){
+		if (location.hash === '#stop') {
+			stats.delete();
+		}
+		else {
+			$.ajax({
+				type: "GET",
+				url: app.url + 'php/rejoinGame.php' // check if already in a game
+			}).done(function(data) {
+				console.info('rejoin ', data.gameId, data.team);
+				if (data.gameId > 0){
+					my.player = data.player;
+					my.playerColor = data.player;
+					g.teamMode = data.teamMode;
+					g.rankedMode = data.rankedMode;
+					my.team = data.team;
+					game.id = data.gameId;
+					g.map = data.mapData;
+					// g.speed = data.speed;
+					// join lobby in progress
+					setTimeout(function(){
+						lobby.init(data);
+						lobby.join(0); // autojoin
+						initResources(data); // setResources(data);
+						my.government = data.government;
+						lobby.updateGovernmentWindow(my.government);
+						socket.joinGame();
+					}, 111);
+				}
+				else {
+					stats.delete();
+				}
+			}).fail(function(data){
+				g.msg(data.responseText);
+			});
+		}
 	}
 	else {
-		sessionStorage.removeItem('stats');
+		stats.delete();
 	}
 })();
 var game = {
@@ -1168,11 +1175,11 @@ var video = {
 function playerLogout(){
 	
     g.lock();
-	socket.removePlayer(my.account);
-    $.ajax({
+	title.presence.remove(my.account);
+    /*$.ajax({
 		type: 'GET',
 		url: app.url + 'php/deleteFromFwtitle.php'
-	});
+	});*/
 	
 	try {
 		FB.getLoginStatus(function(ret) {

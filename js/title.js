@@ -89,141 +89,6 @@ var title = {
 			}, 180000);
 		});
 	})(),
-	updateTimer: 0,
-	updatePlayers: function(once){
-		clearTimeout(title.updateTimer);
-		title.titleUpdate = $("#titleChatPlayers").length; // player is logged in
-		if (title.titleUpdate) {
-			// see self in lobby upon login
-			title.addPlayer(my.account, my.flag, my.rating);
-			// title chat loop
-			(function repeat(){
-				if (isLoggedIn && g.view === 'title'){
-					$.ajax({
-						type: "POST",
-						url: app.url + "php/titleUpdate.php",
-						data: {
-							channel: my.channel
-						}
-					}).done(function(data){
-						console.info('titleUpdate.php', JSON.parse(JSON.stringify(title.players)));
-						console.info('data', data);
-						title.updatePlayerCallback(data);
-					}).always(function(){
-						if (!once){
-							title.updateTimer = setTimeout(repeat, 5000);
-						}
-					});
-				}
-			})();
-		} else {
-			// not logged in
-			$("#titleChat, #titleMenu").remove();
-		}
-	},
-	updatePlayerCallback: function(data) {
-		// set title players
-		if (g.view === 'title'){
-			if (data.playerData !== undefined){
-				var p = data.playerData,
-					foundPlayers = [];
-				for (var i=0, len=p.length; i<len; i++){
-					// add new players
-					var account = p[i].account,
-						flag = p[i].flag,
-						rating = p[i].rating;
-					if (!title.players[account]){
-						console.info("ADDING PLAYER: ", p[i]);
-						title.addPlayer(account, flag, rating);
-					}
-					else if (title.players[account].flag !== flag){
-						// replace player flag
-						var flagElement = document.getElementById("titlePlayerFlag_" + account);
-						if (flagElement !== null){
-							flagElement.src = 'images/flags/' + flag;
-						}
-					}
-					foundPlayers.push(account);
-				}
-				// remove missing players
-				for (var key in title.players){
-					if (foundPlayers.indexOf(key) === -1){
-						var x = {
-							account: key
-						}
-						// console.info("REMOVING PLAYER: " + x.account);
-						title.removePlayer(x);
-					}
-				}
-			}
-			document.getElementById('titleChatHeaderCount').textContent = len !== undefined ? '('+len+')' : '';
-			// game data sanity check
-			var serverGames = [];
-			if (data.gameData !== undefined){
-				var p = data.gameData;
-				for (var i=0, len=p.length; i<len; i++){
-					serverGames[p[i].id] = {
-						players: p[i].players * 1,
-						max: p[i].max * 1
-					}
-				}
-			}
-			// remove games if they're not found in server games
-			title.games.forEach(function(e, ind){
-				// console.info(serverGames[ind]);
-				if (serverGames[ind] === undefined){
-					// game timed out, not found
-					var o = {
-						id: ind
-					}
-					console.info("REMOVING: ", o);
-					title.removeGame(o);
-				}/*
-				else {
-					// found game
-					if (serverGames[ind].players !== title.games[ind]){
-						// player count does not match... fixing
-						// console.info("PLAYER COUNT WRONG!");
-						var o = {
-							id: ind,
-							players: serverGames[ind].players,
-							max: serverGames[ind].max
-						}
-						title.setToGame(o);
-					}
-				}*/
-			});
-		}
-	},
-	// adds player to chat room
-	addPlayer: function(account, flag, rating){
-		console.info("title.addPlayer 2", account, flag, rating);
-		title.players[account] = {
-			flag: flag
-		}
-		var e = document.getElementById('titlePlayer' + account);
-		if (e !== null){
-			e.parentNode.removeChild(e);
-		}
-		var e = document.createElement('div');
-		e.className = "titlePlayer";
-		e.id = "titlePlayer" + account;
-		e.innerHTML =
-			'<img id="titlePlayerFlag_'+ account +'" class="flag" src="images/flags/'+ flag +'">' +
-			'<span class="chat-rating">['+ rating +']</span> '+
-			'<span class="titlePlayerAccount">'+ account +'</span>';
-		if (account && flag && title.titleUpdate){
-			DOM.titleChatBody.appendChild(e);
-		}
-	},
-	removePlayer: function(data){
-		// fix this
-		title.players[data.account] = null;
-		var z = document.getElementById('titlePlayer' + data.account);
-		if (z !== null){
-			z.parentNode.removeChild(z);
-		}
-	},
 	updateGame: function(data){
 		console.info("title.updateGame");
 		if (data.type === 'addToGame'){
@@ -235,20 +100,6 @@ var title = {
 		} else if (data.type === 'removeGame'){
 			title.removeGame(data);
 		}
-	},
-	updatePlayerText: function(id){
-		var e = document.getElementById('game_players_' + id);
-		if (e !== null){
-			e.textContent = title.games[id];
-		}
-	},
-	setToGame: function(data){
-		// refreshGames corrects player values
-		// console.info("setToGame", data);
-		var id = data.id;
-		console.info(data);
-		title.games[id] = data.players;
-		// title.updatePlayerText(id);
 	},
 	addToGame: function(data){
 		// player joined or left
@@ -263,7 +114,6 @@ var title = {
 		} else {
 			title.games[id] = 1;
 		}
-		//title.updatePlayerText(id);
 	},
 	removeFromGame: function(data){
 		// player joined or left
@@ -278,7 +128,6 @@ var title = {
 		} else {
 			title.games[id] = 1;
 		}
-		//title.updatePlayerText(id);
 	},
 	addGame: function(data){
 		// created game
@@ -490,121 +339,57 @@ var title = {
 			g.chat(account + ' is not on your ignore list.', 'chat-muted');
 		}
 	},
-	chatReceive: function(data){
-		if (g.view === 'title'){
-			// title
-			if (data.type === 'remove'){
-				title.removePlayer(data);
-			} else if (data.type === 'add'){
-				title.addPlayer(data.account, data.flag, data.rating);
-			} else {
-				if (data.message !== undefined){
-					title.chat(data);
-				}
+	presence: {
+		list: {},
+		hb: function(data) {
+			data.timestamp = Date.now();
+			console.log('%c titleHeartbeat: '+ data.account, 'background: #0f0; color: #f00');
+			if (typeof title.presence.list[data.account] === 'undefined') {
+				title.presence.add(data);
 			}
-		} else if (g.view === 'lobby'){
-			// lobby
-			//console.info('lobby receive: ', data);
-			if (data.type === 'hostLeft'){
-				lobby.hostLeft();
-			} else if (data.type === 'lobby-set-cpu-difficulty'){
-				lobby.updateDifficulty(data);
-			} else if (data.type === 'updateGovernment'){
-				lobby.updateGovernment(data);
-			} else if (data.type === 'updatePlayerColor'){
-				lobby.updatePlayerColor(data);
-			} else if (data.type === 'updateTeamNumber'){
-				lobby.updateTeamNumber(data);
-			} else if (data.type === 'countdown'){
-				lobby.countdown(data);
-			} else if (data.type === 'updateLobbyPlayer'){
-				lobby.updatePlayer(data);
-			} else if (data.type === 'updateLobbyCPU') {
-				lobby.updateCPU(data);
-			} else if (data.type === 'loadGameState'){
-				my.player !== 1 && loadGameState();
-			} else {
-				if (data.message !== undefined){
-					lobby.chat(data);
-				}
+			else {
+				title.presence.update(data);
 			}
-		}
-		else {
-			// game
-			// console.info('game receive: ', data);
-			if (data.type === 'statUpdate') {
-				stats.update(data);
+			title.presence.audit(data.timestamp);
+		},
+		add: function(data) {
+			//data
+			title.presence.update(data);
+			//dom
+			var e = document.getElementById('titlePlayer' + data.account);
+			if (e !== null){
+				e.parentNode.removeChild(e);
 			}
-			else if (data.type === 'cannons'){
-				animate.cannons(data.attackerTile, data.tile, true);
-				game.updateTile(data);
-			} else if (data.type === 'missile'){
-				animate.missile(data.attacker, data.defender, true);
-			} else if (data.type === 'nuke'){
-				setTimeout(function(){
-					animate.nuke(data.tile, data.attacker);
-				}, 5000);
-			} else if (data.type === 'nukeHit'){
-				game.updateTile(data);
-				game.updateDefense(data);
-			} else if (data.type === 'gunfire'){
-				// defender tile update
-				var volume = data.player === my.player || data.playerB === my.player ?
-					.7 : .2;
-				animate.gunfire(data.attackerTile, data.tile, volume);
-				game.updateTile(data);
-				if (data.rewardUnits){
-					animate.upgrade(data.tile, 'troops', data.rewardUnits);
-				}
+			e = document.createElement('div');
+			e.className = "titlePlayer";
+			e.id = "titlePlayer" + data.account;
+			e.innerHTML =
+				'<img id="titlePlayerFlag_'+ data.account +'" class="flag" src="images/flags/'+ data.flag +'">' +
+				'<span class="chat-rating">['+ data.rating +']</span> '+
+				'<span class="titlePlayerAccount">'+ data.account +'</span>';
+			DOM.titleChatBody.appendChild(e);
+
+		},
+		update: function(data) {
+			title.presence.list[data.account] = data;
+		},
+		remove: function(account) {
+			console.log("remove: ", account)
+			title.presence.list[account] = void 0;
+			var z = document.getElementById('titlePlayer' + account);
+			if (z !== null){
+				z.parentNode.removeChild(z);
 			}
-			else if (data.type === 'updateTile'){
-				// attacker tile update 
-				game.updateTile(data);
-				game.setSumValues();
-				if (data.rewardUnits){
-					animate.upgrade(data.tile, 'troops', data.rewardUnits);
-				}
-				if (data.sfx === 'sniper0'){
-					animate.upgrade(data.tile, 'culture');
-				}
-			}
-			else if (data.type === 'democracy-units') {
-				my.player === data.player && action.democracyUnits();
-			}
-			else if (data.type === 'food'){
-				if (data.account.indexOf(my.account) > -1){
-					audio.play('hup2');
-				}
-			}
-			else if (data.type === 'upgrade'){
-				// fetch updated tile defense data
-				game.updateDefense(data);
-				animate.upgrade(data.tile, 'shield');
-			}
-			else if (data.type === 'eliminated'){
-				game.eliminatePlayer(data);
-			}
-			else if (data.type === 'endTurnCheck'){
-				game.triggerNextTurn(data);
-			}
-			else if (data.type === 'disconnect'){
-				game.eliminatePlayer(data);
-			}
-			
-			if (data.message){
-				if (data.type === 'gunfire'){
-					// ? when I'm attacked?
-					if (data.defender === my.account){
-						// display msg?
-						game.chat(data);
-					}
-					// lost attack
-				} else {
-					game.chat(data);
-				}
-			}
-			if (data.sfx){
-				audio.play(data.sfx);
+		},
+		reset: function() {
+			title.presence.list = {};
+		},
+		audit: function(now) {
+			for (var key in title.presence.list) {
+				console.info('audit ', title.presence.list);
+				title.presence.list[key] !== void 0 &&
+					now - title.presence.list[key].timestamp > 5000 &&
+					title.presence.remove(key);
 			}
 		}
 	},
@@ -1070,7 +855,7 @@ var title = {
 				speed: speed
 			}
 		}).done(function(data) {
-			socket.removePlayer(my.account);
+			title.presence.remove(my.account);
 			my.player = data.player;
 			my.playerColor = data.playerColor;
 			my.team = data.team;
@@ -1112,7 +897,7 @@ var title = {
 		});
 	},
 	joinGameCallback: function(data){
-		socket.removePlayer(my.account);
+		title.presence.remove(my.account);
 		// console.info(data);
 		my.player = data.player;
 		my.playerColor = data.player;

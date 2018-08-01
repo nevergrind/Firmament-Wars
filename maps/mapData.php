@@ -9,7 +9,7 @@
 		'startTiles' => [135, 4, 65, 81, 100, 13, 73, 21],
 		'sizeX' => 5299,
 		'sizeY' => 2627,
-		'tileNames' => array(
+		'tileNames' => [
 			'Kabul', 'Luanda', 'Libreville', 'Muscat', 'Rio Gallegos', //0
 			'Puerto Montt', 'Santiago', 'Athens', 'Istanbul', 'Gaziantep',
 			'Tbilisi', 'Volgograd', 'Adelaide', 'Sydney', 'Darwin', //10
@@ -39,7 +39,7 @@
 			'Austin', 'Atlanta', 'New York City', 'Denver', 'Chicago', //130
 			'Juneau', 'Caracas', "Sana'a", 'Lusaka', 'Mogadishu',
 			'Paris', 'Havana', 'Kuala Lumpur'
-		)
+		]
 	);
 	$mapData['China'] = (object) [
 		'name' => 'China',

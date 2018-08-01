@@ -204,6 +204,8 @@ var ai = {
 				loop: i,
 				attacker: tiles[0],
 				defender: tiles[1],
+				attackRow: game.tiles[tiles[0]].row,
+				defendRow: game.tiles[tiles[1]].row,
 				player: d.player,
 				defGovernment: game.player[game.tiles[tiles[1]].player].government
 			};
@@ -229,12 +231,13 @@ var ai = {
 		}
 		else {
 			console.warn("Failed to attack! Deploying...");
-
+			var tile = ai.getDeployTarget(d.player);
 			$.ajax({
 				url: app.url + 'php/deploy-ai.php',
 				data: {
 					newUnits: 5,
-					deployTile: ai.getDeployTarget(d.player)
+					attackRow: game.tiles[tile].row,
+					deployTile: tile
 				}
 			});
 		}
@@ -369,7 +372,9 @@ var ai = {
 				url: app.url + 'php/ai-fireCannons.php',
 				data: {
 					attacker: tiles[0],
-					defender: tiles[1]
+					attackRow: game.tiles[tiles[0]].row,
+					defender: tiles[1],
+					defendRow: game.tiles[tiles[1]].row,
 				}
 			});
 		}
@@ -381,16 +386,19 @@ var ai = {
 				url: app.url + 'php/ai-launchMissile.php',
 				data: {
 					attacker: tiles[0],
-					defender: tiles[1]
+					defender: tiles[1],
+					attackRow: game.tiles[tiles[0]].row,
+					defendRow: game.tiles[tiles[1]].row,
 				}
 			}).done(function(){
 				setTimeout(function(){
 					$.ajax({
 						url: app.url + 'php/ai-launchMissileHit.php',
 						data: {
+							attackPlayer: d.player,
 							account: d.account,
-							attacker: tiles[0],
-							defender: tiles[1]
+							defender: tiles[1],
+							defendRow: game.tiles[tiles[1]].row,
 						}
 					});
 				}, 1000);
@@ -404,15 +412,19 @@ var ai = {
 				url: app.url + 'php/ai-launchNuke.php',
 				data: {
 					attacker: tiles[0],
-					defender: tiles[1]
+					defender: tiles[1],
+					attackRow: game.tiles[tiles[0]].row,
+					defendRow: game.tiles[tiles[1]].row,
 				}
 			}).done(function(){
 				setTimeout(function(){
 					$.ajax({
 						url: app.url + 'php/ai-launchNukeHit.php',
 						data: {
+							attackPlayer: d.player,
 							account: d.account,
-							defender: tiles[1]
+							defender: tiles[1],
+							defendRow: game.tiles[tiles[1]].row,
 						}
 					});
 				}, 6000);
@@ -426,6 +438,8 @@ var ai = {
 				url: app.url + 'php/ai-upgradeTileDefense.php',
 				data: {
 					target: tile,
+					targetRow: game.tiles[tile].row,
+					player: d.player,
 					account: d.account
 				}
 			});
