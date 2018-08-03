@@ -153,10 +153,6 @@ var events = {
 			title.joinGame();
 		});
 
-		// events for title-chat buttons
-		$("#refresh-game-button").on(ui.click, function(){
-			title.refreshGames();
-		});
 		$("#titleChat").on(ui.click, '.nw-link', function() {
 			title.openWindow($(this).attr('href'));
 		});

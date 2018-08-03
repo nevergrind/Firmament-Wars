@@ -369,6 +369,14 @@ var g = {
 		// handle hiding/showing menu based on environment
 		if (app.isApp) {
 			$("#logout").remove();
+
+			if (localStorage.getItem('disconnects')) {
+				$.ajax({
+					type: 'GET',
+					url: app.url + 'php/disconnect.php'
+				});
+				localStorage.setItem('disconnects', null);
+			}
 		}
 		else {
 			$("#logout").css('display', 'inline-block');
@@ -406,11 +414,11 @@ var g = {
 			// set flag
 			document.getElementById('updateNationFlag').src = 'images/flags/'+ data.flag;
 			document.getElementById('selectedFlag').textContent = data.flagShort;
-			title.refreshGamesCallback(data.games);
 			// initChatId
 			my.account = data.account;
 			my.flag = data.flag;
 			my.rating = data.rating;
+			my.nation = data.nation;
 			g.checkPlayerData();
 			title.friendGetCallback(data.friends);
 			g.msgClose();
@@ -443,7 +451,14 @@ var g = {
 		});
 		// handle setting accounts and config nation for new players
 		console.info('setAccountName', data.setAccountName);
-		socket.init();
+		(function repeat() {
+			if (typeof socket === 'object') {
+				socket.init();
+			}
+			else {
+				setTimeout(repeat, 100);
+			}
+		})();
 		data.isNewAccount && title.configureNation();
 	}
 };

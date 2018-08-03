@@ -24,6 +24,7 @@ var lobby = {
 		return count;
 	},
 	addCpuPlayer: function(){
+		g.lock();
 		var flag = lobby.cpuFlag === 'Random' ?
 			g.getRandomFlag() : lobby.cpuFlag + ui.getFlagExt(lobby.cpuFlag)
 		$.ajax({
@@ -31,7 +32,7 @@ var lobby = {
 			data: {
 				flag: flag
 			}
-		});
+		}).always(g.unlock);
 	},
 	updateGovernmentWindow: function(government){ // key value in
 		if (g.view === 'game') return;
@@ -300,30 +301,15 @@ var lobby = {
 			//data
 			this.update(data);
 			//dom
-			var e = document.getElementById('titlePlayer' + data.account);
-			if (e !== null){
-				e.parentNode.removeChild(e);
-			}
-			e = document.createElement('div');
-			e.className = "titlePlayer";
-			e.id = "titlePlayer" + data.account;
-			e.innerHTML =
-				'<img id="titlePlayerFlag_'+ data.account +'" class="flag" src="images/flags/'+ data.flag +'">' +
-				'<span class="chat-rating">['+ data.rating +']</span> '+
-				'<span class="titlePlayerAccount">'+ data.account +'</span>';
-			DOM.titleChatBody.appendChild(e);
-
+			lobby.updatePlayer(data);
 		},
 		update: function(data) {
 			this.list[data.account] = data;
 		},
-		remove: function(account) {
-			console.log("remove: ", account);
-			this.list[account] = void 0;
-			var z = document.getElementById('titlePlayer' + account);
-			if (z !== null){
-				z.parentNode.removeChild(z);
-			}
+		remove: function(data) {
+			console.log("remove: ", data.account);
+			this.list[data.account] = void 0;
+			lobby.removePlayer(data);
 		},
 		reset: function() {
 			this.list = {};
@@ -332,7 +318,10 @@ var lobby = {
 			for (var key in this.list) {
 				this.list[key] !== void 0 &&
 					now - this.list[key].timestamp > 5000 &&
-					this.remove(key);
+					this.remove({
+						account: key,
+						player: this.list[key].player
+					});
 			}
 		}
 	},
@@ -352,9 +341,7 @@ var lobby = {
 			x: '100%',
 			ease: Quad.easeIn
 		});
-		document.getElementById('lobbyFirmamentWarsLogo').src = 'images/title/firmament-wars-logo-1280.png';
-		document.getElementById('worldTitle').src = 'images/FlatWorld90.jpg';
-		
+
 		TweenMax.to('#titleMenu', d, {
 			x: '-100%',
 			ease: Quad.easeIn,
@@ -372,6 +359,10 @@ var lobby = {
 						// add cpu automatically in Play Now
 						title.addCpu && lobby.addCpuPlayer();
 						title.addCpu = 0;
+
+						my.player !== 1 &&
+							$(".lobbyRow:visible").length < 2 &&
+							lobby.hostLeft();
 					}
 				});
 			}
@@ -382,6 +373,7 @@ var lobby = {
 		}
 		else {
 			// load lobby
+					/*
 			(function repeat(){
 				if (g.view === "lobby"){
 					var pingCpu = 0;
@@ -394,7 +386,7 @@ var lobby = {
 					}
 					//console.info('pingCpu ', pingCpu);
 					$.ajax({
-						url: app.url +"php/updateLobby.php",
+						url: app.url +"php/pingGame.php",
 						data: {
 							pingCpu: pingCpu
 						}
@@ -413,7 +405,8 @@ var lobby = {
 									if (data.gameHost === 1){
 										hostFound = true;
 									}
-								} else {
+								}
+								else {
 									// not defined on server
 									if (lobby.data[i].account){
 										var o = {
@@ -432,13 +425,12 @@ var lobby = {
 							if (!hostFound){
 								lobby.hostLeft();
 							}
-							setTimeout(repeat, 5000);
+							//setTimeout(repeat, 5000);
 						}
-					}).fail(function(data){
-						serverError(data);
-					});
+					}).fail(serverError);
 				}
 			})();
+			*/
 		}
 	},
 	hostLeft: function(){
@@ -451,61 +443,67 @@ var lobby = {
 	},
 	// add/remove players from lobby
 	updatePlayer: function(data){
-		var i = data.player;
 		if (data.account !== undefined){
-			// add
-			//console.info("ADD PLAYER: ", data);
-			document.getElementById("lobbyRow" + i).style.display = 'flex';
-			// different player account
-			document.getElementById("lobbyAccountName" + i).innerHTML = data.cpu ?
-				'Computer' : data.account;
-			// nation name
-			if (data.cpu) {
-				data.nation = data.nation.split('.')[0];
-			}
-			document.getElementById("lobbyName" + i).innerHTML = data.nation;
-			var flag = data.flag.split('.')[0];
-			document.getElementById("lobbyFlag" + i).src =
-				'images/flags/'+ flag + ui.getFlagExt(flag);
-
-			if (my.player === i){
-				if (isLoggedIn){
-					$("#lobbyPlayerColor" + i).attr('title', lang[my.lang].selectPlayerColor)
-						.tooltip({
-							container: 'body',
-							animation: false
-						});
-					$("#lobbyTeam" + i).attr('title', lang[my.lang].selectTeam)
-						.tooltip({
-							container: 'body',
-							animation: false
-						});
-				}
-			}
-			console.info('LOBBY: updatePlayer', data);
-			lobby.updateGovernment(data);
-			lobby.data[i] = data;
-			lobby.updatePlayerColor(data);
-			document.getElementById('lobbyGovernment'+ i).innerHTML = data.cpu ?
-				('<img src="images/icons/computer.png" class="fw-icon-sm">'+ data.difficulty) : '<img src="images/icons/Despotism.png" class="fw-icon-sm">'+ lang[my.lang].governments.Despotism;
-			
-			$("#lobbyCaret"+ i)
-				.removeClass("text-warning text-disabled")
-				.addClass(my.player === i || data.cpu && my.player === 1 ? 'text-warning' : 'text-disabled');
-			
-			document.getElementById('gov-dropdown-player'+ data.player).style.display = 
-				data.cpu ? 'none' : 'block';
-			document.getElementById('gov-dropdown-cpu'+ data.player).style.display = 
-				data.cpu ? 'block' : 'none';
+			this.addPlayer(data);
 		}
 		else {
-			// remove
-			//console.info("REMOVE PLAYER: ", data);
-			document.getElementById("lobbyRow" + i).style.display = 'none';
-			document.getElementById('lobby-difficulty-cpu' + i).innerHTML = lang[my.lang].difficulties['Very Easy'];
-			lobby.data[i] = { account: '', cpu: 0 };
+			this.removePlayer(data);
 		}
 		lobby.styleStartGame();
+	},
+	addPlayer: function(data) {
+		//console.info("ADD PLAYER: ", data);
+		var i = data.player;
+		document.getElementById("lobbyRow" + i).style.display = 'flex';
+		// different player account
+		document.getElementById("lobbyAccountName" + i).innerHTML = data.cpu ?
+			'Computer' : data.account;
+		// nation name
+		if (data.cpu) {
+			data.nation = data.nation.split('.')[0];
+		}
+		document.getElementById("lobbyName" + i).innerHTML = data.nation;
+		var flag = data.flag.split('.')[0];
+		document.getElementById("lobbyFlag" + i).src =
+			'images/flags/'+ flag + ui.getFlagExt(flag);
+
+		if (my.player === i){
+			if (isLoggedIn){
+				$("#lobbyPlayerColor" + i).attr('title', lang[my.lang].selectPlayerColor)
+					.tooltip({
+						container: 'body',
+						animation: false
+					});
+				$("#lobbyTeam" + i).attr('title', lang[my.lang].selectTeam)
+					.tooltip({
+						container: 'body',
+						animation: false
+					});
+			}
+		}
+		//console.info('LOBBY: updatePlayer', data);
+		lobby.updateGovernment(data);
+		lobby.data[i] = data;
+		lobby.updatePlayerColor(data);
+		document.getElementById('lobbyGovernment'+ i).innerHTML = data.cpu ?
+			('<img src="images/icons/computer.png" class="fw-icon-sm">'+ data.difficulty) :
+			'<img src="images/icons/Despotism.png" class="fw-icon-sm">'+ lang[my.lang].governments.Despotism;
+
+		$("#lobbyCaret"+ i)
+			.removeClass("text-warning text-disabled")
+			.addClass(my.player === i || data.cpu && my.player === 1 ? 'text-warning' : 'text-disabled');
+
+		document.getElementById('gov-dropdown-player'+ data.player).style.display =
+			data.cpu ? 'none' : 'block';
+		document.getElementById('gov-dropdown-cpu'+ data.player).style.display =
+			data.cpu ? 'block' : 'none';
+	},
+	removePlayer: function(data) {
+		//console.info("REMOVE PLAYER: ", data);
+		var i = data.player;
+		document.getElementById("lobbyRow" + i).style.display = 'none';
+		document.getElementById('lobby-difficulty-cpu' + i).innerHTML = lang[my.lang].difficulties['Very Easy'];
+		lobby.data[i] = { account: '', cpu: 0 };
 	},
 	// update player's team number
 	updateTeamNumber: function(data){
@@ -556,9 +554,8 @@ var lobby = {
 		}
 	},
 	countdown: function(data){
-		socket.unsubscribe('title:refreshGames');
 		// still in the lobby?
-		if (!lobby.gameStarted){
+		if (!lobby.gameStarted || my.player === 1){
 			$("#lobby-cpu-row").remove();
 			lobby.gameStarted = true;
 			new Audio('sound/beepHi.mp3');
@@ -589,6 +586,8 @@ var lobby = {
 			})(5);
 			cancelGame.style.display = 'none';
 			$("#teamDropdown").css('display', 'none');
+			// save game's players
+			localStorage.setItem('fwplayers', JSON.stringify(lobby.data));
 		}
 	},
 	governmentIcon: function(p){
@@ -606,6 +605,7 @@ var lobby = {
 	startGame: function(){
 		if (my.player === 1){
 			if (lobby.totalPlayers() >= 2){
+				lobby.gameStarted = true;
 				startGame.style.display = "none";
 				cancelGame.style.display = 'none';
 				g.lock();
@@ -803,18 +803,6 @@ function setBars(d){
 	});
 }
 
-function Nation(){
-	this.account = "";
-	this.nation = "";
-	this.flag = "blank.png";
-	this.playerColor = 0;
-	this.team = 1;
-	this.alive = true;
-	// this.avatar = '';
-	this.government = '';
-	return this;
-}
-
 function loadGameState(){
 	sessionStorage.setItem('gameDuration', Date.now());
 	g.lock(1);
@@ -846,19 +834,30 @@ function loadGameState(){
 	clearInterval(socket.keepAliveInterval);
 	$("#leaderboard, #configureNation, joinPrivateGameModal, #createGameWrap").remove();
 
+	var playerData = [];
+	lobby.data.forEach(function(v, i) {
+		v.account && playerData.push(v);
+	});
+	console.info("SENDING: ", playerData);
 	$.ajax({
-		type: "GET",
-		url: app.url +"php/loadGameState.php"
+		url: app.url +"php/loadGameState.php",
+		data: {
+			players: JSON.stringify(playerData)
+		}
 	}).done(function(data){
 
-		if (sessionStorage.getItem('stats') !== null) {
-			// load if it's there
-			stats.data = JSON.parse(sessionStorage.getItem('stats'));
-			console.info("LOADING stats.data: ", stats.data);
-		}
-		else {
+		if (sessionStorage.getItem('fwstats') === null) {
 			stats.initStats();
 		}
+		else {
+			// load if it's there
+			stats.data = JSON.parse(sessionStorage.getItem('fwstats'));
+		}
+
+		if (!localStorage.getItem('disconnects')) {
+			localStorage.setItem('disconnects', 1);
+		}
+
 		console.info("loadGameState", data);
 		console.info("player data:", data.players);
 		// data.mapData.sizeX data.mapData.sizeX
@@ -943,10 +942,24 @@ function loadGameState(){
 		}
 		// initialize player data
 		game.initialized = true;
-		for (var z=0, len=game.player.length; z<len; z++){
-			// initialize diplomacy-ui
-			game.player[z] = new Nation();
+		for (var i=0; i<=8; i++) {
+			game.player[i] = {
+				account: '',
+				nation: '',
+				flag: "blank.png",
+				playerColor: 0,
+				team: 1,
+				alive: true,
+				government: '',
+			};
 		}
+		if (!lobby.data[1].account) {
+			// did not find lobby data
+			lobby.data = JSON.parse(localStorage.getItem('fwplayers'));
+		}
+		game.player.forEach(function(v, i) {
+			game.player[i] = Object.assign(game.player[i], lobby.data[i]);
+		});
 
 		g.removeContainers();
 		g.unlock();
@@ -957,22 +970,23 @@ function loadGameState(){
 			autoAlpha: 1
 		});
 		// init game player data
-		for (var i=0, len=data.players.length; i<len; i++){
-			var d = data.players[i],
-				z = game.player[d.player],
-				flag = d.flag.split('.')[0];
-			z.account = stats.data[d.player].account = d.account;
-			z.flag = stats.data[d.player].flag = flag + ui.getFlagExt(flag);
-			z.nation = stats.data[d.player].nation = d.nation;
-			z.player = d.player;
-			z.playerColor = d.playerColor;
-			z.team = d.team;
-			z.government = d.government;
-			// z.avatar = d.avatar;
-			z.cpu = stats.data[d.player].cpu = d.cpu;
-			z.difficulty = d.difficulty;
-			z.difficultyShort = d.difficulty.replace(/ /g, '');
+		for (var i=0, len=game.player.length; i<len; i++){
+			if (game.player[i].account) {
+				var d = game.player[i],
+					z = game.player[d.player],
+					flag = d.flag.split('.')[0];
 
+				z.account = stats.data[d.player].account = d.account;
+				z.flag = stats.data[d.player].flag = flag + ui.getFlagExt(flag);
+				z.nation = stats.data[d.player].nation = d.nation;
+				z.player = d.player;
+				z.playerColor = d.playerColor;
+				z.team = d.team;
+				z.government = d.government;
+				z.cpu = stats.data[d.player].cpu = d.cpu;
+				z.difficulty = d.difficulty;
+				z.difficultyShort = d.difficulty.replace(/ /g, '');
+			}
 		}
 
 		// initialize client tile data
@@ -1139,6 +1153,7 @@ function loadGameState(){
 			animate.initMapBars(i);
 		}
 	}).fail(function(data){
+		console.info(data);
 		setTimeout(function(){
 			loadGameState();
 		}, 1500);

@@ -630,8 +630,7 @@ var stats = {
 		}
 	},
 	delete: function() {
-		console.info("sessionStorage.removeItem('stats');");
-		sessionStorage.removeItem('stats');
+		sessionStorage.removeItem('fwstats');
 	},
 	update: function(data) {
 		console.info("stats.update", data);
@@ -642,7 +641,7 @@ var stats = {
 				stats.data[player][key] += pObj[key];
 			}
 		};
-		sessionStorage.setItem('stats', JSON.stringify(stats.data));
+		sessionStorage.setItem('fwstats', JSON.stringify(stats.data));
 	},
 	data: [],
 	gameDuration: function(data){

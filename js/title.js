@@ -1,7 +1,6 @@
 // title.js
 var title = {
 	players: [],
-	games: [],
 	getLeaderboard: function(type){
 		var e = document.getElementById('leaderboardBody');
 		e.innerHTML = '';
@@ -14,49 +13,6 @@ var title = {
 		}).done(function(data) {
 			e.innerHTML = data.str;
 		}).always(g.unlock);
-	},
-	refreshTimer: 0,
-	refreshGames: function(){
-		if (Date.now() - title.refreshTimer > 5000){
-			title.refreshTimer = Date.now();
-			g.lock(1);
-
-			$("#title-chat-input").focus();
-			TweenMax.to('#refresh-game-button', 1, {
-				rotation: "+=360",
-				ease: Linear.easeIn
-			});
-
-			$.ajax({
-				type: 'GET',
-				url: app.url + 'php/refreshGames.php'
-			}).done(function(data) {
-				title.refreshGamesCallback(data.games);
-			}).fail(function(e){
-				console.info(e.responseText);
-			}).always(function() {
-				g.unlock();
-			});
-		}
-	},
-	refreshGamesCallback: function(data) {
-		var e = document.getElementById('gameTableBody');
-		if (e === null) return;
-		// head
-		var str = '';
-		// body
-		for (var i=0, len=data.length; i<len; i++){
-			var d = data[i];
-			title.games[d.id] = 1;
-			str +=
-			"<tr id='game_"+ d.id +"' class='shadow4 wars wars-"+ d.gameMode +" no-select' data-name='" + d.name + "'>\
-				<td class='warCells'>"+ d.name + "</td>\
-				<td class='warCells'>" + d.map + "</td>\
-				<td class='warCells'>" + d.gameMode + "</td>\
-			</tr>";
-
-		}
-		e.innerHTML = str;
 	},
 	init: (function(){
 		$(document).ready(function(){
@@ -84,74 +40,73 @@ var title = {
 				title.sendMsg(true);
 			});*/
 			// initial refresh of games
-			setTimeout(function(){
-				g.keepAlive();
-			}, 180000);
+			setTimeout(g.keepAlive, 180000);
 		});
 	})(),
 	updateGame: function(data){
-		console.info("title.updateGame");
-		if (data.type === 'addToGame'){
-			title.addToGame(data);
-		} else if (data.type === 'removeFromGame'){
-			title.removeFromGame(data);
-		} else if (data.type === 'addGame'){
-			title.addGame(data);
-		} else if (data.type === 'removeGame'){
-			title.removeGame(data);
+		if (data.type === 'updateToGame'){
+			title.games.presence.hb(data);
+		}
+		else if (data.type === 'addGame'){
+			title.games.presence.add(data);
+		}
+		else if (data.type === 'removeGame'){
+			title.games.presence.remove(data);
 		}
 	},
-	addToGame: function(data){
-		// player joined or left
-		//console.info("addToGame", data);
-		var id = data.id;
-		if (title.games[id] !== undefined){
-			if (title.games[id] + 1 > data.max){
-				title.games[id] = data.max;
-			} else {
-				title.games[id]++;
-			}
-		} else {
-			title.games[id] = 1;
-		}
-	},
-	removeFromGame: function(data){
-		// player joined or left
-		//console.info("removeFromGame", data);
-		var id = data.id;
-		if (title.games[id] !== undefined){
-			if (title.games[id] - 1 < 1){
-				title.games[id] = 1;
-			} else {
-				title.games[id]--;
-			}
-		} else {
-			title.games[id] = 1;
-		}
-	},
-	addGame: function(data){
-		// created game
-		// console.info("addGame", data);
-		title.games[data.id] = 1;
-		var e = document.createElement('tr'),
-			gameMode = data.gameMode === 'Ranked' ? 'Ranked' : data.gameMode === 'Team' ? 'Team' : 'FFA';
-		e.id = 'game_' + data.id;
-		e.className = 'shadow4 wars wars-'+ gameMode +' no-select';
-		e.setAttribute('data-name', data.name);
-		e.innerHTML = 
-			"<td class='warCells'>"+ data.name + "</td>\
-			<td class='warCells'>" + data.map + "</td>\
-			<td class='warCells'>" + gameMode + "</td>";
-		DOM.gameTableBody.insertBefore(e, DOM.gameTableBody.childNodes[0]);
-	},
-	removeGame: function(data){
-		// game countdown started or exited
-		// console.info("removeGame", data);
-		title.games[data.id] = null;
-		var e = document.getElementById('game_' + data.id);
-		if (e !== null){
-			e.parentNode.removeChild(e);
-		}
+	games: {
+		presence: {
+			list: {},
+			hb: function(data) {
+				data.timestamp = Date.now();
+				console.log('%c titleGamesHeartbeat: '+ data.id, 'background: #f8f; color: #f00');
+				if (typeof this.list[data.id] === 'undefined') {
+					this.add(data);
+				}
+				else {
+					this.update(data);
+				}
+				this.auditTry(data.timestamp);
+			},
+			add: function(data) {
+				//data
+				this.update(data);
+				//dom
+				var e = document.createElement('tr');
+				e.id = 'game_' + data.id;
+				e.className = 'shadow4 wars wars-'+ data.gameMode +' no-select';
+				e.setAttribute('data-name', data.name);
+				e.innerHTML =
+					"<td class='warCells'>"+ data.name + "</td>\
+					<td class='warCells'>" + data.map + "</td>\
+					<td class='warCells'>" + data.gameMode + "</td>";
+				DOM.gameTableBody.insertBefore(e, DOM.gameTableBody.childNodes[0]);
+
+			},
+			update: function(data) {
+				this.list[data.id] = data;
+			},
+			remove: function(data) {
+				console.log("remove: ", data.id)
+				this.list[data.id] = void 0;
+				var e = document.getElementById('game_' + data.id);
+				if (e !== null){
+					e.parentNode.removeChild(e);
+				}
+			},
+			audit: function(now) {
+				for (var key in this.list) {
+					this.list[key] !== void 0 &&
+						now - this.list[key].timestamp > 5000 &&
+						this.remove({
+							id: key
+						});
+				}
+			},
+			auditTry: _.throttle(function(data) {
+				this.audit(data);
+			}, 1000)
+		},
 	},
 	mapData: {
 		AlphaEarth: {
@@ -366,6 +321,7 @@ var title = {
 				this.update(data);
 			}
 			this.auditTry(data.timestamp);
+			title.games.presence.auditTry(data.timestamp);
 		},
 		add: function(data) {
 			//data
@@ -875,12 +831,15 @@ var title = {
 				speed: speed
 			}
 		}).done(function(data) {
+			console.info("Created Game: ", data);
 			socket.publish.title.remove(my.account);
 			my.player = data.player;
 			my.playerColor = data.playerColor;
 			my.team = data.team;
 			game.id = data.gameId;
 			game.name = data.gameName;
+			game.mode = data.gameMode;
+			game.password = data.password;
 			// console.info("Creating: ", data);
 			lobby.init(data);
 			lobby.join(); // create
@@ -888,6 +847,7 @@ var title = {
 			lobby.styleStartGame();
 		}).fail(function(e){
 			g.msg(e.statusText);
+		}).always(function() {
 			g.unlock(1);
 		});
 	},

@@ -139,6 +139,9 @@ var socket = {
 			if (data.sfx){
 				audio.play(data.sfx);
 			}
+		},
+		stats: function() {
+			// future use?
 		}
 	},
 	publish: {
@@ -280,11 +283,55 @@ var socket = {
 
 			}
 			else if (g.view === 'lobby') {
+				// update lobby player presence
 				socket.zmq.publish('game:' + game.id, {
 					type: 'hb',
 					account: my.account,
-					flag: my.flag
+					nation: my.nation,
+					flag: my.flag,
+					player: my.player,
+					playerColor: my.playerColor,
+					team: my.team,
+					government: my.government,
+					gameHost: my.player === 1 ? 1 : 0,
+					difficulty: '',
+					cpu: 0
 				});
+				// update CPU lobby presence
+				if (my.player === 1) {
+					lobby.data.forEach(function(player) {
+						if (player.cpu) {
+							socket.zmq.publish('game:' + game.id, {
+								type: 'hb',
+								account: player.account,
+								nation: player.nation,
+								flag: player.flag,
+								player: player.player,
+								playerColor: player.playerColor,
+								team: player.team,
+								government: player.government,
+								gameHost: 0,
+								difficulty: player.difficulty,
+								cpu: 1
+							});
+						}
+					})
+				}
+				// update title screen games
+				if (my.player === 1 &&
+					!lobby.gameStarted &&
+					!game.password &&
+					game.mode !== 'Ranked') {
+					// only broadcast public games
+					socket.zmq.publish('title:refreshGames', {
+						id: game.id,
+						name: game.name,
+						gameMode: game.mode,
+						map: g.map.name,
+						max: g.map.max,
+						type: 'updateToGame'
+					});
+				}
 			}
 			else {
 				socket.zmq.publish('game:' + game.id, {
@@ -311,6 +358,7 @@ var socket = {
 	connectGame: function() {
 		socket.unsubscribe('title:' + my.channel);
 		socket.unsubscribe('game:' + game.id);
+		socket.unsubscribe('title:refreshGames');
 		title.presence.reset();
 		// game updates
 		// console.info("Subscribing to game:" + game.id);
@@ -334,7 +382,7 @@ var socket = {
 		// chat updates
 		if (g.view === 'title'){
 			socket.zmq.subscribe('title:refreshGames', function(topic, data) {
-				console.info("title:refreshGames");
+				console.info("title:refreshGames", data);
 				title.updateGame(data);
 			});
 			socket.setChannel(my.channel, true); // should be usa-1

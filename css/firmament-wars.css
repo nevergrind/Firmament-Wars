@@ -31,11 +31,6 @@ fieldset {
 	text-align:left;
 	text-indent:15px;
 }
-#refresh-game-button {
-	cursor: url('cursor/hover.png'), pointer;
-	color: #aef;
-	margin: .3rem 0!important;
-}
 #create-account, #login-btn, #resetPW{
 	position: relative;
 	font: 1rem/2;
@@ -1993,6 +1988,7 @@ circle {
 }
 #lobbyButtonWrap {
     position: relative;
+	min-height: 4.5rem;
 	background: rgba(0,0,0,.8);
     padding: 1rem 5rem
 }

@@ -452,6 +452,7 @@ var isXbox = /Xbox/i.test(navigator.userAgent),
 
 function gameDefeat(){
 	new Audio('sound/shotgun2.mp3');
+	localStorage.setItem('disconnects', 0);
 	$.ajax({
 		type: "GET",
 		url: app.url + "php/gameDefeat.php"
@@ -491,7 +492,7 @@ function gameDefeat(){
 
 function gameVictory(){
 	new Audio('sound/sniper0.mp3');
-	var count = 0;
+	localStorage.setItem('disconnects', 0);
 	(function repeat(){
 		$.ajax({
 			type: "POST",
