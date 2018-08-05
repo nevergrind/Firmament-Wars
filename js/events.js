@@ -149,9 +149,7 @@ var events = {
 
 		// cached values on client to reduce DB load
 
-		$("#joinPrivateGameModal").on(ui.click, "#joinPrivateGameBtnConfirm", function(){
-			title.joinGame();
-		});
+		$("#joinPrivateGameModal").on(ui.click, "#joinPrivateGameBtnConfirm", title.joinGame);
 
 		$("#titleChat").on(ui.click, '.nw-link', function() {
 			title.openWindow($(this).attr('href'));
@@ -190,19 +188,14 @@ var events = {
 			$("#title-chat-input").val('#').focus();
 		});
 		
-		$("#body").on(ui.click, "#cancelGame", function(){
-			exitGame();
-		}).on(ui.click, "#startGame", function(){
-			lobby.startGame();
-		}).on(ui.click, '.addFriend', function(){
+		$("#body").on(ui.click, "#cancelGame", exitGame).on(ui.click, "#startGame", lobby.startGame)
+		.on(ui.click, '.addFriend', function(){
 			title.toggleFriend($(this).data('account'));
 		}).on(ui.click, '.ribbon', function(){
 			var x = $(this).data('ribbon') * 1;
 			g.chat(lang[my.lang].ribbonTitle[x] +": "+ lang[my.lang].ribbonDescription[x], 'chat-warning');
 		});
-		$("#toggleNation").on(ui.click, function(){
-			title.configureNation();
-		});
+		$("#toggleNation").on(ui.click, title.configureNation);
 		$("#joinPrivateGameBtn").on(ui.click, function(){
 			var e = $("#joinGame");
 			e.val('');
@@ -407,9 +400,7 @@ var events = {
 		});
 	})(),
 	lobby: (function(){
-		$("#chat-input-open").on(ui.click, function(){
-			toggleChatMode();
-		});
+		$("#chat-input-open").on(ui.click, toggleChatMode);
 		$("#chat-input-send").on(ui.click, function(){
 			toggleChatMode(true);
 		});
@@ -475,17 +466,8 @@ var events = {
 				}
 			});
 			
-		}).on(ui.click, '#cpu-add-player', function(e){
-			//console.info("Adding player");
-			audio.play('click');
-			lobby.addCpuPlayer();
-		}).on(ui.click, '#cpu-remove-player', function(e){
-			//console.info("Removing player");
-			audio.play('click');
-			$.ajax({
-				url: app.url + 'php/cpu-remove-player.php'
-			});
-		});
+		}).on(ui.click, '#cpu-add-player', lobby.addCpuPlayer)
+		.on(ui.click, '#cpu-remove-player', lobby.removeCpuPlayer);
 	})(),
 	map: (function(){
 		$("body").on("mousewheel", function(e){

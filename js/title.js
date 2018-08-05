@@ -84,7 +84,19 @@ var title = {
 
 			},
 			update: function(data) {
+				if (data.players === 8 &&
+					this.list[data.id].players < 8) {
+					// hide it!
+					document.querySelector('#game_' + data.id).style.display = 'none';
+				}
+				if (typeof this.list[data.id] !== 'undefined' &&
+					this.list[data.id].players === 8 &&
+					data.players < 8) {
+					// show it!
+					document.querySelector('#game_' + data.id).style.display = 'table-row';
+				}
 				this.list[data.id] = data;
+
 			},
 			remove: function(data) {
 				console.log("remove: ", data.id)

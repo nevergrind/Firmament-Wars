@@ -5,6 +5,7 @@ $.ajaxSetup({
 });
 TweenMax.defaultEase = Quad.easeOut;
 var g = {
+	reloadGame: false,
 	attackTimer: 0,
 	splitAttackTimer: 0,
 	cannonTimer: 0,
@@ -590,6 +591,7 @@ g.init = (function(){
 			stats.delete();
 		}
 		else {
+			g.reloadGame = true;
 			$.ajax({
 				type: "GET",
 				url: app.url + 'php/rejoinGame.php' // check if already in a game
@@ -636,39 +638,16 @@ var game = {
 			data.timestamp = Date.now();
 			console.log('%c gameHeartbeat: ', 'background: #0f0; color: #f00');
 			console.info(data);
-			if (typeof this.list[data.account] === 'undefined') {
-				this.add(data);
-			}
-			else {
-				this.update(data);
-			}
-			this.audit(data.timestamp);
-		},
-		add: function(data) {
-			//data
 			this.update(data);
-			//dom
-			var e = document.getElementById('titlePlayer' + data.account);
-			if (e !== null){
-				e.parentNode.removeChild(e);
-			}
-			e = document.createElement('div');
-			e.className = "titlePlayer";
-			e.id = "titlePlayer" + data.account;
-			e.innerHTML =
-				'<img id="titlePlayerFlag_'+ data.account +'" class="flag" src="images/flags/'+ data.flag +'">' +
-				'<span class="chat-rating">['+ data.rating +']</span> '+
-				'<span class="titlePlayerAccount">'+ data.account +'</span>';
-			//DOM.titleChatBody.appendChild(e);
-
+			this.audit(data.timestamp);
 		},
 		update: function(data) {
 			this.list[data.account] = data;
 		},
-		remove: function(account) {
-			console.log("remove: ", account);
-			this.list[account] = void 0;
-			var z = document.getElementById('titlePlayer' + account);
+		remove: function(data) {
+			console.log("remove: ", data.account, data.player);
+			this.list[data.account] = void 0;
+			var z = document.getElementById('diplomacyPlayer' + data.player);
 			if (z !== null){
 				z.parentNode.removeChild(z);
 			}
@@ -680,7 +659,7 @@ var game = {
 			for (var key in this.list) {
 				this.list[key] !== void 0 &&
 					now - this.list[key].timestamp > 5000 &&
-					this.remove(key);
+					this.remove(this.list[key]);
 			}
 		}
 	},

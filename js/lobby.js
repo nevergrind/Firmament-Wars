@@ -1,5 +1,6 @@
 // lobby.js
 var lobby = {
+	reloadGame: false,
 	cpuFlag: 'Random',
 	data: [
 		{ account: '' }, 
@@ -14,25 +15,56 @@ var lobby = {
 	],
 	startClassOn:  "btn btn-md btn-block btn-responsive shadow4 lobbyButtons",
 	startClassOff: "btn btn-md btn-block btn-responsive shadow4 lobbyButtons",
-	totalPlayers: function(){
-		var count = 0;
-		for (var i=0, len=lobby.data.length; i<len; i++){
-			if (lobby.data[i].account){
-				count++;
+	util: {
+		countPlayers: function() {
+			var v, key, count = 0;
+			for (key in lobby.presence.list) {
+				v = lobby.presence.list[key];
+				if (typeof v !== 'undefined' && v.account) count++;
 			}
+			return count;
+		},
+		countCpuPlayers: function() {
+			var v, key, count = 0;
+			for (key in lobby.presence.list) {
+				v = lobby.presence.list[key];
+				if (typeof v !== 'undefined' && v.account && v.cpu) count++;
+			}
+			return count;
 		}
-		return count;
 	},
 	addCpuPlayer: function(){
-		g.lock();
 		var flag = lobby.cpuFlag === 'Random' ?
-			g.getRandomFlag() : lobby.cpuFlag + ui.getFlagExt(lobby.cpuFlag)
-		$.ajax({
-			url: app.url +'php/cpu-add-player.php',
-			data: {
-				flag: flag
+			g.getRandomFlag() : lobby.cpuFlag + ui.getFlagExt(lobby.cpuFlag);
+		var count = lobby.util.countPlayers();
+		console.info('add start: ', flag, count);
+		if (count && count < 8) {
+			g.lock();
+			audio.play('click');
+			$.ajax({
+				url: app.url +'php/cpu-add-player.php',
+				data: {
+					flag: flag,
+				}
+			}).always(g.unlock);
+		}
+	},
+	removeCpuPlayer: function() {
+		if (lobby.util.countCpuPlayers()) {
+			var player = lobby.getHighestCpuPlayer();
+			if (player) {
+				console.info("REMOVING PLAYER: ", player);
+				audio.play('click');
+				g.lock();
+				$.ajax({
+					type: 'POST',
+					url: app.url + 'php/cpu-remove-player.php',
+					data: {
+						player: player
+					}
+				}).always(g.unlock);
 			}
-		}).always(g.unlock);
+		}
 	},
 	updateGovernmentWindow: function(government){ // key value in
 		if (g.view === 'game') return;
@@ -289,19 +321,26 @@ var lobby = {
 		hb: function(data) {
 			data.timestamp = Date.now();
 			console.log('%c lobbyHeartbeat: '+ data.account, 'background: #0f0; color: #f00');
-			if (typeof this.list[data.account] === 'undefined') {
-				this.add(data);
+			if (typeof data.account === 'undefined') {
+				console.info("removePlayer: ", data.player);
+				lobby.removePlayer(data);
 			}
 			else {
-				this.update(data);
+				if (typeof this.list[data.account] === 'undefined') {
+					console.info("ADDING NEW:", data.account);
+					this.add(data);
+				}
+				else {
+					this.update(data);
+				}
+				this.audit(data.timestamp);
 			}
-			this.audit(data.timestamp);
 		},
 		add: function(data) {
 			//data
 			this.update(data);
 			//dom
-			lobby.updatePlayer(data);
+			lobby.addPlayer(data);
 		},
 		update: function(data) {
 			this.list[data.account] = data;
@@ -309,18 +348,17 @@ var lobby = {
 		remove: function(data) {
 			console.log("remove: ", data.account);
 			this.list[data.account] = void 0;
+			// dom
 			lobby.removePlayer(data);
 		},
-		reset: function() {
-			this.list = {};
-		},
 		audit: function(now) {
+			var v;
 			for (var key in this.list) {
-				this.list[key] !== void 0 &&
-					now - this.list[key].timestamp > 5000 &&
-					this.remove({
-						account: key,
-						player: this.list[key].player
+				v = this.list[key];
+				typeof v !== 'undefined' &&
+					now - v.timestamp > 5000 &&
+					lobby.presence.remove({
+						account: v.account
 					});
 			}
 		}
@@ -363,6 +401,13 @@ var lobby = {
 						my.player !== 1 &&
 							$(".lobbyRow:visible").length < 2 &&
 							lobby.hostLeft();
+
+						TweenMax.from('#lobbyRightCol', 1, {
+							x: '150%'
+						});
+						TweenMax.from('#lobbyLeftCol', 1, {
+							x: '-150%'
+						})
 					}
 				});
 			}
@@ -441,19 +486,12 @@ var lobby = {
 			}, 1000);
 		}, 500);
 	},
-	// add/remove players from lobby
-	updatePlayer: function(data){
-		if (data.account !== undefined){
-			this.addPlayer(data);
-		}
-		else {
-			this.removePlayer(data);
-		}
-		lobby.styleStartGame();
-	},
 	addPlayer: function(data) {
-		//console.info("ADD PLAYER: ", data);
+		data.timestamp = Date.now();
 		var i = data.player;
+		console.warn('!', data.player);
+		console.info("ADD PLAYER: ", data);
+
 		document.getElementById("lobbyRow" + i).style.display = 'flex';
 		// different player account
 		document.getElementById("lobbyAccountName" + i).innerHTML = data.cpu ?
@@ -467,23 +505,21 @@ var lobby = {
 		document.getElementById("lobbyFlag" + i).src =
 			'images/flags/'+ flag + ui.getFlagExt(flag);
 
-		if (my.player === i){
-			if (isLoggedIn){
-				$("#lobbyPlayerColor" + i).attr('title', lang[my.lang].selectPlayerColor)
-					.tooltip({
-						container: 'body',
-						animation: false
-					});
-				$("#lobbyTeam" + i).attr('title', lang[my.lang].selectTeam)
-					.tooltip({
-						container: 'body',
-						animation: false
-					});
-			}
+		if (my.player === i && isLoggedIn){
+			$("#lobbyPlayerColor" + i).attr('title', lang[my.lang].selectPlayerColor)
+				.tooltip({
+					container: 'body',
+					animation: false
+				});
+			$("#lobbyTeam" + i).attr('title', lang[my.lang].selectTeam)
+				.tooltip({
+					container: 'body',
+					animation: false
+				});
 		}
-		//console.info('LOBBY: updatePlayer', data);
+		console.info('LOBBY: updatePlayer', data);
+		lobby.presence.list[data.account] = data;
 		lobby.updateGovernment(data);
-		lobby.data[i] = data;
 		lobby.updatePlayerColor(data);
 		document.getElementById('lobbyGovernment'+ i).innerHTML = data.cpu ?
 			('<img src="images/icons/computer.png" class="fw-icon-sm">'+ data.difficulty) :
@@ -497,13 +533,56 @@ var lobby = {
 			data.cpu ? 'none' : 'block';
 		document.getElementById('gov-dropdown-cpu'+ data.player).style.display =
 			data.cpu ? 'block' : 'none';
+		lobby.styleStartGame();
 	},
 	removePlayer: function(data) {
-		//console.info("REMOVE PLAYER: ", data);
-		var i = data.player;
+		console.info("REMOVE PLAYER: ", data);
+		var i = data.player,
+			o = _.find(lobby.presence.list, function(v) {
+				return data.player === v.player;
+			});
+		console.info("FOUND: ", o);
 		document.getElementById("lobbyRow" + i).style.display = 'none';
 		document.getElementById('lobby-difficulty-cpu' + i).innerHTML = lang[my.lang].difficulties['Very Easy'];
-		lobby.data[i] = { account: '', cpu: 0 };
+		lobby.presence.list[o.account] = void 0;
+		lobby.styleStartGame();
+	},
+	getHighestCpuPlayer: function() {
+		var player = 1, index = 0, v;
+		for (var key in lobby.presence.list) {
+			v = lobby.presence.list[key];
+			index++;
+			if (typeof v !== 'undefined' && v.account && v.cpu) {
+				player = index;
+			}
+		}
+		return player;
+	},
+	getLowestAvailablePlayer: function() {
+		var index = 0;
+		for (var key in lobby.presence.list) {
+			index++;
+		}
+		return index;
+	},
+	getLowestAvailableColor: function() {
+		var taken = [0],
+			color = 0,
+			index = 0,
+			v;
+		for (var key in lobby.presence.list) {
+			v = lobby.presence.list[key];
+			index++;
+			if (index && v.account) {
+				taken.push(v.player);
+			}
+		}
+		g.color.forEach(function(v, i) {
+			if (!color && taken.indexOf(i) === -1) {
+				color = i;
+			}
+		});
+		return color;
 	},
 	// update player's team number
 	updateTeamNumber: function(data){
@@ -524,7 +603,7 @@ var lobby = {
 		$("#lobbyPlayerColor" + i).removeClass()
 			.addClass(str)
 			.data('playerColor', data.playerColor);
-		lobby.data[i].playerColor = data.playerColor;
+		lobby.presence.list[data.account].playerColor = data.playerColor;
 	},
 	// update player's government only
 	updateGovernment: function(data){
@@ -535,20 +614,21 @@ var lobby = {
 			data.government === 'Random' ?
 				lang[my.lang].governments[data.government] :
 				'<img src="images/icons/'+ data.government +'.png" class="fw-icon-sm">' + lang[my.lang].governments[data.government];
-		lobby.data[i].government = lang[my.lang].governments[data.government];
+		lobby.presence.list[data.account].government = lang[my.lang].governments[data.government];
 	},
 	updateDifficulty: function(data){
 		var i = data.player;
 		console.info('updateDifficulty', i, data.difficulty);
 		$('#lobby-difficulty-cpu' + i).html(lang[my.lang].difficulties[data.difficulty]);
-		lobby.data[i].difficulty = data.difficulty;
+		lobby.presence.list[i].difficulty = data.difficulty;
 	},
 	styleStartGame: function(){
 		if (my.player === 1){
 			// set start game button
-			if (lobby.totalPlayers() === 1){
+			if (lobby.util.countPlayers() === 1){
 				startGame.className = lobby.startClassOff;
-			} else {
+			}
+			else {
 				startGame.className = lobby.startClassOn;
 			}
 		}
@@ -587,7 +667,7 @@ var lobby = {
 			cancelGame.style.display = 'none';
 			$("#teamDropdown").css('display', 'none');
 			// save game's players
-			localStorage.setItem('fwplayers', JSON.stringify(lobby.data));
+			localStorage.setItem('fwplayers', JSON.stringify(lobby.presence.list));
 		}
 	},
 	governmentIcon: function(p){
@@ -604,7 +684,7 @@ var lobby = {
 	},
 	startGame: function(){
 		if (my.player === 1){
-			if (lobby.totalPlayers() >= 2){
+			if (lobby.util.countPlayers() >= 2){
 				lobby.gameStarted = true;
 				startGame.style.display = "none";
 				cancelGame.style.display = 'none';
@@ -620,8 +700,9 @@ var lobby = {
 				}).always(function(){
 					g.unlock();
 				});
-			} else {
-				g.msg(lang[my.lang].needTwoPlayers);
+			}
+			else {
+				g.msg(lang[my.lang].needTwoPlayers, 5);
 			}
 		}
 	}
@@ -835,9 +916,10 @@ function loadGameState(){
 	$("#leaderboard, #configureNation, joinPrivateGameModal, #createGameWrap").remove();
 
 	var playerData = [];
-	lobby.data.forEach(function(v, i) {
+	for (var key in lobby.presence.list) {
+		var v = lobby.presence.list[key];
 		v.account && playerData.push(v);
-	});
+	}
 	console.info("SENDING: ", playerData);
 	$.ajax({
 		url: app.url +"php/loadGameState.php",
@@ -947,20 +1029,28 @@ function loadGameState(){
 				account: '',
 				nation: '',
 				flag: "blank.png",
+				player: 0,
 				playerColor: 0,
 				team: 1,
 				alive: true,
 				government: '',
 			};
 		}
-		if (!lobby.data[1].account) {
+		if (g.reloadGame) {
 			// did not find lobby data
-			lobby.data = JSON.parse(localStorage.getItem('fwplayers'));
+			lobby.presence.list = JSON.parse(localStorage.getItem('fwplayers'));
 		}
-		game.player.forEach(function(v, i) {
-			game.player[i] = Object.assign(game.player[i], lobby.data[i]);
-		});
-
+		var i = 1, key, v, ind;
+		for (key in lobby.presence.list) {
+			v = lobby.presence.list[key];
+			for (ind in v) {
+				// console.info('assigning: ', i, ind, v[ind]);
+				game.player[i][ind] = v[ind];
+			}
+			i++;
+		}
+		console.info(JSON.parse(JSON.stringify(game.player)));
+		
 		g.removeContainers();
 		g.unlock();
 		g.view = "game";
@@ -985,7 +1075,7 @@ function loadGameState(){
 				z.government = d.government;
 				z.cpu = stats.data[d.player].cpu = d.cpu;
 				z.difficulty = d.difficulty;
-				z.difficultyShort = d.difficulty.replace(/ /g, '');
+				z.difficultyShort = d.difficulty ? d.difficulty.replace(/ /g, '') : '';
 			}
 		}
 

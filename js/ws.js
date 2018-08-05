@@ -21,7 +21,7 @@ var socket = {
 			}
 		},
 		lobby: function(data) {
-			console.info("LOBBY: ", data);
+			// console.info("LOBBY: ", data);
 			if (data.type === 'hb'){
 				lobby.presence.hb(data);
 			}
@@ -43,8 +43,11 @@ var socket = {
 			else if (data.type === 'countdown'){
 				lobby.countdown(data);
 			}
-			else if (data.type === 'updateLobbyPlayer'){
-				lobby.updatePlayer(data);
+			else if (data.type === 'updateLobbyAdd'){
+				lobby.addPlayer(data);
+			}
+			else if (data.type === 'updateLobbyRemove'){
+				lobby.removePlayer(data);
 			}
 			else if (data.type === 'loadGameState'){
 				// trigger game start for non-hosts
@@ -299,48 +302,54 @@ var socket = {
 				});
 				// update CPU lobby presence
 				if (my.player === 1) {
-					lobby.data.forEach(function(player) {
-						if (player.cpu) {
+					var v;
+					for (var key in lobby.presence.list) {
+						v = lobby.presence.list[key];
+						if (typeof v !== 'undefined' && v.cpu) {
 							socket.zmq.publish('game:' + game.id, {
 								type: 'hb',
-								account: player.account,
-								nation: player.nation,
-								flag: player.flag,
-								player: player.player,
-								playerColor: player.playerColor,
-								team: player.team,
-								government: player.government,
+								account: v.account,
+								nation: v.nation,
+								flag: v.flag,
+								player: v.player,
+								playerColor: v.playerColor,
+								team: v.team,
+								government: v.government,
 								gameHost: 0,
-								difficulty: player.difficulty,
+								difficulty: v.difficulty,
 								cpu: 1
 							});
 						}
-					})
-				}
-				// update title screen games
-				if (my.player === 1 &&
-					!lobby.gameStarted &&
-					!game.password &&
-					game.mode !== 'Ranked') {
-					// only broadcast public games
-					socket.zmq.publish('title:refreshGames', {
-						id: game.id,
-						name: game.name,
-						gameMode: game.mode,
-						map: g.map.name,
-						max: g.map.max,
-						type: 'updateToGame'
-					});
+					}
+
+					// update title screen games
+					if (!lobby.gameStarted &&
+						!game.password &&
+						game.mode !== 'Ranked') {
+						// only broadcast public games
+						socket.zmq.publish('title:refreshGames', {
+							id: game.id,
+							name: game.name,
+							gameMode: game.mode,
+							map: g.map.name,
+							max: g.map.max,
+							players: lobby.util.countPlayers(),
+							type: 'updateToGame'
+						});
+					}
 				}
 			}
-			else {
+			else if (g.view === 'game') {
 				socket.zmq.publish('game:' + game.id, {
 					type: 'hb',
+					player: my.player,
 					account: my.account,
+					playerColor: my.playerColor,
+					team: my.team,
+					nation: my.nation,
 					flag: my.flag,
 					government: my.government,
-					nation: my.nation,
-					playerColor: my.playerColor
+					cpu: 0
 				});
 			}
 		}

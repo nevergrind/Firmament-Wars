@@ -224,6 +224,7 @@ var ai = {
 				}, obj);
 			}
 
+			console.info('ai-update: ', obj);
 			$.ajax({
 				url: app.url + 'php/attack-ai.php',
 				data: obj
