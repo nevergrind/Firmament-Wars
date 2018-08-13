@@ -126,6 +126,7 @@ var my = {
 	},
 	// shift camera to tile
 	focusTile: function(tile, d){
+		console.info('focusTile', tile, d);
 		var e = DOM['land' + tile];
 		if (e !== null){
 			var box = e.getBBox();

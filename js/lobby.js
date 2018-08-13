@@ -14,7 +14,7 @@ var lobby = {
 		{ account: '' }
 	],
 	startClassOn:  "btn btn-md btn-block btn-responsive shadow4 lobbyButtons",
-	startClassOff: "btn btn-md btn-block btn-responsive shadow4 lobbyButtons",
+	startClassOff: "btn btn-md btn-block btn-responsive shadow4 lobbyButtons lobby-gray",
 	util: {
 		countPlayers: function() {
 			var v, key, count = 0;
@@ -38,7 +38,7 @@ var lobby = {
 			g.getRandomFlag() : lobby.cpuFlag + ui.getFlagExt(lobby.cpuFlag);
 		var count = lobby.util.countPlayers();
 		console.info('add start: ', flag, count);
-		if (count && count < 8) {
+		if (count && count < title.mapData[g.map.key].players) {
 			g.lock();
 			audio.play('click');
 			$.ajax({
@@ -321,20 +321,20 @@ var lobby = {
 		hb: function(data) {
 			data.timestamp = Date.now();
 			console.log('%c lobbyHeartbeat: '+ data.account, 'background: #0f0; color: #f00');
-			if (typeof data.account === 'undefined') {
+			/*if (typeof data.account === 'undefined') {
 				console.info("removePlayer: ", data.player);
 				lobby.removePlayer(data);
 			}
-			else {
-				if (typeof this.list[data.account] === 'undefined') {
-					console.info("ADDING NEW:", data.account);
-					this.add(data);
-				}
-				else {
-					this.update(data);
-				}
-				this.audit(data.timestamp);
+			else {*/
+			if (typeof this.list[data.account] === 'undefined') {
+				console.info("ADDING NEW:", data.account);
+				this.add(data);
 			}
+			else {
+				this.update(data);
+			}
+			this.audit(data.timestamp);
+			/*}*/
 		},
 		add: function(data) {
 			//data
@@ -346,10 +346,11 @@ var lobby = {
 			this.list[data.account] = data;
 		},
 		remove: function(data) {
-			console.log("remove: ", data.account);
+			console.log("remove: ", data);
 			this.list[data.account] = void 0;
 			// dom
 			lobby.removePlayer(data);
+
 		},
 		audit: function(now) {
 			var v;
@@ -357,8 +358,9 @@ var lobby = {
 				v = this.list[key];
 				typeof v !== 'undefined' &&
 					now - v.timestamp > 5000 &&
-					lobby.presence.remove({
-						account: v.account
+					this.remove({
+						account: v.account,
+						player: v.player,
 					});
 			}
 		}
@@ -398,7 +400,7 @@ var lobby = {
 						title.addCpu && lobby.addCpuPlayer();
 						title.addCpu = 0;
 
-						my.player !== 1 &&
+						d !== 0 && my.player !== 1 &&
 							$(".lobbyRow:visible").length < 2 &&
 							lobby.hostLeft();
 
@@ -489,7 +491,6 @@ var lobby = {
 	addPlayer: function(data) {
 		data.timestamp = Date.now();
 		var i = data.player;
-		console.warn('!', data.player);
 		console.info("ADD PLAYER: ", data);
 
 		document.getElementById("lobbyRow" + i).style.display = 'flex';
@@ -538,14 +539,32 @@ var lobby = {
 	removePlayer: function(data) {
 		console.info("REMOVE PLAYER: ", data);
 		var i = data.player,
-			o = _.find(lobby.presence.list, function(v) {
-				return data.player === v.player;
-			});
-		console.info("FOUND: ", o);
-		document.getElementById("lobbyRow" + i).style.display = 'none';
-		document.getElementById('lobby-difficulty-cpu' + i).innerHTML = lang[my.lang].difficulties['Very Easy'];
-		lobby.presence.list[o.account] = void 0;
-		lobby.styleStartGame();
+			account = '',
+			key,
+			v;
+		for (key in lobby.presence.list) {
+			v = lobby.presence.list[key];
+			if (typeof v !== 'undefined' && v.player === i) {
+				account = v.account;
+			}
+		}
+		console.info('account: ', account)
+		if (account) {
+			lobby.presence.list[account] = void 0;
+			document.getElementById("lobbyRow" + i).style.display = 'none';
+			document.getElementById('lobby-difficulty-cpu' + i).innerHTML = lang[my.lang].difficulties['Very Easy'];
+			lobby.styleStartGame();
+			// remove in case they dropped
+			if (my.player === 1) {
+				$.ajax({
+					type: 'POST',
+					url: 'php/deletePlayerFromFwplayers.php',
+					data: {
+						player: data.player,
+					}
+				});
+			}
+		}
 	},
 	getHighestCpuPlayer: function() {
 		var player = 1, index = 0, v;
@@ -610,17 +629,27 @@ var lobby = {
 		// update button & window
 		var i = data.player;
 		console.info('updateGovernment', data.government);
+		lobby.presence.list[data.account].government = data.government;
 		document.getElementById('lobbyGovernment' + i).innerHTML =
 			data.government === 'Random' ?
 				lang[my.lang].governments[data.government] :
 				'<img src="images/icons/'+ data.government +'.png" class="fw-icon-sm">' + lang[my.lang].governments[data.government];
-		lobby.presence.list[data.account].government = lang[my.lang].governments[data.government];
 	},
 	updateDifficulty: function(data){
-		var i = data.player;
-		console.info('updateDifficulty', i, data.difficulty);
-		$('#lobby-difficulty-cpu' + i).html(lang[my.lang].difficulties[data.difficulty]);
-		lobby.presence.list[i].difficulty = data.difficulty;
+		var i = data.player * 1,
+			account = '',
+			key,
+			v = lobby.presence.list;
+		for (key in v) {
+			if (v[key].player === i) {
+				account = v[key].account;
+			}
+		}
+		if (account) {
+			console.info('updateDifficulty', data, data.difficulty);
+			$('#lobby-difficulty-cpu' + i).html(lang[my.lang].difficulties[data.difficulty]);
+			lobby.presence.list[account].difficulty = data.difficulty;
+		}
 	},
 	styleStartGame: function(){
 		if (my.player === 1){
@@ -641,11 +670,11 @@ var lobby = {
 			new Audio('sound/beepHi.mp3');
 			// normal countdown
 			countdown.style.display = 'block';
-			(function repeating(secondsToStart){
+			(function repeat(secondsToStart){
 				countdown.textContent = lang[my.lang].startingGame + secondsToStart--;
 				if (secondsToStart >= 0){
 					audio.play('beep');
-					setTimeout(repeating, 1000, secondsToStart);
+					setTimeout(repeat, 1000, secondsToStart);
 				}
 				else {
 					audio.play('beepHi');
@@ -666,14 +695,10 @@ var lobby = {
 			})(5);
 			cancelGame.style.display = 'none';
 			$("#teamDropdown").css('display', 'none');
-			// save game's players
-			localStorage.setItem('fwplayers', JSON.stringify(lobby.presence.list));
 		}
 	},
 	governmentIcon: function(p){
-		// <i class="' + icon + ' diploSquare player'+ game.player[p.player].playerColor +'" data-placement="right"></i>
 		var str = '';
-
 		if (p.cpu) {
 			str += '<img src="images/icons/computer.png" class="fw-icon-sm">';
 		}
@@ -682,24 +707,233 @@ var lobby = {
 		}
 		return str;
 	},
+	getFood: function() {
+		var foo = 2,
+			roll = ~~(Math.random() * 20) + 1;
+		if (roll >= 19){
+			foo = 4;
+		} else if (roll >= 14){
+			foo = 3;
+		}
+		return foo;
+	},
+	getProduction: function() {
+		var foo = 1,
+			roll = ~~(Math.random() * 20) + 1;
+		if (roll >= 19) {
+			foo = ~~(Math.random() * 2) + 3;
+		}
+		else if (roll >= 16) {
+			foo = 2;
+		}
+		return foo;
+	},
+	getCulture: function() {
+		var foo = 0,
+			roll = ~~(Math.random() * 20) + 1;
+		if (roll >= 19){
+			foo = ~~(Math.random() * 4) + 5;
+		} else if (roll >= 16){
+			foo = ~~(Math.random() * 2) + 3;
+		} else if (roll >= 12){
+			foo = 2;
+		}
+		return foo;
+	},
+	getPlayers: function() {
+		var players = [{
+				account: '',
+				nation: '',
+				flag: "blank.png",
+				player: 0,
+				playerColor: 0,
+				team: 1,
+				oBonus: 0,
+				dBonus: 0,
+				alive: true,
+				government: '',
+			}],
+			key,
+			v;
+		for (key in lobby.presence.list) {
+			v = lobby.presence.list[key];
+			typeof v !== 'undefined' && v.account && players.push(v);
+		}
+		return players;
+	},
+	getGameTiles: function() {
+		var tiles = [],
+			i = 0,
+			key, v, t,
+			len = title.mapData[g.map.key].tiles,
+			startTiles = title.mapData[g.map.key].startTiles,
+			tileNames = title.mapData[g.map.key].names,
+			units = 0,
+			barbEnabled = ~~(Math.random() * 4),
+			bonusType = 0,
+			food = 0,
+			production = 0,
+			culture = 0;
+
+		// fwtiles
+		for (; i<len; i++) {
+			units = 0;
+			if (i % 4 === barbEnabled) {
+				units = ~~(Math.random() * 3) + 2;
+			}
+			food = this.getFood();
+			production = this.getProduction();
+			culture = this.getCulture();
+			// apply barb resource bonus
+			if (units) {
+				bonusType = ~~(Math.random() * 2);
+				if (bonusType) {
+					if (culture) {
+						culture += ~~(Math.random() * 2) + 2;
+					}
+					else if (production) {
+						production += 1;
+					}
+					else {
+						food += ~~(Math.random() * 3) + 2;
+					}
+				}
+				else {
+					food += ~~(Math.random() * 2) + 2;
+				}
+			}
+			tiles[i] = {
+				account: '',
+				adj: [],
+				capital: 0,
+				cpu: 0,
+				culture: culture,
+				defense: 0,
+				flag: '',
+				food: food,
+				name: tileNames[i],
+				nation: '',
+				player: 0,
+				playerColor: 0,
+				production: production,
+				team: 0,
+				units: units,
+			}
+		}
+		// update for capitals etc
+		// len = lobby.util.countPlayers();
+		food = 5;
+		production = 4;
+		culture = 8;
+		for (key in lobby.presence.list) {
+			v = lobby.presence.list[key];
+			if (typeof v !== 'undefined') {
+				var startLen = startTiles.length,
+					startIndex = ~~(Math.random() * startLen - 1),
+					startTile = startTiles[startIndex],
+					units = 12,
+					defense = 1,
+					cpu = 0;
+
+				v.start = startTile;
+
+				startTiles.splice(startIndex, 1);
+
+				if (v.government === 'Despotism') {
+					defense = 2;
+				}
+				if (v.government === 1) {
+					cpu = 1;
+				}
+				t = tiles[startTile];
+				t.account = v.account;
+				t.player = v.player;
+				t.playerColor = v.playerColor;
+				t.team = v.team;
+				t.nation = v.nation;
+				t.flag = v.flag;
+				t.units = units;
+				t.food = food;
+				t.production = production;
+				t.culture = culture;
+				t.defense = defense;
+				t.capital = 1;
+				t.cpu = cpu;
+				console.info("Setting cap: ", v.account, startTile, t);
+			}
+		}
+		return tiles;
+	},
+	getMyCapital: function() {
+		var capital = 0, key, v;
+		for (key in game.player) {
+			v = game.player[key];
+			if (typeof v !== 'undefined') {
+				if (v.start && v.player === my.player) {
+					capital = v.start;
+				}
+			}
+		}
+		return capital;
+	},
+	setCapitalData: function() {
+		var capitalTiles = [];
+		for (var key in game.tiles) {
+			if (game.tiles[key].capital &&
+				game.tiles[key].player) {
+				capitalTiles.push(key * 1);
+			}
+		}
+		my.capital = lobby.getMyCapital();
+		$.ajax({
+			url: app.url +'php/set-capital-data.php',
+			data: {
+				capital: my.capital,
+				capitalTiles: capitalTiles,
+			}
+		});
+		return capitalTiles;
+	},
+	rxGameInit: function(data) {
+		// game tiles
+		game.tiles = JSON.parse(data.tiles);
+		localStorage.setItem('fwtiles', JSON.stringify(game.tiles));
+		console.info('rxFwtiles: ', game.tiles);
+		// game players
+		game.player = JSON.parse(data.players);
+		localStorage.setItem('fwplayers', JSON.stringify(game.player));
+		console.info('rxFwplayers', game.player);
+		this.setCapitalData(data);
+	},
 	startGame: function(){
 		if (my.player === 1){
 			if (lobby.util.countPlayers() >= 2){
+				g.lock();
+				audio.play('click');
 				lobby.gameStarted = true;
 				startGame.style.display = "none";
 				cancelGame.style.display = 'none';
-				g.lock();
-				audio.play('click');
 				$.ajax({
-					type: "GET",
+					type: 'GET',
 					url: app.url +"php/startGame.php"
 				}).fail(function(data){
 					g.msg(data.statusText);
 					startGame.style.display = "block";
 					cancelGame.style.display = 'block';
-				}).always(function(){
-					g.unlock();
-				});
+				}).always(g.unlock);
+				// send tile data
+				setTimeout(function() {
+					var players = lobby.getPlayers(),
+						tiles = lobby.getGameTiles();
+					$.ajax({
+						url: app.url +"php/send-game-init.php",
+						data: {
+							apcTiles: tiles,
+							tiles: JSON.stringify(tiles),
+							players: JSON.stringify(players)
+						}
+					});
+				}, 3500);
 			}
 			else {
 				g.msg(lang[my.lang].needTwoPlayers, 5);
@@ -908,24 +1142,17 @@ function loadGameState(){
 	// programmatically set text elements' id and class
 	e = document.querySelectorAll('text');
 	for (i=0, len = e.length; i<len; i++) {
-	  e[i].setAttributeNS(null, 'id', 'unit'+i);
-	  e[i].setAttributeNS(null, 'class', 'unit');
+	  	e[i].setAttributeNS(null, 'id', 'unit'+i);
+	  	e[i].setAttributeNS(null, 'class', 'unit');
 	}
 	initDom();
 	clearInterval(socket.keepAliveInterval);
 	$("#leaderboard, #configureNation, joinPrivateGameModal, #createGameWrap").remove();
 
-	var playerData = [];
-	for (var key in lobby.presence.list) {
-		var v = lobby.presence.list[key];
-		v.account && playerData.push(v);
-	}
-	console.info("SENDING: ", playerData);
+	// console.info("SENDING: ", playerData);
 	$.ajax({
+		type: 'GET',
 		url: app.url +"php/loadGameState.php",
-		data: {
-			players: JSON.stringify(playerData)
-		}
 	}).done(function(data){
 
 		if (sessionStorage.getItem('fwstats') === null) {
@@ -941,15 +1168,12 @@ function loadGameState(){
 		}
 
 		console.info("loadGameState", data);
-		console.info("player data:", data.players);
 		// data.mapData.sizeX data.mapData.sizeX
 		document.getElementById('world')
 			.setAttribute('viewBox', '0 0 ' + data.mapData.sizeX + ' ' + data.mapData.sizeY);
 
-		$("#login-modal").remove();
-		setTimeout(function() {
-			$("#title-bg-wrap").remove();
-		}, 2000);
+		$("#login-modal, meta").remove();
+		setTimeout($("#title-bg-wrap").remove, 2000);
 
 		g.resourceTick = data.resourceTick;
 		g.startGame = data.startGame * 1;
@@ -958,10 +1182,11 @@ function loadGameState(){
 		// set map data
 		g.map.sizeX = data.mapData.sizeX;
 		g.map.sizeY = data.mapData.sizeY;
-		g.map.name = data.mapData.name;
-		g.map.tiles = data.mapData.tiles;
-		g.map.tileNames = data.mapData.tileNames;
-		if (data.tiles.length < g.map.tiles){
+		g.map.name = title.mapData[g.map.key].name;
+		g.map.tiles = title.mapData[g.map.key].tiles;
+		g.map.tileNames = title.mapData[g.map.key].names;
+
+		/*if (data.tiles.length < g.map.tiles){
 			console.warn(data.tiles.length, g.map.tiles);
 			if (g.loadAttempts < 20){
 				setTimeout(function(){
@@ -977,10 +1202,8 @@ function loadGameState(){
 				}, 3000);
 			}
 			return;
-		}
-		$("meta").remove();
+		}*/
 		g.screen.resizeMap();
-
 		audio.gameMusicInit();
 		// only when refreshing page while testing
 		audio.load.game();
@@ -988,12 +1211,11 @@ function loadGameState(){
 		// done
 		my.player = data.player;
 		my.team = data.team;
-		my.account = data.account;
+		// my.account = data.account;
 		my.oBonus = data.oBonus;
 		my.dBonus = data.dBonus;
 		my.cultureBonus = data.cultureBonus;
 		my.tech = data.tech;
-		my.capital = data.capital;
 		my.flag = data.flag;
 		my.nation = data.nation;
 		my.foodMax = data.foodMax;
@@ -1024,33 +1246,14 @@ function loadGameState(){
 		}
 		// initialize player data
 		game.initialized = true;
-		for (var i=0; i<=8; i++) {
-			game.player[i] = {
-				account: '',
-				nation: '',
-				flag: "blank.png",
-				player: 0,
-				playerColor: 0,
-				team: 1,
-				alive: true,
-				government: '',
-			};
-		}
 		if (g.reloadGame) {
 			// did not find lobby data
-			lobby.presence.list = JSON.parse(localStorage.getItem('fwplayers'));
+			// TODO: Optimize this... can't I just assign it right to game.player?
+			game.player = JSON.parse(localStorage.getItem('fwplayers'));
+			game.tiles = JSON.parse(localStorage.getItem('fwtiles'));
 		}
-		var i = 1, key, v, ind;
-		for (key in lobby.presence.list) {
-			v = lobby.presence.list[key];
-			for (ind in v) {
-				// console.info('assigning: ', i, ind, v[ind]);
-				game.player[i][ind] = v[ind];
-			}
-			i++;
-		}
-		console.info(JSON.parse(JSON.stringify(game.player)));
-		
+		my.capital = lobby.getMyCapital();
+
 		g.removeContainers();
 		g.unlock();
 		g.view = "game";
@@ -1059,52 +1262,20 @@ function loadGameState(){
 		}, {
 			autoAlpha: 1
 		});
-		// init game player data
-		for (var i=0, len=game.player.length; i<len; i++){
-			if (game.player[i].account) {
-				var d = game.player[i],
-					z = game.player[d.player],
-					flag = d.flag.split('.')[0];
-
-				z.account = stats.data[d.player].account = d.account;
-				z.flag = stats.data[d.player].flag = flag + ui.getFlagExt(flag);
-				z.nation = stats.data[d.player].nation = d.nation;
-				z.player = d.player;
-				z.playerColor = d.playerColor;
-				z.team = d.team;
-				z.government = d.government;
-				z.cpu = stats.data[d.player].cpu = d.cpu;
-				z.difficulty = d.difficulty;
-				z.difficultyShort = d.difficulty ? d.difficulty.replace(/ /g, '') : '';
-			}
-		}
 
 		// initialize client tile data
-		var now = Date.now();
-		for (var i=0, len=data.tiles.length; i<len; i++){
-			var d = data.tiles[i];
-			game.tiles[i] = {
-				row: d.row,
-				name: d.tileName,
-				account: d.account,
-				player: d.player,
-				nation: d.nation,
-				flag: d.flag,
-				capital: data.capitalTiles.indexOf(i) > -1 && d.flag ? true : false,
-				units: d.units,
-				food: d.food,
-				production: d.production,
-				culture: d.culture,
-				defense: d.defense,
-				adj: data.adj[i],
-				timestamp: now
-			}
+		var now = Date.now(), d, i;
+		for (i=0, len=game.tiles.length; i<len; i++){
+			d = game.tiles[i];
+			d.adj = data.adj[i];
+			d.timestamp = now;
+
 			// init flag unit values
 			var zig = document.getElementById('unit' + i);
 			if (zig !== null){
 				var unitVal = game.tiles[i].capital ?
-					'<tspan class="unit-star">&#10028;</tspan>' + game.tiles[i].units :
-					game.tiles[i].units;
+					'<tspan class="unit-star">&#10028;</tspan>' + d.units :
+					d.units;
 				zig.innerHTML = d.units === 0 ? 0 : unitVal;
 				if (d.units){
 					zig.style.visibility = 'visible';
@@ -1244,9 +1415,7 @@ function loadGameState(){
 		}
 	}).fail(function(data){
 		console.info(data);
-		setTimeout(function(){
-			loadGameState();
-		}, 1500);
+		setTimeout(loadGameState, 1500);
 	}).always(function(){
 		g.unlock();
 	});

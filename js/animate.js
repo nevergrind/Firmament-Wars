@@ -160,7 +160,6 @@ var animate = {
 		})
 	},
 	initMapBars: function(i, x, y){
-		//console.info("unit: ", i);
 		var e = DOM['unit' + i],
 			x = e.getAttribute('x') - 25,
 			y = e.getAttribute('y') - 24,

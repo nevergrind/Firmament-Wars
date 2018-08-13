@@ -43,6 +43,9 @@ var socket = {
 			else if (data.type === 'countdown'){
 				lobby.countdown(data);
 			}
+			else if (data.type === 'send-game-init'){
+				lobby.rxGameInit(data);
+			}
 			else if (data.type === 'updateLobbyAdd'){
 				lobby.addPlayer(data);
 			}
@@ -294,6 +297,8 @@ var socket = {
 					flag: my.flag,
 					player: my.player,
 					playerColor: my.playerColor,
+					oBonus: 0,
+					dBonus: 0,
 					team: my.team,
 					government: my.government,
 					gameHost: my.player === 1 ? 1 : 0,
@@ -302,8 +307,8 @@ var socket = {
 				});
 				// update CPU lobby presence
 				if (my.player === 1) {
-					var v;
-					for (var key in lobby.presence.list) {
+					var v, key;
+					for (key in lobby.presence.list) {
 						v = lobby.presence.list[key];
 						if (typeof v !== 'undefined' && v.cpu) {
 							socket.zmq.publish('game:' + game.id, {
@@ -317,6 +322,7 @@ var socket = {
 								government: v.government,
 								gameHost: 0,
 								difficulty: v.difficulty,
+								difficultyShort: v.difficulty.replace(/ /g, ''),
 								cpu: 1
 							});
 						}
@@ -332,7 +338,7 @@ var socket = {
 							name: game.name,
 							gameMode: game.mode,
 							map: g.map.name,
-							max: g.map.max,
+							max: title.mapData[g.map.key].players,
 							players: lobby.util.countPlayers(),
 							type: 'updateToGame'
 						});

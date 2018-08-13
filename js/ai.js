@@ -278,7 +278,7 @@ var ai = {
 				score = 0,
 				tileScore = 0,
 				adjTiles = 0,
-				tileDefense = d.defense + (d.capital ? 1 : 0);
+				tileDefense = d.defense + d.capital;
 			//console.info(index, d.player === cpuPlayer, d.units, d.flag);
 			if (d.player === cpuPlayer && d.units < 65535 && d.flag){
 				// cpu's tile

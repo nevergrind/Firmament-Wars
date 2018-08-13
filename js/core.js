@@ -902,7 +902,7 @@ var game = {
 	},
 	updateTile: function(d){
 		var i = d.tile * 1,
-			p = d.player,
+			p = d.player * 1,
 			timestamp = d.timestamp * 10000;
 		// this update happened on the server earlier than most recent update... ignore!
 		if (timestamp < game.tiles[i].timestamp) {
@@ -910,6 +910,7 @@ var game = {
 			return;
 		}
 		// only update client data
+		console.info('updateTile: ', d);
 		game.tiles[i].player = p;
 		game.tiles[i].account = game.player[p].account;
 		game.tiles[i].nation = game.player[p].nation;
@@ -956,6 +957,7 @@ var game = {
 		
 		my.tgt === i && ui.showTarget(DOM['land' + i]);
 		ui.drawDiplomacyPanel();
+		location.host === 'localhost' && localStorage.setItem('fwtiles', JSON.stringify(game.tiles));
 	},
 	isMineOrAdjacent: function(tile) {
 		if (game.tiles[tile].player === my.player) return 1;
@@ -1034,6 +1036,27 @@ var game = {
 		// console.info('Player '+ result + ' taking turn for cpu ' + cpu);
 		return result === my.player;
 	},
+	getResourceSums: function() {
+		var o = {
+			food: 0,
+			production: 0,
+			culture: 0
+		};
+		game.tiles.forEach(function(v) {
+			if (v.player === my.player) {
+				if (v.food) {
+					o.food += v.food;
+				}
+				if (v.production) {
+					o.production += v.production;
+				}
+				if (v.culture) {
+					o.culture += v.culture;
+				}
+			}
+		});
+		return o;
+	},
 	updateResources: function(){
 		if (!g.over){
 			var firstPlayer = 0,
@@ -1056,23 +1079,57 @@ var game = {
 					}
 				}
 			});
-			//console.info('getGameState ', firstPlayer, pingCpu);
+			var res = game.getResourceSums();
 			$.ajax({
 				url: app.url + "php/updateResources.php",
 				data: {
 					pingCpu: pingCpu,
-					resourceTick: g.resourceTick 
+					resourceTick: g.resourceTick,
+					food: res.food,
+					production: res.production,
+					culture: res.culture,
+					revTile: game.getRevolutionTile()
 				}
-			}).done(function(data){
-				g.resourceTick = data.resourceTick;
-				setResources(data);
-				game.reportMilestones(data);
-				animate.energyBar(data.resourceTick);
-			}).fail(function(data){
+			}).done(game.updateResourcesDone)
+			.fail(function(data){
 				console.info(data.responseText);
 				serverError(data);
 			});
 		}
+	},
+	getRevolutionTile: function() {
+		var tile = -1,
+			units = 0;
+		game.tiles.forEach(function(v, i) {
+			if (g.teamMode) {
+				if (v.team !== my.team &&
+					v.flag &&
+					!v.capital) {
+					if (v.units > units) {
+						tile = i;
+						units = v.units;
+					}
+				}
+			}
+			else {
+				if (v.player !== my.player &&
+					v.flag &&
+					!v.capital) {
+					if (v.units > units) {
+						tile = i;
+						units = v.units;
+					}
+				}
+			}
+		});
+		return tile;
+	},
+	updateResourcesDone: function(data) {
+		console.info('updateResources.php', data);
+		g.resourceTick = data.resourceTick;
+		setResources(data);
+		game.reportMilestones(data);
+		animate.energyBar(data.resourceTick);
 	},
 	reportMilestones: function(data){
 		if (data.cultureMsg !== undefined){
@@ -1262,19 +1319,17 @@ function playerLogout(){
 }
 
 function exitGame(bypass){
-	if (g.view === 'game'){
+	/*if (g.view === 'game'){
 		var r = confirm("Are you sure you want to surrender?");
-	}
-	if (r || bypass || g.view !== 'game'){
+	}*/
+	if (bypass || g.view !== 'game'){
 		g.lock(1);
 		$.ajax({
 			url: app.url + 'php/exitGame.php',
 			data: {
 				view: g.view
 			}
-		}).always(function(){
-			location.reload();
-		});
+		}).always(location.reload);
 	}
 }
 function surrenderMenu(){

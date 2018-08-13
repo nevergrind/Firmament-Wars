@@ -116,6 +116,7 @@ var action = {
 		var attacker = my.tgt,
 			defender = that.id.slice(4)*1;
 		if (my.tgt === defender){
+			// same tile!
 			return;
 		}
 		if (game.tiles[attacker].adj.indexOf(defender) === -1){
@@ -166,9 +167,7 @@ var action = {
 
 		TweenMax.to(filter, .5, {
 			brightness: 100,
-			onUpdate: function() {
-				animate.brightness(element, filter.brightness);
-			}
+			onUpdate: animate.brightness(element, filter.brightness)
 		});
 		// send attack to server
 		$.ajax({
@@ -176,12 +175,11 @@ var action = {
 			data: {
 				attacker: attacker,
 				defender: defender,
-				attackRow: game.tiles[attacker].row,
-				defendRow: game.tiles[defender].row,
 				split: isSplit,
+				dBonus: game.player[game.tiles[defender].player].dBonus,
 				defGovernment: game.player[game.tiles[defender].player].government
 			}
-		}).done(function(data){
+		}).done(function(data) {
 			//console.info('attackTile', data);
 			// animate attack
 			action.timeoutWeaponButton(attackElement, dur);
@@ -190,7 +188,8 @@ var action = {
 				if (!game.tiles[defender].units){
 					audio.move();
 				}
-			} else {
+			}
+			else {
 				audio.move();
 			}
 			// barbarian message
@@ -206,36 +205,47 @@ var action = {
 					setTimeout(function(){
 						animate.upgrade(defender, 'culture', data.cultureReward +'%');
 					}, 1000);
-				} else if (data.sumFood){
+				}
+				else if (data.sumFood){
 					animate.upgrade(defender, 'food', data.sumFood);
-				} else if (data.sumProduction){
+				}
+				else if (data.sumProduction){
 					animate.upgrade(defender, 'production', data.sumProduction);
-				} else if (data.sumCulture){
+				}
+				else if (data.sumCulture){
 					animate.upgrade(defender, 'culture', data.sumCulture);
-				} else if (data.sumMoves){
+				}
+				else if (data.sumMoves){
 					animate.upgrade(defender, 'energy', data.sumMoves);
-				} else if (data.foodReward){
+				}
+				else if (data.foodReward){
 					// food %
 					animate.upgrade(defender, 'food', data.foodReward +'%');
-				} else if (data.productionReward){
+				}
+				else if (data.productionReward){
 					// production %
 					animate.upgrade(defender, 'production', data.productionReward +'%');
-				} else if (data.cultureReward){
+				}
+				else if (data.cultureReward){
 					// culture %
 					animate.upgrade(defender, 'culture', data.cultureReward +'%');
 				}
 			}
-			setMoves(data); 
+			setMoves(data);
 			// reset target if lost
 			if (!data.victory){
 				ui.showTarget(DOM['land' + attacker]);
 			}
 			// process barbarian reward messages
 			game.reportMilestones(data);
-		}).fail(function(data){
+		})
+		.fail(function(data){
 			action.targetNotAdjacent(data.statusText, attacker);
 		});
-	},/*
+	},
+	attackTileDone: function(data, dur) {
+	},
+	/*
 	getRandomDemocracyTile: function(tile, player){
 		var a = [],
 			i = 0;
@@ -290,7 +300,6 @@ var action = {
 			$.ajax({
 				url: app.url + 'php/deploy.php',
 				data: {
-					deployRow: game.tiles[tgt].row,
 					target: tgt
 				}
 			}).done(function(data) {
@@ -334,7 +343,6 @@ var action = {
 			$.ajax({
 				url: app.url + 'php/rush.php',
 				data: {
-					rushRow: game.tiles[tgt].row,
 					target: tgt
 				}
 			}).done(function(data) {
@@ -343,13 +351,22 @@ var action = {
 				game.tiles[tgt].units = data.units;
 				//setProduction(data);
 				ui.setTileUnits(tgt);
-			}).fail(function(e){
+			}).fail(function(){
 				audio.play('error');
 			}).always(function(data){
 				// my.manpower = data.manpower;
 				setResources(data);
 			});
 		}
+	},
+	getRushedUnits: function() {
+		var deployedUnits = 2 + ~~(my.cultureBonus / 50),
+			units = game.tiles[my.tgt].units;
+
+		if (units + deployedUnits > 65535){
+			deployedUnits = (units - 65535) * -1;
+		}
+		return deployedUnits;
 	},
 	democracyUnits: function() {
 		console.info('democracyUnits ', Date.now());
@@ -364,7 +381,7 @@ var action = {
 	upgradeTileDefense: function(){
 		//my.checkSelectLastTarget();
 		var t = game.tiles[my.tgt],
-			ind = t.defense - t.capital ? 1 : 0;
+			ind = t.defense - t.capital;
 		if (my.player !== t.player) {
 			action.error(lang[my.lang].notYourTile);
 			return;
@@ -601,7 +618,7 @@ var action = {
 	},
 	setBuildButton: function() {
 		var t = game.tiles[my.tgt],
-			defense = t.defense - (t.capital ? 1 : 0),
+			defense = t.defense - t.capital,
 			display = 'none';
 
 		if (my.tech.masonry && t.player === my.player){
@@ -904,8 +921,10 @@ var research = {
 	},
 	futureTechDone: function() {
 		$.ajax({
-			type: 'GET',
-			url: app.url + 'php/researchFutureTechDone.php'
+			url: app.url + 'php/researchFutureTechDone.php',
+			data: {
+				revTile: game.getRevolutionTile()
+			}
 		}).done(function(data) {
 			research.report(data, "Future Tech");
 		})

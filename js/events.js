@@ -464,6 +464,11 @@ var events = {
 				if (my.player === data.player * 1) {
 					my.team = data.team;
 				}
+				var obj = _.find(lobby.presence.list, function(v) {
+					return v.player === data.player * 1;
+				});
+				console.info('obj ', obj);
+				lobby.presence.list[obj.account].team = data.team;
 			});
 			
 		}).on(ui.click, '#cpu-add-player', lobby.addCpuPlayer)

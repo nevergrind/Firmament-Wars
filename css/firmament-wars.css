@@ -1539,6 +1539,12 @@ audio,
 #create-map-select {
 	margin: 2rem 0;
 }
+.lobby-gray {
+	background: #444!important;
+}
+#startGame {
+	transition: background ease-out .2s;
+}
 .lobbyButtons {
 	position: relative;
 	background: rgba(0, 48, 112, .8);
@@ -1547,7 +1553,6 @@ audio,
 	margin: 0 auto;
 	max-width: 20rem;
     border: 1px double #37d!important;
-    box-shadow: 0 0 2rem rgba(0, 40, 148, 1) inset;
 	cursor: url('cursor/hover.png'), pointer;
 }
 .lobbyButtons:hover {

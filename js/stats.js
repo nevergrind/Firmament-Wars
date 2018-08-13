@@ -70,6 +70,7 @@ var stats = {
 		var flag = my.flag,
 			str = '<img id="statWorld" src="images/FlatWorld90.jpg">',
 			kjv = bible.getRandomQuoteAndVerse();
+
 		str +=
 		'<div id="statResult" class="no-select">\
 			<img class="statResultFlag" src="images/flags/'+ flag +'">\
@@ -151,7 +152,6 @@ var stats = {
 			audio.play('defeat');
 			audio.play("JourneyOfForgottenSoldiers", 1);
 		}
-		console.warn("GOING VISIBLE");
 		document.getElementById('statWrap').style.visibility = 'visible';
 		TweenMax.to('#gameWrap', .5, {
 			startAt: {
@@ -628,17 +628,26 @@ var stats = {
 				production: 0,
 			}
 		}
+		// add player data
+		game.player.forEach(function(v, i) {
+			if (v.account) {
+				stats.data[i].account = v.account;
+				stats.data[i].flag = v.flag;
+				stats.data[i].government = v.government;
+				stats.data[i].nation = v.nation;
+			}
+		});
 	},
 	delete: function() {
 		sessionStorage.removeItem('fwstats');
 	},
 	update: function(data) {
-		console.info("stats.update", data);
+		// console.info("stats.update", data);
 		for (var player in data.contents) {
 			var pObj = data.contents[player];
 			for (var key in pObj) {
-				console.info('adding: player', player, key, pObj[key]);
 				stats.data[player][key] += pObj[key];
+				console.info('adding: player', player, key, pObj[key], stats.data[player][key]);
 			}
 		};
 		sessionStorage.setItem('fwstats', JSON.stringify(stats.data));
