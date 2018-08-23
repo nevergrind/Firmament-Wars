@@ -151,6 +151,12 @@ var ui = {
 			}
 		}
 		DOM.diplomacyBody.innerHTML = strArr.reverse().join("");
+		// check elimination
+		rankedPlayers.forEach(function(v, i) {
+			if (i && game.player[i].alive && !v) {
+				game.publishEliminatePlayer(i);
+			}
+		})
 	},
 	currentLoser: 0,
 	resizeWindow: function() {

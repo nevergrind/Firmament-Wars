@@ -204,9 +204,8 @@ var ai = {
 				loop: i,
 				attacker: tiles[0],
 				defender: tiles[1],
-				attackRow: game.tiles[tiles[0]].row,
-				defendRow: game.tiles[tiles[1]].row,
 				player: d.player,
+				dBonus: game.player[game.tiles[tiles[1]].player].dBonus,
 				defGovernment: game.player[game.tiles[tiles[1]].player].government
 			};
 			if (i === 0) {
@@ -223,12 +222,17 @@ var ai = {
 					newUnits: o.newUnits,
 				}, obj);
 			}
+			if (game.tiles[obj.attacker].adj.indexOf(obj.defender) === -1){
+				console.warn("Uh oh! AI chose a territory that is not adjacent!");
+			}
+			else {
+				// console.info('ai-update: ', obj);
+				$.ajax({
+					url: app.url + 'php/attack-ai.php',
+					data: obj
+				});
+			}
 
-			console.info('ai-update: ', obj);
-			$.ajax({
-				url: app.url + 'php/attack-ai.php',
-				data: obj
-			});
 		}
 		else {
 			console.warn("Failed to attack! Deploying...");
@@ -237,7 +241,6 @@ var ai = {
 				url: app.url + 'php/deploy-ai.php',
 				data: {
 					newUnits: 5,
-					attackRow: game.tiles[tile].row,
 					deployTile: tile
 				}
 			});
@@ -369,13 +372,15 @@ var ai = {
 	fireCannons: function(d){
 		var tiles = ai.getWeaponTarget(d.player);
 		if (tiles[0] > -1){
+			if (game.tiles[tiles[0]].adj.indexOf(tiles[1]) === -1){
+				action.targetNotAdjacent('You can only attack adjacent territories.', attacker);
+				return;
+			}
 			$.ajax({
 				url: app.url + 'php/ai-fireCannons.php',
 				data: {
 					attacker: tiles[0],
-					attackRow: game.tiles[tiles[0]].row,
 					defender: tiles[1],
-					defendRow: game.tiles[tiles[1]].row,
 				}
 			});
 		}
@@ -388,8 +393,6 @@ var ai = {
 				data: {
 					attacker: tiles[0],
 					defender: tiles[1],
-					attackRow: game.tiles[tiles[0]].row,
-					defendRow: game.tiles[tiles[1]].row,
 				}
 			}).done(function(){
 				setTimeout(function(){
@@ -397,9 +400,8 @@ var ai = {
 						url: app.url + 'php/ai-launchMissileHit.php',
 						data: {
 							attackPlayer: d.player,
-							account: d.account,
+							// account: d.account,
 							defender: tiles[1],
-							defendRow: game.tiles[tiles[1]].row,
 						}
 					});
 				}, 1000);
@@ -414,8 +416,6 @@ var ai = {
 				data: {
 					attacker: tiles[0],
 					defender: tiles[1],
-					attackRow: game.tiles[tiles[0]].row,
-					defendRow: game.tiles[tiles[1]].row,
 				}
 			}).done(function(){
 				setTimeout(function(){
@@ -425,7 +425,6 @@ var ai = {
 							attackPlayer: d.player,
 							account: d.account,
 							defender: tiles[1],
-							defendRow: game.tiles[tiles[1]].row,
 						}
 					});
 				}, 6000);
@@ -439,7 +438,6 @@ var ai = {
 				url: app.url + 'php/ai-upgradeTileDefense.php',
 				data: {
 					target: tile,
-					targetRow: game.tiles[tile].row,
 					player: d.player,
 					account: d.account
 				}
@@ -461,10 +459,10 @@ var ai = {
 		VeryEasy: 50, 
 		Easy: 40,
 		Normal: 30,
-		Hard: 22,
-		VeryHard: 15,
-		Mania: 10,
-		Juggernaut: 5
+		Hard: 25,
+		VeryHard: 20,
+		Mania: 15,
+		Juggernaut: 10
 	},
 	// number of bonus attacks
 	attackFood: {
@@ -481,10 +479,10 @@ var ai = {
 		VeryEasy: 2,
 		Easy: 2,
 		Normal: 2,
-		Hard: 2,
-		VeryHard: 3,
-		Mania: 3,
-		Juggernaut: 3
+		Hard: 3,
+		VeryHard: 4,
+		Mania: 5,
+		Juggernaut: 6
 	},
 	// guaranteed attacks
 	attackBaseTurns: {
@@ -493,8 +491,8 @@ var ai = {
 		Normal: 2,
 		Hard: 2,
 		VeryHard: 2,
-		Mania: 2,
-		Juggernaut: 2
+		Mania: 3,
+		Juggernaut: 4
 	},
 	unlockNuke: {
 		VeryEasy: 250, 
@@ -551,13 +549,13 @@ var ai = {
 		Juggernaut: 0
 	},
 	takeTurn: function(d){
-		//console.info('TAKING TURN', d.player, d.account);
-		var o = ai.getResourceTotal(d.player);
-		// attack
-		var turns = Math.ceil(o.food / ai.attackFood[d.difficultyShort]) + ai.attackBaseTurns[d.difficultyShort];
+		var o = ai.getResourceTotal(d.player),
+			turns = Math.ceil(o.food / ai.attackFood[d.difficultyShort]) + ai.attackBaseTurns[d.difficultyShort];
+
 		if (turns > ai.attackMax[d.difficultyShort]){
 			turns = ai.attackMax[d.difficultyShort];
 		}
+		// console.info('TAKING TURN', d.player, d.account, turns);
 		for (var i=0; i<turns; i++){
 			(function(i, d){
 				setTimeout(function(){
@@ -569,7 +567,7 @@ var ai = {
 						o = Object.assign(deployObj, o);
 					}
 					ai.attack(i, d, o);
-					console.info('executing turn: ', d.player, Date.now());
+					// console.info('executing turn: ', d.player, Date.now());
 				}, ai.attackDelay(i, d));
 			})(i, d);
 		}

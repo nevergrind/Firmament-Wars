@@ -628,6 +628,7 @@ g.init = (function(){
 		stats.delete();
 	}
 })();
+
 var game = {
 	name: '',
 	tiles: [],
@@ -636,8 +637,8 @@ var game = {
 		list: {},
 		hb: function(data) {
 			data.timestamp = Date.now();
-			console.log('%c gameHeartbeat: ', 'background: #0f0; color: #f00');
-			console.info(data);
+			/*console.log('%c gameHeartbeat: ', 'background: #0f0; color: #f00');
+			console.info(data);*/
 			this.update(data);
 			this.audit(data.timestamp);
 		},
@@ -722,6 +723,15 @@ var game = {
 			}
 		}, 12000);
 	},
+	publishEliminatePlayer: function(player) {
+		socket.zmq.publish('game:'+ game.id, {
+			type: 'eliminated',
+			sfx: 'chat',
+			player: player,
+			message: '<span class="chat-warning">'+ game.player[player].nation + ' has been eliminated.</span>',
+			eliminateType: 'byPlayer',
+		});
+	},
 	eliminatePlayer: function(data){
 		// player eliminated
 		var i = data.player,
@@ -729,26 +739,28 @@ var game = {
 			cpuCount = 0,
 			teams = [];
 
-		game.player[i].alive = false;
+		// avoid calling multiple times
+		if (!game.player[i].alive) return;
+		game.player[i].alive = 0;
 		// count alive players remaining
 		game.player.forEach(function(e, index){
-			if (e.account){
-				if (e.alive){
-					if (!e.cpu){
-						// only counts human players
-						//console.info('Human player found at: '+ index);
-						playerCount++;
-						if (teams.indexOf(e.team) === -1){
-							teams.push(e.team);
-						}
-					}
-					if (e.cpu){
-						//console.info('CPU player found at: '+ index);
-						cpuCount++;
-					}
+			if (e.account && e.alive){
+				if (e.cpu){
+					// console.info('CPU player found at: '+ index);
+					cpuCount++;
+				}
+				else {
+					// only counts human players
+					// console.info('Human player found at: '+ index);
+					playerCount++;
+				}
+				if (teams.indexOf(e.team) === -1){
+					// get a unique array of teams
+					teams.push(e.team);
 				}
 			}
 		});
+
 		// found 2 players on diplomacy panel
 		$("#diplomacyPlayer" + i).removeClass('alive');
 		console.info(playerCount, cpuCount, teams);
@@ -767,8 +779,9 @@ var game = {
 		// game over - insurance check to avoid multiples somehow happening
 		if (!g.over){
 			// it's not over... check with server
-			console.info('ELIMINATED: ', playerCount, teams.length);
+			console.info('ELIMINATED: ', i, playerCount, teams.length);
 			if (i === my.player){
+				console.info('I was eliminated!!!! ', i, my.player);
 				gameDefeat();
 			}
 			else {
@@ -808,22 +821,27 @@ var game = {
 			height: 0,
 			rotationX: -90
 		});
+		// remove player??? always???
 		data.eliminateType !== 'byPlayer' && game.removePlayer(i);
 	},
 	removePlayer: function(p){
-		game.tiles[p].account = '';
+		/*game.tiles[p].account = '';
 		game.tiles[p].nation = '';
-		game.tiles[p].flag = '';
+		game.tiles[p].flag = '';*/
+		var timestamp = Date.now();
 		for (var i=0, len=game.tiles.length; i<len; i++){
 			if (game.tiles[i].player === p){
+				game.tiles[i].tile = i;
 				game.tiles[i].account = '';
-				game.tiles[i].defense = '';
 				game.tiles[i].flag = '';
 				game.tiles[i].nation = '';
+				game.tiles[i].defense = 0;
 				game.tiles[i].player = 0;
+				game.tiles[i].playerColor = 0;
+				game.tiles[i].team = 0;
 				game.tiles[i].units = 0;
-				game.tiles[i].tile = i;
-				game.updateTile(game.tiles[i]);
+				game.tiles[i].timestamp = 0;
+				game.updateTile(game.tiles[i], timestamp);
 			}
 		}
 	},
@@ -900,39 +918,50 @@ var game = {
 			ui.showTarget(DOM['land' + my.tgt]);
 		}
 	},
-	updateTile: function(d){
+	updateTile: function(d, localTimestampBypass){
 		var i = d.tile * 1,
-			p = d.player * 1,
+			attackPlayer = d.player * 1,
 			timestamp = d.timestamp * 10000;
+
 		// this update happened on the server earlier than most recent update... ignore!
 		if (timestamp < game.tiles[i].timestamp) {
-			console.warn('did not update', i, timestamp, game.tiles[i].timestamp, timestamp < game.tiles[i].timestamp);
-			return;
+			if (localTimestampBypass) {
+				timestamp = localTimestampBypass;
+			}
+			else {
+				console.warn('did not update', i, timestamp, game.tiles[i].timestamp, timestamp < game.tiles[i].timestamp);
+				return;
+			}
 		}
 		// only update client data
-		console.info('updateTile: ', d);
-		game.tiles[i].player = p;
-		game.tiles[i].account = game.player[p].account;
-		game.tiles[i].nation = game.player[p].nation;
-		game.tiles[i].flag = game.player[p].flag;
+		var tileObj = JSON.parse(JSON.stringify(game.tiles[i])),
+			defendPlayer = tileObj.player,
+			defendingFlag = tileObj.flag,
+			playerChanged = tileObj.player === attackPlayer;
+
+		// console.info('updateTile: ', d);
+		game.tiles[i].player = attackPlayer;
+		game.tiles[i].account = game.player[attackPlayer].account;
+		game.tiles[i].nation = game.player[attackPlayer].nation;
+		game.tiles[i].flag = game.player[attackPlayer].flag;
 		game.tiles[i].timestamp = timestamp;
-		var newFlag = game.player[p].flag;
+		var newFlag = game.player[attackPlayer].flag;
 		// change flag
-		if (DOM['flag' + i] !== null && newFlag){
+		//if (DOM['flag' + i] !== null && newFlag){
 			// check barb
 			if (newFlag === 'blank.png' && d.units) {
 				newFlag = 'Barbarian.jpg';
 			}
 			//console.info('newFlag', newFlag, d.units);
 			DOM['flag' + i].href.baseVal = "images/flags/" + newFlag;
-		}
+		//}
 		// land color
 		TweenMax.set(DOM['land' + i], {
-			fill: g.color[game.player[p].playerColor],
-			stroke: p ? g.color[game.player[p].playerColor] : '#aaa',
+			fill: g.color[game.player[attackPlayer].playerColor],
+			stroke: attackPlayer ? g.color[game.player[attackPlayer].playerColor] : '#aaa',
 			strokeWidth: 1,
 			onComplete: function(){
-				if (p){
+				if (attackPlayer){
 					TweenMax.set(this.target, {
 						stroke: "hsl(+=0%, +=0%, "+ (my.tgt === i ? "+=15%)" : "-=30%)")
 					});
@@ -957,7 +986,15 @@ var game = {
 		
 		my.tgt === i && ui.showTarget(DOM['land' + i]);
 		ui.drawDiplomacyPanel();
-		location.host === 'localhost' && localStorage.setItem('fwtiles', JSON.stringify(game.tiles));
+		location.host === 'localhost' &&
+			localStorage.setItem('fwtiles', JSON.stringify(game.tiles));
+		// only check if tile changed to a player
+		/*if (defendingFlag && playerChanged) {
+			console.info('player compare: ', game.tiles[i].player, defendPlayer);
+			console.info("check eliminate? ", game.tiles[i].name, defendPlayer, defendingFlag);
+			game.checkEliminatedPlayers();
+			console.info("playerEliminated? ", playerEliminated);
+		}*/
 	},
 	isMineOrAdjacent: function(tile) {
 		if (game.tiles[tile].player === my.player) return 1;
@@ -1001,16 +1038,18 @@ var game = {
 		game.energyTimer = setInterval(game.updateResources, g.speed * 1000);
 		animate.energyBar();
 	},
-	triggerNextTurn: function(data){
-		//console.info("TRIGGERING NEXT TURN!", data);
-		clearInterval(game.energyTimer);
-		game.energyTimer = setInterval(game.updateResources, g.speed * 1000);
+	triggerNextTurn: function(){
+		console.info("TRIGGERING NEXT TURN!");
+		// clearInterval(game.energyTimer);
+		// game.energyTimer = setInterval(game.updateResources, g.speed * 1000);
 		game.updateResources();
 	},
 	lowestPlayerIsMe: function() {
 		var lowestId = my.player;
 		game.player.forEach(function(v) {
-			if (v.alive && v.player < lowestId) {
+			if (!v.cpu &&
+				v.alive &&
+				v.player < lowestId) {
 				lowestId = v.player;
 			}
 		});
@@ -1032,8 +1071,8 @@ var game = {
 		var result = alivePlayers[cpu % count];
 		/*console.info('alivePlayers: ', alivePlayers);
 		console.info('cpu: ', cpu);
-		console.info('count: ', count);*/
-		// console.info('Player '+ result + ' taking turn for cpu ' + cpu);
+		console.info('count: ', count);
+		console.info('Player '+ result + ' taking turn for cpu ' + cpu);*/
 		return result === my.player;
 	},
 	getResourceSums: function() {
@@ -1067,7 +1106,7 @@ var game = {
 						// game.lowestPlayerIsMe() && ai.takeTurn(d);
 						game.playerActivatesCpuTurn(d.player) && ai.takeTurn(d);
 					}
-					else if (d.cpu === 0){
+					else {
 						// 0 means player, null means barb
 						if (!firstPlayer){
 							firstPlayer = 1;
@@ -1079,6 +1118,7 @@ var game = {
 					}
 				}
 			});
+
 			var res = game.getResourceSums();
 			$.ajax({
 				url: app.url + "php/updateResources.php",
@@ -1130,6 +1170,7 @@ var game = {
 		setResources(data);
 		game.reportMilestones(data);
 		animate.energyBar(data.resourceTick);
+		// game.lowestPlayerIsMe() && game.triggerNextTurn();
 	},
 	reportMilestones: function(data){
 		if (data.cultureMsg !== undefined){
@@ -1144,6 +1185,16 @@ var game = {
 				initOffensiveTooltips();
 			}
 		}
+	},
+	getPlayersTiles: function(player) {
+		if (player === undefined) {
+			return;
+		}
+		var arr = [];
+		game.tiles.forEach(function(v, i) {
+			player === v.player && arr.push(i);
+		});
+		return arr;
 	}
 };
 var timer = {
@@ -1329,7 +1380,9 @@ function exitGame(bypass){
 			data: {
 				view: g.view
 			}
-		}).always(location.reload);
+		}).always(function() {
+			location.reload();
+		});
 	}
 }
 function surrenderMenu(){
@@ -1338,9 +1391,16 @@ function surrenderMenu(){
 }
 function surrender(){
 	document.getElementById('surrenderScreen').style.display = 'none';
+	var tiles = game.getPlayersTiles(my.player);
+	if (!tiles.length) {
+		tiles = [];
+	}
+	console.info('surrender tiles: ', tiles);
 	$.ajax({
-		type: 'GET',
 		url: app.url + 'php/surrender.php',
+		data: {
+			tiles: tiles
+		}
 	});
 	audio.play('click');
 	

@@ -157,7 +157,9 @@ var my = {
 			TweenMax.to(DOM.worldWrap, d, {
 				left: ~~x,
 				top: ~~y,
-				onUpdate: applyBounds
+				onUpdate: function() {
+					applyBounds()
+				}
 			});
 			ui.showTarget(DOM['land' + tile], false, 1);
 		}

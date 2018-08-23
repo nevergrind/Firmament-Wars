@@ -293,6 +293,7 @@ var socket = {
 				socket.zmq.publish('game:' + game.id, {
 					type: 'hb',
 					account: my.account,
+					alive: 1,
 					nation: my.nation,
 					flag: my.flag,
 					player: my.player,
@@ -314,10 +315,13 @@ var socket = {
 							socket.zmq.publish('game:' + game.id, {
 								type: 'hb',
 								account: v.account,
+								alive: 1,
 								nation: v.nation,
 								flag: v.flag,
 								player: v.player,
 								playerColor: v.playerColor,
+								oBonus: 0,
+								dBonus: 0,
 								team: v.team,
 								government: v.government,
 								gameHost: 0,

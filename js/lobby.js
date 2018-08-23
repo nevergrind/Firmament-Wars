@@ -750,7 +750,7 @@ var lobby = {
 				team: 1,
 				oBonus: 0,
 				dBonus: 0,
-				alive: true,
+				alive: 1,
 				government: '',
 			}],
 			key,
@@ -842,7 +842,7 @@ var lobby = {
 				if (v.government === 'Despotism') {
 					defense = 2;
 				}
-				if (v.government === 1) {
+				if (v.cpu === 1) {
 					cpu = 1;
 				}
 				t = tiles[startTile];

@@ -23,8 +23,12 @@ function mouseZoomIn(e){
 		transformOrigin: g.mouse.x + "px " + g.mouse.y + "px",
 		force3D: true,
 		scale: g.mouse.zoom / 100,
-		onUpdate: applyBounds,
-		onComplete: mouseZoomDone
+		onUpdate: function() {
+			applyBounds()
+		},
+		onComplete: function() {
+			mouseZoomDone()
+		}
 	});
 }
 function mouseZoomOut(e){
@@ -38,8 +42,12 @@ function mouseZoomOut(e){
 		transformOrigin: g.mouse.x + "px " + g.mouse.y + "px",
 		force3D: true,
 		scale: g.mouse.zoom / 100,
-		onUpdate: applyBounds,
-		onComplete: mouseZoomDone
+		onUpdate: function() {
+			applyBounds()
+		},
+		onComplete: function() {
+			mouseZoomDone()
+		}
 	});
 }
 function setMousePosition(X, Y){

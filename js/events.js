@@ -534,7 +534,7 @@ var events = {
 			audio.play('click');
 			document.getElementById('surrenderScreen').style.display = 'none';
 		});
-		$("#surrenderButton").on(ui.click, function(){
+		$("#surrenderButton").on(ui.click, function() {
 			surrender();
 		});
 	})()

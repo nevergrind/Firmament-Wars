@@ -647,7 +647,7 @@ var stats = {
 			var pObj = data.contents[player];
 			for (var key in pObj) {
 				stats.data[player][key] += pObj[key];
-				console.info('adding: player', player, key, pObj[key], stats.data[player][key]);
+				// console.info('adding: player', player, key, pObj[key], stats.data[player][key]);
 			}
 		};
 		sessionStorage.setItem('fwstats', JSON.stringify(stats.data));

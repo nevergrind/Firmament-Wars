@@ -109,7 +109,9 @@ var action = {
 			timerKey = isSplit ? 'splitAttackTimer' : 'attackTimer',
 			attackElement = isSplit ? 'splitAttack' : 'attack',
 			now = Date.now(),
-			dur = 500;
+			dur = 500,
+			moveCost = 0;
+
 		if (now - g[timerKey] < dur) {
 			return;
 		}
@@ -139,9 +141,10 @@ var action = {
 			my.clearHud();
 			return;
 		}
-		if (my.government === lang[my.lang].governments.Despotism &&
-			game.tiles[defender].player === my.player){
-			// nothing
+		if (my.government === 'Despotism' &&
+			my.player === game.tiles[defender].player){
+			// bypass move check
+			moveCost = 0;
 		}
 		else {
 			if ((my.moves < 2 && !isSplit) ||
@@ -149,13 +152,19 @@ var action = {
 				action.error(lang[my.lang].notEnoughEnergy);
 				return;
 			}
+			if (isSplit) {
+				moveCost = 1;
+			}
+			else {
+				moveCost = 2;
+			}
 		}
 		ui.showTarget(that);
 		my.clearHud();
 		if (g.teamMode && game.tiles[defender].player){
 			if (my.account !== game.tiles[defender].account){
 				if (my.team === game.player[game.tiles[defender].player].team){
-					console.warn(my.team, game.tiles[defender].player, game.player[game.tiles[defender].player].team)
+					console.warn(my.team, game.tiles[defender].player, game.player[game.tiles[defender].player].team);
 					g.msg(lang[my.lang].friendlyFire);
 				}
 			}
@@ -167,7 +176,9 @@ var action = {
 
 		TweenMax.to(filter, .5, {
 			brightness: 100,
-			onUpdate: animate.brightness(element, filter.brightness)
+			onUpdate: function() {
+				animate.brightness(element, filter.brightness)
+			}
 		});
 		// send attack to server
 		$.ajax({
@@ -176,6 +187,7 @@ var action = {
 				attacker: attacker,
 				defender: defender,
 				split: isSplit,
+				moveCost: moveCost,
 				dBonus: game.player[game.tiles[defender].player].dBonus,
 				defGovernment: game.player[game.tiles[defender].player].government
 			}
@@ -448,12 +460,14 @@ var action = {
 		if (now - g.cannonTimer < dur) {
 			return;
 		}
-		var attacker = my.tgt;
-		var defender = that.id.slice(4)*1;
-		if (my.tgt === defender){
+		var attacker = my.tgt,
+			defender = that.id.slice(4)*1;
+		if (my.tgt === defender ||
+			game.tiles[my.tgt].units < 1){
 			return;
 		}
-		if (game.tiles[my.tgt].units < 1){
+		if (game.tiles[attacker].adj.indexOf(defender) === -1){
+			action.targetNotAdjacent('You can only attack adjacent territories.', attacker);
 			return;
 		}
 		my.attackOn = false;
@@ -470,8 +484,6 @@ var action = {
 			data: {
 				attacker: attacker,
 				defender: defender,
-				attackRow: game.tiles[attacker].row,
-				defendRow: game.tiles[defender].row,
 			}
 		}).done(function(data) {
 			action.timeoutWeaponButton('fireCannons', dur);
@@ -513,8 +525,6 @@ var action = {
 			data: {
 				attacker: attacker,
 				defender: defender,
-				attackRow: game.tiles[attacker].row,
-				defendRow: game.tiles[defender].row,
 			}
 		}).done(function(data) {
 			console.info('launchMissile', data);
@@ -529,7 +539,6 @@ var action = {
 					url: app.url + 'php/launchMissileHit.php',
 					data: {
 						defender: defender,
-						defendRow: game.tiles[defender].row,
 					}
 				}).fail(function(e){
 					console.info('error: ', e);
@@ -575,8 +584,6 @@ var action = {
 			data: {
 				attacker: attacker,
 				defender: defender,
-				attackRow: game.tiles[attacker].row,
-				defendRow: game.tiles[defender].row,
 			}
 		}).done(function(data) {
 			action.timeoutWeaponButton('launchNuke', dur);
@@ -586,7 +593,6 @@ var action = {
 					url: app.url + 'php/launchNukeHit.php',
 					data: {
 						defender: defender,
-						defendRow: game.tiles[defender].row,
 					}
 				});
 			}, 6000);
