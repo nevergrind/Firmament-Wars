@@ -127,7 +127,7 @@ var socket = {
 				game.eliminatePlayer(data);
 			}
 
-			if (data.message){
+			if (data.type !== 'eliminated' && data.message){
 				if (data.type === 'gunfire'){
 					// ? when I'm attacked?
 					if (data.defender === my.account){
@@ -198,6 +198,7 @@ var socket = {
 					socket.unsubscribe('title:' + my.channel);
 					// set new channel data
 					my.channel = data.channel;
+					console.info("Changed channel: ", my.channel);
 					localStorage.setItem('channel', my.channel);
 					title.presence.reset();
 					data.skip = true;
@@ -278,7 +279,7 @@ var socket = {
 	socketSendTime: 0,
 	sendHeartbeat: function() {
 		socket.socketSendTime = Date.now();
-		if (socket.zmq) {
+		if (socket.enabled) {
 			if (g.view === 'title') {
 				socket.zmq.publish('title:' + my.channel, {
 					type: 'hb',
@@ -286,7 +287,6 @@ var socket = {
 					flag: my.flag,
 					rating: my.rating
 				});
-
 			}
 			else if (g.view === 'lobby') {
 				// update lobby player presence
@@ -411,7 +411,7 @@ var socket = {
 		}
 		else if (g.view === 'game'){
 			socket.connectGame();
-			game.getGameState();
+			// game.getGameState();
 		}
 		socket.zmq.subscribe('admin:broadcast', function(topic, data) {
 			if (data.msg){

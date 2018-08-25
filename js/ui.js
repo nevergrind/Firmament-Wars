@@ -152,11 +152,12 @@ var ui = {
 		}
 		DOM.diplomacyBody.innerHTML = strArr.reverse().join("");
 		// check elimination
-		rankedPlayers.forEach(function(v, i) {
-			if (i && game.player[i].alive && !v) {
-				game.publishEliminatePlayer(i);
+		rankedPlayers.forEach(function(v, index) {
+			if (game.player[index] !== void 0 &&
+				index && game.player[index].alive && !v) {
+				game.publishEliminatePlayer(index);
 			}
-		})
+		});
 	},
 	currentLoser: 0,
 	resizeWindow: function() {
@@ -519,7 +520,7 @@ function gameVictory(){
 				</div>';
 				audio.play('shotgun2');
 			}
-			else if (data.gameDone){
+			else if (data.win){
 				msg =
 				'<p>'+ lang[my.lang].congratulations +'</p>\
 				<div>'+ lang[my.lang].gameVictory +'</div>\

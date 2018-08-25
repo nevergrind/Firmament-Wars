@@ -198,6 +198,7 @@ var ai = {
 		return [atkTile, defTile, maxScore];
 	},
 	attack: function(i, d, o){
+		if (g.over) return;
 		var tiles = ai.getAttackTarget(d.player);
 		if (tiles[0] > -1){
 			var obj = {
@@ -370,6 +371,7 @@ var ai = {
 		return t;
 	},
 	fireCannons: function(d){
+		if (g.over) return;
 		var tiles = ai.getWeaponTarget(d.player);
 		if (tiles[0] > -1){
 			if (game.tiles[tiles[0]].adj.indexOf(tiles[1]) === -1){
@@ -386,6 +388,7 @@ var ai = {
 		}
 	},
 	launchMissile: function(d){
+		if (g.over) return;
 		var tiles = ai.getRangedWeaponTarget(d.player);
 		if (tiles[0] > -1){
 			$.ajax({
@@ -396,6 +399,7 @@ var ai = {
 				}
 			}).done(function(){
 				setTimeout(function(){
+					if (g.over) return;
 					$.ajax({
 						url: app.url + 'php/ai-launchMissileHit.php',
 						data: {
@@ -409,6 +413,7 @@ var ai = {
 		}
 	},
 	launchNuke: function(d){
+		if (g.over) return;
 		var tiles = ai.getRangedWeaponTarget(d.player);
 		if (tiles[0] > -1){
 			$.ajax({
@@ -419,6 +424,7 @@ var ai = {
 				}
 			}).done(function(){
 				setTimeout(function(){
+					if (g.over) return;
 					$.ajax({
 						url: app.url + 'php/ai-launchNukeHit.php',
 						data: {
@@ -432,6 +438,7 @@ var ai = {
 		}
 	},
 	upgradeTileDefense: function(d){
+		if (g.over) return;
 		var tile = ai.getDefenseTarget(d.player);
 		if (tile > -1){
 			$.ajax({
@@ -482,7 +489,7 @@ var ai = {
 		Hard: 3,
 		VeryHard: 4,
 		Mania: 5,
-		Juggernaut: 6
+		Juggernaut: 8
 	},
 	// guaranteed attacks
 	attackBaseTurns: {
@@ -492,7 +499,7 @@ var ai = {
 		Hard: 2,
 		VeryHard: 2,
 		Mania: 3,
-		Juggernaut: 4
+		Juggernaut: 5
 	},
 	unlockNuke: {
 		VeryEasy: 250, 

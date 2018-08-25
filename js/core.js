@@ -390,9 +390,7 @@ var g = {
 		}, .1);
 
 		console.info('init-game', data.account, data);
-		var lastChannel = localStorage.getItem('channel') === null ?
-			'usa-1' : localStorage.getItem('channel');
-		my.channel = lastChannel;
+
 		$('.actionButtons').tooltip({
 			animation: false,
 			placement: 'left',
@@ -514,6 +512,8 @@ g.init = (function(){
 	});
 	// default
 	my.lang = 'english';
+	my.channel = localStorage.getItem('channel') === null ?
+		'usa-1' : localStorage.getItem('channel');
 	if (app.isApp) {
 		g.lock(1);
 		// app login, check for steam ticket
@@ -550,6 +550,7 @@ g.init = (function(){
 						version: app.version,
 						screenName: steam.screenName,
 						steamid: steam.steamid,
+						channel: my.channel,
 						ticket: data.ticket.toString('hex')
 					}
 				}).done(function(data) {
@@ -573,6 +574,7 @@ g.init = (function(){
 			url: app.url + 'php/init-game.php',
 			data: {
 				version: app.version,
+				channel: my.channel,
 				screenName: '',
 				steamid: '',
 				ticket: ''
@@ -823,6 +825,7 @@ var game = {
 		});
 		// remove player??? always???
 		data.eliminateType !== 'byPlayer' && game.removePlayer(i);
+		game.chat(data);
 	},
 	removePlayer: function(p){
 		/*game.tiles[p].account = '';
@@ -1034,7 +1037,7 @@ var game = {
 	energyTimer: 0,
 	startGameState: function(){
 		// add function to get player data list?
-		game.getGameState();
+		// game.getGameState();
 		game.energyTimer = setInterval(game.updateResources, g.speed * 1000);
 		animate.energyBar();
 	},
@@ -1071,8 +1074,8 @@ var game = {
 		var result = alivePlayers[cpu % count];
 		/*console.info('alivePlayers: ', alivePlayers);
 		console.info('cpu: ', cpu);
-		console.info('count: ', count);
-		console.info('Player '+ result + ' taking turn for cpu ' + cpu);*/
+		console.info('count: ', count);*/
+		console.info('Player '+ result + ' taking turn for cpu ' + cpu);
 		return result === my.player;
 	},
 	getResourceSums: function() {
@@ -1133,7 +1136,6 @@ var game = {
 			}).done(game.updateResourcesDone)
 			.fail(function(data){
 				console.info(data.responseText);
-				serverError(data);
 			});
 		}
 	},
@@ -1404,9 +1406,4 @@ function surrender(){
 	});
 	audio.play('click');
 	
-}
-
-function serverError(data){
-	// g.msg('The server reported an error.');
-	console.error('The server reported an error.', data);
 }

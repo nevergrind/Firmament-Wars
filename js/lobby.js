@@ -418,67 +418,6 @@ var lobby = {
 			// rejoin game
 			setTimeout(loadGameState, 100); // page refresh
 		}
-		else {
-			// load lobby
-					/*
-			(function repeat(){
-				if (g.view === "lobby"){
-					var pingCpu = 0;
-					if (my.player === 1){
-						lobby.data.forEach(function(d){
-							if (d.cpu){
-								pingCpu = 1;
-							}
-						});
-					}
-					//console.info('pingCpu ', pingCpu);
-					$.ajax({
-						url: app.url +"php/pingGame.php",
-						data: {
-							pingCpu: pingCpu
-						}
-					}).done(function(x){
-						if (g.view === "lobby"){
-							// reality check of presence data every 5 seconds
-							var hostFound = false
-							for (var i=1; i<=8; i++){
-								var data = x.playerData[i];
-								if (data !== undefined){
-									// server defined
-									if (data.account !== lobby.data[i].account){
-										lobby.updatePlayer(data);
-									}
-									// check if host
-									if (data.gameHost === 1){
-										hostFound = true;
-									}
-								}
-								else {
-									// not defined on server
-									if (lobby.data[i].account){
-										var o = {
-											message: lobby.data[i].account + " has disconnected",
-											type: 'chat-warning'
-										};
-										lobby.chat(o)
-										var o = {
-											player: i
-										}
-										lobby.updatePlayer(o);
-									}
-								}
-							}
-							// make sure host didn't disconnect
-							if (!hostFound){
-								lobby.hostLeft();
-							}
-							//setTimeout(repeat, 5000);
-						}
-					}).fail(serverError);
-				}
-			})();
-			*/
-		}
 	},
 	hostLeft: function(){
 		setTimeout(function(){
@@ -1248,7 +1187,6 @@ function loadGameState(){
 		game.initialized = true;
 		if (g.reloadGame) {
 			// did not find lobby data
-			// TODO: Optimize this... can't I just assign it right to game.player?
 			game.player = JSON.parse(localStorage.getItem('fwplayers'));
 			game.tiles = JSON.parse(localStorage.getItem('fwtiles'));
 		}

@@ -1242,9 +1242,9 @@ tbody {
 	0% { filter: brightness(100%); }
 	100% { filter: brightness(135%); }
 }
-.diplomacyPlayers:first-child {
+/*.diplomacyPlayers:first-child {
 	animation: flash-outline .7s ease-out infinite alternate;
-}
+}*/
 .diplo-data-col {
 	padding: 0 .5rem;
 	width: 100%;
@@ -1571,12 +1571,13 @@ audio,
     padding: 2px;
     margin-top: 4%
 }
-.endBtn:hover {
-    background: rgba(0, 48, 112, .5)
-}
 .modalBtnChild {
     border: 1px solid #149;
-    border-radius: 4%
+    border-radius: 4%;
+	transition: background ease-out .2s;
+}
+.modalBtnChild:hover {
+	background: rgba(0, 48, 112, .5)
 }
 .portal {
     position: absolute;
@@ -2985,6 +2986,7 @@ header #options {
 	background: rgba(0, 48, 112, .8);
 	margin: 1rem auto;
 	cursor: url('cursor/hover.png'), pointer;
+	transition: background ease-out .2s;
 }
 #statsEndGame:hover {
 	background: rgba(0, 48, 112, 1);
