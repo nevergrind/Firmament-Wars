@@ -231,7 +231,7 @@ var socket = {
 		socket.zmq.subscribe(channel, function(topic, data) {
 			if (data.message){
 				if (data.action === 'send'){
-					//console.info("SENT: ", data.playerColor, data);
+					console.info("SENT: ", data.playerColor, data);
 					// message sent to user
 					var flag = my.flag.split(".");
 					flag = flag[0].replace(/ /g, "-");
@@ -253,7 +253,7 @@ var socket = {
 				}
 				else {
 					// message receive confirmation to original sender
-					// console.info("CALLBACK: ", data);
+					console.info("CALLBACK: ", data);
 					if (data.timestamp - title.lastWhisper.timestamp < 500 &&
 						data.account === title.lastWhisper.account &&
 						data.message === title.lastWhisper.message){
@@ -271,6 +271,30 @@ var socket = {
 						data.type = 'chat-whisper';
 						title.receiveWhisper(data);
 					}
+				}
+			}
+			else {
+				// callback for friend status
+				// console.info(data.type, data);
+				if (data.type === 'callback-friend-tx') {
+					// sending to friends
+					var status = '';
+					if (g.view === 'title') {
+						status = ' in chat channel: <span class="chat-online chat-join">' + my.channel + '</span>';
+					}
+					else {
+						status = ' playing in game: ' + game.name;
+					}
+					socket.zmq.publish('account:'+ data.account, {
+						account: 'chrome',
+						type: 'callback-friend-rx',
+						status: status,
+					});
+				}
+				else {
+					// receiving from friends
+					// console.info("callback-friend-rx RECEIVING: ", data);
+					title.friendStatus[data.account] = '<span class="chat-online titlePlayerAccount">' + data.account + '</span>' + data.status;
 				}
 			}
 		});

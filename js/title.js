@@ -570,15 +570,18 @@ var title = {
 			}).done(function(data){
 				if (data.action === 'fail'){
 					g.chat('You cannot have more than 20 friends!');
-				} else if (data.action === 'remove'){
+				}
+				else if (data.action === 'remove'){
 					g.chat('Removed '+ account +' from your friend list');
 					title.friendGet();
-				} else if (data.action === 'add'){
+				}
+				else if (data.action === 'add'){
 					g.chat('Added '+ account +' to your friend list');
 					title.friendGet();
 				}
 			});
-		} else {
+		}
+		else {
 			// cannot add yourself
 			g.chat("You can't be friends with yourself!", 'chat-muted');
 		}
@@ -587,7 +590,7 @@ var title = {
 		var len = g.ignore.length;
 		g.chat('<div>Ignore List ('+ len +')</div>');
 		for (var i=0; i<len; i++){
-			var str = '<div><span class="chat-muted titlePlayerAccount">' + g.ignore[i] +'</span></div>';
+			var str = '<span class="chat-news titlePlayerAccount">' + g.ignore[i] +'</span>';
 			g.chat(str);
 		}
 	},
@@ -607,7 +610,7 @@ var title = {
 				g.chat('You cannot ignore more than 20 accounts!', 'chat-muted');
 			}
 		} else {
-			g.chat('Already ignoring ' + account +'!', 'chat-muted');
+			g.chat('Already ignoring ' + account +'! Try /unignore to stop ignoring them.', 'chat-muted');
 		}
 	},
 	removeIgnore: function(account){
@@ -940,49 +943,31 @@ var title = {
 		}
 	},
 	listFriendsThrottle: 0,
+	friendStatus: {},
 	listFriends: function(){
 		if (Date.now() - title.listFriendsThrottle < 5000) return;
 		title.listFriendsThrottle = Date.now();
 		var len = g.friends.length;
 		g.chat('<div>Checking friends list...</div>');
 		if (g.friends.length){
-			$.ajax({
-				url: app.url + 'php/friendStatus.php',
-				data: {
-					friends: g.friends
+			g.chat('<div>Friend List ('+ len +')</div>');
+
+			for (var i=0; i<len; i++){
+				socket.zmq.publish('account:'+ g.friends[i], {
+					type: 'callback-friend-tx',
+					account: 'chrome',
+				});
+
+				title.friendStatus[g.friends[i]] = '<span class="chat-muted titlePlayerAccount">' + g.friends[i] +'</span>';
+			}
+			setTimeout(function() {
+				// console.info("title.friendStatus: ", title.friendStatus);
+				for (var key in title.friendStatus) {
+					g.chat(title.friendStatus[key]);
 				}
-			}).done(function(data){
-				var str = '<div>Friend List ('+ len +')</div>';
-				g.chat(str);
-				for (var i=0; i<len; i++){
-					var str = '',
-						index = data.players.indexOf(g.friends[i]);
-					if (index > -1){
-						// online
-						str += '<div><span class="chat-online titlePlayerAccount">' + g.friends[i] + '</span>';
-						if (typeof data.locations[index] === 'number'){
-							str += ' playing in game: ' + data.locations[index];
-						} else {
-							str += ' in chat channel: ';
-							if (g.view === 'title'){
-								// enable clicking to change channel
-								str += '<span class="chat-online chat-join">' + data.locations[index] + '</span>';
-							} else {
-								// not in a game ?
-								str += data.locations[index];
-							}
-						}
-						console.info("ONLINE: ", str);
-						str += '</div>';
-						g.chat(str);
-					} else {
-						// offline
-						console.info("OFFLINE: ");
-						g.chat('<div><span class="chat-muted titlePlayerAccount">' + g.friends[i] +'</span></div>');
-					}
-				}
-			});
-		} else {
+			}, 1000);
+		}
+		else {
 			g.chat("<div>You don't have any friends! Use /friend account to add a new friend.</div>", 'chat-muted');
 		}
 		$("#title-chat-input").focus();
