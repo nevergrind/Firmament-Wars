@@ -123,10 +123,7 @@ var socket = {
 			else if (data.type === 'endTurnCheck'){
 				game.triggerNextTurn(data);
 			}
-			else if (data.type === 'disconnect'){
-				game.eliminatePlayer(data);
-			}
-
+			// avoid double message
 			if (data.type !== 'eliminated' && data.message){
 				if (data.type === 'gunfire'){
 					// ? when I'm attacked?
@@ -286,15 +283,19 @@ var socket = {
 						status = ' playing in game: ' + game.name;
 					}
 					socket.zmq.publish('account:'+ data.account, {
-						account: 'chrome',
+						account: my.account,
 						type: 'callback-friend-rx',
 						status: status,
 					});
 				}
 				else {
 					// receiving from friends
-					// console.info("callback-friend-rx RECEIVING: ", data);
-					title.friendStatus[data.account] = '<span class="chat-online titlePlayerAccount">' + data.account + '</span>' + data.status;
+					console.info("callback-friend-rx RECEIVING: ", data);
+					title.friendStatus[data.account] = [
+						'<span class="chat-online titlePlayerAccount">',
+						data.account,
+						'</span>' + data.status
+					].join('');
 				}
 			}
 		});

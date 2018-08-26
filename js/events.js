@@ -453,7 +453,17 @@ var events = {
 		}).on(ui.click, '.teamChoice', function(){
 			var team = $(this).text().slice(5),
 				player = $(this).data('player');
+
 			console.info("TEAM: ", player, team);
+			// is it human player?
+			for (var key in lobby.presence.list) {
+				var v = lobby.presence.list[key];
+				if (player === v.player && !v.cpu) {
+					// cannot change other player's team
+					return;
+				}
+			}
+
 			$.ajax({
 				url: app.url + 'php/changeTeam.php',
 				data: {

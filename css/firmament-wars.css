@@ -1864,7 +1864,7 @@ circle {
 }
 #lobby-cpu-row {
 	display: flex;
-	margin-bottom: 0 0 .5rem;
+	padding-top: 1rem;
 	justify-content: flex-end;
 	align-items: flex-end;
 }
@@ -2739,7 +2739,7 @@ table {
     letter-spacing: .25em
 }
 header #options {
-	margin: 0 1rem;
+	margin: 0 1rem 0 .5rem;
 }
 .close-btn-wrap {
 	border-radius: 50%;
@@ -2749,6 +2749,9 @@ header #options {
 	right: 0;
 	z-index: 1;
 	transform: translate(50%, -50%);
+}
+#howToPlay, #discord {
+	margin: 0 .5rem;
 }
 .close-btn-wrap .close-btn {
 	cursor: url('cursor/hover.png'), pointer;
@@ -3229,6 +3232,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 ::-webkit-scrollbar-button {
 	/* addresses the directional buttons on the scrollbar */
+	display: none;
 }
 ::-webkit-scrollbar-track {
 	/* background */
@@ -3246,6 +3250,14 @@ input[type=number]::-webkit-outer-spin-button {
 	/* draggable thing */
 	background-color: #58a;
 	/*background-image: -webkit-linear-gradient(top, #579 0%, #bdf 50%, #579 100%);*/
+}
+::-webkit-scrollbar-corner {
+	/* bottom corner intersection of scrollbar */
+	display: none;
+}
+::-webkit-resizer {
+	/* bottom corner intersection when it is resizeable */
+	display: none;
 }
 ::selection {
 	background: #999;

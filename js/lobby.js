@@ -487,9 +487,9 @@ var lobby = {
 				account = v.account;
 			}
 		}
-		console.info('account: ', account)
-		if (account) {
-			lobby.presence.list[account] = void 0;
+		console.info('account: ', data.account)
+		if (data.account) {
+			lobby.presence.list[data.account] = void 0;
 			document.getElementById("lobbyRow" + i).style.display = 'none';
 			document.getElementById('lobby-difficulty-cpu' + i).innerHTML = lang[my.lang].difficulties['Very Easy'];
 			lobby.styleStartGame();
@@ -855,24 +855,25 @@ var lobby = {
 				$.ajax({
 					type: 'GET',
 					url: app.url +"php/startGame.php"
+				}).done(function() {
+					// send tile data
+					setTimeout(function() {
+						var players = lobby.getPlayers(),
+							tiles = lobby.getGameTiles();
+						$.ajax({
+							url: app.url +"php/send-game-init.php",
+							data: {
+								apcTiles: tiles,
+								tiles: JSON.stringify(tiles),
+								players: JSON.stringify(players)
+							}
+						});
+					}, 3500);
 				}).fail(function(data){
 					g.msg(data.statusText);
 					startGame.style.display = "block";
 					cancelGame.style.display = 'block';
 				}).always(g.unlock);
-				// send tile data
-				setTimeout(function() {
-					var players = lobby.getPlayers(),
-						tiles = lobby.getGameTiles();
-					$.ajax({
-						url: app.url +"php/send-game-init.php",
-						data: {
-							apcTiles: tiles,
-							tiles: JSON.stringify(tiles),
-							players: JSON.stringify(players)
-						}
-					});
-				}, 3500);
 			}
 			else {
 				g.msg(lang[my.lang].needTwoPlayers, 5);
@@ -1101,10 +1102,7 @@ function loadGameState(){
 			// load if it's there
 			stats.data = JSON.parse(sessionStorage.getItem('fwstats'));
 		}
-
-		if (!localStorage.getItem('disconnects')) {
-			localStorage.setItem('disconnects', 1);
-		}
+		localStorage.setItem('disconnects', 1);
 
 		console.info("loadGameState", data);
 		// data.mapData.sizeX data.mapData.sizeX

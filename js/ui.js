@@ -459,7 +459,6 @@ var ui = {
 
 function gameDefeat(){
 	new Audio('sound/shotgun2.mp3');
-	localStorage.setItem('disconnects', 0);
 	$.ajax({
 		type: "GET",
 		url: app.url + "php/gameDefeat.php"
@@ -467,14 +466,15 @@ function gameDefeat(){
 		console.info("DEFEAT: ", data);
 		var msg = '';
 		if (data.ceaseFire){
-			msg =
-			'<p>'+ lang[my.lang].armistice +'</p>\
-			<div>'+ lang[my.lang].gameArmistice +'</div>\
-			<div id="ceaseFire" class="endBtn">\
-				<div class="modalBtnChild">'+ lang[my.lang].ceaseFire +'</div>\
-			</div>';
+			msg = [
+				'<p>'+ lang[my.lang].armistice +'</p>',
+				'<div>'+ lang[my.lang].gameArmistice +'</div>',
+				'<div id="ceaseFire" class="endBtn">',
+					'<div class="modalBtnChild">'+ lang[my.lang].ceaseFire +'</div>',
+				'</div>',
+			].join('');
 		}
-		else if (data.gameDone){
+		else if (data.lose){
 			msg =
 			'<p>'+ lang[my.lang].defeat +'</p>\
 			<div>'+ lang[my.lang].gameDefeat +'</div>';
@@ -499,7 +499,6 @@ function gameDefeat(){
 
 function gameVictory(){
 	new Audio('sound/sniper0.mp3');
-	localStorage.setItem('disconnects', 0);
 	(function repeat(){
 		$.ajax({
 			type: "POST",
@@ -538,7 +537,7 @@ function gameVictory(){
 	})();
 }
 function triggerEndGame(msg, victory){
-	// $("body, #gameWrap").off('click mousedown keydown keyup keypress');
+	localStorage.setItem('disconnects', 0);
 	g.gameDuration = ~~((Date.now()- ((sessionStorage.getItem('gameDuration') * 1))) / 1000);
 	$("#chat-input-open, #chat-input-wrap").remove();
 	window.onbeforeunload = null;

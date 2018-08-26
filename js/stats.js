@@ -74,7 +74,7 @@ var stats = {
 		str +=
 		'<div id="statResult" class="no-select">\
 			<img class="statResultFlag" src="images/flags/'+ flag +'">\
-			<span id="statGameResult">'+ lang[my.lang].defeatIn + ui.transformYear(data.resourceTick) +'</span>\
+			<span id="statGameResult">'+ lang[my.lang].defeatIn + ui.transformYear(g.resourceTick) +'</span>\
 			<img class="statResultFlag" src="images/flags/'+ flag +'">\
 		</div>\
 		<div id="statTabWrap" class="no-select shadow4">\
@@ -146,7 +146,7 @@ var stats = {
 			audio.play('bell-8');
 			audio.play('TheAssault', 1);
 			document.getElementById('statGameResult').textContent =
-				"Victory in "+ ui.transformYear(stats.data.resourceTick);
+				"Victory in "+ ui.transformYear(g.resourceTick);
 		}
 		else {
 			audio.play('defeat');

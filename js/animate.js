@@ -384,7 +384,7 @@ var animate = {
 		var image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
 		image.setAttributeNS(null,"width",'200px');
 		image.setAttributeNS(null,"height",'200px');
-		image.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","images/flash.png");
+		image.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","images/flash-nuke.png");
 		image.setAttributeNS(null, 'class', 'no-pointer');
 		image.setAttributeNS(null,"x",o.x);
 		image.setAttributeNS(null,"y",o.y);
@@ -399,7 +399,13 @@ var animate = {
 				this.target.parentNode.removeChild(this.target);
 			}
 		});
-		TweenLite.to(image, o.d - 1.8, {
+		TweenMax.to(image, .5, {
+			startAt: { rotation: 0 },
+			rotation: -360,
+			repeat: -1,
+			ease: Linear.easeIn
+		});
+		TweenLite.to(image, .7, {
 			delay: 1.8,
 			opacity: 0,
 		})
@@ -759,26 +765,26 @@ var animate = {
 				//animate.sepia();
 				animate.flashNuke({
 					d: 2.5,
-					scale: 5,
+					scale: 2.5,
 					opacity: 0,
 					x: x - 100,
 					y: y - 100,
 				});
 				animate.flashNuke({
 					d: 2.5,
-					scale: 4,
-					x: x - 100,
-					y: y - 100,
-				});
-				animate.flashNuke({
-					d: 2.5,
-					scale: 3,
-					x: x - 100,
-					y: y - 100,
-				});
-				animate.flashNuke({
-					d: 2.5,
 					scale: 2,
+					x: x - 100,
+					y: y - 100,
+				});
+				animate.flashNuke({
+					d: 2.5,
+					scale: 1.5,
+					x: x - 100,
+					y: y - 100,
+				});
+				animate.flashNuke({
+					d: 2.5,
+					scale: .75,
 					x: x - 100,
 					y: y - 100,
 				});

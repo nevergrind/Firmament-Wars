@@ -417,7 +417,6 @@ var action = {
 		$.ajax({
 			url: app.url + 'php/upgradeTileDefense.php',
 			data: {
-				targetRow: game.tiles[my.tgt].row,
 				target: my.tgt
 			}
 		}).done(function(data) {
