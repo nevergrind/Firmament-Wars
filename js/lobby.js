@@ -344,6 +344,7 @@ var lobby = {
 		},
 		update: function(data) {
 			this.list[data.account] = data;
+			console.info("lobby: ", this.list);
 		},
 		remove: function(data) {
 			console.log("remove: ", data);
@@ -487,8 +488,8 @@ var lobby = {
 				account = v.account;
 			}
 		}
-		console.info('account: ', data.account)
-		if (data.account) {
+		console.info('account: ', account)
+		if (account) {
 			lobby.presence.list[data.account] = void 0;
 			document.getElementById("lobbyRow" + i).style.display = 'none';
 			document.getElementById('lobby-difficulty-cpu' + i).innerHTML = lang[my.lang].difficulties['Very Easy'];
@@ -497,7 +498,7 @@ var lobby = {
 			if (my.player === 1) {
 				$.ajax({
 					type: 'POST',
-					url: 'php/deletePlayerFromFwplayers.php',
+					url: app.url +'php/deletePlayerFromFwplayers.php',
 					data: {
 						player: data.player,
 					}
@@ -698,6 +699,7 @@ var lobby = {
 			v = lobby.presence.list[key];
 			typeof v !== 'undefined' && v.account && players.push(v);
 		}
+		console.info("getPlayers: ", players);
 		return players;
 	},
 	getGameTiles: function() {
@@ -760,7 +762,6 @@ var lobby = {
 			}
 		}
 		// update for capitals etc
-		// len = lobby.util.countPlayers();
 		food = 5;
 		production = 4;
 		culture = 8;
@@ -801,6 +802,7 @@ var lobby = {
 				console.info("Setting cap: ", v.account, startTile, t);
 			}
 		}
+		console.info("getGameTiles: ", tiles);
 		return tiles;
 	},
 	getMyCapital: function() {
@@ -834,14 +836,13 @@ var lobby = {
 		return capitalTiles;
 	},
 	rxGameInit: function(data) {
+		console.info("rxGameInit", data);
 		// game tiles
-		game.tiles = JSON.parse(data.tiles);
+		game.tiles = data.tiles;
 		localStorage.setItem('fwtiles', JSON.stringify(game.tiles));
-		console.info('rxFwtiles: ', game.tiles);
 		// game players
-		game.player = JSON.parse(data.players);
+		game.player = data.players;
 		localStorage.setItem('fwplayers', JSON.stringify(game.player));
-		console.info('rxFwplayers', game.player);
 		this.setCapitalData(data);
 	},
 	startGame: function(){
@@ -863,10 +864,15 @@ var lobby = {
 						$.ajax({
 							url: app.url +"php/send-game-init.php",
 							data: {
-								apcTiles: tiles,
 								tiles: JSON.stringify(tiles),
-								players: JSON.stringify(players)
 							}
+						}).done(function(data) {
+							console.info("send-game-init.php", data);
+						});
+						socket.zmq.publish('game:' + game.id, {
+							type: 'send-game-init',
+							tiles: tiles,
+							players: players
 						});
 					}, 3500);
 				}).fail(function(data){
@@ -1086,7 +1092,6 @@ function loadGameState(){
 	  	e[i].setAttributeNS(null, 'class', 'unit');
 	}
 	initDom();
-	clearInterval(socket.keepAliveInterval);
 	$("#leaderboard, #configureNation, joinPrivateGameModal, #createGameWrap").remove();
 
 	// console.info("SENDING: ", playerData);

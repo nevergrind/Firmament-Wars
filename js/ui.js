@@ -155,6 +155,7 @@ var ui = {
 		rankedPlayers.forEach(function(v, index) {
 			if (game.player[index] !== void 0 &&
 				index && game.player[index].alive && !v) {
+				console.info("Eliminate this player: ", index);
 				game.publishEliminatePlayer(index);
 			}
 		});

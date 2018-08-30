@@ -118,13 +118,12 @@ var socket = {
 				animate.upgrade(data.tile, 'shield');
 			}
 			else if (data.type === 'eliminated'){
+				console.info("Eliminated rx!", data);
 				game.eliminatePlayer(data);
 			}
-			else if (data.type === 'endTurnCheck'){
-				game.triggerNextTurn(data);
-			}
 			// avoid double message
-			if (data.type !== 'eliminated' && data.message){
+			if (data.type !== 'eliminated' &&
+				data.message){
 				if (data.type === 'gunfire'){
 					// ? when I'm attacked?
 					if (data.defender === my.account){

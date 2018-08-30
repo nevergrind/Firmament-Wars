@@ -1047,10 +1047,11 @@ var title = {
 	},
 	closeGame: function() {
 		if (app.isApp) {
-			var gui = require('nw.gui');
 			// do things I should do before leaving the game
-			my.account && socket.removePlayer(my.account);
-			if (g.view === 'lobby') {
+			if (g.view === 'title') {
+				my.account && title.presence.remove(my.account);
+			}
+			else if (g.view === 'lobby') {
 				exitGame();
 			}
 			else if (g.view === 'game') {
@@ -1083,12 +1084,12 @@ var title = {
 	},
 	openWindow: function(href) {
 		if (app.isApp) {
-			/*var gui = require('nw.gui'),
+			var gui = require('nw.gui'),
 				win = gui.Window.open(href, {
 					position: 'center',
 					width: 1280,
 					height: 720
-				});*/
+				});
 		}
 	},
 	configureNation: function() {

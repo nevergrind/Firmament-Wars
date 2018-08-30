@@ -240,12 +240,13 @@ var g = {
 	},
 	geo: {},
 	keepAlive: function(){
-		$.ajax({
-			type: 'GET',
-			url: app.url + "php/keepAlive.php"
-		}).always(function() {
-			setTimeout(g.keepAlive, 120000);
-		});
+		if (g.view !== 'game') {
+			$.ajax({
+				type: 'GET',
+				url: app.url + "php/keepAlive.php"
+			});
+		}
+		setTimeout(g.keepAlive, 120000);
 	},
 	removeContainers: function(){
 		$("#firmament-wars-logo-wrap, #mainWrap").remove();

@@ -151,7 +151,7 @@ var events = {
 
 		$("#joinPrivateGameModal").on(ui.click, "#joinPrivateGameBtnConfirm", title.joinGame);
 
-		$("#titleChat").on(ui.click, '.nw-link', function() {
+		$("#titleMain").on(ui.click, '.nw-link', function() {
 			title.openWindow($(this).attr('href'));
 		});
 		$("#titleChatPlayers").on(ui.click, '#friend-status', function(){
@@ -240,7 +240,7 @@ var events = {
 				alpha: 1
 			});
 			title.showBackdrop();
-			title.getLeaderboard('Ranked');
+			title.getLeaderboard('FFA');
 		});
 		// leaderboard buttons
 		$("#leaderboardFfaBtn").on(ui.click, function(){

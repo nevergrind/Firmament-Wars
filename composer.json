@@ -1,5 +1,6 @@
 {
     "require": {
-        "da-mitchell/steam-api": "^2.1"
+        "da-mitchell/steam-api": "^2.1",
+        "predis/predis": "^1.1"
     }
 }

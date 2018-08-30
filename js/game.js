@@ -16,12 +16,25 @@ var game = {
 			this.list[data.account] = data;
 		},
 		remove: function(data) {
-			console.log("remove: ", data.account, data.player);
+			console.log("remove: ", data.account, data.player);/*
 			socket.zmq.publish('game:'+ game.id, {
-				message: '<span class="chat-warning">'+ data.account +' has disconnected.</span>',
 				type: 'eliminated',
 				player: data.player,
+			});*/
+
+			var tiles = game.getPlayersTiles(data.player);
+			console.info('disconnected tiles: ', tiles, data);
+			$.ajax({
+				url: app.url + 'php/surrender.php',
+				data: {
+					player: data.player,
+					account: data.account,
+					eliminateType: 'disconnected',
+					tiles: JSON.stringify(tiles)
+				}
 			});
+
+
 		},
 		reset: function() {
 			this.list = {};
@@ -110,6 +123,7 @@ var game = {
 			teams = [];
 
 		// avoid calling multiple times
+		console.info("eliminatePlayer: ", i, 'alive? ', game.player[i].alive);
 		if (!game.player[i].alive) return;
 		game.player[i].alive = 0;
 		// count alive players remaining
@@ -557,10 +571,10 @@ var game = {
 		}
 	},
 	getPlayersTiles: function(player) {
+		var arr = [];
 		if (player === undefined) {
 			return;
 		}
-		var arr = [];
 		game.tiles.forEach(function(v, i) {
 			player === v.player && arr.push(i);
 		});
@@ -744,6 +758,9 @@ function exitGame(bypass){
 		$.ajax({
 			url: app.url + 'php/exitGame.php',
 			data: {
+				player: my.player,
+				account: my.account,
+				eliminateType: 'surrendered',
 				view: g.view
 			}
 		}).always(function() {
@@ -758,14 +775,14 @@ function surrenderMenu(){
 function surrender(){
 	document.getElementById('surrenderScreen').style.display = 'none';
 	var tiles = game.getPlayersTiles(my.player);
-	if (!tiles.length) {
-		tiles = [];
-	}
 	console.info('surrender tiles: ', tiles);
 	$.ajax({
 		url: app.url + 'php/surrender.php',
 		data: {
-			tiles: tiles
+			player: my.player,
+			account: my.account,
+			eliminateType: 'surrendered',
+			tiles: JSON.stringify(tiles)
 		}
 	});
 	audio.play('click');
