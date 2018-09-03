@@ -12,6 +12,10 @@ var socket = {
 			else if (data.type === 'add'){
 				title.presence.add(data);
 			}
+			else if (data.type === 'updateFlag'){
+				console.info('updateFlag', data);
+				$("#titlePlayerFlag_" + data.account).attr('src', 'images/flags/' + data.flag);
+			}
 			else {
 				if (data.message !== void 0){
 					if (g.ignore.indexOf(data.account) === -1) {
@@ -65,6 +69,7 @@ var socket = {
 			}
 		},
 		game: function(data) {
+			console.info("game rx!", data);
 			if (data.type === 'hb'){
 				game.presence.hb(data);
 			}
@@ -157,9 +162,6 @@ var socket = {
 				title.players[account] = void 0;
 			}
 		},
-		lobby: {
-
-		}
 	},
 	initialConnection: true,
 	unsubscribe: function(channel){
@@ -224,13 +226,13 @@ var socket = {
 	},
 	enableWhisper: function(){
 		var channel = 'account:' + my.account;
+		console.info("SUBSCRIBING TO: ", channel);
 		socket.zmq.subscribe(channel, function(topic, data) {
 			if (data.message){
 				if (data.action === 'send'){
-					console.info("SENT: ", data.playerColor, data);
 					// message sent to user
-					var flag = my.flag.split(".");
-					flag = flag[0].replace(/ /g, "-");
+					/*var flag = my.flag.split(".");
+					flag = flag[0].replace(/ /g, "-");*/
 					my.lastReceivedWhisper = data.account;
 					$.ajax({
 						url: app.url + 'php/insertWhisper.php',
@@ -249,7 +251,6 @@ var socket = {
 				}
 				else {
 					// message receive confirmation to original sender
-					console.info("CALLBACK: ", data);
 					if (data.timestamp - title.lastWhisper.timestamp < 500 &&
 						data.account === title.lastWhisper.account &&
 						data.message === title.lastWhisper.message){
@@ -289,7 +290,6 @@ var socket = {
 				}
 				else {
 					// receiving from friends
-					console.info("callback-friend-rx RECEIVING: ", data);
 					title.friendStatus[data.account] = [
 						'<span class="chat-online titlePlayerAccount">',
 						data.account,
@@ -330,12 +330,13 @@ var socket = {
 					difficulty: '',
 					cpu: 0
 				});
-				// update CPU lobby presence
 				if (my.player === 1) {
 					var v, key;
+					// update CPU lobby presence
 					for (key in lobby.presence.list) {
 						v = lobby.presence.list[key];
 						if (typeof v !== 'undefined' && v.cpu) {
+							console.info('FLAG: ', v.flag);
 							socket.zmq.publish('game:' + game.id, {
 								type: 'hb',
 								account: v.account,

@@ -47,11 +47,12 @@
     "platformKeys",
     "sessions",
     "storage",
-    "https://geoip-db.com",
-    "*://www.google-analytics.com",
+    "*://geoip-db.com/*",
+    "*://www.google-analytics.com/*",
     "*://apis.google.com",
     "*://*.google.com",
-    "*://nevergrind.com/*"
+    "*://nevergrind.com/*",
+    "*://discordapp.com/*"
   ],
   "os": [
     "win64",

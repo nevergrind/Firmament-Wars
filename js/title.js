@@ -44,11 +44,9 @@ var title = {
 		});
 	})(),
 	updateGame: function(data){
+		// console.info("UPDATE GAME: ", data.type);
 		if (data.type === 'updateToGame'){
 			title.games.presence.hb(data);
-		}
-		else if (data.type === 'addGame'){
-			title.games.presence.add(data);
 		}
 		else if (data.type === 'removeGame'){
 			title.games.presence.remove(data);
@@ -84,7 +82,7 @@ var title = {
 
 			},
 			update: function(data) {
-				console.info('update: ', data);
+				console.info('title.update: ', data);
 				if (data.players === data.max &&
 					this.list[data.id].players < data.max) {
 					// hide it!
@@ -97,7 +95,6 @@ var title = {
 					document.querySelector('#game_' + data.id).style.display = 'table-row';
 				}
 				this.list[data.id] = data;
-
 			},
 			remove: function(data) {
 				console.log("remove: ", data.id)
@@ -548,16 +545,15 @@ var title = {
 		if (Date.now() - title.listFriendsThrottle < 5000) return;
 		title.listFriendsThrottle = Date.now();
 		var len = g.friends.length;
-		g.chat('<div>Checking friends list...</div>');
+		g.chat('<div>Retrieving friends list...</div>');
 		if (g.friends.length){
 			g.chat('<div>Friend List ('+ len +')</div>');
 
 			for (var i=0; i<len; i++){
 				socket.zmq.publish('account:'+ g.friends[i], {
 					type: 'callback-friend-tx',
-					account: 'chrome',
+					account: my.account,
 				});
-				console.info("Sending...", 'account:'+ g.friends[i]);
 				title.friendStatus[g.friends[i]] = [
 					'<span class="chat-muted titlePlayerAccount">',
 					g.friends[i],
@@ -569,7 +565,7 @@ var title = {
 				for (var key in title.friendStatus) {
 					g.chat(title.friendStatus[key]);
 				}
-			}, 1000);
+			}, 1200);
 		}
 		else {
 			g.chat("<div>You don't have any friends! Use /friend account to add a new friend.</div>", 'chat-muted');
@@ -583,35 +579,28 @@ var title = {
 	},
 	toggleFriend: function(account){
 		account = account.trim();
-		if (account !== my.account){
-			console.info('toggle: ', account, account.length);
 
-			if (g.friends.length >= 20){
-				g.chat('You cannot have more than 20 friends!');
-			}
-			else if (g.friends.indexOf(account) > -1) {
-				g.chat('Removed '+ account +' from your friend list');
-				var index = g.friends.indexOf(account);
-				g.friends.splice(index, 1);
-				localStorage.setItem('friends', JSON.stringify(g.friends));
-			}
-			else {
-				// add
-				g.chat('Added '+ account +' to your friend list');
-				g.friends.push(account);
-				localStorage.setItem('friends', JSON.stringify(g.friends));
-				if (g.friends.length >= 2 &&
-					g.ribbons.indexOf(3) === -1) {
-					$.ajax({
-						type: 'GET',
-						url: app.url + 'php/friend-ribbon.php'
-					});
-				}
-			}
+		if (g.friends.length >= 20){
+			g.chat('You cannot have more than 20 friends!');
+		}
+		else if (g.friends.indexOf(account) > -1) {
+			g.chat('Removed '+ account +' from your friend list');
+			var index = g.friends.indexOf(account);
+			g.friends.splice(index, 1);
+			localStorage.setItem('friends', JSON.stringify(g.friends));
 		}
 		else {
-			// cannot add yourself
-			g.chat("You can't be friends with yourself!", 'chat-muted');
+			// add
+			g.chat('Added '+ account +' to your friend list');
+			g.friends.push(account);
+			localStorage.setItem('friends', JSON.stringify(g.friends));
+			if (g.friends.length >= 2 &&
+				g.ribbons.indexOf(3) === -1) {
+				$.ajax({
+					type: 'GET',
+					url: app.url + 'php/friend-ribbon.php'
+				});
+			}
 		}
 	},
 	listIgnore: function(){

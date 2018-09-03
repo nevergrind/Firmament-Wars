@@ -210,11 +210,16 @@ var ai = {
 				defGovernment: game.player[game.tiles[tiles[1]].player].government
 			};
 			if (i === 0) {
+				var moveBonus = ~~(g.resourceTick / 10);
+				if (moveBonus > 8) {
+					moveBonus = 8;
+				}
+				var resourceBonus = ~~(g.resourceTick / 40);
 				obj = Object.assign({
-					moves: (4 + ~~(o.food / 50)),
-					food: o.food,
-					production: o.production,
-					culture: o.culture
+					moves: (4 + ~~(o.food / 50)) + moveBonus,
+					food: o.food + ~~(o.food * resourceBonus),
+					production: o.production + ~~(o.production * resourceBonus),
+					culture: o.culture + ~~(o.culture * resourceBonus)
 				}, obj);
 			}
 			if (o.deployTile > -1) {
@@ -375,7 +380,6 @@ var ai = {
 		var tiles = ai.getWeaponTarget(d.player);
 		if (tiles[0] > -1){
 			if (game.tiles[tiles[0]].adj.indexOf(tiles[1]) === -1){
-				action.targetNotAdjacent('You can only attack adjacent territories.', attacker);
 				return;
 			}
 			$.ajax({
@@ -578,33 +582,29 @@ var ai = {
 				}, ai.attackDelay(i, d));
 			})(i, d);
 		}
-		var usingNuke = 0;
-		if (g.resourceTick > ai.unlockNuke[d.difficultyShort]){
-			if (Math.random() > .95){
-				usingNuke = 1;
+		var usingWeapon = 0;
+		if (g.resourceTick > ai.unlockNuke[d.difficultyShort] &&
+			Math.random() > .95){
+			usingWeapon = 1;
+			setTimeout(function(){
+				ai.launchNuke(d);
+			}, ai.weaponDelay());
+		}
+		if (!usingWeapon){
+			if (g.resourceTick > ai.unlockMissile[d.difficultyShort] &&
+				Math.random() > ai.missileRate[d.difficultyShort]){
+				usingWeapon = 1;
 				setTimeout(function(){
-					ai.launchNuke(d);
+					ai.launchMissile(d);
 				}, ai.weaponDelay());
 			}
 		}
-		if (!usingNuke){
-			if (g.resourceTick > ai.unlockMissile[d.difficultyShort]){
-				if (Math.random() > ai.missileRate[d.difficultyShort]){
-					// var len = Math.ceil(o.food / 60);
-					setTimeout(function(){
-						ai.launchMissile(d);
-					}, ai.weaponDelay());
-				}
-			}
-			else if (g.resourceTick > ai.unlockCannons[d.difficultyShort]){
-				if (Math.random() > ai.cannonRate[d.difficultyShort]){
-					/*var len = Math.ceil(o.food / 30);
-					for (var i=0; i<len; i++){
-					}*/
-					setTimeout(function(){
-						ai.fireCannons(d);
-					}, ai.weaponDelay());
-				}
+		if (!usingWeapon) {
+			if (g.resourceTick > ai.unlockCannons[d.difficultyShort] &&
+				Math.random() > ai.cannonRate[d.difficultyShort]){
+				setTimeout(function(){
+					ai.fireCannons(d);
+				}, ai.weaponDelay());
 			}
 		}
 		// defense

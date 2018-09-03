@@ -4,7 +4,7 @@ connect1.php
 master1.php
 Stripe
 Stripe.php
-firmament-wars.js
+js/firmament-wars.js
 socket/
 values.php
 socket/
@@ -16,7 +16,10 @@ steam_appid.txt
 greenworks.js
 node_modules/
 Thumbs.db
-firmament-wars.min.js
-firmament-wars.min.css
+js/firmament-wars.js
+js/firmament-wars.min.js
+js/firmament-wars.min.css
 package-lock.json
 cache/
+*.min.js
+*.min.css

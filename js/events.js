@@ -188,7 +188,9 @@ var events = {
 			$("#title-chat-input").val('#').focus();
 		});
 		
-		$("#body").on(ui.click, "#cancelGame", exitGame).on(ui.click, "#startGame", lobby.startGame)
+		$("#body").on(ui.click, "#cancelGame", function() {
+			exitGame();
+		}).on(ui.click, "#startGame", lobby.startGame)
 		.on(ui.click, '.addFriend', function(){
 			title.toggleFriend($(this).data('account'));
 		}).on(ui.click, '.ribbon', function(){
@@ -481,22 +483,24 @@ var events = {
 				lobby.presence.list[obj.account].team = data.team;
 			});
 			
-		}).on(ui.click, '#cpu-add-player', lobby.addCpuPlayer)
-		.on(ui.click, '#cpu-remove-player', lobby.removeCpuPlayer);
+		}).on(ui.click, '#cpu-add-player', function() {
+			lobby.addCpuPlayer();
+		})
+		.on(ui.click, '#cpu-remove-player', function() {
+			lobby.removeCpuPlayer();
+		});
 	})(),
 	map: (function(){
 		$("body").on("mousewheel", function(e){
 			if (g.view === 'game'){
+				if (e.originalEvent.wheelDelta > 0) {
+					mouseZoomIn(e);
+				}
+				else if (e.originalEvent.wheelDelta < 0) {
+					mouseZoomOut(e);
+				}
 				setMousePosition(e.offsetX, e.offsetY);
 				applyBounds();
-			}
-		});
-		$("#worldWrap").on("mousewheel", function(e){
-			if (e.originalEvent.wheelDelta > 0) {
-				mouseZoomIn(e);
-			}
-			else if (e.originalEvent.wheelDelta < 0) {
-				mouseZoomOut(e);
 			}
 		});
 
@@ -808,5 +812,10 @@ if (app.isApp) {
 		this.hide(); // pretend
 		title.closeGame();
 		this.close(true);
-	})
+	});
+	$(".nwjs-link").on('click', function(e) {
+		console.info("CLICK: ", this);
+		require('nw.gui').Shell.openExternal(this.href);
+		return false;
+	});
 }

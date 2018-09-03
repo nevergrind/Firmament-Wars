@@ -20,7 +20,10 @@ var lobby = {
 			var v, key, count = 0;
 			for (key in lobby.presence.list) {
 				v = lobby.presence.list[key];
-				if (typeof v !== 'undefined' && v.account) count++;
+				if (typeof v !== 'undefined' && v.account) {
+					count++;
+					// console.info(count, v, v.account);
+				}
 			}
 			return count;
 		},
@@ -35,7 +38,7 @@ var lobby = {
 	},
 	addCpuPlayer: function(){
 		var flag = lobby.cpuFlag === 'Random' ?
-			g.getRandomFlag() : lobby.cpuFlag + ui.getFlagExt(lobby.cpuFlag);
+			g.getRandomFlag() : lobby.cpuFlag;
 		var count = lobby.util.countPlayers();
 		console.info('add start: ', flag, count);
 		if (count && count < title.mapData[g.map.key].players) {
@@ -46,23 +49,32 @@ var lobby = {
 				data: {
 					flag: flag,
 				}
-			}).always(g.unlock);
+			}).always(function() {
+				g.unlock();
+			});
 		}
 	},
 	removeCpuPlayer: function() {
 		if (lobby.util.countCpuPlayers()) {
 			var player = lobby.getHighestCpuPlayer();
+			console.info("REMOVING PLAYER: ", player);
 			if (player) {
-				console.info("REMOVING PLAYER: ", player);
 				audio.play('click');
 				g.lock();
+				// disable cpu presence
+				lobby.presence.list['Computer_' + game.id +'-' + player].cpu = 0;
 				$.ajax({
 					type: 'POST',
 					url: app.url + 'php/cpu-remove-player.php',
 					data: {
 						player: player
 					}
-				}).always(g.unlock);
+				}).done(function() {
+					//lobby.presence.list['Computer_' + game.id +'-' + player] = undefined;
+					console.warn("//////////////////////////////////////////////////////");
+				}).always(function() {
+					g.unlock();
+				});
 			}
 		}
 	},
@@ -321,11 +333,6 @@ var lobby = {
 		hb: function(data) {
 			data.timestamp = Date.now();
 			console.log('%c lobbyHeartbeat: '+ data.account, 'background: #0f0; color: #f00');
-			/*if (typeof data.account === 'undefined') {
-				console.info("removePlayer: ", data.player);
-				lobby.removePlayer(data);
-			}
-			else {*/
 			if (typeof this.list[data.account] === 'undefined') {
 				console.info("ADDING NEW:", data.account);
 				this.add(data);
@@ -344,13 +351,13 @@ var lobby = {
 		},
 		update: function(data) {
 			this.list[data.account] = data;
-			console.info("lobby: ", this.list);
+			// console.info("lobby: ", this.list);
 		},
 		remove: function(data) {
-			console.log("remove: ", data);
+			// console.log("remove: ", data);
 			this.list[data.account] = void 0;
 			// dom
-			lobby.removePlayer(data);
+			lobby.removePlayer(data, true);
 
 		},
 		audit: function(now) {
@@ -476,32 +483,33 @@ var lobby = {
 			data.cpu ? 'block' : 'none';
 		lobby.styleStartGame();
 	},
-	removePlayer: function(data) {
+	removePlayer: function(data, disconnected) {
 		console.info("REMOVE PLAYER: ", data);
 		var i = data.player,
-			account = '',
+			account = data.account,
 			key,
 			v;
-		for (key in lobby.presence.list) {
-			v = lobby.presence.list[key];
-			if (typeof v !== 'undefined' && v.player === i) {
-				account = v.account;
+
+		if (!disconnected) {
+			// cpu remove
+			for (key in lobby.presence.list) {
+				v = lobby.presence.list[key];
+				if (typeof v !== 'undefined' && v.player === i) {
+					account = v.account;
+				}
 			}
 		}
-		console.info('account: ', account)
+		console.info('removePlayer: ', account);
 		if (account) {
-			lobby.presence.list[data.account] = void 0;
+			lobby.presence.list[account] = void 0;
 			document.getElementById("lobbyRow" + i).style.display = 'none';
 			document.getElementById('lobby-difficulty-cpu' + i).innerHTML = lang[my.lang].difficulties['Very Easy'];
 			lobby.styleStartGame();
 			// remove in case they dropped
-			if (my.player === 1) {
-				$.ajax({
-					type: 'POST',
-					url: app.url +'php/deletePlayerFromFwplayers.php',
-					data: {
-						player: data.player,
-					}
+			if (disconnected && my.player === 1) {
+				// why is this here? it's in cpu-remove-player.php
+				$.post(app.url +'php/deletePlayerFromFwplayers.php', {
+					player: data.player,
 				});
 			}
 		}
@@ -516,7 +524,7 @@ var lobby = {
 			}
 		}
 		return player;
-	},
+	},/*
 	getLowestAvailablePlayer: function() {
 		var index = 0;
 		for (var key in lobby.presence.list) {
@@ -542,7 +550,7 @@ var lobby = {
 			}
 		});
 		return color;
-	},
+	},*/
 	// update player's team number
 	updateTeamNumber: function(data){
 		//console.info("UPDATE TEAM NUMBER: ", data);

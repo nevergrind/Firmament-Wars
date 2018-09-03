@@ -16,11 +16,7 @@ var game = {
 			this.list[data.account] = data;
 		},
 		remove: function(data) {
-			console.log("remove: ", data.account, data.player);/*
-			socket.zmq.publish('game:'+ game.id, {
-				type: 'eliminated',
-				player: data.player,
-			});*/
+			console.log("remove: ", data.account, data.player);
 
 			var tiles = game.getPlayersTiles(data.player);
 			console.info('disconnected tiles: ', tiles, data);
@@ -107,13 +103,25 @@ var game = {
 		}, 12000);
 	},
 	publishEliminatePlayer: function(player) {
-		socket.zmq.publish('game:'+ game.id, {
+		socket.zmq.publish('game:' + game.id, {
 			type: 'eliminated',
 			sfx: 'chat',
 			player: player,
-			message: '<span class="chat-warning">'+ game.player[player].nation + ' has been eliminated.</span>',
 			eliminateType: 'byPlayer',
+			message: [
+				'<span class="chat-warning">',
+				game.player[player].nation,
+				' has been eliminated</span>'
+			].join('')
 		});
+		/*$.post(app.url + 'php/eliminated.php', {
+			player: player,
+			message: [
+				'<span class="chat-warning">',
+				game.player[player].nation,
+				' has been eliminated</span>'
+			].join('')
+		});*/
 	},
 	eliminatePlayer: function(data){
 		// player eliminated
@@ -373,13 +381,6 @@ var game = {
 		ui.drawDiplomacyPanel();
 		location.host === 'localhost' &&
 			localStorage.setItem('fwtiles', JSON.stringify(game.tiles));
-		// only check if tile changed to a player
-		/*if (defendingFlag && playerChanged) {
-			console.info('player compare: ', game.tiles[i].player, defendPlayer);
-			console.info("check eliminate? ", game.tiles[i].name, defendPlayer, defendingFlag);
-			game.checkEliminatedPlayers();
-			console.info("playerEliminated? ", playerEliminated);
-		}*/
 	},
 	isMineOrAdjacent: function(tile) {
 		if (game.tiles[tile].player === my.player) return 1;
@@ -739,7 +740,7 @@ function playerLogout(){
 		$.ajax({
 			type: 'GET',
 			url: app.url + 'php/logout.php'
-		}).done(function(data) {
+		}).done(function() {
 			localStorage.removeItem('token');
 			location.reload();
 			g.msg(lang[my.lang].logoutSuccess);

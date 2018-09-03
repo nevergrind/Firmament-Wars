@@ -98,6 +98,7 @@ body {
     background: #000;
     overflow: hidden;
 	cursor: url('cursor/default.png'), auto;
+	user-select: none;
 }
 .abcRioButton{
 	margin: 5px auto;
@@ -280,9 +281,6 @@ label{
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
 }
-::-moz-focus-inner {
-    border: 0
-}
 :focus {
     outline: none
 }
@@ -296,7 +294,8 @@ html {
 }
 input {
     cursor: text;
-    background: #059
+    background: #059;
+	user-select: text;
 }
 header {
 	display: flex;
@@ -1860,7 +1859,7 @@ circle {
 	max-height: 20rem;
 	overflow: hidden;
 	overflow-y: auto;
-	width: auto;
+	width: 100%;
 }
 #lobby-cpu-row {
 	display: flex;
@@ -3260,8 +3259,5 @@ input[type=number]::-webkit-outer-spin-button {
 	display: none;
 }
 ::selection {
-	background: #999;
-}
-::-moz-selection {
 	background: #999;
 }
