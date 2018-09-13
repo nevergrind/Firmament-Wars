@@ -38,16 +38,19 @@ var lobby = {
 	},
 	addCpuPlayer: function(){
 		var flag = lobby.cpuFlag === 'Random' ?
-			g.getRandomFlag() : lobby.cpuFlag;
-		var count = lobby.util.countPlayers();
+			g.getRandomFlag() : lobby.cpuFlag,
+			count = lobby.util.countPlayers(),
+			player = count + 1;
 		console.info('add start: ', flag, count);
 		if (count && count < title.mapData[g.map.key].players) {
 			g.lock();
 			audio.play('click');
+			document.getElementById('lobby-difficulty-cpu'+ player).textContent = my.lastDifficulty;
 			$.ajax({
 				url: app.url +'php/cpu-add-player.php',
 				data: {
 					flag: flag,
+					lastDifficulty: my.lastDifficulty,
 				}
 			}).always(function() {
 				g.unlock();
@@ -314,7 +317,7 @@ var lobby = {
 		'<div id="gov-dropdown-cpu'+ player +'" class="dropdown govDropdown none">\
 			<button class="btn btn-primary btn-responsive dropdown-toggle shadow4 fwDropdownButton" type="button" data-toggle="dropdown">\
 				<img src="images/icons/computer.png" class="fw-icon-sm">\
-				<span id="lobby-difficulty-cpu'+ player +'">'+ lang[my.lang].difficulties['Very Easy'] +'</span>\
+				<span id="lobby-difficulty-cpu'+ player +'">'+ lang[my.lang].difficulties[my.lastDifficulty] +'</span>\
 				<i id="lobby-caret-cpu'+ player +'" class="fa fa-caret-down text-warning lobbyCaret"></i>\
 			</button>\
 			<ul class="governmentDropdown dropdown-menu no-select">';
@@ -503,7 +506,7 @@ var lobby = {
 		if (account) {
 			lobby.presence.list[account] = void 0;
 			document.getElementById("lobbyRow" + i).style.display = 'none';
-			document.getElementById('lobby-difficulty-cpu' + i).innerHTML = lang[my.lang].difficulties['Very Easy'];
+			document.getElementById('lobby-difficulty-cpu' + i).innerHTML = lang[my.lang].difficulties[my.lastDifficulty];
 			lobby.styleStartGame();
 			// remove in case they dropped
 			if (disconnected && my.player === 1) {
@@ -1100,7 +1103,7 @@ function loadGameState(){
 	  	e[i].setAttributeNS(null, 'class', 'unit');
 	}
 	initDom();
-	$("#leaderboard, #configureNation, joinPrivateGameModal, #createGameWrap").remove();
+	$("#leaderboard, #configureNation, #joinPrivateGameModal, #createGameWrap").remove();
 
 	// console.info("SENDING: ", playerData);
 	$.ajax({

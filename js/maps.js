@@ -1,6 +1,7 @@
 // all game maps
 maps.getMap = function(key) {
-	var str = '<div id="worldWater"></div>' +
+	var str =
+		'<div id="worldWater"></div>' +
 		this.head +
 		this.filters +
 		'<g id="landWrap">'+ this[key].land + '</g>' +
@@ -65,7 +66,7 @@ maps.filters = '<defs>\
 					operator="in"/>\
 			</filter>\
 			<pattern id="smallGrid" width="22" height="22" patternUnits="userSpaceOnUse">\
-				<path d="M 22 0 L 0 0 0 22" fill="none" stroke="rgba(32, 64, 96, 1)"\ stroke-width="2" />\
+				<path d="M 22 0 L 0 0 0 22" fill="none" stroke="rgba(32, 64, 96, 1)"\ stroke-width="3" />\
 			</pattern>\
 		</defs>\
 		<rect id="grid" fill="url(#smallGrid)" width="100%" height="100%" x="-400px" y="-200px"/>';

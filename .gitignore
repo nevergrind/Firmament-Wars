@@ -19,6 +19,10 @@ Thumbs.db
 js/firmament-wars.js
 js/firmament-wars.min.js
 js/firmament-wars.min.css
+firmament-wars.js
+firmament-wars.min.js
+firmament-wars.css
+firmament-wars.min.css
 package-lock.json
 cache/
 *.min.js

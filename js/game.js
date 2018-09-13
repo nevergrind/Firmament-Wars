@@ -38,6 +38,7 @@ var game = {
 		audit: function(now) {
 			for (var key in this.list) {
 				this.list[key] !== void 0 &&
+					!this.list[key].cpu && // cpu cannot disconnect
 					now - this.list[key].timestamp > 8000 &&
 					this.remove(this.list[key]);
 			}

@@ -430,9 +430,14 @@ var events = {
 					government: government
 				}
 			});
-		}).on(ui.click, '.cpu-choice', function(e){
-			var difficulty = $(this).data('difficulty');
+		}).on(ui.click, '.cpu-choice', function(){
+			var difficulty = $(this).data('difficulty'),
+				player = $(this).data('player');
+
 			console.info('cpu-choice', difficulty);
+			localStorage.setItem('lastDifficulty', difficulty);
+			my.lastDifficulty = difficulty;
+			document.getElementById('lobby-difficulty-cpu'+ player).textContent = difficulty;
 			$.ajax({
 				url: app.url + "php/change-cpu-difficulty.php",
 				data: {

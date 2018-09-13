@@ -451,11 +451,11 @@ var ui = {
 		}
 		$("head").append('<style> text { fill: #ffffff; stroke: none; stroke-width: 0px; } </style>');
 	}
-	setTimeout(function(){
-		$("script").remove();
-	}, 1000);
-	ui.initWindow();
 })();*/
+ui.initWindow();
+setTimeout(function(){
+	$("script").remove();
+}, 1000);
 
 
 function gameDefeat(){

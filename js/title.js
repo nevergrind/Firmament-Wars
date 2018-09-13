@@ -1120,6 +1120,10 @@ var title = {
 		g.lock(1);
 		g.rankedMode = rankedMode;
 		g.teamMode = teamMode;
+		if (localStorage.getItem('lastDifficulty') === null) {
+			localStorage.setItem('lastDifficulty', 'Very Easy');
+		}
+		my.lastDifficulty = localStorage.getItem('lastDifficulty');
 		// g.speed = speed;
 		$.ajax({
 			url: app.url + 'php/createGame.php',
