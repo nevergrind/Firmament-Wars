@@ -533,7 +533,7 @@ var ai = {
 		Juggernaut: 0
 	},
 	missileRate: {
-		VeryEasy: 1,
+		VeryEasy: .98,
 		Easy: .95,
 		Normal: .9,
 		Hard: .85,
@@ -582,30 +582,23 @@ var ai = {
 				}, ai.attackDelay(i, d));
 			})(i, d);
 		}
-		var usingWeapon = 0;
 		if (g.resourceTick > ai.unlockNuke[d.difficultyShort] &&
 			Math.random() > .95){
-			usingWeapon = 1;
 			setTimeout(function(){
 				ai.launchNuke(d);
 			}, ai.weaponDelay());
 		}
-		if (!usingWeapon){
-			if (g.resourceTick > ai.unlockMissile[d.difficultyShort] &&
-				Math.random() > ai.missileRate[d.difficultyShort]){
-				usingWeapon = 1;
-				setTimeout(function(){
-					ai.launchMissile(d);
-				}, ai.weaponDelay());
-			}
+		else if (g.resourceTick > ai.unlockMissile[d.difficultyShort] &&
+			Math.random() > ai.missileRate[d.difficultyShort]){
+			setTimeout(function(){
+				ai.launchMissile(d);
+			}, ai.weaponDelay());
 		}
-		if (!usingWeapon) {
-			if (g.resourceTick > ai.unlockCannons[d.difficultyShort] &&
-				Math.random() > ai.cannonRate[d.difficultyShort]){
-				setTimeout(function(){
-					ai.fireCannons(d);
-				}, ai.weaponDelay());
-			}
+		else if (g.resourceTick > ai.unlockCannons[d.difficultyShort] &&
+			Math.random() > ai.cannonRate[d.difficultyShort]){
+			setTimeout(function(){
+				ai.fireCannons(d);
+			}, ai.weaponDelay());
 		}
 		// defense
 		if (g.resourceTick > ai.unlockStructures[d.difficultyShort]){

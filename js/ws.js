@@ -25,7 +25,7 @@ var socket = {
 			}
 		},
 		lobby: function(data) {
-			// console.info("LOBBY: ", data);
+			//console.info("LOBBY: ", data);
 			if (data.type === 'hb'){
 				lobby.presence.hb(data);
 			}

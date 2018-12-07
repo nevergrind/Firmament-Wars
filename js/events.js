@@ -424,6 +424,7 @@ var events = {
 			// changes player's own government only
 			var government = $(this).data('government');
 			lobby.updateGovernmentWindow(government);
+			my.government = government;
 			$.ajax({
 				url: app.url + "php/changeGovernment.php",
 				data: {

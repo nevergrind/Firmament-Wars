@@ -32,44 +32,40 @@ maps.filters = '<defs>\
 			<path id="arrowhead-tip-head"\
 				d="M0,0 V4.2 L2.1,2.1 Z" />\
 		  </marker>\
-			<!--<filter id="darken">\
-				<feColorMatrix type="matrix"\
-				values=".2   0   0   0   0\
-						 0  .2   0   0   0\
-						 0   0  .2   0   0\
-						 0   0   0   1   0 "/>\
-			</filter>-->\
-			<filter id="emboss" color-interpolation-filters="sRGB">\
-				<feGaussianBlur\
-					in="SourceAlpha"\
-					result="result0"\
-					stdDeviation="2"/>\
-				<feSpecularLighting\
-					in="result0"\
-					result="result1"\
-					lighting-color="#fff"\
-					surfaceScale="5"\
-					specularConstant=".3"\
-					specularExponent="33">\
-					  <feDistantLight azimuth="235" elevation="70"/>\
-				 </feSpecularLighting>\
-				 <feComposite\
-					k2="1"\
-					k3="1"\
-					in="SourceGraphic"\
-					result="result4"\
-					operator="arithmetic"/>\
-				 <feComposite\
-					in2="SourceAlpha"\
-					in="result4"\
-					result="result2"\
-					operator="in"/>\
-			</filter>\
-			<pattern id="smallGrid" width="22" height="22" patternUnits="userSpaceOnUse">\
-				<path d="M 22 0 L 0 0 0 22" fill="none" stroke="rgba(32, 64, 96, 1)"\ stroke-width="3" />\
-			</pattern>\
-		</defs>\
-		<rect id="grid" fill="url(#smallGrid)" width="100%" height="100%" x="-400px" y="-200px"/>';
+		  	<clipPath id="c1" clipPathUnits="objectBoundingBox">\
+	       	 	<rect x="0" y="0" rx="1" ry="1" width="1" height="1"/>\
+	       	 </clipPath>\
+				<filter id="emboss" color-interpolation-filters="sRGB">\
+					<feGaussianBlur\
+						in="SourceAlpha"\
+						result="result0"\
+						stdDeviation="2"/>\
+					<feSpecularLighting\
+						in="result0"\
+						result="result1"\
+						lighting-color="#fff"\
+						surfaceScale="5"\
+						specularConstant=".3"\
+						specularExponent="33">\
+						  <feDistantLight azimuth="235" elevation="70"/>\
+					 </feSpecularLighting>\
+					 <feComposite\
+						k2="1"\
+						k3="1"\
+						in="SourceGraphic"\
+						result="result4"\
+						operator="arithmetic"/>\
+					 <feComposite\
+						in2="SourceAlpha"\
+						in="result4"\
+						result="result2"\
+						operator="in"/>\
+				</filter>\
+				<pattern id="smallGrid" width="22" height="22" patternUnits="userSpaceOnUse">\
+					<path d="M 22 0 L 0 0 0 22" fill="none" stroke="rgba(32, 64, 96, 1)"\ stroke-width="3" />\
+				</pattern>\
+			</defs>\
+			<rect id="grid" fill="url(#smallGrid)" width="100%" height="100%" x="-400px" y="-200px"/>';
 
 maps.mapLayers = '\
 		<g id="mapFlagWrap" class="no-pointer"></g>\

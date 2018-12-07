@@ -42,6 +42,7 @@ var lobby = {
 			count = lobby.util.countPlayers(),
 			player = count + 1;
 		console.info('add start: ', flag, count);
+		console.info('my.lastDifficulty: ', my.lastDifficulty);
 		if (count && count < title.mapData[g.map.key].players) {
 			g.lock();
 			audio.play('click');
@@ -579,7 +580,7 @@ var lobby = {
 	updateGovernment: function(data){
 		// update button & window
 		var i = data.player;
-		console.info('updateGovernment', data.government);
+		console.info('updateGovernment', data);
 		lobby.presence.list[data.account].government = data.government;
 		document.getElementById('lobbyGovernment' + i).innerHTML =
 			data.government === 'Random' ?
@@ -1235,6 +1236,7 @@ function loadGameState(){
 			}
 			if (d.player){
 				// init map appearance
+				console.info('d.player', d.player, game.player[d.player]);
 				TweenMax.set('#land' + i, {
 					fill: g.color[game.player[d.player].playerColor],
 					stroke: g.color[game.player[d.player].playerColor],
@@ -1333,8 +1335,8 @@ function loadGameState(){
 		for (var i=0, len=a.length; i<len; i++){
 			// set flag position and value
 			var t = game.tiles[i],
-				x = a[i].getAttribute('x') - 20,
-				y = a[i].getAttribute('y') - 30,
+				x = a[i].getAttribute('x') - 30,
+				y = a[i].getAttribute('y') - 40,
 				flag = 'blank.png';
 
 			if (t !== undefined){
@@ -1350,8 +1352,8 @@ function loadGameState(){
 			// dynamically add svg flag image to the map
 			var svg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
 			svg.id = 'flag' + i;
-			svg.setAttributeNS(null, 'height', 40);
-			svg.setAttributeNS(null, 'width', 40);
+			svg.setAttributeNS(null, 'height', 60);
+			svg.setAttributeNS(null, 'width', 60);
 			svg.setAttributeNS(null,"x",x);
 			svg.setAttributeNS(null,"y",y);
 			svg.setAttributeNS(null,"class","mapFlag");

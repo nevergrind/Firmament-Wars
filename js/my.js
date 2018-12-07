@@ -79,7 +79,8 @@ var my = {
 		if (game.tiles[my.tgt].player !== my.player){
 			if (game.tiles[my.lastTgt].player === my.player){
 				my.nextTarget(false, my.lastTgt);
-			} else {
+			}
+			else {
 				my.nextTarget(false);
 			}
 		}

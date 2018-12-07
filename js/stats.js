@@ -573,35 +573,36 @@ var stats = {
 		for (var i=0, len=column.length; i<len; i++){
 			if (i === 4){
 				str += '<th class="text-center statHead chat-warning">'+ column[i] +'</th>';
-			} else {
+			}
+			else {
 				str += '<th class="text-center statHead">'+ column[i] +'</th>';
 			}
 		}
-		str += '</tr><tr class="statSpacer2"></tr>';
 		return str;
 	},
 	playerCell: function(p, i){
 		var z = game.player[i],
-			color = z.playerColor,
 			flag = p.flag.split('.')[0];
+
 		flag = flag + ui.getFlagExt(flag);
-		var str = '<td class="stat-detail-wrap">\
-			<div class="statWrapper">\
-				<img class="statFlagBG" src="images/flags/'+ flag +'">\
-			</div>\
-			<img class="statsFlags" src="images/flags/'+ flag +'">\
-			<div class="statsPlayerWrap">\
-				<div class="statsAccount chat-warning nowrap">' + lobby.governmentIcon(z);
+		var str =
+		'<td class="stat-detail-wrap">'+
+			'<div class="statWrapper">'+
+				'<img class="statFlagBG" src="images/flags/'+ flag +'">'+
+			'</div>'+
+			'<img class="statsFlags" src="images/flags/'+ flag +'">'+
+			'<div class="statsPlayerWrap">'+
+				'<div class="statsAccount chat-warning nowrap">' + lobby.governmentIcon(z);
 					if (g.teamMode){
 						str += '<span class="diploTeam">'+ z.team +'</span>';
 					}
 					// TODO: undefined error here on difficulty after CPU was eliminated and I surrendered
-					var account = p.cpu === 1 ? z.difficulty : p.account;
+					var account = z.cpu === 1 ? z.difficulty : p.account;
 					str += account +
-				'</div>\
-				<div class="statsNation nowrap">'+ p.nation +'</div>\
-			</div>\
-		</td>';
+				'</div>'+
+				'<div class="statsNation nowrap">'+ p.nation +'</div>'+
+			'</div>'+
+		'</td>';
 		return str;
 	},
 	initStats: function() {

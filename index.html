@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head id='head'>
 	<meta charset="utf-8">
 	<meta http-equiv="Cache-control" content="no-cache">
 	<script>
 		var app = {
-			version: '1.0.3',
+			version: '1.0.6',
 			initialized: 0, // init-game returned
 			isApp: location.protocol === 'chrome-extension:' ? 1 : 0,
 			account: ''
@@ -471,9 +471,6 @@
 				<button id="leaderboardRankedBtn" type="button" class="btn fwBlue btn-responsive shadow4 ranked"></button>
 				<button id="leaderboard-nation-rank" type="button" class="btn fwBlue btn-responsive shadow4">Nations</button>
 				<button id="leaderboard-flag-rank" type="button" class="btn fwBlue btn-responsive shadow4">Flags</button>
-				<!--button id="leaderboard-trips-btn" type="button" class="btn fwBlue btn-responsive shadow4">Trips</button>
-				<button id="leaderboard-quads-btn" type="button" class="btn fwBlue btn-responsive shadow4">Quads</button>
-				<button-- id="leaderboard-pents-btn" type="button" class="btn fwBlue btn-responsive shadow4">Pents</button-->
 			</div>
 		</div>
 
@@ -1066,14 +1063,7 @@
 				loginMsg("Your account name must be less than 16 characters long.");
 				return false;
 			}
-			var tempAcc = acc.replace('_', '');
-			/*tempAcc = acc.replace(' ', '');
-			tempAcc = acc.replace('(', '');
-			tempAcc = acc.replace(')', '');
-			if (tempAcc.match(/[a-z0-9]/gi, '').length < tempAcc.length) {
-				loginMsg("Your account name should only contain letters, numbers, and underscores.");
-				return false;
-			}*/
+
 			if (pw.length < 6) {
 				loginMsg("Your password must be at least six characters long.");
 				return false;

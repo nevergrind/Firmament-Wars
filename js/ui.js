@@ -218,7 +218,6 @@ var ui = {
 		}
 		if (typeof e === 'object'){
 			var tileId = e.id.slice(4)*1;
-			var d = game.tiles[tileId];
 			var cacheOldTgt = my.tgt;
 			if (!hover){
 				if (cacheOldTgt !== tileId){

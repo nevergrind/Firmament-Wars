@@ -14,7 +14,7 @@ var action = {
 	isJuggernautValid: function() {
 		var juggernautValid = 1;
 		if (g.teamMode) {
-			game.player.forEach(function (v, i) {
+			game.player.forEach(function (v) {
 				if (!juggernautValid) return;
 				if (my.team === v.team && v.cpu) {
 					juggernautValid = 0;
@@ -41,7 +41,7 @@ var action = {
 			return stats.data[player].killed / stats.data[player].lost;
 		}
 	},
-	triggerAction: function(that, event) {
+	triggerAction: function(that) {
 		var id = that.id.slice(4)*1;
 		console.log('%c tile: '+ id +
 			' x: '+ (g.mouse.x - 400) +' y: '+ (g.mouse.y - 200) +
@@ -77,20 +77,22 @@ var action = {
 	},
 	target: function(o){
 		my.targetData = o;
-		my.checkSelectLastTarget();
-		if (my.attackOn && o.attackName === my.attackName){
+		// my.checkSelectLastTarget();
+		if (game.tiles[my.tgt].player !== my.player){
+			g.msg(lang[my.lang].notYourTile, 1.5);
+			my.clearHud();
+		}
+		else if (my.attackOn && o.attackName === my.attackName){
 			my.attackOn = false;
 			my.attackName = '';
 			my.clearHud();
 			ui.showTarget(DOM['land' + my.tgt]);
-			return;
 		}
-		if (game.tiles[my.tgt].units < o.minimum){
+		else if (game.tiles[my.tgt].units < o.minimum){
 			g.msg(lang[my.lang].needTwoUnits, 1.5);
 			my.clearHud();
-			return;
 		}
-		if (my.player === game.tiles[my.tgt].player){
+		else if (my.player === game.tiles[my.tgt].player){
 			my.attackOn = true;
 			my.attackName = o.attackName;
 			my.splitAttack = o.splitAttack;
